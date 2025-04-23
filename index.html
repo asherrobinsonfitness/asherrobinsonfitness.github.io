@@ -7,7 +7,12 @@
     <title>Sustainable Weight Loss Without Diet Stress</title>
     <meta name="description" content="Discover how to lose weight without giving up your favorite foods. Join our free call to create a personalized weight loss plan.">
     <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Resource hints -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Critical CSS Inline - Optimized -->
     <style>
         :root {
             --primary: #0072C6;
@@ -15,26 +20,33 @@
             --background: #0F172A;
             --text: #F8FAFC;
             --text-light: #94A3B8;
+            --red: #DC2626;
+            --red-light: #EF4444;
+            --red-dark: #B91C1C
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, sans-serif;
+            font-family: system-ui, sans-serif
         }
 
         body {
             background: var(--background);
             color: var(--text);
             line-height: 1.5;
-            font-size: 16px;
+            font-size: 16px
+        }
+
+        body.noscroll {
+            overflow: hidden
         }
 
         .container {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            flex-direction: column
         }
 
         .content {
@@ -44,21 +56,7 @@
             flex-direction: column;
             gap: 1.25rem;
             max-width: 800px;
-            padding: 0 1.25rem 2rem;
-        }
-
-        .callout {
-            background: var(--primary);
-            color: var(--text);
-            padding: .625rem;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: none;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 0;
-            letter-spacing: .02em;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            padding: 1.25rem 1.25rem 2rem
         }
 
         .headline {
@@ -75,8 +73,55 @@
             font-size: 1.125rem;
             color: var(--text);
             line-height: 1.5;
-            max-width: 650px;
-            margin: 0 auto;
+            margin-top: 0.5rem;
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        @media(max-width:768px) {
+            body {
+                font-size: 15px
+            }
+
+            .callout {
+                font-size: .9375rem
+            }
+
+            .content {
+                gap: 1rem;
+                padding: 1rem 1.25rem 2rem;
+            }
+
+            .headline {
+                font-size: 1.625rem;
+                margin: 0.75rem 0;
+            }
+
+            .subheadline {
+                font-size: 1rem
+            }
+        }
+    </style>
+    <!-- Non-critical CSS - Load asynchronously -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all';this.onload=null">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
+    <style id="deferred-styles">
+        .callout {
+            background: var(--primary);
+            color: var(--text);
+            padding: .625rem;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: none;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0;
+            letter-spacing: .02em;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .video-section {
@@ -100,7 +145,7 @@
         }
 
         .video-instruction i {
-            font-size: 1.125rem;
+            font-size: 1.125rem
         }
 
         .video-container {
@@ -110,7 +155,7 @@
             overflow: hidden;
             background: var(--background);
             margin: 0 auto;
-            max-width: 800px;
+            max-width: 800px
         }
 
         .video-container video {
@@ -119,7 +164,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover
         }
 
         .video-thumbnail {
@@ -131,57 +176,49 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .video-thumbnail .play-icon {
             position: absolute;
             font-size: 2.5rem;
-            color: #000000;
-            opacity: 0.9;
-            transition: all 0.3s ease;
-            background: #FFFFFF;
+            color: #000;
+            opacity: .9;
+            transition: all .3s ease;
+            background: #FFF;
             width: 80px;
             height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, .2)
         }
 
         .video-thumbnail .play-icon i {
-            margin-left: 5px;
+            margin-left: 5px
         }
 
         .video-thumbnail:hover .play-icon {
             opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .hidden {
-            display: none !important;
+            transform: scale(1.05)
         }
 
         .section-divider {
-            border-top: 1px solid rgba(148, 163, 184, 0.2);
-            margin: 0.5rem 0;
-            width: 100%;
+            border-top: 1px solid rgba(148, 163, 184, .2);
+            margin: .5rem 0;
+            width: 100%
         }
 
         .scheduler-container {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            background: #FFFFFF;
-            border-radius: 0 0 8px 8px;
-            color: #1E293B;
-            border: 1px solid #E5E7EB;
-            padding: 1rem;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-            overflow: hidden;
-            font-family: system-ui, sans-serif
+            background: #FFF;
+            border-radius: 4px;
+            padding: 1.5rem;
+            border: 1px solid #CBD5E1;
+            color: #1E293B
         }
 
         .contact-form {
@@ -487,6 +524,13 @@
             text-decoration: underline;
         }
 
+        .highlight {
+            text-decoration: underline;
+            text-decoration-color: #0072C6;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px
+        }
+
         @media (min-width: 769px) {
             .content {
                 padding-top: 0.5rem;
@@ -502,37 +546,50 @@
                 font-size: 0.9375rem;
             }
 
-            .content {
-                gap: 1rem;
-                padding: 0 1rem 1.5rem;
-            }
-
             .headline {
                 font-size: 1.625rem;
-                margin: 0.75rem 0;
             }
 
             .subheadline {
                 font-size: 1rem;
             }
 
-            .video-container {
-                padding-bottom: 56.25%;
-                max-height: 250px;
+            .video-instruction {
+                font-size: 0.9375rem;
             }
 
-            .cta-button {
-                width: 100%;
-                padding: 0.75rem 1.5rem;
+            .video-thumbnail .play-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.75rem;
             }
 
             .scheduler-container {
-                padding: 1rem;
+                box-shadow: none;
+                border-radius: 6px;
+                padding: 1.25rem;
             }
 
-            .form-button {
-                width: 100%;
+            .form-button,
+            .cta-button {
+                font-size: 1rem;
                 padding: 0.75rem 1.5rem;
+            }
+
+            .form-button i,
+            .cta-button i {
+                font-size: 0.875rem;
+            }
+
+            .form-field input,
+            .form-field select {
+                padding: 0.75rem 0.875rem;
+                font-size: 0.9375rem;
+            }
+
+            .radio-option label {
+                padding: 0.75rem 1rem 0.75rem 2.75rem;
+                font-size: 0.875rem;
             }
 
             .legal {
@@ -541,97 +598,7 @@
             }
         }
 
-        .next-steps-header {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .contact-info {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 4px;
-            text-align: left;
-            color: #1E293B;
-        }
-
-        .contact-info-header {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #1E293B;
-        }
-
-        .contact-info-header i {
-            color: var(--success);
-        }
-
-        .contact-info-form {
-            margin-bottom: 1.5rem;
-            background: #FFFFFF;
-            border-radius: 4px;
-            padding: 1rem;
-        }
-
-        .contact-info-item {
-            display: flex;
-            margin-bottom: 0.75rem;
-            border-bottom: 1px solid #E2E8F0;
-            padding-bottom: 0.75rem;
-        }
-
-        .contact-info-item:last-child {
-            margin-bottom: 0;
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .contact-info-label {
-            width: 150px;
-            color: #64748B;
-            font-size: 0.9375rem;
-            font-weight: 500;
-        }
-
-        .contact-info-input {
-            flex: 1;
-            font-size: 0.9375rem;
-            padding: 0.5rem;
-            border: 1px solid #E2E8F0;
-            border-radius: 4px;
-            color: #1E293B;
-            background: #F8FAFC;
-        }
-
-        .contact-info-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 1px var(--primary);
-        }
-
-        .contact-info-input::placeholder {
-            color: #94A3B8;
-        }
-
-        select.contact-info-input {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748B' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            padding-right: 2rem;
-        }
-
-        .form-button i {
-            margin-left: 0.5rem;
-        }
-
-        /* Verification Modal Styles */
+        /* Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -647,21 +614,18 @@
 
         .modal-content {
             background: #FFFFFF;
-            padding: 1rem;
-            border-radius: 4px;
+            padding: 1.5rem;
+            border-radius: 8px;
             width: 90%;
-            max-width: 500px;
+            max-width: 450px;
             text-align: center;
             position: relative;
             border: 1px solid #CBD5E1;
-        }
-
-        .close-modal {
-            display: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
 
         .verification-title {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #1E293B;
             margin-bottom: 1.5rem;
@@ -681,15 +645,6 @@
         .phone-display {
             font-weight: 600;
             color: #1E293B;
-        }
-
-        .change-phone {
-            color: #EF4444;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
         }
 
         .verification-inputs {
@@ -717,6 +672,29 @@
             background: #F1F5F9;
         }
 
+        .verification-button {
+            width: 100%;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(to bottom, #EF4444, #DC2626);
+            color: white;
+            border: 1px solid #B91C1C;
+            border-radius: 4px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .verification-button:hover {
+            background: linear-gradient(to bottom, #DC2626, #B91C1C);
+            transform: translateY(-1px);
+        }
+
         .resend-container {
             margin-top: 1.5rem;
             margin-bottom: 0;
@@ -734,37 +712,22 @@
             font-weight: 600;
         }
 
-        .verification-button {
-            width: 100%;
-            padding: 0.875rem 2rem;
-            background: linear-gradient(to bottom, #EF4444, #DC2626);
-            color: white;
-            border: 1px solid #B91C1C;
-            border-radius: 4px;
-            font-size: 1.125rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 1.25rem;
+                width: 95%;
+            }
 
-        .verification-button:hover {
-            background: linear-gradient(to bottom, #DC2626, #B91C1C);
-        }
+            .verification-input {
+                width: 2.5rem;
+                height: 3rem;
+                font-size: 1.25rem;
+            }
 
-        .highlight {
-            text-decoration: underline;
-            text-decoration-color: #0072C6;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
-
-        em {
-            font-style: italic;
-            font-weight: inherit;
+            .verification-button {
+                font-size: 1rem;
+                padding: 0.75rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -790,7 +753,7 @@
                 <div style="position: relative; background: linear-gradient(to bottom, #EF4444, #DC2626); color: white; font-weight: 700; padding: 0.75rem; border-radius: 8px 8px 0 0; font-size: 1rem; text-align: center; border: 1px solid #B91C1C; border-bottom: none; font-family: system-ui, sans-serif; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
                     Get Access Now ↓↓↓
                 </div>
-                <div class="scheduler-container" id="booking-form">
+                <div class="scheduler-container" id="booking-form" style="border-radius: 0 0 8px 8px; margin-top: -1px;">
                     <form class="contact-form" action="thank-you.php" method="post" id="qualificationForm">
                         <!-- Contact Information Section -->
                         <div class="form-section-header">
@@ -837,152 +800,6 @@
 
                     </form>
                 </div>
-
-                <script>
-                    // Phone number formatting
-                    const phoneInput = document.getElementById('phone');
-
-                    phoneInput.addEventListener('input', function(e) {
-                        let value = e.target.value.replace(/\D/g, '');
-                        if (value.length === 0) {
-                            e.target.value = '';
-                            return;
-                        }
-
-                        // Format phone numbers based on country code
-                        const countryCode = document.getElementById('country_code').value;
-
-                        if (countryCode === '+1') {
-                            // US/Canada format: (XXX) XXX-XXXX
-                            value = value.substring(0, 10);
-                            if (value.length > 6) {
-                                e.target.value = value.replace(/(\d{3})(\d{3})(\d{1,4})/, "($1) $2-$3");
-                            } else if (value.length > 3) {
-                                e.target.value = value.replace(/(\d{3})(\d{1,3})/, "($1) $2");
-                            } else if (value.length > 0) {
-                                e.target.value = value.replace(/(\d{1,3})/, "($1");
-                            }
-                        } else {
-                            // Basic international format with spaces
-                            value = value.substring(0, 15);
-                            e.target.value = value.replace(/(\d{1,3})(?=(\d{3})+(?!\d))/g, "$1 ").trim();
-                        }
-                    });
-
-                    // Update phone formats when changing country code
-                    document.getElementById('country_code').addEventListener('change', function(e) {
-                        const phoneInput = document.getElementById('phone');
-
-                        // Clear phone input when changing country codes
-                        phoneInput.value = '';
-                        phoneInput.placeholder = 'Phone Number';
-                    });
-
-                    // Set default placeholder on load
-                    document.addEventListener('DOMContentLoaded', function() {
-                        document.getElementById('phone').placeholder = 'Phone Number';
-                    });
-
-                    // Add input validation for email
-                    const emailInput = document.getElementById('email');
-                    emailInput.addEventListener('blur', function(e) {
-                        const email = e.target.value;
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                        if (email && !emailRegex.test(email)) {
-                            e.target.classList.add('invalid');
-                        } else {
-                            e.target.classList.remove('invalid');
-                        }
-                    });
-
-                    // Smooth scroll for CTA button
-                    document.querySelector('.cta-button').addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            window.scrollTo({
-                                top: target.offsetTop - 20,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
-
-                    // Add qualification logic
-                    document.getElementById('qualificationForm').addEventListener('submit', function(event) {
-                        event.preventDefault();
-
-                        // Get qualification answers
-                        const timeframeCommitment = document.querySelector('input[name="timeframe_commitment"]:checked').value;
-                        const weightGoal = document.querySelector('input[name="weight_goal"]:checked').value;
-
-                        // Check if qualified
-                        const isQualified = (
-                            timeframeCommitment === 'ready_yes' &&
-                            weightGoal === '25+ lbs'
-                        );
-
-                        // Redirect based on qualification
-                        if (isQualified) {
-                            // Save form data to localStorage
-                            localStorage.setItem('firstName', document.getElementById('first_name').value);
-                            localStorage.setItem('lastName', document.getElementById('last_name').value);
-                            localStorage.setItem('email', document.getElementById('email').value);
-                            localStorage.setItem('phone', document.getElementById('country_code').value + ' ' + document.getElementById('phone').value);
-                            localStorage.setItem('timeframeCommitment', timeframeCommitment);
-                            localStorage.setItem('weightGoal', weightGoal);
-
-                            // Show verification modal instead of redirecting
-                            document.getElementById('verificationModal').style.display = 'flex';
-                        } else {
-                            window.location.href = 'free-download.php';
-                        }
-                    });
-
-                    // Video thumbnail and play functionality
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const mainVideo = document.getElementById('main-video');
-                        const thumbnailContainer = document.getElementById('video-thumbnail');
-                        const thumbnailVideo = document.getElementById('thumbnail-video');
-
-                        // Fix for mobile: ensure thumbnail video loads and plays
-                        function initThumbnail() {
-                            // Reset video source with cache-busting parameter
-                            const currentSrc = thumbnailVideo.querySelector('source').src;
-                            const newSrc = currentSrc.split('#')[0] + '#t=0,5?' + new Date().getTime();
-                            thumbnailVideo.querySelector('source').src = newSrc;
-
-                            // Force load and play
-                            thumbnailVideo.load();
-                            thumbnailVideo.play().catch(e => {
-                                console.log('Auto-play prevented, using fallback');
-                                // If autoplay fails, use a static thumbnail instead
-                                thumbnailContainer.style.backgroundImage = 'url("thumbnail.png")';
-                                thumbnailContainer.style.backgroundSize = 'cover';
-                                thumbnailContainer.style.backgroundPosition = 'center';
-                            });
-                        }
-
-                        // Initialize thumbnail
-                        initThumbnail();
-
-                        // When thumbnail is clicked, hide thumbnail and play main video
-                        thumbnailContainer.addEventListener('click', function() {
-                            thumbnailContainer.classList.add('hidden');
-                            mainVideo.controls = true;
-                            mainVideo.play().catch(e => {
-                                console.log('Error playing main video:', e);
-                            });
-                        });
-
-                        // If main video ends, show thumbnail again
-                        mainVideo.addEventListener('ended', function() {
-                            thumbnailContainer.classList.remove('hidden');
-                            mainVideo.controls = false;
-                            initThumbnail();
-                        });
-                    });
-                </script>
             </div>
 
             <div class="legal">
@@ -1022,38 +839,88 @@
     </div>
 
     <script>
-        // Handle verification modal
-        const verificationModal = document.getElementById('verificationModal');
-        const closeModal = document.getElementById('closeModal');
-        const changePhone = document.getElementById('changePhone');
-        const phoneDisplay = document.getElementById('phoneDisplay');
-        const resendCode = document.getElementById('resendCode');
-        const verificationInputs = document.querySelectorAll('.verification-input');
-        const verifyButton = document.getElementById('verifyButton');
+        // Optimize JavaScript loading
+        document.addEventListener('DOMContentLoaded', function() {
+            // Phone number formatting
+            const phoneInput = document.getElementById('phone');
 
-        // Function to focus first input
-        const focusFirstInput = () => {
-            setTimeout(() => {
-                verificationInputs[0].focus();
-                verificationInputs[0].click();
-            }, 50);
-        };
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length === 0) {
+                    e.target.value = '';
+                    return;
+                }
 
-        // Display phone number in modal
-        phoneDisplay.textContent = localStorage.getItem('phone') || '';
+                // Format phone numbers based on country code
+                const countryCode = document.getElementById('country_code').value;
 
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            verificationModal.style.display = 'none';
-        });
+                if (countryCode === '+1') {
+                    // US/Canada format: (XXX) XXX-XXXX
+                    value = value.substring(0, 10);
+                    if (value.length > 6) {
+                        e.target.value = value.replace(/(\d{3})(\d{3})(\d{1,4})/, "($1) $2-$3");
+                    } else if (value.length > 3) {
+                        e.target.value = value.replace(/(\d{3})(\d{1,3})/, "($1) $2");
+                    } else if (value.length > 0) {
+                        e.target.value = value.replace(/(\d{1,3})/, "($1");
+                    }
+                } else {
+                    // Basic international format with spaces
+                    value = value.substring(0, 15);
+                    e.target.value = value.replace(/(\d{1,3})(?=(\d{3})+(?!\d))/g, "$1 ").trim();
+                }
+            });
 
-        // Change phone number
-        changePhone.addEventListener('click', () => {
-            verificationModal.style.display = 'none';
-            document.getElementById('phone').focus();
+            // Update phone formats when changing country code
+            document.getElementById('country_code').addEventListener('change', function(e) {
+                const phoneInput = document.getElementById('phone');
+
+                // Clear phone input when changing country codes
+                phoneInput.value = '';
+                phoneInput.placeholder = 'Phone Number';
+            });
+
+            // Set default placeholder on load
+            phoneInput.placeholder = 'Phone Number';
+
+            // Add input validation for email
+            const emailInput = document.getElementById('email');
+            emailInput.addEventListener('blur', function(e) {
+                const email = e.target.value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (email && !emailRegex.test(email)) {
+                    e.target.classList.add('invalid');
+                } else {
+                    e.target.classList.remove('invalid');
+                }
+            });
+
+            // Add qualification logic
+            document.getElementById('qualificationForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Save form data to localStorage
+                localStorage.setItem('firstName', document.getElementById('first_name').value);
+                localStorage.setItem('lastName', document.getElementById('last_name').value);
+                localStorage.setItem('email', document.getElementById('email').value);
+                localStorage.setItem('phone', document.getElementById('country_code').value + ' ' + document.getElementById('phone').value);
+
+                // Show verification modal
+                document.getElementById('verificationModal').style.display = 'flex';
+                // Set phone display text
+                document.getElementById('phoneDisplay').textContent = localStorage.getItem('phone') || '';
+
+                // Focus first verification input after modal displays
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('.verification-input')[0].focus();
+                });
+            });
         });
 
         // Handle verification inputs
+        const verificationInputs = document.querySelectorAll('.verification-input');
+        
         verificationInputs.forEach((input, index) => {
             // Clear any existing value
             input.value = '';
@@ -1094,55 +961,13 @@
             });
         });
 
-        // Start countdown on modal open
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Store form data
-            const formData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                weightGoal: document.querySelector('input[name="weight_goal"]:checked').value
-            };
-
-            // Store in localStorage
-            Object.entries(formData).forEach(([key, value]) => {
-                localStorage.setItem(key, value);
-            });
-
-            // Show verification modal
-            verificationModal.style.display = 'flex';
-            phoneDisplay.textContent = formData.phone;
-
-            // Start the countdown
-            startCountdown();
-
-            // Focus first input immediately
-            requestAnimationFrame(() => {
-                verificationInputs[0].focus();
-                verificationInputs[0].select();
-            });
-        });
-
-        // When modal becomes visible, focus first input
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.target === verificationModal &&
-                    mutation.type === 'attributes' &&
-                    mutation.attributeName === 'style' &&
-                    verificationModal.style.display === 'flex') {
-                    requestAnimationFrame(() => {
-                        verificationInputs[0].focus();
-                        verificationInputs[0].select();
-                    });
-                }
-            });
-        });
-
-        observer.observe(verificationModal, {
-            attributes: true
+        // Handle resend code click
+        document.getElementById('resendCode').addEventListener('click', function() {
+            // Simulate resend with visual feedback
+            this.textContent = "Code sent!";
+            setTimeout(() => {
+                this.textContent = "Resend code";
+            }, 3000);
         });
     </script>
 </body>
