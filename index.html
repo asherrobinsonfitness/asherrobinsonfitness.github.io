@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sustainable Weight Loss Without Diet Stress</title>
     <meta name="description" content="Discover how to lose weight without giving up your favorite foods. Join our free call to create a personalized weight loss plan.">
     <meta name="robots" content="index, follow">
@@ -64,7 +64,7 @@
             font-weight: 700;
             line-height: 1.2;
             color: var(--text);
-            margin: 0.75rem 0;
+            margin: 0.75rem 0 0.25rem;
             max-width: 800px;
             letter-spacing: -.01em
         }
@@ -73,7 +73,7 @@
             font-size: 1.125rem;
             color: var(--text);
             line-height: 1.5;
-            margin-top: 0.5rem;
+            margin-top: 0;
         }
 
         .hidden {
@@ -96,7 +96,7 @@
 
             .headline {
                 font-size: 1.625rem;
-                margin: 0.75rem 0;
+                margin: 0.75rem 0 0.25rem;
             }
 
             .subheadline {
@@ -572,19 +572,19 @@
 
             .form-button,
             .cta-button {
-                font-size: 1rem;
-                padding: 0.75rem 1.5rem;
+                font-size: 1.125rem;
+                padding: 0.875rem 1.5rem;
             }
 
             .form-button i,
             .cta-button i {
-                font-size: 0.875rem;
+                font-size: 1rem;
             }
 
             .form-field input,
             .form-field select {
                 padding: 0.75rem 0.875rem;
-                font-size: 0.9375rem;
+                font-size: 16px !important;
             }
 
             .radio-option label {
@@ -729,6 +729,29 @@
                 padding: 0.75rem 1.5rem;
             }
         }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* Fix for iOS auto-zoom */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            font-size: 16px !important;
+        }
     </style>
 </head>
 
@@ -745,13 +768,16 @@
                     <span>Discover How It Works</span>
                 </div>
                 <div class="video-container">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/9fcfc0a9723f4146bf0e84b8948b8f91?sid=0b669cd5-16a8-4bb9-bced-8bd6c0b9fec7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                        <iframe src="https://www.loom.com/embed/9fcfc0a9723f4146bf0e84b8948b8f91?sid=0b669cd5-16a8-4bb9-bced-8bd6c0b9fec7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                        <div class="video-overlay" id="videoOverlay"></div>
+                    </div>
                 </div>
             </div>
 
             <div style="position: relative; width: 100%; max-width: 450px; margin: 0 auto;">
                 <div style="position: relative; background: linear-gradient(to bottom, #EF4444, #DC2626); color: white; font-weight: 700; padding: 0.75rem; border-radius: 8px 8px 0 0; font-size: 1rem; text-align: center; border: 1px solid #B91C1C; border-bottom: none; font-family: system-ui, sans-serif; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
-                    Get Access Now ↓↓↓
+                Get Instant Access ↓↓↓
                 </div>
                 <div class="scheduler-container" id="booking-form" style="border-radius: 0 0 8px 8px; margin-top: -1px;">
                     <form class="contact-form" action="thank-you.php" method="post" id="qualificationForm">
@@ -795,7 +821,7 @@
                         </div>
 
                         <button type="submit" class="form-button" id="submitButton">
-                            See How it Works <i class="fas fa-arrow-right"></i>
+                        Watch Now <i class="fas fa-arrow-right"></i>
                         </button>
 
                     </form>
@@ -897,24 +923,94 @@
             });
 
             // Add qualification logic
-            document.getElementById('qualificationForm').addEventListener('submit', function(event) {
+            const qualificationForm = document.getElementById('qualificationForm');
+            
+            qualificationForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                // Save form data to localStorage
-                localStorage.setItem('firstName', document.getElementById('first_name').value);
-                localStorage.setItem('lastName', document.getElementById('last_name').value);
-                localStorage.setItem('email', document.getElementById('email').value);
-                localStorage.setItem('phone', document.getElementById('country_code').value + ' ' + document.getElementById('phone').value);
+                // Get form fields
+                const firstName = document.getElementById('first_name');
+                const lastName = document.getElementById('last_name');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                
+                // Basic validation
+                let isValid = true;
+                
+                if (!firstName.value.trim()) {
+                    firstName.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    firstName.classList.remove('invalid');
+                }
+                
+                if (!lastName.value.trim()) {
+                    lastName.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    lastName.classList.remove('invalid');
+                }
+                
+                if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                    email.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    email.classList.remove('invalid');
+                }
+                
+                if (!phone.value.trim()) {
+                    phone.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    phone.classList.remove('invalid');
+                }
+                
+                if (isValid) {
+                    // Save form data to localStorage
+                    localStorage.setItem('firstName', firstName.value);
+                    localStorage.setItem('lastName', lastName.value);
+                    localStorage.setItem('email', email.value);
+                    localStorage.setItem('phone', document.getElementById('country_code').value + ' ' + phone.value);
 
-                // Show verification modal
-                document.getElementById('verificationModal').style.display = 'flex';
-                // Set phone display text
-                document.getElementById('phoneDisplay').textContent = localStorage.getItem('phone') || '';
+                    // Show verification modal
+                    document.getElementById('verificationModal').style.display = 'flex';
+                    // Set phone display text
+                    document.getElementById('phoneDisplay').textContent = localStorage.getItem('phone') || '';
 
-                // Focus first verification input after modal displays
-                requestAnimationFrame(() => {
-                    document.querySelectorAll('.verification-input')[0].focus();
-                });
+                    // Focus first verification input after modal displays
+                    requestAnimationFrame(() => {
+                        document.querySelectorAll('.verification-input')[0].focus();
+                    });
+                } else {
+                    // Scroll to the form container with appropriate offset
+                    const formContainer = document.getElementById('booking-form');
+                    if (formContainer) {
+                        const formRect = formContainer.getBoundingClientRect();
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        // Scroll to place the form 20% from the top of the viewport
+                        const targetPosition = scrollTop + formRect.top - (window.innerHeight * 0.2);
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Focus first invalid field after scrolling
+                        setTimeout(() => {
+                            const firstInvalid = document.querySelector('.invalid');
+                            if (firstInvalid) {
+                                firstInvalid.focus();
+                            }
+                        }, 500);
+                    }
+                }
+            });
+            
+            // Add video overlay click functionality - same validation as form submit
+            document.getElementById('videoOverlay').addEventListener('click', function() {
+                // Trigger the same validation and submission process as the form
+                const submitEvent = new Event('submit', { cancelable: true });
+                qualificationForm.dispatchEvent(submitEvent);
             });
         });
 
