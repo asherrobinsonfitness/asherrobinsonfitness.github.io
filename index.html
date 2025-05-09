@@ -19,12 +19,14 @@
             --space-6: 48px;  /* 3rem */
             
             /* Primary colors */
-            --primary: #0b57d0;
+            --primary: #1877F2;
             --background: #f8f9fa;
             --text: #202124;
             --text-secondary: #5f6368;
-            --border: #c1c7cd; /* Updated to match opt-in.php */
+            --border: #c1c7cd;
             --card-bg: #fff;
+            --error: #ff3b30;
+            --success: #4cd964;
         }
 
         * {
@@ -98,226 +100,235 @@
             border-radius: 12px;
         }
 
-        /* Calendar */
-        .calendar-wrapper {
+        /* Pricing Info */
+        .pricing-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: var(--space-2);
+            max-width: 650px;
+            margin: 0 auto var(--space-1);
+            border: 1px solid var(--border);
+        }
+
+        .price-tag {
+            background-color: #FFEC3D;
+            color: #202124;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 0 auto;
+            display: table;
+        }
+
+        .price-container {
+            text-align: center;
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .old-price {
+            color: #9AA0A6;
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .price-wrapper {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .current-price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #202124;
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #202124;
+            margin-left: 2px;
+        }
+
+        .price-divider {
+            height: 1px;
+            background-color: #E8EAED;
+            margin: 8px 0 12px;
+        }
+
+        .benefits-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .benefit-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 8px;
+            position: relative;
+        }
+
+        .benefit-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: #E8EAED;
+        }
+
+        .benefit-icon {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .benefit-text {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--text);
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
+        /* Contact Form Styles */
+        .form-wrapper {
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
+            position: relative;
             padding-top: var(--space-4);
-            border-top: 1px solid var(--border);
         }
         
-        .calendar-header-text {
-            margin-bottom: var(--space-3);
-            text-align: left;
+        .form-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #000;
+            margin-bottom: var(--space-4);
+            position: relative;
         }
         
-        .calendar-title {
+        .form-title {
             color: var(--text);
             font-weight: 700;
-            font-size: var(--font-lg);
-            margin-bottom: var(--space-xs);
-            text-align: left;
+            font-size: 1.125rem;
+            text-align: center;
             line-height: 1.2;
+            padding: 0 var(--space-2);
+            background-color: var(--background);
+            position: absolute;
+            top: var(--space-4);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
         }
-
-        .calendar-subtitle {
+        
+        .form-subtitle {
             color: var(--text);
-            font-size: var(--font-md);
-            margin-bottom: var(--space-md);
-            text-align: left;
+            font-size: 1.125rem;
+            margin-bottom: var(--space-3);
+            text-align: center;
             line-height: 1.4;
         }
-
-        .subtitle-description {
-            font-size: 1rem;
-            color: var(--text);
-            margin-top: 4px;
-        }
-
-        .calendar-container {
+        
+        .contact-form {
             width: 100%;
-            background: transparent;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .month-calendar {
-            padding: 0 0 16px;
-        }
-
-        .calendar-header {
-            padding-bottom: 16px;
-        }
-
-        .month-nav {
             display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            color: var(--text);
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        /* Form with floating labels */
+        .form-group, .name-field {
+            position: relative;
+        }
+        
+        .name-row {
+            display: flex;
+            gap: var(--space-2);
             width: 100%;
-            justify-content: space-between;
         }
-
-        .month-title {
-            font-size: 1rem;
-            font-weight: 700;
-            text-align: left;
+        
+        .name-field {
+            flex: 1;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 24px 14px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1.125rem;
             color: var(--text);
-            display: flex;
-            align-items: center;
-        }
-
-        .month-title span {
-            color: #6B7280;
-            font-weight: normal;
-            margin-left: 8px;
-            font-size: 0.9375rem;
-        }
-
-        .nav-button {
-            background: transparent;
-            border: none;
-            color: #6B7280;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .nav-button:hover {
-            background: #F9FAFB;
-            color: var(--text);
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: 500;
-            color: #6B7280;
-            font-size: 0.75rem;
-            padding: 8px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin: 0 0 8px;
-        }
-
-        .weekday {
-            padding: 8px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            padding: 8px 0;
-        }
-
-        .calendar-day {
+            background-color: var(--card-bg);
             height: 56px;
-            width: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            border-radius: 8px;
-            cursor: pointer;
-            position: relative;
-            color: var(--text);
-            margin: 0 auto;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none; /* Remove browser styling */
+            -webkit-appearance: none;
         }
-
-        .calendar-day:hover {
-            background-color: #F0F9FF;
-            color: var(--primary);
+        
+        .form-input::placeholder {
+            color: transparent;
         }
-
-        .calendar-day.selected {
-            background-color: var(--primary);
-            color: #fff;
-            font-weight: 500;
-            border-radius: 8px;
-        }
-
-        .calendar-day.today {
-            font-weight: 700;
-            position: relative;
-        }
-
-        .calendar-day.today::after {
-            content: "";
+        
+        .form-label {
             position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background-color: var(--primary);
-            border-radius: 50%;
-        }
-
-        .calendar-day.other-month {
-            visibility: hidden;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 16px;
             pointer-events: none;
-        }
-
-        .day-view {
-            padding: 8px 0 0;
-            margin-top: 8px;
+            transition: transform 0.2s, top 0.2s;
+            transform-origin: 0 0;
             background-color: transparent;
-            position: relative;
+            line-height: 1;
+            padding: 0 2px;
         }
-
-        .time-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
+        
+        /* When input is focused or has content */
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label {
+            top: 8px;
+            transform: translateY(0) scale(0.75);
+            color: var(--text-secondary);
+            background-color: var(--card-bg);
+            padding: 0 4px;
+            margin-left: -2px;
         }
-
-        .day-title {
-            font-size: 0.9375rem;
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
+        }
+        
+        .submit-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: var(--space-2) 0;
+            font-size: 16px;
             font-weight: 600;
-        }
-
-        .time-slots-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .time-slot {
-            padding: 16px;
-            background: white;
-            border: 1px solid #E5E7EB;
-            border-radius: 8px;
-            text-align: center;
             cursor: pointer;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.875rem;
+            width: 100%;
             transition: all 0.2s ease;
+            margin-top: var(--space-1);
         }
-
-        .time-slot:hover {
-            background: #F0F9FF;
-            border-color: #BFDBFE;
-            color: var(--primary);
+        
+        .submit-button:hover {
+            background-color: #166FE5;
         }
-
+        
         /* Disclaimer */
         .disclaimer {
             max-width: 650px;
@@ -327,7 +338,56 @@
             font-size: 0.75rem;
             color: var(--text-secondary);
             text-align: center;
-            border-top: 1px solid var(--border);
+        }
+
+        /* Validation and error states */
+        .validation-mark {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            background-color: var(--success);
+            font-size: 10px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-input.valid:not(:focus) ~ .validation-mark {
+            opacity: 1;
+        }
+        
+        .form-input.error {
+            border-color: var(--error);
+        }
+        
+        .form-input.error ~ .form-label {
+            color: var(--error);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            display: none;
+            text-align: left;
+            padding-left: 2px;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            line-height: 1.2;
+        }
+        
+        .form-input.error ~ .error-message {
+            display: block;
         }
 
         /* Mobile Styles */
@@ -349,61 +409,89 @@
                 font-size: 1rem; 
             }
             
-            .calendar-days {
-                gap: 2px;
+            .pricing-card {
+                padding: 12px;
             }
             
-            .calendar-day {
-                height: 44px;
-                width: 44px;
-                font-size: 0.9375rem;
+            .price-container {
+                margin: 10px 0 6px;
             }
             
-            .event-details {
-                margin-bottom: 20px;
-                gap: 8px;
+            .old-price {
+                font-size: 1.25rem;
+                margin-right: 6px;
             }
             
-            .event-detail {
-                font-size: 0.9375rem;
+            .current-price {
+                font-size: 1.5rem;
             }
             
-            .day-view {
-                padding: 8px 0 0; 
+            .price-period {
+                font-size: 0.75rem;
             }
             
-            .time-slot { 
-                padding: 14px; 
-                font-size: 0.9375rem; 
+            .price-tag {
+                padding: 2px 10px;
+                font-size: 0.6875rem;
             }
             
-            .month-title { 
-                font-size: 1.5rem; 
+            .price-divider {
+                margin: 6px 0 10px;
             }
             
-            .calendar-title {
-                font-size: var(--font-md);
+            .benefit-icon {
+                font-size: 0.875rem;
+                margin-bottom: 4px;
             }
             
-            .calendar-subtitle {
-                font-size: var(--font-sm);
+            .benefit-text {
+                font-size: 0.6875rem;
+                line-height: 1.2;
+                max-width: 100%;
             }
             
-            .day-title {
+            .form-title {
                 font-size: 1rem;
             }
-
-            .nav-button { 
-                width: 36px; 
-                height: 36px; 
+            
+            .form-subtitle {
+                font-size: 0.875rem;
             }
-
+            
+            .name-row {
+                flex-direction: row;
+                gap: var(--space-2);
+            }
+            
+            .form-input {
+                padding: 24px 12px 8px;
+                font-size: 1rem;
+                height: 52px;
+            }
+            
+            .form-label {
+                font-size: 1rem;
+                top: 50%;
+                left: 12px;
+                line-height: 1;
+                transform: translateY(-50%);
+            }
+            
+            .form-input:focus ~ .form-label,
+            .form-input:not(:placeholder-shown) ~ .form-label {
+                top: 8px;
+                transform: translateY(0) scale(0.75);
+                background-color: var(--card-bg);
+                padding: 0 4px;
+                margin-left: -2px;
+            }
+            
+            .error-message {
+                top: 56px;
+            }
+            
             .disclaimer {
                 font-size: 0.7rem;
-            }
-
-            select.timezone-select {
-                font-size: 0.9375rem;
             }
         }
 
@@ -411,59 +499,6 @@
         a:focus, button:focus, input:focus, select:focus, textarea:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
-        }
-
-        .event-details {
-            margin-bottom: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .event-detail {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text);
-            font-size: 0.875rem;
-        }
-
-        .event-detail i {
-            color: #6B7280;
-            width: 20px;
-            text-align: center;
-        }
-
-        .event-timezone {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .event-timezone i.fa-chevron-down {
-            font-size: 0.75rem;
-            color: #6B7280;
-            margin-left: 2px;
-        }
-
-        select.timezone-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-color: transparent;
-            border: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.875rem;
-            color: var(--text);
-            cursor: pointer;
-            font-family: inherit;
-            width: auto;
-        }
-
-        select.timezone-select:focus {
-            outline: none;
         }
     </style>
 </head>
@@ -473,76 +508,72 @@
         <div class="content">
             <div class="header-group">
                 <h1 class="headline">6-Week Online Weight Loss Mentorship</h1>
-                <p class="subheadline">I'll fix your diet, training, and supplementation without making it suck. No bullshit.</p>
+                <p class="subheadline">I'll help you optimize your diet and training so you're far more likely to lose fat at a steady pace without trying to figure it out yourself.</p>
             </div>
 
-                <div class="video-container">
+            <div class="video-container">
                 <iframe src="https://www.loom.com/embed/9fcfc0a9723f4146bf0e84b8948b8f91?sid=0b669cd5-16a8-4bb9-bced-8bd6c0b9fec7" frameborder="0" title="Weight Loss Program Overview" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
             
-            <div class="calendar-wrapper">
-                <div class="calendar-header-text">
-                    <h2 class="calendar-title">Book Your Call</h2>
-                    <p class="calendar-subtitle">Select the soonest time you're available.</p>
+            <div class="pricing-card">
+                <div class="price-tag">Due Today</div>
+                <div class="price-container">
+                    <span class="old-price">$599</span>
+                    <span class="current-price">$0</span>
                 </div>
-                
-                <div class="event-details">
-                    <div class="event-detail">
-                        <i class="far fa-clock"></i>
-                        <span>30m</span>
+                <div class="price-divider"></div>
+                <div class="benefits-container">
+                    <div class="benefit-item">
+                        <div class="benefit-icon"><i class="fas fa-user-friends"></i></div>
+                        <div class="benefit-text">1-on-1 fat loss coaching tailored to you</div>
                     </div>
-                    <div class="event-detail">
-                        <i class="fab fa-google"></i>
-                        <span>Google Meet</span>
+                    <div class="benefit-item">
+                        <div class="benefit-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="benefit-text">Pay $599 once for the full 6 week mentorship</div>
                     </div>
-                    <div class="event-detail">
-                        <i class="fas fa-globe"></i>
-                        <div class="event-timezone">
-                            <select id="timezone-select" class="timezone-select">
-                                <!-- Will be populated by JavaScript -->
-                            </select>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="benefit-text">Love it or get a full refund within 30 days</div>
                     </div>
                 </div>
-                
-                <div class="calendar-container">
-                    <div class="month-calendar">
-                        <div class="calendar-header">
-                            <div class="month-nav">
-                                <div class="month-title">May <span>2025</span></div>
-                                <div class="nav-buttons">
-                                    <button class="nav-button prev-month" aria-label="Previous month">
-                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="nav-button next-month" aria-label="Next month">
-                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
+            </div>
+            
+            <div class="form-wrapper">
+                <div class="form-divider"></div>
+                <div class="form-title">Contact Information</div>
+                <p class="form-subtitle">If you're curious how this could work for you, share your info so we can confirm it's a fit and get started.</p>
+                <form action="calendar.php" method="POST" id="contactForm" class="contact-form">
+                    <div class="name-row">
+                        <div class="name-field">
+                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true">
+                            <label for="firstName" class="form-label">First name</label>
+                            <div class="validation-mark">✓</div>
+                            <div class="error-message">Please enter your first name</div>
                         </div>
-                        <div class="weekdays" role="row">
-                            <div class="weekday" role="columnheader">SUN</div>
-                            <div class="weekday" role="columnheader">MON</div>
-                            <div class="weekday" role="columnheader">TUE</div>
-                            <div class="weekday" role="columnheader">WED</div>
-                            <div class="weekday" role="columnheader">THU</div>
-                            <div class="weekday" role="columnheader">FRI</div>
-                            <div class="weekday" role="columnheader">SAT</div>
-                        </div>
-                        <div class="calendar-days" role="grid">
-                            <!-- Days will be populated by JavaScript -->
+                        <div class="name-field">
+                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Last name" required aria-required="true">
+                            <label for="lastName" class="form-label">Last name</label>
+                            <div class="validation-mark">✓</div>
+                            <div class="error-message">Please enter your last name</div>
                         </div>
                     </div>
-                    <div class="day-view">
-                        <div class="time-header">
-                            <div class="day-title">Thu 08</div>
-                        </div>
-                        <div class="time-slots-grid" role="list">
-                            <!-- Time slots will be populated by JavaScript -->
-                        </div>
+                    
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Email" required aria-required="true">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="validation-mark">✓</div>
+                        <div class="error-message">Please enter a valid email address</div>
                     </div>
-                </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true">
+                        <label for="phone" class="form-label">Phone number</label>
+                        <div class="validation-mark">✓</div>
+                        <div class="error-message">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Submit</button>
+                </form>
             </div>
 
             <div class="disclaimer">
@@ -555,245 +586,118 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize timezone selector
-            const timezoneSelector = {
-                init() {
-                    this.selectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                    this.timezones = [
-                        "Pacific/Midway", "Pacific/Pago_Pago", "Pacific/Honolulu", "America/Juneau", "America/Los_Angeles", 
-                        "America/Tijuana", "America/Denver", "America/Phoenix", "America/Chihuahua", "America/Mazatlan", 
-                        "America/Chicago", "America/Regina", "America/Mexico_City", "America/Monterrey", "America/Guatemala", 
-                        "America/New_York", "America/Indiana/Indianapolis", "America/Bogota", "America/Lima", "America/Halifax", 
-                        "America/Caracas", "America/La_Paz", "America/Santiago", "America/St_Johns", "America/Sao_Paulo", 
-                        "America/Argentina/Buenos_Aires", "America/Montevideo", "Atlantic/South_Georgia", "Atlantic/Azores", 
-                        "Atlantic/Cape_Verde", "Europe/Dublin", "Europe/London", "Europe/Lisbon", "Africa/Casablanca", 
-                        "Africa/Monrovia", "Etc/UTC", "Europe/Belgrade", "Europe/Bratislava", "Europe/Budapest", "Europe/Ljubljana", 
-                        "Europe/Prague", "Europe/Sarajevo", "Europe/Skopje", "Europe/Warsaw", "Europe/Zagreb", "Europe/Brussels", 
-                        "Europe/Copenhagen", "Europe/Madrid", "Europe/Paris", "Europe/Amsterdam", "Europe/Berlin", "Europe/Rome", 
-                        "Europe/Stockholm", "Europe/Vienna", "Europe/Zurich", "Africa/Cairo", "Africa/Johannesburg", "Europe/Istanbul", 
-                        "Europe/Kiev", "Europe/Helsinki", "Europe/Riga", "Europe/Sofia", "Europe/Tallinn", "Europe/Vilnius", 
-                        "Asia/Jerusalem", "Asia/Baghdad", "Asia/Kuwait", "Asia/Riyadh", "Asia/Tehran", "Asia/Baku", 
-                        "Asia/Muscat", "Asia/Tbilisi", "Asia/Yerevan", "Asia/Kabul", "Asia/Karachi", "Asia/Tashkent", 
-                        "Asia/Kolkata", "Asia/Colombo", "Asia/Kathmandu", "Asia/Dhaka", "Asia/Almaty", "Asia/Yangon", 
-                        "Asia/Bangkok", "Asia/Jakarta", "Asia/Singapore", "Asia/Kuala_Lumpur", "Asia/Urumqi", 
-                        "Asia/Ho_Chi_Minh", "Asia/Hong_Kong", "Asia/Shanghai", "Asia/Taipei", "Asia/Manila", 
-                        "Asia/Seoul", "Asia/Tokyo", "Australia/Perth", "Australia/Darwin", "Australia/Brisbane", 
-                        "Australia/Adelaide", "Australia/Sydney", "Australia/Hobart", "Pacific/Guam", "Pacific/Port_Moresby", 
-                        "Pacific/Auckland", "Pacific/Fiji"
-                    ];
-                    
-                    this.populateTimezoneSelect();
-                    this.setupEventListeners();
-                },
-                
-                formatTimezone(timezone) {
-                    // Format timezones to be more readable (e.g., "America/New_York" -> "America/New York")
-                    return timezone.replace('_', ' ');
-                },
-                
-                populateTimezoneSelect() {
-                    const select = document.getElementById('timezone-select');
-                    select.innerHTML = '';
-                    
-                    this.timezones.forEach(timezone => {
-                        const option = document.createElement('option');
-                        option.value = timezone;
-                        option.textContent = this.formatTimezone(timezone);
-                        
-                        if (timezone === this.selectedTimezone) {
-                            option.selected = true;
-                        }
-                        
-                        select.appendChild(option);
-                    });
-                },
-                
-                setupEventListeners() {
-                    // Timezone selection change
-                    document.getElementById('timezone-select').addEventListener('change', (e) => {
-                        this.selectedTimezone = e.target.value;
-                        
-                        // You would typically update your calendar here based on the new timezone
-                        calendar.renderCalendar();
-                        calendar.renderTimeSlots();
-                    });
-                }
+            const form = document.getElementById('contactForm');
+            const inputs = {
+                firstName: document.getElementById('firstName'),
+                lastName: document.getElementById('lastName'),
+                email: document.getElementById('email'),
+                phone: document.getElementById('phone')
             };
-
-            const calendar = {
-                currentDate: new Date(),
-                selectedDate: new Date(),
-                timeSlots: [
-                    '3:00pm', '3:15pm', '3:30pm', '3:45pm',
-                    '4:00pm', '4:15pm', '4:30pm', '4:45pm'
-                ],
-                
-                init() {
-                    this.renderCalendar();
-                    this.setupEventListeners();
-                    this.renderTimeSlots();
-                },
-
-                renderCalendar() {
-                    const year = this.currentDate.getFullYear();
-                    const month = this.currentDate.getMonth();
-                    
-                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                        'July', 'August', 'September', 'October', 'November', 'December'];
-                    
-                    // Update month title with separate year span
-                    const monthTitleEl = document.querySelector('.month-title');
-                    monthTitleEl.innerHTML = `${monthNames[month]} <span>${year}</span>`;
-
-                    const firstDay = new Date(year, month, 1);
-                    const lastDay = new Date(year, month + 1, 0);
-                    const totalDays = lastDay.getDate();
-                    const startingDay = firstDay.getDay();
-                    const prevMonthLastDay = new Date(year, month, 0).getDate();
-                    
-                    const calendarDays = document.querySelector('.calendar-days');
-                    calendarDays.innerHTML = '';
-
-                    // Previous month days
-                    for (let i = startingDay - 1; i >= 0; i--) {
-                        const day = document.createElement('div');
-                        day.className = 'calendar-day other-month';
-                        day.setAttribute('role', 'gridcell');
-                        day.setAttribute('tabindex', '-1');
-                        day.setAttribute('aria-disabled', 'true');
-                        day.textContent = prevMonthLastDay - i;
-                        calendarDays.appendChild(day);
-                    }
-
-                    // Current month days
-                    for (let i = 1; i <= totalDays; i++) {
-                        const day = document.createElement('div');
-                        day.className = 'calendar-day';
-                        day.setAttribute('role', 'gridcell');
-                        day.setAttribute('tabindex', '0');
-                        day.textContent = i;
-                        
-                        const dayDate = new Date(year, month, i);
-                        
-                        // Check if this is today
-                        const today = new Date();
-                        if (i === today.getDate() && 
-                            month === today.getMonth() && 
-                            year === today.getFullYear()) {
-                            day.classList.add('today');
-                        }
-                        
-                        // Check if this is the selected date
-                        if (i === this.selectedDate.getDate() && 
-                            month === this.selectedDate.getMonth() && 
-                            year === this.selectedDate.getFullYear()) {
-                            day.classList.add('selected');
-                            day.setAttribute('aria-selected', 'true');
-                        }
-                        
-                        calendarDays.appendChild(day);
-                    }
-
-                    // Next month days
-                    const remainingDays = 42 - (startingDay + totalDays);
-                    for (let i = 1; i <= remainingDays; i++) {
-                        const day = document.createElement('div');
-                        day.className = 'calendar-day other-month';
-                        day.setAttribute('role', 'gridcell');
-                        day.setAttribute('tabindex', '-1');
-                        day.setAttribute('aria-disabled', 'true');
-                        day.textContent = i;
-                        calendarDays.appendChild(day);
-                    }
-                    
-                    // Update day title
-                    this.updateDayTitle();
-                },
-                
-                updateDayTitle() {
-                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    const day = this.selectedDate.getDate().toString().padStart(2, '0');
-                    const dayName = dayNames[this.selectedDate.getDay()];
-                    
-                    document.querySelector('.day-title').textContent = `${dayName} ${day}`;
-                },
-
-                setupEventListeners() {
-                    document.querySelector('.prev-month').addEventListener('click', () => {
-                        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-                        this.renderCalendar();
-                    });
-
-                    document.querySelector('.next-month').addEventListener('click', () => {
-                        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-                        this.renderCalendar();
-                    });
-
-                    document.querySelector('.calendar-days').addEventListener('click', (e) => {
-                        if (e.target.classList.contains('calendar-day') && 
-                            !e.target.classList.contains('other-month')) {
-                            
-                            document.querySelectorAll('.calendar-day').forEach(day => {
-                                day.classList.remove('selected');
-                                day.setAttribute('aria-selected', 'false');
-                            });
-                            
-                            e.target.classList.add('selected');
-                            e.target.setAttribute('aria-selected', 'true');
-                            
-                            this.selectedDate = new Date(
-                                this.currentDate.getFullYear(),
-                                this.currentDate.getMonth(),
-                                parseInt(e.target.textContent)
-                            );
-                            
-                            this.updateDayTitle();
-                            this.renderTimeSlots();
-                        }
-                    });
-                    
-                    // Keyboard navigation for calendar
-                    document.querySelector('.calendar-days').addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            if (e.target.classList.contains('calendar-day') && 
-                                !e.target.classList.contains('other-month')) {
-                                e.preventDefault();
-                                e.target.click();
-                            }
-                        }
-                    });
-                },
-
-                renderTimeSlots() {
-                    const timeSlotsGrid = document.querySelector('.time-slots-grid');
-                    timeSlotsGrid.innerHTML = '';
-
-                    this.timeSlots.forEach(time => {
-                        const slot = document.createElement('div');
-                        slot.className = 'time-slot';
-                        slot.setAttribute('role', 'listitem');
-                        slot.setAttribute('tabindex', '0');
-                        slot.textContent = time;
-                        
-                        // Add aria label with date and time
-                        const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            month: 'long', 
-                            day: 'numeric',
-                            year: 'numeric'
-                        });
-                        slot.setAttribute('aria-label', `Book appointment for ${dateStr} at ${time}`);
-                        
-                        timeSlotsGrid.appendChild(slot);
-                    });
-                }
-            };
-
-            // Initialize the calendar
-            calendar.init();
             
-            // Initialize the timezone selector
-            timezoneSelector.init();
+            // Validation patterns
+            const patterns = {
+                firstName: /^[a-zA-Z\s\-']{2,}$/,
+                lastName: /^[a-zA-Z\s\-']{2,}$/,
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                phone: /^[0-9\-\(\)\s]{10,}$/
+            };
+            
+            // Error messages
+            const errorMessages = {
+                firstName: "Please enter your first name",
+                lastName: "Please enter your last name",
+                email: "Please enter a valid email address",
+                phone: "Please enter a valid 10-digit phone number"
+            };
+            
+            // Live validation as user types
+            Object.keys(inputs).forEach(field => {
+                inputs[field].addEventListener('input', function() {
+                    validateField(field, this.value);
+                    // Remove error class when typing
+                    this.classList.remove('error');
+                });
+                
+                // Validation on blur
+                inputs[field].addEventListener('blur', function() {
+                    validateField(field, this.value);
+                });
+                
+                // Special handling for phone field
+                if (field === 'phone') {
+                    inputs[field].addEventListener('focus', function() {
+                        if (!this.value) {
+                            this.value = '+1 ';
+                        }
+                    });
+                    
+                    inputs[field].addEventListener('input', function() {
+                        formatPhoneNumber(this);
+                    });
+                }
+            });
+            
+            function formatPhoneNumber(input) {
+                let value = input.value.replace(/\D/g, '');
+                
+                // Ensure it starts with country code
+                if (!value.startsWith('1') && value.length > 0) {
+                    value = '1' + value;
+                }
+                
+                // Format: +1 (XXX) XXX-XXXX
+                if (value.length > 0) {
+                    value = '+' + value.substring(0, 1) + 
+                            (value.length > 1 ? ' (' + value.substring(1, 4) : '') +
+                            (value.length > 4 ? ') ' + value.substring(4, 7) : '') +
+                            (value.length > 7 ? '-' + value.substring(7, 11) : '');
+                }
+                
+                input.value = value;
+                validateField('phone', value);
+            }
+            
+            // Validation function
+            function validateField(field, value) {
+                if (field === 'phone' && value) {
+                    // Only check digits for phone validation
+                    const digitsOnly = value.replace(/\D/g, '');
+                    // Must have at least 11 digits including country code (1 + 10 digits)
+                    inputs[field].classList.toggle('valid', digitsOnly.length >= 11);
+                } else {
+                    inputs[field].classList.toggle('valid', patterns[field].test(value));
+                }
+            }
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Check all fields
+                let isValid = true;
+                Object.keys(inputs).forEach(field => {
+                    const value = inputs[field].value;
+                    
+                    if (field === 'phone') {
+                        // Check phone has 11 digits (including country code)
+                        const digitsOnly = value.replace(/\D/g, '');
+                        if (digitsOnly.length < 11) {
+                            inputs[field].classList.add('error');
+                            inputs[field].classList.remove('valid');
+                            isValid = false;
+                        }
+                    } else if (!patterns[field].test(value)) {
+                        inputs[field].classList.add('error');
+                        inputs[field].classList.remove('valid');
+                        isValid = false;
+                    }
+                });
+                
+                if (isValid) {
+                    // If validation passes, redirect to calendar.php
+                    window.location.href = 'calendar.php';
+                }
+            });
         });
     </script>
 </body>
