@@ -7,6 +7,8 @@
     <title>6-Week Online Weight Loss Mentorship</title>
     <meta name="description" content="Join our 6-week online weight loss mentorship program. We'll fix your diet, training, and supplementation without making it suck.">
     <meta name="robots" content="index, follow">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="instagram:lead" content="true">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <style>
         /* Simple 8-point spacing system */
@@ -292,13 +294,23 @@
         
         /* When input is focused or has content */
         .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label {
+        .form-input:not(:placeholder-shown) ~ .form-label,
+        .form-input:-webkit-autofill ~ .form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
             background-color: var(--card-bg);
             padding: 0 4px;
             margin-left: -2px;
+        }
+        
+        /* Instagram autofill styling support */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+            -webkit-text-fill-color: var(--text) !important;
+            transition: background-color 5000s ease-in-out 0s;
         }
         
         .form-input:focus {
@@ -552,6 +564,8 @@
             border-radius: 3px;
             background: #e0e0e0;
             transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         .progress-bar-step.active {
             background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
@@ -592,19 +606,20 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar-step active"></div>
                     <div class="progress-bar-step"></div>
+                    <div class="progress-bar-step"></div>
                 </div>
                 <div class="form-title">Contact Information</div>
                 <p class="form-subtitle">If you're curious how this could help you, send me your contact info so I can show you how it works.</p>
-                <form action="calendar.php" method="POST" id="contactForm" class="contact-form">
+                <form action="calendar.php" method="POST" id="contactForm" class="contact-form" autocomplete="on">
                     <div class="name-row">
                         <div class="name-field">
-                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true">
+                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
                             <label for="firstName" class="form-label">First name</label>
                             <div class="validation-mark">✓</div>
                             <div class="error-message">Please enter your first name</div>
                         </div>
                         <div class="name-field">
-                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Last name" required aria-required="true">
+                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Last name" required aria-required="true" autocomplete="family-name">
                             <label for="lastName" class="form-label">Last name</label>
                             <div class="validation-mark">✓</div>
                             <div class="error-message">Please enter your last name</div>
@@ -612,14 +627,14 @@
                     </div>
                     
                     <div class="form-group">
-                        <input type="email" id="email" name="email" class="form-input" placeholder="Email" required aria-required="true">
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Email" required aria-required="true" autocomplete="email">
                         <label for="email" class="form-label">Email</label>
                         <div class="validation-mark">✓</div>
                         <div class="error-message">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-group">
-                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true">
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true" autocomplete="tel">
                         <label for="phone" class="form-label">Phone number</label>
                         <div class="validation-mark">✓</div>
                         <div class="error-message">Please enter a valid phone number</div>
@@ -667,6 +682,21 @@
                 phone: "Please enter a valid 10-digit phone number"
             };
             
+            // Check for Instagram auto-fill
+            function checkForAutoFill() {
+                Object.keys(inputs).forEach(field => {
+                    if (inputs[field].value) {
+                        // If the field has a value on page load (likely from autofill)
+                        inputs[field].classList.add('autofilled');
+                        validateField(field, inputs[field].value);
+                    }
+                });
+            }
+            
+            // Run once immediately and then again after a short delay
+            checkForAutoFill();
+            setTimeout(checkForAutoFill, 500);
+            
             // Live validation as user types
             Object.keys(inputs).forEach(field => {
                 inputs[field].addEventListener('input', function() {
@@ -695,6 +725,11 @@
             });
             
             function formatPhoneNumber(input) {
+                // Don't format if it looks like Instagram pre-filled it
+                if (input.classList.contains('autofilled') && input.value && !input.value.startsWith('+1')) {
+                    return;
+                }
+                
                 let value = input.value.replace(/\D/g, '');
                 
                 // Ensure it starts with country code
@@ -717,10 +752,17 @@
             // Validation function
             function validateField(field, value) {
                 if (field === 'phone' && value) {
-                    // Only check digits for phone validation
-                    const digitsOnly = value.replace(/\D/g, '');
-                    // Must have at least 11 digits including country code (1 + 10 digits)
-                    inputs[field].classList.toggle('valid', digitsOnly.length >= 11);
+                    // Handle Instagram autofilled phone numbers differently
+                    if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
+                        // Instagram often fills phone numbers in local format
+                        // Just do a length check instead of format check
+                        const digitsOnly = value.replace(/\D/g, '');
+                        inputs[field].classList.toggle('valid', digitsOnly.length >= 10);
+                    } else {
+                        // Regular validation for manually entered numbers
+                        const digitsOnly = value.replace(/\D/g, '');
+                        inputs[field].classList.toggle('valid', digitsOnly.length >= 11);
+                    }
                 } else {
                     inputs[field].classList.toggle('valid', patterns[field].test(value));
                 }
@@ -736,12 +778,22 @@
                     const value = inputs[field].value;
                     
                     if (field === 'phone') {
-                        // Check phone has 11 digits (including country code)
-                        const digitsOnly = value.replace(/\D/g, '');
-                        if (digitsOnly.length < 11) {
-                            inputs[field].classList.add('error');
-                            inputs[field].classList.remove('valid');
-                            isValid = false;
+                        // Handle Instagram autofilled phone numbers differently
+                        if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
+                            const digitsOnly = value.replace(/\D/g, '');
+                            if (digitsOnly.length < 10) {
+                                inputs[field].classList.add('error');
+                                inputs[field].classList.remove('valid');
+                                isValid = false;
+                            }
+                        } else {
+                            // Regular validation
+                            const digitsOnly = value.replace(/\D/g, '');
+                            if (digitsOnly.length < 11) {
+                                inputs[field].classList.add('error');
+                                inputs[field].classList.remove('valid');
+                                isValid = false;
+                            }
                         }
                     } else if (!patterns[field].test(value)) {
                         inputs[field].classList.add('error');
@@ -751,7 +803,7 @@
                 });
                 
                 if (isValid) {
-                    // If validation passes, redirect to calendar.php
+                    // If validation passes, submit the form
                     window.location.href = 'calendar.php';
                 }
             });
