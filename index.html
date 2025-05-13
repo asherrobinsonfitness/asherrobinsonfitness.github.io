@@ -570,6 +570,173 @@
         .progress-bar-step.active {
             background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
         }
+
+        /* Before-After Slider */
+        .transformation-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto var(--space-3);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background-color: transparent;
+            box-shadow: none;
+            overflow: hidden;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        @media(max-width:768px) {
+            .transformation-container {
+                margin-left: -1.25rem;
+                margin-right: -1.25rem;
+                width: 100vw;
+                max-width: 100vw;
+                position: relative;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+            
+            .before-after-slider {
+                aspect-ratio: 3/4;
+            }
+            
+            .transformation-labels {
+                padding: var(--space-2) var(--space-3);
+            }
+        }
+
+        .transformation-header {
+            display: none;
+        }
+
+        .transformation-title {
+            font-weight: 700;
+            font-size: 1.375rem;
+            margin-bottom: var(--space-1);
+            color: var(--text);
+        }
+
+        .transformation-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .before-after-slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .slider-after, .slider-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-after img, .slider-before img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: white;
+            left: 50%; /* Default position */
+            transform: translateX(-50%);
+            cursor: col-resize;
+            z-index: 10;
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-handle::after {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .slider-before {
+            clip-path: inset(0 50% 0 0); /* Initially show only left half */
+        }
+
+        .transformation-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-2) var(--space-3);
+        }
+
+        .transformation-labels .label-group {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .transformation-labels .label-group:first-child {
+            text-align: left;
+        }
+
+        .transformation-labels .label-group:last-child {
+            text-align: right;
+        }
+
+        .transformation-labels .label-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .transformation-labels .label-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+        }
     </style>
 </head>
 
@@ -593,11 +760,35 @@
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon"><i class="fas fa-dollar-sign"></i></div>
-                        <div class="benefit-text">One payment of $599 and no hidden fees</div>
+                        <div class="benefit-text">One payment of $599 with no hidden fees</div>
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
                         <div class="benefit-text">Love it or get a full refund within 30 days</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="transformation-container">
+                <div class="slider-container">
+                    <div class="before-after-slider">
+                        <div class="slider-after">
+                            <img src="https://i.postimg.cc/y8tmpBx7/after.png" alt="After">
+                        </div>
+                        <div class="slider-before">
+                            <img src="https://i.postimg.cc/y8khTWVf/before.png" alt="Before">
+                        </div>
+                        <div class="slider-handle"></div>
+                    </div>
+                </div>
+                <div class="transformation-labels">
+                    <div class="label-group">
+                        <div class="label-title">VISUALISATION /</div>
+                        <div class="label-value">Body Transformation</div>
+                    </div>
+                    <div class="label-group">
+                        <div class="label-title">TIMELINE /</div>
+                        <div class="label-value">6 Weeks</div>
                     </div>
                 </div>
             </div>
@@ -642,8 +833,8 @@
                     
                     <button type="submit" class="submit-button">Submit</button>
                     <div class="fine-print">
-                        <p>Submit to check available call times. I'll get back to you within 24 hours.</p>
                         <p>By submitting, you agree to my <a href="privacy-policy.php">Privacy Policy</a>.</p>
+                        <p>I'll get back to you within 24 hours.</p>
                     </div>
                 </form>
             </div>
@@ -658,6 +849,67 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Before-After Slider
+            const sliderContainer = document.querySelector('.before-after-slider');
+            const sliderHandle = document.querySelector('.slider-handle');
+            const beforeSlide = document.querySelector('.slider-before');
+            const afterImg = document.querySelector('.slider-after img');
+            const beforeImg = document.querySelector('.slider-before img');
+            
+            // Set appropriate aspect ratio based on image dimensions once loaded
+            if (afterImg) {
+                afterImg.onload = function() {
+                    const imgRatio = afterImg.naturalWidth / afterImg.naturalHeight;
+                    sliderContainer.style.aspectRatio = imgRatio;
+                }
+            }
+            
+            if (sliderContainer && sliderHandle && beforeSlide) {
+                let isDragging = false;
+                
+                const handlePosition = (e) => {
+                    if (!isDragging) return;
+                    
+                    let position;
+                    if (e.type === 'mousemove') {
+                        position = (e.clientX - sliderContainer.getBoundingClientRect().left) / sliderContainer.offsetWidth;
+                    } else if (e.type === 'touchmove') {
+                        position = (e.touches[0].clientX - sliderContainer.getBoundingClientRect().left) / sliderContainer.offsetWidth;
+                    }
+                    
+                    position = Math.max(0, Math.min(1, position));
+                    
+                    // Update the clipPath of the before slide to show correct portion
+                    beforeSlide.style.clipPath = `inset(0 ${100 - (position * 100)}% 0 0)`;
+                    sliderHandle.style.left = `${position * 100}%`;
+                }
+                
+                const startDrag = () => {
+                    isDragging = true;
+                }
+                
+                const endDrag = () => {
+                    isDragging = false;
+                }
+                
+                // Mouse events
+                sliderHandle.addEventListener('mousedown', startDrag);
+                window.addEventListener('mouseup', endDrag);
+                window.addEventListener('mousemove', handlePosition);
+                
+                // Touch events for mobile
+                sliderHandle.addEventListener('touchstart', startDrag);
+                window.addEventListener('touchend', endDrag);
+                window.addEventListener('touchmove', handlePosition);
+                
+                // Prevent page scrolling when interacting with slider on mobile
+                sliderContainer.addEventListener('touchmove', (e) => {
+                    if (isDragging) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+            }
+            
             const form = document.getElementById('contactForm');
             const inputs = {
                 firstName: document.getElementById('firstName'),
