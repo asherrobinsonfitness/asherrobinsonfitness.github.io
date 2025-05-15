@@ -13,13 +13,19 @@
     <style>
         /* Simple 8-point spacing system */
         :root {
-            --space-1: 8px;   /* 0.5rem */
-            --space-2: 16px;  /* 1rem */
-            --space-3: 24px;  /* 1.5rem */
-            --space-4: 32px;  /* 2rem */
-            --space-5: 40px;  /* 2.5rem */
-            --space-6: 48px;  /* 3rem */
-            
+            --space-1: 8px;
+            /* 0.5rem */
+            --space-2: 16px;
+            /* 1rem */
+            --space-3: 24px;
+            /* 1.5rem */
+            --space-4: 32px;
+            /* 2rem */
+            --space-5: 40px;
+            /* 2.5rem */
+            --space-6: 48px;
+            /* 3rem */
+
             /* Primary colors */
             --primary: #1877F2;
             --background: #f8f9fa;
@@ -49,7 +55,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: var(--space-6) 0;
+            padding: var(--space-6) 0 var(--space-6);
         }
 
         .content {
@@ -84,15 +90,20 @@
         /* Video */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 100%;
+            /* 1:1 aspect ratio */
             height: 0;
             overflow: hidden;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             background-color: var(--card-bg);
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
         }
 
-        .video-container iframe {
+        .video-container iframe,
+        .video-container wistia-player {
             position: absolute;
             top: 0;
             left: 0;
@@ -209,7 +220,7 @@
             position: relative;
             padding-top: var(--space-4);
         }
-        
+
         .form-divider {
             width: 100%;
             height: 1px;
@@ -217,7 +228,7 @@
             margin-bottom: var(--space-4);
             position: relative;
         }
-        
+
         .form-title {
             color: var(--text);
             font-weight: 700;
@@ -228,7 +239,7 @@
             text-align: left;
             margin-bottom: var(--space-1);
         }
-        
+
         .form-subtitle {
             color: var(--text);
             font-size: 1.125rem;
@@ -236,29 +247,30 @@
             line-height: 1.4;
             text-align: left;
         }
-        
+
         .contact-form {
             width: 100%;
             display: flex;
             flex-direction: column;
             gap: var(--space-2);
         }
-        
+
         /* Form with floating labels */
-        .form-group, .name-field {
+        .form-group,
+        .name-field {
             position: relative;
         }
-        
+
         .name-row {
             display: flex;
             gap: var(--space-2);
             width: 100%;
         }
-        
+
         .name-field {
             flex: 1;
         }
-        
+
         .form-input {
             width: 100%;
             padding: 24px 14px 8px;
@@ -269,14 +281,15 @@
             background-color: var(--card-bg);
             height: 56px;
             transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none; /* Remove browser styling */
+            appearance: none;
+            /* Remove browser styling */
             -webkit-appearance: none;
         }
-        
+
         .form-input::placeholder {
             color: transparent;
         }
-        
+
         .form-label {
             position: absolute;
             left: 14px;
@@ -291,11 +304,11 @@
             line-height: 1;
             padding: 0 2px;
         }
-        
+
         /* When input is focused or has content */
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label,
-        .form-input:-webkit-autofill ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label,
+        .form-input:-webkit-autofill~.form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
@@ -303,7 +316,7 @@
             padding: 0 4px;
             margin-left: -2px;
         }
-        
+
         /* Instagram autofill styling support */
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
@@ -312,13 +325,13 @@
             -webkit-text-fill-color: var(--text) !important;
             transition: background-color 5000s ease-in-out 0s;
         }
-        
+
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
         }
-        
+
         .submit-button {
             background-color: var(--primary);
             color: white;
@@ -332,11 +345,11 @@
             transition: all 0.2s ease;
             margin-top: var(--space-1);
         }
-        
+
         .submit-button:hover {
             background-color: #166FE5;
         }
-        
+
         /* Disclaimer */
         .disclaimer {
             max-width: 650px;
@@ -368,19 +381,19 @@
             align-items: center;
             justify-content: center;
         }
-        
-        .form-input.valid:not(:focus) ~ .validation-mark {
+
+        .form-input.valid:not(:focus)~.validation-mark {
             opacity: 1;
         }
-        
+
         .form-input.error {
             border-color: var(--error);
         }
-        
-        .form-input.error ~ .form-label {
+
+        .form-input.error~.form-label {
             color: var(--error);
         }
-        
+
         .error-message {
             color: var(--error);
             font-size: 0.75rem;
@@ -393,86 +406,86 @@
             width: 100%;
             line-height: 1.2;
         }
-        
-        .form-input.error ~ .error-message {
+
+        .form-input.error~.error-message {
             display: block;
         }
 
         /* Mobile Styles */
         @media(max-width:768px) {
-            .container { 
-                padding: var(--space-4) 0; 
+            .container {
+                padding: var(--space-4) 0 var(--space-6);
             }
-            
-            .content { 
-                gap: var(--space-4); 
-                padding: 0 1.25rem; 
+
+            .content {
+                gap: var(--space-4);
+                padding: 0 1.25rem;
             }
-            
-            .headline { 
+
+            .headline {
                 font-size: 1.875rem;
             }
-            
-            .subheadline { 
-                font-size: 1rem; 
+
+            .subheadline {
+                font-size: 1rem;
             }
-            
+
             .price-container {
                 margin: 10px 0 6px;
             }
-            
+
             .old-price {
                 font-size: 1.25rem;
                 margin-right: 6px;
             }
-            
+
             .current-price {
                 font-size: 1.5rem;
             }
-            
+
             .price-period {
                 font-size: 0.75rem;
             }
-            
+
             .price-tag {
                 padding: 2px 10px;
                 font-size: 0.6875rem;
             }
-            
+
             .price-divider {
                 margin: 6px 0 10px;
             }
-            
+
             .benefit-icon {
                 font-size: 0.875rem;
                 margin-bottom: 4px;
             }
-            
+
             .benefit-text {
                 font-size: 0.6875rem;
                 line-height: 1.2;
                 max-width: 100%;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
-            
+
             .form-subtitle {
                 font-size: 0.875rem;
             }
-            
+
             .name-row {
                 flex-direction: row;
                 gap: var(--space-2);
             }
-            
+
             .form-input {
                 padding: 24px 12px 8px;
                 font-size: 1rem;
                 height: 52px;
             }
-            
+
             .form-label {
                 font-size: 1rem;
                 top: 50%;
@@ -480,27 +493,31 @@
                 line-height: 1;
                 transform: translateY(-50%);
             }
-            
-            .form-input:focus ~ .form-label,
-            .form-input:not(:placeholder-shown) ~ .form-label {
+
+            .form-input:focus~.form-label,
+            .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
                 transform: translateY(0) scale(0.75);
                 background-color: var(--card-bg);
                 padding: 0 4px;
                 margin-left: -2px;
             }
-            
+
             .error-message {
                 top: 56px;
             }
-            
+
             .disclaimer {
                 font-size: 0.7rem;
             }
         }
 
         /* Accessibility */
-        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+        a:focus,
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
@@ -515,6 +532,7 @@
 
         .form-wrapper .fine-print {
             text-align: left;
+            margin-bottom: var(--space-3);
         }
 
         .fine-print p {
@@ -558,6 +576,7 @@
             align-items: center;
             gap: 0.5rem;
         }
+
         .progress-bar-step {
             flex: 1;
             height: 5px;
@@ -567,175 +586,9 @@
             position: relative;
             overflow: hidden;
         }
+
         .progress-bar-step.active {
             background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
-        }
-
-        /* Before-After Slider */
-        .transformation-container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto var(--space-3);
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            background-color: transparent;
-            box-shadow: none;
-            overflow: hidden;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        @media(max-width:768px) {
-            .transformation-container {
-                margin-left: -1.25rem;
-                margin-right: -1.25rem;
-                width: 100vw;
-                max-width: 100vw;
-                position: relative;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
-            }
-            
-            .before-after-slider {
-                aspect-ratio: 3/4;
-            }
-            
-            .transformation-labels {
-                padding: var(--space-2) var(--space-3);
-            }
-        }
-
-        .transformation-header {
-            display: none;
-        }
-
-        .transformation-title {
-            font-weight: 700;
-            font-size: 1.375rem;
-            margin-bottom: var(--space-1);
-            color: var(--text);
-        }
-
-        .transformation-subtitle {
-            font-size: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .slider-container {
-            position: relative;
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .before-after-slider {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/3;
-            overflow: hidden;
-        }
-
-        .slider-after, .slider-before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slider-after img, .slider-before img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: white;
-            left: 50%; /* Default position */
-            transform: translateX(-50%);
-            cursor: col-resize;
-            z-index: 10;
-        }
-
-        .slider-handle::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 32px;
-            height: 32px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slider-handle::after {
-            content: '↔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--text);
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .slider-before {
-            clip-path: inset(0 50% 0 0); /* Initially show only left half */
-        }
-
-        .transformation-labels {
-            display: flex;
-            justify-content: space-between;
-            padding: var(--space-2) var(--space-3);
-        }
-
-        .transformation-labels .label-group {
-            display: flex;
-            flex-direction: column;
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-
-        .transformation-labels .label-group:first-child {
-            text-align: left;
-        }
-
-        .transformation-labels .label-group:last-child {
-            text-align: right;
-        }
-
-        .transformation-labels .label-title {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 3px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .transformation-labels .label-value {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text);
         }
     </style>
 </head>
@@ -749,9 +602,18 @@
             </div>
 
             <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script><script src="https://fast.wistia.com/embed/qffyp793v0.js" async type="module"></script><style>wistia-player[media-id='qffyp793v0']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/qffyp793v0/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style> <wistia-player media-id="qffyp793v0" seo="false" aspect="1.7777777777777777"></wistia-player>
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src="https://fast.wistia.com/embed/spq65ia4g6.js" async type="module"></script>
+                <style>
+                    wistia-player[media-id='spq65ia4g6']:not(:defined) {
+                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/spq65ia4g6/swatch');
+                        display: block;
+                        filter: blur(5px);
+                        padding-top: 100.0%;
+                    }
+                </style> <wistia-player media-id="spq65ia4g6" seo="false" aspect="1.0"></wistia-player>
             </div>
-            
+
             <div class="pricing-card">
                 <div class="benefits-container">
                     <div class="benefit-item">
@@ -768,31 +630,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="transformation-container">
-                <div class="slider-container">
-                    <div class="before-after-slider">
-                        <div class="slider-after">
-                            <img src="https://i.postimg.cc/y8tmpBx7/after.png" alt="After">
-                        </div>
-                        <div class="slider-before">
-                            <img src="https://i.postimg.cc/y8khTWVf/before.png" alt="Before">
-                        </div>
-                        <div class="slider-handle"></div>
-                    </div>
-                </div>
-                <div class="transformation-labels">
-                    <div class="label-group">
-                        <div class="label-title">VISUALISATION /</div>
-                        <div class="label-value">Body Transformation</div>
-                    </div>
-                    <div class="label-group">
-                        <div class="label-title">TIMELINE /</div>
-                        <div class="label-value">6 Weeks</div>
-                    </div>
-                </div>
-            </div>
-            
+
             <div class="form-wrapper">
                 <div class="progress-bar-container">
                     <div class="progress-bar-step active"></div>
@@ -816,31 +654,27 @@
                             <div class="error-message">Please enter your last name</div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <input type="email" id="email" name="email" class="form-input" placeholder="Email" required aria-required="true" autocomplete="email">
                         <label for="email" class="form-label">Email</label>
                         <div class="validation-mark">✓</div>
                         <div class="error-message">Please enter a valid email address</div>
                     </div>
-                    
+
                     <div class="form-group">
                         <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true" autocomplete="tel">
                         <label for="phone" class="form-label">Phone number</label>
                         <div class="validation-mark">✓</div>
                         <div class="error-message">Please enter a valid phone number</div>
                     </div>
-                    
+
                     <button type="submit" class="submit-button">Submit</button>
                     <div class="fine-print">
-                        <p>By submitting, you agree to my <a href="privacy-policy.php">Privacy Policy</a>.</p>
-                        <p>I'll get back to you within 24 hours.</p>
+                        <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I never sell/share your data. Unsubscribe anytime.
+                        <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</p>
                     </div>
                 </form>
-            </div>
-
-            <div class="fine-print">
-                <p>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</p>
             </div>
         </div>
     </div>
@@ -849,67 +683,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Before-After Slider
-            const sliderContainer = document.querySelector('.before-after-slider');
-            const sliderHandle = document.querySelector('.slider-handle');
-            const beforeSlide = document.querySelector('.slider-before');
-            const afterImg = document.querySelector('.slider-after img');
-            const beforeImg = document.querySelector('.slider-before img');
-            
-            // Set appropriate aspect ratio based on image dimensions once loaded
-            if (afterImg) {
-                afterImg.onload = function() {
-                    const imgRatio = afterImg.naturalWidth / afterImg.naturalHeight;
-                    sliderContainer.style.aspectRatio = imgRatio;
-                }
-            }
-            
-            if (sliderContainer && sliderHandle && beforeSlide) {
-                let isDragging = false;
-                
-                const handlePosition = (e) => {
-                    if (!isDragging) return;
-                    
-                    let position;
-                    if (e.type === 'mousemove') {
-                        position = (e.clientX - sliderContainer.getBoundingClientRect().left) / sliderContainer.offsetWidth;
-                    } else if (e.type === 'touchmove') {
-                        position = (e.touches[0].clientX - sliderContainer.getBoundingClientRect().left) / sliderContainer.offsetWidth;
-                    }
-                    
-                    position = Math.max(0, Math.min(1, position));
-                    
-                    // Update the clipPath of the before slide to show correct portion
-                    beforeSlide.style.clipPath = `inset(0 ${100 - (position * 100)}% 0 0)`;
-                    sliderHandle.style.left = `${position * 100}%`;
-                }
-                
-                const startDrag = () => {
-                    isDragging = true;
-                }
-                
-                const endDrag = () => {
-                    isDragging = false;
-                }
-                
-                // Mouse events
-                sliderHandle.addEventListener('mousedown', startDrag);
-                window.addEventListener('mouseup', endDrag);
-                window.addEventListener('mousemove', handlePosition);
-                
-                // Touch events for mobile
-                sliderHandle.addEventListener('touchstart', startDrag);
-                window.addEventListener('touchend', endDrag);
-                window.addEventListener('touchmove', handlePosition);
-                
-                // Prevent page scrolling when interacting with slider on mobile
-                sliderContainer.addEventListener('touchmove', (e) => {
-                    if (isDragging) {
-                        e.preventDefault();
-                    }
-                }, { passive: false });
-            }
-            
             const form = document.getElementById('contactForm');
             const inputs = {
                 firstName: document.getElementById('firstName'),
@@ -917,7 +690,7 @@
                 email: document.getElementById('email'),
                 phone: document.getElementById('phone')
             };
-            
+
             // Validation patterns
             const patterns = {
                 firstName: /^[a-zA-Z\s\-']{2,}$/,
@@ -925,7 +698,7 @@
                 email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 phone: /^[0-9\-\(\)\s]{10,}$/
             };
-            
+
             // Error messages
             const errorMessages = {
                 firstName: "Please enter your first name",
@@ -933,7 +706,7 @@
                 email: "Please enter a valid email address",
                 phone: "Please enter a valid 10-digit phone number"
             };
-            
+
             // Check for Instagram auto-fill
             function checkForAutoFill() {
                 Object.keys(inputs).forEach(field => {
@@ -944,11 +717,11 @@
                     }
                 });
             }
-            
+
             // Run once immediately and then again after a short delay
             checkForAutoFill();
             setTimeout(checkForAutoFill, 500);
-            
+
             // Live validation as user types
             Object.keys(inputs).forEach(field => {
                 inputs[field].addEventListener('input', function() {
@@ -956,12 +729,12 @@
                     // Remove error class when typing
                     this.classList.remove('error');
                 });
-                
+
                 // Validation on blur
                 inputs[field].addEventListener('blur', function() {
                     validateField(field, this.value);
                 });
-                
+
                 // Special handling for phone field
                 if (field === 'phone') {
                     inputs[field].addEventListener('focus', function() {
@@ -969,38 +742,38 @@
                             this.value = '+1 ';
                         }
                     });
-                    
+
                     inputs[field].addEventListener('input', function() {
                         formatPhoneNumber(this);
                     });
                 }
             });
-            
+
             function formatPhoneNumber(input) {
                 // Don't format if it looks like Instagram pre-filled it
                 if (input.classList.contains('autofilled') && input.value && !input.value.startsWith('+1')) {
                     return;
                 }
-                
+
                 let value = input.value.replace(/\D/g, '');
-                
+
                 // Ensure it starts with country code
                 if (!value.startsWith('1') && value.length > 0) {
                     value = '1' + value;
                 }
-                
+
                 // Format: +1 (XXX) XXX-XXXX
                 if (value.length > 0) {
-                    value = '+' + value.substring(0, 1) + 
-                            (value.length > 1 ? ' (' + value.substring(1, 4) : '') +
-                            (value.length > 4 ? ') ' + value.substring(4, 7) : '') +
-                            (value.length > 7 ? '-' + value.substring(7, 11) : '');
+                    value = '+' + value.substring(0, 1) +
+                        (value.length > 1 ? ' (' + value.substring(1, 4) : '') +
+                        (value.length > 4 ? ') ' + value.substring(4, 7) : '') +
+                        (value.length > 7 ? '-' + value.substring(7, 11) : '');
                 }
-                
+
                 input.value = value;
                 validateField('phone', value);
             }
-            
+
             // Validation function
             function validateField(field, value) {
                 if (field === 'phone' && value) {
@@ -1019,16 +792,16 @@
                     inputs[field].classList.toggle('valid', patterns[field].test(value));
                 }
             }
-            
+
             // Form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 // Check all fields
                 let isValid = true;
                 Object.keys(inputs).forEach(field => {
                     const value = inputs[field].value;
-                    
+
                     if (field === 'phone') {
                         // Handle Instagram autofilled phone numbers differently
                         if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
@@ -1053,7 +826,7 @@
                         isValid = false;
                     }
                 });
-                
+
                 if (isValid) {
                     // If validation passes, submit the form
                     window.location.href = 'calendar.php';
@@ -1062,4 +835,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
