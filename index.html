@@ -90,8 +90,8 @@
         /* Video */
         .video-container {
             position: relative;
-            padding-bottom: 100%;
-            /* 1:1 aspect ratio */
+            padding-bottom: 80%;
+            /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
             height: 0;
             overflow: hidden;
             border-radius: 12px;
@@ -100,8 +100,10 @@
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
+            cursor: pointer;
         }
 
+        .video-container video,
         .video-container iframe,
         .video-container wistia-player {
             position: absolute;
@@ -111,6 +113,73 @@
             height: 100%;
             border: none;
             border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            z-index: 2;
+        }
+
+        .video-container.playing .video-thumbnail {
+            display: none;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 999px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            padding: 5px 7px 5px 20px;
+            transition: background-color 0.2s;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            width: auto;
+        }
+
+        .play-icon {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 14px;
+            margin-right: 0;
+        }
+
+        .play-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #333;
+            margin-left: 0;
+            position: relative;
+            transform: none;
+        }
+
+        .video-container:hover .play-button {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+
+        .video-container.playing .play-button {
+            display: none;
         }
 
         /* Pricing Info */
@@ -601,17 +670,22 @@
                 <p class="subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
             </div>
 
-            <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script>
-                <script src="https://fast.wistia.com/embed/spq65ia4g6.js" async type="module"></script>
-                <style>
-                    wistia-player[media-id='spq65ia4g6']:not(:defined) {
-                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/spq65ia4g6/swatch');
-                        display: block;
-                        filter: blur(5px);
-                        padding-top: 100.0%;
-                    }
-                </style> <wistia-player media-id="spq65ia4g6" seo="false" aspect="1.0"></wistia-player>
+            <div class="video-container" id="videoContainer">
+                <div class="play-button" id="playButton">
+                    Watch the video
+                    <div class="play-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                <video id="previewVideo" class="video-thumbnail" playsinline muted loop autoplay>
+                    <source src="video.mp4" type="video/mp4">
+                </video>
+                <video id="mainVideo" controls playsinline>
+                    <source src="video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
 
             <div class="pricing-card">
@@ -671,8 +745,9 @@
 
                     <button type="submit" class="submit-button">Submit</button>
                     <div class="fine-print">
-                        <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I never sell/share your data. Unsubscribe anytime.
-                        <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.</p>
+                        <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.
+                            <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
+                        </p>
                     </div>
                 </form>
             </div>
@@ -683,6 +758,48 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Video player functionality
+            const videoContainer = document.getElementById('videoContainer');
+            const previewVideo = document.getElementById('previewVideo');
+            const mainVideo = document.getElementById('mainVideo');
+            const playButton = document.getElementById('playButton');
+
+            if (videoContainer && previewVideo && mainVideo) {
+                // Set up 5-second preview loop
+                previewVideo.addEventListener('timeupdate', function() {
+                    if (previewVideo.currentTime >= 5) {
+                        previewVideo.currentTime = 0;
+                        previewVideo.play();
+                    }
+                });
+
+                // Ensure preview starts playing
+                if (previewVideo.paused) {
+                    previewVideo.play().catch(e => console.log('Preview autoplay failed:', e));
+                }
+
+                videoContainer.addEventListener('click', function() {
+                    videoContainer.classList.add('playing');
+                    mainVideo.play();
+                });
+
+                // Only show controls when the main video is playing
+                mainVideo.controls = false;
+
+                mainVideo.addEventListener('playing', function() {
+                    mainVideo.controls = true;
+                });
+
+                // Reset to preview state when video ends
+                mainVideo.addEventListener('ended', function() {
+                    videoContainer.classList.remove('playing');
+                    previewVideo.currentTime = 0;
+                    previewVideo.play();
+                    mainVideo.controls = false;
+                });
+            }
+
+            // Form functionality
             const form = document.getElementById('contactForm');
             const inputs = {
                 firstName: document.getElementById('firstName'),
