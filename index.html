@@ -3,28 +3,31 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>6-Week Online Weight Loss Mentorship</title>
     <meta name="description" content="Join our 6-week online weight loss mentorship program. We'll fix your diet, training, and supplementation without making it suck.">
     <meta name="robots" content="index, follow">
     <meta name="format-detection" content="telephone=yes">
     <meta name="instagram:lead" content="true">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preload" as="video" href="video.mp4">
     <style>
         /* Simple 8-point spacing system */
         :root {
-            --space-1: 8px;
-            /* 0.5rem */
-            --space-2: 16px;
-            /* 1rem */
-            --space-3: 24px;
-            /* 1.5rem */
-            --space-4: 32px;
-            /* 2rem */
-            --space-5: 40px;
-            /* 2.5rem */
-            --space-6: 48px;
-            /* 3rem */
+            --space-1: 0.5rem;
+            /* 8px */
+            --space-2: 1rem;
+            /* 16px */
+            --space-3: 1.5rem;
+            /* 24px */
+            --space-4: 2rem;
+            /* 32px */
+            --space-5: 2.5rem;
+            /* 40px */
+            --space-6: 3rem;
+            /* 48px */
+            --form-gap: 1rem;
+            /* Consistent form spacing */
 
             /* Primary colors */
             --primary: #1877F2;
@@ -35,6 +38,20 @@
             --card-bg: #fff;
             --error: #ff3b30;
             --success: #4cd964;
+
+            /* Base font size */
+            font-size: 16px;
+
+            /* Video aspect ratios */
+            --mobile-video-ratio: 80%;
+            /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
+            --desktop-video-ratio: 54.05%;
+            /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
+
+            /* Premium styling variables */
+            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
+            --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         * {
@@ -49,6 +66,8 @@
             color: var(--text);
             line-height: 1.5;
             font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
@@ -56,6 +75,38 @@
             display: flex;
             flex-direction: column;
             padding: var(--space-6) 0 var(--space-6);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes borderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 15px);
+            }
+
+            to {
+                clip-path: inset(0% 0% 0% 0% round 14px);
+            }
+        }
+
+        @keyframes desktopBorderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 11px);
+            }
+
+            to {
+                clip-path: inset(0% 0% 0% 0% round 10px);
+            }
         }
 
         .content {
@@ -68,16 +119,23 @@
             padding: 0 1.5rem;
         }
 
-        /* Header */
         .header-group {
+            animation: fadeIn 0.5s ease-out forwards;
             margin-bottom: var(--space-2);
         }
 
+        /* Hide desktop elements by default (mobile-first) */
+        .desktop-layout {
+            display: none;
+        }
+
+        /* Header */
         .headline {
             font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.2;
+            font-weight: 800;
+            line-height: 1.15;
             margin-bottom: var(--space-1);
+            letter-spacing: -0.015em;
         }
 
         .subheadline {
@@ -85,22 +143,35 @@
             color: var(--text);
             max-width: 650px;
             margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         /* Video */
         .video-container {
             position: relative;
-            padding-bottom: 80%;
-            /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
+            padding-bottom: var(--mobile-video-ratio);
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            background-color: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: var(--premium-shadow);
+            background-color: #000;
+            background-image: url('video-thumb.png');
+            background-size: cover;
+            background-position: center;
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
             cursor: pointer;
+            transition: var(--premium-transition);
+            border: 1px solid var(--border);
+            animation: borderReveal 0.5s ease-out forwards;
+            transform: none;
+        }
+
+        .video-container:hover {
+            transform: none;
+            box-shadow: var(--card-hover-shadow);
         }
 
         .video-container video,
@@ -114,6 +185,7 @@
             border: none;
             border-radius: 12px;
             object-fit: cover;
+            transform: none;
         }
 
         .video-thumbnail {
@@ -143,13 +215,17 @@
             display: flex;
             align-items: center;
             padding: 5px 7px 5px 20px;
-            transition: background-color 0.2s;
             color: white;
             font-weight: 500;
             font-size: 16px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             white-space: nowrap;
             width: auto;
+            transition: background-color 0.2s;
+        }
+
+        .video-container:hover .play-button {
+            background-color: rgba(0, 0, 0, 0.75);
         }
 
         .play-icon {
@@ -174,10 +250,6 @@
             transform: none;
         }
 
-        .video-container:hover .play-button {
-            background-color: rgba(0, 0, 0, 0.75);
-        }
-
         .video-container.playing .play-button {
             display: none;
         }
@@ -185,11 +257,17 @@
         /* Pricing Info */
         .pricing-card {
             background-color: white;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 12px 0;
             max-width: 650px;
             margin: 0 auto var(--space-1);
             border: 1px solid var(--border);
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
+        }
+
+        .pricing-card:hover {
+            box-shadow: var(--card-hover-shadow);
         }
 
         .price-tag {
@@ -268,9 +346,22 @@
         }
 
         .benefit-icon {
-            color: var(--text);
-            font-size: 1rem;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .benefit-icon img {
+            height: 28px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.2s;
+        }
+
+        .benefit-item:hover .benefit-icon img {
+            transform: translateY(-2px);
         }
 
         .benefit-text {
@@ -321,7 +412,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: var(--space-2);
+            gap: var(--form-gap);
         }
 
         /* Form with floating labels */
@@ -332,7 +423,7 @@
 
         .name-row {
             display: flex;
-            gap: var(--space-2);
+            gap: var(--form-gap);
             width: 100%;
         }
 
@@ -344,12 +435,12 @@
             width: 100%;
             padding: 24px 14px 8px;
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1.125rem;
             color: var(--text);
             background-color: var(--card-bg);
             height: 56px;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
             appearance: none;
             /* Remove browser styling */
             -webkit-appearance: none;
@@ -398,25 +489,30 @@
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
+            transform: translateY(-1px);
         }
 
         .submit-button {
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             padding: var(--space-2) 0;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             margin-top: var(--space-1);
+            position: relative;
+            overflow: hidden;
         }
 
         .submit-button:hover {
             background-color: #166FE5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
         /* Disclaimer */
@@ -480,7 +576,7 @@
             display: block;
         }
 
-        /* Mobile Styles */
+        /* Mobile Styles (specific adjustments for small screens) */
         @media(max-width:768px) {
             .container {
                 padding: var(--space-4) 0 var(--space-6);
@@ -489,6 +585,16 @@
             .content {
                 gap: var(--space-4);
                 padding: 0 1.25rem;
+            }
+
+            /* Ensure desktop layout is hidden */
+            .desktop-layout {
+                display: none;
+            }
+
+            /* Show mobile layout */
+            .mobile-layout {
+                display: block;
             }
 
             .headline {
@@ -546,7 +652,7 @@
 
             .name-row {
                 flex-direction: row;
-                gap: var(--space-2);
+                gap: var(--form-gap);
             }
 
             .form-input {
@@ -578,6 +684,326 @@
 
             .disclaimer {
                 font-size: 0.7rem;
+            }
+        }
+
+        /* Desktop split layout (Qoves-style) */
+        @media(min-width:769px) {
+
+            /* Base font size adjustment for desktop */
+            :root {
+                font-size: 16px;
+            }
+
+            /* Hide mobile layout */
+            .mobile-layout {
+                display: none;
+            }
+
+            /* Show desktop layout */
+            .desktop-layout {
+                display: flex;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .left-column {
+                width: 50%;
+                background-color: #fff;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            .right-column {
+                width: 50%;
+                background-color: #f8f9fa;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            .desktop-content {
+                width: 75%;
+                max-width: 480px;
+            }
+
+            .desktop-header {
+                text-align: center;
+                margin-bottom: var(--space-4);
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+
+            .desktop-headline {
+                font-size: 2rem;
+                font-weight: 700;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+                text-align: center;
+                color: var(--text);
+            }
+
+            .desktop-subheadline {
+                font-size: 1.1rem;
+                line-height: 1.5;
+                color: var(--text-secondary);
+                text-align: center;
+                max-width: 90%;
+                margin: 0 auto;
+            }
+
+            .desktop-video-container {
+                position: relative;
+                padding-bottom: var(--desktop-video-ratio);
+                height: 0;
+                overflow: hidden;
+                border-radius: 10px;
+                box-shadow: var(--premium-shadow);
+                background-color: #000;
+                background-image: url('video-thumb.png');
+                background-size: cover;
+                background-position: center;
+                width: 100%;
+                margin: var(--space-5) 0 var(--space-4);
+                cursor: pointer;
+                z-index: 1;
+                transition: var(--premium-transition);
+                border: 1px solid var(--border);
+                animation: desktopBorderReveal 0.5s ease-out forwards;
+                transform: none;
+            }
+
+            .desktop-video-container:hover {
+                transform: none;
+                box-shadow: var(--card-hover-shadow);
+            }
+
+            .desktop-video-container video,
+            .desktop-video-container iframe,
+            .desktop-video-container wistia-player {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 8px;
+                object-fit: cover;
+                transform: none;
+            }
+
+            .desktop-benefits-container {
+                width: 100%;
+                margin-top: var(--space-3);
+                display: flex;
+                flex-direction: row;
+                background-color: white;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                padding: 0.8rem 0;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .desktop-benefit-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+                padding: 0 0.6rem;
+                position: relative;
+                text-align: center;
+            }
+
+            .desktop-benefit-item:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 20%;
+                height: 60%;
+                width: 1px;
+                background-color: #E8EAED;
+            }
+
+            .desktop-benefit-icon {
+                margin-bottom: 0.8rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 36px;
+            }
+
+            .desktop-benefit-icon img {
+                height: 24px;
+                width: auto;
+                filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+                transition: transform 0.2s;
+            }
+
+            .desktop-benefit-item:hover .desktop-benefit-icon img {
+                transform: translateY(-2px);
+            }
+
+            .desktop-benefit-text {
+                font-size: 0.75rem;
+                line-height: 1.3;
+                color: var(--text);
+                max-width: 90%;
+                margin: 0 auto;
+            }
+
+            .desktop-form-wrapper {
+                width: 75%;
+                max-width: 400px;
+                background-color: #fff;
+                border-radius: 10px;
+                border: 1px solid #e1e4e8;
+                padding: 1.5rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .desktop-progress-bar-container {
+                width: 100%;
+                margin-bottom: var(--space-3);
+                display: flex;
+                gap: 0.4rem;
+            }
+
+            .desktop-progress-bar-step {
+                flex: 1;
+                height: 4px;
+                border-radius: 2px;
+                background: #e0e0e0;
+                overflow: hidden;
+            }
+
+            .desktop-progress-bar-step.active {
+                background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+            }
+
+            .desktop-form-title {
+                font-size: 1.1rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                color: var(--text);
+            }
+
+            .desktop-form-subtitle {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                margin-bottom: var(--space-3);
+                line-height: 1.4;
+            }
+
+            /* Desktop form input styling */
+            .desktop-layout .form-input {
+                font-size: 0.9rem;
+                height: 50px;
+                padding: 24px 14px 8px;
+                background-color: #fff;
+                border-radius: 6px;
+                transition: border-color 0.2s;
+            }
+
+            .desktop-layout .form-input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.15);
+                outline: none;
+            }
+
+            .desktop-layout .form-label {
+                font-size: 0.9rem;
+                left: 14px;
+                color: var(--text-secondary);
+            }
+
+            .desktop-layout .submit-button {
+                font-size: 0.95rem;
+                padding: 0.9rem 0;
+                margin-top: 0.5rem;
+                background-color: var(--primary);
+                transition: background-color 0.2s;
+                font-weight: 600;
+                border-radius: 6px;
+            }
+
+            .desktop-layout .submit-button:hover {
+                background-color: #166FE5;
+            }
+
+            .desktop-layout .name-row {
+                gap: var(--form-gap);
+            }
+
+            .desktop-layout .form-group,
+            .desktop-layout .name-field {
+                margin-bottom: 0;
+            }
+
+            .desktop-layout .contact-form {
+                gap: var(--form-gap);
+            }
+
+            .desktop-layout .error-message {
+                font-size: 0.7rem;
+                top: 52px;
+            }
+
+            .desktop-layout .fine-print {
+                font-size: 0.65rem;
+                line-height: 1.2;
+                margin-top: 1rem;
+                color: #9aa0a6;
+                opacity: 0.9;
+            }
+
+            .desktop-layout .fine-print p {
+                margin-bottom: 0.5rem;
+            }
+
+            .desktop-layout .validation-mark {
+                width: 14px;
+                height: 14px;
+                font-size: 9px;
+                right: 14px;
+            }
+
+            /* Adjust play button on desktop to make it more prominent */
+            .desktop-layout .play-button {
+                padding: 6px 10px 6px 22px;
+                font-size: 1rem;
+                background-color: rgba(0, 0, 0, 0.7);
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+                border-radius: 999px;
+                font-weight: 500;
+                transition: background-color 0.2s;
+            }
+
+            .desktop-layout .video-container:hover .play-button,
+            .desktop-layout .desktop-video-container:hover .play-button {
+                background-color: rgba(0, 0, 0, 0.75);
+            }
+
+            .desktop-layout .play-icon {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                margin-left: 14px;
+                background-color: white;
+                border-radius: 50%;
+            }
+
+            .desktop-layout .play-icon svg {
+                width: 22px;
+                height: 22px;
+                fill: #333;
             }
         }
 
@@ -659,11 +1085,61 @@
         .progress-bar-step.active {
             background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
         }
+
+        /* Video styles for proper display */
+        .video-container video,
+        .desktop-video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Initial video states */
+        .video-container #mainVideo,
+        .desktop-video-container #desktopMainVideo {
+            display: none;
+            z-index: 3; /* Ensure main video is above other elements */
+        }
+
+        /* Ensure video controls are visible and not obstructed */
+        video::-webkit-media-controls-panel {
+            display: flex !important;
+            opacity: 1 !important;
+        }
+
+        video::-webkit-media-controls {
+            display: flex !important;
+        }
+
+        .video-container.playing #previewVideo,
+        .desktop-video-container.playing #desktopPreviewVideo {
+            display: none;
+        }
+
+        .video-container.playing #mainVideo,
+        .desktop-video-container.playing #desktopMainVideo {
+            display: block;
+        }
+
+        /* Hide play button when playing */
+        .video-container.playing .play-button,
+        .desktop-video-container.playing .play-button {
+            display: none !important;
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <!-- Mobile Layout -->
+    <div class="container mobile-layout">
         <div class="content">
             <div class="header-group">
                 <h1 class="headline">6-Week Online Weight Loss Mentorship</h1>
@@ -691,15 +1167,15 @@
             <div class="pricing-card">
                 <div class="benefits-container">
                     <div class="benefit-item">
-                        <div class="benefit-icon"><i class="fas fa-user-friends"></i></div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
                         <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
                         <div class="benefit-text">One payment of $599 with no hidden fees</div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
                         <div class="benefit-text">Love it or get a full refund within 30 days</div>
                     </div>
                 </div>
@@ -754,201 +1230,331 @@
         </div>
     </div>
 
+    <!-- Desktop Layout (Qoves Style) -->
+    <div class="desktop-layout">
+        <div class="left-column">
+            <div class="desktop-content">
+                <div class="desktop-header">
+                    <h1 class="desktop-headline">6-Week Online Weight Loss Mentorship</h1>
+                    <p class="desktop-subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
+                </div>
+
+                <div class="desktop-video-container" id="desktopVideoContainer">
+                    <div class="play-button" id="desktopPlayButton">
+                        Watch the video
+                        <div class="play-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                    <video id="desktopPreviewVideo" class="video-thumbnail" playsinline muted loop autoplay>
+                        <source src="video.mp4" type="video/mp4">
+                    </video>
+                    <video id="desktopMainVideo" controls playsinline>
+                        <source src="video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="desktop-benefits-container">
+                    <div class="desktop-benefit-item">
+                        <div class="desktop-benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
+                        <div class="desktop-benefit-text">1-on-1 weight loss coaching tailored to you</div>
+                    </div>
+                    <div class="desktop-benefit-item">
+                        <div class="desktop-benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
+                        <div class="desktop-benefit-text">One payment of $599 with no hidden fees</div>
+                    </div>
+                    <div class="desktop-benefit-item">
+                        <div class="desktop-benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
+                        <div class="desktop-benefit-text">Love it or get a full refund within 30 days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="desktop-form-wrapper">
+                <div class="desktop-progress-bar-container">
+                    <div class="desktop-progress-bar-step active"></div>
+                    <div class="desktop-progress-bar-step"></div>
+                    <div class="desktop-progress-bar-step"></div>
+                </div>
+
+                <div class="desktop-form-title">Contact Information</div>
+                <p class="desktop-form-subtitle">If you're curious how this could help you, send me your contact info so I can show you how it works.</p>
+
+                <form action="calendar.php" method="POST" id="desktopContactForm" class="contact-form" autocomplete="on">
+                    <div class="name-row">
+                        <div class="name-field">
+                            <input type="text" id="desktopFirstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
+                            <label for="desktopFirstName" class="form-label">First name</label>
+                            <div class="validation-mark">✓</div>
+                            <div class="error-message">Please enter your first name</div>
+                        </div>
+                        <div class="name-field">
+                            <input type="text" id="desktopLastName" name="lastName" class="form-input" placeholder="Last name" required aria-required="true" autocomplete="family-name">
+                            <label for="desktopLastName" class="form-label">Last name</label>
+                            <div class="validation-mark">✓</div>
+                            <div class="error-message">Please enter your last name</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="desktopEmail" name="email" class="form-input" placeholder="Email" required aria-required="true" autocomplete="email">
+                        <label for="desktopEmail" class="form-label">Email</label>
+                        <div class="validation-mark">✓</div>
+                        <div class="error-message">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="tel" id="desktopPhone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true" autocomplete="tel">
+                        <label for="desktopPhone" class="form-label">Phone number</label>
+                        <div class="validation-mark">✓</div>
+                        <div class="error-message">Please enter a valid phone number</div>
+                    </div>
+
+                    <button type="submit" class="submit-button">Submit</button>
+                    <div class="fine-print">
+                        <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.
+                            <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Video player functionality
-            const videoContainer = document.getElementById('videoContainer');
-            const previewVideo = document.getElementById('previewVideo');
-            const mainVideo = document.getElementById('mainVideo');
-            const playButton = document.getElementById('playButton');
+            // Setup video functionality for both mobile and desktop
+            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
+            setupVideoPlayer('desktopVideoContainer', 'desktopPreviewVideo', 'desktopMainVideo', 'desktopPlayButton');
 
-            if (videoContainer && previewVideo && mainVideo) {
+            // Setup form validation for both mobile and desktop
+            setupFormValidation('contactForm', {
+                firstName: document.getElementById('firstName'),
+                lastName: document.getElementById('lastName'),
+                email: document.getElementById('email'),
+                phone: document.getElementById('phone')
+            });
+
+            setupFormValidation('desktopContactForm', {
+                firstName: document.getElementById('desktopFirstName'),
+                lastName: document.getElementById('desktopLastName'),
+                email: document.getElementById('desktopEmail'),
+                phone: document.getElementById('desktopPhone')
+            });
+
+            // Video player functionality
+            function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
+                const videoContainer = document.getElementById(containerId);
+                const previewVideo = document.getElementById(previewId);
+                const mainVideo = document.getElementById(mainId);
+                const playButton = document.getElementById(buttonId);
+                
+                if (!videoContainer || !previewVideo || !mainVideo || !playButton) return;
+                
                 // Set up 5-second preview loop
                 previewVideo.addEventListener('timeupdate', function() {
                     if (previewVideo.currentTime >= 5) {
                         previewVideo.currentTime = 0;
-                        previewVideo.play();
                     }
                 });
 
                 // Ensure preview starts playing
-                if (previewVideo.paused) {
-                    previewVideo.play().catch(e => console.log('Preview autoplay failed:', e));
-                }
-
-                videoContainer.addEventListener('click', function() {
-                    videoContainer.classList.add('playing');
-                    mainVideo.play();
+                previewVideo.muted = true; // Ensure muted for autoplay
+                previewVideo.play().catch(e => {
+                    console.log('Preview autoplay failed:', e);
                 });
 
-                // Only show controls when the main video is playing
-                mainVideo.controls = false;
-
-                mainVideo.addEventListener('playing', function() {
+                // Click handler for video container
+                videoContainer.addEventListener('click', function() {
+                    // Add playing class to container to trigger CSS changes
+                    videoContainer.classList.add('playing');
+                    
+                    // Hide preview video and show main video
+                    previewVideo.style.display = 'none';
+                    mainVideo.style.display = 'block';
+                    
+                    // Enable standard controls immediately
                     mainVideo.controls = true;
+                    
+                    // Play the main video
+                    const playPromise = mainVideo.play();
+                    
+                    // Handle potential play() promise rejection (happens in some browsers)
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            console.log('Video playback started successfully');
+                        })
+                        .catch(error => {
+                            console.log('Error playing video:', error);
+                            // Make sure controls are still enabled even if play fails
+                            mainVideo.controls = true;
+                        });
+                    }
                 });
 
                 // Reset to preview state when video ends
                 mainVideo.addEventListener('ended', function() {
                     videoContainer.classList.remove('playing');
+                    previewVideo.style.display = 'block';
+                    mainVideo.style.display = 'none';
                     previewVideo.currentTime = 0;
                     previewVideo.play();
                     mainVideo.controls = false;
                 });
             }
 
-            // Form functionality
-            const form = document.getElementById('contactForm');
-            const inputs = {
-                firstName: document.getElementById('firstName'),
-                lastName: document.getElementById('lastName'),
-                email: document.getElementById('email'),
-                phone: document.getElementById('phone')
-            };
+            // Form validation functionality
+            function setupFormValidation(formId, inputs) {
+                const form = document.getElementById(formId);
+                if (!form) return;
 
-            // Validation patterns
-            const patterns = {
-                firstName: /^[a-zA-Z\s\-']{2,}$/,
-                lastName: /^[a-zA-Z\s\-']{2,}$/,
-                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                phone: /^[0-9\-\(\)\s]{10,}$/
-            };
+                // Validation patterns
+                const patterns = {
+                    firstName: /^[a-zA-Z\s\-']{2,}$/,
+                    lastName: /^[a-zA-Z\s\-']{2,}$/,
+                    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    phone: /^[0-9\-\(\)\s]{10,}$/
+                };
 
-            // Error messages
-            const errorMessages = {
-                firstName: "Please enter your first name",
-                lastName: "Please enter your last name",
-                email: "Please enter a valid email address",
-                phone: "Please enter a valid 10-digit phone number"
-            };
-
-            // Check for Instagram auto-fill
-            function checkForAutoFill() {
-                Object.keys(inputs).forEach(field => {
-                    if (inputs[field].value) {
-                        // If the field has a value on page load (likely from autofill)
-                        inputs[field].classList.add('autofilled');
-                        validateField(field, inputs[field].value);
-                    }
-                });
-            }
-
-            // Run once immediately and then again after a short delay
-            checkForAutoFill();
-            setTimeout(checkForAutoFill, 500);
-
-            // Live validation as user types
-            Object.keys(inputs).forEach(field => {
-                inputs[field].addEventListener('input', function() {
-                    validateField(field, this.value);
-                    // Remove error class when typing
-                    this.classList.remove('error');
-                });
-
-                // Validation on blur
-                inputs[field].addEventListener('blur', function() {
-                    validateField(field, this.value);
-                });
-
-                // Special handling for phone field
-                if (field === 'phone') {
-                    inputs[field].addEventListener('focus', function() {
-                        if (!this.value) {
-                            this.value = '+1 ';
+                // Check for Instagram auto-fill
+                function checkForAutoFill() {
+                    Object.keys(inputs).forEach(field => {
+                        if (inputs[field] && inputs[field].value) {
+                            // If the field has a value on page load (likely from autofill)
+                            inputs[field].classList.add('autofilled');
+                            validateField(field, inputs[field].value);
                         }
                     });
+                }
+
+                // Run once immediately and then again after a short delay
+                checkForAutoFill();
+                setTimeout(checkForAutoFill, 500);
+
+                // Live validation as user types
+                Object.keys(inputs).forEach(field => {
+                    if (!inputs[field]) return;
 
                     inputs[field].addEventListener('input', function() {
-                        formatPhoneNumber(this);
+                        validateField(field, this.value);
+                        // Remove error class when typing
+                        this.classList.remove('error');
                     });
-                }
-            });
 
-            function formatPhoneNumber(input) {
-                // Don't format if it looks like Instagram pre-filled it
-                if (input.classList.contains('autofilled') && input.value && !input.value.startsWith('+1')) {
-                    return;
-                }
+                    // Validation on blur
+                    inputs[field].addEventListener('blur', function() {
+                        validateField(field, this.value);
+                    });
 
-                let value = input.value.replace(/\D/g, '');
-
-                // Ensure it starts with country code
-                if (!value.startsWith('1') && value.length > 0) {
-                    value = '1' + value;
-                }
-
-                // Format: +1 (XXX) XXX-XXXX
-                if (value.length > 0) {
-                    value = '+' + value.substring(0, 1) +
-                        (value.length > 1 ? ' (' + value.substring(1, 4) : '') +
-                        (value.length > 4 ? ') ' + value.substring(4, 7) : '') +
-                        (value.length > 7 ? '-' + value.substring(7, 11) : '');
-                }
-
-                input.value = value;
-                validateField('phone', value);
-            }
-
-            // Validation function
-            function validateField(field, value) {
-                if (field === 'phone' && value) {
-                    // Handle Instagram autofilled phone numbers differently
-                    if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
-                        // Instagram often fills phone numbers in local format
-                        // Just do a length check instead of format check
-                        const digitsOnly = value.replace(/\D/g, '');
-                        inputs[field].classList.toggle('valid', digitsOnly.length >= 10);
-                    } else {
-                        // Regular validation for manually entered numbers
-                        const digitsOnly = value.replace(/\D/g, '');
-                        inputs[field].classList.toggle('valid', digitsOnly.length >= 11);
-                    }
-                } else {
-                    inputs[field].classList.toggle('valid', patterns[field].test(value));
-                }
-            }
-
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Check all fields
-                let isValid = true;
-                Object.keys(inputs).forEach(field => {
-                    const value = inputs[field].value;
-
+                    // Special handling for phone field
                     if (field === 'phone') {
-                        // Handle Instagram autofilled phone numbers differently
-                        if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
-                            const digitsOnly = value.replace(/\D/g, '');
-                            if (digitsOnly.length < 10) {
-                                inputs[field].classList.add('error');
-                                inputs[field].classList.remove('valid');
-                                isValid = false;
+                        inputs[field].addEventListener('focus', function() {
+                            if (!this.value) {
+                                this.value = '+1 ';
                             }
-                        } else {
-                            // Regular validation
-                            const digitsOnly = value.replace(/\D/g, '');
-                            if (digitsOnly.length < 11) {
-                                inputs[field].classList.add('error');
-                                inputs[field].classList.remove('valid');
-                                isValid = false;
-                            }
-                        }
-                    } else if (!patterns[field].test(value)) {
-                        inputs[field].classList.add('error');
-                        inputs[field].classList.remove('valid');
-                        isValid = false;
+                        });
+
+                        inputs[field].addEventListener('input', function() {
+                            formatPhoneNumber(this);
+                        });
                     }
                 });
 
-                if (isValid) {
-                    // If validation passes, submit the form
-                    window.location.href = 'calendar.php';
+                function formatPhoneNumber(input) {
+                    // Don't format if it looks like Instagram pre-filled it
+                    if (input.classList.contains('autofilled') && input.value && !input.value.startsWith('+1')) {
+                        return;
+                    }
+
+                    let value = input.value.replace(/\D/g, '');
+
+                    // Ensure it starts with country code
+                    if (!value.startsWith('1') && value.length > 0) {
+                        value = '1' + value;
+                    }
+
+                    // Format: +1 (XXX) XXX-XXXX
+                    if (value.length > 0) {
+                        value = '+' + value.substring(0, 1) +
+                            (value.length > 1 ? ' (' + value.substring(1, 4) : '') +
+                            (value.length > 4 ? ') ' + value.substring(4, 7) : '') +
+                            (value.length > 7 ? '-' + value.substring(7, 11) : '');
+                    }
+
+                    input.value = value;
+                    validateField('phone', value);
                 }
-            });
+
+                // Validation function
+                function validateField(field, value) {
+                    if (!inputs[field]) return;
+
+                    if (field === 'phone' && value) {
+                        // Handle Instagram autofilled phone numbers differently
+                        if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
+                            // Instagram often fills phone numbers in local format
+                            // Just do a length check instead of format check
+                            const digitsOnly = value.replace(/\D/g, '');
+                            inputs[field].classList.toggle('valid', digitsOnly.length >= 10);
+                        } else {
+                            // Regular validation for manually entered numbers
+                            const digitsOnly = value.replace(/\D/g, '');
+                            inputs[field].classList.toggle('valid', digitsOnly.length >= 11);
+                        }
+                    } else {
+                        inputs[field].classList.toggle('valid', patterns[field].test(value));
+                    }
+                }
+
+                // Form submission
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Check all fields
+                    let isValid = true;
+                    Object.keys(inputs).forEach(field => {
+                        if (!inputs[field]) return;
+
+                        const value = inputs[field].value;
+
+                        if (field === 'phone') {
+                            // Handle Instagram autofilled phone numbers differently
+                            if (inputs[field].classList.contains('autofilled') && !value.startsWith('+1')) {
+                                const digitsOnly = value.replace(/\D/g, '');
+                                if (digitsOnly.length < 10) {
+                                    inputs[field].classList.add('error');
+                                    inputs[field].classList.remove('valid');
+                                    isValid = false;
+                                }
+                            } else {
+                                // Regular validation
+                                const digitsOnly = value.replace(/\D/g, '');
+                                if (digitsOnly.length < 11) {
+                                    inputs[field].classList.add('error');
+                                    inputs[field].classList.remove('valid');
+                                    isValid = false;
+                                }
+                            }
+                        } else if (!patterns[field].test(value)) {
+                            inputs[field].classList.add('error');
+                            inputs[field].classList.remove('valid');
+                            isValid = false;
+                        }
+                    });
+
+                    if (isValid) {
+                        // If validation passes, submit the form
+                        window.location.href = 'calendar.php';
+                    }
+                });
+            }
         });
     </script>
 </body>
