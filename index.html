@@ -32,22 +32,22 @@
             /* Primary colors */
             --primary: #1877F2;
             --background: #f8f9fa;
-            --text: #202124;
-            --text-secondary: #5f6368;
+            --text: #222222;
+            --text-secondary: #717171;
             --border: #c1c7cd;
             --card-bg: #fff;
             --error: #ff3b30;
             --success: #4cd964;
-
+            
             /* Base font size */
             font-size: 16px;
-
+            
             /* Video aspect ratios */
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
             --desktop-video-ratio: 54.05%;
             /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
-
+            
             /* Premium styling variables */
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
@@ -68,6 +68,7 @@
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         .container {
@@ -131,20 +132,22 @@
 
         /* Header */
         .headline {
-            font-size: 2.25rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 700;
             line-height: 1.15;
-            margin-bottom: var(--space-1);
+            margin-bottom: var(--space-2);
             letter-spacing: -0.015em;
+            color: var(--text);
         }
 
         .subheadline {
-            font-size: 1.125rem;
-            color: var(--text);
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             max-width: 650px;
             margin: 0 auto;
-            line-height: 1.6;
-            font-weight: 400;
+            line-height: 1.5;
+            font-weight: 500;
+            letter-spacing: -0.005em;
         }
 
         /* Video */
@@ -742,21 +745,24 @@
             }
 
             .desktop-headline {
-                font-size: 2rem;
+                font-size: 2.375rem;
                 font-weight: 700;
                 line-height: 1.2;
                 margin-bottom: 1rem;
                 text-align: center;
                 color: var(--text);
+                letter-spacing: -0.015em;
             }
 
             .desktop-subheadline {
-                font-size: 1.1rem;
+                font-size: 1.25rem;
                 line-height: 1.5;
                 color: var(--text-secondary);
                 text-align: center;
                 max-width: 90%;
                 margin: 0 auto;
+                letter-spacing: -0.005em;
+                font-weight: 500;
             }
 
             .desktop-video-container {
@@ -1148,7 +1154,7 @@
 
             <div class="video-container" id="videoContainer">
                 <div class="play-button" id="playButton">
-                    Watch the video
+                    Here's how it works
                     <div class="play-icon">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
@@ -1241,7 +1247,7 @@
 
                 <div class="desktop-video-container" id="desktopVideoContainer">
                     <div class="play-button" id="desktopPlayButton">
-                        Watch the video
+                        Here's how it works
                         <div class="play-icon">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
