@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Book Your Call - Weight Loss Mentorship</title>
+    <meta name="description" content="Book a call for our weight loss mentorship program.">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <style>
+        /* Simple 8-point spacing system */
+        :root {
+            --space-1: 8px;   /* 0.5rem */
+            --space-2: 16px;  /* 1rem */
+            --space-3: 24px;  /* 1.5rem */
+            --space-4: 32px;  /* 2rem */
+            --space-5: 40px;  /* 2.5rem */
+            --space-6: 48px;  /* 3rem */
+            
+            /* Light mode colors */
+            --primary: #1877F2;
+            --background: #f8f9fa;
+            --text: #202124;
+            --text-secondary: #5f6368;
+            --border: #c1c7cd;
+            --card-bg: #fff;
+            --weekday-text: #6B7280;
+            --calendar-day-hover: #F0F9FF;
+            --calendar-border: #E5E7EB;
+            --divider: #E8EAED;
+            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
+            --nav-hover: #F9FAFB;
+            --time-dot: #4cd964;
+            --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+            --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
+            --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
+            --progress-inactive: #e0e0e0;
+        }
+        
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #1a8cff;
+                --background: #121212;
+                --text: #ffffff;
+                --text-secondary: #aaaaaa;
+                --border: #333333;
+                --card-bg: #1e1e1e;
+                --weekday-text: #999999;
+                --calendar-day-hover: #1a3045;
+                --calendar-border: #333333;
+                --divider: #333333;
+                --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+                --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+                --nav-hover: #2a2a2a;
+                --time-dot: #30d158;
+                --progress-inactive: #333333;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes borderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 15px);
+            }
+
+            to {
+                clip-path: inset(0% 0% 0% 0% round 14px);
+            }
+        }
+
+        @keyframes desktopBorderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 11px);
+            }
+
+            to {
+                clip-path: inset(0% 0% 0% 0% round 10px);
+            }
+        }
+        
+        @keyframes pulseFade {
+            0% {
+                box-shadow: 0 0 0 0 rgba(238, 9, 121, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 4px rgba(238, 9, 121, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(238, 9, 121, 0);
+            }
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0 0 var(--space-6) 0;
+        }
+
+        .content {
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-5);
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        /* Calendar */
+        .calendar-wrapper {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: var(--background);
+            padding-bottom: var(--space-3);
+        }
+        
+        .calendar-header-text {
+            margin-bottom: var(--space-3);
+            text-align: left;
+        }
+        
+        .calendar-title {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: var(--space-1);
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .calendar-subtitle {
+            color: var(--text);
+            font-size: 1.125rem;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .calendar-container {
+            width: 100%;
+            background: transparent;
+            border-radius: 12px;
+            overflow: hidden;
+            padding-top: 0;
+        }
+
+        /* Coach Profile */
+        .coach-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-2);
+            padding-bottom: var(--space-2);
+            justify-content: center;
+        }
+
+        .coach-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: var(--space-2);
+            background-color: #E8EAED;
+        }
+
+        .coach-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .coach-info {
+            text-align: left;
+        }
+
+        .coach-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .coach-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        /* Subheader */
+        .calendar-subheader {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: var(--space-3);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Event details */
+        .event-details {
+            margin-bottom: var(--space-6);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+
+        .event-detail i {
+            color: #6B7280;
+            width: 20px;
+            text-align: center;
+        }
+
+        .time-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .day-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .time-header .event-timezone {
+            margin-left: auto;
+        }
+
+        .event-timezone {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .event-timezone i.fa-chevron-down {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-left: 2px;
+        }
+
+        select.timezone-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text);
+            cursor: pointer;
+            font-family: inherit;
+            width: auto;
+        }
+
+        select.timezone-select:focus {
+            outline: none;
+        }
+
+        .month-calendar {
+            padding: 0 0 16px;
+        }
+
+        .calendar-header {
+            padding-bottom: 16px;
+        }
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            color: var(--text);
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .month-title {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: left;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+        }
+
+        .month-title span {
+            color: #6B7280;
+            font-weight: normal;
+            margin-left: 8px;
+            font-size: 0.9375rem;
+        }
+
+        .nav-button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--nav-hover);
+            color: var(--text);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: 500;
+            color: var(--weekday-text);
+            font-size: 0.75rem;
+            padding: 8px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin: 0 0 8px;
+        }
+
+        .weekday {
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            padding: 8px 0;
+        }
+
+        .calendar-day {
+            height: 56px;
+            width: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            color: var(--text);
+            margin: 0 auto;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background-color: var(--calendar-day-hover);
+            color: var(--primary);
+        }
+
+        .calendar-day.selected {
+            background-color: var(--primary);
+            color: #fff;
+            font-weight: 500;
+            border-radius: 50%;
+        }
+
+        .calendar-day.today {
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .calendar-day.today::after {
+            content: "";
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        .calendar-day.other-month {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .day-view {
+            padding: 8px 0 0;
+            margin-top: 8px;
+            background-color: transparent;
+            position: relative;
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--calendar-border);
+            border-radius: 999px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .time-slot:hover {
+            background: var(--calendar-day-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            max-width: 650px;
+            margin: var(--space-4) auto 0;
+            padding-top: var(--space-4);
+            line-height: 1.5;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Form header */
+        .form-wrapper {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            z-index: 100;
+            padding: var(--space-2) 0;
+        }
+        
+        /* Progress Bar Styles */
+        .progress-bar-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto var(--space-4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar-step {
+            flex: 1;
+            height: 5px;
+            border-radius: 3px;
+            background: var(--progress-inactive);
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar-step.active:nth-child(1) {
+            background: var(--gradient-1);
+        }
+        
+        .progress-bar-step.active:nth-child(2) {
+            background: var(--gradient-2);
+        }
+        
+        .progress-bar-step.active:nth-child(3) {
+            background: var(--gradient-3);
+        }
+
+        .form-title {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.125rem;
+            line-height: 1.2;
+            padding: 0;
+            background-color: var(--background);
+            text-align: left;
+            margin-bottom: var(--space-1);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .form-subtitle {
+            color: var(--text);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-2);
+            line-height: 1.4;
+            text-align: left;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Accessibility */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Styles */
+        @media(max-width:768px) {
+            .container { 
+                padding: 0 0 var(--space-4) 0; 
+            }
+            
+            .content { 
+                gap: var(--space-4); 
+                padding: 0 1.25rem; 
+            }
+            
+            .calendar-days {
+                gap: 2px;
+            }
+            
+            .calendar-day {
+                height: 44px;
+                width: 44px;
+            font-size: 0.9375rem;
+            }
+            
+            .event-details {
+                margin-bottom: var(--space-5);
+                gap: 6px;
+            }
+            
+            .event-detail {
+                font-size: 0.875rem;
+            }
+
+            .day-view {
+                padding: 8px 0 0; 
+            }
+            
+            .time-slot { 
+                padding: 10px; 
+            font-size: 0.9375rem;
+            }
+            
+            .month-title { 
+                font-size: 1.5rem; 
+            }
+            
+            .calendar-title {
+            font-size: 1.125rem;
+            }
+            
+            .calendar-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .day-title {
+                font-size: 1rem;
+            }
+            
+            .nav-button { 
+                width: 36px; 
+                height: 36px; 
+            }
+
+            .disclaimer {
+                font-size: 0.7rem;
+            }
+
+            select.timezone-select {
+                font-size: 0.9375rem;
+            }
+
+            .form-title {
+                font-size: 1rem;
+            }
+            
+            .form-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            /* Hide desktop layout on mobile */
+            .desktop-view {
+                display: none;
+            }
+        }
+        
+        /* Desktop layout */
+        @media(min-width:769px) {
+            /* Base font size adjustment for desktop */
+            :root {
+                font-size: 16px;
+            }
+            
+            /* Hide mobile layout */
+            .mobile-layout {
+                display: none;
+            }
+            
+            /* Show desktop layout */
+            .desktop-view {
+                display: block;
+            }
+            
+            body {
+                background: var(--background);
+            }
+            
+            .desktop-container {
+                min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+                padding: 2rem 0 var(--space-6);
+            }
+            
+            /* Sticky progress bar at top */
+            .desktop-progress-container {
+                position: sticky;
+                top: 0;
+            width: 100%;
+                background-color: var(--background);
+                padding: 1.5rem 0 2.5rem;
+                z-index: 100;
+            }
+            
+            .desktop-progress-bar-container {
+            width: 100%;
+                max-width: 900px;
+                margin: 0 auto;
+                display: flex;
+                gap: 0.5rem;
+            }
+            
+            .desktop-progress-bar-step {
+                flex: 1;
+                height: 4px;
+                border-radius: 2px;
+                background: var(--progress-inactive);
+                overflow: hidden;
+            }
+            
+            .desktop-progress-bar-step.active:nth-child(1) {
+                background: var(--gradient-1);
+            }
+            
+            .desktop-progress-bar-step.active:nth-child(2) {
+                background: var(--gradient-2);
+            }
+            
+            .desktop-progress-bar-step.active:nth-child(3) {
+                background: var(--gradient-3);
+            }
+
+            /* Main calendar widget */
+            .desktop-calendar-widget {
+                max-width: 900px;
+                width: 90%;
+                margin: 0 auto;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+                border: 1px solid #e1e4e8;
+                display: flex;
+            }
+            
+            /* Left section - Details and header */
+            .desktop-info-section {
+                flex: 0 0 280px;
+                padding: 2.5rem 2rem;
+                border-right: 1px solid #eaeaea;
+            }
+            
+            .desktop-header-text {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out forwards;
+            }
+            
+            .desktop-title {
+                color: var(--text);
+                font-weight: 700;
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.2;
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+            
+            .desktop-subtitle {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                line-height: 1.4;
+                margin-bottom: 0;
+                animation: fadeIn 0.6s ease-out forwards;
+            }
+            
+            .desktop-event-details {
+            display: flex;
+            flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .desktop-event-detail {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                color: var(--text);
+                font-size: 0.9rem;
+            }
+            
+            .desktop-event-detail i {
+                color: #6B7280;
+            width: 18px;
+                text-align: center;
+            }
+            
+            .desktop-coach-profile {
+                display: flex;
+                align-items: center;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #eaeaea;
+            }
+            
+            .desktop-coach-avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 0.75rem;
+                background-color: #E8EAED;
+            }
+            
+            .desktop-coach-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .desktop-coach-info {
+                text-align: left;
+            }
+            
+            .desktop-coach-label {
+                font-size: 0.75rem;
+                color: var(--text-secondary);
+                margin-bottom: 2px;
+            }
+            
+            .desktop-coach-name {
+            font-size: 1rem;
+                font-weight: 700;
+                color: var(--text);
+                line-height: 1.2;
+            }
+            
+            /* Middle section - Month calendar */
+            .desktop-calendar-section {
+                flex: 0 0 380px;
+                padding: 2rem;
+                border-right: 1px solid #eaeaea;
+            }
+            
+            .desktop-calendar-header {
+                padding-bottom: 1.5rem;
+            }
+            
+            .desktop-month-nav {
+                display: flex;
+                align-items: center;
+                color: var(--text);
+            width: 100%;
+                justify-content: space-between;
+            }
+            
+            .desktop-month-title {
+                font-size: 1.2rem;
+            font-weight: 700;
+                color: var(--text);
+            display: flex;
+            align-items: center;
+            }
+            
+            .desktop-month-title span {
+                color: #6B7280;
+                font-weight: normal;
+                margin-left: 8px;
+                font-size: 1rem;
+            }
+            
+            .desktop-nav-button {
+                background: transparent;
+                border: none;
+                color: var(--text-secondary);
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            
+            .desktop-nav-button:hover {
+                background: var(--nav-hover);
+                color: var(--text);
+            }
+            
+            .desktop-weekdays {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+                font-weight: 600;
+                color: var(--weekday-text);
+                font-size: 0.8rem;
+                padding: 0.75rem 0;
+            }
+            
+            .desktop-weekday {
+                padding: 0.5rem 0;
+            }
+            
+            .desktop-calendar-days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 4px;
+                justify-items: center;
+            }
+            
+            .desktop-calendar-day {
+                height: 44px;
+                width: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.95rem;
+                border-radius: 50%;
+                cursor: pointer;
+                position: relative;
+                color: var(--text);
+                transition: all 0.2s ease;
+            }
+            
+            .desktop-calendar-day:hover {
+                background-color: var(--calendar-day-hover);
+                color: var(--primary);
+            }
+            
+            .desktop-calendar-day.selected {
+                background-color: var(--primary);
+                color: #fff;
+                font-weight: 500;
+            }
+            
+            .desktop-calendar-day.today {
+                font-weight: 700;
+                position: relative;
+            }
+            
+            .desktop-calendar-day.today::after {
+                content: "";
+                position: absolute;
+                bottom: 6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 4px;
+                height: 4px;
+                background-color: var(--primary);
+                border-radius: 50%;
+            }
+            
+            .desktop-calendar-day.other-month {
+                visibility: hidden;
+                pointer-events: none;
+            }
+            
+            /* Right section - Time slots */
+            .desktop-timeslots-section {
+                flex: 0 0 260px;
+                padding: 2rem;
+            }
+            
+            .desktop-time-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.25rem;
+            }
+            
+            .desktop-day-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text);
+            }
+            
+            .desktop-time-header .event-timezone {
+                margin-left: auto;
+            }
+            
+
+            
+            .desktop-time-slots-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .desktop-time-slot {
+                padding: 0.6rem 0;
+                background: var(--card-bg);
+                border: 1px solid var(--calendar-border);
+                border-radius: 999px;
+                text-align: center;
+            cursor: pointer;
+                color: var(--text);
+                font-weight: 500;
+                font-size: 0.9rem;
+                transition: all 0.2s ease;
+            }
+            
+            .desktop-time-slot:hover {
+                background: var(--calendar-day-hover);
+                border-color: var(--primary);
+                color: var(--primary);
+            }
+            
+            /* Time slot with green dot */
+            .desktop-time-slot::before {
+                content: "";
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background-color: var(--time-dot);
+                border-radius: 50%;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            
+            /* Fine print */
+            .desktop-fine-print {
+                max-width: 940px;
+                width: 90%;
+                margin: 1.5rem auto 0;
+                font-size: 0.75rem;
+                line-height: 1.4;
+                color: #9aa0a6;
+                text-align: center;
+            }
+        }
+
+        /* Additional dark mode adjustments */
+        @media (prefers-color-scheme: dark) {
+            /* Improve contrast for icons */
+            .play-icon {
+                background-color: #ffffff;
+            }
+            
+            .play-icon svg {
+                fill: #000000;
+            }
+            
+            /* Special handling for calendar */
+            .calendar-widget, .desktop-calendar-widget {
+                border-color: var(--border);
+            }
+            
+            /* Ensure input text is readable */
+            input, select {
+                color: var(--text);
+                background-color: var(--card-bg);
+            }
+            
+            /* Override autofill styling */
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+                -webkit-text-fill-color: var(--text) !important;
+                caret-color: var(--text);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Mobile Layout -->
+    <div class="container mobile-layout">
+        <div class="content">
+            <div class="calendar-wrapper">
+                <div class="form-wrapper">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-step active"></div>
+                        <div class="progress-bar-step active"></div>
+                        <div class="progress-bar-step"></div>
+                        </div>
+                    <div class="form-title">Book Your Call</div>
+                    <p class="form-subtitle">Choose a time for an honest conversation about whether this is right for you.</p>
+                </div>
+
+            <div class="calendar-container">
+                    <div class="month-calendar">
+                <div class="calendar-header">
+                    <div class="month-nav">
+                                <div class="month-title">May <span>2025</span></div>
+                                <div class="nav-buttons">
+                                    <button class="nav-button prev-month" aria-label="Previous month">
+                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                        </button>
+                                    <button class="nav-button next-month" aria-label="Next month">
+                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                    </div>
+                        <div class="weekdays" role="row">
+                            <div class="weekday" role="columnheader">SUN</div>
+                            <div class="weekday" role="columnheader">MON</div>
+                            <div class="weekday" role="columnheader">TUE</div>
+                            <div class="weekday" role="columnheader">WED</div>
+                            <div class="weekday" role="columnheader">THU</div>
+                            <div class="weekday" role="columnheader">FRI</div>
+                            <div class="weekday" role="columnheader">SAT</div>
+                        </div>
+                        <div class="calendar-days" role="grid">
+                            <!-- Days will be populated by JavaScript -->
+                        </div>
+                        </div>
+                    <div class="day-view">
+                        <div class="time-header">
+                            <div class="day-title">Thu 08</div>
+                            <div class="event-timezone">
+                                <select id="membership-timezone-select" class="timezone-select">
+                                    <!-- Will be populated by JavaScript -->
+                                </select>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="time-slots-grid" role="list">
+                            <!-- Time slots will be populated by JavaScript -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+                
+    <!-- Desktop Layout (Centered Calendar) -->
+    <div class="desktop-view">
+        <div class="desktop-container">
+            <!-- Progress bar at the top -->
+            <div class="desktop-progress-container">
+                <div class="desktop-progress-bar-container">
+                    <div class="desktop-progress-bar-step active"></div>
+                    <div class="desktop-progress-bar-step active"></div>
+                    <div class="desktop-progress-bar-step"></div>
+                </div>
+                    </div>
+                    
+            <!-- Main calendar widget -->
+            <div class="desktop-calendar-widget">
+                <!-- Left section - Details -->
+                <div class="desktop-info-section">
+                    <div class="desktop-header-text">
+                        <h1 class="desktop-title">Book Your Call</h1>
+                        <p class="desktop-subtitle">Choose a time for an honest conversation about whether this is right for you.</p>
+                        </div>
+                    
+                    <div class="desktop-coach-profile">
+                        <div class="desktop-coach-avatar">
+                            <img src="https://i.postimg.cc/HxCNvjdC/person.jpg" alt="Asher - Weight Loss Coach">
+                        </div>
+                        <div class="desktop-coach-info">
+                            <div class="desktop-coach-label">Progress Check-in w/</div>
+                            <div class="desktop-coach-name">Asher</div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                <!-- Middle section - Month calendar -->
+                <div class="desktop-calendar-section">
+                    <div class="desktop-calendar-header">
+                        <div class="desktop-month-nav">
+                            <div class="desktop-month-title">May <span>2025</span></div>
+                            <div class="nav-buttons">
+                                <button class="desktop-nav-button desktop-prev-month" aria-label="Previous month">
+                                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                        </button>
+                                <button class="desktop-nav-button desktop-next-month" aria-label="Next month">
+                                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+                    <div class="desktop-weekdays" role="row">
+                        <div class="desktop-weekday" role="columnheader">SUN</div>
+                        <div class="desktop-weekday" role="columnheader">MON</div>
+                        <div class="desktop-weekday" role="columnheader">TUE</div>
+                        <div class="desktop-weekday" role="columnheader">WED</div>
+                        <div class="desktop-weekday" role="columnheader">THU</div>
+                        <div class="desktop-weekday" role="columnheader">FRI</div>
+                        <div class="desktop-weekday" role="columnheader">SAT</div>
+            </div>
+                    
+                    <div class="desktop-calendar-days" role="grid">
+                        <!-- Days will be populated by JavaScript -->
+        </div>
+    </div>
+                
+                <!-- Right section - Time slots -->
+                <div class="desktop-timeslots-section">
+                    <div class="desktop-time-header">
+                        <div class="desktop-day-title">Sat 17</div>
+                        <div class="event-timezone">
+                            <select id="desktop-timezone-select" class="timezone-select">
+                                <!-- Will be populated by JavaScript -->
+                            </select>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="desktop-time-slots-grid" role="list">
+                        <!-- Time slots will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer text -->
+            <div class="desktop-fine-print">
+                <p>I respect your privacy. Your information will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize timezone selector for both mobile and desktop
+            const timezoneSelector = {
+                init() {
+                    this.selectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    this.timezones = [
+                        "Pacific/Midway", "Pacific/Pago_Pago", "Pacific/Honolulu", "America/Juneau", "America/Los_Angeles", 
+                        "America/Tijuana", "America/Denver", "America/Phoenix", "America/Chihuahua", "America/Mazatlan", 
+                        "America/Chicago", "America/Regina", "America/Mexico_City", "America/Monterrey", "America/Guatemala", 
+                        "America/New_York", "America/Indiana/Indianapolis", "America/Bogota", "America/Lima", "America/Halifax", 
+                        "America/Caracas", "America/La_Paz", "America/Santiago", "America/St_Johns", "America/Sao_Paulo", 
+                        "America/Argentina/Buenos_Aires", "America/Montevideo", "Atlantic/South_Georgia", "Atlantic/Azores", 
+                        "Atlantic/Cape_Verde", "Europe/Dublin", "Europe/London", "Europe/Lisbon", "Africa/Casablanca", 
+                        "Africa/Monrovia", "Etc/UTC", "Europe/Belgrade", "Europe/Bratislava", "Europe/Budapest", "Europe/Ljubljana", 
+                        "Europe/Prague", "Europe/Sarajevo", "Europe/Skopje", "Europe/Warsaw", "Europe/Zagreb", "Europe/Brussels", 
+                        "Europe/Copenhagen", "Europe/Madrid", "Europe/Paris", "Europe/Amsterdam", "Europe/Berlin", "Europe/Rome", 
+                        "Europe/Stockholm", "Europe/Vienna", "Europe/Zurich", "Africa/Cairo", "Africa/Johannesburg", "Europe/Istanbul", 
+                        "Europe/Kiev", "Europe/Helsinki", "Europe/Riga", "Europe/Sofia", "Europe/Tallinn", "Europe/Vilnius", 
+                        "Asia/Jerusalem", "Asia/Baghdad", "Asia/Kuwait", "Asia/Riyadh", "Asia/Tehran", "Asia/Baku", 
+                        "Asia/Muscat", "Asia/Tbilisi", "Asia/Yerevan", "Asia/Kabul", "Asia/Karachi", "Asia/Tashkent", 
+                        "Asia/Kolkata", "Asia/Colombo", "Asia/Kathmandu", "Asia/Dhaka", "Asia/Almaty", "Asia/Yangon", 
+                        "Asia/Bangkok", "Asia/Jakarta", "Asia/Singapore", "Asia/Kuala_Lumpur", "Asia/Urumqi", 
+                        "Asia/Ho_Chi_Minh", "Asia/Hong_Kong", "Asia/Shanghai", "Asia/Taipei", "Asia/Manila", 
+                        "Asia/Seoul", "Asia/Tokyo", "Australia/Perth", "Australia/Darwin", "Australia/Brisbane", 
+                        "Australia/Adelaide", "Australia/Sydney", "Australia/Hobart", "Pacific/Guam", "Pacific/Port_Moresby", 
+                        "Pacific/Auckland", "Pacific/Fiji"
+                    ];
+                    
+                    this.populateTimezoneSelect();
+                    this.setupEventListeners();
+                },
+                
+                formatTimezone(timezone) {
+                    // Format timezones to be more readable (e.g., "America/New_York" -> "America/New York")
+                    return timezone.replace('_', ' ');
+                },
+                
+                populateTimezoneSelect() {
+                    // Mobile timezone selector
+                    const mobileSelect = document.getElementById('membership-timezone-select');
+                    mobileSelect.innerHTML = '';
+                    
+                    this.timezones.forEach(timezone => {
+                        const option = document.createElement('option');
+                        option.value = timezone;
+                        option.textContent = this.formatTimezone(timezone);
+                        
+                        if (timezone === this.selectedTimezone) {
+                            option.selected = true;
+                        }
+                        
+                        mobileSelect.appendChild(option);
+                    });
+                    
+                    // Desktop timezone selector
+                    const desktopSelect = document.getElementById('desktop-timezone-select');
+                    desktopSelect.innerHTML = '';
+                    
+                    this.timezones.forEach(timezone => {
+                        const option = document.createElement('option');
+                        option.value = timezone;
+                        option.textContent = this.formatTimezone(timezone);
+                        
+                        if (timezone === this.selectedTimezone) {
+                            option.selected = true;
+                        }
+                        
+                        desktopSelect.appendChild(option);
+                    });
+                },
+                
+                setupEventListeners() {
+                    // Mobile timezone selection change
+                    document.getElementById('membership-timezone-select').addEventListener('change', (e) => {
+                        this.selectedTimezone = e.target.value;
+                        
+                        // Sync desktop timezone with mobile
+                        document.getElementById('desktop-timezone-select').value = e.target.value;
+                        
+                        // Update calendars
+                        calendar.renderCalendar();
+                        calendar.renderTimeSlots();
+                        desktopCalendar.renderCalendar();
+                        desktopCalendar.renderTimeSlots();
+                    });
+                    
+                    // Desktop timezone selection change
+                    document.getElementById('desktop-timezone-select').addEventListener('change', (e) => {
+                        this.selectedTimezone = e.target.value;
+                        
+                        // Sync mobile timezone with desktop
+                        document.getElementById('membership-timezone-select').value = e.target.value;
+                        
+                        // Update calendars
+                        calendar.renderCalendar();
+                        calendar.renderTimeSlots();
+                        desktopCalendar.renderCalendar();
+                        desktopCalendar.renderTimeSlots();
+                    });
+                }
+            };
+
+            // Mobile calendar
+            const calendar = {
+                currentDate: new Date(),
+                selectedDate: new Date(),
+                timeSlots: [
+                    '3:00pm', '3:15pm', '3:30pm', '3:45pm',
+                    '4:00pm', '4:15pm', '4:30pm', '4:45pm'
+                ],
+                
+                init() {
+                    this.renderCalendar();
+                    this.setupEventListeners();
+                    this.renderTimeSlots();
+                },
+
+                renderCalendar() {
+                    const year = this.currentDate.getFullYear();
+                    const month = this.currentDate.getMonth();
+                    
+                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+                    
+                    // Update month title with separate year span
+                    const monthTitleEl = document.querySelector('.month-title');
+                    monthTitleEl.innerHTML = `${monthNames[month]} <span>${year}</span>`;
+
+                    const firstDay = new Date(year, month, 1);
+                    const lastDay = new Date(year, month + 1, 0);
+                    const totalDays = lastDay.getDate();
+                    const startingDay = firstDay.getDay();
+                    const prevMonthLastDay = new Date(year, month, 0).getDate();
+                    
+                    const calendarDays = document.querySelector('.calendar-days');
+                    calendarDays.innerHTML = '';
+
+                    // Previous month days
+                    for (let i = startingDay - 1; i >= 0; i--) {
+                        const day = document.createElement('div');
+                        day.className = 'calendar-day other-month';
+                        day.setAttribute('role', 'gridcell');
+                        day.setAttribute('tabindex', '-1');
+                        day.setAttribute('aria-disabled', 'true');
+                        day.textContent = prevMonthLastDay - i;
+                        calendarDays.appendChild(day);
+                    }
+
+                    // Current month days
+                    for (let i = 1; i <= totalDays; i++) {
+                        const day = document.createElement('div');
+                        day.className = 'calendar-day';
+                        day.setAttribute('role', 'gridcell');
+                        day.setAttribute('tabindex', '0');
+                        day.textContent = i;
+                        
+                        const dayDate = new Date(year, month, i);
+                        
+                        // Check if this is today
+                        const today = new Date();
+                        if (i === today.getDate() && 
+                            month === today.getMonth() && 
+                            year === today.getFullYear()) {
+                            day.classList.add('today');
+                        }
+                        
+                        // Check if this is the selected date
+                        if (i === this.selectedDate.getDate() && 
+                            month === this.selectedDate.getMonth() && 
+                            year === this.selectedDate.getFullYear()) {
+                            day.classList.add('selected');
+                            day.setAttribute('aria-selected', 'true');
+                        }
+                        
+                        calendarDays.appendChild(day);
+                    }
+
+                    // Calculate if we need a 6th row
+                    const totalCellsFilled = startingDay + totalDays;
+                    const rowsNeeded = Math.ceil(totalCellsFilled / 7);
+                    const cellsToFill = rowsNeeded * 7 - totalCellsFilled;
+
+                    // Next month days - only add if needed
+                    if (cellsToFill > 0) {
+                        for (let i = 1; i <= cellsToFill; i++) {
+                            const day = document.createElement('div');
+                            day.className = 'calendar-day other-month';
+                            day.setAttribute('role', 'gridcell');
+                            day.setAttribute('tabindex', '-1');
+                            day.setAttribute('aria-disabled', 'true');
+                            day.textContent = i;
+                            calendarDays.appendChild(day);
+                        }
+                    }
+                    
+                    // Update day title
+                    this.updateDayTitle();
+                },
+                
+                updateDayTitle() {
+                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    const day = this.selectedDate.getDate().toString().padStart(2, '0');
+                    const dayName = dayNames[this.selectedDate.getDay()];
+                    
+                    document.querySelector('.day-title').textContent = `${dayName} ${day}`;
+                },
+
+                setupEventListeners() {
+                    document.querySelector('.prev-month').addEventListener('click', () => {
+                        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                        this.renderCalendar();
+                    });
+
+                    document.querySelector('.next-month').addEventListener('click', () => {
+                        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                        this.renderCalendar();
+                    });
+
+                    document.querySelector('.calendar-days').addEventListener('click', (e) => {
+                        if (e.target.classList.contains('calendar-day') && 
+                            !e.target.classList.contains('other-month')) {
+                            
+                            document.querySelectorAll('.calendar-day').forEach(day => {
+                                day.classList.remove('selected');
+                                day.setAttribute('aria-selected', 'false');
+                            });
+                            
+                            e.target.classList.add('selected');
+                            e.target.setAttribute('aria-selected', 'true');
+                            
+                            this.selectedDate = new Date(
+                                this.currentDate.getFullYear(),
+                                this.currentDate.getMonth(),
+                                parseInt(e.target.textContent)
+                            );
+                            
+                            this.updateDayTitle();
+                            this.renderTimeSlots();
+                            
+                            // Sync desktop calendar selection
+                            desktopCalendar.selectedDate = new Date(this.selectedDate);
+                            desktopCalendar.updateDayTitle();
+                            desktopCalendar.renderTimeSlots();
+                            desktopCalendar.renderCalendar();
+                        }
+                    });
+                    
+                    // Keyboard navigation for calendar
+                    document.querySelector('.calendar-days').addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            if (e.target.classList.contains('calendar-day') && 
+                                !e.target.classList.contains('other-month')) {
+                                e.preventDefault();
+                                e.target.click();
+                            }
+                        }
+                    });
+                },
+
+                renderTimeSlots() {
+                    const timeSlotsGrid = document.querySelector('.time-slots-grid');
+                    timeSlotsGrid.innerHTML = '';
+
+                    this.timeSlots.forEach(time => {
+                        const slot = document.createElement('div');
+                        slot.className = 'time-slot';
+                        slot.setAttribute('role', 'listitem');
+                        slot.setAttribute('tabindex', '0');
+                        slot.textContent = time;
+                        
+                        // Add booking functionality
+                        slot.addEventListener('click', () => {
+                            const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
+                                weekday: 'long', 
+                                month: 'long', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            // Redirect to confirmation page with booking details
+                            window.location.href = `confirmation.php?date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(time)}&timezone=${encodeURIComponent(timezoneSelector.selectedTimezone)}`;
+                        });
+                        
+                        // Add aria label with date and time
+                        const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
+                            weekday: 'long', 
+                            month: 'long', 
+                            day: 'numeric',
+                            year: 'numeric'
+                        });
+                        slot.setAttribute('aria-label', `Book appointment for ${dateStr} at ${time}`);
+                        
+                        timeSlotsGrid.appendChild(slot);
+                    });
+                }
+            };
+            
+            // Desktop calendar - similar to mobile but with different selectors
+            const desktopCalendar = {
+                currentDate: new Date(),
+                selectedDate: new Date(),
+                timeSlots: [
+                    '2:30pm', '2:45pm', '3:00pm', '3:15pm',
+                    '3:30pm', '3:45pm', '4:00pm', '4:15pm'
+                ],
+                use24Hour: false,
+                
+                init() {
+                    this.renderCalendar();
+                    this.setupEventListeners();
+                    this.renderTimeSlots();
+                },
+
+                renderCalendar() {
+                    const year = this.currentDate.getFullYear();
+                    const month = this.currentDate.getMonth();
+                    
+                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+                    
+                    // Update month title with separate year span
+                    const monthTitleEl = document.querySelector('.desktop-month-title');
+                    monthTitleEl.innerHTML = `${monthNames[month]} <span>${year}</span>`;
+
+                    const firstDay = new Date(year, month, 1);
+                    const lastDay = new Date(year, month + 1, 0);
+                    const totalDays = lastDay.getDate();
+                    const startingDay = firstDay.getDay();
+                    const prevMonthLastDay = new Date(year, month, 0).getDate();
+                    
+                    const calendarDays = document.querySelector('.desktop-calendar-days');
+                    calendarDays.innerHTML = '';
+
+                    // Previous month days
+                    for (let i = startingDay - 1; i >= 0; i--) {
+                        const day = document.createElement('div');
+                        day.className = 'desktop-calendar-day other-month';
+                        day.setAttribute('role', 'gridcell');
+                        day.setAttribute('tabindex', '-1');
+                        day.setAttribute('aria-disabled', 'true');
+                        day.textContent = prevMonthLastDay - i;
+                        calendarDays.appendChild(day);
+                    }
+
+                    // Current month days
+                    for (let i = 1; i <= totalDays; i++) {
+                        const day = document.createElement('div');
+                        day.className = 'desktop-calendar-day';
+                        day.setAttribute('role', 'gridcell');
+                        day.setAttribute('tabindex', '0');
+                        day.textContent = i;
+                        
+                        const dayDate = new Date(year, month, i);
+                        
+                        // Check if this is today
+                        const today = new Date();
+                        if (i === today.getDate() && 
+                            month === today.getMonth() && 
+                            year === today.getFullYear()) {
+                            day.classList.add('today');
+                        }
+                        
+                        // Check if this is the selected date
+                        if (i === this.selectedDate.getDate() && 
+                            month === this.selectedDate.getMonth() && 
+                            year === this.selectedDate.getFullYear()) {
+                            day.classList.add('selected');
+                            day.setAttribute('aria-selected', 'true');
+                        }
+                        
+                        calendarDays.appendChild(day);
+                    }
+
+                    // Calculate if we need a 6th row
+                    const totalCellsFilled = startingDay + totalDays;
+                    const rowsNeeded = Math.ceil(totalCellsFilled / 7);
+                    const cellsToFill = rowsNeeded * 7 - totalCellsFilled;
+
+                    // Next month days - only add if needed
+                    if (cellsToFill > 0) {
+                        for (let i = 1; i <= cellsToFill; i++) {
+                            const day = document.createElement('div');
+                            day.className = 'desktop-calendar-day other-month';
+                            day.setAttribute('role', 'gridcell');
+                            day.setAttribute('tabindex', '-1');
+                            day.setAttribute('aria-disabled', 'true');
+                            day.textContent = i;
+                            calendarDays.appendChild(day);
+                        }
+                    }
+                    
+                    // Update day title
+                    this.updateDayTitle();
+                },
+                
+                updateDayTitle() {
+                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    const day = this.selectedDate.getDate().toString().padStart(2, '0');
+                    const dayName = dayNames[this.selectedDate.getDay()];
+                    
+                    document.querySelector('.desktop-day-title').textContent = `${dayName} ${day}`;
+                },
+
+                setupEventListeners() {
+                    document.querySelector('.desktop-prev-month').addEventListener('click', () => {
+                        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+                        this.renderCalendar();
+                    });
+
+                    document.querySelector('.desktop-next-month').addEventListener('click', () => {
+                        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+                        this.renderCalendar();
+                    });
+
+                    document.querySelector('.desktop-calendar-days').addEventListener('click', (e) => {
+                        if (e.target.classList.contains('desktop-calendar-day') && 
+                            !e.target.classList.contains('other-month')) {
+                            
+                            document.querySelectorAll('.desktop-calendar-day').forEach(day => {
+                                day.classList.remove('selected');
+                                day.setAttribute('aria-selected', 'false');
+                            });
+                            
+                            e.target.classList.add('selected');
+                            e.target.setAttribute('aria-selected', 'true');
+                            
+                            this.selectedDate = new Date(
+                                this.currentDate.getFullYear(),
+                                this.currentDate.getMonth(),
+                                parseInt(e.target.textContent)
+                            );
+                            
+                            this.updateDayTitle();
+                            this.renderTimeSlots();
+                            
+                            // Sync mobile calendar selection
+                            calendar.selectedDate = new Date(this.selectedDate);
+                            calendar.updateDayTitle();
+                            calendar.renderTimeSlots();
+                            calendar.renderCalendar();
+                        }
+                    });
+                    
+                    // Keyboard navigation for calendar
+                    document.querySelector('.desktop-calendar-days').addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            if (e.target.classList.contains('desktop-calendar-day') && 
+                                !e.target.classList.contains('other-month')) {
+                                e.preventDefault();
+                                e.target.click();
+                            }
+                        }
+                    });
+                },
+
+                renderTimeSlots() {
+                    const timeSlotsGrid = document.querySelector('.desktop-time-slots-grid');
+                    timeSlotsGrid.innerHTML = '';
+
+                    this.timeSlots.forEach(time => {
+                        const slot = document.createElement('div');
+                        slot.className = 'desktop-time-slot';
+                        slot.setAttribute('role', 'listitem');
+                        slot.setAttribute('tabindex', '0');
+                        
+                        // Convert time to 24h format if needed
+                        if (this.use24Hour) {
+                            // Simple conversion for demo purposes
+                            // In a real app, you'd want more robust time handling
+                            const timeParts = time.match(/(\d+):(\d+)(am|pm)/i);
+                            if (timeParts) {
+                                let hours = parseInt(timeParts[1]);
+                                const minutes = timeParts[2];
+                                const period = timeParts[3].toLowerCase();
+                                
+                                if (period === 'pm' && hours < 12) hours += 12;
+                                if (period === 'am' && hours === 12) hours = 0;
+                                
+                                slot.textContent = `${hours.toString().padStart(2, '0')}:${minutes}`;
+                            } else {
+                                slot.textContent = time;
+                            }
+                        } else {
+                            slot.textContent = time;
+                        }
+                        
+                        // Add booking functionality
+                        slot.addEventListener('click', () => {
+                            const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
+                                weekday: 'long', 
+                                month: 'long', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            // Redirect to confirmation page with booking details
+                            window.location.href = `confirmation.php?date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(time)}&timezone=${encodeURIComponent(timezoneSelector.selectedTimezone)}`;
+                        });
+                        
+                        // Add aria label with date and time
+                        const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
+                            weekday: 'long', 
+                            month: 'long', 
+                            day: 'numeric',
+                            year: 'numeric'
+                        });
+                        slot.setAttribute('aria-label', `Book appointment for ${dateStr} at ${time}`);
+                        
+                        timeSlotsGrid.appendChild(slot);
+                    });
+                }
+            };
+
+            // Initialize the mobile calendar
+            calendar.init();
+            
+            // Initialize the desktop calendar
+            desktopCalendar.init();
+            
+            // Initialize the timezone selector
+            timezoneSelector.init();
+        });
+    </script>
+</body>
+</html> 
