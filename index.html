@@ -927,23 +927,12 @@
 
             .desktop-layout .progress-bar-container {
                 width: 100%;
-                margin-bottom: 0.75rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
+                margin-bottom: 1.25rem;
+                gap: 0.75rem;
             }
             
             .desktop-layout .progress-bar-step {
-                flex: 1;
                 height: 4px;
-                border-radius: 2px;
-                background: var(--progress-inactive);
-                overflow: hidden;
-            }
-            
-            .desktop-layout .progress-bar-step.active {
-                background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
             }
             
             .desktop-layout .form-title {
@@ -1055,29 +1044,12 @@
             text-decoration: underline;
         }
 
-        /* Progress Bar Styles */
-        .progress-bar-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto var(--space-4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .progress-bar-step {
-            flex: 1;
-            height: 5px;
-            border-radius: 3px;
-            background: var(--progress-inactive);
-            transition: background 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar-step.active {
-            background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+        /* Progress Bar Styles - REMOVE */
+        .progress-bar-container,
+        .desktop-progress-bar-container,
+        .progress-bar-step,
+        .desktop-progress-bar-step {
+            display: none;
         }
 
         /* Video styles for proper display */
@@ -1335,7 +1307,7 @@
             <div class="form-wrapper">
                 <div class="form-title">Contact Information</div>
                 <p class="form-subtitle">Send me your contact info. Your phone number is only used to notify you when emails arrive.</p>
-                <form action="calendar.php" method="GET" id="contactForm" class="contact-form" autocomplete="on">
+                <form action="offer.html" method="GET" id="contactForm" class="contact-form" autocomplete="on">
                     <div class="name-row">
                         <div class="name-field">
                             <input type="text" id="firstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
@@ -1439,7 +1411,7 @@
                         <div class="form-wrapper">
                             <div class="form-title">Contact Information</div>
                             <p class="form-subtitle">If you're curious how this could help you, send me your contact info so I can show you how this works.</p>
-                            <form action="calendar.php" method="GET" id="desktopContactForm" class="contact-form" autocomplete="on">
+                            <form action="offer.html" method="GET" id="desktopContactForm" class="contact-form" autocomplete="on">
                                 <div class="name-row">
                                     <div class="name-field">
                                         <input type="text" id="desktopFirstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
@@ -1740,7 +1712,7 @@
 
                     if (isValid) {
                         // If validation passes, submit the form
-                        window.location.href = 'calendar.php';
+                        window.location.href = 'offer.html';
                     }
                 });
             }
