@@ -9,8 +9,10 @@
     <meta name="robots" content="index, follow">
     <meta name="format-detection" content="telephone=yes">
     <meta name="instagram:lead" content="true">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preload" as="video" href="video.mp4">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" as="image" href="video-thumb-optimized.png" fetchpriority="high">
     <style>
         /* Simple 8-point spacing system */
         :root {
@@ -174,110 +176,47 @@
             letter-spacing: -0.005em;
         }
 
-        /* Video */
-        .video-container {
+        /* Update image container styles to preserve natural dimensions */
+        .image-container {
             position: relative;
-            padding-bottom: var(--mobile-video-ratio);
-            height: 0;
-            overflow: hidden;
-            border-radius: 14px;
-            box-shadow: var(--premium-shadow);
-            background-color: #000;
-            background-image: url('video-thumb.png');
-            background-size: cover;
-            background-position: center;
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
-            cursor: pointer;
-            transition: var(--premium-transition);
+            border-radius: 14px;
+            box-shadow: var(--premium-shadow);
             border: 1px solid var(--border);
             animation: borderReveal 0.5s ease-out forwards;
-            transform: none;
+            overflow: hidden;
         }
 
-        .video-container:hover {
-            transform: none;
-            box-shadow: var(--card-hover-shadow);
-        }
-
-        .video-container video,
-        .video-container iframe,
-        .video-container wistia-player {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .image-container img {
             width: 100%;
-            height: 100%;
-            border: none;
+            height: auto;
+            display: block;
             border-radius: 12px;
-            object-fit: cover;
-            transform: none;
         }
 
-        .video-thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            z-index: 2;
-        }
-
-        .video-container.playing .video-thumbnail {
-            display: none;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 999px;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            padding: 5px 7px 5px 20px;
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            white-space: nowrap;
-            width: auto;
-            transition: background-color 0.2s;
-        }
-
-        .video-container:hover .play-button {
-            background-color: rgba(0, 0, 0, 0.75);
-        }
-
-        .play-icon {
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 14px;
-            margin-right: 0;
-        }
-
-        .play-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: #333;
-            margin-left: 0;
+        .desktop-image-container {
             position: relative;
-            transform: none;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--premium-shadow);
+            border: 1px solid var(--border);
+            animation: desktopBorderReveal 0.5s ease-out forwards;
+            overflow: hidden;
         }
 
-        .video-container.playing .play-button {
+        .desktop-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Remove video-specific styles */
+        .video-container, .desktop-video-container,
+        .play-button, .play-icon,
+        .video-thumbnail {
             display: none;
         }
 
@@ -776,7 +715,7 @@
                 font-weight: 500;
             }
             
-            /* Content section with video on left and form on right */
+            /* Content section with image on left and form on right */
             .desktop-content-section {
                 display: flex;
                 width: 100%;
@@ -785,6 +724,7 @@
                 padding: 0 2rem 6rem;
             }
             
+            /* Left Column - Desktop */
             .left-column {
                 width: 62%;
                 padding: 0 2rem 0 0;
@@ -808,24 +748,20 @@
                 max-width: 560px;
             }
             
-            /* Container for the form with fixed height matching video */
+            /* Container for the form with fixed height matching image */
             .form-container {
                 width: 100%;
-                height: 0;
-                padding-bottom: calc(var(--desktop-video-ratio) + 9.2%); /* Match video height plus benefits row */
                 position: relative;
                 background-color: var(--card-bg);
                 border-radius: 10px;
                 border: 1px solid #e1e4e8;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
                 overflow: hidden;
+                padding: 1.5rem;
             }
             
             .desktop-layout .form-wrapper {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
+                position: relative;
                 padding: 1.25rem;
                 margin: 0;
                 border: none;
@@ -834,8 +770,6 @@
                 transform: scale(0.85);
                 background-color: transparent;
                 border-radius: 0;
-                height: 100%;
-                overflow: hidden;
                 display: flex;
                 flex-direction: column;
             }
@@ -899,7 +833,7 @@
                 border-radius: 10px;
                 box-shadow: var(--premium-shadow);
                 background-color: #000;
-                background-image: url('video-thumb.png');
+                background-image: url('video-thumb-optimized.png');
                 background-size: cover;
                 background-position: center;
                 width: 100%;
@@ -1239,6 +1173,110 @@
                 color: #000000;
             }
         }
+
+        /* Email Carousel Styles */
+        .carousel-container {
+            position: relative;
+            padding-bottom: var(--mobile-video-ratio);
+            height: 0;
+            overflow: hidden;
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.3s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .email-slide {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .email-slide.active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        .email-slide.prev {
+            opacity: 0.5;
+            transform: translateX(calc(-50% - 30%)) scale(0.85);
+            z-index: 1;
+        }
+
+        .email-slide.next {
+            opacity: 0.5;
+            transform: translateX(calc(-50% + 30%)) scale(0.85);
+            z-index: 1;
+        }
+
+        .email-slide img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+            box-shadow: var(--premium-shadow);
+            position: relative;
+        }
+
+        .email-slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to top, 
+                rgba(255, 255, 255, 1) 0%,
+                rgba(255, 255, 255, 0.9) 20%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Dark mode support for the fade effect */
+        @media (prefers-color-scheme: dark) {
+            .email-slide::after {
+                background: linear-gradient(to top, 
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(255, 255, 255, 0.9) 20%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+            }
+        }
+
+        /* Desktop specific styles */
+        @media (min-width: 769px) {
+            .carousel-container {
+                padding-bottom: var(--desktop-video-ratio);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                max-width: 350px;
+            }
+        }
     </style>
 </head>
 
@@ -1247,54 +1285,57 @@
     <div class="container mobile-layout">
         <div class="content">
             <div class="header-group">
-                <h1 class="headline">6-Week Online Weight Loss Mentorship</h1>
-                <p class="subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
+                <h1 class="headline">How I Get Back in Shape in 6 Weeks</h1>
+                <p class="subheadline">I'll send you 7 emails teaching you how I optimize my diet and training over 6 weeks to whip myself back into shape so you can do the same.</p>
             </div>
 
-            <div class="video-container" id="videoContainer">
-                <div class="play-button" id="playButton">
-                    Watch how this works
-                    <div class="play-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                        </svg>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="email-slide prev">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 7" draggable="false">
+                    </div>
+                    <div class="email-slide active">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 1" draggable="false">
+                    </div>
+                    <div class="email-slide next">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 2" draggable="false">
+                    </div>
+                    <div class="email-slide">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 3" draggable="false">
+                    </div>
+                    <div class="email-slide">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 4" draggable="false">
+                    </div>
+                    <div class="email-slide">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 5" draggable="false">
+                    </div>
+                    <div class="email-slide">
+                        <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 6" draggable="false">
                     </div>
                 </div>
-                <video id="previewVideo" class="video-thumbnail" playsinline muted loop autoplay>
-                    <source src="video.mp4" type="video/mp4">
-                </video>
-                <video id="mainVideo" controls playsinline>
-                    <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
             </div>
 
             <div class="pricing-card">
                 <div class="benefits-container">
                     <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
-                        <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
+                        <div class="benefit-text">How to structure meals for steady fat loss</div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
-                        <div class="benefit-text">One payment of $599 with no hidden fees</div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/vTpPjjyY/dumbbell.png" alt="Dumbbell icon"></div>
+                        <div class="benefit-text">Picking exercises that prevent muscle loss</div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
-                        <div class="benefit-text">Love it or get a full refund within 30 days</div>
+                        <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
+                        <div class="benefit-text">Setting reasonable goals and staying on track</div>
                     </div>
                 </div>
             </div>
 
             <div class="form-wrapper">
-                <div class="progress-bar-container">
-                    <div class="progress-bar-step active"></div>
-                    <div class="progress-bar-step"></div>
-                    <div class="progress-bar-step"></div>
-                </div>
                 <div class="form-title">Contact Information</div>
-                <p class="form-subtitle">If you're curious how this could help you, send me your contact info so I can show you how this works.</p>
-                <form action="calendar.html" method="POST" id="contactForm" class="contact-form" autocomplete="on">
+                <p class="form-subtitle">Send me your contact info. Your phone number is only used to notify you when emails arrive.</p>
+                <form action="calendar.php" method="GET" id="contactForm" class="contact-form" autocomplete="on">
                     <div class="name-row">
                         <div class="name-field">
                             <input type="text" id="firstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
@@ -1326,7 +1367,7 @@
 
                     <button type="submit" class="submit-button">Submit</button>
                     <div class="fine-print">
-                        <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.
+                        <p>I respect your privacy. Your email and phone number will only be used to deliver the 7 emails you're requesting. I will never sell or share your data. Unsubscribe at anytime.
                             <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
                         </p>
                     </div>
@@ -1340,46 +1381,52 @@
         <!-- New centered header section -->
         <div class="desktop-header-section">
             <div class="desktop-header">
-                <h1 class="desktop-headline">6-Week Online Weight Loss Mentorship</h1>
-                <p class="desktop-subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
+                <h1 class="desktop-headline">How I Get Back in Shape in 6 Weeks</h1>
+                <p class="desktop-subheadline">I'll teach you how I optimize my diet and training over 6 weeks to whip myself back into shape so you can do the same.</p>
             </div>
         </div>
         
-        <!-- Content section with video on left and form on right -->
+        <!-- Content section with image on left and form on right -->
         <div class="desktop-content-section">
-            <!-- Left Column - Video -->
             <div class="left-column">
                 <div class="desktop-content">
-                    <div class="desktop-video-container" id="desktopVideoContainer">
-                        <div class="play-button" id="desktopPlayButton">
-                            Watch how this works
-                            <div class="play-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                                </svg>
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <div class="email-slide prev">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 7" draggable="false">
+                            </div>
+                            <div class="email-slide active">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 1" draggable="false">
+                            </div>
+                            <div class="email-slide next">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 2" draggable="false">
+                            </div>
+                            <div class="email-slide">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 3" draggable="false">
+                            </div>
+                            <div class="email-slide">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 4" draggable="false">
+                            </div>
+                            <div class="email-slide">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 5" draggable="false">
+                            </div>
+                            <div class="email-slide">
+                                <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 6" draggable="false">
                             </div>
                         </div>
-                        <video id="desktopPreviewVideo" class="video-thumbnail" playsinline muted loop autoplay>
-                            <source src="video.mp4" type="video/mp4">
-                        </video>
-                        <video id="desktopMainVideo" controls playsinline>
-                            <source src="video.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
                     </div>
-
                     <div class="desktop-benefits-container">
                         <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
-                            <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
+                            <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
+                            <div class="benefit-text">How to structure meals for steady fat loss</div>
                         </div>
                         <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
-                            <div class="benefit-text">One payment of $599 with no hidden fees</div>
+                            <div class="benefit-icon"><img src="https://i.postimg.cc/vTpPjjyY/dumbbell.png" alt="Dumbbell icon"></div>
+                            <div class="benefit-text">Picking exercises that prevent muscle loss</div>
                         </div>
                         <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
-                            <div class="benefit-text">Love it or get a full refund within 30 days</div>
+                            <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
+                            <div class="benefit-text">Setting reasonable goals and staying on track</div>
                         </div>
                     </div>
                 </div>
@@ -1390,14 +1437,9 @@
                 <div class="desktop-content">
                     <div class="form-container">
                         <div class="form-wrapper">
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-step active"></div>
-                                <div class="progress-bar-step"></div>
-                                <div class="progress-bar-step"></div>
-                            </div>
                             <div class="form-title">Contact Information</div>
                             <p class="form-subtitle">If you're curious how this could help you, send me your contact info so I can show you how this works.</p>
-                            <form action="calendar.html" method="POST" id="desktopContactForm" class="contact-form" autocomplete="on">
+                            <form action="calendar.php" method="GET" id="desktopContactForm" class="contact-form" autocomplete="on">
                                 <div class="name-row">
                                     <div class="name-field">
                                         <input type="text" id="desktopFirstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
@@ -1429,7 +1471,7 @@
 
                                 <button type="submit" class="submit-button">Submit</button>
                                 <div class="fine-print">
-                                    <p>I respect your privacy. Your email and phone number will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.
+                                    <p>I respect your privacy. Your email and phone number will only be used to deliver the 7 emails you're requesting. I will never sell or share your data. Unsubscribe at anytime.
                                         <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
                                     </p>
                                 </div>
@@ -1441,14 +1483,10 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" defer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Setup video functionality for both mobile and desktop
-            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
-            setupVideoPlayer('desktopVideoContainer', 'desktopPreviewVideo', 'desktopMainVideo', 'desktopPlayButton');
-
             // Setup form validation for both mobile and desktop
             setupFormValidation('contactForm', {
                 firstName: document.getElementById('firstName'),
@@ -1464,66 +1502,102 @@
                 phone: document.getElementById('desktopPhone')
             });
 
-            // Video player functionality
-            function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
-                const videoContainer = document.getElementById(containerId);
-                const previewVideo = document.getElementById(previewId);
-                const mainVideo = document.getElementById(mainId);
-                const playButton = document.getElementById(buttonId);
-                
-                if (!videoContainer || !previewVideo || !mainVideo || !playButton) return;
-                
-                // Set up 5-second preview loop
-                previewVideo.addEventListener('timeupdate', function() {
-                    if (previewVideo.currentTime >= 5) {
-                        previewVideo.currentTime = 0;
+            // Carousel functionality
+            const carousels = document.querySelectorAll('.carousel-container');
+            
+            carousels.forEach(carousel => {
+                const track = carousel.querySelector('.carousel-track');
+                const slides = Array.from(carousel.querySelectorAll('.email-slide'));
+                let currentIndex = slides.findIndex(slide => slide.classList.contains('active'));
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                function updateSlides() {
+                    slides.forEach((slide, index) => {
+                        slide.classList.remove('active', 'prev', 'next');
+                        if (index === currentIndex) {
+                            slide.classList.add('active');
+                        } else if (index === getPrevIndex()) {
+                            slide.classList.add('prev');
+                        } else if (index === getNextIndex()) {
+                            slide.classList.add('next');
+                        }
+                    });
+                }
+
+                function getPrevIndex() {
+                    return (currentIndex - 1 + slides.length) % slides.length;
+                }
+
+                function getNextIndex() {
+                    return (currentIndex + 1) % slides.length;
+                }
+
+                function goToSlide(index) {
+                    currentIndex = index;
+                    if (currentIndex < 0) currentIndex = slides.length - 1;
+                    if (currentIndex >= slides.length) currentIndex = 0;
+                    updateSlides();
+                }
+
+                // Touch events
+                carousel.addEventListener('touchstart', e => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                    e.preventDefault();
+                }, { passive: false });
+
+                carousel.addEventListener('touchmove', e => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    currentX = e.touches[0].clientX;
+                }, { passive: false });
+
+                carousel.addEventListener('touchend', e => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    const walk = startX - currentX;
+                    
+                    if (Math.abs(walk) > 50) {
+                        if (walk > 0) {
+                            goToSlide(currentIndex + 1);
+                        } else {
+                            goToSlide(currentIndex - 1);
+                        }
                     }
                 });
 
-                // Ensure preview starts playing
-                previewVideo.muted = true; // Ensure muted for autoplay
-                previewVideo.play().catch(e => {
-                    console.log('Preview autoplay failed:', e);
+                // Mouse events
+                carousel.addEventListener('mousedown', e => {
+                    startX = e.clientX;
+                    isDragging = true;
+                    e.preventDefault();
                 });
 
-                // Click handler for video container
-                videoContainer.addEventListener('click', function() {
-                    // Add playing class to container to trigger CSS changes
-                    videoContainer.classList.add('playing');
+                window.addEventListener('mousemove', e => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    currentX = e.clientX;
+                });
+
+                window.addEventListener('mouseup', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    const walk = startX - currentX;
                     
-                    // Hide preview video and show main video
-                    previewVideo.style.display = 'none';
-                    mainVideo.style.display = 'block';
-                    
-                    // Enable standard controls immediately
-                    mainVideo.controls = true;
-                    
-                    // Play the main video
-                    const playPromise = mainVideo.play();
-                    
-                    // Handle potential play() promise rejection (happens in some browsers)
-                    if (playPromise !== undefined) {
-                        playPromise.then(_ => {
-                            console.log('Video playback started successfully');
-                        })
-                        .catch(error => {
-                            console.log('Error playing video:', error);
-                            // Make sure controls are still enabled even if play fails
-                            mainVideo.controls = true;
-                        });
+                    if (Math.abs(walk) > 50) {
+                        if (walk > 0) {
+                            goToSlide(currentIndex + 1);
+                        } else {
+                            goToSlide(currentIndex - 1);
+                        }
                     }
                 });
 
-                // Reset to preview state when video ends
-                mainVideo.addEventListener('ended', function() {
-                    videoContainer.classList.remove('playing');
-                    previewVideo.style.display = 'block';
-                    mainVideo.style.display = 'none';
-                    previewVideo.currentTime = 0;
-                    previewVideo.play();
-                    mainVideo.controls = false;
-                });
-            }
+                // Initialize
+                updateSlides();
+            });
 
             // Form validation functionality
             function setupFormValidation(formId, inputs) {
@@ -1631,7 +1705,7 @@
                 // Form submission
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-
+                    
                     // Check all fields
                     let isValid = true;
                     Object.keys(inputs).forEach(field => {
@@ -1666,7 +1740,7 @@
 
                     if (isValid) {
                         // If validation passes, submit the form
-                        window.location.href = 'calendar.html';
+                        window.location.href = 'calendar.php';
                     }
                 });
             }
