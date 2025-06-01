@@ -13,127 +13,20 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="video-thumb-optimized.png" fetchpriority="high">
+    <link rel="stylesheet" href="global.css">
     <style>
-        /* Simple 8-point spacing system */
+        /* Page-specific styles for index.php */
+        
+        /* Video aspect ratios */
         :root {
-            --space-1: 0.5rem;
-            /* 8px */
-            --space-2: 1rem;
-            /* 16px */
-            --space-3: 1.5rem;
-            /* 24px */
-            --space-4: 2rem;
-            /* 32px */
-            --space-5: 2.5rem;
-            /* 40px */
-            --space-6: 3rem;
-            /* 48px */
-            --form-gap: 1rem;
-            /* Consistent form spacing */
-
-            /* Light mode colors */
-            --primary: #1877F2;
-            --background: #f8f9fa;
-            --text: #222222;
-            --text-secondary: #717171;
-            --border: #c1c7cd;
-            --card-bg: #fff;
-            --error: #ff3b30;
-            --success: #4cd964;
-            --calendar-day-hover: #F0F9FF;
-            --calendar-border: #E5E7EB;
-            --divider: #E8EAED;
-            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-            --progress-inactive: #e0e0e0;
-            
-            /* Base font size */
-            font-size: 16px;
-            
-            /* Video aspect ratios */
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
             --desktop-video-ratio: 54.05%;
             /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
-            
-            /* Premium styling variables */
-            --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        /* Dark mode colors */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --primary: #1a8cff;
-                --background: #121212;
-                --text: #ffffff;
-                --text-secondary: #aaaaaa;
-                --border: #333333;
-                --card-bg: #1e1e1e;
-                --error: #ff453a;
-                --success: #30d158;
-                --calendar-day-hover: #1a3045;
-                --calendar-border: #333333;
-                --divider: #333333;
-                --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-                --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
-                --progress-inactive: #333333;
-            }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-        }
-
-        body {
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.5;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
         }
 
         .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             padding: var(--space-6) 0 var(--space-6);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes borderReveal {
-            from {
-                clip-path: inset(5% 5% 5% 5% round 15px);
-            }
-
-            to {
-                clip-path: inset(0% 0% 0% 0% round 14px);
-            }
-        }
-
-        @keyframes desktopBorderReveal {
-            from {
-                clip-path: inset(5% 5% 5% 5% round 11px);
-            }
-
-            to {
-                clip-path: inset(0% 0% 0% 0% round 10px);
-            }
         }
 
         .content {
@@ -156,24 +49,10 @@
             display: none;
         }
 
-        /* Header */
-        .headline {
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: var(--space-2);
-            letter-spacing: -0.015em;
-            color: var(--text);
-        }
-
+        /* Header - using global styles, only page-specific overrides here */
         .subheadline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
             max-width: 650px;
             margin: 0 auto;
-            line-height: 1.5;
-            font-weight: 500;
-            letter-spacing: -0.005em;
         }
 
         /* Update image container styles to preserve natural dimensions */
@@ -338,12 +217,8 @@
             margin: 0 auto;
         }
 
-        /* Contact Form Styles */
+        /* Contact Form Styles - page-specific overrides only */
         .form-wrapper {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            position: relative;
             padding-top: var(--space-4);
         }
 
@@ -355,25 +230,6 @@
             position: relative;
         }
 
-        .form-title {
-            color: var(--text);
-            font-weight: 700;
-            font-size: 1.125rem;
-            line-height: 1.2;
-            padding: 0;
-            background-color: var(--background);
-            text-align: left;
-            margin-bottom: var(--space-1);
-        }
-
-        .form-subtitle {
-            color: var(--text);
-            font-size: 1.125rem;
-            margin-bottom: var(--space-3);
-            line-height: 1.4;
-            text-align: left;
-        }
-
         .contact-form {
             width: 100%;
             display: flex;
@@ -381,20 +237,16 @@
             gap: var(--form-gap);
         }
 
-        /* Form with floating labels */
-        .form-group,
+        /* Form with floating labels - page-specific */
         .name-field {
             position: relative;
+            flex: 1;
         }
 
         .name-row {
             display: flex;
             gap: var(--form-gap);
             width: 100%;
-        }
-
-        .name-field {
-            flex: 1;
         }
 
         .form-input {
@@ -563,14 +415,6 @@
                 display: block;
             }
 
-            .headline {
-                font-size: 1.875rem;
-            }
-
-            .subheadline {
-                font-size: 1rem;
-            }
-
             .price-container {
                 margin: 10px 0 6px;
             }
@@ -608,48 +452,9 @@
                 max-width: 100%;
             }
 
-            .form-title {
-                font-size: 1rem;
-            }
-
-            .form-subtitle {
-                font-size: 0.875rem;
-            }
-
             .name-row {
                 flex-direction: row;
                 gap: var(--form-gap);
-            }
-
-            .form-input {
-                padding: 24px 12px 8px;
-                font-size: 1rem;
-                height: 52px;
-            }
-
-            .form-label {
-                font-size: 1rem;
-                top: 50%;
-                left: 12px;
-                line-height: 1;
-                transform: translateY(-50%);
-            }
-
-            .form-input:focus~.form-label,
-            .form-input:not(:placeholder-shown)~.form-label {
-                top: 8px;
-                transform: translateY(0) scale(0.75);
-                background-color: var(--card-bg);
-                padding: 0 4px;
-                margin-left: -2px;
-            }
-
-            .error-message {
-                top: 56px;
-            }
-
-            .disclaimer {
-                font-size: 0.7rem;
             }
         }
 
@@ -1117,35 +922,6 @@
             color: var(--primary);
         }
 
-        /* For dark mode support on autofill */
-        @media (prefers-color-scheme: dark) {
-            input:-webkit-autofill,
-            input:-webkit-autofill:hover,
-            input:-webkit-autofill:focus {
-                -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
-                -webkit-text-fill-color: var(--text) !important;
-                caret-color: var(--text);
-            }
-            
-            /* Improve contrast for icons on dark mode */
-            .play-icon {
-                background-color: #ffffff;
-            }
-            
-            .play-icon svg {
-                fill: #000000;
-            }
-            
-            /* Ensure form inputs and validation are visible */
-            .form-input {
-                color: var(--text);
-            }
-            
-            .validation-mark {
-                color: #000000;
-            }
-        }
-
         /* Email Carousel Styles */
         .carousel-container {
             position: relative;
@@ -1171,38 +947,41 @@
             position: absolute;
             width: auto;
             height: 100%;
+            max-height: 100%;
             flex-shrink: 0;
-            transition: all 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0;
             pointer-events: none;
             display: flex;
             justify-content: center;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) scale(0.7);
         }
 
         .email-slide.active {
             opacity: 1;
             transform: translateX(-50%) scale(1);
-            z-index: 2;
+            z-index: 3;
             pointer-events: auto;
         }
 
         .email-slide.prev {
-            opacity: 0.5;
-            transform: translateX(calc(-50% - 30%)) scale(0.85);
-            z-index: 1;
+            opacity: 0.7;
+            z-index: 2;
+            pointer-events: none;
         }
 
         .email-slide.next {
-            opacity: 0.5;
-            transform: translateX(calc(-50% + 30%)) scale(0.85);
-            z-index: 1;
+            opacity: 0.7;
+            z-index: 2;
+            pointer-events: none;
         }
 
         .email-slide img {
             height: 100%;
             width: auto;
+            max-width: none;
             object-fit: contain;
             user-select: none;
             -webkit-user-drag: none;
@@ -1210,43 +989,35 @@
             position: relative;
         }
 
+        /* Remove the fade effect */
         .email-slide::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30%;
-            background: linear-gradient(to top, 
-                rgba(255, 255, 255, 1) 0%,
-                rgba(255, 255, 255, 0.9) 20%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        /* Dark mode support for the fade effect */
-        @media (prefers-color-scheme: dark) {
-            .email-slide::after {
-                background: linear-gradient(to top, 
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.9) 20%,
-                    rgba(255, 255, 255, 0) 100%
-                );
-            }
+            display: none;
         }
 
         /* Desktop specific styles */
         @media (min-width: 769px) {
             .carousel-container {
                 padding-bottom: var(--desktop-video-ratio);
+                max-width: 650px;
             }
         }
 
         @media (max-width: 768px) {
             .carousel-container {
-                max-width: 350px;
+                max-width: 650px;
+            }
+            
+            /* Remove the added styles that were breaking layout */
+            .header-group {
+                padding: 0;
+            }
+            
+            /* Remove the added styles that were breaking widget */
+            .pricing-card {
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 650px;
+                margin: 0 auto var(--space-1);
             }
         }
     </style>
@@ -1474,7 +1245,7 @@
                 phone: document.getElementById('desktopPhone')
             });
 
-            // Carousel functionality
+            // Carousel functionality with fluid scrolling
             const carousels = document.querySelectorAll('.carousel-container');
             
             carousels.forEach(carousel => {
@@ -1482,93 +1253,292 @@
                 const slides = Array.from(carousel.querySelectorAll('.email-slide'));
                 let currentIndex = slides.findIndex(slide => slide.classList.contains('active'));
                 let startX = 0;
+                let startY = 0;
                 let currentX = 0;
+                let currentY = 0;
                 let isDragging = false;
+                let isVerticalScroll = false;
+                let dragStartTime = 0;
+                let lastX = 0;
+                let velocity = 0;
 
-                function updateSlides() {
+                // Get carousel width for calculations
+                function getCarouselWidth() {
+                    return carousel.offsetWidth;
+                }
+
+                function updateSlides(progress = 0) {
+                    const totalSlides = slides.length;
+                    const containerWidth = carousel.offsetWidth;
+                    
                     slides.forEach((slide, index) => {
                         slide.classList.remove('active', 'prev', 'next');
-                        if (index === currentIndex) {
+                        
+                        // Calculate relative position with wrapping for infinite scroll
+                        let offset = index - currentIndex;
+                        
+                        // Wrap around for infinite scroll
+                        if (offset > totalSlides / 2) {
+                            offset -= totalSlides;
+                        } else if (offset < -totalSlides / 2) {
+                            offset += totalSlides;
+                        }
+                        
+                        const position = offset - progress;
+                        
+                        // Hide slides that are too far away
+                        if (Math.abs(position) > 1.5) {
+                            slide.style.opacity = '0';
+                            slide.style.pointerEvents = 'none';
+                            slide.style.transform = `translateX(-50%) scale(0.5)`;
+                            return;
+                        }
+                        
+                        // Get the image width (approximate)
+                        const imgWidth = slide.querySelector('img') ? slide.querySelector('img').offsetWidth : 240;
+                        const sideScale = 0.85;
+                        
+                        // Calculate edge positions
+                        const leftEdge = -(containerWidth / 2) + (imgWidth * sideScale / 2);
+                        const rightEdge = (containerWidth / 2) - (imgWidth * sideScale / 2);
+                        
+                        // Smooth interpolation based on position
+                        let x, scale, opacity;
+                        
+                        if (Math.abs(position) <= 1) {
+                            // Slide is in view or transitioning
+                            if (position === 0) {
+                                // Exactly center
+                                x = 0;
+                                scale = 1;
+                                opacity = 1;
+                            } else if (position > 0) {
+                                // Moving towards right
+                                const t = Math.min(Math.abs(position), 1);
+                                x = rightEdge * t;
+                                scale = 1 - (1 - sideScale) * t;
+                                opacity = 1 - 0.3 * t;
+                            } else {
+                                // Moving towards left
+                                const t = Math.min(Math.abs(position), 1);
+                                x = leftEdge * t;
+                                scale = 1 - (1 - sideScale) * t;
+                                opacity = 1 - 0.3 * t;
+                            }
+                        } else {
+                            // Slide is off to the side
+                            if (position > 1) {
+                                // Far right
+                                x = rightEdge;
+                                scale = sideScale;
+                                opacity = 0.7 * (1 - (position - 1));
+                            } else {
+                                // Far left
+                                x = leftEdge;
+                                scale = sideScale;
+                                opacity = 0.7 * (1 - (Math.abs(position) - 1));
+                            }
+                        }
+                        
+                        // Determine z-index based on distance from center
+                        const zIndex = Math.abs(position) < 0.5 ? 3 : Math.abs(position) < 1 ? 2 : 1;
+                        
+                        // Apply transforms with improved easing
+                        slide.style.transform = `translateX(calc(-50% + ${x}px)) scale(${scale})`;
+                        slide.style.opacity = opacity;
+                        slide.style.zIndex = zIndex;
+                        slide.style.pointerEvents = Math.abs(position) < 0.5 ? 'auto' : 'none';
+                        
+                        // Add classes for styling
+                        if (Math.abs(position) < 0.1) {
                             slide.classList.add('active');
-                        } else if (index === getPrevIndex()) {
+                        } else if (position <= -0.9) {
                             slide.classList.add('prev');
-                        } else if (index === getNextIndex()) {
+                        } else if (position >= 0.9) {
                             slide.classList.add('next');
                         }
                     });
                 }
 
-                function getPrevIndex() {
-                    return (currentIndex - 1 + slides.length) % slides.length;
-                }
-
-                function getNextIndex() {
-                    return (currentIndex + 1) % slides.length;
-                }
-
-                function goToSlide(index) {
+                function goToSlide(index, animate = true) {
+                    // Remove bounds checking to allow infinite scroll
                     currentIndex = index;
-                    if (currentIndex < 0) currentIndex = slides.length - 1;
-                    if (currentIndex >= slides.length) currentIndex = 0;
+                    
+                    if (animate) {
+                        slides.forEach(slide => {
+                            slide.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        });
+                    } else {
+                        slides.forEach(slide => {
+                            slide.style.transition = 'none';
+                        });
+                    }
+                    
                     updateSlides();
+                    
+                    // Remove transitions after animation to allow smooth dragging
+                    if (animate) {
+                        setTimeout(() => {
+                            slides.forEach(slide => {
+                                slide.style.transition = 'none';
+                            });
+                        }, 300);
+                    }
                 }
 
-                // Touch events
+                // Touch events with vertical scroll detection
                 carousel.addEventListener('touchstart', e => {
                     startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    currentX = startX;
+                    currentY = startY;
                     isDragging = true;
-                    e.preventDefault();
-                }, { passive: false });
+                    isVerticalScroll = false;
+                    dragStartTime = Date.now();
+                    lastX = startX;
+                    velocity = 0;
+                    
+                    // Remove transitions during drag
+                    slides.forEach(slide => {
+                        slide.style.transition = 'none';
+                    });
+                }, { passive: true });
 
                 carousel.addEventListener('touchmove', e => {
                     if (!isDragging) return;
-                    e.preventDefault();
+                    
                     currentX = e.touches[0].clientX;
+                    currentY = e.touches[0].clientY;
+                    
+                    const deltaX = currentX - startX;
+                    const deltaY = currentY - startY;
+                    
+                    // Determine if this is a vertical scroll
+                    if (!isVerticalScroll && Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+                        isVerticalScroll = true;
+                        isDragging = false;
+                        return;
+                    }
+                    
+                    // If horizontal movement is dominant, prevent vertical scroll
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+                        e.preventDefault();
+                        
+                        // Calculate progress based on drag distance
+                        const carouselWidth = getCarouselWidth();
+                        const progress = -deltaX / (carouselWidth * 0.3); // 30% of width to move to next slide
+                        
+                        // Update velocity for momentum
+                        velocity = currentX - lastX;
+                        lastX = currentX;
+                        
+                        // Update slides with progress
+                        updateSlides(Math.max(-1, Math.min(1, progress)));
+                    }
                 }, { passive: false });
 
                 carousel.addEventListener('touchend', e => {
-                    if (!isDragging) return;
+                    if (!isDragging || isVerticalScroll) return;
                     isDragging = false;
-                    const walk = startX - currentX;
                     
-                    if (Math.abs(walk) > 50) {
-                        if (walk > 0) {
-                            goToSlide(currentIndex + 1);
-                        } else {
-                            goToSlide(currentIndex - 1);
+                    const deltaX = currentX - startX;
+                    const carouselWidth = getCarouselWidth();
+                    const threshold = carouselWidth * 0.2; // 20% threshold for snap
+                    const dragDuration = Date.now() - dragStartTime;
+                    const speed = Math.abs(velocity);
+                    
+                    // Determine if we should change slides based on distance, velocity, or time
+                    let shouldChangeSlide = Math.abs(deltaX) > threshold || 
+                                           (speed > 5 && dragDuration < 300);
+                    
+                    if (shouldChangeSlide) {
+                        if (deltaX > 0 || velocity > 5) {
+                            currentIndex--;
+                            if (currentIndex < 0) currentIndex = slides.length - 1;
+                            goToSlide(currentIndex);
+                        } else if (deltaX < 0 || velocity < -5) {
+                            currentIndex++;
+                            if (currentIndex >= slides.length) currentIndex = 0;
+                            goToSlide(currentIndex);
                         }
+                    } else {
+                        // Snap back to current slide
+                        goToSlide(currentIndex);
                     }
                 });
 
-                // Mouse events
+                // Mouse events for desktop
                 carousel.addEventListener('mousedown', e => {
                     startX = e.clientX;
+                    startY = e.clientY;
+                    currentX = startX;
                     isDragging = true;
+                    isVerticalScroll = false;
+                    dragStartTime = Date.now();
+                    lastX = startX;
+                    velocity = 0;
                     e.preventDefault();
+                    
+                    // Remove transitions during drag
+                    slides.forEach(slide => {
+                        slide.style.transition = 'none';
+                    });
                 });
 
                 window.addEventListener('mousemove', e => {
-                    if (!isDragging) return;
+                    if (!isDragging || isVerticalScroll) return;
                     e.preventDefault();
+                    
                     currentX = e.clientX;
+                    const deltaX = currentX - startX;
+                    
+                    // Calculate progress based on drag distance
+                    const carouselWidth = getCarouselWidth();
+                    const progress = -deltaX / (carouselWidth * 0.3);
+                    
+                    // Update velocity for momentum
+                    velocity = currentX - lastX;
+                    lastX = currentX;
+                    
+                    // Update slides with progress
+                    updateSlides(Math.max(-1, Math.min(1, progress)));
                 });
 
                 window.addEventListener('mouseup', () => {
-                    if (!isDragging) return;
+                    if (!isDragging || isVerticalScroll) return;
                     isDragging = false;
-                    const walk = startX - currentX;
                     
-                    if (Math.abs(walk) > 50) {
-                        if (walk > 0) {
-                            goToSlide(currentIndex + 1);
-                        } else {
-                            goToSlide(currentIndex - 1);
+                    const deltaX = currentX - startX;
+                    const carouselWidth = getCarouselWidth();
+                    const threshold = carouselWidth * 0.2;
+                    const dragDuration = Date.now() - dragStartTime;
+                    const speed = Math.abs(velocity);
+                    
+                    let shouldChangeSlide = Math.abs(deltaX) > threshold || 
+                                           (speed > 5 && dragDuration < 300);
+                    
+                    if (shouldChangeSlide) {
+                        if (deltaX > 0 || velocity > 5) {
+                            currentIndex--;
+                            if (currentIndex < 0) currentIndex = slides.length - 1;
+                            goToSlide(currentIndex);
+                        } else if (deltaX < 0 || velocity < -5) {
+                            currentIndex++;
+                            if (currentIndex >= slides.length) currentIndex = 0;
+                            goToSlide(currentIndex);
                         }
+                    } else {
+                        goToSlide(currentIndex);
                     }
                 });
 
                 // Initialize
-                updateSlides();
+                goToSlide(currentIndex, false);
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    goToSlide(currentIndex, false);
+                });
             });
 
             // Form validation functionality
