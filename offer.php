@@ -10,7 +10,406 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="video-thumb-optimized.png" fetchpriority="high">
-    <link rel="stylesheet" href="global.css">
+    <style>
+        /* Global CSS Variables and Styles for BusyBarbell */
+
+        /* CSS Variables */
+        :root {
+            /* Spacing System - 8-point grid */
+            --space-1: 0.5rem;  /* 8px */
+            --space-2: 1rem;    /* 16px */
+            --space-3: 1.5rem;  /* 24px */
+            --space-4: 2rem;    /* 32px */
+            --space-5: 2.5rem;  /* 40px */
+            --space-6: 3rem;    /* 48px */
+            
+            /* Form Spacing */
+            --form-gap: 1rem;
+            
+            /* Colors */
+            --primary: #1877F2;
+            --background: #f8f9fa;
+            --text: #222222;
+            --text-secondary: #717171;
+            --border: #c1c7cd;
+            --card-bg: #fff;
+            --error: #ff3b30;
+            --success: #4cd964;
+            --divider: #E8EAED;
+            --progress-inactive: #e0e0e0;
+            
+            /* Calendar Specific Colors */
+            --calendar-day-hover: #F0F9FF;
+            --calendar-border: #E5E7EB;
+            
+            /* Shadows */
+            --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
+            
+            /* Transitions */
+            --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            
+            /* Gradients for Progress Bars */
+            --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+            --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
+            --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
+            
+            /* Questionnaire Specific */
+            --slider-blue: #E3F2FD;
+            --slider-blue-highlight: #1877F2;
+            --slider-track: #E0E0E0;
+            --slider-thumb: #1877F2;
+            
+            /* Base Font Size */
+            font-size: 16px;
+        }
+
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        }
+
+        /* Body Styles */
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Common Container Styles */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Common Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes borderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 15px);
+            }
+            to {
+                clip-path: inset(0% 0% 0% 0% round 14px);
+            }
+        }
+
+        @keyframes desktopBorderReveal {
+            from {
+                clip-path: inset(5% 5% 5% 5% round 11px);
+            }
+            to {
+                clip-path: inset(0% 0% 0% 0% round 10px);
+            }
+        }
+
+        /* Common Typography */
+        .headline {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: var(--space-2);
+            letter-spacing: -0.015em;
+            color: var(--text);
+        }
+
+        .subheadline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            letter-spacing: -0.005em;
+        }
+
+        /* Common Form Styles */
+        .form-wrapper {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .form-title {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.125rem;
+            line-height: 1.2;
+            padding: 0;
+            background-color: var(--background);
+            text-align: left;
+            margin-bottom: var(--space-1);
+        }
+
+        .form-subtitle {
+            color: var(--text);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-3);
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 24px 14px 8px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1.125rem;
+            color: var(--text);
+            background-color: var(--card-bg);
+            height: 56px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-input::placeholder {
+            color: transparent;
+        }
+
+        .form-label {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 16px;
+            pointer-events: none;
+            transition: transform 0.2s, top 0.2s;
+            transform-origin: 0 0;
+            background-color: transparent;
+            line-height: 1;
+            padding: 0 2px;
+        }
+
+        /* When input is focused or has content */
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label,
+        .form-input:-webkit-autofill ~ .form-label {
+            top: 8px;
+            transform: translateY(0) scale(0.75);
+            color: var(--text-secondary);
+            background-color: var(--card-bg);
+            padding: 0 4px;
+            margin-left: -2px;
+        }
+
+        /* Instagram autofill styling support */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+            -webkit-text-fill-color: var(--text) !important;
+            caret-color: var(--text);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Validation States */
+        .validation-mark {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            background-color: var(--success);
+            font-size: 10px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-input.valid:not(:focus) ~ .validation-mark {
+            opacity: 1;
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .form-input.error ~ .form-label {
+            color: var(--error);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            display: none;
+            text-align: left;
+            padding-left: 2px;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            line-height: 1.2;
+        }
+
+        .form-input.error ~ .error-message {
+            display: block;
+        }
+
+        /* Common Button Styles */
+        .submit-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: var(--space-2) 0;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.25s ease;
+            margin-top: var(--space-1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button:hover {
+            background-color: #166FE5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+        }
+
+        /* Progress Bar Styles */
+        .progress-bar-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar-step {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--progress-inactive);
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-step.active:nth-child(1) {
+            background: var(--gradient-1);
+        }
+
+        .progress-bar-step.active:nth-child(2) {
+            background: var(--gradient-2);
+        }
+
+        .progress-bar-step.active:nth-child(3) {
+            background: var(--gradient-3);
+        }
+
+        /* Common Disclaimer Styles */
+        .disclaimer {
+            max-width: 650px;
+            margin: var(--space-4) auto 0;
+            padding-top: var(--space-4);
+            line-height: 1.5;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Accessibility */
+        a:focus,
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Responsive Typography */
+        @media (max-width: 768px) {
+            .headline {
+                font-size: 1.875rem;
+            }
+            
+            .subheadline {
+                font-size: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1rem;
+            }
+            
+            .form-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .form-input {
+                padding: 24px 12px 8px;
+                font-size: 1rem;
+                height: 52px;
+            }
+            
+            .form-label {
+                font-size: 1rem;
+                left: 12px;
+            }
+            
+            .form-input:focus ~ .form-label,
+            .form-input:not(:placeholder-shown) ~ .form-label {
+                top: 8px;
+                transform: translateY(0) scale(0.75);
+                background-color: var(--card-bg);
+                padding: 0 4px;
+                margin-left: -2px;
+            }
+            
+            .error-message {
+                top: 56px;
+            }
+            
+            .disclaimer {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Desktop Base Font Size */
+        @media (min-width: 769px) {
+            :root {
+                font-size: 16px;
+            }
+        }
+    </style>
     <link rel="dns-prefetch" href="https://api.cal.com">
     <link rel="preconnect" href="https://api.cal.com" crossorigin>
     <style>
