@@ -1955,48 +1955,22 @@
                     <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
                 </div>
 
-                <div class="calendar-container">
-                    <div class="month-calendar">
-                        <div class="calendar-header">
-                            <div class="month-nav">
-                                <div class="month-title">May <span>2025</span></div>
-                                <div class="nav-buttons">
-                                    <button class="nav-button prev-month" aria-label="Previous month">
-                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="nav-button next-month" aria-label="Next month">
-                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="weekdays" role="row">
-                            <div class="weekday" role="columnheader">SUN</div>
-                            <div class="weekday" role="columnheader">MON</div>
-                            <div class="weekday" role="columnheader">TUE</div>
-                            <div class="weekday" role="columnheader">WED</div>
-                            <div class="weekday" role="columnheader">THU</div>
-                            <div class="weekday" role="columnheader">FRI</div>
-                            <div class="weekday" role="columnheader">SAT</div>
-                        </div>
-                        <div class="calendar-days" role="grid">
-                            <!-- Days will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    <div class="day-view">
-                        <div class="time-header">
-                            <div class="day-title">Thu 08</div>
-                            <div class="event-timezone">
-                                <select id="membership-timezone-select" class="timezone-select">
-                                    <!-- Will be populated by JavaScript -->
-                                </select>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                        </div>
-                        <div class="time-slots-grid" role="list">
-                            <!-- Time slots will be populated by JavaScript -->
-                        </div>
-                    </div>
+                <div style="width:100%;height:600px;border-radius:12px;overflow:hidden;">
+                    <!-- Cal inline embed code begins -->
+                    <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
+                    <script type="text/javascript">
+                      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+                    Cal("init", "discovery", {origin:"https://cal.com"});
+
+                      Cal.ns.discovery("inline", {
+                        elementOrSelector:"#my-cal-inline",
+                        config: {"layout":"month_view","theme":"light"},
+                        calLink: "busy-barbell/discovery",
+                      });
+
+                      Cal.ns.discovery("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#0069ff"},"dark":{"cal-brand":"#0069ff"}},"hideEventTypeDetails":true,"layout":"month_view"});
+                    </script>
+                    <!-- Cal inline embed code ends -->
                 </div>
             </div>
         </div>
@@ -2062,47 +2036,23 @@
             <!-- Right Column - Calendar -->
             <div class="right-column">
                 <div class="desktop-content">
-                    <div class="calendar-container">
-                        <div class="month-calendar">
-                            <div class="calendar-header">
-                                <div class="month-nav">
-                                    <div class="month-title">May <span>2025</span></div>
-                                    <div class="nav-buttons">
-                                        <button class="nav-button" id="desktopPrevMonth">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </button>
-                                        <button class="nav-button" id="desktopNextMonth">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="weekdays" role="row">
-                                <div class="weekday" role="columnheader">SUN</div>
-                                <div class="weekday" role="columnheader">MON</div>
-                                <div class="weekday" role="columnheader">TUE</div>
-                                <div class="weekday" role="columnheader">WED</div>
-                                <div class="weekday" role="columnheader">THU</div>
-                                <div class="weekday" role="columnheader">FRI</div>
-                                <div class="weekday" role="columnheader">SAT</div>
-                            </div>
-                            <div class="calendar-days" role="grid">
-                                <!-- Calendar days will be populated by JavaScript -->
-                            </div>
+                    <div class="calendar-wrapper" style="background: var(--card-bg); border-radius: 16px; padding: var(--space-4); box-shadow: var(--premium-shadow); border: 1px solid var(--border); height: fit-content; position: sticky; top: var(--space-4);">
+                        <div class="calendar-header-text">
+                            <h2 class="form-title">Book Your Call</h2>
+                            <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
                         </div>
-                        <div class="day-view">
-                            <div class="time-header">
-                                <div class="day-title">Thu 08</div>
-                                <div class="event-timezone">
-                                    <select id="desktopTimezone" class="timezone-select">
-                                        <!-- Will be populated by JavaScript -->
-                                    </select>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                            <div class="time-slots-grid" role="list">
-                                <!-- Time slots will be populated by JavaScript -->
-                            </div>
+
+                        <div style="width:100%;height:700px;border-radius:12px;overflow:hidden;">
+                            <!-- Cal inline embed code begins -->
+                            <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-desktop"></div>
+                            <script type="text/javascript">
+                              Cal.ns.discovery("inline", {
+                                elementOrSelector:"#my-cal-inline-desktop",
+                                config: {"layout":"month_view","theme":"light"},
+                                calLink: "busy-barbell/discovery",
+                              });
+                            </script>
+                            <!-- Cal inline embed code ends -->
                         </div>
                     </div>
                 </div>
@@ -2429,7 +2379,6 @@
 
                         const dayDate = new Date(year, month, day);
                         const today = new Date();
-                        const dateKey = dayDate.toISOString().split('T')[0];
                         
                         // Mark today
                         if (this.isSameDay(dayDate, today)) {
@@ -2440,11 +2389,6 @@
                         if (this.isSameDay(dayDate, this.selectedDate)) {
                         dayElement.classList.add('selected');
                     }
-
-                        // Check if this date has available slots (async check)
-                        if (dayDate >= today.setHours(0, 0, 0, 0)) {
-                            this.checkDateAvailability(dateKey, dayElement);
-                        }
 
                         // Disable past dates
                         if (dayDate < today.setHours(0, 0, 0, 0)) {
@@ -2483,23 +2427,6 @@
                             day.className = 'calendar-day other-month';
                             calendarDays.appendChild(day);
                         }
-                    }
-                },
-                
-                async checkDateAvailability(dateKey, dayElement) {
-                    try {
-                        const response = await fetch(`cal_api.php?action=availability&event_type_id=${this.eventTypeId}&date=${dateKey}&timezone=${this.selectedTimezone}`);
-                        
-                        if (response.ok) {
-                            const data = await response.json();
-                            
-                            // Check if this date has available slots
-                            if (data.slots && data.slots[dateKey] && data.slots[dateKey].length > 0) {
-                                dayElement.classList.add('available');
-                            }
-                        }
-                    } catch (error) {
-                        console.error(`Error checking availability for ${dateKey}:`, error);
                     }
                 },
                 
@@ -2554,13 +2481,6 @@
                     this.renderTimeSlotsForContainer(timeSlotsGrid);
                 },
                 
-                async renderDesktopTimeSlots() {
-                    const timeSlotsGrid = document.querySelector('.right-column .time-slots-grid');
-                    if (!timeSlotsGrid) return;
-                    
-                    await this.renderTimeSlotsForContainer(timeSlotsGrid);
-                },
-                
                 async renderTimeSlotsForContainer(container) {
                     container.innerHTML = '<div style="text-align: center; padding: 20px;">Loading available times...</div>';
                     
@@ -2573,8 +2493,8 @@
                         // Format date for Cal.com API (YYYY-MM-DD)
                         const dateStr = this.selectedDate.toISOString().split('T')[0];
                         
-                        // Get availability from Cal.com
-                        const response = await fetch(`cal_api.php?action=availability&event_type_id=${this.eventTypeId}&date=${dateStr}&timezone=${this.selectedTimezone}`);
+                        // Get availability from Cal.com (with fallback)
+                        const response = await fetch(`calendar_fallback.php?action=availability&event_type_id=${this.eventTypeId}&date=${dateStr}&timezone=${this.selectedTimezone}`);
                         
                         if (response.ok) {
                             const data = await response.json();
@@ -2638,7 +2558,7 @@
                     if (!this.selectedTime || !this.selectedSlot) {
                         alert('Please select a time slot first.');
                         return;
-                    }
+                                }
                     
                     // Get user info from URL parameters (passed through the funnel)
                     const urlParams = new URLSearchParams(window.location.search);
@@ -3150,22 +3070,26 @@
                 async createBooking(name, email, phone, slot) {
                     try {
                         // Get start time from the selected slot
-                        const startTime = new Date(slot.time);
+                        const startTime = new Date(this.selectedSlot.time);
                         
                         // Create booking data for Cal.com v2 API
                         const bookingData = {
-                            eventTypeId: parseInt(this.eventTypeId),
+                            eventTypeId: this.eventTypeId,
                             start: startTime.toISOString(),
-                            attendee: {
-                                name: name,
-                                email: email,
-                                timeZone: this.selectedTimezone,
-                                phoneNumber: phone
-                            }
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            timeZone: this.selectedTimezone,
+                            bookingFieldsResponses: [
+                                {
+                                    name: "phone",
+                                    value: phone
+                                }
+                            ]
                         };
                         
                         // Create booking via Cal.com API
-                        const response = await fetch('cal_api.php?action=create_booking', {
+                                                    const response = await fetch('calendar_fallback.php?action=create_booking', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -3173,7 +3097,7 @@
                             body: JSON.stringify(bookingData)
                         });
                         
-                        if (response.ok) {
+                                                if (response.ok) {
                             const result = await response.json();
                             
                             // Remove the modal
@@ -3202,8 +3126,6 @@
                             window.location.href = `confirmation.php?date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(this.selectedTime)}&timezone=${encodeURIComponent(this.selectedTimezone)}`;
                         } else {
                             const error = await response.json();
-                            console.error('Booking API error:', error);
-                            
                             // Reset button state on error
                             const modal = document.getElementById('booking-modal');
                             if (modal) {
@@ -3215,10 +3137,9 @@
                                 }
                             }
                             alert(`Booking failed: ${error.error || 'Unknown error'}`);
-                        }
+                }
                     } catch (error) {
                         console.error('Booking error:', error);
-                        
                         // Reset button state on error
                         const modal = document.getElementById('booking-modal');
                         if (modal) {
