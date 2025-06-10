@@ -1858,6 +1858,17 @@
                 font-size: 1rem;
                 margin-top: var(--space-2);
             }
+
+            .benefit-icon {
+                font-size: 0.875rem;
+                margin-bottom: 4px;
+            }
+
+            .benefit-text {
+                font-size: 0.6875rem;
+                line-height: 1.2;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
