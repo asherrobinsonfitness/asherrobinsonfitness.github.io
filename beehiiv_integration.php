@@ -146,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['currentWeight'])) {
     $result = $beehiiv->addSubscriber($contactData);
     
     if ($result['success']) {
-        // Success - redirect to questionnaire with all contact parameters
-        header('Location: questionnaire.php?email=' . urlencode($contactData['email']) . 
+        // Success - redirect directly to offer page, skipping questionnaire
+        header('Location: offer.php?success=1&email=' . urlencode($contactData['email']) . 
                '&firstName=' . urlencode($contactData['firstName']) . 
                '&lastName=' . urlencode($contactData['lastName']) . 
                '&phone=' . urlencode($contactData['phone']));
