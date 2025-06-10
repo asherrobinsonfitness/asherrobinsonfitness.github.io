@@ -132,7 +132,7 @@
             flex-direction: column;
             gap: var(--space-3);
             width: 100%;
-            padding: 0 var(--space-2);
+            padding: 0 1.5rem;
         }
 
         /* Calendar */
@@ -529,7 +529,7 @@
             }
 
             .content {
-                padding: 0 var(--space-2);
+                padding: 0 1.5rem;
                 gap: var(--space-2);
             }
 
@@ -1387,6 +1387,72 @@
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
+        /* Benefits Section */
+        .benefits-card {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 0;
+            max-width: 450px;
+            margin: var(--space-3) auto 0;
+            border: 1px solid var(--border);
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
+        }
+
+        .benefits-card:hover {
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .benefits-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .benefit-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 12px;
+            position: relative;
+        }
+
+        .benefit-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--divider);
+        }
+
+        .benefit-icon {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .benefit-icon img {
+            height: 28px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.2s;
+        }
+
+        .benefit-item:hover .benefit-icon img {
+            transform: translateY(-2px);
+        }
+
+        .benefit-text {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--text);
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
         @media (max-width: 768px) {
             .cta-button {
                 padding: var(--space-2) 0;
@@ -1403,13 +1469,13 @@
         <div class="content">
                 <div class="form-wrapper">
                     <div class="form-title">You're Signed Up</div>
-                <p class="form-subtitle">Here is your first email. View it below or check your inbox.</p>
+                <p class="form-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
                 </div>
 
                 <div class="video-details-wrapper">
                     <div class="video-container" id="videoContainer">
                         <div class="play-button" id="playButton">
-                            Watch the training
+                            Here's what to expect
                             <div class="play-icon">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
@@ -1424,6 +1490,24 @@
                             Your browser does not support the video tag.
                         </video>
                     </div>
+
+                    <div class="benefits-card">
+                        <div class="benefits-container">
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
+                                <div class="benefit-text">How I ate to lose fat without feeling hungry</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/MZsVxTTg/gymmm.png" alt="Dumbbell icon"></div>
+                                <div class="benefit-text">The 2 workouts I did to prevent muscle loss</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
+                                <div class="benefit-text">The exact way I tracked progress to stay on target</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="mentorship.php<?php 
                         $params = [];
                         if (isset($_GET['email'])) $params[] = 'email=' . urlencode($_GET['email']);
@@ -1433,57 +1517,6 @@
                         echo !empty($params) ? '?' . implode('&', $params) : '';
                     ?>" class="cta-button">Want my help? Click Here</a>
                 </div>
-
-            <div class="email-content">
-                <div class="intro-text">
-                    <h2 class="intro-heading">Get Your Own Facial Analysis</h2>
-                    <p class="intro-description">Qoves is a complete solution for achieving the best-looking version of yourself from the comfort of your home and without any surgery. Our work is based on more than 12,000 research papers and offers the most straightforward way to achieve a real facial transformation in just a few months.</p>
-                                </div>
-
-                <div class="large-image">
-                    <img src="https://i.postimg.cc/65C0CKjp/unnamed-5.png" alt="Summary of The Changes">
-                            </div>
-
-                <div class="summary-section">
-                    <h2 class="summary-title">Summary of <span>The Changes</span></h2>
-                    <div class="summary-grid">
-                        <div class="summary-box">
-                            <img src="https://i.postimg.cc/mDqwygWt/unnamed-1.png" alt="Science-Based Facial Analysis">
-                            <div class="summary-box-content">
-                                <h3 class="summary-box-title">Science-Based Facial Analysis</h3>
-                                <p class="summary-box-description">You will be able to get a facial analysis and understand how your facial features impact your appearance.</p>
-                        </div>
-                        </div>
-                        <div class="summary-box">
-                            <img src="https://i.postimg.cc/vTVvqwGX/unnamed-2.png" alt="Personalized Glow-Up Plan">
-                            <div class="summary-box-content">
-                                <h3 class="summary-box-title">Personalized Glow-Up Plan</h3>
-                                <p class="summary-box-description">In addition to your analysis, you also receive a detailed transformation plan with actionable steps.</p>
-                        </div>
-                    </div>
-                        <div class="summary-box">
-                            <img src="https://i.postimg.cc/gcCswjK7/unnamed-3.png" alt="See The Future You">
-                            <div class="summary-box-content">
-                                <h3 class="summary-box-title">See The Future You</h3>
-                                <p class="summary-box-description">Every QOVES user will receive realistic visualisation of what their best-looking self could realistically look like after their transformation.</p>
-                            </div>
-                        </div>
-                        <div class="summary-box">
-                            <img src="https://i.postimg.cc/59YpNL8v/unnamed-4.png" alt="Ongoing Year-Long Support">
-                            <div class="summary-box-content">
-                                <h3 class="summary-box-title">Ongoing Year-Long Support</h3>
-                                <p class="summary-box-description">Every member who joins QOVES will have year-long support from a team of doctors who check in on you to help you stick to your transformation plan.</p>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <div class="footer-fine-print">
-                <p class="copyright">© 2025 QOVES Limited, All Rights Reserved.</p>
-                <p><strong>Disclaimer:</strong><br>
-                Our facial assessments and recommendations are based on advanced aesthetic research and AI technology. Individual results may vary. For personalized advice, always consult with a qualified healthcare professional.</p>
-            </div>
         </div>
     </div>
 
@@ -1493,7 +1526,7 @@
             <div class="desktop-progress-container">
                 <div class="desktop-header-text">
                     <h1 class="desktop-title">You're Signed Up</h1>
-                    <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email</p>
+                    <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
                 </div>
             </div>
 
@@ -1501,13 +1534,13 @@
                 <div class="desktop-info-section">
                     <div class="desktop-header-text">
                         <h1 class="desktop-title">You're Signed Up</h1>
-                        <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email</p>
+                        <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
                     </div>
 
                     <div class="video-details-wrapper">
                         <div class="desktop-video-container" id="desktopVideoContainer">
                             <div class="play-button" id="desktopPlayButton">
-                                Watch the training
+                                Here's what to expect
                                 <div class="play-icon">
                                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
@@ -1523,6 +1556,24 @@
                             </video>
                         </div>
                     </div>
+
+                    <div class="benefits-card">
+                        <div class="benefits-container">
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
+                                <div class="benefit-text">How I ate to lose fat without feeling hungry</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/MZsVxTTg/gymmm.png" alt="Dumbbell icon"></div>
+                                <div class="benefit-text">The 2 workouts I did to prevent muscle loss</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
+                                <div class="benefit-text">The exact way I tracked progress to stay on target</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="mentorship.php<?php 
                         $params = [];
                         if (isset($_GET['email'])) $params[] = 'email=' . urlencode($_GET['email']);
@@ -1532,62 +1583,6 @@
                         echo !empty($params) ? '?' . implode('&', $params) : '';
                     ?>" class="cta-button">Want my help? Click Here</a>
                 </div>
-
-                    <div class="email-content">
-                        <div class="intro-text">
-                            <h2 class="intro-heading">Get Your Own Facial Analysis</h2>
-                            <p class="intro-description">Qoves is a complete solution for achieving the best-looking version of yourself from the comfort of your home and without any surgery. Our work is based on more than 12,000 research papers and offers the most straightforward way to achieve a real facial transformation in just a few months.</p>
-                    </div>
-
-                        <div class="large-image">
-                            <img src="https://i.postimg.cc/65C0CKjp/unnamed-5.png" alt="Summary of The Changes">
-                    </div>
-
-                        <div class="summary-section">
-                            <h2 class="summary-title">Summary of <span>The Changes</span></h2>
-                            <div class="summary-grid">
-                                <div class="summary-box">
-                                    <img src="https://i.postimg.cc/mDqwygWt/unnamed-1.png" alt="Science-Based Facial Analysis">
-                                    <div class="summary-box-content">
-                                        <h3 class="summary-box-title">Science-Based Facial Analysis</h3>
-                                        <p class="summary-box-description">You will be able to get a facial analysis and understand how your facial features impact your appearance.</p>
-                    </div>
-                </div>
-                                <div class="summary-box">
-                                    <img src="https://i.postimg.cc/vTVvqwGX/unnamed-2.png" alt="Personalized Glow-Up Plan">
-                                    <div class="summary-box-content">
-                                        <h3 class="summary-box-title">Personalized Glow-Up Plan</h3>
-                                        <p class="summary-box-description">In addition to your analysis, you also receive a detailed transformation plan with actionable steps.</p>
-                        </div>
-                    </div>
-                                <div class="summary-box">
-                                    <img src="https://i.postimg.cc/gcCswjK7/unnamed-3.png" alt="See The Future You">
-                                    <div class="summary-box-content">
-                                        <h3 class="summary-box-title">See The Future You</h3>
-                                        <p class="summary-box-description">Every QOVES user will receive realistic visualisation of what their best-looking self could realistically look like after their transformation.</p>
-                    </div>
-                                </div>
-                                <div class="summary-box">
-                                    <img src="https://i.postimg.cc/59YpNL8v/unnamed-4.png" alt="Ongoing Year-Long Support">
-                                    <div class="summary-box-content">
-                                        <h3 class="summary-box-title">Ongoing Year-Long Support</h3>
-                                        <p class="summary-box-description">Every member who joins QOVES will have year-long support from a team of doctors who check in on you to help you stick to your transformation plan.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="desktop-fine-print">
-                <p>I respect your privacy. Your information will only be used to communicate about your coaching inquiry. I will never sell or share your data. Unsubscribe at anytime.</p>
-            </div>
-
-            <div class="footer-fine-print">
-                <p class="copyright">© 2025 QOVES Limited, All Rights Reserved.</p>
-                <p><strong>Disclaimer:</strong><br>
-                Our facial assessments and recommendations are based on advanced aesthetic research and AI technology. Individual results may vary. For personalized advice, always consult with a qualified healthcare professional.</p>
             </div>
         </div>
     </div>
@@ -1606,8 +1601,6 @@
             const playButton = document.getElementById('playButton');
             const previewVideo = document.getElementById('previewVideo');
             const mainVideo = document.getElementById('mainVideo');
-            const calendarContainer = document.querySelector('.calendar-container');
-            const desktopCalendarWidget = document.querySelector('.desktop-calendar-widget');
 
             if (videoContainer && playButton && previewVideo && mainVideo) {
                 videoContainer.addEventListener('click', function() {
