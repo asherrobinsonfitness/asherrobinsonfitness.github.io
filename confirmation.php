@@ -346,43 +346,72 @@
             animation: fadeIn 0.6s ease-out forwards;
         }
 
-        /* Meeting Details */
+        /* Meeting Details - styled like benefits widget */
         .meeting-details {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 0;
+            max-width: 450px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            text-align: left;
+            justify-content: space-between;
+        }
+
+        .meeting-details:hover {
+            box-shadow: var(--card-hover-shadow);
         }
 
         .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-align: left;
+            flex: 1;
+            text-align: center;
+            padding: 0 12px;
+            position: relative;
+        }
+
+        .detail-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--divider);
         }
 
         .detail-icon {
-            width: 20px;
-            color: var(--text-secondary);
-            flex-shrink: 0;
+            margin-bottom: 10px;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 40px;
         }
 
-        .detail-icon img {
-            width: 20px;
-            height: auto;
+        .detail-icon i {
+            font-size: 28px;
+            color: var(--text-secondary);
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.2s;
+        }
+
+        .detail-item:hover .detail-icon i {
+            transform: translateY(-2px);
         }
 
         .detail-text {
+            font-size: 0.75rem;
+            line-height: 1.3;
             color: var(--text);
-            font-size: 0.875rem;
+            max-width: 160px;
+            margin: 0 auto;
         }
 
         .detail-title {
             font-weight: 600;
             color: var(--text);
+            margin-bottom: 2px;
         }
 
         /* FAQ Section Styles */
@@ -543,32 +572,36 @@
                     </div>
 
                     <div class="meeting-details">
-                    <div class="detail-item">
-                        <div class="detail-icon">
-                            <i class="far fa-clock"></i>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="detail-text">
+                                <div class="detail-title">Strategy Call</div>
+                                30 minutes
+                            </div>
                         </div>
-                        <div class="detail-text">
-                            <div class="detail-title">Strategy Call</div>
-                        </div>
-                    </div>
 
-                    <div class="detail-item">
-                        <div class="detail-icon">
-                            <i class="far fa-calendar"></i>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="far fa-calendar"></i>
+                            </div>
+                            <div class="detail-text">
+                                <div class="detail-title" id="booking-date">Thursday, August 8, 2024</div>
+                                <div id="booking-time">3:00pm - 3:30pm</div>
+                            </div>
                         </div>
-                        <div class="detail-text">
-                            <div class="detail-title" id="booking-date">Thursday, August 8, 2024</div>
-                            <div id="booking-time">3:00pm - 3:30pm</div>
-                        </div>
-                    </div>
 
-                    <div class="detail-item">
-                        <div class="detail-icon">
-                            <i class="fas fa-globe"></i>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="detail-text">
+                                <div class="detail-title">Timezone</div>
+                                <div id="booking-timezone">America/New York</div>
+                            </div>
                         </div>
-                        <div class="detail-text" id="booking-timezone">America/New York</div>
                     </div>
-                </div>
                 </div>
 
                 <!-- FAQ Section -->
