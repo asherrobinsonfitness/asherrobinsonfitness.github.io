@@ -19,12 +19,18 @@
         /* CSS Variables */
         :root {
             /* Spacing System - 8-point grid */
-            --space-1: 0.5rem;  /* 8px */
-            --space-2: 1rem;    /* 16px */
-            --space-3: 1.5rem;  /* 24px */
-            --space-4: 2rem;    /* 32px */
-            --space-5: 2.5rem;  /* 40px */
-            --space-6: 3rem;    /* 48px */
+            --space-1: 0.5rem;
+            /* 8px */
+            --space-2: 1rem;
+            /* 16px */
+            --space-3: 1.5rem;
+            /* 24px */
+            --space-4: 2rem;
+            /* 32px */
+            --space-5: 2.5rem;
+            /* 40px */
+            --space-6: 3rem;
+            /* 48px */
             
             /* Form Spacing */
             --form-gap: 1rem;
@@ -99,6 +105,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -109,6 +116,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 15px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 14px);
             }
@@ -118,6 +126,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 11px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 10px);
             }
@@ -205,9 +214,9 @@
         }
 
         /* When input is focused or has content */
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label,
-        .form-input:-webkit-autofill ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label,
+        .form-input:-webkit-autofill~.form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
@@ -229,7 +238,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
         }
 
         /* Validation States */
@@ -253,7 +261,7 @@
             justify-content: center;
         }
 
-        .form-input.valid:not(:focus) ~ .validation-mark {
+        .form-input.valid:not(:focus)~.validation-mark {
             opacity: 1;
         }
 
@@ -261,7 +269,7 @@
             border-color: var(--error);
         }
 
-        .form-input.error ~ .form-label {
+        .form-input.error~.form-label {
             color: var(--error);
         }
 
@@ -278,7 +286,7 @@
             line-height: 1.2;
         }
 
-        .form-input.error ~ .error-message {
+        .form-input.error~.error-message {
             display: block;
         }
 
@@ -301,7 +309,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -388,8 +395,8 @@
                 left: 12px;
             }
             
-            .form-input:focus ~ .form-label,
-            .form-input:not(:placeholder-shown) ~ .form-label {
+            .form-input:focus~.form-label,
+            .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
                 transform: translateY(0) scale(0.75);
                 background-color: var(--card-bg);
@@ -463,8 +470,7 @@
             /* Video aspect ratios */
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
-            --desktop-video-ratio: 54.05%;
-            /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
+
             
             /* Premium styling variables */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -488,9 +494,6 @@
         }
 
         .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             padding: var(--space-6) 0 var(--space-6);
         }
 
@@ -532,7 +535,8 @@
             display: flex;
             flex-direction: column;
             gap: var(--space-5);
-            max-width: 800px;
+            width: 100%;
+            max-width: 500px;
             padding: 0 1.5rem;
         }
 
@@ -541,10 +545,7 @@
             margin-bottom: var(--space-2);
         }
 
-        /* Hide desktop elements by default (mobile-first) */
-        .desktop-layout {
-            display: none;
-        }
+
 
         /* Header */
         .headline {
@@ -557,13 +558,8 @@
         }
 
         .subheadline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 650px;
+            max-width: 450px;
             margin: 0 auto;
-            line-height: 1.5;
-            font-weight: 500;
-            letter-spacing: -0.005em;
         }
 
         /* Video */
@@ -673,21 +669,19 @@
             display: none;
         }
 
-        /* Pricing Info */
-        .pricing-card {
+        /* Widget Section */
+        .widget {
             background-color: var(--card-bg);
             border-radius: 14px;
             padding: 12px 0;
-            max-width: 650px;
-            margin: 0 auto var(--space-1);
+            width: 100%;
+            margin: 0 auto;
             border: 1px solid var(--border);
             box-shadow: var(--premium-shadow);
             transition: var(--premium-transition);
         }
 
-        .pricing-card:hover {
-            box-shadow: var(--card-hover-shadow);
-        }
+
 
         .price-tag {
             background-color: #FFEC3D;
@@ -779,9 +773,7 @@
             transition: transform 0.2s;
         }
 
-        .benefit-item:hover .benefit-icon img {
-            transform: translateY(-2px);
-        }
+
 
         .benefit-text {
             font-size: 0.75rem;
@@ -909,7 +901,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
         }
 
         .submit-button {
@@ -930,7 +921,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -1006,15 +996,7 @@
                 padding: 0 1.25rem;
             }
 
-            /* Ensure desktop layout is hidden */
-            .desktop-layout {
-                display: none;
-            }
 
-            /* Show mobile layout */
-            .mobile-layout {
-                display: block;
-            }
 
             .headline {
                 font-size: 1.875rem;
@@ -1114,691 +1096,19 @@
                 font-size: 16px;
             }
 
-            /* Hide mobile layout */
-            .mobile-layout {
-                display: none;
-            }
 
-            /* Show desktop layout */
-            .desktop-layout {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                min-height: 100vh;
-                overflow-x: hidden;
-                background-color: var(--background);
-            }
-            
-            /* New centered header section */
-            .desktop-header-section {
-                width: 100%;
-                padding: 6rem 2rem 4rem;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .desktop-header {
-                max-width: 960px;
-                margin: 0 auto;
-                text-align: center;
-                animation: fadeIn 0.5s ease-out forwards;
-            }
 
-            .desktop-headline {
-                font-size: 2.375rem;
-                font-weight: 700;
-                line-height: 1.2;
-                margin-bottom: 1rem;
-                text-align: center;
-                color: var(--text);
-                letter-spacing: -0.015em;
-            }
 
-            .desktop-subheadline {
-                font-size: 1.25rem;
-                line-height: 1.5;
-                color: var(--text-secondary);
-                text-align: center;
-                max-width: 820px;
-                margin: 0 auto;
-                letter-spacing: -0.005em;
-                font-weight: 500;
-            }
-            
-            /* Content section with video on left and form on right */
-            .desktop-content-section {
-                display: flex;
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 2rem 6rem;
-            }
-            
-            .left-column {
-                width: 62%;
-                padding: 0 2rem 0 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-            }
 
-            .right-column {
-                width: 38%;
-                padding: 0 0 0 2rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-            }
 
-            .desktop-content {
-                width: 100%;
-                max-width: 560px;
-            }
-            
-            /* Container for the form with fixed height matching video */
-            .form-container {
-                width: 100%;
-                height: 0;
-                padding-bottom: calc(var(--desktop-video-ratio) + 9.2%); /* Match video height plus benefits row */
-                position: relative;
-                background-color: var(--card-bg);
-                border-radius: 10px;
-                border: 1px solid #e1e4e8;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-                overflow: hidden;
-            }
-            
-            .desktop-layout .form-wrapper {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                padding: 1.25rem;
-                margin: 0;
-                border: none;
-                box-shadow: none;
-                transform-origin: top center;
-                transform: scale(0.85);
-                background-color: transparent;
-                border-radius: 0;
-                height: 100%;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .desktop-layout .contact-form {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-            }
-            
-            .desktop-layout .fine-print {
-                font-size: 0.65rem;
-                line-height: 1.25;
-                margin-top: 0.5rem;
-            }
-            
-            .desktop-layout .fine-print p {
-                margin-bottom: 0.25rem;
-            }
-            
-            .desktop-layout .submit-button {
-                padding: 0.75rem 0;
-                margin-top: 0.375rem;
-            }
-            
-            .desktop-layout .play-button {
-                padding: 6px 10px 6px 22px;
-                font-size: 1rem;
-                background-color: rgba(0, 0, 0, 0.7);
-                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
-                border-radius: 999px;
-                font-weight: 500;
-                transition: background-color 0.2s;
-            }
-            
-            .desktop-layout .video-container:hover .play-button,
-            .desktop-layout .desktop-video-container:hover .play-button {
-                background-color: rgba(0, 0, 0, 0.75);
-            }
-            
-            .desktop-layout .play-icon {
-                width: 36px;
-                height: 36px;
-                min-width: 36px;
-                margin-left: 14px;
-                background-color: white;
-                border-radius: 50%;
-            }
-            
-            .desktop-layout .play-icon svg {
-                width: 22px;
-                height: 22px;
-                fill: #333;
-            }
 
-            .desktop-video-container {
-                position: relative;
-                padding-bottom: var(--desktop-video-ratio);
-                height: 0;
-                overflow: hidden;
-                border-radius: 10px;
-                box-shadow: var(--premium-shadow);
-                background-color: #000;
-                background-image: url('video-thumb-optimized.png');
-                background-size: cover;
-                background-position: center;
-                width: 100%;
-                cursor: pointer;
-                z-index: 1;
-                transition: var(--premium-transition);
-                border: 1px solid var(--border);
-                animation: desktopBorderReveal 0.5s ease-out forwards;
-                transform: none;
-            }
 
-            .desktop-video-container:hover {
-                transform: none;
-                box-shadow: var(--card-hover-shadow);
-            }
 
-            .desktop-video-container video,
-            .desktop-video-container iframe,
-            .desktop-video-container wistia-player {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
-                border-radius: 8px;
-                object-fit: cover;
-                transform: none;
-            }
 
-            .desktop-benefits-container {
-                display: flex;
-                width: 100%;
-                margin-top: var(--space-3);
-                display: flex;
-                flex-direction: row;
-                background-color: white;
-                border-radius: 10px;
-                border: 1px solid var(--border);
-                padding: 0.8rem 0;
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-            }
 
-            .desktop-benefit-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                flex: 1;
-                padding: 0 0.6rem;
-                position: relative;
-                text-align: center;
-            }
 
-            .desktop-benefit-item:not(:last-child)::after {
-                content: '';
-                position: absolute;
-                right: 0;
-                top: 20%;
-                height: 60%;
-                width: 1px;
-                background-color: #E8EAED;
-            }
 
-            .desktop-benefit-item .benefit-icon {
-                margin-bottom: 0.8rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 36px;
-            }
 
-            .desktop-benefit-item .benefit-icon img {
-                height: 24px;
-                width: auto;
-                filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-                transition: transform 0.2s;
-            }
-
-            .desktop-benefit-item:hover .benefit-icon img {
-                transform: translateY(-2px);
-            }
-
-            .desktop-benefit-item .benefit-text {
-                font-size: 0.75rem;
-                line-height: 1.3;
-                color: var(--text);
-                max-width: 90%;
-                margin: 0 auto;
-            }
-
-            .desktop-layout .progress-bar-container {
-                width: 100%;
-                margin-bottom: 0.75rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .desktop-layout .progress-bar-step {
-                flex: 1;
-                height: 4px;
-                border-radius: 2px;
-                background: var(--progress-inactive);
-                overflow: hidden;
-            }
-            
-            .desktop-layout .progress-bar-step.active {
-                background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
-            }
-            
-            .desktop-layout .form-title {
-                font-size: 1rem;
-                margin-bottom: 0.375rem;
-                font-weight: 700;
-                text-align: left;
-                color: var(--text);
-            }
-            
-            .desktop-layout .form-subtitle {
-                font-size: 0.85rem;
-                margin-bottom: 0.75rem;
-                line-height: 1.3;
-                color: var(--text-secondary);
-            }
-            
-            .desktop-layout .form-input {
-                height: 44px;
-                padding: 20px 14px 8px;
-                font-size: 0.9rem;
-                border-radius: 8px;
-            }
-            
-            .desktop-layout .form-label {
-                font-size: 0.9rem;
-                left: 14px;
-            }
-            
-            .desktop-layout .form-group {
-                margin-bottom: 0.75rem;
-            }
-            
-            .desktop-layout .name-row {
-                margin-bottom: 0.75rem;
-                display: flex;
-                flex-direction: row;
-                gap: 0.75rem;
-            }
-            
-            .desktop-layout .submit-button {
-                padding: 0.75rem 0;
-                margin-top: 0.375rem;
-                font-size: 0.9rem;
-                background-color: var(--primary);
-                transition: background-color 0.2s;
-                font-weight: 600;
-                border-radius: 6px;
-            }
-            
-            .desktop-layout .submit-button:hover {
-                background-color: #166FE5;
-                transform: none;
-                box-shadow: none;
-            }
-
-            /* Desktop Calendar Widget Styles from calendar.php */
-            .desktop-container {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                padding: 2rem 0 var(--space-6);
-            }
-            
-            /* Sticky progress bar at top */
-            .desktop-progress-container {
-                position: sticky;
-                top: 0;
-                width: 100%;
-                background-color: var(--background);
-                padding: 1.5rem 0 2.5rem;
-                z-index: 100;
-            }
-            
-            .desktop-progress-bar-container {
-                width: 100%;
-                max-width: 900px;
-                margin: 0 auto;
-                display: flex;
-                gap: 0.5rem;
-            }
-            
-            .desktop-progress-bar-step {
-                flex: 1;
-                height: 4px;
-                border-radius: 2px;
-                background: var(--progress-inactive);
-                overflow: hidden;
-            }
-            
-            .desktop-progress-bar-step.active:nth-child(1) {
-                background: var(--gradient-1);
-            }
-            
-            .desktop-progress-bar-step.active:nth-child(2) {
-                background: var(--gradient-2);
-            }
-            
-            .desktop-progress-bar-step.active:nth-child(3) {
-                background: var(--gradient-3);
-            }
-
-            /* Main calendar widget */
-            .desktop-calendar-widget {
-                max-width: 900px;
-                width: 90%;
-                margin: 0 auto;
-                background: white;
-                border-radius: 12px;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-                border: 1px solid #e1e4e8;
-                display: flex;
-            }
-            
-            /* Left section - Details and header */
-            .desktop-info-section {
-                flex: 0 0 280px;
-                padding: 2.5rem 2rem;
-                border-right: 1px solid #eaeaea;
-            }
-            
-            .desktop-header-text {
-                margin-bottom: 1.5rem;
-                animation: fadeIn 0.5s ease-out forwards;
-            }
-            
-            .desktop-title {
-                color: var(--text);
-                font-weight: 700;
-                font-size: 1.3rem;
-                margin-bottom: 0.5rem;
-                line-height: 1.2;
-                animation: fadeIn 0.5s ease-out forwards;
-            }
-            
-            .desktop-subtitle {
-                color: var(--text-secondary);
-                font-size: 0.9rem;
-                line-height: 1.4;
-                margin-bottom: 0;
-                animation: fadeIn 0.6s ease-out forwards;
-            }
-            
-            .desktop-event-details {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .desktop-event-detail {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                color: var(--text);
-                font-size: 0.9rem;
-            }
-            
-            .desktop-event-detail i {
-                color: #6B7280;
-                width: 18px;
-                text-align: center;
-            }
-            
-            .desktop-coach-profile {
-                display: flex;
-                align-items: center;
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid #eaeaea;
-            }
-            
-            .desktop-coach-avatar {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                overflow: hidden;
-                margin-right: 0.75rem;
-                background-color: #E8EAED;
-            }
-            
-            .desktop-coach-avatar img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            
-            .desktop-coach-info {
-                text-align: left;
-            }
-            
-            .desktop-coach-label {
-                font-size: 0.75rem;
-                color: var(--text-secondary);
-                margin-bottom: 2px;
-            }
-            
-            .desktop-coach-name {
-                font-size: 1rem;
-                font-weight: 700;
-                color: var(--text);
-                line-height: 1.2;
-            }
-            
-            /* Middle section - Month calendar */
-            .desktop-calendar-section {
-                flex: 0 0 380px;
-                padding: 2rem;
-                border-right: 1px solid #eaeaea;
-            }
-            
-            .desktop-calendar-header {
-                padding-bottom: 1.5rem;
-            }
-            
-            .desktop-month-nav {
-                display: flex;
-                align-items: center;
-                color: var(--text);
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .desktop-month-title {
-                font-size: 1.2rem;
-                font-weight: 700;
-                color: var(--text);
-                display: flex;
-                align-items: center;
-            }
-            
-            .desktop-month-title span {
-                color: #6B7280;
-                font-weight: normal;
-                margin-left: 8px;
-                font-size: 1rem;
-            }
-            
-            .desktop-nav-button {
-                background: transparent;
-                border: none;
-                color: var(--text-secondary);
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
-            
-            .desktop-nav-button:hover {
-                background: var(--nav-hover);
-                color: var(--text);
-            }
-            
-            .desktop-weekdays {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                text-align: center;
-                font-weight: 600;
-                color: var(--weekday-text);
-                font-size: 0.8rem;
-                padding: 0.75rem 0;
-            }
-            
-            .desktop-weekday {
-                padding: 0.5rem 0;
-            }
-            
-            .desktop-calendar-days {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 4px;
-                justify-items: center;
-                align-items: center;
-                width: 100%;
-                overflow: hidden;
-            }
-            
-            .desktop-calendar-day {
-                height: 44px;
-                width: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.95rem;
-                border-radius: 50%;
-                cursor: pointer;
-                position: relative;
-                color: var(--text);
-                transition: all 0.2s ease;
-            }
-            
-            .desktop-calendar-day:hover {
-                background-color: var(--calendar-day-hover);
-                color: var(--primary);
-            }
-            
-            .desktop-calendar-day.selected {
-                background-color: var(--primary);
-                color: #fff;
-                font-weight: 500;
-            }
-            
-            .desktop-calendar-day.today {
-                font-weight: 700;
-                position: relative;
-            }
-            
-            .desktop-calendar-day.today::after {
-                content: "";
-                position: absolute;
-                bottom: 6px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 4px;
-                height: 4px;
-                background-color: var(--primary);
-                border-radius: 50%;
-            }
-            
-            .desktop-calendar-day.other-month {
-                visibility: hidden;
-                pointer-events: none;
-            }
-            
-            /* Right section - Time slots */
-            .desktop-timeslots-section {
-                flex: 0 0 260px;
-                padding: 2rem;
-            }
-            
-            .desktop-time-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.25rem;
-            }
-            
-            .desktop-day-title {
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: var(--text);
-            }
-            
-            .desktop-time-header .event-timezone {
-                margin-left: auto;
-            }
-            
-            .desktop-time-slots-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-            
-            .desktop-time-slot {
-                padding: 0.6rem 0;
-                background: var(--card-bg);
-                border: 1px solid var(--calendar-border);
-                border-radius: 999px;
-                text-align: center;
-                cursor: pointer;
-                color: var(--text);
-                font-weight: 500;
-                font-size: 0.9rem;
-                transition: all 0.2s ease;
-            }
-            
-            .desktop-time-slot:hover {
-                background: var(--calendar-day-hover);
-                border-color: var(--primary);
-                color: var(--primary);
-            }
-            
-            /* Time slot with green dot */
-            .desktop-time-slot::before {
-                content: "";
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                background-color: var(--time-dot);
-                border-radius: 50%;
-                margin-right: 8px;
-                vertical-align: middle;
-            }
-            
-            /* Fine print */
-            .desktop-fine-print {
-                max-width: 940px;
-                width: 90%;
-                margin: 1.5rem auto 0;
-                font-size: 0.75rem;
-                line-height: 1.4;
-                color: #9aa0a6;
-                text-align: center;
-            }
         }
 
         /* Accessibility */
@@ -1881,8 +1191,7 @@
         }
 
         /* Video styles for proper display */
-        .video-container video,
-        .desktop-video-container video {
+        .video-container video {
             position: absolute;
             top: 0;
             left: 0;
@@ -1894,10 +1203,10 @@
         }
 
         /* Initial video states */
-        .video-container #mainVideo,
-        .desktop-video-container #desktopMainVideo {
+        .video-container #mainVideo {
             display: none;
-            z-index: 3; /* Ensure main video is above other elements */
+            z-index: 3;
+            /* Ensure main video is above other elements */
         }
 
         /* Ensure video controls are visible and not obstructed */
@@ -1910,39 +1219,25 @@
             display: flex !important;
         }
 
-        .video-container.playing #previewVideo,
-        .desktop-video-container.playing #desktopPreviewVideo {
+        .video-container.playing #previewVideo {
             display: none;
         }
 
-        .video-container.playing #mainVideo,
-        .desktop-video-container.playing #desktopMainVideo {
+        .video-container.playing #mainVideo {
             display: block;
         }
 
         /* Hide play button when playing */
-        .video-container.playing .play-button,
-        .desktop-video-container.playing .play-button {
+        .video-container.playing .play-button {
             display: none !important;
             z-index: -1;
             opacity: 0;
             pointer-events: none;
         }
 
-        .calendar-day:hover {
-            background-color: var(--calendar-day-hover);
-            color: var(--primary);
-        }
-
         .time-slot {
             background: var(--card-bg);
             border: 1px solid var(--calendar-border);
-        }
-
-        .time-slot:hover {
-            background: var(--calendar-day-hover);
-            border-color: var(--primary);
-            color: var(--primary);
         }
 
         /* Calendar */
@@ -1972,16 +1267,6 @@
             border-radius: 12px;
             overflow: hidden;
             padding-top: 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s;
-        }
-
-        .calendar-container.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
         }
 
         /* Coach Profile */
@@ -2209,10 +1494,7 @@
             transition: all 0.2s ease;
         }
 
-        .calendar-day:hover {
-            background-color: var(--calendar-day-hover);
-            color: var(--primary);
-        }
+
 
         .calendar-day.selected {
             background-color: var(--primary);
@@ -2269,11 +1551,7 @@
             transition: all 0.2s ease;
         }
 
-        .time-slot:hover {
-            background: var(--calendar-day-hover);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
+
 
         .time-slot.selected {
             background: var(--primary);
@@ -2304,8 +1582,7 @@
 </head>
 
 <body>
-    <!-- Mobile Layout -->
-    <div class="container mobile-layout">
+    <div class="container">
         <div class="content">
             <div class="header-group">
                 <h1 class="headline">6-Week Online Weight Loss Mentorship</h1>
@@ -2330,7 +1607,7 @@
                 </video>
             </div>
 
-            <div class="pricing-card">
+            <div class="widget">
                 <div class="benefits-container">
                     <div class="benefit-item">
                         <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
@@ -2354,106 +1631,67 @@
                     <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
                 </div>
 
-                <div style="width:100%;height:600px;border-radius:12px;overflow:hidden;">
-                    <!-- Cal inline embed code begins -->
-                    <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
+                <!-- Cal inline embed code begins -->
+                <div style="width:100%;height:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--premium-shadow);" id="my-cal-inline"></div>
                     <script type="text/javascript">
-                      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-                    Cal("init", "30min", {origin:"https://cal.com"});
+                    (function(C, A, L) {
+                        let p = function(a, ar) {
+                            a.q.push(ar);
+                        };
+                        let d = C.document;
+                        C.Cal = C.Cal || function() {
+                            let cal = C.Cal;
+                            let ar = arguments;
+                            if (!cal.loaded) {
+                                cal.ns = {};
+                                cal.q = cal.q || [];
+                                d.head.appendChild(d.createElement("script")).src = A;
+                                cal.loaded = true;
+                            }
+                            if (ar[0] === L) {
+                                const api = function() {
+                                    p(api, arguments);
+                                };
+                                const namespace = ar[1];
+                                api.q = api.q || [];
+                                if (typeof namespace === "string") {
+                                    cal.ns[namespace] = cal.ns[namespace] || api;
+                                    p(cal.ns[namespace], ar);
+                                    p(cal, ["initNamespace", namespace]);
+                                } else p(cal, ar);
+                                return;
+                            }
+                            p(cal, ar);
+                        };
+                    })(window, "https://app.cal.com/embed/embed.js", "init");
+                    Cal("init", "30min", {
+                        origin: "https://cal.com"
+                    });
 
                       Cal.ns["30min"]("inline", {
-                        elementOrSelector:"#my-cal-inline",
-                        config: {"layout":"month_view","theme":"light"},
+                        elementOrSelector: "#my-cal-inline",
+                        config: {
+                            "layout": "month_view",
+                            "theme": "light"
+                        },
                         calLink: "busy-barbell/30min",
                       });
 
-                      Cal.ns["30min"]("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#0069ff"},"dark":{"cal-brand":"#0069ff"}},"hideEventTypeDetails":true,"layout":"month_view"});
-                    </script>
-                    <!-- Cal inline embed code ends -->
-                </div>
-            </div>
-        </div>
-        
-        <!-- Add booking form for Cal.com integration -->
-        <form id="booking-form" style="display: none;">
-            <input type="hidden" name="name" id="user-name">
-            <input type="hidden" name="email" id="user-email">
-            <input type="hidden" name="notes" id="user-notes">
-        </form>
-    </div>
-
-    <!-- Desktop Layout -->
-    <div class="desktop-layout">
-        <!-- New centered header section -->
-        <div class="desktop-header-section">
-            <div class="desktop-header">
-                <h1 class="desktop-headline">6-Week Online Weight Loss Mentorship</h1>
-                <p class="desktop-subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
-            </div>
-        </div>
-        
-        <!-- Content section with video on left and calendar on right -->
-        <div class="desktop-content-section">
-            <!-- Left Column - Video -->
-            <div class="left-column">
-                <div class="desktop-content">
-                    <div class="desktop-video-container" id="desktopVideoContainer">
-                        <div class="play-button" id="desktopPlayButton">
-                            Watch how this works
-                            <div class="play-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </div>
-                        <video id="desktopPreviewVideo" class="video-thumbnail" playsinline muted loop autoplay>
-                            <source src="video.mp4" type="video/mp4">
-                        </video>
-                        <video id="desktopMainVideo" controls playsinline>
-                            <source src="video.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-
-                    <div class="desktop-benefits-container">
-                        <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
-                            <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
-                        </div>
-                        <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
-                            <div class="benefit-text">One payment of $599 with no hidden fees</div>
-                        </div>
-                        <div class="desktop-benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
-                            <div class="benefit-text">Love it or get a full refund within 30 days</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Column - Calendar -->
-            <div class="right-column">
-                <div class="desktop-content">
-                    <div class="calendar-wrapper" style="background: var(--card-bg); border-radius: 16px; padding: var(--space-4); box-shadow: var(--premium-shadow); border: 1px solid var(--border); height: fit-content; position: sticky; top: var(--space-4);">
-                        <div class="calendar-header-text">
-                            <h2 class="form-title">Book Your Call</h2>
-                            <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
-                        </div>
-
-                        <div style="width:100%;height:700px;border-radius:12px;overflow:hidden;">
-                            <!-- Cal inline embed code begins -->
-                            <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-desktop"></div>
-                            <script type="text/javascript">
-                              Cal.ns["30min"]("inline", {
-                                elementOrSelector:"#my-cal-inline-desktop",
-                                config: {"layout":"month_view","theme":"light"},
-                                calLink: "busy-barbell/30min",
+                    Cal.ns["30min"]("ui", {
+                        "theme": "light",
+                        "cssVarsPerTheme": {
+                            "light": {
+                                "cal-brand": "#0069ff"
+                            },
+                            "dark": {
+                                "cal-brand": "#0069ff"
+                            }
+                        },
+                        "hideEventTypeDetails": true,
+                        "layout": "month_view"
                               });
                             </script>
                             <!-- Cal inline embed code ends -->
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -2463,22 +1701,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lazy load videos with Intersection Observer for better performance
-            lazyLoadVideos();
-            
-            // Setup video functionality for both mobile and desktop
-            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
-            setupVideoPlayer('desktopVideoContainer', 'desktopPreviewVideo', 'desktopMainVideo', 'desktopPlayButton');
-
-            // Video player functionality
+            // Video player functionality - exact same as confirmation.php
             function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
                 const videoContainer = document.getElementById(containerId);
                 const previewVideo = document.getElementById(previewId);
                 const mainVideo = document.getElementById(mainId);
                 const playButton = document.getElementById(buttonId);
-                
+
                 if (!videoContainer || !previewVideo || !mainVideo || !playButton) return;
-                
+
                 // Set up 5-second preview loop
                 previewVideo.addEventListener('timeupdate', function() {
                     if (previewVideo.currentTime >= 5) {
@@ -2492,8 +1723,13 @@
                     console.log('Preview autoplay failed:', e);
                 });
 
-                // Click handler for video container
-                videoContainer.addEventListener('click', function() {
+                // Click handler for video container (but not on video controls)
+                videoContainer.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on video controls
+                    if (e.target.tagName === 'VIDEO' || e.target.closest('video')) {
+                        return;
+                    }
+
                     videoContainer.classList.add('playing');
                     mainVideo.style.display = 'block';
                     mainVideo.play();
@@ -2509,57 +1745,10 @@
                 });
             }
 
-            // Lazy load videos function
-            function lazyLoadVideos() {
-                const videos = document.querySelectorAll('video');
-                
-                // Replace source with data-src attribute to prevent initial loading
-                videos.forEach(video => {
-                    const sources = video.querySelectorAll('source');
-                    sources.forEach(source => {
-                        source.setAttribute('data-src', source.getAttribute('src'));
-                        source.removeAttribute('src');
-                    });
-                });
-                
-                // Create intersection observer to load videos only when they come into view
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const video = entry.target;
-                            const sources = video.querySelectorAll('source');
-                            
-                            // Set the src attribute back to load the video
-                            sources.forEach(source => {
-                                if (source.getAttribute('data-src')) {
-                                    source.setAttribute('src', source.getAttribute('data-src'));
-                                }
-                            });
-                            
-                            // Required to make the browser load the video
-                            video.load();
-                            
-                            // Stop observing once the video is loaded
-                            observer.unobserve(video);
-                        }
-                    });
-                }, {
-                    rootMargin: '200px' // Load video when it's 200px from viewport
-                });
-                
-                // Observe all videos
-                videos.forEach(video => {
-                    observer.observe(video);
-                });
-            }
+            // Initialize video players
+            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
 
-            // Make calendar container visible after a short delay
-            setTimeout(() => {
-                const calendarContainer = document.querySelector('.calendar-container');
-                if (calendarContainer) {
-                    calendarContainer.classList.add('visible');
-                }
-            }, 100);
+
 
             // Booking System
             const BookingSystem = {
@@ -2748,7 +1937,8 @@
                     const month = this.selectedDate.getMonth();
                     
                     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                        'July', 'August', 'September', 'October', 'November', 'December'];
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ];
                     
                     // Update month title
                     const monthTitle = document.querySelector(monthTitleSelector);
@@ -3166,7 +2356,6 @@
                                 outline: none;
                                 border-color: var(--primary);
                                 box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-                                transform: translateY(-1px);
                             }
                             
                             .validation-mark {
@@ -3236,7 +2425,6 @@
                             
                             .submit-button:hover {
                                 background-color: #166FE5;
-                                transform: translateY(-1px);
                                 box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
                             }
                             
@@ -3344,15 +2532,29 @@
                     const phone = document.getElementById('modalPhone').value.trim();
                     
                     // Validate all fields
-                    const inputs = [
-                        { field: 'firstName', element: document.getElementById('modalFirstName') },
-                        { field: 'lastName', element: document.getElementById('modalLastName') },
-                        { field: 'email', element: document.getElementById('modalEmail') },
-                        { field: 'phone', element: document.getElementById('modalPhone') }
+                    const inputs = [{
+                            field: 'firstName',
+                            element: document.getElementById('modalFirstName')
+                        },
+                        {
+                            field: 'lastName',
+                            element: document.getElementById('modalLastName')
+                        },
+                        {
+                            field: 'email',
+                            element: document.getElementById('modalEmail')
+                        },
+                        {
+                            field: 'phone',
+                            element: document.getElementById('modalPhone')
+                        }
                     ];
                     
                     let allValid = true;
-                    inputs.forEach(({ field, element }) => {
+                    inputs.forEach(({
+                        field,
+                        element
+                    }) => {
                         if (!this.validateModalField(field, element)) {
                             allValid = false;
                         }
@@ -3479,12 +2681,10 @@
                             email: email,
                             phone: phone,
                             timeZone: this.selectedTimezone,
-                            bookingFieldsResponses: [
-                                {
+                            bookingFieldsResponses: [{
                                     name: "phone",
                                     value: phone
-                                }
-                            ]
+                            }]
                         };
                         
                         // Create booking via Cal.com API
