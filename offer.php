@@ -10,22 +10,39 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="video-thumb-optimized.png" fetchpriority="high">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QLJZQBQ89"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1QLJZQBQ89');
+    </script>
+    
     <style>
         /* Global CSS Variables and Styles for BusyBarbell */
 
         /* CSS Variables */
         :root {
             /* Spacing System - 8-point grid */
-            --space-1: 0.5rem;  /* 8px */
-            --space-2: 1rem;    /* 16px */
-            --space-3: 1.5rem;  /* 24px */
-            --space-4: 2rem;    /* 32px */
-            --space-5: 2.5rem;  /* 40px */
-            --space-6: 3rem;    /* 48px */
-            
+            --space-1: 0.5rem;
+            /* 8px */
+            --space-2: 1rem;
+            /* 16px */
+            --space-3: 1.5rem;
+            /* 24px */
+            --space-4: 2rem;
+            /* 32px */
+            --space-5: 2.5rem;
+            /* 40px */
+            --space-6: 3rem;
+            /* 48px */
+
             /* Form Spacing */
             --form-gap: 1rem;
-            
+
             /* Colors */
             --primary: #1877F2;
             --background: #f8f9fa;
@@ -37,29 +54,29 @@
             --success: #4cd964;
             --divider: #E8EAED;
             --progress-inactive: #e0e0e0;
-            
+
             /* Calendar Specific Colors */
             --calendar-day-hover: #F0F9FF;
             --calendar-border: #E5E7EB;
-            
+
             /* Shadows */
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-            
+
             /* Transitions */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
+
             /* Gradients for Progress Bars */
             --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
             --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
             --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
-            
+
             /* Questionnaire Specific */
             --slider-blue: #E3F2FD;
             --slider-blue-highlight: #1877F2;
             --slider-track: #E0E0E0;
             --slider-thumb: #1877F2;
-            
+
             /* Base Font Size */
             font-size: 16px;
         }
@@ -96,6 +113,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -106,6 +124,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 15px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 14px);
             }
@@ -115,6 +134,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 11px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 10px);
             }
@@ -154,14 +174,16 @@
             background-color: var(--background);
             text-align: left;
             margin-bottom: var(--space-1);
+            animation: fadeIn 0.5s ease-out forwards;
         }
 
         .form-subtitle {
-            color: var(--text);
+            color: var(--text-secondary);
             font-size: 1.125rem;
             margin-bottom: var(--space-3);
             line-height: 1.4;
             text-align: left;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         .form-group {
@@ -202,9 +224,9 @@
         }
 
         /* When input is focused or has content */
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label,
-        .form-input:-webkit-autofill ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label,
+        .form-input:-webkit-autofill~.form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
@@ -226,7 +248,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
         }
 
         /* Validation States */
@@ -250,7 +271,7 @@
             justify-content: center;
         }
 
-        .form-input.valid:not(:focus) ~ .validation-mark {
+        .form-input.valid:not(:focus)~.validation-mark {
             opacity: 1;
         }
 
@@ -258,7 +279,7 @@
             border-color: var(--error);
         }
 
-        .form-input.error ~ .form-label {
+        .form-input.error~.form-label {
             color: var(--error);
         }
 
@@ -275,7 +296,7 @@
             line-height: 1.2;
         }
 
-        .form-input.error ~ .error-message {
+        .form-input.error~.error-message {
             display: block;
         }
 
@@ -298,7 +319,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -361,43 +381,43 @@
             .headline {
                 font-size: 1.875rem;
             }
-            
+
             .subheadline {
                 font-size: 1rem;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
-            
+
             .form-subtitle {
                 font-size: 0.875rem;
             }
-            
+
             .form-input {
                 padding: 24px 12px 8px;
                 font-size: 1rem;
                 height: 52px;
             }
-            
+
             .form-label {
                 font-size: 1rem;
                 left: 12px;
             }
-            
-            .form-input:focus ~ .form-label,
-            .form-input:not(:placeholder-shown) ~ .form-label {
+
+            .form-input:focus~.form-label,
+            .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
                 transform: translateY(0) scale(0.75);
                 background-color: var(--card-bg);
                 padding: 0 4px;
                 margin-left: -2px;
             }
-            
+
             .error-message {
                 top: 56px;
             }
-            
+
             .disclaimer {
                 font-size: 0.7rem;
             }
@@ -427,13 +447,12 @@
             /* 2.5rem */
             --space-6: 48px;
             /* 3rem */
-            
+
             /* Video aspect ratios */
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
-            --desktop-video-ratio: 54.05%;
-            /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
-            
+
+
             /* Premium styling variables */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
@@ -518,20 +537,24 @@
         }
 
         .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: var(--space-4) 0 var(--space-6);
+            padding: var(--space-6) 0 var(--space-6);
         }
 
         .content {
             margin: 0 auto;
-            text-align: left;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
+            gap: var(--space-5);
             width: 100%;
+            max-width: 500px;
             padding: 0 1.5rem;
+        }
+
+        .inner-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         /* Calendar */
@@ -880,19 +903,12 @@
         /* Form header */
         .form-wrapper {
             width: 100%;
-            margin: 0;
-            background-color: var(--background);
-            padding: var(--space-2) 0;
-            text-align: left;
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: transparent;
         }
 
-        /* Progress Bar Styles - REMOVE */
-        .progress-bar-container,
-        .desktop-progress-bar-container,
-        .progress-bar-step,
-        .desktop-progress-bar-step {
-            display: none;
-        }
+
 
         .form-title {
             color: var(--text);
@@ -909,6 +925,7 @@
             margin-bottom: var(--space-3);
             line-height: 1.4;
             text-align: left;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         /* Accessibility */
@@ -924,12 +941,12 @@
         /* Mobile Styles */
         @media(max-width:768px) {
             .container {
-                padding: var(--space-3) 0 var(--space-4);
+                padding: var(--space-4) 0 var(--space-6);
             }
 
             .content {
-                padding: 0 1.5rem;
-                gap: var(--space-2);
+                gap: var(--space-4);
+                padding: 0 1.25rem;
             }
 
             .calendar-days {
@@ -995,13 +1012,9 @@
 
             .form-subtitle {
                 font-size: 0.875rem;
-                margin-bottom: var(--space-2);
             }
 
-            /* Hide desktop layout on mobile */
-            .desktop-view {
-                display: none;
-            }
+
         }
 
         /* Desktop layout */
@@ -1012,376 +1025,23 @@
                 font-size: 16px;
             }
 
-            /* Hide mobile layout */
-            .mobile-layout {
-                display: none;
-            }
 
-            /* Show desktop layout */
-            .desktop-view {
-                display: block;
-            }
 
             body {
                 background: var(--background);
             }
 
-            .desktop-container {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                padding: var(--space-4) var(--space-2);
-            }
 
-            /* Sticky progress bar at top */
-            .desktop-progress-container {
-                width: 100%;
-                background-color: var(--background);
-                padding: var(--space-4) 0 var(--space-4);
-            }
 
-            .desktop-header-text {
-                text-align: left;
-                width: 100%;
-            }
 
-            .desktop-progress-bar-container {
-                width: 100%;
-                max-width: 900px;
-                margin: 0 auto;
-                display: flex;
-                gap: 0.5rem;
-            }
-
-            .desktop-progress-bar-step {
-                flex: 1;
-                height: 4px;
-                border-radius: 2px;
-                background: var(--progress-inactive);
-                overflow: hidden;
-            }
-
-            .desktop-progress-bar-step.active:nth-child(1) {
-                background: var(--gradient-1);
-            }
-
-            .desktop-progress-bar-step.active:nth-child(2) {
-                background: var(--gradient-2);
-            }
-
-            /* Main calendar widget */
-            .desktop-calendar-widget {
-                max-width: 900px;
-                width: 90%;
-                margin: 0 auto;
-                background: white;
-                border-radius: 12px;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-                border: 1px solid #e1e4e8;
-                display: flex;
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(20px);
-                transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s;
-            }
-
-            .desktop-calendar-widget.visible {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-
-            /* Left section - Details and header */
-            .desktop-info-section {
-                flex: 0 0 280px;
-                padding: 2.5rem 2rem;
-                border-right: 1px solid #eaeaea;
-            }
-
-            .desktop-header-text {
-                margin-bottom: 1.5rem;
-                animation: fadeIn 0.5s ease-out forwards;
-            }
-
-            .desktop-title {
-                text-align: left;
-                color: var(--text);
-                font-weight: 700;
-                font-size: 1.3rem;
-                margin-bottom: 0.5rem;
-                line-height: 1.2;
-                animation: fadeIn 0.5s ease-out forwards;
-            }
-
-            .desktop-subtitle {
-                text-align: left;
-                color: var(--text-secondary);
-                font-size: 0.9rem;
-                line-height: 1.4;
-                margin-bottom: 0;
-                animation: fadeIn 0.6s ease-out forwards;
-            }
-
-            .desktop-event-details {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .desktop-event-detail {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                color: var(--text);
-                font-size: 0.9rem;
-            }
-
-            .desktop-event-detail i {
-                color: #6B7280;
-                width: 18px;
-                text-align: center;
-            }
-
-            .desktop-coach-profile {
-                display: flex;
-                align-items: center;
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid #eaeaea;
-            }
-
-            .desktop-coach-avatar {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                overflow: hidden;
-                margin-right: 0.75rem;
-                background-color: #E8EAED;
-            }
-
-            .desktop-coach-avatar img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .desktop-coach-info {
-                text-align: left;
-            }
-
-            .desktop-coach-label {
-                font-size: 0.75rem;
-                color: var(--text-secondary);
-                margin-bottom: 2px;
-            }
-
-            .desktop-coach-name {
-                font-size: 1rem;
-                font-weight: 700;
-                color: var(--text);
-                line-height: 1.2;
-            }
-
-            /* Middle section - Month calendar */
-            .desktop-calendar-section {
-                flex: 0 0 380px;
-                padding: 2rem;
-                border-right: 1px solid #eaeaea;
-            }
-
-            .desktop-calendar-header {
-                padding-bottom: 1.5rem;
-            }
-
-            .desktop-month-nav {
-                display: flex;
-                align-items: center;
-                color: var(--text);
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .desktop-month-title {
-                font-size: 1.2rem;
-                font-weight: 700;
-                color: var(--text);
-                display: flex;
-                align-items: center;
-            }
-
-            .desktop-month-title span {
-                color: #6B7280;
-                font-weight: normal;
-                margin-left: 8px;
-                font-size: 1rem;
-            }
-
-            .desktop-nav-button {
-                background: transparent;
-                border: none;
-                color: var(--text-secondary);
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
-
-            .desktop-nav-button:hover {
-                background: var(--nav-hover);
-                color: var(--text);
-            }
-
-            .desktop-weekdays {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                text-align: center;
-                font-weight: 600;
-                color: var(--weekday-text);
-                font-size: 0.8rem;
-                padding: 0.75rem 0;
-            }
-
-            .desktop-weekday {
-                padding: 0.5rem 0;
-            }
-
-            .desktop-calendar-days {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 4px;
-                justify-items: center;
-            }
-
-            .desktop-calendar-day {
-                height: 44px;
-                width: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.95rem;
-                border-radius: 50%;
-                cursor: pointer;
-                position: relative;
-                color: var(--text);
-                transition: all 0.2s ease;
-            }
-
-            .desktop-calendar-day:hover {
-                background-color: var(--calendar-day-hover);
-                color: var(--primary);
-            }
-
-            .desktop-calendar-day.selected {
-                background-color: var(--primary);
-                color: #fff;
-                font-weight: 500;
-            }
-
-            .desktop-calendar-day.today {
-                font-weight: 700;
-                position: relative;
-            }
-
-            .desktop-calendar-day.today::after {
-                content: "";
-                position: absolute;
-                bottom: 6px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 4px;
-                height: 4px;
-                background-color: var(--primary);
-                border-radius: 50%;
-            }
-
-            .desktop-calendar-day.other-month {
-                visibility: hidden;
-                pointer-events: none;
-            }
-
-            /* Right section - Time slots */
-            .desktop-timeslots-section {
-                flex: 0 0 260px;
-                padding: 2rem;
-            }
-
-            .desktop-time-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.25rem;
-            }
-
-            .desktop-day-title {
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: var(--text);
-            }
-
-            .desktop-time-header .event-timezone {
-                margin-left: auto;
-            }
-
-            .desktop-time-slots-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-
-            .desktop-time-slot {
-                padding: 0.6rem 0;
-                background: var(--card-bg);
-                border: 1px solid var(--calendar-border);
-                border-radius: 999px;
-                text-align: center;
-                cursor: pointer;
-                color: var(--text);
-                font-weight: 500;
-                font-size: 0.9rem;
-                transition: all 0.2s ease;
-            }
-
-            .desktop-time-slot:hover {
-                background: var(--calendar-day-hover);
-                border-color: var(--primary);
-                color: var(--primary);
-            }
-
-            /* Time slot with green dot */
-            .desktop-time-slot::before {
-                content: "";
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                background-color: var(--time-dot);
-                border-radius: 50%;
-                margin-right: 8px;
-                vertical-align: middle;
-            }
-
-            /* Fine print */
-            .desktop-fine-print {
-                max-width: 940px;
-                width: 90%;
-                margin: 1.5rem auto 0;
-                font-size: 0.75rem;
-                line-height: 1.4;
-                color: #9aa0a6;
-                text-align: center;
-            }
         }
 
         /* Video styles */
         .video-details-wrapper {
-            width: 100%;
-            margin-bottom: var(--space-3);
             display: flex;
             flex-direction: column;
-            align-items: center;
+            width: 100%;
+            gap: var(--space-3);
         }
 
         .video-container {
@@ -1505,7 +1165,8 @@
         /* Initial video states */
         .video-container #mainVideo {
             display: none;
-            z-index: 3; /* Ensure main video is above other elements */
+            z-index: 3;
+            /* Ensure main video is above other elements */
         }
 
         /* Ensure video controls are visible and not obstructed */
@@ -1668,15 +1329,15 @@
             .summary-box {
                 padding: var(--space-1);
             }
-            
+
             .summary-box-content {
                 padding: var(--space-1) 0 0 0;
             }
-            
+
             .summary-box-title {
                 font-size: 1rem;
             }
-            
+
             .summary-box-description {
                 font-size: 0.875rem;
             }
@@ -1775,32 +1436,28 @@
             max-width: 450px;
             text-decoration: none;
             transition: all 0.25s ease;
-            margin-top: var(--space-3);
             text-align: center;
             display: inline-block;
         }
 
         .cta-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
-        /* Benefits Section */
-        .benefits-card {
+        /* Widget Section */
+        .widget {
             background-color: var(--card-bg);
             border-radius: 14px;
             padding: 12px 0;
-            max-width: 450px;
-            margin: var(--space-3) auto 0;
+            width: 100%;
+            margin: 0 auto;
             border: 1px solid var(--border);
             box-shadow: var(--premium-shadow);
             transition: var(--premium-transition);
         }
 
-        .benefits-card:hover {
-            box-shadow: var(--card-hover-shadow);
-        }
+
 
         .benefits-container {
             display: flex;
@@ -1840,9 +1497,7 @@
             transition: transform 0.2s;
         }
 
-        .benefit-item:hover .benefit-icon img {
-            transform: translateY(-2px);
-        }
+
 
         .benefit-text {
             font-size: 0.75rem;
@@ -1856,7 +1511,6 @@
             .cta-button {
                 padding: var(--space-2) 0;
                 font-size: 1rem;
-                margin-top: var(--space-2);
             }
 
             .benefit-icon {
@@ -1874,12 +1528,12 @@
 </head>
 
 <body>
-    <!-- Mobile Layout -->
-    <div class="container mobile-layout">
+    <div class="container">
         <div class="content">
+            <div class="inner-content">
                 <div class="form-wrapper">
                     <div class="form-title">You're Signed Up</div>
-                <p class="form-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
+                    <p class="form-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
                 </div>
 
                 <div class="video-details-wrapper">
@@ -1901,124 +1555,75 @@
                         </video>
                     </div>
 
-                    <div class="benefits-card">
+                    <div class="widget">
                         <div class="benefits-container">
                             <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
-                                <div class="benefit-text">How I ate to lose fat without feeling hungry</div>
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/4N69j4T1/redplay.png" alt="Play icon"></div>
+                                <div class="benefit-text">Watch the video above to learn what to expect</div>
                             </div>
                             <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/MZsVxTTg/gymmm.png" alt="Dumbbell icon"></div>
-                                <div class="benefit-text">The 2 workouts I did to prevent muscle loss</div>
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/pT0HmF8B/at.png" alt="At symbol icon"></div>
+                                <div class="benefit-text">Then, check your inbox for the first email</div>
                             </div>
                             <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
-                                <div class="benefit-text">The exact way I tracked progress to stay on target</div>
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/1tKzJXFg/blastoff.png" alt="Blastoff icon"></div>
+                                <div class="benefit-text">Finally, apply the email lessons to get a result</div>
                             </div>
                         </div>
                     </div>
 
-                    <a href="mentorship.php<?php 
-                        $params = [];
-                        if (isset($_GET['email'])) $params[] = 'email=' . urlencode($_GET['email']);
-                        if (isset($_GET['firstName'])) $params[] = 'firstName=' . urlencode($_GET['firstName']);
-                        if (isset($_GET['lastName'])) $params[] = 'lastName=' . urlencode($_GET['lastName']);
-                        if (isset($_GET['phone'])) $params[] = 'phone=' . urlencode($_GET['phone']);
-                        echo !empty($params) ? '?' . implode('&', $params) : '';
-                    ?>" class="cta-button">Want my help? Click Here</a>
-                </div>
-        </div>
-    </div>
-
-    <!-- Desktop Layout -->
-    <div class="desktop-view">
-        <div class="desktop-container">
-            <div class="desktop-progress-container">
-                <div class="desktop-header-text">
-                    <h1 class="desktop-title">You're Signed Up</h1>
-                    <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
-                </div>
-            </div>
-
-            <div class="desktop-calendar-widget">
-                <div class="desktop-info-section">
-                    <div class="desktop-header-text">
-                        <h1 class="desktop-title">You're Signed Up</h1>
-                        <p class="desktop-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
-                    </div>
-
-                    <div class="video-details-wrapper">
-                        <div class="desktop-video-container" id="desktopVideoContainer">
-                            <div class="play-button" id="desktopPlayButton">
-                                Here's what to expect
-                                <div class="play-icon">
-                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <video id="desktopPreviewVideo" class="video-thumbnail" playsinline muted loop autoplay>
-                                <source src="video.mp4" type="video/mp4">
-                            </video>
-                            <video id="desktopMainVideo" controls playsinline>
-                                <source src="video.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                    </div>
-
-                    <div class="benefits-card">
-                        <div class="benefits-container">
-                            <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
-                                <div class="benefit-text">How I ate to lose fat without feeling hungry</div>
-                            </div>
-                            <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/MZsVxTTg/gymmm.png" alt="Dumbbell icon"></div>
-                                <div class="benefit-text">The 2 workouts I did to prevent muscle loss</div>
-                            </div>
-                            <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
-                                <div class="benefit-text">The exact way I tracked progress to stay on target</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="mentorship.php<?php 
-                        $params = [];
-                        if (isset($_GET['email'])) $params[] = 'email=' . urlencode($_GET['email']);
-                        if (isset($_GET['firstName'])) $params[] = 'firstName=' . urlencode($_GET['firstName']);
-                        if (isset($_GET['lastName'])) $params[] = 'lastName=' . urlencode($_GET['lastName']);
-                        if (isset($_GET['phone'])) $params[] = 'phone=' . urlencode($_GET['phone']);
-                        echo !empty($params) ? '?' . implode('&', $params) : '';
-                    ?>" class="cta-button">Want my help? Click Here</a>
+                    <a href="mentorship.php<?php
+                                            $params = [];
+                                            if (isset($_GET['email'])) $params[] = 'email=' . urlencode($_GET['email']);
+                                            if (isset($_GET['firstName'])) $params[] = 'firstName=' . urlencode($_GET['firstName']);
+                                            if (isset($_GET['lastName'])) $params[] = 'lastName=' . urlencode($_GET['lastName']);
+                                            if (isset($_GET['phone'])) $params[] = 'phone=' . urlencode($_GET['phone']);
+                                            echo !empty($params) ? '?' . implode('&', $params) : '';
+                                            ?>" class="cta-button">Want my help? Click Here</a>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close">&times;</div>
-        <img src="" alt="" id="lightbox-img">
     </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" defer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Video playback control
-            const videoContainer = document.getElementById('videoContainer');
-            const playButton = document.getElementById('playButton');
-            const previewVideo = document.getElementById('previewVideo');
-            const mainVideo = document.getElementById('mainVideo');
+            // Video player functionality - exact same as mentorship.php
+            function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
+                const videoContainer = document.getElementById(containerId);
+                const previewVideo = document.getElementById(previewId);
+                const mainVideo = document.getElementById(mainId);
+                const playButton = document.getElementById(buttonId);
 
-            if (videoContainer && playButton && previewVideo && mainVideo) {
-                videoContainer.addEventListener('click', function() {
+                if (!videoContainer || !previewVideo || !mainVideo || !playButton) return;
+
+                // Set up 5-second preview loop
+                previewVideo.addEventListener('timeupdate', function() {
+                    if (previewVideo.currentTime >= 5) {
+                        previewVideo.currentTime = 0;
+                    }
+                });
+
+                // Ensure preview starts playing
+                previewVideo.muted = true; // Ensure muted for autoplay
+                previewVideo.play().catch(e => {
+                    console.log('Preview autoplay failed:', e);
+                });
+
+                // Click handler for video container (but not on video controls)
+                videoContainer.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on video controls
+                    if (e.target.tagName === 'VIDEO' || e.target.closest('video')) {
+                        return;
+                    }
+
                     videoContainer.classList.add('playing');
                     mainVideo.style.display = 'block';
                     mainVideo.play();
                 });
 
+                // Reset to preview state when video ends
                 mainVideo.addEventListener('pause', function() {
                     if (mainVideo.currentTime >= mainVideo.duration) {
                         videoContainer.classList.remove('playing');
@@ -2028,66 +1633,12 @@
                 });
             }
 
-            // Desktop video control
-            const desktopVideoContainer = document.getElementById('desktopVideoContainer');
-            const desktopPlayButton = document.getElementById('desktopPlayButton');
-            const desktopPreviewVideo = document.getElementById('desktopPreviewVideo');
-            const desktopMainVideo = document.getElementById('desktopMainVideo');
+            // Initialize video players
+            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
 
-            if (desktopVideoContainer && desktopPlayButton && desktopPreviewVideo && desktopMainVideo) {
-                desktopVideoContainer.addEventListener('click', function() {
-                    desktopVideoContainer.classList.add('playing');
-                    desktopMainVideo.style.display = 'block';
-                    desktopMainVideo.play();
-                });
 
-                desktopMainVideo.addEventListener('pause', function() {
-                    if (desktopMainVideo.currentTime >= desktopMainVideo.duration) {
-                        desktopVideoContainer.classList.remove('playing');
-                        desktopPreviewVideo.style.display = 'block';
-                        desktopMainVideo.style.display = 'none';
-                    }
-                });
-            }
-
-            // Lightbox functionality
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.querySelector('.lightbox-close');
-
-            // Get all clickable images
-            const images = document.querySelectorAll('.summary-box img');
-            
-            images.forEach(img => {
-                img.addEventListener('click', function() {
-                    lightbox.classList.add('active');
-                    lightboxImg.src = this.src;
-                    lightboxImg.alt = this.alt;
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                });
-            });
-
-            // Close lightbox when clicking the close button or outside the image
-            lightbox.addEventListener('click', function(e) {
-                if (e.target !== lightboxImg) {
-                    closeLightbox();
-                }
-            });
-
-            lightboxClose.addEventListener('click', closeLightbox);
-
-            // Close on escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                }
-            });
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
         });
     </script>
 </body>
+
 </html>
