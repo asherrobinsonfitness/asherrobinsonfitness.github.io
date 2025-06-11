@@ -1567,7 +1567,7 @@
                             </div>
                             <div class="benefit-item">
                                 <div class="benefit-icon"><img src="https://i.postimg.cc/jST0CQ2y/people.png" alt="Person icon"></div>
-                                <div class="benefit-text">If you want extra help click the button below</div>
+                                <div class="benefit-text">If you want help with this, click the button below ↓</div>
                             </div>
                         </div>
                     </div>
