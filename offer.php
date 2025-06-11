@@ -1566,8 +1566,8 @@
                                 <div class="benefit-text">Then, check your inbox for the first email</div>
                             </div>
                             <div class="benefit-item">
-                                <div class="benefit-icon"><img src="https://i.postimg.cc/1tKzJXFg/blastoff.png" alt="Blastoff icon"></div>
-                                <div class="benefit-text">Finally, apply the email lessons to get a result</div>
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/jST0CQ2y/people.png" alt="Person icon"></div>
+                                <div class="benefit-text">If you want extra help click the button below</div>
                             </div>
                         </div>
                     </div>
