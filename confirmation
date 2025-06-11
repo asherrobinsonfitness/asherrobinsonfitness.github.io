@@ -15,16 +15,22 @@
         /* CSS Variables */
         :root {
             /* Spacing System - 8-point grid */
-            --space-1: 0.5rem;  /* 8px */
-            --space-2: 1rem;    /* 16px */
-            --space-3: 1.5rem;  /* 24px */
-            --space-4: 2rem;    /* 32px */
-            --space-5: 2.5rem;  /* 40px */
-            --space-6: 3rem;    /* 48px */
-            
+            --space-1: 0.5rem;
+            /* 8px */
+            --space-2: 1rem;
+            /* 16px */
+            --space-3: 1.5rem;
+            /* 24px */
+            --space-4: 2rem;
+            /* 32px */
+            --space-5: 2.5rem;
+            /* 40px */
+            --space-6: 3rem;
+            /* 48px */
+
             /* Form Spacing */
             --form-gap: 1rem;
-            
+
             /* Colors */
             --primary: #1877F2;
             --background: #f8f9fa;
@@ -36,29 +42,29 @@
             --success: #4cd964;
             --divider: #E8EAED;
             --progress-inactive: #e0e0e0;
-            
+
             /* Calendar Specific Colors */
             --calendar-day-hover: #F0F9FF;
             --calendar-border: #E5E7EB;
-            
+
             /* Shadows */
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-            
+
             /* Transitions */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
+
             /* Gradients for Progress Bars */
             --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
             --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
             --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
-            
+
             /* Questionnaire Specific */
             --slider-blue: #E3F2FD;
             --slider-blue-highlight: #1877F2;
             --slider-track: #E0E0E0;
             --slider-thumb: #1877F2;
-            
+
             /* Base Font Size */
             font-size: 16px;
         }
@@ -95,6 +101,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -105,6 +112,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 15px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 14px);
             }
@@ -114,6 +122,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 11px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 10px);
             }
@@ -201,9 +210,9 @@
         }
 
         /* When input is focused or has content */
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label,
-        .form-input:-webkit-autofill ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label,
+        .form-input:-webkit-autofill~.form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
@@ -225,7 +234,7 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
+
         }
 
         /* Validation States */
@@ -249,7 +258,7 @@
             justify-content: center;
         }
 
-        .form-input.valid:not(:focus) ~ .validation-mark {
+        .form-input.valid:not(:focus)~.validation-mark {
             opacity: 1;
         }
 
@@ -257,7 +266,7 @@
             border-color: var(--error);
         }
 
-        .form-input.error ~ .form-label {
+        .form-input.error~.form-label {
             color: var(--error);
         }
 
@@ -274,7 +283,7 @@
             line-height: 1.2;
         }
 
-        .form-input.error ~ .error-message {
+        .form-input.error~.error-message {
             display: block;
         }
 
@@ -297,7 +306,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -360,43 +368,43 @@
             .headline {
                 font-size: 1.875rem;
             }
-            
+
             .subheadline {
                 font-size: 1rem;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
-            
+
             .form-subtitle {
                 font-size: 0.875rem;
             }
-            
+
             .form-input {
                 padding: 24px 12px 8px;
                 font-size: 1rem;
                 height: 52px;
             }
-            
+
             .form-label {
                 font-size: 1rem;
                 left: 12px;
             }
-            
-            .form-input:focus ~ .form-label,
-            .form-input:not(:placeholder-shown) ~ .form-label {
+
+            .form-input:focus~.form-label,
+            .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
                 transform: translateY(0) scale(0.75);
                 background-color: var(--card-bg);
                 padding: 0 4px;
                 margin-left: -2px;
             }
-            
+
             .error-message {
                 top: 56px;
             }
-            
+
             .disclaimer {
                 font-size: 0.7rem;
             }
@@ -443,13 +451,12 @@
             --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
             --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
             --progress-inactive: #e0e0e0;
-            
+
             /* Video aspect ratios */
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
-            --desktop-video-ratio: 54.05%;
-            /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
-            
+
+
             /* Premium styling variables */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
@@ -506,10 +513,7 @@
         }
 
         .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: var(--space-4) 0 var(--space-6) 0;
+            padding: var(--space-6) 0 var(--space-6);
         }
 
         .content {
@@ -518,7 +522,8 @@
             display: flex;
             flex-direction: column;
             gap: var(--space-5);
-            max-width: 800px;
+            width: 100%;
+            max-width: 500px;
             padding: 0 1.5rem;
         }
 
@@ -527,7 +532,8 @@
             flex-direction: column;
             width: 100%;
         }
-        
+
+        /* Video styles */
         .video-details-wrapper {
             display: flex;
             flex-direction: column;
@@ -535,7 +541,6 @@
             gap: var(--space-3);
         }
 
-        /* Video */
         .video-container {
             position: relative;
             padding-bottom: var(--mobile-video-ratio);
@@ -657,7 +662,8 @@
         /* Initial video states */
         .video-container #mainVideo {
             display: none;
-            z-index: 3; /* Ensure main video is above other elements */
+            z-index: 3;
+            /* Ensure main video is above other elements */
         }
 
         /* Ensure video controls are visible and not obstructed */
@@ -721,7 +727,6 @@
             max-width: 450px;
             margin: 0 auto;
             background-color: transparent;
-            padding: var(--space-2) 0;
         }
 
         .form-title {
@@ -737,7 +742,7 @@
         }
 
         .form-subtitle {
-            color: var(--text);
+            color: var(--text-secondary);
             font-size: 1.125rem;
             margin-bottom: var(--space-3);
             line-height: 1.4;
@@ -784,9 +789,7 @@
             transition: transform 0.2s;
         }
 
-        .benefit-item:hover .benefit-icon img {
-            transform: translateY(-2px);
-        }
+
 
         .benefit-text {
             font-size: 0.75rem;
@@ -796,21 +799,31 @@
             margin: 0 auto;
         }
 
-        /* Meeting Details Card - wrapper for benefits */
-        .meeting-details {
+        /* Widget Section */
+        .widget {
             background-color: var(--card-bg);
             border-radius: 14px;
             padding: 12px 0;
-            max-width: 450px;
+            width: 100%;
             margin: 0 auto;
             border: 1px solid var(--border);
             box-shadow: var(--premium-shadow);
             transition: var(--premium-transition);
         }
 
-        .meeting-details:hover {
-            box-shadow: var(--card-hover-shadow);
+        /* FAQ Widget Section */
+        .faq-widget {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 0;
+            width: 100%;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
         }
+
+
 
         .detail-title {
             font-weight: 600;
@@ -836,10 +849,15 @@
         .faq-grid {
             display: flex;
             flex-direction: column;
+            padding: 0 var(--space-2);
         }
 
         .faq-item {
             border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
         }
 
         .faq-question {
@@ -873,13 +891,17 @@
             font-size: 0.9375rem;
             color: var(--text-secondary);
             line-height: 1.5;
-            padding: 0 0 var(--space-2);
+            padding: 0;
             margin: 0;
             max-height: 0;
             overflow: hidden;
             transition: all 0.3s ease-out;
             opacity: 0;
             text-align: left;
+        }
+
+        .faq-answer-content {
+            padding-bottom: var(--space-2);
         }
 
         .faq-item.active .faq-answer {
@@ -901,7 +923,7 @@
         /* Mobile Styles */
         @media(max-width:768px) {
             .container {
-                padding: var(--space-3) 0 var(--space-4) 0;
+                padding: var(--space-4) 0 var(--space-6);
             }
 
             .content {
@@ -987,7 +1009,7 @@
                         </video>
                     </div>
 
-                    <div class="meeting-details">
+                    <div class="widget">
                         <div class="benefits-container">
                             <div class="benefit-item">
                                 <div class="benefit-icon">
@@ -1025,331 +1047,143 @@
                 <!-- FAQ Section -->
                 <div class="faq-section">
                     <h2 class="faq-title">Common Questions</h2>
-                    <div class="faq-grid">
+                    <div class="faq-widget">
+                        <div class="faq-grid">
                         <div class="faq-item">
                             <h3 class="faq-question">What kind of results can I expect?</h3>
-                            <p class="faq-answer">Most people lose 1-2 pounds per week when following the plan. You'll learn how to eat better, exercise properly, and keep the weight off long-term. I've helped hundreds of people do this successfully.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">Most people lose 1-2 pounds per week when following the plan. You'll learn how to eat better, exercise properly, and keep the weight off long-term. I've helped hundreds of people do this successfully.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">How is this different from other programs?</h3>
-                            <p class="faq-answer">Everything is customized for you - your meal plan, workouts, and check-ins. No generic plans or cookie-cutter approaches. I work with you directly to make sure you're getting results and adjust things when needed.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">Everything is customized for you - your meal plan, workouts, and check-ins. No generic plans or cookie-cutter approaches. I work with you directly to make sure you're getting results and adjust things when needed.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">I've failed at diets before - why would this work?</h3>
-                            <p class="faq-answer">Most diets fail because they're too strict and don't fit your life. I'll help you create a plan that works with your schedule and food preferences. When things get tough, I'm here to help you adjust and stay on track.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">Most diets fail because they're too strict and don't fit your life. I'll help you create a plan that works with your schedule and food preferences. When things get tough, I'm here to help you adjust and stay on track.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">What's included in the 6 weeks?</h3>
-                            <p class="faq-answer">You get: 1) A meal plan with foods you like, 2) Workouts that fit your schedule and equipment, 3) Weekly check-ins to track progress, 4) Direct access to me for questions, 5) Form checks for exercises, 6) Tips for eating out and social events.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">You get: 1) A meal plan with foods you like, 2) Workouts that fit your schedule and equipment, 3) Weekly check-ins to track progress, 4) Direct access to me for questions, 5) Form checks for exercises, 6) Tips for eating out and social events.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">Can I see client results?</h3>
-                            <p class="faq-answer">Yes - during our call, I'll show you real results from people who started where you are. You'll see their exact progress and how long it took them.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">Yes - during our call, I'll show you real results from people who started where you are. You'll see their exact progress and how long it took them.</div>
+                            </div>
                         </div>
 
                         <div class="faq-item">
                             <h3 class="faq-question">What's the cost?</h3>
-                            <p class="faq-answer">It's $599 total - that covers everything with no hidden fees. I don't offer payment plans, but I do offer a 30-day money-back guarantee if you're not happy.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">It's $599 total - that covers everything with no hidden fees. I don't offer payment plans, but I do offer a 30-day money-back guarantee if you're not happy.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">Do I need to decide right after the call?</h3>
-                            <p class="faq-answer">No pressure at all. The call is just to see if we're a good fit. Take your time to think about it. If you do join, we can start right away.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">No pressure at all. The call is just to see if we're a good fit. Take your time to think about it. If you do join, we can start right away.</div>
+                            </div>
                         </div>
-                        
+
                         <div class="faq-item">
                             <h3 class="faq-question">How much time do I need each week?</h3>
-                            <p class="faq-answer">Most people spend 3-4 hours on workouts (split into shorter sessions) plus some meal prep time. Weekly check-ins take 15 minutes. The key is being consistent, not spending hours in the gym.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">Most people spend 3-4 hours on workouts (split into shorter sessions) plus some meal prep time. Weekly check-ins take 15 minutes. The key is being consistent, not spending hours in the gym.</div>
+                            </div>
                         </div>
 
                         <div class="faq-item">
                             <h3 class="faq-question">What if I travel a lot?</h3>
-                            <p class="faq-answer">The program adapts to your schedule. I'll give you quick workouts and tips for eating out. Many of my clients travel for work - we make it work.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">The program adapts to your schedule. I'll give you quick workouts and tips for eating out. Many of my clients travel for work - we make it work.</div>
+                            </div>
                         </div>
 
                         <div class="faq-item">
                             <h3 class="faq-question">What happens after 6 weeks?</h3>
-                            <p class="faq-answer">You'll have the tools to keep going on your own. If you want more support, we can do monthly check-ins or extend the coaching. We'll discuss options near the end if you're interested.</p>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">You'll have the tools to keep going on your own. If you want more support, we can do monthly check-ins or extend the coaching. We'll discuss options near the end if you're interested.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </div>
-
-    <!-- Font Awesome removed - using custom icons -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get URL parameters from Cal.com and other booking systems
-            const params = new URLSearchParams(window.location.search);
-            
-            // Cal.com specific parameters
-            const bookingUid = params.get('bookingUid');
-            const bookingId = params.get('booking_id') || params.get('bookingId');
-            
-            // Date and time parameters (various formats)
-            const date = params.get('date') || params.get('startDate');
-            const time = params.get('time') || params.get('startTime');
-            const endTime = params.get('endTime');
-            
-            // Timezone parameters
-            const timezone = params.get('timezone') || params.get('timeZone') || params.get('tz');
-            
-            // Event details
-            const eventTitle = params.get('eventTitle') || params.get('title');
-            const duration = params.get('duration');
-            
-            // Attendee information
-            const attendeeName = params.get('attendeeName') || params.get('name');
-            const attendeeEmail = params.get('attendeeEmail') || params.get('email');
-            
-            // Update DOM with booking details
-            const bookingDateEl = document.getElementById('booking-date');
-            const bookingTimeEl = document.getElementById('booking-time');
-            const bookingTzEl = document.getElementById('booking-timezone');
-            
-            // Function to get booking details from localStorage or URL parameters
-            function getBookingDetails() {
-                // First try to get from localStorage (from our new booking system)
-                const pendingBooking = localStorage.getItem('pendingBooking');
-                if (pendingBooking) {
-                    try {
-                        const bookingData = JSON.parse(pendingBooking);
-                        
-                        if (bookingDateEl && bookingData.date) {
-                            bookingDateEl.textContent = bookingData.date;
-                        }
-                        
-                        if (bookingTimeEl && bookingData.time) {
-                            // Format time to show duration (assuming 30-minute slots)
-                            const startTime = bookingData.time;
-                            const endTime = addMinutesToTime(startTime, 30);
-                            bookingTimeEl.textContent = `${startTime} - ${endTime}`;
-                        }
-                        
-                        if (bookingTzEl && bookingData.timezone) {
-                            bookingTzEl.textContent = formatTimezone(bookingData.timezone);
-                        }
-                        
-                        // Clear the pending booking from localStorage
-                        localStorage.removeItem('pendingBooking');
+            // Video player functionality - exact same as mentorship.php
+            function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
+                const videoContainer = document.getElementById(containerId);
+                const previewVideo = document.getElementById(previewId);
+                const mainVideo = document.getElementById(mainId);
+                const playButton = document.getElementById(buttonId);
+
+                if (!videoContainer || !previewVideo || !mainVideo || !playButton) return;
+
+                // Set up 5-second preview loop
+                previewVideo.addEventListener('timeupdate', function() {
+                    if (previewVideo.currentTime >= 5) {
+                        previewVideo.currentTime = 0;
+                    }
+                });
+
+                // Ensure preview starts playing
+                previewVideo.muted = true; // Ensure muted for autoplay
+                previewVideo.play().catch(e => {
+                    console.log('Preview autoplay failed:', e);
+                });
+
+                // Click handler for video container (but not on video controls)
+                videoContainer.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on video controls
+                    if (e.target.tagName === 'VIDEO' || e.target.closest('video')) {
                         return;
-                    } catch (error) {
-                        console.error('Error parsing booking data from localStorage:', error);
                     }
-                }
-                
-                // Handle URL parameters from Cal.com and other booking systems
-                if (bookingDateEl && date) {
-                    // Try to format the date nicely
-                    const formattedDate = formatDate(date);
-                    bookingDateEl.textContent = formattedDate;
-                }
-                
-                if (bookingTimeEl && time) {
-                    // Format the start time
-                    const formattedStartTime = formatTime(time);
-                    let timeDisplay = formattedStartTime;
-                    
-                    // If we have both start and end time from URL
-                    if (endTime) {
-                        const formattedEndTime = formatTime(endTime);
-                        timeDisplay = `${formattedStartTime} - ${formattedEndTime}`;
-                    } else if (duration) {
-                        // Calculate end time based on duration
-                        const calculatedEndTime = addMinutesToTime(formattedStartTime, parseInt(duration));
-                        timeDisplay = `${formattedStartTime} - ${calculatedEndTime}`;
-                    } else {
-                        // Default to 30-minute duration
-                        const calculatedEndTime = addMinutesToTime(formattedStartTime, 30);
-                        timeDisplay = `${formattedStartTime} - ${calculatedEndTime}`;
-                    }
-                    
-                    bookingTimeEl.textContent = timeDisplay;
-                }
-                
-                if (bookingTzEl && timezone) {
-                    bookingTzEl.textContent = formatTimezone(timezone);
-                }
-                
-                // Log booking details for debugging (remove in production)
-                if (bookingUid) {
-                    console.log('Cal.com Booking UID:', bookingUid);
-                }
-                if (attendeeName) {
-                    console.log('Attendee Name:', attendeeName);
-                }
-                if (attendeeEmail) {
-                    console.log('Attendee Email:', attendeeEmail);
-                }
-            }
-            
-            // Helper function to format date strings
-            function formatDate(dateStr) {
-                try {
-                    // Handle various date formats
-                    let date;
-                    
-                    // If it's already a formatted date string, return as is
-                    if (dateStr.includes(',') && (dateStr.includes('Monday') || dateStr.includes('Tuesday') || 
-                        dateStr.includes('Wednesday') || dateStr.includes('Thursday') || dateStr.includes('Friday') || 
-                        dateStr.includes('Saturday') || dateStr.includes('Sunday'))) {
-                        return dateStr;
-                    }
-                    
-                    // Handle ISO datetime format from Cal.com (2024-08-13T15:30:00Z)
-                    if (dateStr.includes('T')) {
-                        date = new Date(dateStr);
-                    }
-                    // Handle ISO date format (2024-08-13)
-                    else if (dateStr.includes('-') && dateStr.length >= 10) {
-                        date = new Date(dateStr + 'T00:00:00');
-                    } 
-                    // Handle other formats
-                    else {
-                        date = new Date(dateStr);
-                    }
-                    
-                    // Check if date is valid
-                    if (isNaN(date.getTime())) {
-                        console.warn('Invalid date:', dateStr);
-                        return dateStr;
-                    }
-                    
-                    // Format as "Thursday, August 8, 2024"
-                    const options = { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                    };
-                    
-                    return date.toLocaleDateString('en-US', options);
-                } catch (error) {
-                    console.error('Error formatting date:', error);
-                    return dateStr; // Return original if formatting fails
-                }
-            }
-            
-            // Helper function to format timezone strings
-            function formatTimezone(timezoneStr) {
-                if (!timezoneStr) return 'America/New_York';
-                
-                // Convert underscores to spaces and handle common timezone formats
-                return timezoneStr
-                    .replace(/_/g, ' ')
-                    .replace(/\//g, ' / ')
-                    .replace(/([a-z])([A-Z])/g, '$1 $2'); // Add space before capital letters
-            }
-            
-            // Helper function to format time from ISO datetime or time string
-            function formatTime(timeStr) {
-                try {
-                    // If it's an ISO datetime string (2024-08-13T15:30:00Z)
-                    if (timeStr.includes('T')) {
-                        const date = new Date(timeStr);
-                        if (isNaN(date.getTime())) return timeStr;
-                        
-                        return date.toLocaleTimeString('en-US', {
-                            hour: 'numeric',
-                            minute: '2-digit',
-                            hour12: true
-                        }).toLowerCase();
-                    }
-                    
-                    // If it's already a formatted time string, return as is
-                    return timeStr;
-                } catch (error) {
-                    console.error('Error formatting time:', error);
-                    return timeStr;
-                }
-            }
-            
-            // Helper function to add minutes to a time string
-            function addMinutesToTime(timeStr, minutes) {
-                // First try to format the time if it's an ISO string
-                const formattedTime = formatTime(timeStr);
-                
-                // Parse time string like "3:00pm"
-                const match = formattedTime.match(/(\d{1,2}):(\d{2})(am|pm)/i);
-                if (!match) return formattedTime;
-                
-                let hours = parseInt(match[1]);
-                const mins = parseInt(match[2]);
-                const period = match[3].toLowerCase();
-                
-                // Convert to 24-hour format
-                if (period === 'pm' && hours !== 12) {
-                    hours += 12;
-                } else if (period === 'am' && hours === 12) {
-                    hours = 0;
-                }
-                
-                // Add minutes
-                const totalMinutes = hours * 60 + mins + minutes;
-                const newHours = Math.floor(totalMinutes / 60) % 24;
-                const newMins = totalMinutes % 60;
-                
-                // Convert back to 12-hour format
-                let displayHours = newHours;
-                let newPeriod = 'am';
-                
-                if (newHours === 0) {
-                    displayHours = 12;
-                } else if (newHours === 12) {
-                    newPeriod = 'pm';
-                } else if (newHours > 12) {
-                    displayHours = newHours - 12;
-                    newPeriod = 'pm';
-                }
-                
-                return `${displayHours}:${newMins.toString().padStart(2, '0')}${newPeriod}`;
-            }
-            
-            // Call the function to get booking details
-            getBookingDetails();
-            
-            // Video playback control - ensure this still works with our changes
-            const videoContainer = document.querySelector('.video-container');
-            const videoThumbnail = document.querySelector('.video-thumbnail');
-            const videoElement = document.querySelector('.video-element');
-            
-            if (videoContainer && videoElement) {
-                videoContainer.addEventListener('click', function() {
-                    if (videoThumbnail) {
-                        videoThumbnail.style.display = 'none';
-                    }
-                    
-                    if (videoElement.paused) {
-                        videoElement.play();
-                    } else {
-                        videoElement.pause();
+
+                    videoContainer.classList.add('playing');
+                    mainVideo.style.display = 'block';
+                    mainVideo.play();
+                });
+
+                // Reset to preview state when video ends
+                mainVideo.addEventListener('pause', function() {
+                    if (mainVideo.currentTime >= mainVideo.duration) {
+                        videoContainer.classList.remove('playing');
+                        previewVideo.style.display = 'block';
+                        mainVideo.style.display = 'none';
                     }
                 });
             }
-            
+
+            // Initialize video players
+            setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
+
+
+
             // FAQ functionality
             const faqItems = document.querySelectorAll('.faq-item');
-            
+
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
-                
+
                 question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close all other FAQs
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                    
-                    // Toggle current FAQ
+                    // Simply toggle current FAQ without closing others
                     item.classList.toggle('active');
                 });
             });
