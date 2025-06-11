@@ -19,16 +19,22 @@
         /* CSS Variables */
         :root {
             /* Spacing System - 8-point grid */
-            --space-1: 0.5rem;  /* 8px */
-            --space-2: 1rem;    /* 16px */
-            --space-3: 1.5rem;  /* 24px */
-            --space-4: 2rem;    /* 32px */
-            --space-5: 2.5rem;  /* 40px */
-            --space-6: 3rem;    /* 48px */
-            
+            --space-1: 0.5rem;
+            /* 8px */
+            --space-2: 1rem;
+            /* 16px */
+            --space-3: 1.5rem;
+            /* 24px */
+            --space-4: 2rem;
+            /* 32px */
+            --space-5: 2.5rem;
+            /* 40px */
+            --space-6: 3rem;
+            /* 48px */
+
             /* Form Spacing */
             --form-gap: 1rem;
-            
+
             /* Colors */
             --primary: #1877F2;
             --background: #f8f9fa;
@@ -40,29 +46,29 @@
             --success: #4cd964;
             --divider: #E8EAED;
             --progress-inactive: #e0e0e0;
-            
+
             /* Calendar Specific Colors */
             --calendar-day-hover: #F0F9FF;
             --calendar-border: #E5E7EB;
-            
+
             /* Shadows */
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-            
+
             /* Transitions */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
+
             /* Gradients for Progress Bars */
             --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
             --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
             --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
-            
+
             /* Questionnaire Specific */
             --slider-blue: #E3F2FD;
             --slider-blue-highlight: #1877F2;
             --slider-track: #E0E0E0;
             --slider-thumb: #1877F2;
-            
+
             /* Base Font Size */
             font-size: 16px;
         }
@@ -99,6 +105,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -109,6 +116,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 15px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 14px);
             }
@@ -118,6 +126,7 @@
             from {
                 clip-path: inset(5% 5% 5% 5% round 11px);
             }
+
             to {
                 clip-path: inset(0% 0% 0% 0% round 10px);
             }
@@ -205,9 +214,9 @@
         }
 
         /* When input is focused or has content */
-        .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label,
-        .form-input:-webkit-autofill ~ .form-label {
+        .form-input:focus~.form-label,
+        .form-input:not(:placeholder-shown)~.form-label,
+        .form-input:-webkit-autofill~.form-label {
             top: 8px;
             transform: translateY(0) scale(0.75);
             color: var(--text-secondary);
@@ -229,7 +238,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
         }
 
         /* Validation States */
@@ -253,7 +261,7 @@
             justify-content: center;
         }
 
-        .form-input.valid:not(:focus) ~ .validation-mark {
+        .form-input.valid:not(:focus)~.validation-mark {
             opacity: 1;
         }
 
@@ -261,7 +269,7 @@
             border-color: var(--error);
         }
 
-        .form-input.error ~ .form-label {
+        .form-input.error~.form-label {
             color: var(--error);
         }
 
@@ -278,7 +286,7 @@
             line-height: 1.2;
         }
 
-        .form-input.error ~ .error-message {
+        .form-input.error~.error-message {
             display: block;
         }
 
@@ -301,7 +309,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -364,43 +371,43 @@
             .headline {
                 font-size: 1.875rem;
             }
-            
+
             .subheadline {
                 font-size: 1rem;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
-            
+
             .form-subtitle {
                 font-size: 0.875rem;
             }
-            
+
             .form-input {
                 padding: 24px 12px 8px;
                 font-size: 1rem;
                 height: 52px;
             }
-            
+
             .form-label {
                 font-size: 1rem;
                 left: 12px;
             }
-            
-            .form-input:focus ~ .form-label,
-            .form-input:not(:placeholder-shown) ~ .form-label {
+
+            .form-input:focus~.form-label,
+            .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
                 transform: translateY(0) scale(0.75);
                 background-color: var(--card-bg);
                 padding: 0 4px;
                 margin-left: -2px;
             }
-            
+
             .error-message {
                 top: 56px;
             }
-            
+
             .disclaimer {
                 font-size: 0.7rem;
             }
@@ -415,13 +422,12 @@
     </style>
     <style>
         /* Page-specific styles for index.php */
-        
+
         /* Video aspect ratios */
         :root {
             --mobile-video-ratio: 80%;
             /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
-            --desktop-video-ratio: 54.05%;
-            /* 1.85:1 aspect ratio (1/1.85 = 0.5405 = 54.05%) */
+
         }
 
         .container {
@@ -434,7 +440,8 @@
             display: flex;
             flex-direction: column;
             gap: var(--space-5);
-            max-width: 450px;
+            width: 100%;
+            max-width: 500px;
             padding: 0 1.5rem;
         }
 
@@ -443,10 +450,7 @@
             margin-bottom: var(--space-2);
         }
 
-        /* Hide desktop elements by default (mobile-first) */
-        .desktop-layout {
-            display: none;
-        }
+
 
         /* Header - using global styles, only page-specific overrides here */
         .subheadline {
@@ -474,45 +478,23 @@
             border-radius: 12px;
         }
 
-        .desktop-image-container {
-            position: relative;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: var(--premium-shadow);
-            border: 1px solid var(--border);
-            animation: desktopBorderReveal 0.5s ease-out forwards;
-            overflow: hidden;
-        }
 
-        .desktop-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-        }
 
-        /* Remove video-specific styles */
-        .video-container, .desktop-video-container,
-        .play-button, .play-icon,
-        .video-thumbnail {
-            display: none;
-        }
 
-        /* Pricing Info */
-        .pricing-card {
+
+        /* Widget Section */
+        .widget {
             background-color: var(--card-bg);
             border-radius: 14px;
             padding: 12px 0;
-            max-width: 450px;
-            margin: 0 auto var(--space-1);
+            width: 100%;
+            margin: 0 auto;
             border: 1px solid var(--border);
             box-shadow: var(--premium-shadow);
             transition: var(--premium-transition);
         }
 
-        .pricing-card:hover {
-            box-shadow: var(--card-hover-shadow);
-        }
+
 
         .price-tag {
             background-color: #FFEC3D;
@@ -604,9 +586,7 @@
             transition: transform 0.2s;
         }
 
-        .benefit-item:hover .benefit-icon img {
-            transform: translateY(-2px);
-        }
+
 
         .benefit-text {
             font-size: 0.75rem;
@@ -707,7 +687,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-            transform: translateY(-1px);
         }
 
         .submit-button {
@@ -728,7 +707,6 @@
 
         .submit-button:hover {
             background-color: #166FE5;
-            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
         }
 
@@ -804,15 +782,7 @@
                 padding: 0 1.25rem;
             }
 
-            /* Ensure desktop layout is hidden */
-            .desktop-layout {
-                display: none;
-            }
 
-            /* Show mobile layout */
-            .mobile-layout {
-                display: block;
-            }
 
             .price-container {
                 margin: 10px 0 6px;
@@ -859,23 +829,13 @@
 
         /* Desktop styling - unified max-width approach */
         @media(min-width:769px) {
-            /* Hide mobile layout */
-            .mobile-layout {
-                display: none;
-            }
-
-            /* Show desktop layout */
-            .desktop-layout {
-                display: block;
-            }
-
             /* Slightly larger fonts for desktop readability */
-            .desktop-layout .headline {
+            .headline {
                 font-size: 2.25rem;
                 line-height: 1.15;
             }
 
-            .desktop-layout .subheadline {
+            .subheadline {
                 font-size: 1.125rem;
                 line-height: 1.4;
             }
@@ -935,78 +895,9 @@
             text-decoration: underline;
         }
 
-        /* Progress Bar Styles - REMOVE */
-        .progress-bar-container,
-        .desktop-progress-bar-container,
-        .progress-bar-step,
-        .desktop-progress-bar-step {
-            display: none;
-        }
 
-        /* Video styles for proper display */
-        .video-container video,
-        .desktop-video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 12px;
-            object-fit: cover;
-        }
 
-        /* Initial video states */
-        .video-container #mainVideo,
-        .desktop-video-container #desktopMainVideo {
-            display: none;
-            z-index: 3; /* Ensure main video is above other elements */
-        }
 
-        /* Ensure video controls are visible and not obstructed */
-        video::-webkit-media-controls-panel {
-            display: flex !important;
-            opacity: 1 !important;
-        }
-
-        video::-webkit-media-controls {
-            display: flex !important;
-        }
-
-        .video-container.playing #previewVideo,
-        .desktop-video-container.playing #desktopPreviewVideo {
-            display: none;
-        }
-
-        .video-container.playing #mainVideo,
-        .desktop-video-container.playing #desktopMainVideo {
-            display: block;
-        }
-
-        /* Hide play button when playing */
-        .video-container.playing .play-button,
-        .desktop-video-container.playing .play-button {
-            display: none !important;
-            z-index: -1;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .calendar-day:hover {
-            background-color: var(--calendar-day-hover);
-            color: var(--primary);
-        }
-
-        .time-slot {
-            background: var(--card-bg);
-            border: 1px solid var(--calendar-border);
-        }
-
-        .time-slot:hover {
-            background: var(--calendar-day-hover);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
 
         /* Email Carousel Styles */
         .carousel-container {
@@ -1035,8 +926,8 @@
             height: 100%;
             max-height: 100%;
             flex-shrink: 0;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0;
             pointer-events: none;
             display: flex;
@@ -1086,26 +977,19 @@
             .carousel-container {
                 max-width: 450px;
             }
-            
+
             /* Remove the added styles that were breaking layout */
             .header-group {
                 padding: 0;
             }
-            
-            /* Remove the added styles that were breaking widget */
-            .pricing-card {
-                margin-left: 0;
-                margin-right: 0;
-                max-width: 450px;
-                margin: 0 auto var(--space-1);
-            }
+
+
         }
     </style>
 </head>
 
 <body>
-    <!-- Mobile Layout -->
-    <div class="container mobile-layout">
+    <div class="container">
         <div class="content">
             <div class="header-group">
                 <h1 class="headline">Get My 6-Week Weight Loss System</h1>
@@ -1138,7 +1022,7 @@
                 </div>
             </div>
 
-            <div class="pricing-card">
+            <div class="widget">
                 <div class="benefits-container">
                     <div class="benefit-item">
                         <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
@@ -1158,11 +1042,11 @@
             <div class="form-wrapper">
                 <div class="form-title">Contact Information</div>
                 <p class="form-subtitle">Send me your contact info. Your phone number will only be used to notify you when each email is sent.</p>
-                
+
                 <?php if (isset($_GET['error'])): ?>
                     <div class="error-alert" style="background: #ffebee; border: 1px solid #f44336; color: #c62828; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px;">
-                        <?php 
-                        switch($_GET['error']) {
+                        <?php
+                        switch ($_GET['error']) {
                             case 'missing_fields':
                                 echo 'Please fill in all required fields.';
                                 break;
@@ -1178,7 +1062,7 @@
                         ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (isset($_GET['success'])): ?>
                     <div class="success-alert" style="background: #e8f5e8; border: 1px solid #4caf50; color: #2e7d32; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px;">
                         Thank you! Please check your email and complete the questionnaire.
@@ -1225,130 +1109,6 @@
         </div>
     </div>
 
-    <!-- Desktop Layout - Same structure as mobile -->
-    <div class="desktop-layout">
-        <div class="container">
-            <div class="content">
-                <div class="header-group">
-                    <h1 class="headline">Get My 6-Week Weight Loss System</h1>
-                    <p class="subheadline">I'll send you 7 emails teaching you how I optimize my diet and training over 6 weeks to whip myself back into shape so you can do the same.</p>
-                </div>
-
-                <div class="carousel-container">
-                    <div class="carousel-track">
-                        <div class="email-slide prev">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 7" draggable="false">
-                        </div>
-                        <div class="email-slide active">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 1" draggable="false">
-                        </div>
-                        <div class="email-slide next">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 2" draggable="false">
-                        </div>
-                        <div class="email-slide">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 3" draggable="false">
-                        </div>
-                        <div class="email-slide">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 4" draggable="false">
-                        </div>
-                        <div class="email-slide">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 5" draggable="false">
-                        </div>
-                        <div class="email-slide">
-                            <img src="https://i.postimg.cc/MGbx0CR8/email.png" alt="Email preview 6" draggable="false">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="benefits-container">
-                        <div class="benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/dQXSL7yb/fire.png" alt="Fire icon"></div>
-                            <div class="benefit-text">How I ate to lose fat without feeling hungry</div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/MZsVxTTg/gymmm.png" alt="Dumbbell icon"></div>
-                            <div class="benefit-text">The 2 workouts I did to prevent muscle loss</div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon"><img src="https://i.postimg.cc/28Z9vzdV/target.png" alt="Target icon"></div>
-                            <div class="benefit-text">The exact way I tracked progress to stay on target</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-wrapper">
-                    <div class="form-title">Contact Information</div>
-                    <p class="form-subtitle">Send me your contact info. Your phone number will only be used to notify you when each email is sent.</p>
-                    
-                    <?php if (isset($_GET['error'])): ?>
-                        <div class="error-alert" style="background: #ffebee; border: 1px solid #f44336; color: #c62828; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px;">
-                            <?php 
-                            switch($_GET['error']) {
-                                case 'missing_fields':
-                                    echo 'Please fill in all required fields.';
-                                    break;
-                                case 'missing_email':
-                                    echo 'Email address is required.';
-                                    break;
-                                case 'api_error':
-                                    echo 'There was an error processing your request. Please try again.';
-                                    break;
-                                default:
-                                    echo 'An error occurred. Please try again.';
-                            }
-                            ?>
-                        </div>
-                    <?php endif; ?>
-                    
-                    <?php if (isset($_GET['success'])): ?>
-                        <div class="success-alert" style="background: #e8f5e8; border: 1px solid #4caf50; color: #2e7d32; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px;">
-                            Thank you! Please check your email and complete the questionnaire.
-                        </div>
-                    <?php endif; ?>
-                    
-                    <form action="beehiiv_integration.php" method="POST" id="desktopContactForm" class="contact-form" autocomplete="on">
-                        <div class="name-row">
-                            <div class="name-field">
-                                <input type="text" id="desktopFirstName" name="firstName" class="form-input" placeholder="First name" required aria-required="true" autocomplete="given-name">
-                                <label for="desktopFirstName" class="form-label">First name</label>
-                                <div class="validation-mark">✓</div>
-                                <div class="error-message">Please enter your first name</div>
-                            </div>
-                            <div class="name-field">
-                                <input type="text" id="desktopLastName" name="lastName" class="form-input" placeholder="Last name" required aria-required="true" autocomplete="family-name">
-                                <label for="desktopLastName" class="form-label">Last name</label>
-                                <div class="validation-mark">✓</div>
-                                <div class="error-message">Please enter your last name</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" id="desktopEmail" name="email" class="form-input" placeholder="Email" required aria-required="true" autocomplete="email">
-                            <label for="desktopEmail" class="form-label">Email</label>
-                            <div class="validation-mark">✓</div>
-                            <div class="error-message">Please enter a valid email address</div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="tel" id="desktopPhone" name="phone" class="form-input" placeholder="Phone number" required aria-required="true" autocomplete="tel">
-                            <label for="desktopPhone" class="form-label">Phone number (Text notifications)</label>
-                            <div class="validation-mark">✓</div>
-                            <div class="error-message">Please enter a valid phone number</div>
-                        </div>
-
-                        <button type="submit" class="submit-button">Submit</button>
-                        <div class="fine-print">
-                            <p>I respect your privacy. Your email and phone number will only be used to deliver the 7 emails you're requesting. I will never sell or share your data. Unsubscribe at anytime.
-                                <br><br>This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" defer>
 
     <script>
@@ -1370,7 +1130,7 @@
 
             // Carousel functionality with fluid scrolling
             const carousels = document.querySelectorAll('.carousel-container');
-            
+
             carousels.forEach(carousel => {
                 const track = carousel.querySelector('.carousel-track');
                 const slides = Array.from(carousel.querySelectorAll('.email-slide'));
@@ -1393,22 +1153,22 @@
                 function updateSlides(progress = 0) {
                     const totalSlides = slides.length;
                     const containerWidth = carousel.offsetWidth;
-                    
+
                     slides.forEach((slide, index) => {
                         slide.classList.remove('active', 'prev', 'next');
-                        
+
                         // Calculate relative position with wrapping for infinite scroll
                         let offset = index - currentIndex;
-                        
+
                         // Wrap around for infinite scroll
                         if (offset > totalSlides / 2) {
                             offset -= totalSlides;
                         } else if (offset < -totalSlides / 2) {
                             offset += totalSlides;
                         }
-                        
+
                         const position = offset - progress;
-                        
+
                         // Hide slides that are too far away
                         if (Math.abs(position) > 1.5) {
                             slide.style.opacity = '0';
@@ -1416,18 +1176,18 @@
                             slide.style.transform = `translateX(-50%) scale(0.5)`;
                             return;
                         }
-                        
+
                         // Get the image width (approximate)
                         const imgWidth = slide.querySelector('img') ? slide.querySelector('img').offsetWidth : 240;
                         const sideScale = 0.85;
-                        
+
                         // Calculate edge positions
                         const leftEdge = -(containerWidth / 2) + (imgWidth * sideScale / 2);
                         const rightEdge = (containerWidth / 2) - (imgWidth * sideScale / 2);
-                        
+
                         // Smooth interpolation based on position
                         let x, scale, opacity;
-                        
+
                         if (Math.abs(position) <= 1) {
                             // Slide is in view or transitioning
                             if (position === 0) {
@@ -1462,16 +1222,16 @@
                                 opacity = 0.7 * (1 - (Math.abs(position) - 1));
                             }
                         }
-                        
+
                         // Determine z-index based on distance from center
                         const zIndex = Math.abs(position) < 0.5 ? 3 : Math.abs(position) < 1 ? 2 : 1;
-                        
+
                         // Apply transforms with improved easing
                         slide.style.transform = `translateX(calc(-50% + ${x}px)) scale(${scale})`;
                         slide.style.opacity = opacity;
                         slide.style.zIndex = zIndex;
                         slide.style.pointerEvents = Math.abs(position) < 0.5 ? 'auto' : 'none';
-                        
+
                         // Add classes for styling
                         if (Math.abs(position) < 0.1) {
                             slide.classList.add('active');
@@ -1486,7 +1246,7 @@
                 function goToSlide(index, animate = true) {
                     // Remove bounds checking to allow infinite scroll
                     currentIndex = index;
-                    
+
                     if (animate) {
                         slides.forEach(slide => {
                             slide.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -1496,9 +1256,9 @@
                             slide.style.transition = 'none';
                         });
                     }
-                    
+
                     updateSlides();
-                    
+
                     // Remove transitions after animation to allow smooth dragging
                     if (animate) {
                         setTimeout(() => {
@@ -1520,60 +1280,64 @@
                     dragStartTime = Date.now();
                     lastX = startX;
                     velocity = 0;
-                    
+
                     // Remove transitions during drag
                     slides.forEach(slide => {
                         slide.style.transition = 'none';
                     });
-                }, { passive: true });
+                }, {
+                    passive: true
+                });
 
                 carousel.addEventListener('touchmove', e => {
                     if (!isDragging) return;
-                    
+
                     currentX = e.touches[0].clientX;
                     currentY = e.touches[0].clientY;
-                    
+
                     const deltaX = currentX - startX;
                     const deltaY = currentY - startY;
-                    
+
                     // Determine if this is a vertical scroll
                     if (!isVerticalScroll && Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
                         isVerticalScroll = true;
                         isDragging = false;
                         return;
                     }
-                    
+
                     // If horizontal movement is dominant, prevent vertical scroll
                     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
                         e.preventDefault();
-                        
+
                         // Calculate progress based on drag distance
                         const carouselWidth = getCarouselWidth();
                         const progress = -deltaX / (carouselWidth * 0.3); // 30% of width to move to next slide
-                        
+
                         // Update velocity for momentum
                         velocity = currentX - lastX;
                         lastX = currentX;
-                        
+
                         // Update slides with progress
                         updateSlides(Math.max(-1, Math.min(1, progress)));
                     }
-                }, { passive: false });
+                }, {
+                    passive: false
+                });
 
                 carousel.addEventListener('touchend', e => {
                     if (!isDragging || isVerticalScroll) return;
                     isDragging = false;
-                    
+
                     const deltaX = currentX - startX;
                     const carouselWidth = getCarouselWidth();
                     const threshold = carouselWidth * 0.2; // 20% threshold for snap
                     const dragDuration = Date.now() - dragStartTime;
                     const speed = Math.abs(velocity);
-                    
+
                     // Determine if we should change slides based on distance, velocity, or time
-                    let shouldChangeSlide = Math.abs(deltaX) > threshold || 
-                                           (speed > 5 && dragDuration < 300);
-                    
+                    let shouldChangeSlide = Math.abs(deltaX) > threshold ||
+                        (speed > 5 && dragDuration < 300);
+
                     if (shouldChangeSlide) {
                         if (deltaX > 0 || velocity > 5) {
                             currentIndex--;
@@ -1601,7 +1365,7 @@
                     lastX = startX;
                     velocity = 0;
                     e.preventDefault();
-                    
+
                     // Remove transitions during drag
                     slides.forEach(slide => {
                         slide.style.transition = 'none';
@@ -1611,18 +1375,18 @@
                 window.addEventListener('mousemove', e => {
                     if (!isDragging || isVerticalScroll) return;
                     e.preventDefault();
-                    
+
                     currentX = e.clientX;
                     const deltaX = currentX - startX;
-                    
+
                     // Calculate progress based on drag distance
                     const carouselWidth = getCarouselWidth();
                     const progress = -deltaX / (carouselWidth * 0.3);
-                    
+
                     // Update velocity for momentum
                     velocity = currentX - lastX;
                     lastX = currentX;
-                    
+
                     // Update slides with progress
                     updateSlides(Math.max(-1, Math.min(1, progress)));
                 });
@@ -1630,16 +1394,16 @@
                 window.addEventListener('mouseup', () => {
                     if (!isDragging || isVerticalScroll) return;
                     isDragging = false;
-                    
+
                     const deltaX = currentX - startX;
                     const carouselWidth = getCarouselWidth();
                     const threshold = carouselWidth * 0.2;
                     const dragDuration = Date.now() - dragStartTime;
                     const speed = Math.abs(velocity);
-                    
-                    let shouldChangeSlide = Math.abs(deltaX) > threshold || 
-                                           (speed > 5 && dragDuration < 300);
-                    
+
+                    let shouldChangeSlide = Math.abs(deltaX) > threshold ||
+                        (speed > 5 && dragDuration < 300);
+
                     if (shouldChangeSlide) {
                         if (deltaX > 0 || velocity > 5) {
                             currentIndex--;
@@ -1770,7 +1534,7 @@
                 // Form submission
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
+
                     // Check all fields
                     let isValid = true;
                     Object.keys(inputs).forEach(field => {
