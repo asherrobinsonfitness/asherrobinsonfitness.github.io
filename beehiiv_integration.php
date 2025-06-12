@@ -146,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['currentWeight'])) {
     $result = $beehiiv->addSubscriber($contactData);
     
     if ($result['success']) {
-        // Success - redirect to offer page
-        header('Location: offer.php?success=1&email=' . urlencode($contactData['email']) . 
+        // Success - redirect to mentorship page
+        header('Location: mentorship.php?success=1&email=' . urlencode($contactData['email']) . 
                '&firstName=' . urlencode($contactData['firstName']) . 
                '&lastName=' . urlencode($contactData['lastName']) . 
                '&phone=' . urlencode($contactData['phone']));
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['currentWeight'])) {
     } else {
         // Error handling
         error_log('Beehiiv API Error: ' . json_encode($result));
-        header('Location: index.php?error=api_error');
+        header('Location: system.php?error=api_error');
         exit;
     }
 }
@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['currentWeight'])) {
     $email = $_POST['email'] ?? '';
     
     if (empty($email)) {
-        header('Location: index.php?error=missing_email');
+        header('Location: system.php?error=missing_email');
         exit;
     }
     
@@ -183,8 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['currentWeight'])) {
     $result = $beehiiv->updateSubscriber($email, $questionnaireData);
     
     if ($result['success']) {
-        // Success - redirect to offer page
-        header('Location: offer.php?success=1&email=' . urlencode($email) . 
+        // Success - redirect to mentorship page
+        header('Location: mentorship.php?success=1&email=' . urlencode($email) . 
                '&firstName=' . urlencode($_POST['firstName'] ?? '') . 
                '&lastName=' . urlencode($_POST['lastName'] ?? '') . 
                '&phone=' . urlencode($_POST['phone'] ?? ''));
@@ -192,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['currentWeight'])) {
     } else {
         // Error handling
         error_log('Beehiiv Update Error: ' . json_encode($result));
-        header('Location: offer.php?error=1');
+        header('Location: mentorship.php?error=1');
         exit;
     }
 }
