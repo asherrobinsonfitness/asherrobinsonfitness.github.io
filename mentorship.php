@@ -4,12 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>6-Week Online Weight Loss Mentorship</title>
-    <meta name="description" content="Join our 6-week online weight loss mentorship program. We'll fix your diet, training, and supplementation without making it suck.">
+    <title>Book Your Call - Weight Loss Mentorship</title>
+    <meta name="description" content="Book a call for our weight loss mentorship program.">
     <meta name="robots" content="index, follow">
-    <meta name="format-detection" content="telephone=yes">
-    <meta name="instagram:lead" content="true">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="video-thumb-optimized.png" fetchpriority="high">
@@ -23,6 +20,7 @@
 
       gtag('config', 'G-1QLJZQBQ89');
     </script>
+    
     <style>
         /* Global CSS Variables and Styles for BusyBarbell */
 
@@ -41,10 +39,10 @@
             /* 40px */
             --space-6: 3rem;
             /* 48px */
-            
+
             /* Form Spacing */
             --form-gap: 1rem;
-            
+
             /* Colors */
             --primary: #1877F2;
             --background: #f8f9fa;
@@ -56,29 +54,29 @@
             --success: #4cd964;
             --divider: #E8EAED;
             --progress-inactive: #e0e0e0;
-            
+
             /* Calendar Specific Colors */
             --calendar-day-hover: #F0F9FF;
             --calendar-border: #E5E7EB;
-            
+
             /* Shadows */
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-            
+
             /* Transitions */
             --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
+
             /* Gradients for Progress Bars */
             --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
             --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
             --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
-            
+
             /* Questionnaire Specific */
             --slider-blue: #E3F2FD;
             --slider-blue-highlight: #1877F2;
             --slider-track: #E0E0E0;
             --slider-thumb: #1877F2;
-            
+
             /* Base Font Size */
             font-size: 16px;
         }
@@ -176,14 +174,16 @@
             background-color: var(--background);
             text-align: left;
             margin-bottom: var(--space-1);
+            animation: fadeIn 0.5s ease-out forwards;
         }
 
         .form-subtitle {
-            color: var(--text);
+            color: var(--text-secondary);
             font-size: 1.125rem;
             margin-bottom: var(--space-3);
             line-height: 1.4;
             text-align: left;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         .form-group {
@@ -381,30 +381,30 @@
             .headline {
                 font-size: 1.875rem;
             }
-            
+
             .subheadline {
                 font-size: 1rem;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
-            
+
             .form-subtitle {
                 font-size: 0.875rem;
             }
-            
+
             .form-input {
                 padding: 24px 12px 8px;
                 font-size: 1rem;
                 height: 52px;
             }
-            
+
             .form-label {
                 font-size: 1rem;
                 left: 12px;
             }
-            
+
             .form-input:focus~.form-label,
             .form-input:not(:placeholder-shown)~.form-label {
                 top: 8px;
@@ -413,11 +413,11 @@
                 padding: 0 4px;
                 margin-left: -2px;
             }
-            
+
             .error-message {
                 top: 56px;
             }
-            
+
             .disclaimer {
                 font-size: 0.7rem;
             }
@@ -430,23 +430,31 @@
             }
         }
     </style>
+    <link rel="dns-prefetch" href="https://api.cal.com">
+    <link rel="preconnect" href="https://api.cal.com" crossorigin>
     <style>
         /* Simple 8-point spacing system */
         :root {
-            --space-1: 0.5rem;
-            /* 8px */
-            --space-2: 1rem;
-            /* 16px */
-            --space-3: 1.5rem;
-            /* 24px */
-            --space-4: 2rem;
-            /* 32px */
-            --space-5: 2.5rem;
-            /* 40px */
-            --space-6: 3rem;
-            /* 48px */
-            --form-gap: 1rem;
-            /* Consistent form spacing */
+            --space-1: 8px;
+            /* 0.5rem */
+            --space-2: 16px;
+            /* 1rem */
+            --space-3: 24px;
+            /* 1.5rem */
+            --space-4: 32px;
+            /* 2rem */
+            --space-5: 40px;
+            /* 2.5rem */
+            --space-6: 48px;
+            /* 3rem */
+
+            /* Video aspect ratios */
+            --mobile-video-ratio: 80%;
+            /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
+
+
+            /* Premium styling variables */
+            --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
             /* Light mode colors */
             --primary: #1877F2;
@@ -463,27 +471,9 @@
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-hover-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
             --progress-inactive: #e0e0e0;
-            
-            /* Gradients for progress bars */
-            --gradient-1: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
-            --gradient-2: linear-gradient(90deg, #ee0979 0%, #9733ee 100%);
-            --gradient-3: linear-gradient(90deg, #9733ee 0%, #00c6ff 100%);
-            
-            /* Calendar specific colors */
-            --nav-hover: #F0F9FF;
-            --weekday-text: #6B7280;
-            --time-dot: #4cd964;
-            
+
             /* Base font size */
             font-size: 16px;
-            
-            /* Video aspect ratios */
-            --mobile-video-ratio: 80%;
-            /* 5:4 aspect ratio (4/5 = 0.8 = 80%) */
-
-            
-            /* Premium styling variables */
-            --premium-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         * {
@@ -498,13 +488,6 @@
             color: var(--text);
             line-height: 1.5;
             font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
-
-        .container {
-            padding: var(--space-6) 0 var(--space-6);
         }
 
         @keyframes fadeIn {
@@ -539,6 +522,24 @@
             }
         }
 
+        @keyframes pulseFade {
+            0% {
+                box-shadow: 0 0 0 0 rgba(238, 9, 121, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 4px rgba(238, 9, 121, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(238, 9, 121, 0);
+            }
+        }
+
+        .container {
+            padding: var(--space-6) 0 var(--space-6);
+        }
+
         .content {
             margin: 0 auto;
             text-align: center;
@@ -550,704 +551,10 @@
             padding: 0 1.5rem;
         }
 
-        .header-group {
-            animation: fadeIn 0.5s ease-out forwards;
-            margin-bottom: var(--space-2);
-        }
-
-
-
-        /* Header */
-        .headline {
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: var(--space-2);
-            letter-spacing: -0.015em;
-            color: var(--text);
-        }
-
-        .subheadline {
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        /* Video */
-        .video-container {
-            position: relative;
-            padding-bottom: var(--mobile-video-ratio);
-            height: 0;
-            overflow: hidden;
-            border-radius: 14px;
-            box-shadow: var(--premium-shadow);
-            background-color: #000;
-            background-image: url('video-thumb-optimized.png');
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            cursor: pointer;
-            transition: var(--premium-transition);
-            border: 1px solid var(--border);
-            animation: borderReveal 0.5s ease-out forwards;
-            transform: none;
-        }
-
-        .video-container:hover {
-            transform: none;
-            box-shadow: var(--card-hover-shadow);
-        }
-
-        .video-container video,
-        .video-container iframe,
-        .video-container wistia-player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 12px;
-            object-fit: cover;
-            transform: none;
-        }
-
-        .video-thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            z-index: 2;
-        }
-
-        .video-container.playing .video-thumbnail {
-            display: none;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 999px;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            padding: 5px 7px 5px 20px;
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            white-space: nowrap;
-            width: auto;
-            transition: background-color 0.2s;
-        }
-
-        .video-container:hover .play-button {
-            background-color: rgba(0, 0, 0, 0.75);
-        }
-
-        .play-icon {
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 14px;
-            margin-right: 0;
-        }
-
-        .play-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: #333;
-            margin-left: 0;
-            position: relative;
-            transform: none;
-        }
-
-        .video-container.playing .play-button {
-            display: none;
-        }
-
-        /* Widget Section */
-        .widget {
-            background-color: var(--card-bg);
-            border-radius: 14px;
-            padding: 12px 0;
-            width: 100%;
-            margin: 0 auto;
-            border: 1px solid var(--border);
-            box-shadow: var(--premium-shadow);
-            transition: var(--premium-transition);
-        }
-
-
-
-        .price-tag {
-            background-color: #FFEC3D;
-            color: #202124;
-            font-weight: 600;
-            padding: 3px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin: 0 auto;
-            display: table;
-        }
-
-        .price-container {
-            text-align: center;
-            margin: 12px 0 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .old-price {
-            color: #9AA0A6;
-            font-size: 1.5rem;
-            font-weight: 500;
-            text-decoration: line-through;
-            margin-right: 8px;
-        }
-
-        .price-wrapper {
-            display: flex;
-            align-items: baseline;
-        }
-
-        .current-price {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #202124;
-            line-height: 1;
-        }
-
-        .price-period {
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: #202124;
-            margin-left: 2px;
-        }
-
-        .price-divider {
-            height: 1px;
-            background-color: var(--divider);
-            margin: 8px 0 12px;
-        }
-
-        .benefits-container {
-            display: flex;
-            justify-content: space-between;
-            padding: 0;
-        }
-
-        .benefit-item {
-            flex: 1;
-            text-align: center;
-            padding: 0 12px;
-            position: relative;
-        }
-
-        .benefit-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 15%;
-            height: 70%;
-            width: 1px;
-            background-color: var(--divider);
-        }
-
-        .benefit-icon {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40px;
-        }
-
-        .benefit-icon img {
-            height: 28px;
-            width: auto;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-            transition: transform 0.2s;
-        }
-
-
-
-        .benefit-text {
-            font-size: 0.75rem;
-            line-height: 1.3;
-            color: var(--text);
-            max-width: 160px;
-            margin: 0 auto;
-        }
-
-        /* Contact Form Styles */
-        .form-wrapper {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            position: relative;
-            padding-top: var(--space-4);
-        }
-
-        .form-divider {
-            width: 100%;
-            height: 1px;
-            background-color: #000;
-            margin-bottom: var(--space-4);
-            position: relative;
-        }
-
-        .form-title {
-            color: var(--text);
-            font-weight: 700;
-            font-size: 1.125rem;
-            line-height: 1.2;
-            padding: 0;
-            background-color: var(--background);
-            text-align: left;
-            margin-bottom: var(--space-1);
-        }
-
-        .form-subtitle {
-            color: var(--text);
-            font-size: 1.125rem;
-            margin-bottom: var(--space-3);
-            line-height: 1.4;
-            text-align: left;
-        }
-
-        .contact-form {
-            width: 100%;
+        .inner-content {
             display: flex;
             flex-direction: column;
-            gap: var(--form-gap);
-        }
-
-        /* Form with floating labels */
-        .form-group,
-        .name-field {
-            position: relative;
-        }
-
-        .name-row {
-            display: flex;
-            gap: var(--form-gap);
             width: 100%;
-        }
-
-        .name-field {
-            flex: 1;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 24px 14px 8px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1.125rem;
-            color: var(--text);
-            background-color: var(--card-bg);
-            height: 56px;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-            appearance: none;
-            /* Remove browser styling */
-            -webkit-appearance: none;
-        }
-
-        .form-input::placeholder {
-            color: transparent;
-        }
-
-        .form-label {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 16px;
-            pointer-events: none;
-            transition: transform 0.2s, top 0.2s;
-            transform-origin: 0 0;
-            background-color: transparent;
-            line-height: 1;
-            padding: 0 2px;
-        }
-
-        /* When input is focused or has content */
-        .form-input:focus~.form-label,
-        .form-input:not(:placeholder-shown)~.form-label,
-        .form-input:-webkit-autofill~.form-label {
-            top: 8px;
-            transform: translateY(0) scale(0.75);
-            color: var(--text-secondary);
-            background-color: var(--card-bg);
-            padding: 0 4px;
-            margin-left: -2px;
-        }
-
-        /* Instagram autofill styling support */
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus {
-            -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
-            -webkit-text-fill-color: var(--text) !important;
-            caret-color: var(--text);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-        }
-
-        .submit-button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: var(--space-2) 0;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.25s ease;
-            margin-top: var(--space-1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-button:hover {
-            background-color: #166FE5;
-            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
-        }
-
-        /* Disclaimer */
-        .disclaimer {
-            max-width: 650px;
-            margin: var(--space-4) auto 0;
-            padding-top: var(--space-4);
-            line-height: 1.5;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        /* Validation and error states */
-        .validation-mark {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            background-color: var(--success);
-            font-size: 10px;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.2s;
-            z-index: 1;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .form-input.valid:not(:focus)~.validation-mark {
-            opacity: 1;
-        }
-
-        .form-input.error {
-            border-color: var(--error);
-        }
-
-        .form-input.error~.form-label {
-            color: var(--error);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 0.75rem;
-            display: none;
-            text-align: left;
-            padding-left: 2px;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            line-height: 1.2;
-        }
-
-        .form-input.error~.error-message {
-            display: block;
-        }
-
-        /* Mobile Styles (specific adjustments for small screens) */
-        @media(max-width:768px) {
-            .container {
-                padding: var(--space-4) 0 var(--space-6);
-            }
-
-            .content {
-                gap: var(--space-4);
-                padding: 0 1.25rem;
-            }
-
-
-
-            .headline {
-                font-size: 1.875rem;
-            }
-
-            .subheadline {
-                font-size: 1rem;
-            }
-
-            .price-container {
-                margin: 10px 0 6px;
-            }
-
-            .old-price {
-                font-size: 1.25rem;
-                margin-right: 6px;
-            }
-
-            .current-price {
-                font-size: 1.5rem;
-            }
-
-            .price-period {
-                font-size: 0.75rem;
-            }
-
-            .price-tag {
-                padding: 2px 10px;
-                font-size: 0.6875rem;
-            }
-
-            .price-divider {
-                margin: 6px 0 10px;
-            }
-
-            .benefit-icon {
-                font-size: 0.875rem;
-                margin-bottom: 4px;
-            }
-
-            .benefit-text {
-                font-size: 0.6875rem;
-                line-height: 1.2;
-                max-width: 100%;
-            }
-
-            .form-title {
-                font-size: 1rem;
-            }
-
-            .form-subtitle {
-                font-size: 0.875rem;
-            }
-
-            .name-row {
-                flex-direction: row;
-                gap: var(--form-gap);
-            }
-
-            .form-input {
-                padding: 24px 12px 8px;
-                font-size: 1rem;
-                height: 52px;
-            }
-
-            .form-label {
-                font-size: 1rem;
-                top: 50%;
-                left: 12px;
-                line-height: 1;
-                transform: translateY(-50%);
-            }
-
-            .form-input:focus~.form-label,
-            .form-input:not(:placeholder-shown)~.form-label {
-                top: 8px;
-                transform: translateY(0) scale(0.75);
-                background-color: var(--card-bg);
-                padding: 0 4px;
-                margin-left: -2px;
-            }
-
-            .error-message {
-                top: 56px;
-            }
-
-            .disclaimer {
-                font-size: 0.7rem;
-            }
-        }
-
-        /* Desktop split layout (Qoves-style) */
-        @media(min-width:769px) {
-
-            /* Base font size adjustment for desktop */
-            :root {
-                font-size: 16px;
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-
-        /* Accessibility */
-        a:focus,
-        button:focus,
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        /* Fine Print Styles */
-        .fine-print {
-            margin: var(--space-1) 0 0;
-            line-height: 1.3;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .form-wrapper .fine-print {
-            text-align: left;
-            margin-bottom: var(--space-3);
-        }
-
-        .fine-print p {
-            margin-bottom: var(--space-1);
-        }
-
-        .fine-print a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .fine-print a:hover {
-            text-decoration: underline;
-        }
-
-        .legal-links {
-            display: flex;
-            gap: var(--space-2);
-            justify-content: center;
-            margin-top: var(--space-2);
-            flex-wrap: wrap;
-        }
-
-        .legal-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.75rem;
-        }
-
-        .legal-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* Progress Bar Styles */
-        .progress-bar-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto var(--space-4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .progress-bar-step {
-            flex: 1;
-            height: 5px;
-            border-radius: 3px;
-            background: var(--progress-inactive);
-            transition: background 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar-step.active {
-            background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
-        }
-
-        /* Video styles for proper display */
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        /* Initial video states */
-        .video-container #mainVideo {
-            display: none;
-            z-index: 3;
-            /* Ensure main video is above other elements */
-        }
-
-        /* Ensure video controls are visible and not obstructed */
-        video::-webkit-media-controls-panel {
-            display: flex !important;
-            opacity: 1 !important;
-        }
-
-        video::-webkit-media-controls {
-            display: flex !important;
-        }
-
-        .video-container.playing #previewVideo {
-            display: none;
-        }
-
-        .video-container.playing #mainVideo {
-            display: block;
-        }
-
-        /* Hide play button when playing */
-        .video-container.playing .play-button {
-            display: none !important;
-            z-index: -1;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .time-slot {
-            background: var(--card-bg);
-            border: 1px solid var(--calendar-border);
         }
 
         /* Calendar */
@@ -1264,6 +571,15 @@
             text-align: left;
         }
 
+        .calendar-title {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: var(--space-1);
+            text-align: left;
+            line-height: 1.2;
+        }
+
         .calendar-subtitle {
             color: var(--text);
             font-size: 1.125rem;
@@ -1277,6 +593,16 @@
             border-radius: 12px;
             overflow: hidden;
             padding-top: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s;
+        }
+
+        .calendar-container.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         /* Coach Profile */
@@ -1401,8 +727,6 @@
 
         .month-calendar {
             padding: 0 0 16px;
-            overflow: hidden;
-            width: 100%;
         }
 
         .calendar-header {
@@ -1469,8 +793,6 @@
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             margin: 0 0 8px;
-            width: 100%;
-            overflow: hidden;
         }
 
         .weekday {
@@ -1484,15 +806,11 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 2px;
             padding: 8px 0;
-            justify-items: center;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
         }
 
         .calendar-day {
-            height: 44px;
-            width: 44px;
+            height: 56px;
+            width: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1501,10 +819,14 @@
             cursor: pointer;
             position: relative;
             color: var(--text);
+            margin: 0 auto;
             transition: all 0.2s ease;
         }
 
-
+        .calendar-day:hover {
+            background-color: var(--calendar-day-hover);
+            color: var(--primary);
+        }
 
         .calendar-day.selected {
             background-color: var(--primary);
@@ -1561,32 +883,646 @@
             transition: all 0.2s ease;
         }
 
-
-
-        .time-slot.selected {
-            background: var(--primary);
+        .time-slot:hover {
+            background: var(--calendar-day-hover);
             border-color: var(--primary);
-            color: white;
-            font-weight: 600;
+            color: var(--primary);
         }
 
-        .time-slot.selected:hover {
-            background: #166FE5;
-            border-color: #166FE5;
-            color: white;
+        /* Disclaimer */
+        .disclaimer {
+            max-width: 650px;
+            margin: var(--space-4) auto 0;
+            padding-top: var(--space-4);
+            line-height: 1.5;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
         }
 
-        .calendar-day.disabled {
-            color: #ccc;
-            cursor: not-allowed;
+        /* Form header */
+        .form-wrapper {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: transparent;
+        }
+
+
+
+        .form-title {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: var(--space-1);
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-3);
+            line-height: 1.4;
+            text-align: left;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Accessibility */
+        a:focus,
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Styles */
+        @media(max-width:768px) {
+            .container {
+                padding: var(--space-4) 0 var(--space-6);
+            }
+
+            .content {
+                gap: var(--space-4);
+                padding: 0 1.25rem;
+            }
+
+            .calendar-days {
+                gap: 2px;
+            }
+
+            .calendar-day {
+                height: 44px;
+                width: 44px;
+                font-size: 0.9375rem;
+            }
+
+            .event-details {
+                margin-bottom: var(--space-5);
+                gap: 6px;
+            }
+
+            .event-detail {
+                font-size: 0.875rem;
+            }
+
+            .day-view {
+                padding: 8px 0 0;
+            }
+
+            .time-slot {
+                padding: 10px;
+                font-size: 0.9375rem;
+            }
+
+            .month-title {
+                font-size: 1.5rem;
+            }
+
+            .calendar-title {
+                font-size: 1.125rem;
+            }
+
+            .calendar-subtitle {
+                font-size: 0.875rem;
+            }
+
+            .day-title {
+                font-size: 1rem;
+            }
+
+            .nav-button {
+                width: 36px;
+                height: 36px;
+            }
+
+            .disclaimer {
+                font-size: 0.7rem;
+            }
+
+            select.timezone-select {
+                font-size: 0.9375rem;
+            }
+
+            .form-title {
+                font-size: 1rem;
+            }
+
+            .form-subtitle {
+                font-size: 0.875rem;
+            }
+
+
+        }
+
+        /* Desktop layout */
+        @media(min-width:769px) {
+
+            /* Base font size adjustment for desktop */
+            :root {
+                font-size: 16px;
+            }
+
+
+
+            body {
+                background: var(--background);
+            }
+
+
+
+
+        }
+
+        /* Video styles */
+        .video-details-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: var(--space-3);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: var(--mobile-video-ratio);
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: var(--premium-shadow);
+            background-color: #000;
+            background-image: url('video-thumb-optimized.png');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: var(--premium-transition);
+            border: 1px solid var(--border);
+            animation: borderReveal 0.5s ease-out forwards;
+            transform: none;
+        }
+
+        .video-container:hover {
+            transform: none;
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .video-container video,
+        .video-container iframe,
+        .video-container wistia-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            object-fit: cover;
+            transform: none;
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            z-index: 2;
+        }
+
+        .video-container.playing .video-thumbnail {
+            display: none;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 999px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            padding: 5px 7px 5px 20px;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            width: auto;
+            transition: background-color 0.2s;
+        }
+
+        .video-container:hover .play-button {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+
+        .play-icon {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 14px;
+            margin-right: 0;
+        }
+
+        .play-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #333;
+            margin-left: 0;
+            position: relative;
+            transform: none;
+        }
+
+        .video-container.playing .play-button {
+            display: none;
+        }
+
+        /* Video styles for proper display */
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Initial video states */
+        .video-container #mainVideo {
+            display: none;
+            z-index: 3;
+            /* Ensure main video is above other elements */
+        }
+
+        /* Ensure video controls are visible and not obstructed */
+        video::-webkit-media-controls-panel {
+            display: flex !important;
+            opacity: 1 !important;
+        }
+
+        video::-webkit-media-controls {
+            display: flex !important;
+        }
+
+        .video-container.playing #previewVideo {
+            display: none;
+        }
+
+        .video-container.playing #mainVideo {
+            display: block;
+        }
+
+        /* Hide play button when playing */
+        .video-container.playing .play-button {
+            display: none !important;
+            z-index: -1;
+            opacity: 0;
             pointer-events: none;
         }
 
-        .no-slots-message {
+        /* Email-like layout styles */
+        .email-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .feature-boxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+
+        .feature-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
+        }
+
+        .feature-box:hover {
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .feature-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .feature-box-content {
+            padding: var(--space-2);
+            text-align: left;
+        }
+
+        .feature-box-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .feature-box-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .large-image {
+            width: 100%;
+            max-width: 900px;
+            margin: var(--space-3) auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--premium-shadow);
+        }
+
+        .large-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .summary-section {
+            width: 100%;
+            padding: var(--space-3) 0;
+            background: var(--background);
+        }
+
+        .summary-title {
+            text-align: left;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+            color: var(--text);
+        }
+
+        .summary-title span {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-2);
+            width: 100%;
+        }
+
+        .summary-box {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: var(--space-2);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+        }
+
+        .summary-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .summary-box-content {
+            padding: var(--space-2) 0 0 0;
+        }
+
+        .summary-box-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-1);
+            text-align: left;
+        }
+
+        .summary-box-description {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .summary-box {
+                padding: var(--space-1);
+            }
+
+            .summary-box-content {
+                padding: var(--space-1) 0 0 0;
+            }
+
+            .summary-box-title {
+                font-size: 1rem;
+            }
+
+            .summary-box-description {
+                font-size: 0.875rem;
+            }
+        }
+
+        .footer-fine-print {
+            width: 100%;
+            padding: var(--space-3) var(--space-2);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.5;
+            text-align: left;
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-3);
+        }
+
+        .footer-fine-print p {
+            margin-bottom: var(--space-2);
+        }
+
+        .footer-fine-print .copyright {
+            margin-bottom: var(--space-2);
+        }
+
+        @media (max-width: 768px) {
+            .footer-fine-print {
+                padding: var(--space-2);
+                margin-top: var(--space-2);
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            z-index: 1001;
+        }
+
+        .summary-box img {
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .summary-box img:hover {
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: var(--space-2) var(--space-4);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 450px;
+            text-decoration: none;
+            transition: all 0.25s ease;
             text-align: center;
-            padding: 20px;
-            color: #666;
-            font-style: italic;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #166FE5;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+        }
+
+        /* Widget Section */
+        .widget {
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 0;
+            width: 100%;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            box-shadow: var(--premium-shadow);
+            transition: var(--premium-transition);
+        }
+
+
+
+        .benefits-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .benefit-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 12px;
+            position: relative;
+        }
+
+        .benefit-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--divider);
+        }
+
+        .benefit-icon {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .benefit-icon img {
+            height: 28px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.2s;
+        }
+
+
+
+        .benefit-text {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--text);
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .cta-button {
+                padding: var(--space-2) 0;
+                font-size: 1rem;
+            }
+
+            .benefit-icon {
+                font-size: 0.875rem;
+                margin-bottom: 4px;
+            }
+
+            .benefit-text {
+                font-size: 0.6875rem;
+                line-height: 1.2;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -1594,114 +1530,118 @@
 <body>
     <div class="container">
         <div class="content">
-            <div class="header-group">
-                <h1 class="headline">6-Week Online Weight Loss Mentorship</h1>
-                <p class="subheadline">I'll help you optimize your diet and training so you're far more likely to lose weight at a steady pace without trying to figure it out yourself.</p>
-            </div>
-
-            <div class="video-container" id="videoContainer">
-                <div class="play-button" id="playButton">
-                    Watch how this works
-                    <div class="play-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </div>
-                <video id="previewVideo" class="video-thumbnail" playsinline muted loop autoplay>
-                    <source src="video.mp4" type="video/mp4">
-                </video>
-                <video id="mainVideo" controls playsinline>
-                    <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="widget">
-                <div class="benefits-container">
-                    <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
-                        <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
-                        <div class="benefit-text">One payment of $599 with no hidden fees</div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
-                        <div class="benefit-text">Love it or get a full refund within 30 days</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Calendar Section -->
-            <div class="calendar-wrapper">
-                <div class="calendar-header-text">
-                    <h2 class="form-title">Book Your Call</h2>
-                    <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
+            <div class="inner-content">
+                <div class="form-wrapper">
+                    <div class="form-title">You're Signed Up</div>
+                    <p class="form-subtitle">Watch the video below to learn how this works. Then check your inbox for the first email.</p>
                 </div>
 
-                <!-- Cal inline embed code begins -->
-                <div style="width:100%;height:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--premium-shadow);" id="my-cal-inline"></div>
-                    <script type="text/javascript">
-                    (function(C, A, L) {
-                        let p = function(a, ar) {
-                            a.q.push(ar);
-                        };
-                        let d = C.document;
-                        C.Cal = C.Cal || function() {
-                            let cal = C.Cal;
-                            let ar = arguments;
-                            if (!cal.loaded) {
-                                cal.ns = {};
-                                cal.q = cal.q || [];
-                                d.head.appendChild(d.createElement("script")).src = A;
-                                cal.loaded = true;
-                            }
-                            if (ar[0] === L) {
-                                const api = function() {
-                                    p(api, arguments);
+                <div class="video-details-wrapper">
+                    <div class="video-container" id="videoContainer">
+                        <div class="play-button" id="playButton">
+                            Learn how this works
+                            <div class="play-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                        <video id="previewVideo" class="video-thumbnail" playsinline muted loop autoplay>
+                            <source src="video.mp4" type="video/mp4">
+                        </video>
+                        <video id="mainVideo" controls playsinline>
+                            <source src="video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <div class="widget">
+                        <div class="benefits-container">
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/Vv0vD3wv/coaching.png" alt="Coaching icon"></div>
+                                <div class="benefit-text">1-on-1 weight loss coaching tailored to you</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/nzPMKn6N/dollar.png" alt="Dollar icon"></div>
+                                <div class="benefit-text">One payment of $599 with no hidden fees</div>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon"><img src="https://i.postimg.cc/V5y6TDsR/money-back.png" alt="Money back guarantee icon"></div>
+                                <div class="benefit-text">Love it or get a full refund within 30 days</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Section -->
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header-text">
+                            <h2 class="form-title">Book Your Call</h2>
+                            <p class="form-subtitle">Choose a time that works best for you. I'll show you exactly how this works.</p>
+                        </div>
+
+                        <!-- Cal inline embed code begins -->
+                        <div style="width:100%;height:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--premium-shadow);" id="my-cal-inline"></div>
+                            <script type="text/javascript">
+                            (function(C, A, L) {
+                                let p = function(a, ar) {
+                                    a.q.push(ar);
                                 };
-                                const namespace = ar[1];
-                                api.q = api.q || [];
-                                if (typeof namespace === "string") {
-                                    cal.ns[namespace] = cal.ns[namespace] || api;
-                                    p(cal.ns[namespace], ar);
-                                    p(cal, ["initNamespace", namespace]);
-                                } else p(cal, ar);
-                                return;
-                            }
-                            p(cal, ar);
-                        };
-                    })(window, "https://app.cal.com/embed/embed.js", "init");
-                    Cal("init", "30min", {
-                        origin: "https://cal.com"
-                    });
+                                let d = C.document;
+                                C.Cal = C.Cal || function() {
+                                    let cal = C.Cal;
+                                    let ar = arguments;
+                                    if (!cal.loaded) {
+                                        cal.ns = {};
+                                        cal.q = cal.q || [];
+                                        d.head.appendChild(d.createElement("script")).src = A;
+                                        cal.loaded = true;
+                                    }
+                                    if (ar[0] === L) {
+                                        const api = function() {
+                                            p(api, arguments);
+                                        };
+                                        const namespace = ar[1];
+                                        api.q = api.q || [];
+                                        if (typeof namespace === "string") {
+                                            cal.ns[namespace] = cal.ns[namespace] || api;
+                                            p(cal.ns[namespace], ar);
+                                            p(cal, ["initNamespace", namespace]);
+                                        } else p(cal, ar);
+                                        return;
+                                    }
+                                    p(cal, ar);
+                                };
+                            })(window, "https://app.cal.com/embed/embed.js", "init");
+                            Cal("init", "30min", {
+                                origin: "https://cal.com"
+                            });
 
-                      Cal.ns["30min"]("inline", {
-                        elementOrSelector: "#my-cal-inline",
-                        config: {
-                            "layout": "month_view",
-                            "theme": "light"
-                        },
-                        calLink: "busy-barbell/30min",
-                      });
-
-                    Cal.ns["30min"]("ui", {
-                        "theme": "light",
-                        "cssVarsPerTheme": {
-                            "light": {
-                                "cal-brand": "#0069ff"
-                            },
-                            "dark": {
-                                "cal-brand": "#0069ff"
-                            }
-                        },
-                        "hideEventTypeDetails": true,
-                        "layout": "month_view"
+                              Cal.ns["30min"]("inline", {
+                                elementOrSelector: "#my-cal-inline",
+                                config: {
+                                    "layout": "month_view",
+                                    "theme": "light"
+                                },
+                                calLink: "busy-barbell/30min",
                               });
-                            </script>
-                            <!-- Cal inline embed code ends -->
+
+                            Cal.ns["30min"]("ui", {
+                                "theme": "light",
+                                "cssVarsPerTheme": {
+                                    "light": {
+                                        "cal-brand": "#0069ff"
+                                    },
+                                    "dark": {
+                                        "cal-brand": "#0069ff"
+                                    }
+                                },
+                                "hideEventTypeDetails": true,
+                                "layout": "month_view"
+                                      });
+                                    </script>
+                                    <!-- Cal inline embed code ends -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1711,7 +1651,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Video player functionality - exact same as confirmation.php
+            // Video player functionality - exact same as mentorship.php
             function setupVideoPlayer(containerId, previewId, mainId, buttonId) {
                 const videoContainer = document.getElementById(containerId);
                 const previewVideo = document.getElementById(previewId);
@@ -1759,1051 +1699,6 @@
             setupVideoPlayer('videoContainer', 'previewVideo', 'mainVideo', 'playButton');
 
 
-
-            // Booking System
-            const BookingSystem = {
-                selectedDate: new Date(),
-                selectedTime: null,
-                selectedSlot: null,
-                selectedTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                
-                // Available time slots (you can customize these)
-                availableSlots: {
-                    'Monday': ['9:00am', '10:00am', '11:00am', '2:00pm', '3:00pm', '4:00pm'],
-                    'Tuesday': ['9:00am', '10:00am', '11:00am', '2:00pm', '3:00pm', '4:00pm'],
-                    'Wednesday': ['9:00am', '10:00am', '11:00am', '2:00pm', '3:00pm', '4:00pm'],
-                    'Thursday': ['9:00am', '10:00am', '11:00am', '2:00pm', '3:00pm', '4:00pm'],
-                    'Friday': ['9:00am', '10:00am', '11:00am', '2:00pm', '3:00pm', '4:00pm'],
-                    'Saturday': ['10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm'],
-                    'Sunday': []
-                },
-                
-                // Booked slots (loaded from server)
-                bookedSlots: new Set(),
-                eventTypeId: null,
-                
-                async init() {
-                    this.setupTimezones();
-                    await this.loadBookedSlots();
-                    this.initializeCalendars();
-                    this.setupEventListeners();
-                },
-                
-                setupTimezones() {
-                    const timezones = [
-                        "Pacific/Midway", "Pacific/Pago_Pago", "Pacific/Honolulu", "America/Juneau", "America/Los_Angeles", 
-                        "America/Tijuana", "America/Denver", "America/Phoenix", "America/Chihuahua", "America/Mazatlan", 
-                        "America/Chicago", "America/Regina", "America/Mexico_City", "America/Monterrey", "America/Guatemala", 
-                        "America/New_York", "America/Indiana/Indianapolis", "America/Bogota", "America/Lima", "America/Halifax", 
-                        "America/Caracas", "America/La_Paz", "America/Santiago", "America/St_Johns", "America/Sao_Paulo", 
-                        "America/Argentina/Buenos_Aires", "America/Montevideo", "Atlantic/South_Georgia", "Atlantic/Azores", 
-                        "Atlantic/Cape_Verde", "Europe/Dublin", "Europe/London", "Europe/Lisbon", "Africa/Casablanca", 
-                        "Africa/Monrovia", "Etc/UTC", "Europe/Belgrade", "Europe/Bratislava", "Europe/Budapest", "Europe/Ljubljana", 
-                        "Europe/Prague", "Europe/Sarajevo", "Europe/Skopje", "Europe/Warsaw", "Europe/Zagreb", "Europe/Brussels", 
-                        "Europe/Copenhagen", "Europe/Madrid", "Europe/Paris", "Europe/Amsterdam", "Europe/Berlin", "Europe/Rome", 
-                        "Europe/Stockholm", "Europe/Vienna", "Europe/Zurich", "Africa/Cairo", "Africa/Johannesburg", "Europe/Istanbul", 
-                        "Europe/Kiev", "Europe/Helsinki", "Europe/Riga", "Europe/Sofia", "Europe/Tallinn", "Europe/Vilnius", 
-                        "Asia/Jerusalem", "Asia/Baghdad", "Asia/Kuwait", "Asia/Riyadh", "Asia/Tehran", "Asia/Baku", 
-                        "Asia/Muscat", "Asia/Tbilisi", "Asia/Yerevan", "Asia/Kabul", "Asia/Karachi", "Asia/Tashkent", 
-                        "Asia/Kolkata", "Asia/Colombo", "Asia/Kathmandu", "Asia/Dhaka", "Asia/Almaty", "Asia/Yangon", 
-                        "Asia/Bangkok", "Asia/Jakarta", "Asia/Singapore", "Asia/Kuala_Lumpur", "Asia/Urumqi", 
-                        "Asia/Ho_Chi_Minh", "Asia/Hong_Kong", "Asia/Shanghai", "Asia/Taipei", "Asia/Manila", 
-                        "Asia/Seoul", "Asia/Tokyo", "Australia/Perth", "Australia/Darwin", "Australia/Brisbane", 
-                        "Australia/Adelaide", "Australia/Sydney", "Australia/Hobart", "Pacific/Guam", "Pacific/Port_Moresby", 
-                        "Pacific/Auckland", "Pacific/Fiji"
-                    ];
-                    
-                    // Populate mobile timezone selector
-                    const mobileSelect = document.getElementById('membership-timezone-select');
-                    if (mobileSelect) {
-                        mobileSelect.innerHTML = '';
-                        timezones.forEach(timezone => {
-                            const option = document.createElement('option');
-                            option.value = timezone;
-                            option.textContent = timezone.replace('_', ' ');
-                            if (timezone === this.selectedTimezone) {
-                                option.selected = true;
-                            }
-                            mobileSelect.appendChild(option);
-                        });
-                    }
-                    
-                    // Populate desktop timezone selector
-                    const desktopSelect = document.getElementById('desktopTimezone');
-                    if (desktopSelect) {
-                        desktopSelect.innerHTML = '';
-                        timezones.forEach(timezone => {
-                            const option = document.createElement('option');
-                            option.value = timezone;
-                            option.textContent = timezone.replace('_', ' ');
-                            if (timezone === this.selectedTimezone) {
-                                option.selected = true;
-                            }
-                            desktopSelect.appendChild(option);
-                        });
-                    }
-                },
-                
-                async loadBookedSlots() {
-                    // Set the event type ID from config
-                    this.eventTypeId = '671523';
-                    console.log('Using event type ID:', this.eventTypeId);
-                },
-                
-                initializeCalendars() {
-                    // Set initial selected date to today or next available day
-                    const today = new Date();
-                    this.selectedDate = new Date(today);
-                    
-                    // If today is past business hours, start with tomorrow
-                    if (today.getHours() >= 17) {
-                        this.selectedDate.setDate(today.getDate() + 1);
-                    }
-                    
-                    this.renderMobileCalendar();
-                    this.renderDesktopCalendar();
-                    this.updateDayTitles();
-                    this.renderTimeSlots();
-                },
-                
-                setupEventListeners() {
-                    // Mobile calendar navigation
-                    const mobileNext = document.querySelector('.mobile-layout .next-month');
-                    const mobilePrev = document.querySelector('.mobile-layout .prev-month');
-                    
-                    if (mobileNext) {
-                        mobileNext.addEventListener('click', () => {
-                            this.selectedDate.setMonth(this.selectedDate.getMonth() + 1);
-                            this.renderMobileCalendar();
-                            this.renderTimeSlots();
-                        });
-                    }
-                    
-                    if (mobilePrev) {
-                        mobilePrev.addEventListener('click', () => {
-                            this.selectedDate.setMonth(this.selectedDate.getMonth() - 1);
-                            this.renderMobileCalendar();
-                            this.renderTimeSlots();
-                        });
-                    }
-                    
-                    // Desktop calendar navigation
-                    const desktopNext = document.getElementById('desktopNextMonth');
-                    const desktopPrev = document.getElementById('desktopPrevMonth');
-                    
-                    if (desktopNext) {
-                        desktopNext.addEventListener('click', () => {
-                            this.selectedDate.setMonth(this.selectedDate.getMonth() + 1);
-                            this.renderDesktopCalendar();
-                            this.renderTimeSlots();
-                        });
-                    }
-                    
-                    if (desktopPrev) {
-                        desktopPrev.addEventListener('click', () => {
-                            this.selectedDate.setMonth(this.selectedDate.getMonth() - 1);
-                            this.renderDesktopCalendar();
-                            this.renderTimeSlots();
-                        });
-                    }
-                    
-                    // Timezone changes
-                    const mobileTimezone = document.getElementById('membership-timezone-select');
-                    const desktopTimezone = document.getElementById('desktopTimezone');
-                    
-                    if (mobileTimezone) {
-                        mobileTimezone.addEventListener('change', (e) => {
-                            this.selectedTimezone = e.target.value;
-                            if (desktopTimezone) desktopTimezone.value = e.target.value;
-                    this.renderTimeSlots();
-                        });
-                    }
-                    
-                    if (desktopTimezone) {
-                        desktopTimezone.addEventListener('change', (e) => {
-                            this.selectedTimezone = e.target.value;
-                            if (mobileTimezone) mobileTimezone.value = e.target.value;
-                            this.renderTimeSlots();
-                        });
-                    }
-                },
-                
-                renderMobileCalendar() {
-                    const calendarDays = document.querySelector('.mobile-layout .calendar-days');
-                    if (!calendarDays) return;
-                    
-                    this.renderCalendar(calendarDays, '.mobile-layout .month-title');
-                },
-                
-                renderDesktopCalendar() {
-                    const calendarDays = document.querySelector('.right-column .calendar-days');
-                    if (!calendarDays) return;
-                    
-                    this.renderCalendar(calendarDays, '.right-column .month-title');
-                },
-                
-                renderCalendar(calendarDays, monthTitleSelector) {
-                    const year = this.selectedDate.getFullYear();
-                    const month = this.selectedDate.getMonth();
-                    
-                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                        'July', 'August', 'September', 'October', 'November', 'December'
-                    ];
-                    
-                    // Update month title
-                    const monthTitle = document.querySelector(monthTitleSelector);
-                    if (monthTitle) {
-                        monthTitle.innerHTML = `${monthNames[month]} <span>${year}</span>`;
-                    }
-
-                const firstDay = new Date(year, month, 1);
-                const lastDay = new Date(year, month + 1, 0);
-                    const totalDays = lastDay.getDate();
-                const startingDay = firstDay.getDay();
-                    
-                calendarDays.innerHTML = '';
-
-                    // Previous month days (empty spaces)
-                    for (let i = 0; i < startingDay; i++) {
-                        const day = document.createElement('div');
-                        day.className = 'calendar-day other-month';
-                        calendarDays.appendChild(day);
-                }
-
-                    // Current month days
-                    for (let day = 1; day <= totalDays; day++) {
-                    const dayElement = document.createElement('div');
-                    dayElement.className = 'calendar-day';
-                    dayElement.textContent = day;
-
-                        const dayDate = new Date(year, month, day);
-                        const today = new Date();
-                        
-                        // Mark today
-                        if (this.isSameDay(dayDate, today)) {
-                            dayElement.classList.add('today');
-                        }
-                        
-                        // Mark selected day
-                        if (this.isSameDay(dayDate, this.selectedDate)) {
-                        dayElement.classList.add('selected');
-                    }
-
-                        // Disable past dates
-                        if (dayDate < today.setHours(0, 0, 0, 0)) {
-                            dayElement.classList.add('disabled');
-                        } else {
-                            // Add click handler for future dates
-                            dayElement.addEventListener('click', () => {
-                                // Remove selected class from all days
-                                calendarDays.querySelectorAll('.calendar-day').forEach(d => {
-                                    d.classList.remove('selected');
-                                });
-                                
-                                // Add selected class to clicked day
-                                dayElement.classList.add('selected');
-                                
-                                // Update selected date
-                                this.selectedDate = new Date(year, month, day);
-                                
-                                // Sync both calendars
-                                this.syncCalendars();
-                                this.updateDayTitles();
-                                this.renderTimeSlots();
-                            });
-                    }
-
-                    calendarDays.appendChild(dayElement);
-                }
-                    
-                    // Add trailing empty cells to complete the grid (prevent overflow)
-                    const totalCells = startingDay + totalDays;
-                    const remainingCells = totalCells % 7;
-                    if (remainingCells !== 0) {
-                        const trailingCells = 7 - remainingCells;
-                        for (let i = 0; i < trailingCells; i++) {
-                            const day = document.createElement('div');
-                            day.className = 'calendar-day other-month';
-                            calendarDays.appendChild(day);
-                        }
-                    }
-                },
-                
-                syncCalendars() {
-                    // Update both mobile and desktop calendars to show the same selected date
-                    const allCalendarDays = document.querySelectorAll('.calendar-day');
-                    allCalendarDays.forEach(day => {
-                        day.classList.remove('selected');
-                        
-                        if (day.textContent == this.selectedDate.getDate() && 
-                            !day.classList.contains('other-month') && 
-                            !day.classList.contains('disabled')) {
-                            day.classList.add('selected');
-                        }
-                    });
-                },
-                
-                updateDayTitles() {
-                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    const day = this.selectedDate.getDate().toString().padStart(2, '0');
-                    const dayName = dayNames[this.selectedDate.getDay()];
-                    
-                    // Update mobile day title
-                    const mobileDayTitle = document.querySelector('.mobile-layout .day-title');
-                    if (mobileDayTitle) {
-                        mobileDayTitle.textContent = `${dayName} ${day}`;
-                    }
-                    
-                    // Update desktop day title
-                    const desktopDayTitle = document.querySelector('.right-column .day-title');
-                    if (desktopDayTitle) {
-                        desktopDayTitle.textContent = `${dayName} ${day}`;
-                    }
-                },
-                
-                renderTimeSlots() {
-                    this.renderMobileTimeSlots();
-                    this.renderDesktopTimeSlots();
-                },
-                
-                renderMobileTimeSlots() {
-                    const timeSlotsGrid = document.querySelector('.mobile-layout .time-slots-grid');
-                    if (!timeSlotsGrid) return;
-                    
-                    this.renderTimeSlotsForContainer(timeSlotsGrid);
-                },
-                
-                renderDesktopTimeSlots() {
-                    const timeSlotsGrid = document.querySelector('.right-column .time-slots-grid');
-                    if (!timeSlotsGrid) return;
-                    
-                    this.renderTimeSlotsForContainer(timeSlotsGrid);
-                },
-                
-                async renderTimeSlotsForContainer(container) {
-                    container.innerHTML = '<div style="text-align: center; padding: 20px;">Loading available times...</div>';
-                    
-                    if (!this.eventTypeId) {
-                        container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Unable to load event type. Please refresh the page.</div>';
-                        return;
-                    }
-                    
-                    try {
-                        // Format date for Cal.com API (YYYY-MM-DD)
-                        const dateStr = this.selectedDate.toISOString().split('T')[0];
-                        
-                        // Get availability from Cal.com (with fallback)
-                        const response = await fetch(`calendar_fallback.php?action=availability&event_type_id=${this.eventTypeId}&date=${dateStr}&timezone=${this.selectedTimezone}`);
-                        
-                        if (response.ok) {
-                            const data = await response.json();
-                            container.innerHTML = '';
-                            
-                            // Cal.com returns slots in format: { slots: { "2025-06-09": [slot1, slot2, ...] } }
-                            const dateKey = this.selectedDate.toISOString().split('T')[0];
-                            const daySlots = data.slots && data.slots[dateKey] ? data.slots[dateKey] : [];
-                            
-                            if (daySlots.length > 0) {
-                                daySlots.forEach(slot => {
-                                    const startTime = new Date(slot.time);
-                                    const timeStr = startTime.toLocaleTimeString('en-US', {
-                                        hour: 'numeric',
-                                        minute: '2-digit',
-                                        hour12: true
-                                    });
-                                    
-                                    const slotElement = document.createElement('div');
-                                    slotElement.className = 'time-slot';
-                                    slotElement.textContent = timeStr;
-                                    
-                                    slotElement.addEventListener('click', () => {
-                                        // Remove selected class from all time slots
-                                        document.querySelectorAll('.time-slot').forEach(s => {
-                                            s.classList.remove('selected');
-                                        });
-                                        
-                                        // Add selected class to clicked slot
-                                        slotElement.classList.add('selected');
-                                        
-                                        // Store selected time and slot data
-                                        this.selectedTime = timeStr;
-                                        this.selectedSlot = slot;
-                                        
-                                        // Proceed to booking
-                                        this.proceedToBooking();
-                                    });
-                                    
-                                    container.appendChild(slotElement);
-                                });
-                            } else {
-                                const noSlots = document.createElement('div');
-                                noSlots.className = 'no-slots-message';
-                                noSlots.textContent = 'No available time slots for this day.';
-                                noSlots.style.textAlign = 'center';
-                                noSlots.style.padding = '20px';
-                                noSlots.style.color = '#666';
-                                container.appendChild(noSlots);
-                            }
-                        } else {
-                            throw new Error('Failed to load availability');
-                        }
-                    } catch (error) {
-                        console.error('Error loading time slots:', error);
-                        container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Unable to load available times. Please try again.</div>';
-                    }
-                },
-                
-                async proceedToBooking() {
-                    if (!this.selectedTime || !this.selectedSlot) {
-                        alert('Please select a time slot first.');
-                        return;
-                                }
-                    
-                    // Get user info from URL parameters (passed through the funnel)
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const firstName = urlParams.get('firstName') || '';
-                    const lastName = urlParams.get('lastName') || '';
-                    const email = urlParams.get('email') || '';
-                    const phone = urlParams.get('phone') || '';
-                    
-                    // If we have complete contact info from the funnel, proceed directly
-                    if (firstName && lastName && email && phone) {
-                        const name = (firstName + ' ' + lastName).trim();
-                        this.showBookingConfirmation(name, email, phone, this.selectedTime, this.selectedSlot);
-                    } else {
-                        // Show contact form for direct visitors or incomplete funnel data
-                        this.showContactForm();
-                        // Pre-fill the form with any available funnel data
-                        setTimeout(() => {
-                            if (firstName) document.getElementById('modalFirstName').value = firstName;
-                            if (lastName) document.getElementById('modalLastName').value = lastName;
-                            if (email) document.getElementById('modalEmail').value = email;
-                            if (phone) document.getElementById('modalPhone').value = phone;
-                        }, 100);
-                    }
-                },
-                
-                showContactForm() {
-                    // Format the date for display
-                            const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
-                                weekday: 'long', 
-                                month: 'long', 
-                                day: 'numeric',
-                                year: 'numeric'
-                            });
-                            
-                    // Create contact form modal HTML with exact index.php styles
-                    const modalHTML = `
-                        <div id="contact-modal" class="modal-overlay">
-                            <div class="modal-content">
-                                <div class="form-title">Complete Your Booking</div>
-                                
-                                <div class="selected-time-info">
-                                    <p><strong>Selected Time:</strong></p>
-                                    <p>${dateStr}</p>
-                                    <p>${this.selectedTime} (30 minutes)</p>
-                                </div>
-                                
-                                <form id="contact-form" class="contact-form">
-                                    <div class="name-row">
-                                        <div class="name-field">
-                                            <input type="text" id="modalFirstName" class="form-input" placeholder="First name" required>
-                                            <label for="modalFirstName" class="form-label">First name</label>
-                                            <div class="validation-mark">✓</div>
-                                            <div class="error-message">Please enter your first name</div>
-                                        </div>
-                                        <div class="name-field">
-                                            <input type="text" id="modalLastName" class="form-input" placeholder="Last name" required>
-                                            <label for="modalLastName" class="form-label">Last name</label>
-                                            <div class="validation-mark">✓</div>
-                                            <div class="error-message">Please enter your last name</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="email" id="modalEmail" class="form-input" placeholder="Email" required>
-                                        <label for="modalEmail" class="form-label">Email</label>
-                                        <div class="validation-mark">✓</div>
-                                        <div class="error-message">Please enter a valid email address</div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="tel" id="modalPhone" class="form-input" placeholder="Phone number" required>
-                                        <label for="modalPhone" class="form-label">Phone number (Text notifications)</label>
-                                        <div class="validation-mark">✓</div>
-                                        <div class="error-message">Please enter a valid phone number</div>
-                                    </div>
-
-                                    <button type="submit" id="confirm-contact" class="submit-button">Confirm Booking</button>
-                                </form>
-                                
-                                <div class="fine-print">
-                                    <p>You'll receive a confirmation email with calendar invite and meeting details.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <style>
-                            .modal-overlay {
-                                position: fixed;
-                                top: 0;
-                                left: 0;
-                                width: 100%;
-                                height: 100%;
-                                background: rgba(0, 0, 0, 0.5);
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                z-index: 1000;
-                                padding: 1rem;
-                            }
-                            
-                            .modal-content {
-                                background: var(--card-bg);
-                                border-radius: 12px;
-                                max-width: 450px;
-                                width: 100%;
-                                padding: 2rem;
-                                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                                max-height: 90vh;
-                                overflow-y: auto;
-                            }
-                            
-                            .form-title {
-                                font-size: 1.5rem;
-                                font-weight: 700;
-                                color: var(--text);
-                                margin-bottom: 1rem;
-                                text-align: center;
-                            }
-                            
-                            .selected-time-info {
-                                background: var(--background);
-                                padding: 1rem;
-                                border-radius: 8px;
-                                margin-bottom: 1.5rem;
-                                text-align: center;
-                            }
-                            
-                            .selected-time-info p {
-                                margin: 0.25rem 0;
-                                color: var(--text);
-                            }
-                            
-                            .selected-time-info p:first-child {
-                                font-weight: 600;
-                            }
-                            
-                            /* Copy exact form styles from index.php */
-                            .contact-form {
-                                width: 100%;
-                                display: flex;
-                                flex-direction: column;
-                                gap: var(--form-gap);
-                            }
-                            
-                            .name-field {
-                                position: relative;
-                                flex: 1;
-                            }
-                            
-                            .name-row {
-                                display: flex;
-                                gap: var(--form-gap);
-                                width: 100%;
-                            }
-                            
-                            .form-group {
-                                position: relative;
-                            }
-                            
-                            .form-input {
-                                width: 100%;
-                                padding: 24px 14px 8px;
-                                border: 1px solid var(--border);
-                                border-radius: 8px;
-                                font-size: 1.125rem;
-                                color: var(--text);
-                                background-color: var(--card-bg);
-                                height: 56px;
-                                transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-                                appearance: none;
-                                -webkit-appearance: none;
-                                box-sizing: border-box;
-                            }
-                            
-                            .form-input::placeholder {
-                                color: transparent;
-                        }
-                        
-                            .form-label {
-                                position: absolute;
-                                left: 14px;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                color: var(--text-secondary);
-                                font-size: 16px;
-                                pointer-events: none;
-                                transition: transform 0.2s, top 0.2s;
-                                transform-origin: 0 0;
-                                background-color: transparent;
-                                line-height: 1;
-                                padding: 0 2px;
-                    }
-                            
-                            .form-input:focus~.form-label,
-                            .form-input:not(:placeholder-shown)~.form-label,
-                            .form-input:-webkit-autofill~.form-label {
-                                top: 8px;
-                                transform: translateY(0) scale(0.75);
-                                color: var(--text-secondary);
-                                background-color: var(--card-bg);
-                                padding: 0 4px;
-                                margin-left: -2px;
-                    }
-                            
-                            .form-input:focus {
-                                outline: none;
-                                border-color: var(--primary);
-                                box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
-                            }
-                            
-                            .validation-mark {
-                                position: absolute;
-                                right: 14px;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                color: white;
-                                background-color: var(--success);
-                                font-size: 10px;
-                                font-weight: bold;
-                                opacity: 0;
-                                transition: opacity 0.2s;
-                                z-index: 1;
-                                width: 16px;
-                                height: 16px;
-                                border-radius: 50%;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
-                            
-                            .form-input.valid:not(:focus)~.validation-mark {
-                                opacity: 1;
-                            }
-                            
-                            .form-input.error {
-                                border-color: var(--error);
-                            }
-                            
-                            .form-input.error~.form-label {
-                                color: var(--error);
-                            }
-                            
-                            .error-message {
-                                color: var(--error);
-                                font-size: 0.75rem;
-                                display: none;
-                                text-align: left;
-                                padding-left: 2px;
-                                position: absolute;
-                                top: 60px;
-                                left: 0;
-                                width: 100%;
-                                line-height: 1.2;
-                            }
-                            
-                            .form-input.error~.error-message {
-                                display: block;
-                            }
-                            
-                            .submit-button {
-                                background-color: var(--primary);
-                                color: white;
-                                border: none;
-                                border-radius: 8px;
-                                padding: var(--space-2) 0;
-                                font-size: 16px;
-                                font-weight: 600;
-                                cursor: pointer;
-                                width: 100%;
-                                transition: all 0.25s ease;
-                                margin-top: var(--space-1);
-                                position: relative;
-                                overflow: hidden;
-                            }
-                            
-                            .submit-button:hover {
-                                background-color: #166FE5;
-                                box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
-                            }
-                            
-                            .submit-button:disabled {
-                                opacity: 0.7;
-                                cursor: not-allowed;
-                                transform: none;
-                            }
-                            
-                            .fine-print {
-                                margin-top: 1rem;
-                                text-align: center;
-                            }
-                            
-                            .fine-print p {
-                                font-size: 0.875rem;
-                                color: var(--text-secondary);
-                                line-height: 1.4;
-                                margin: 0;
-                            }
-                        </style>
-                    `;
-                    
-                    // Add modal to page
-                    document.body.insertAdjacentHTML('beforeend', modalHTML);
-                        
-                    // Add click outside to close
-                    const modal = document.getElementById('contact-modal');
-                    modal.addEventListener('click', (e) => {
-                        if (e.target === modal) {
-                            this.closeContactModal();
-                        }
-                    });
-                    
-                    // Setup form validation
-                    this.setupModalFormValidation();
-                    
-                    // Add form submit handler
-                    document.getElementById('contact-form').addEventListener('submit', (e) => {
-                                    e.preventDefault();
-                        this.handleContactFormSubmit();
-                        });
-                },
-
-                closeContactModal() {
-                    const modal = document.getElementById('contact-modal');
-                    if (modal) modal.remove();
-                    
-                    // Remove selected state from time slot
-                    document.querySelectorAll('.time-slot').forEach(s => {
-                        s.classList.remove('selected');
-                    });
-                    this.selectedTime = null;
-                    this.selectedSlot = null;
-                },
-                
-                setupModalFormValidation() {
-                    const inputs = {
-                        firstName: document.getElementById('modalFirstName'),
-                        lastName: document.getElementById('modalLastName'),
-                        email: document.getElementById('modalEmail'),
-                        phone: document.getElementById('modalPhone')
-                    };
-                    
-                    // Add validation for each input
-                    Object.entries(inputs).forEach(([field, input]) => {
-                        if (!input) return;
-                        
-                        input.addEventListener('blur', () => this.validateModalField(field, input));
-                        input.addEventListener('input', () => {
-                            if (input.classList.contains('error')) {
-                                this.validateModalField(field, input);
-                            }
-                        });
-                    });
-                },
-                
-                validateModalField(field, input) {
-                    const value = input.value.trim();
-                    let isValid = false;
-                    
-                    switch (field) {
-                        case 'firstName':
-                        case 'lastName':
-                            isValid = value.length >= 2;
-                            break;
-                        case 'email':
-                            isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-                            break;
-                        case 'phone':
-                            isValid = value.length >= 10;
-                            break;
-                    }
-                    
-                    input.classList.toggle('error', !isValid && value.length > 0);
-                    input.classList.toggle('valid', isValid);
-                    
-                    return isValid;
-                },
-                
-                handleContactFormSubmit() {
-                    const firstName = document.getElementById('modalFirstName').value.trim();
-                    const lastName = document.getElementById('modalLastName').value.trim();
-                    const email = document.getElementById('modalEmail').value.trim();
-                    const phone = document.getElementById('modalPhone').value.trim();
-                    
-                    // Validate all fields
-                    const inputs = [{
-                            field: 'firstName',
-                            element: document.getElementById('modalFirstName')
-                        },
-                        {
-                            field: 'lastName',
-                            element: document.getElementById('modalLastName')
-                        },
-                        {
-                            field: 'email',
-                            element: document.getElementById('modalEmail')
-                        },
-                        {
-                            field: 'phone',
-                            element: document.getElementById('modalPhone')
-                        }
-                    ];
-                    
-                    let allValid = true;
-                    inputs.forEach(({
-                        field,
-                        element
-                    }) => {
-                        if (!this.validateModalField(field, element)) {
-                            allValid = false;
-                        }
-                    });
-                    
-                    if (!allValid) {
-                        return;
-                    }
-                    
-                    // Show loading state
-                    const submitBtn = document.getElementById('confirm-contact');
-                    submitBtn.textContent = 'Booking...';
-                    submitBtn.disabled = true;
-                        
-                    // Proceed with booking
-                    const name = (firstName + ' ' + lastName).trim();
-                    document.getElementById('contact-modal').remove();
-                    this.createBooking(name, email, phone, this.selectedSlot);
-                },
-                
-                showBookingConfirmation(name, email, phone, time, slot) {
-                    // Format the date for display
-                            const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
-                                weekday: 'long', 
-                                month: 'long', 
-                                day: 'numeric',
-                                year: 'numeric'
-                    });
-                    
-                    // Create modal HTML
-                    const modalHTML = `
-                        <div id="booking-modal" style="
-                            position: fixed;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            background: rgba(0, 0, 0, 0.5);
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            z-index: 1000;
-                        ">
-                            <div style="
-                                background: white;
-                                padding: 2rem;
-                                border-radius: 12px;
-                                max-width: 500px;
-                                width: 90%;
-                                text-align: center;
-                                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                            ">
-                                <h2 style="margin-bottom: 1rem; color: #333;">Confirm Your Booking</h2>
-                                
-                                <div style="text-align: left; margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                    <p style="margin: 0.5rem 0;"><strong>Name:</strong> ${name}</p>
-                                    <p style="margin: 0.5rem 0;"><strong>Email:</strong> ${email}</p>
-                                    <p style="margin: 0.5rem 0;"><strong>Date:</strong> ${dateStr}</p>
-                                    <p style="margin: 0.5rem 0;"><strong>Time:</strong> ${time}</p>
-                                    <p style="margin: 0.5rem 0;"><strong>Duration:</strong> 30 minutes</p>
-                                </div>
-                                
-                                <p style="margin: 1rem 0; color: #666; font-size: 0.9rem;">
-                                    You'll receive a confirmation email with calendar invite and meeting details.
-                                </p>
-                                
-                                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-                                    <button id="cancel-booking" style="
-                                        padding: 0.75rem 1.5rem;
-                                        border: 1px solid #ccc;
-                                        background: white;
-                                        border-radius: 6px;
-                                        cursor: pointer;
-                                        font-size: 1rem;
-                                    ">Cancel</button>
-                                    <button id="confirm-booking" style="
-                                        padding: 0.75rem 1.5rem;
-                                        background: #1877F2;
-                                        color: white;
-                                        border: none;
-                                        border-radius: 6px;
-                                        cursor: pointer;
-                                        font-size: 1rem;
-                                        font-weight: 600;
-                                    ">Confirm Booking</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Add modal to page
-                    document.body.insertAdjacentHTML('beforeend', modalHTML);
-                    
-                    // Add event listeners
-                    document.getElementById('cancel-booking').addEventListener('click', () => {
-                        document.getElementById('booking-modal').remove();
-                        // Remove selected state from time slot
-                        document.querySelectorAll('.time-slot').forEach(s => {
-                            s.classList.remove('selected');
-                        });
-                        this.selectedTime = null;
-                        this.selectedSlot = null;
-                    });
-                    
-                    document.getElementById('confirm-booking').addEventListener('click', () => {
-                        const confirmBtn = document.getElementById('confirm-booking');
-                        confirmBtn.textContent = 'Booking...';
-                        confirmBtn.disabled = true;
-                        confirmBtn.style.opacity = '0.7';
-                        this.createBooking(name, email, phone, slot);
-                    });
-                },
-                
-                async createBooking(name, email, phone, slot) {
-                    try {
-                        // Get start time from the selected slot
-                        const startTime = new Date(this.selectedSlot.time);
-                        
-                        // Create booking data for Cal.com v2 API
-                        const bookingData = {
-                            eventTypeId: this.eventTypeId,
-                            start: startTime.toISOString(),
-                            name: name,
-                            email: email,
-                            phone: phone,
-                            timeZone: this.selectedTimezone,
-                            bookingFieldsResponses: [{
-                                    name: "phone",
-                                    value: phone
-                            }]
-                        };
-                        
-                        // Create booking via Cal.com API
-                                                    const response = await fetch('calendar_fallback.php?action=create_booking', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(bookingData)
-                        });
-                        
-                                                if (response.ok) {
-                            const result = await response.json();
-                            
-                            // Remove the modal
-                            const modal = document.getElementById('booking-modal');
-                            if (modal) modal.remove();
-                            
-                            // Format the date for the confirmation page
-                        const dateStr = this.selectedDate.toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            month: 'long', 
-                            day: 'numeric',
-                            year: 'numeric'
-                        });
-                            
-                            // Store booking in localStorage for the confirmation page
-                            localStorage.setItem('pendingBooking', JSON.stringify({
-                                date: dateStr,
-                                time: this.selectedTime,
-                                timezone: this.selectedTimezone,
-                                bookingId: result.id,
-                                name: name,
-                                email: email
-                            }));
-                            
-                            // Redirect to confirmation page
-                            window.location.href = `confirmation.php?date=${encodeURIComponent(dateStr)}&time=${encodeURIComponent(this.selectedTime)}&timezone=${encodeURIComponent(this.selectedTimezone)}`;
-                        } else {
-                            const error = await response.json();
-                            // Reset button state on error
-                            const modal = document.getElementById('booking-modal');
-                            if (modal) {
-                                const confirmBtn = document.getElementById('confirm-booking');
-                                if (confirmBtn) {
-                                    confirmBtn.textContent = 'Confirm Booking';
-                                    confirmBtn.disabled = false;
-                                    confirmBtn.style.opacity = '1';
-                                }
-                            }
-                            alert(`Booking failed: ${error.error || 'Unknown error'}`);
-                }
-                    } catch (error) {
-                        console.error('Booking error:', error);
-                        // Reset button state on error
-                        const modal = document.getElementById('booking-modal');
-                        if (modal) {
-                            const confirmBtn = document.getElementById('confirm-booking');
-                            if (confirmBtn) {
-                                confirmBtn.textContent = 'Confirm Booking';
-                                confirmBtn.disabled = false;
-                                confirmBtn.style.opacity = '1';
-                            }
-                        }
-                        alert('Booking failed. Please try again.');
-                    }
-                },
-                
-                isSameDay(date1, date2) {
-                    return date1.getDate() === date2.getDate() &&
-                           date1.getMonth() === date2.getMonth() &&
-                           date1.getFullYear() === date2.getFullYear();
-                }
-            };
-            
-            // Initialize the booking system
-            BookingSystem.init();
-            
-            // Function to get URL parameters
-            function getUrlParams() {
-                const params = {};
-                window.location.search.substring(1).split('&').forEach(param => {
-                    if (param) {
-                        const [key, value] = param.split('=');
-                        params[key] = decodeURIComponent(value || '');
-                    }
-                });
-                return params;
-            }
-
-            // Function to populate user data from URL parameters
-            function populateUserData() {
-                const params = getUrlParams();
-                
-                if (params.name) {
-                    document.getElementById('user-name').value = params.name;
-                }
-                
-                if (params.email) {
-                    document.getElementById('user-email').value = params.email;
-                }
-                
-                if (params.notes) {
-                    document.getElementById('user-notes').value = params.notes;
-                }
-            }
-
-            // Call the function to populate user data
-            populateUserData();
         });
     </script>
 </body>
