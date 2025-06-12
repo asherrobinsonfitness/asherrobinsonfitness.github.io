@@ -9,17 +9,20 @@
     <meta name="robots" content="index, follow">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QLJZQBQ89"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-      gtag('config', 'G-1QLJZQBQ89');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-1QLJZQBQ89');
     </script>
-    
+
     <style>
         /* Global CSS Variables and Styles for BusyBarbell */
 
@@ -1004,7 +1007,7 @@
                 <div class="video-details-wrapper">
                     <div class="video-container" id="videoContainer">
                         <div class="play-button" id="playButton">
-                            Watch the video
+                            Here's what to expect
                             <div class="play-icon">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
@@ -1060,79 +1063,79 @@
                     <h2 class="faq-title">Common Questions</h2>
                     <div class="faq-widget">
                         <div class="faq-grid">
-                        <div class="faq-item">
-                            <h3 class="faq-question">What kind of results can I expect?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">Most people lose 1-2 pounds per week when following the plan. You'll learn how to eat better, exercise properly, and keep the weight off long-term. I've helped hundreds of people do this successfully.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">What kind of results can I expect?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">Most people lose 1-2 pounds per week when following the plan. You'll learn how to eat better, exercise properly, and keep the weight off long-term. I've helped hundreds of people do this successfully.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">How is this different from other programs?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">Everything is customized for you - your meal plan, workouts, and check-ins. No generic plans or cookie-cutter approaches. I work with you directly to make sure you're getting results and adjust things when needed.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">How is this different from other programs?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">Everything is customized for you - your meal plan, workouts, and check-ins. No generic plans or cookie-cutter approaches. I work with you directly to make sure you're getting results and adjust things when needed.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">I've failed at diets before - why would this work?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">Most diets fail because they're too strict and don't fit your life. I'll help you create a plan that works with your schedule and food preferences. When things get tough, I'm here to help you adjust and stay on track.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">I've failed at diets before - why would this work?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">Most diets fail because they're too strict and don't fit your life. I'll help you create a plan that works with your schedule and food preferences. When things get tough, I'm here to help you adjust and stay on track.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">What's included in the 6 weeks?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">You get: 1) A meal plan with foods you like, 2) Workouts that fit your schedule and equipment, 3) Weekly check-ins to track progress, 4) Direct access to me for questions, 5) Form checks for exercises, 6) Tips for eating out and social events.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">What's included in the 6 weeks?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">You get: 1) A meal plan with foods you like, 2) Workouts that fit your schedule and equipment, 3) Weekly check-ins to track progress, 4) Direct access to me for questions, 5) Form checks for exercises, 6) Tips for eating out and social events.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">Can I see client results?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">Yes - during our call, I'll show you real results from people who started where you are. You'll see their exact progress and how long it took them.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">Can I see client results?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">Yes - during our call, I'll show you real results from people who started where you are. You'll see their exact progress and how long it took them.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">What's the cost?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">It's $599 total - that covers everything with no hidden fees. I don't offer payment plans, but I do offer a 30-day money-back guarantee if you're not happy.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">What's the cost?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">It's $599 total - that covers everything with no hidden fees. I don't offer payment plans, but I do offer a 30-day money-back guarantee if you're not happy.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">Do I need to decide right after the call?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">No pressure at all. The call is just to see if we're a good fit. Take your time to think about it. If you do join, we can start right away.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">Do I need to decide right after the call?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">No pressure at all. The call is just to see if we're a good fit. Take your time to think about it. If you do join, we can start right away.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">How much time do I need each week?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">Most people spend 3-4 hours on workouts (split into shorter sessions) plus some meal prep time. Weekly check-ins take 15 minutes. The key is being consistent, not spending hours in the gym.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">How much time do I need each week?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">Most people spend 3-4 hours on workouts (split into shorter sessions) plus some meal prep time. Weekly check-ins take 15 minutes. The key is being consistent, not spending hours in the gym.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">What if I travel a lot?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">The program adapts to your schedule. I'll give you quick workouts and tips for eating out. Many of my clients travel for work - we make it work.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">What if I travel a lot?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">The program adapts to your schedule. I'll give you quick workouts and tips for eating out. Many of my clients travel for work - we make it work.</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="faq-item">
-                            <h3 class="faq-question">What happens after 6 weeks?</h3>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">You'll have the tools to keep going on your own. If you want more support, we can do monthly check-ins or extend the coaching. We'll discuss options near the end if you're interested.</div>
+                            <div class="faq-item">
+                                <h3 class="faq-question">What happens after 6 weeks?</h3>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-content">You'll have the tools to keep going on your own. If you want more support, we can do monthly check-ins or extend the coaching. We'll discuss options near the end if you're interested.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 
