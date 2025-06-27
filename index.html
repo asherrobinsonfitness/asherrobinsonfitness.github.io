@@ -5,39 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Free Video Training: How to Lose Your First 10 Pounds</title>
-    <meta name="description" content="Free video training reveals the simple, science backed steps to lose your first 10 pounds. Enter your email for instant access.">
+    <meta name="description"
+        content="Free video training reveals the simple, science backed steps to lose your first 10 pounds. Enter your email for instant access.">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    
+
     <!-- Preconnect to critical domains -->
     <link rel="preconnect" href="https://fast.wistia.com" crossorigin>
     <link rel="dns-prefetch" href="https://fast.wistia.com">
-    
+
     <!-- Preload critical assets -->
     <link rel="preload" href="https://fast.wistia.com/player.js" as="script">
     <link rel="preload" href="https://fast.wistia.com/embed/ejsp0xhq64.js" as="script">
-    
+
     <!-- Google tag (gtag.js) - deferred -->
     <script>
-    window.addEventListener('load', function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-1QLJZQBQ89';
-        document.head.appendChild(script);
-        
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-        gtag('config', 'G-1QLJZQBQ89', {
-            'cookie_flags': 'SameSite=None;Secure'
+        window.addEventListener('load', function () {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-1QLJZQBQ89';
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-1QLJZQBQ89', {
+                'cookie_flags': 'SameSite=None;Secure'
+            });
         });
-    });
     </script>
-    
+
     <!-- iClosed popup widget begin -->
     <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
     <!-- iClosed popup widget end -->
-    
+
     <style>
         :root {
             --space-1: 0.5rem;
@@ -57,7 +58,7 @@
             --success: #4cd964;
             --premium-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -90,7 +91,7 @@
             max-width: 500px;
             padding: 0 1.5rem;
         }
-        
+
         .headline {
             font-size: 2.5rem;
             font-weight: 700;
@@ -108,7 +109,7 @@
             max-width: 450px;
             margin: 0 auto;
         }
-        
+
         .callout {
             color: var(--text);
             font-weight: 700;
@@ -118,36 +119,38 @@
             margin: 0 auto;
             margin-bottom: var(--space-2);
         }
-        
+
         .report-img {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
         }
-        
+
         .video-container {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
             overflow: hidden;
+            cursor: pointer;
         }
-        
-        .video-container wistia-player {
+
+        .video-container img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
-        
+
         .form-wrapper {
             width: 100%;
             max-width: 450px;
             margin: 0 auto;
             position: relative;
         }
-        
+
         .form-title {
             color: var(--text);
             font-weight: 700;
@@ -166,30 +169,81 @@
             line-height: 1.4;
             text-align: center;
         }
-        
+
         /* Calendar wrapper styles */
         .calendar-wrapper {
             width: 100%;
             background-color: var(--background);
         }
-        
+
         /* Pulsing input animation */
         @keyframes pulse-border {
             0% {
                 border-color: var(--border);
             }
+
             50% {
                 border-color: var(--primary);
             }
+
             100% {
                 border-color: var(--border);
             }
         }
-        
+
         .pulse-input {
             animation: pulse-border 1s infinite;
         }
-        
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+
+        .modal-content {
+            width: 100%;
+            max-width: 500px;
+            padding: 0 1.5rem;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        .modal-form-wrapper {
+            margin-top: 10px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: var(--space-4) 0 var(--space-6);
@@ -207,17 +261,22 @@
             .subheadline {
                 font-size: 1rem;
             }
-            
+
             .callout {
                 font-size: 1rem;
             }
-            
+
             .form-title {
                 font-size: 1rem;
             }
 
             .form-subtitle {
                 font-size: 0.875rem;
+            }
+
+            .modal-content {
+                padding: 0 1.25rem;
+
             }
         }
     </style>
@@ -233,7 +292,8 @@
             </div>
 
             <div id="reportImage" class="report-img video-container">
-                <img src="https://i.postimg.cc/zGBtTTC8/imageforopt.png" alt="Weight loss training" style="width: 100%; height: auto; display: block;">
+                <img src="https://i.postimg.cc/zGBtTTC8/imageforopt.png" alt="Weight loss training"
+                    style="width: 100%; height: auto; display: block;">
             </div>
 
             <div class="form-wrapper">
@@ -241,27 +301,92 @@
                     <!-- Two-step progress indicator -->
                     <div style="display: flex; align-items: center; justify-content: center; padding: 15px;">
                         <div style="display: flex; align-items: center; margin-right: 20px;">
-                            <div style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary); margin-right: 10px;"></div>
-                            <span style="font-size: .875rem; line-height: 1.4; color: var(--text);">Enter your email</span>
+                            <div
+                                style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary); margin-right: 10px;">
+                            </div>
+                            <span style="font-size: .875rem; line-height: 1.4; color: var(--text);">Enter your
+                                email</span>
                         </div>
                         <div style="display: flex; align-items: center;">
-                            <div style="width: 10px; height: 10px; border-radius: 50%; background-color: #e0e0e0; margin-right: 10px;"></div>
-                            <span style="font-size: .875rem; line-height: 1.4; color: #a0a0a0;">Watch the training</span>
+                            <div
+                                style="width: 10px; height: 10px; border-radius: 50%; background-color: #e0e0e0; margin-right: 10px;">
+                            </div>
+                            <span style="font-size: .875rem; line-height: 1.4; color: #a0a0a0;">Watch the
+                                training</span>
                         </div>
                     </div>
 
                     <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
 
-                    <form id="emailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST" style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
+                    <form id="emailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST"
+                        style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
                         <div style="display: flex; flex-direction: column; gap: var(--space-1);">
-                            <input type="email" id="email" name="email" placeholder="Email *" required style="padding: 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 16px;" class="pulse-input">
+                            <input type="email" id="email" name="email" placeholder="Email *" required
+                                style="padding: 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 16px;"
+                                class="pulse-input">
                         </div>
-                        
+
                         <p style="font-size: 11px; color: var(--text); text-align: left;">
-                            By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
+                            By entering information, I agree to <a href="https://iclosed.io/terms/"
+                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a
+                                href="https://iclosed.io/privacy-policy/"
+                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy
+                                Policy</a>
                         </p>
-                        
-                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
+
+                        <button type="submit"
+                            style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue
+                            →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal popup -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content">
+            <div class="form-wrapper" style="margin: 0 auto; max-width: 450px;">
+                <div style="border: 1px solid var(--border); border-radius: 8px; background-color: white;">
+                    <!-- Two-step progress indicator -->
+                    <div style="display: flex; align-items: center; justify-content: center; padding: 15px;">
+                        <div style="display: flex; align-items: center; margin-right: 20px;">
+                            <div
+                                style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary); margin-right: 10px;">
+                            </div>
+                            <span style="font-size: .875rem; line-height: 1.4; color: var(--text);">Enter your
+                                email</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div
+                                style="width: 10px; height: 10px; border-radius: 50%; background-color: #e0e0e0; margin-right: 10px;">
+                            </div>
+                            <span style="font-size: .875rem; line-height: 1.4; color: #a0a0a0;">Watch the
+                                training</span>
+                        </div>
+                    </div>
+
+                    <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
+
+                    <form id="modalEmailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST"
+                        style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
+                        <div style="display: flex; flex-direction: column; gap: var(--space-1);">
+                            <input type="email" id="modalEmail" name="email" placeholder="Email *" required
+                                style="padding: 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 16px;"
+                                class="pulse-input">
+                        </div>
+
+                        <p style="font-size: 11px; color: var(--text); text-align: left;">
+                            By entering information, I agree to <a href="https://iclosed.io/terms/"
+                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a
+                                href="https://iclosed.io/privacy-policy/"
+                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy
+                                Policy</a>
+                        </p>
+
+                        <button type="submit"
+                            style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue
+                            →</button>
                     </form>
                 </div>
             </div>
@@ -269,44 +394,53 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Handle console errors gracefully
-            window.addEventListener('error', function(e) {
+            window.addEventListener('error', function (e) {
                 // Prevent default error handling
                 e.preventDefault();
                 return true;
             });
-            
+
             // Add SameSite and Secure attributes to cookies
             document.cookie = "SameSite=None; Secure";
-            
+
             // Capture email input as soon as user types
-            document.getElementById('email').addEventListener('input', function(e) {
+            document.getElementById('email').addEventListener('input', function (e) {
                 const email = e.target.value;
                 // Only proceed if it's a valid email format
                 if (email && validateEmail(email)) {
                     // Store email in localStorage
                     localStorage.setItem('userEmail', email);
-                    
+
                     // Send to backend only for valid emails
                     sendEmailToBackend(email);
                 }
             });
-            
+
+            // Do the same for modal email input
+            document.getElementById('modalEmail').addEventListener('input', function (e) {
+                const email = e.target.value;
+                if (email && validateEmail(email)) {
+                    localStorage.setItem('userEmail', email);
+                    sendEmailToBackend(email);
+                }
+            });
+
             // Email validation function - checks for proper email format
             function validateEmail(email) {
                 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(String(email).toLowerCase());
             }
-            
+
             // Function to send email to backend
             function sendEmailToBackend(email) {
                 // Use a debounced approach to avoid too many requests
                 if (window.emailTimeout) {
                     clearTimeout(window.emailTimeout);
                 }
-                
-                window.emailTimeout = setTimeout(function() {
+
+                window.emailTimeout = setTimeout(function () {
                     // Send to formbackend with partial flag
                     fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
                         method: 'POST',
@@ -323,14 +457,14 @@
                     });
                 }, 1000); // Wait 1 second after typing stops
             }
-            
+
             // Handle form submission and redirect
-            document.getElementById('emailForm').addEventListener('submit', function(e) {
+            document.getElementById('emailForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 // Get the email value
                 const email = document.getElementById('email').value;
-                
+
                 // Submit to formbackend
                 fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
                     method: 'POST',
@@ -349,6 +483,58 @@
                     window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
                 });
             });
+
+            // Handle modal form submission
+            document.getElementById('modalEmailForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('modalEmail').value;
+
+                fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                }).then(() => {
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                }).catch(error => {
+                    console.error('Error:', error);
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                });
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('formModal');
+            const reportImage = document.getElementById('reportImage');
+
+            // Show modal when clicking on the image
+            reportImage.addEventListener('click', function () {
+                showModal();
+            });
+
+            // Show modal when mouse leaves the page
+            document.addEventListener('mouseleave', function (e) {
+                // Only trigger if the mouse moves above the top of the page
+                if (e.clientY < 0) {
+                    showModal();
+                }
+            });
+
+            // Close modal when clicking outside the form
+            modal.addEventListener('click', function (e) {
+                // Check if the click was directly on the modal-overlay (background)
+                // and not on any of its children
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            function showModal() {
+                modal.style.display = 'flex';
+            }
         });
     </script>
 </body>
