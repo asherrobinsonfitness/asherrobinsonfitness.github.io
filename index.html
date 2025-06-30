@@ -321,8 +321,7 @@
                             <div
                                 style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary); margin-right: 10px;">
                             </div>
-                            <span style="font-size: .875rem; line-height: 1.4; color: var(--text);">Enter your
-                                email</span>
+                            <span style="font-size: .875rem; line-height: 1.4; color: var(--text);">Fill out the form</span>
                         </div>
                         <div style="display: flex; align-items: center;">
                             <div
@@ -335,25 +334,36 @@
 
                     <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
 
-                    <form id="emailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST"
-                        style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
+                    <form id="emailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST" style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
                         <div style="display: flex; flex-direction: column; gap: var(--space-1);">
                             <input type="email" id="email" name="email" placeholder="Email *" required
                                 style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px;"
                                 class="pulse-input">
                         </div>
-
+                        
+                        <div style="display: flex; gap: var(--space-2);">
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <input type="text" id="fname" name="fname" placeholder="First Name *" required
+                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <input type="text" id="lname" name="lname" placeholder="Last Name *" required
+                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                            </div>
+                        </div>
+                        
+                        <div id="phoneField" style="display: none; flex-direction: column; gap: var(--space-1);">
+                            <label for="phone" style="text-align: left; font-size: 14px; font-weight: 500;">Phone Number <span style="color: #ff3b30;">*</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required
+                                style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border);"
+                                maxlength="17">
+                        </div>
+                        
                         <p style="font-size: 11px; color: var(--text); text-align: left;">
-                            By entering information, I agree to <a href="https://iclosed.io/terms/"
-                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a
-                                href="https://iclosed.io/privacy-policy/"
-                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy
-                                Policy</a>
+                            By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
-
-                        <button type="submit"
-                            style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue
-                            →</button>
+                        
+                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -385,25 +395,36 @@
 
                     <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
 
-                    <form id="modalEmailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST"
-                        style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
+                    <form id="modalEmailForm" action="https://www.formbackend.com/f/7ff23cde90ce5913" method="POST" style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
                         <div style="display: flex; flex-direction: column; gap: var(--space-1);">
                             <input type="email" id="modalEmail" name="email" placeholder="Email *" required
                                 style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px;"
                                 class="pulse-input">
                         </div>
-
+                        
+                        <div style="display: flex; gap: var(--space-2);">
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <input type="text" id="modalFname" name="fname" placeholder="First Name *" required
+                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <input type="text" id="modalLname" name="lname" placeholder="Last Name *" required
+                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                            </div>
+                        </div>
+                        
+                        <div id="modalPhoneField" style="display: none; flex-direction: column; gap: var(--space-1);">
+                            <label for="modalPhone" style="text-align: left; font-size: 14px; font-weight: 500; margin-bottom: 4px;">Phone Number <span style="color: #ff3b30;">*</span></label>
+                            <input type="tel" id="modalPhone" name="phone" placeholder="+1 (___) ___-____" required
+                                style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border);"
+                                maxlength="17">
+                        </div>
+                        
                         <p style="font-size: 11px; color: var(--text); text-align: left;">
-                            By entering information, I agree to <a href="https://iclosed.io/terms/"
-                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a
-                                href="https://iclosed.io/privacy-policy/"
-                                style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy
-                                Policy</a>
+                            By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
-
-                        <button type="submit"
-                            style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue
-                            →</button>
+                        
+                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -492,12 +513,16 @@
             }
 
             // Handle form submission and redirect
-            document.getElementById('emailForm').addEventListener('submit', function (e) {
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-
-                // Get the email value
+                
+                // Get all form values
                 const email = document.getElementById('email').value;
-
+                const fname = document.getElementById('fname').value;
+                const lname = document.getElementById('lname').value;
+                const phone = document.getElementById('phone').value;
+                const fullName = `${fname} ${lname}`;
+                
                 // Submit to formbackend
                 fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
                     method: 'POST',
@@ -505,37 +530,47 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        email: email
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        phone: phone
                     })
                 }).then(() => {
-                    // Redirect to training page with email parameter
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                    // Redirect to training page with all parameters
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
                 }).catch(error => {
                     console.error('Error:', error);
                     // Redirect anyway in case of error
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
                 });
             });
-
+            
             // Handle modal form submission
-            document.getElementById('modalEmailForm').addEventListener('submit', function (e) {
+            document.getElementById('modalEmailForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-
+                
                 const email = document.getElementById('modalEmail').value;
-
+                const fname = document.getElementById('modalFname').value;
+                const lname = document.getElementById('modalLname').value;
+                const phone = document.getElementById('modalPhone').value;
+                const fullName = `${fname} ${lname}`;
+                
                 fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        email: email
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        phone: phone
                     })
                 }).then(() => {
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
                 }).catch(error => {
                     console.error('Error:', error);
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}`;
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
                 });
             });
 
@@ -568,6 +603,102 @@
             function showModal() {
                 modal.style.display = 'flex';
             }
+
+            // Function to check if last name has input and show/hide phone field
+            function checkLastNameAndTogglePhone(lnameId, phoneFieldId) {
+                const lname = document.getElementById(lnameId).value;
+                const phoneField = document.getElementById(phoneFieldId);
+                
+                if (lname && lname.trim().length > 0) {
+                    phoneField.style.display = 'flex';
+                } else {
+                    phoneField.style.display = 'none';
+                }
+            }
+            
+            // Add event listeners to check last name input
+            document.getElementById('lname').addEventListener('input', function() {
+                checkLastNameAndTogglePhone('lname', 'phoneField');
+            });
+            
+            document.getElementById('modalLname').addEventListener('input', function() {
+                checkLastNameAndTogglePhone('modalLname', 'modalPhoneField');
+            });
+            
+            // Initial check on page load
+            checkLastNameAndTogglePhone('lname', 'phoneField');
+            checkLastNameAndTogglePhone('modalLname', 'modalPhoneField');
+
+            // Format phone number as +1 (xxx) xxx-xxxx
+            function formatPhoneNumber(input) {
+                // Get the current cursor position
+                const cursorPos = input.selectionStart;
+                const oldLength = input.value.length;
+                
+                // If the input is empty, set it to +1 
+                if (input.value === '') {
+                    input.value = '+1 ';
+                    return;
+                }
+                
+                // Ensure the input always starts with +1
+                if (!input.value.startsWith('+1 ')) {
+                    input.value = '+1 ' + input.value.replace('+1 ', '');
+                }
+                
+                // Strip all non-numeric characters except the +1 prefix
+                let phoneNumber = input.value.replace(/\D/g, '');
+                
+                // Remove the country code (1) if it exists at the beginning
+                if (phoneNumber.startsWith('1')) {
+                    phoneNumber = phoneNumber.substring(1);
+                }
+                
+                // Format the number as +1 (xxx) xxx-xxxx
+                let formattedNumber = '+1 ';
+                if (phoneNumber.length > 0) {
+                    if (phoneNumber.length <= 3) {
+                        formattedNumber += '(' + phoneNumber;
+                    } else if (phoneNumber.length <= 6) {
+                        formattedNumber += '(' + phoneNumber.substring(0, 3) + ') ' + phoneNumber.substring(3);
+                    } else {
+                        formattedNumber += '(' + phoneNumber.substring(0, 3) + ') ' + phoneNumber.substring(3, 6) + '-' + phoneNumber.substring(6, 10);
+                    }
+                }
+                
+                // Update the input value
+                input.value = formattedNumber;
+                
+                // Adjust cursor position
+                const newLength = input.value.length;
+                const newCursorPos = cursorPos + (newLength - oldLength);
+                input.setSelectionRange(newCursorPos, newCursorPos);
+            }
+            
+            // Initialize phone inputs with +1
+            function initPhoneInputs() {
+                const phoneInputs = [document.getElementById('phone'), document.getElementById('modalPhone')];
+                phoneInputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        if (this.value === '') {
+                            this.value = '+1 ';
+                        }
+                    });
+                    
+                    input.addEventListener('input', function() {
+                        formatPhoneNumber(this);
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        if (this.value === '+1 ') {
+                            this.value = '';
+                        }
+                    });
+                });
+            }
+            
+            // Call initialization function
+            initPhoneInputs();
         });
     </script>
 </body>
