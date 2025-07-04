@@ -85,11 +85,59 @@
         }
         
         .header-section {
-            background: #0e2550;
-            color: var(--header-text);
-            padding: var(--space-6) 0 0 0;
-            width: 100%;
             position: relative;
+            color: var(--header-text);
+            padding: var(--space-6) 0 var(--space-6) 0;
+            width: 100%;
+            overflow: visible;
+            z-index: 1;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0e2550, #1877F2, #0e5bb9);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            z-index: -1;
+        }
+        
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+        }
+        
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .content {
@@ -146,6 +194,7 @@
             /* 16:9 aspect ratio */
             overflow: hidden;
             cursor: pointer;
+            z-index: 10;
         }
         
         .video-container video {
@@ -334,7 +383,7 @@
             }
             
             .header-section {
-                padding: var(--space-4) 0 0 0;
+                padding: var(--space-4) 0 var(--space-6) 0;
             }
 
             .content {
@@ -346,8 +395,8 @@
                 margin-top: var(--space-4);
             }
             
-            .content#mainContent {
-                margin-top: calc(28.125% + var(--space-4));
+            #mainContent {
+                margin-top: 20px;
             }
 
             .headline {
@@ -380,6 +429,7 @@
 <body>
     <div class="container">
         <div class="header-section">
+            <div class="header-bg"></div>
             <div class="content">
                 <div class="header-group">
                     <p class="callout">Overweight Men ↓</p>
@@ -389,8 +439,8 @@
             </div>
             
             <!-- Video container positioned to be 50% in blue, 50% in white -->
-            <div id="videoWrapper" class="content" style="position: relative; margin-bottom: -28.125%; margin-top: var(--space-5);">
-                <div id="reportImage" class="report-img video-container">
+            <div id="videoWrapper" class="content" style="position: relative; z-index: 10; margin-top: var(--space-5);">
+                <div id="reportImage" class="report-img video-container" style="margin-bottom: 0;">
                     <video autoplay muted loop playsinline disableRemotePlayback 
                         style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
                         <source src="video.mp4" type="video/mp4">
@@ -410,7 +460,7 @@
             </div>
         </div>
         
-        <div class="content" id="mainContent" style="margin-top: calc(28.125% + var(--space-5));">
+        <div class="content" id="mainContent" style="position: relative; z-index: 5; margin-top: 20px;">
             <!-- Content starts after the video -->
 
             <div class="form-wrapper">
