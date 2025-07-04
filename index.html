@@ -91,8 +91,9 @@
                         linear-gradient(0deg, rgba(15, 30, 60, 0.25) 0%, rgba(15, 30, 60, 0.25) 100%), 
                         #0e2550;
             color: var(--header-text);
-            padding: var(--space-6) 0;
+            padding: var(--space-6) 0 28.125% 0; /* 28.125% is half of 56.25% (the video aspect ratio) */
             width: 100%;
+            position: relative;
         }
 
         .content {
@@ -283,7 +284,7 @@
             }
             
             .header-section {
-                padding: var(--space-4) 0;
+                padding: var(--space-4) 0 28.125% 0;
             }
 
             .content {
@@ -292,7 +293,7 @@
             }
             
             .content#mainContent {
-                padding-top: var(--space-4);
+                padding-top: calc(28.125% + var(--space-2));
             }
 
             .headline {
@@ -334,14 +335,20 @@
             </div>
         </div>
         
-        <div class="content" id="mainContent" style="padding-top: var(--space-5);">
-            <div id="reportImage" class="report-img video-container">
-                <video autoplay muted loop playsinline disableRemotePlayback 
-                    style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
-                    <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+        <div id="videoWrapper" style="position: relative; margin-top: -28.125%;">
+            <div class="content" style="position: relative;">
+                <div id="reportImage" class="report-img video-container">
+                    <video autoplay muted loop playsinline disableRemotePlayback 
+                        style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
+                        <source src="video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             </div>
+        </div>
+        
+        <div class="content" id="mainContent" style="padding-top: calc(28.125% + var(--space-4));">
+            <!-- 28.125% is half of 56.25% (the video aspect ratio) -->
 
             <div class="form-wrapper">
                 <div style="border: 1px solid var(--border); border-radius: 8px; background-color: white;">
