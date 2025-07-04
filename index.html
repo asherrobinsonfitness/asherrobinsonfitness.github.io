@@ -87,10 +87,9 @@
         .header-section {
             background: #0e2550;
             color: var(--header-text);
-            padding: var(--space-6) 0 28.125% 0; /* 28.125% is half of 56.25% (the video aspect ratio) */
+            padding: var(--space-6) 0 0 0;
             width: 100%;
             position: relative;
-            margin-bottom: var(--space-5);
         }
 
         .content {
@@ -156,6 +155,60 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 999px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            padding: 5px 7px 5px 20px;
+            color: #222222;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            width: auto;
+        }
+
+        .play-icon {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            background-color: #222222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 14px;
+            margin-right: 0;
+        }
+
+        .play-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+            margin-left: 0;
+            position: relative;
+            transform: none;
         }
         
         .form-wrapper {
@@ -281,8 +334,7 @@
             }
             
             .header-section {
-                padding: var(--space-4) 0 28.125% 0;
-                margin-bottom: var(--space-4);
+                padding: var(--space-4) 0 0 0;
             }
 
             .content {
@@ -290,8 +342,12 @@
                 padding: 0 1.25rem;
             }
             
-            .content#mainContent {
+            #videoWrapper {
                 margin-top: var(--space-4);
+            }
+            
+            .content#mainContent {
+                margin-top: calc(28.125% + var(--space-4));
             }
 
             .headline {
@@ -327,25 +383,34 @@
             <div class="content">
                 <div class="header-group">
                     <p class="callout">Overweight Men ↓</p>
-                    <h1 class="headline">Free Video Training: How I Lost 15 Pounds in 6 Weeks</h1>
+                    <h1 class="headline">Free Video Training: How I Lost <span style="font-weight: 300; font-style: italic;">15 Pounds</span> in <span style="font-weight: 300; font-style: italic;">6 Weeks</span></h1>
                     <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
                 </div>
             </div>
-        </div>
-        
-        <div id="videoWrapper" style="position: relative; margin-top: -28.125%;">
-            <div class="content" style="position: relative;">
+            
+            <!-- Video container positioned to be 50% in blue, 50% in white -->
+            <div id="videoWrapper" class="content" style="position: relative; margin-bottom: -28.125%; margin-top: var(--space-5);">
                 <div id="reportImage" class="report-img video-container">
                     <video autoplay muted loop playsinline disableRemotePlayback 
                         style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
                         <source src="video.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    <div class="video-overlay">
+                        <div class="play-button">
+                            Watch now
+                            <div class="play-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="content" id="mainContent" style="margin-top: var(--space-5);">
+        <div class="content" id="mainContent" style="margin-top: calc(28.125% + var(--space-5));">
             <!-- Content starts after the video -->
 
             <div class="form-wrapper">
