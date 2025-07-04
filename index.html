@@ -49,7 +49,10 @@
             --space-6: 3rem;
             --form-gap: 1rem;
             --primary: #1877F2;
+            --primary-dark: #0e5bb9;
             --background: #f8f9fa;
+            --header-bg: #0e2550;
+            --header-text: #ffffff;
             --text: #222222;
             --text-secondary: #717171;
             --border: #c1c7cd;
@@ -78,7 +81,18 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: var(--space-6) 0 var(--space-6);
+            padding: 0 0 var(--space-6);
+        }
+        
+        .header-section {
+            background: linear-gradient(0deg, rgba(25, 35, 65, 0.3) 0%, rgba(25, 35, 65, 0.3) 100%), 
+                        linear-gradient(235deg, rgba(0, 0, 0, 0) -42.48%, rgba(20, 40, 80, 0.6) 6.79%, rgba(150, 180, 220, 0.42) 19.79%, rgba(25, 45, 85, 0.52) 35.53%, rgba(80, 120, 170, 0.56) 58.56%, rgba(20, 40, 80, 0.6) 84.12%), 
+                        linear-gradient(0deg, rgba(30, 60, 120, 0.2) 0%, rgba(30, 60, 120, 0.2) 100%), 
+                        linear-gradient(0deg, rgba(15, 30, 60, 0.25) 0%, rgba(15, 30, 60, 0.25) 100%), 
+                        #0e2550;
+            color: var(--header-text);
+            padding: var(--space-6) 0;
+            width: 100%;
         }
 
         .content {
@@ -98,12 +112,13 @@
             line-height: 1.15;
             margin-bottom: var(--space-2);
             letter-spacing: -0.015em;
-            color: var(--text);
+            color: inherit;
         }
 
         .subheadline {
             font-size: 1.25rem;
-            color: var(--text-secondary);
+            color: inherit;
+            opacity: 0.9;
             line-height: 1.5;
             letter-spacing: -0.005em;
             max-width: 450px;
@@ -111,7 +126,7 @@
         }
         
         .callout {
-            color: var(--text);
+            color: inherit;
             font-weight: 700;
             font-size: 1.125rem;
             line-height: 1.2;
@@ -264,12 +279,20 @@
         
         @media (max-width: 768px) {
             .container {
-                padding: var(--space-4) 0 var(--space-6);
+                padding: 0 0 var(--space-6);
+            }
+            
+            .header-section {
+                padding: var(--space-4) 0;
             }
 
             .content {
                 gap: var(--space-4);
                 padding: 0 1.25rem;
+            }
+            
+            .content#mainContent {
+                padding-top: var(--space-4);
             }
 
             .headline {
@@ -294,7 +317,6 @@
 
             .modal-content {
                 padding: 0 1.25rem;
-
             }
         }
     </style>
@@ -302,13 +324,17 @@
 
 <body>
     <div class="container">
-        <div class="content" id="mainContent">
-            <div class="header-group">
-                <p class="callout">Overweight Men ↓</p>
-                <h1 class="headline">Free Video Training: How I Lost 15 Pounds in 6 Weeks</h1>
-                <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
+        <div class="header-section">
+            <div class="content">
+                <div class="header-group">
+                    <p class="callout">Overweight Men ↓</p>
+                    <h1 class="headline">Free Video Training: How I Lost 15 Pounds in 6 Weeks</h1>
+                    <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
+                </div>
             </div>
-
+        </div>
+        
+        <div class="content" id="mainContent" style="padding-top: var(--space-5);">
             <div id="reportImage" class="report-img video-container">
                 <video autoplay muted loop playsinline disableRemotePlayback 
                     style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
