@@ -13,9 +13,6 @@
     <!-- Preconnect to critical domains -->
     <link rel="preconnect" href="https://fast.wistia.com" crossorigin>
     <link rel="dns-prefetch" href="https://fast.wistia.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Preload critical assets -->
     <link rel="preload" href="https://fast.wistia.com/player.js" as="script">
@@ -43,22 +40,6 @@
     <!-- iClosed popup widget end -->
     
     <style>
-        @font-face {
-            font-family: "Dharma Gothic E Heavy Italic";
-            src: url("DharmaGothicE_Heavy_I.ttf") format("truetype");
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        
-        @font-face {
-            font-family: "Dharma Gothic E Heavy";
-            src: url("DharmaGothicE_Heavy_R.ttf") format("truetype");
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        
         :root {
             --space-1: 0.5rem;
             --space-2: 1rem;
@@ -82,7 +63,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
         }
 
         body {
@@ -113,25 +94,11 @@
         
         .headline {
             font-size: 2.5rem;
-            font-weight: 400;
+            font-weight: 700;
             line-height: 1.15;
             margin-bottom: var(--space-2);
             letter-spacing: -0.015em;
             color: var(--text);
-            font-family: 'inter', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-        }
-        
-        .headline .bold {
-            font-weight: 700;
-        }
-        
-        .highlight {
-            font-family: 'Anton', sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
         }
 
         .subheadline {
@@ -143,28 +110,14 @@
             margin: 0 auto;
         }
         
-        .bold {
-            font-weight: 700;
-        }
-        
-        .blue-text {
-            color: var(--primary);
-        }
-        
         .callout {
             color: var(--text);
-            font-weight: 500;
-            font-size: 1.25rem;
+            font-weight: 700;
+            font-size: 1.125rem;
             line-height: 1.2;
             max-width: 450px;
             margin: 0 auto;
             margin-bottom: var(--space-2);
-            background-color: #f1f1f1;
-            border-radius: 9999px;
-            padding: 8px 16px;
-            display: inline-block;
-            text-align: center;
-            border: 1px solid var(--border);
         }
         
         .report-img {
@@ -181,71 +134,14 @@
             /* 16:9 aspect ratio */
             overflow: hidden;
             cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        .video-container video {
+        .video-container img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-        }
-        
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-        }
-        
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border-radius: 999px;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            padding: 5px 7px 5px 20px;
-            color: #222222;
-            font-weight: 500;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            white-space: nowrap;
-            width: auto;
-        }
-
-        .play-icon {
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
-            background-color: #222222;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 14px;
-            margin-right: 0;
-        }
-
-        .play-icon svg {
-            width: 22px;
-            height: 22px;
-            fill:white;
-            margin-left: 0;
-            position: relative;
-            transform: none;
         }
         
         .form-wrapper {
@@ -253,11 +149,6 @@
             max-width: 450px;
             margin: 0 auto;
             position: relative;
-        }
-        
-        .form-wrapper > div {
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .form-title {
@@ -412,28 +303,14 @@
     <div class="container">
         <div class="content" id="mainContent">
             <div class="header-group">
-                <div style="text-align: center;">
-                    <p class="callout">Overweight Men</p>
-                </div>
-                <h1 class="headline">Learn How I Lost<br><span class="bold">15 Pounds</span> in <span class="bold">6 Weeks</span></h1>
-                <p class="subheadline">Without an <span class="bold">extreme diet</span> or <span class="bold">hours in the gym</span>...</p>
-                <p class="subheadline blue-text">...so you can just <span class="bold">copy me</span></p>
+                <p class="callout">Overweight Men ↓</p>
+                <h1 class="headline">Free Video Training: How I Lost 15 Pounds in 6 Weeks</h1>
+                <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
             </div>
 
             <div id="reportImage" class="report-img video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="video.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <div class="play-button">
-                        Watch now
-                        <div class="play-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" fill-rule="evenodd" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                <img src="https://i.postimg.cc/BbLsrJy6/3pillarspng.webp" alt="Weight loss training"
+                    style="width: 100%; height: auto; display: block;">
             </div>
 
             <div class="form-wrapper">
