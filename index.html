@@ -15,7 +15,7 @@
     <link rel="dns-prefetch" href="https://fast.wistia.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Preload critical assets -->
     <link rel="preload" href="https://fast.wistia.com/player.js" as="script">
@@ -43,6 +43,22 @@
     <!-- iClosed popup widget end -->
     
     <style>
+        @font-face {
+            font-family: "Dharma Gothic E Heavy Italic";
+            src: url("DharmaGothicE_Heavy_I.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: "Dharma Gothic E Heavy";
+            src: url("DharmaGothicE_Heavy_R.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         :root {
             --space-1: 0.5rem;
             --space-2: 1rem;
@@ -97,19 +113,25 @@
         
         .headline {
             font-size: 2.5rem;
-            font-weight: 500;
+            font-weight: 400;
             line-height: 1.15;
             margin-bottom: var(--space-2);
             letter-spacing: -0.015em;
             color: var(--text);
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        }
+        
+        .headline .bold {
+            font-weight: 700;
         }
         
         .highlight {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-style: italic;
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            font-style: normal;
             color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .subheadline {
@@ -125,14 +147,24 @@
             font-weight: 700;
         }
         
+        .blue-text {
+            color: var(--primary);
+        }
+        
         .callout {
             color: var(--text);
-            font-weight: 700;
-            font-size: 1.125rem;
+            font-weight: 500;
+            font-size: 1rem;
             line-height: 1.2;
             max-width: 450px;
             margin: 0 auto;
             margin-bottom: var(--space-2);
+            background-color: #f1f1f1;
+            border-radius: 9999px;
+            padding: 10px 20px;
+            display: inline-block;
+            text-align: center;
+            border: 1px solid var(--border);
         }
         
         .report-img {
@@ -373,8 +405,11 @@
     <div class="container">
         <div class="content" id="mainContent">
             <div class="header-group">
-                <p class="callout">Overweight Men ↓</p>
-                <h1 class="headline">Free Video Training: How I Lost <span class="highlight">15 pounds</span> in <span class="highlight">6 weeks</span></h1>
+                <div style="text-align: center;">
+                    <p class="callout">Overweight Men ↓</p>
+                </div>
+                <h1 class="headline">Learn How I Lost <span class="bold">15 pounds</span> in <span class="bold">6 weeks</span></h1>
+                <p class="subheadline blue-text">So you can just <span class="bold">copy me</span></p>
                 <p class="subheadline">Fill out the form below ↓ to <span class="bold">get instant access</span></p>
             </div>
 
