@@ -49,10 +49,7 @@
             --space-6: 3rem;
             --form-gap: 1rem;
             --primary: #1877F2;
-            --primary-dark: #0e5bb9;
             --background: #f8f9fa;
-            --header-bg: #0e2550;
-            --header-text: #ffffff;
             --text: #222222;
             --text-secondary: #717171;
             --border: #c1c7cd;
@@ -75,51 +72,13 @@
             line-height: 1.5;
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
-            background: linear-gradient(135deg, #0e2550, #1877F2, #0e5bb9);
-            background-size: 400% 400%;
-            animation: gradient-animation 15s ease infinite;
-        }
-        
-        @keyframes gradient-animation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
         }
 
         .container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 0 0 var(--space-6);
-            position: relative;
-        }
-        
-        .container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .header-section {
-            position: relative;
-            color: var(--header-text);
-            padding: var(--space-6) 0 0 0;
-            width: 100%;
-            overflow: visible;
-            z-index: 1;
+            padding: var(--space-6) 0 var(--space-6);
         }
 
         .content {
@@ -131,8 +90,6 @@
             width: 100%;
             max-width: 500px;
             padding: 0 1.5rem;
-            position: relative;
-            z-index: 2;
         }
         
         .headline {
@@ -141,30 +98,26 @@
             line-height: 1.15;
             margin-bottom: var(--space-2);
             letter-spacing: -0.015em;
-            color: inherit;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: var(--text);
         }
 
         .subheadline {
             font-size: 1.25rem;
-            color: inherit;
-            opacity: 0.9;
+            color: var(--text-secondary);
             line-height: 1.5;
             letter-spacing: -0.005em;
             max-width: 450px;
             margin: 0 auto;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
         }
         
         .callout {
-            color: inherit;
+            color: var(--text);
             font-weight: 700;
             font-size: 1.125rem;
             line-height: 1.2;
             max-width: 450px;
             margin: 0 auto;
             margin-bottom: var(--space-2);
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
         }
         
         .report-img {
@@ -181,7 +134,6 @@
             /* 16:9 aspect ratio */
             overflow: hidden;
             cursor: pointer;
-            z-index: 10;
         }
         
         .video-container video {
@@ -271,14 +223,6 @@
             margin-bottom: var(--space-3);
             line-height: 1.4;
             text-align: center;
-        }
-        
-        /* Form card styles */
-        .form-card {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
         /* Calendar wrapper styles */
@@ -374,28 +318,12 @@
         
         @media (max-width: 768px) {
             .container {
-                padding: 0 0 var(--space-6);
-            }
-            
-            .header-section {
-                padding: var(--space-4) 0 0 0;
-            }
-            
-            .header-bg-container {
-                padding-bottom: 28.125%; /* Maintain the same ratio */
+                padding: var(--space-4) 0 var(--space-6);
             }
 
             .content {
                 gap: var(--space-4);
                 padding: 0 1.25rem;
-            }
-            
-            #videoWrapper {
-                margin-top: var(--space-4);
-            }
-            
-            #mainContent {
-                margin-top: 20px;
             }
 
             .headline {
@@ -420,6 +348,7 @@
 
             .modal-content {
                 padding: 0 1.25rem;
+
             }
         }
     </style>
@@ -427,17 +356,13 @@
 
 <body>
     <div class="container">
-        <div class="header-section">
-            <div class="content">
-                <div class="header-group">
-                    <p class="callout">Overweight Men ↓</p>
-                    <h1 class="headline">Free Video Training: How I Lost <span style="font-weight: 300; font-style: italic;">15 Pounds</span> in <span style="font-weight: 300; font-style: italic;">6 Weeks</span></h1>
-                    <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
-                </div>
+        <div class="content" id="mainContent">
+            <div class="header-group">
+                <p class="callout">Overweight Men ↓</p>
+                <h1 class="headline">Free Video Training: How I Lost <span style="font-weight: 300; font-style: italic;">15 Pounds</span> in <span style="font-weight: 300; font-style: italic;">6 Weeks</span></h1>
+                <p class="subheadline">Fill out the form below ↓ to get instant access.</p>
             </div>
-            
-            <!-- Video container -->
-            <div id="videoWrapper" class="content" style="position: relative; z-index: 10; margin-top: var(--space-5);">
+
                 <div id="reportImage" class="report-img video-container">
                     <video autoplay muted loop playsinline disableRemotePlayback 
                         style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
@@ -455,14 +380,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="content" id="mainContent" style="position: relative; z-index: 5; margin-top: var(--space-5);">
-            <!-- Content starts after the video -->
+
 
             <div class="form-wrapper">
-                <div class="form-card">
+                <div style="border: 1px solid var(--border); border-radius: 8px; background-color: white;">
                     <!-- Two-step progress indicator -->
                     <div style="display: flex; align-items: center; justify-content: center; padding: 15px;">
                         <div style="display: flex; align-items: center; margin-right: 20px;">
@@ -522,7 +443,7 @@
     <div class="modal-overlay" id="formModal">
         <div class="modal-content">
             <div class="form-wrapper" style="margin: 0 auto; max-width: 450px;">
-                <div class="form-card">
+                <div style="border: 1px solid var(--border); border-radius: 8px; background-color: white;">
                     <!-- Two-step progress indicator -->
                     <div style="display: flex; align-items: center; justify-content: center; padding: 15px;">
                         <div style="display: flex; align-items: center; margin-right: 20px;">
