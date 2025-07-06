@@ -410,7 +410,7 @@
                                 class="pulse-input">
                         </div>
                         
-                        <div style="display: flex; gap: var(--space-2);">
+                        <div id="nameFields" style="display: none; gap: var(--space-2);">
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
                                 <input type="text" id="fname" name="fname" placeholder="First Name *" required
                                     style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
@@ -432,7 +432,7 @@
                             By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
                         
-                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
+                        <button type="button" id="continueBtn" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -470,12 +470,14 @@
                                 class="pulse-input">
                         </div>
                         
-                        <div style="display: flex; gap: var(--space-2);">
+                        <div id="modalNameFields" style="display: none; gap: var(--space-2);">
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <label for="modalFname" style="text-align: left; font-size: 14px; font-weight: 500; margin-bottom: 4px;">First Name <span style="color: #ff3b30;">*</span></label>
                                 <input type="text" id="modalFname" name="fname" placeholder="First Name *" required
                                     style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <label for="modalLname" style="text-align: left; font-size: 14px; font-weight: 500; margin-bottom: 4px;">Last Name <span style="color: #ff3b30;">*</span></label>
                                 <input type="text" id="modalLname" name="lname" placeholder="Last Name *" required
                                     style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
                             </div>
@@ -542,10 +544,18 @@
                     // Update input styling
                     this.classList.remove('pulse-input');
                     this.classList.add('valid-input');
+                    
+                    // Show the name and phone fields
+                    document.getElementById('modalNameFields').style.display = 'flex';
+                    document.getElementById('modalPhoneField').style.display = 'flex';
                 } else {
                     // Restore pulse effect if email becomes invalid
                     this.classList.remove('valid-input');
                     this.classList.add('pulse-input');
+                    
+                    // Hide the name and phone fields if email becomes invalid
+                    document.getElementById('modalNameFields').style.display = 'none';
+                    document.getElementById('modalPhoneField').style.display = 'none';
                 }
             });
 
@@ -580,37 +590,15 @@
                 }, 1000); // Wait 1 second after typing stops
             }
 
-            // Handle form submission and redirect
-            document.getElementById('emailForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get all form values
+            // Handle continue button click
+            document.getElementById('continueBtn').addEventListener('click', function() {
+                // Get email value
                 const email = document.getElementById('email').value;
-                const fname = document.getElementById('fname').value;
-                const lname = document.getElementById('lname').value;
-                const phone = document.getElementById('phone').value;
-                const fullName = `${fname} ${lname}`;
                 
-                // Submit to formbackend
-                fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        fname: fname,
-                        lname: lname,
-                        phone: phone
-                    })
-                }).then(() => {
-                    // Redirect to training page with all parameters
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
-                }).catch(error => {
-                    console.error('Error:', error);
-                    // Redirect anyway in case of error
-                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
-                });
+                // If email is valid, show the modal
+                if (email && validateEmail(email)) {
+                    showModalWithEmail(email);
+                }
             });
             
             // Handle modal form submission
@@ -671,8 +659,22 @@
             function showModal() {
                 modal.style.display = 'flex';
             }
+            
+            function showModalWithEmail(email) {
+                // Pre-fill the email in the modal
+                document.getElementById('modalEmail').value = email;
+                document.getElementById('modalEmail').classList.remove('pulse-input');
+                document.getElementById('modalEmail').classList.add('valid-input');
+                
+                // Show the name and phone fields since email is valid
+                document.getElementById('modalNameFields').style.display = 'flex';
+                document.getElementById('modalPhoneField').style.display = 'flex';
+                
+                // Show the modal
+                modal.style.display = 'flex';
+            }
 
-            // Function to check if last name has input and show/hide phone field
+            // Function to check if last name has input and show/hide phone field (for main form only)
             function checkLastNameAndTogglePhone(lnameId, phoneFieldId) {
                 const lname = document.getElementById(lnameId).value;
                 const phoneField = document.getElementById(phoneFieldId);
@@ -684,18 +686,13 @@
                 }
             }
             
-            // Add event listeners to check last name input
+            // Add event listeners to check last name input (for main form only)
             document.getElementById('lname').addEventListener('input', function() {
                 checkLastNameAndTogglePhone('lname', 'phoneField');
             });
             
-            document.getElementById('modalLname').addEventListener('input', function() {
-                checkLastNameAndTogglePhone('modalLname', 'modalPhoneField');
-            });
-            
-            // Initial check on page load
+            // Initial check on page load (for main form only)
             checkLastNameAndTogglePhone('lname', 'phoneField');
-            checkLastNameAndTogglePhone('modalLname', 'modalPhoneField');
 
             // Format phone number as +1 (xxx) xxx-xxxx
             function formatPhoneNumber(input) {
