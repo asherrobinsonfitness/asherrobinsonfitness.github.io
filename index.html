@@ -412,10 +412,12 @@
                         
                         <div id="nameFields" style="display: none; gap: var(--space-2);">
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <label for="fname" style="text-align: left; font-size: 14px; font-weight: 500;">First Name <span style="color: #ff3b30;">*</span></label>
                                 <input type="text" id="fname" name="fname" placeholder="First Name *" required
                                     style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
+                                <label for="lname" style="text-align: left; font-size: 14px; font-weight: 500;">Last Name <span style="color: #ff3b30;">*</span></label>
                                 <input type="text" id="lname" name="lname" placeholder="Last Name *" required
                                     style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
                             </div>
@@ -432,7 +434,7 @@
                             By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
                         
-                        <button type="button" id="continueBtn" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
+                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -516,6 +518,10 @@
             // Capture email input as soon as user types
             document.getElementById('email').addEventListener('input', function(e) {
                 const email = e.target.value;
+                
+                // Sync with modal email input
+                document.getElementById('modalEmail').value = email;
+                
                 // Only proceed if it's a valid email format
                 if (email && validateEmail(email)) {
                     // Store email in localStorage
@@ -524,38 +530,58 @@
                     // Send to backend only for valid emails
                     sendEmailToBackend(email);
                     
-                    // Update input styling
+                    // Update input styling for both forms
                     this.classList.remove('pulse-input');
                     this.classList.add('valid-input');
+                    document.getElementById('modalEmail').classList.remove('pulse-input');
+                    document.getElementById('modalEmail').classList.add('valid-input');
+                    
+                    // Show name and phone fields
+                    checkEmailAndToggleFields('email', 'nameFields', 'phoneField');
+                    checkEmailAndToggleFields('modalEmail', 'modalNameFields', 'modalPhoneField');
                 } else {
                     // Restore pulse effect if email becomes invalid
                     this.classList.remove('valid-input');
                     this.classList.add('pulse-input');
+                    document.getElementById('modalEmail').classList.remove('valid-input');
+                    document.getElementById('modalEmail').classList.add('pulse-input');
+                    
+                    // Hide name and phone fields
+                    checkEmailAndToggleFields('email', 'nameFields', 'phoneField');
+                    checkEmailAndToggleFields('modalEmail', 'modalNameFields', 'modalPhoneField');
                 }
             });
             
             // Do the same for modal email input
             document.getElementById('modalEmail').addEventListener('input', function(e) {
                 const email = e.target.value;
+                
+                // Sync with main email input
+                document.getElementById('email').value = email;
+                
                 if (email && validateEmail(email)) {
                     localStorage.setItem('userEmail', email);
                     sendEmailToBackend(email);
                     
-                    // Update input styling
+                    // Update input styling for both forms
                     this.classList.remove('pulse-input');
                     this.classList.add('valid-input');
+                    document.getElementById('email').classList.remove('pulse-input');
+                    document.getElementById('email').classList.add('valid-input');
                     
-                    // Show the name and phone fields
-                    document.getElementById('modalNameFields').style.display = 'flex';
-                    document.getElementById('modalPhoneField').style.display = 'flex';
+                    // Show name and phone fields
+                    checkEmailAndToggleFields('email', 'nameFields', 'phoneField');
+                    checkEmailAndToggleFields('modalEmail', 'modalNameFields', 'modalPhoneField');
                 } else {
                     // Restore pulse effect if email becomes invalid
                     this.classList.remove('valid-input');
                     this.classList.add('pulse-input');
+                    document.getElementById('email').classList.remove('valid-input');
+                    document.getElementById('email').classList.add('pulse-input');
                     
-                    // Hide the name and phone fields if email becomes invalid
-                    document.getElementById('modalNameFields').style.display = 'none';
-                    document.getElementById('modalPhoneField').style.display = 'none';
+                    // Hide name and phone fields
+                    checkEmailAndToggleFields('email', 'nameFields', 'phoneField');
+                    checkEmailAndToggleFields('modalEmail', 'modalNameFields', 'modalPhoneField');
                 }
             });
 
@@ -590,15 +616,37 @@
                 }, 1000); // Wait 1 second after typing stops
             }
 
-            // Handle continue button click
-            document.getElementById('continueBtn').addEventListener('click', function() {
-                // Get email value
-                const email = document.getElementById('email').value;
+            // Handle form submission and redirect
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                // If email is valid, show the modal
-                if (email && validateEmail(email)) {
-                    showModalWithEmail(email);
-                }
+                // Get all form values
+                const email = document.getElementById('email').value;
+                const fname = document.getElementById('fname').value;
+                const lname = document.getElementById('lname').value;
+                const phone = document.getElementById('phone').value;
+                const fullName = `${fname} ${lname}`;
+                
+                // Submit to formbackend
+                fetch('https://www.formbackend.com/f/7ff23cde90ce5913', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        fname: fname,
+                        lname: lname,
+                        phone: phone
+                    })
+                }).then(() => {
+                    // Redirect to training page with all parameters
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
+                }).catch(error => {
+                    console.error('Error:', error);
+                    // Redirect anyway in case of error
+                    window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
+                });
             });
             
             // Handle modal form submission
@@ -659,40 +707,52 @@
             function showModal() {
                 modal.style.display = 'flex';
             }
-            
-            function showModalWithEmail(email) {
-                // Pre-fill the email in the modal
-                document.getElementById('modalEmail').value = email;
-                document.getElementById('modalEmail').classList.remove('pulse-input');
-                document.getElementById('modalEmail').classList.add('valid-input');
-                
-                // Show the name and phone fields since email is valid
-                document.getElementById('modalNameFields').style.display = 'flex';
-                document.getElementById('modalPhoneField').style.display = 'flex';
-                
-                // Show the modal
-                modal.style.display = 'flex';
-            }
 
-            // Function to check if last name has input and show/hide phone field (for main form only)
-            function checkLastNameAndTogglePhone(lnameId, phoneFieldId) {
-                const lname = document.getElementById(lnameId).value;
+            // Function to check if email is valid and show/hide name and phone fields
+            function checkEmailAndToggleFields(emailId, nameFieldId, phoneFieldId) {
+                const email = document.getElementById(emailId).value;
+                const nameField = document.getElementById(nameFieldId);
                 const phoneField = document.getElementById(phoneFieldId);
                 
-                if (lname && lname.trim().length > 0) {
+                if (email && validateEmail(email)) {
+                    nameField.style.display = 'flex';
                     phoneField.style.display = 'flex';
                 } else {
+                    nameField.style.display = 'none';
                     phoneField.style.display = 'none';
                 }
             }
             
-            // Add event listeners to check last name input (for main form only)
-            document.getElementById('lname').addEventListener('input', function() {
-                checkLastNameAndTogglePhone('lname', 'phoneField');
+            // Sync first name inputs
+            document.getElementById('fname').addEventListener('input', function(e) {
+                document.getElementById('modalFname').value = e.target.value;
             });
             
-            // Initial check on page load (for main form only)
-            checkLastNameAndTogglePhone('lname', 'phoneField');
+            document.getElementById('modalFname').addEventListener('input', function(e) {
+                document.getElementById('fname').value = e.target.value;
+            });
+            
+            // Sync last name inputs
+            document.getElementById('lname').addEventListener('input', function(e) {
+                document.getElementById('modalLname').value = e.target.value;
+            });
+            
+            document.getElementById('modalLname').addEventListener('input', function(e) {
+                document.getElementById('lname').value = e.target.value;
+            });
+            
+            // Sync phone inputs
+            document.getElementById('phone').addEventListener('input', function(e) {
+                document.getElementById('modalPhone').value = e.target.value;
+            });
+            
+            document.getElementById('modalPhone').addEventListener('input', function(e) {
+                document.getElementById('phone').value = e.target.value;
+            });
+            
+            // Initial check on page load
+            checkEmailAndToggleFields('email', 'nameFields', 'phoneField');
+            checkEmailAndToggleFields('modalEmail', 'modalNameFields', 'modalPhoneField');
 
             // Format phone number as +1 (xxx) xxx-xxxx
             function formatPhoneNumber(input) {
