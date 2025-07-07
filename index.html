@@ -99,7 +99,7 @@
         
         .headline {
             font-size: 2.5rem;
-            font-weight: 700;
+            font-weight: 400;
             line-height: 1.15;
             letter-spacing: -0.015em;
             color: var(--text);
@@ -463,6 +463,35 @@
                 font-size: 0.95rem;
             }
         }
+
+        /* Highlighted headline circles */
+        .highlight-highlighted {
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-text {
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            font-weight: 700;
+        }
+        .highlight-img {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+            width: 100%;
+            height: 4px;
+        }
+        .highlight-long {
+            max-width: 100%;
+        }
+        .highlight-short {
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -471,7 +500,8 @@
         <div class="content" id="mainContent">
             <div class="header-group">
                 <p class="callout">For Overweight Men Only</p>
-                <h1 class="headline">Free Video Training: How I Lost <span class="highlight-spectral">15 Pounds</span> in <span class="highlight-spectral">6 Weeks</span></h1>
+                <h1 class="headline">Free Video Training: How I Lost 
+                    <span class="highlight-highlighted"><span class="highlight-text">15 Pounds</span><img src="https://i.postimg.cc/0Qz4jLSH/underline1.webp" alt="highlight underline" class="highlight-img highlight-long"></span> in <span class="highlight-highlighted"><span class="highlight-text">6 Weeks</span><img src="https://i.postimg.cc/0Qz4jLSH/underline1.webp" alt="highlight underline" class="highlight-img highlight-short"></span></h1>
             </div>
 
                 <div id="reportImage" class="report-img video-container">
