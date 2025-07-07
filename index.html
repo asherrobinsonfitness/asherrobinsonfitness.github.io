@@ -148,6 +148,16 @@
             border-radius: 8px;
         }
         
+        .video-ambient-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            filter: blur(40px) brightness(1.2) saturate(1.2);
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 8px;
+        }
+        
         .video-container video {
             position: absolute;
             top: 0;
@@ -155,6 +165,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: 1;
         }
         
         .video-overlay {
@@ -463,27 +474,6 @@
                 font-size: 0.95rem;
             }
         }
-
-        .video-ambient-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        #ambientCanvas {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            filter: blur(32px) brightness(1.2) saturate(1.5);
-            z-index: 1;
-            pointer-events: none;
-            border-radius: 8px;
-        }
-        #mainVideo {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            border-radius: 8px;
-        }
     </style>
 </head>
 
@@ -496,7 +486,7 @@
             </div>
 
                 <div id="reportImage" class="report-img video-container">
-                    <canvas id="ambientCanvas"></canvas>
+                    <canvas class="video-ambient-canvas"></canvas>
                     <video id="mainVideo" autoplay muted loop playsinline disableRemotePlayback 
                         style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
                         <source src="video.mp4" type="video/mp4">
@@ -1016,26 +1006,33 @@
             document.querySelector('#emailForm button[type="submit"]').disabled = true;
             document.querySelector('#modalEmailForm button[type="submit"]').disabled = true;
 
+            // --- Ambient mode for video ---
             const video = document.getElementById('mainVideo');
-            const canvas = document.getElementById('ambientCanvas');
-            const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-            }
-            video.addEventListener('loadeddata', resizeCanvas);
-            window.addEventListener('resize', resizeCanvas);
-
-            function drawAmbient() {
-                if (video.paused || video.ended) return;
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                requestAnimationFrame(drawAmbient);
-            }
-            video.addEventListener('play', function() {
+            const canvas = document.querySelector('.video-ambient-canvas');
+            if (video && canvas) {
+                const ctx = canvas.getContext('2d');
+                function resizeCanvas() {
+                    // Set canvas size to match video display size
+                    const rect = video.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                }
+                function drawFrame() {
+                    if (!video.paused && !video.ended) {
+                        // Draw the current video frame to the canvas
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        requestAnimationFrame(drawFrame);
+                    }
+                }
+                video.addEventListener('play', function() {
+                    resizeCanvas();
+                    drawFrame();
+                });
+                window.addEventListener('resize', resizeCanvas);
+                // Initial resize
                 resizeCanvas();
-                drawAmbient();
-            });
+            }
         });
     </script>
 </body>
