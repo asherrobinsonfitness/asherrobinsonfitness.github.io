@@ -41,6 +41,8 @@
     
     <!-- Google Fonts: Spectral -->
     <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -206,6 +208,24 @@
             margin-left: 0;
             position: relative;
             transform: none;
+        }
+
+        .continue {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:disabled {
+            background-color: #c1c7cd;
+            color: #fff;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
         
         .form-wrapper {
@@ -539,7 +559,7 @@
                             By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
                         
-                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
+                        <button type="submit" class="continue">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -601,7 +621,7 @@
                             By entering information, I agree to <a href="https://iclosed.io/terms/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Terms</a> & <a href="https://iclosed.io/privacy-policy/" style="color: var(--text); font-weight: 600; text-decoration: underline;">Privacy Policy</a>
                         </p>
                         
-                        <button type="submit" style="background-color: var(--primary); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 16px; cursor: pointer;">Continue →</button>
+                        <button type="submit" class="continue">Continue →</button>
                     </form>
                 </div>
             </div>
@@ -929,6 +949,49 @@
             
             // Call initialization function
             initPhoneInputs();
+
+            // --- Validation helpers ---
+            function validateEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            function validateName(name) {
+                return name && name.trim().length > 1;
+            }
+            function validatePhone(phone) {
+                // Accepts +1 (xxx) xxx-xxxx
+                return /^\+1 \(\d{3}\) \d{3}-\d{4}$/.test(phone);
+            }
+
+            // --- Enable/disable submit button logic ---
+            function checkFormValidity() {
+                const emailValid = validateEmail(document.getElementById('email').value);
+                const fnameValid = validateName(document.getElementById('fname').value);
+                const lnameValid = validateName(document.getElementById('lname').value);
+                const phoneValid = validatePhone(document.getElementById('phone').value);
+                const btn = document.querySelector('#emailForm button[type="submit"]');
+                btn.disabled = !(emailValid && fnameValid && lnameValid && phoneValid);
+            }
+            function checkModalFormValidity() {
+                const emailValid = validateEmail(document.getElementById('modalEmail').value);
+                const fnameValid = validateName(document.getElementById('modalFname').value);
+                const lnameValid = validateName(document.getElementById('modalLname').value);
+                const phoneValid = validatePhone(document.getElementById('modalPhone').value);
+                const btn = document.querySelector('#modalEmailForm button[type="submit"]');
+                btn.disabled = !(emailValid && fnameValid && lnameValid && phoneValid);
+            }
+
+            // --- Attach input listeners ---
+            ['email','fname','lname','phone'].forEach(id => {
+                document.getElementById(id).addEventListener('input', checkFormValidity);
+            });
+            ['modalEmail','modalFname','modalLname','modalPhone'].forEach(id => {
+                document.getElementById(id).addEventListener('input', checkModalFormValidity);
+            });
+
+            // --- Initial state: disabled ---
+            document.querySelector('#emailForm button[type="submit"]').disabled = true;
+            document.querySelector('#modalEmailForm button[type="submit"]').disabled = true;
         });
     </script>
 </body>
