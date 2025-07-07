@@ -488,9 +488,15 @@
         }
         .highlight-long {
             max-width: 100%;
+            transform: scaleX(-1);
         }
         .highlight-short {
             max-width: 100%;
+        }
+        .highlight-highlighted .highlight-long {
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%) scaleX(-1);
         }
     </style>
 </head>
