@@ -70,7 +70,7 @@
         }
 
         body {
-            background: var(--background);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e3eafc 100%);
             color: var(--text);
             line-height: 1.5;
             font-size: 16px;
@@ -361,6 +361,88 @@
 
             }
         }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .profile-pic-wrapper {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        .profile-pic {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .online-dot {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: block;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.1rem;
+        }
+        .profile-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+        .verified-badge {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            margin-left: 0.2em;
+            vertical-align: middle;
+        }
+        .profile-role {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.1em;
+        }
+        @media (max-width: 768px) {
+            .profile-row {
+                gap: 0.75rem;
+            }
+            .profile-pic-wrapper {
+                width: 40px;
+                height: 40px;
+            }
+            .profile-pic {
+                width: 40px;
+                height: 40px;
+            }
+            .online-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .verified-badge {
+                width: 15px;
+                height: 15px;
+            }
+            .profile-name {
+                font-size: 1rem;
+            }
+            .profile-role {
+                font-size: 0.95rem;
+            }
+        }
     </style>
 </head>
 
@@ -370,7 +452,6 @@
             <div class="header-group">
                 <p class="callout">For Overweight Men Only</p>
                 <h1 class="headline">Free Video Training: How I Lost <span class="highlight-spectral">15 Pounds</span> in <span class="highlight-spectral">6 Weeks</span></h1>
-                <p class="subheadline">Fill out the form below ↓ to <strong>get instant access</strong>.</p>
             </div>
 
                 <div id="reportImage" class="report-img video-container">
@@ -391,6 +472,19 @@
                     </div>
                 </div>
 
+                <div class="profile-row">
+                    <div class="profile-pic-wrapper">
+                        <img src="https://i.postimg.cc/Nf2VSMhy/profilepicnew.png" alt="Asher profile" class="profile-pic">
+                        <span class="online-dot"></span>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">
+                            Asher Robinson
+                            <img src="https://i.postimg.cc/x8zwvTnb/veriiefff.png" alt="Verified" class="verified-badge" title="Verified">
+                        </div>
+                        <div class="profile-role">Fill out the form ↓ to <strong>get instant access</strong>.</div>
+                    </div>
+                </div>
 
             <div class="form-wrapper">
                 <div style="border: 1px solid var(--border); border-radius: 8px; background-color: white; box-shadow: var(--premium-shadow);">
