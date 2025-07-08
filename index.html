@@ -653,6 +653,29 @@
             function showModal() {
                 modal.style.display = 'flex';
             }
+
+            // --- Modal email input logic: show name/phone fields after valid email ---
+            const modalEmail = document.getElementById('modalEmail');
+            const modalNameFields = document.getElementById('modalNameFields');
+            const modalPhoneField = document.getElementById('modalPhoneField');
+            function validateEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            function checkModalEmailAndToggleFields() {
+                const email = modalEmail.value;
+                if (email && validateEmail(email)) {
+                    modalNameFields.style.display = 'flex';
+                    modalPhoneField.style.display = 'flex';
+                } else {
+                    modalNameFields.style.display = 'none';
+                    modalPhoneField.style.display = 'none';
+                }
+            }
+            modalEmail.addEventListener('input', checkModalEmailAndToggleFields);
+            // Initial check on page load
+            checkModalEmailAndToggleFields();
+
             // Video progress circle logic
             const video = document.getElementById('mainVideo');
             const progressBar = document.querySelector('.progress-bar');
