@@ -612,7 +612,7 @@
                                 Policy</a>
                         </p>
 
-                        <button type="submit" class="continue">Send my training →</button>
+                        <button type="submit" class="continue">Get free training →</button>
                     </form>
                 </div>
             </div>
@@ -658,6 +658,9 @@
             const modalEmail = document.getElementById('modalEmail');
             const modalNameFields = document.getElementById('modalNameFields');
             const modalPhoneField = document.getElementById('modalPhoneField');
+            const modalFname = document.getElementById('modalFname');
+            const modalLname = document.getElementById('modalLname');
+            const modalPhone = document.getElementById('modalPhone');
             function validateEmail(email) {
                 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(String(email).toLowerCase());
@@ -677,8 +680,48 @@
                 }
             }
             modalEmail.addEventListener('input', checkModalEmailAndToggleFields);
-            // Initial check on page load
             checkModalEmailAndToggleFields();
+
+            // --- Modal phone input formatting ---
+            function formatPhoneNumber(input) {
+                // Remove all non-numeric except +
+                let value = input.value.replace(/[^\d]/g, '');
+                // Always start with +1
+                if (!value.startsWith('1')) {
+                    value = '1' + value;
+                }
+                value = value.substring(0, 11); // Limit to country code + 10 digits
+                let formatted = '+1 ';
+                if (value.length > 1) {
+                    // value[0] is '1', so skip it
+                    const num = value.substring(1);
+                    if (num.length <= 3) {
+                        formatted += '(' + num;
+                    } else if (num.length <= 6) {
+                        formatted += '(' + num.substring(0, 3) + ') ' + num.substring(3);
+                    } else {
+                        formatted += '(' + num.substring(0, 3) + ') ' + num.substring(3, 6) + '-' + num.substring(6, 10);
+                    }
+                }
+                input.value = formatted;
+            }
+            modalPhone.addEventListener('input', function() { formatPhoneNumber(modalPhone); });
+            modalPhone.addEventListener('focus', function() { if (modalPhone.value === '') modalPhone.value = '+1 '; });
+            modalPhone.addEventListener('blur', function() { if (modalPhone.value === '+1 ') modalPhone.value = ''; });
+
+            // --- Modal form submission: redirect with iclosed info ---
+            const modalForm = document.getElementById('modalEmailForm');
+            modalForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = modalEmail.value;
+                const fname = modalFname.value;
+                const lname = modalLname.value;
+                const phone = modalPhone.value;
+                const fullName = `${fname} ${lname}`;
+                // Remove all non-digits from phone for the URL param
+                const phoneDigits = phone.replace(/\D/g, '');
+                window.location.href = `https://asherrobinsonfitness.github.io/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phoneDigits)}`;
+            });
 
             // Video progress circle logic
             const video = document.getElementById('mainVideo');
@@ -703,18 +746,6 @@
             video.addEventListener('loadedmetadata', updateProgress);
             video.addEventListener('play', updateProgress);
             video.addEventListener('seeked', updateProgress);
-
-            // Modal form submission: redirect with iclosed info
-            document.getElementById('modalEmailForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = document.getElementById('modalEmail').value;
-                const fname = document.getElementById('modalFname').value;
-                const lname = document.getElementById('modalLname').value;
-                const phone = document.getElementById('modalPhone').value;
-                const fullName = `${fname} ${lname}`;
-                // Redirect to asherrobinsonfitness.com/training with params
-                window.location.href = `https://asherrobinsonfitness.com/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
-            });
         });
     </script>
 </body>
