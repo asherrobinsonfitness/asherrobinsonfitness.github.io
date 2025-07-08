@@ -36,11 +36,6 @@
     <script defer type="text/javascript" src="https://app.iclosed.io/assets/widget.js"></script>
     <!-- iClosed popup widget end -->
 
-    <!-- Google Fonts: Spectral -->
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
-    <!-- Google Fonts: Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --space-1: 0.5rem;
@@ -315,22 +310,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-secondary);
-            background: none;
-            border: none;
-            line-height: 1;
-        }
-
-        .modal-form-wrapper {
-            margin-top: 10px;
-        }
-
         /* Placeholder text color */
         ::placeholder {
             color: var(--text-secondary);
@@ -381,113 +360,17 @@
             }
         }
 
-        .profile-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: center;
+        .input-field {
+            background-color: #f9fafb;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
-        .profile-pic-wrapper {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            flex-shrink: 0;
-        }
-
-        .profile-pic {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .online-dot {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 12px;
-            height: 12px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: block;
-        }
-
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.1rem;
-        }
-
-        .profile-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-        }
-
-        .verified-badge {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            margin-left: 0.2em;
-            vertical-align: middle;
-        }
-
-        .profile-role {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            margin-top: 0.1em;
-        }
-
-        @media (max-width: 768px) {
-            .profile-row {
-                gap: 0.75rem;
-            }
-
-            .profile-pic-wrapper {
-                width: 40px;
-                height: 40px;
-            }
-
-            .profile-pic {
-                width: 40px;
-                height: 40px;
-            }
-
-            .online-dot {
-                width: 10px;
-                height: 10px;
-            }
-
-            .verified-badge {
-                width: 15px;
-                height: 15px;
-            }
-
-            .profile-name {
-                font-size: 1rem;
-            }
-
-            .profile-role {
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Highlighted headline circles */
-        .highlight-highlighted {
-            position: relative;
-            display: inline-block;
-        }
-
-        .highlight-text {
-            position: relative;
-            z-index: 2;
-            display: inline-block;
-            font-weight: 700;
+        .input-bordered {
+            box-shadow: inset 0 0 0 1px var(--border);
+            width: 100%;
         }
     </style>
 </head>
@@ -498,11 +381,7 @@
             <div class="header-group">
                 <p class="callout">Overweight Men</p>
                 <h1 class="headline">Free Video Training: How I Lost
-                    <span class="highlight-highlighted"><span class="highlight-text"
-                            style="text-decoration: underline; text-decoration-color: #1877F2; text-decoration-thickness: 3px; text-underline-offset: 4px;">15
-                            Pounds</span></span> in <span class="highlight-highlighted"><span class="highlight-text"
-                            style="text-decoration: underline; text-decoration-color: #1877F2; text-decoration-thickness: 3px; text-underline-offset: 4px;">6
-                            Weeks</span></span>
+                    <span class="highlight-highlighted"><span class="highlight-text" style="text-decoration: underline; text-decoration-color: #1877F2; text-decoration-thickness: 3px; text-underline-offset: 4px;"><strong>15 Pounds</strong></span></span> in <span class="highlight-highlighted"><span class="highlight-text" style="text-decoration: underline; text-decoration-color: #1877F2; text-decoration-thickness: 3px; text-underline-offset: 4px;"><strong>6 Weeks</strong></span></span>
                 </h1>
                 <div class="subheadline">In 7 minutes learn the <strong>exact 3 part strategy</strong> I used to
                     <strong>lose 15 pounds</strong>, so you can just copy me.</div>
@@ -510,7 +389,7 @@
 
             <div id="reportImage" class="report-img video-container">
                 <video id="mainVideo" autoplay muted loop playsinline disableRemotePlayback
-                    style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
+                    width="500" height="281" style="width: 100%; height: auto; display: block; object-fit: cover; position: absolute; top: 0; left: 0;">
                     <source src="video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -581,24 +460,23 @@
                         style="display: flex; flex-direction: column; gap: var(--space-2); padding: 20px;">
                         <div style="display: flex; flex-direction: column; gap: var(--space-1);">
                             <input type="email" id="modalEmail" name="email" placeholder="Email *" required
-                                style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px;"
-                                class="pulse-input">
+                                class="pulse-input input-field">
                         </div>
 
                         <div id="modalNameFields" style="display: none; gap: var(--space-2);">
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
                                 <input type="text" id="modalFname" name="fname" placeholder="First Name *" required
-                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                                    class="input-field input-bordered">
                             </div>
                             <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
                                 <input type="text" id="modalLname" name="lname" placeholder="Last Name *" required
-                                    style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border); width: 100%;">
+                                    class="input-field input-bordered">
                             </div>
                         </div>
 
                         <div id="modalPhoneField" style="display: none; flex-direction: column; gap: var(--space-1);">
                             <input type="tel" id="modalPhone" name="phone" placeholder="Phone Number *" required
-                                style="background-color: #f9fafb; padding: 14px; border: none; border-radius: 6px; font-size: 16px; box-shadow: inset 0 0 0 1px var(--border);"
+                                class="input-field input-bordered"
                                 maxlength="17">
                         </div>
 
