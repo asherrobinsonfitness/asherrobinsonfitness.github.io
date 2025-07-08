@@ -667,9 +667,13 @@
                 if (email && validateEmail(email)) {
                     modalNameFields.style.display = 'flex';
                     modalPhoneField.style.display = 'flex';
+                    modalEmail.classList.remove('pulse-input');
+                    modalEmail.classList.add('valid-input');
                 } else {
                     modalNameFields.style.display = 'none';
                     modalPhoneField.style.display = 'none';
+                    modalEmail.classList.remove('valid-input');
+                    modalEmail.classList.add('pulse-input');
                 }
             }
             modalEmail.addEventListener('input', checkModalEmailAndToggleFields);
