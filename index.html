@@ -217,14 +217,35 @@
 
         .mainbtn {
             background-color: var(--primary);
-            color: white;
+            color: #fff;
             border: none;
             padding: 20px 32px;
             border-radius: 6px;
             font-size: 1.35rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            letter-spacing: 0.01em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            box-shadow: 0 0 24px rgba(0, 0, 0, 0.18), inset 0 0 1px rgba(0, 0, 0, 0.32);
+        }
+
+        .mainbtn .mainbtn-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+        }
+
+        .mainbtn .mainbtn-subtext {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #eaf3ff;
+            margin-top: 2px;
+            line-height: 1;
             letter-spacing: 0.01em;
         }
 
@@ -415,7 +436,10 @@
                     </svg>
                 </div>
             </div>
-            <button id="mainCtaBtn" class="mainbtn">Get Intstant Access</button>
+            <button id="mainCtaBtn" class="mainbtn">
+                <span class="mainbtn-text">Get Instant Access</span>
+                <span class="mainbtn-subtext">Yes! I want this free training now!</span>
+            </button>
 
             <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
             <div style="text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
