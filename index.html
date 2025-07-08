@@ -612,7 +612,7 @@
                                 Policy</a>
                         </p>
 
-                        <button type="submit" class="continue">Get free training →</button>
+                        <button type="submit" class="continue">Send my training →</button>
                     </form>
                 </div>
             </div>
@@ -703,6 +703,18 @@
             video.addEventListener('loadedmetadata', updateProgress);
             video.addEventListener('play', updateProgress);
             video.addEventListener('seeked', updateProgress);
+
+            // Modal form submission: redirect with iclosed info
+            document.getElementById('modalEmailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('modalEmail').value;
+                const fname = document.getElementById('modalFname').value;
+                const lname = document.getElementById('modalLname').value;
+                const phone = document.getElementById('modalPhone').value;
+                const fullName = `${fname} ${lname}`;
+                // Redirect to asherrobinsonfitness.com/training with params
+                window.location.href = `https://asherrobinsonfitness.com/training?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(fullName)}&iclosedPhone=${encodeURIComponent(phone.replace(/\D/g, ''))}`;
+            });
         });
     </script>
 </body>
