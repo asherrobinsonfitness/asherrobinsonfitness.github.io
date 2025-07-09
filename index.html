@@ -69,7 +69,6 @@
         }
 
         .container {
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: linear-gradient(135deg, #f8f9fa 0%, #e3eafc 100%);
@@ -97,6 +96,7 @@
             max-width: 500px;
             padding: 0 1.5rem;
             padding: var(--space-6) 0 var(--space-6);
+            margin-top: var(--space-5);
         }
 
         .headline {
@@ -422,6 +422,7 @@
             .content2 {
                 gap: var(--space-4);
                 padding: var(--space-4) 1.25rem var(--space-4);
+                margin-top: var(--space-4);
             }
 
             .headline {
@@ -488,7 +489,6 @@
                 </span>
             </button>
         </div>
-        <hr style="width: 100%; border: 0; height: 1px; background-color: var(--border); margin: 0 auto;">
 
         <div class="content2">
             <div id="reportImage" class="report-img video-container">
@@ -609,7 +609,7 @@
                                 Policy</a>
                         </p>
 
-                        <button type="submit" class="continue"><span class="continue-text">Send my training</span><span class="continue-arrow"><span class="arrow-separator"></span><svg style="transform: rotate(45deg)" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5.83337 6.33301H14.1667M14.1667 6.33301V14.6663M14.1667 6.33301L5.83337 14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                        <button type="submit" class="continue"><span class="continue-text">Watch the training</span><span class="continue-arrow"><span class="arrow-separator"></span><svg style="transform: rotate(45deg)" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5.83337 6.33301H14.1667M14.1667 6.33301V14.6663M14.1667 6.33301L5.83337 14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                     </form>
                 </div>
             </div>
@@ -741,6 +741,121 @@
             video.addEventListener('seeked', updateProgress);
         });
     </script>
+
+<!-- Styled Footer for Compliance -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://iclosed.io/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+    <span class="footer-sep">|</span>
+    <a href="https://iclosed.io/terms/" target="_blank" rel="noopener">Terms of Service</a>
+  </div>
+  <div class="footer-disclaimer">
+    Results may vary. This information is not medical advice. Consult your physician before starting any weight loss program.
+  </div>
+  <div class="footer-fb">
+    This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
+  </div>
+  <div class="footer-contact">
+    Contact: <a href="mailto:your@email.com">your@email.com</a>
+  </div>
+</footer>
+
+<!-- Cookie Notice Banner (hidden by default, shows if not previously accepted) -->
+<div id="cookieNotice" class="cookie-notice">
+  <span>This site uses cookies to improve your experience. By continuing, you agree to my use of cookies. </span>
+  <button id="cookieAcceptBtn" class="cookie-accept">OK</button>
+</div>
+
+<style>
+  .site-footer {
+    background: #222e34;
+    color: #eaf3ff;
+    text-align: center;
+    padding: 2.5rem 1rem 2rem 1rem;
+    font-size: 0.98rem;
+    box-shadow: 0 -2px 16px rgba(0,0,0,0.07);
+  }
+  .site-footer a {
+    color: #eaf3ff;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .site-footer a:hover {
+    color: #7b8a92;
+  }
+  .footer-links {
+    margin-bottom: 0.7em;
+    font-size: 1.05em;
+  }
+  .footer-sep {
+    color: #7b8a92;
+    margin: 0 0.5em;
+    opacity: 0.6;
+  }
+  .footer-disclaimer, .footer-fb, .footer-contact {
+    margin-bottom: 0.5em;
+    color: #b6c3ce;
+    font-size: 0.97em;
+    line-height: 1.5;
+  }
+  .footer-contact a {
+    color: #eaf3ff;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  .cookie-notice {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #222e34;
+    color: #eaf3ff;
+    padding: 1.1em 1.5em;
+    font-size: 1em;
+    box-shadow: 0 -2px 16px rgba(0,0,0,0.09);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2em;
+  }
+  .cookie-accept {
+    background: #0068ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1.2em;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    transition: background 0.2s;
+  }
+  .cookie-accept:hover {
+    background: #0050c7;
+  }
+  @media (max-width: 600px) {
+    .site-footer { font-size: 0.93rem; padding: 2rem 0.5rem 1.5rem 0.5rem; }
+    .cookie-notice { font-size: 0.97em; padding: 0.8em 0.5em; }
+  }
+</style>
+
+<script>
+  // Cookie notice logic
+  document.addEventListener('DOMContentLoaded', function () {
+    var cookieNotice = document.getElementById('cookieNotice');
+    var cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
+    if (!localStorage.getItem('cookieAccepted')) {
+      cookieNotice.style.display = 'flex';
+    }
+    cookieAcceptBtn.addEventListener('click', function () {
+      localStorage.setItem('cookieAccepted', 'yes');
+      cookieNotice.style.display = 'none';
+    });
+  });
+</script>
 </body>
 
 </html>
