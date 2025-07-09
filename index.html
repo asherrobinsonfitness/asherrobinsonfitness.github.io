@@ -198,6 +198,30 @@ setTimeout(loadAnalytics, 5000);
         </div>
     </div>
 
+    <!-- ProveSource embed (already async) -->
+    <script>!function(o,i){window.provesrc&&window.console&&console.error&&console.error("ProveSource is included twice in this page."),window.provesrc={dq:[],display:function(){this.dq.push(arguments)}},o._provesrcAsyncInit=function(){window.provesrc.init({apiKey:"YOUR_API_KEY",v:"0.0.4"})};var r=i.createElement("script");r.type="text/javascript",r.async=!0,r["ch"+"ar"+"set"]="UTF-8",r.src="https://cdn.provesrc.com/provesrc.js";var e=i.getElementsByTagName("script")[0];e.parentNode.insertBefore(r,e)}(window,document);</script>
+
+    <!-- Defer location fetch until after page load -->
+    <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        fetch('https://ipinfo.io/json?token=6e2e2e6e2e2e2e') // Replace with your own token
+          .then(response => response.json())
+          .then(data => {
+            if (window.provesrc && window.provesrc.display) {
+              window.provesrc.display('event', {
+                name: 'location_captured',
+                data: {
+                  city: data.city,
+                  country: data.country
+                }
+              });
+            }
+          });
+      }, 1000); // 1 second after load, adjust as needed
+    });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Modal functionality
