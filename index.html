@@ -96,6 +96,7 @@
             width: 100%;
             max-width: 500px;
             padding: 0 1.5rem;
+            padding: var(--space-6) 0 var(--space-6);
         }
 
         .headline {
@@ -248,6 +249,16 @@
             font-size: 1.2em;
             display: flex;
             align-items: center;
+            position: relative;
+        }
+        .continue .arrow-separator {
+            display: inline-block;
+            width: 1px;
+            height: 24px;
+            background: #f8f9fa;
+            margin-right: 0.7em;
+            margin-left: 0.7em;
+            opacity: 0.5;
         }
         .continue .continue-arrow svg {
             display: block;
@@ -256,7 +267,6 @@
         }
 
         #mainCtaBtn {
-            width: 240px;
             align-self: center;
         }
 
@@ -473,6 +483,7 @@
             <button id="mainCtaBtn" class="continue">
                 <span class="continue-text">Get instant access</span>
                 <span class="continue-arrow">
+                    <span class="arrow-separator"></span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5.83337 6.33301H14.1667M14.1667 6.33301V14.6663M14.1667 6.33301L5.83337 14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
             </button>
@@ -598,7 +609,7 @@
                                 Policy</a>
                         </p>
 
-                        <button type="submit" class="continue"><span class="continue-text">Send my training</span><span class="continue-arrow" style="transform: rotate(45deg)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5.83337 6.33301H14.1667M14.1667 6.33301V14.6663M14.1667 6.33301L5.83337 14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                        <button type="submit" class="continue"><span class="continue-text">Send my training</span><span class="continue-arrow"><span class="arrow-separator"></span><svg style="transform: rotate(45deg)" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none"><path d="M5.83337 6.33301H14.1667M14.1667 6.33301V14.6663M14.1667 6.33301L5.83337 14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
                     </form>
                 </div>
             </div>
