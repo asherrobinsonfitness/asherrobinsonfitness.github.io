@@ -56,6 +56,7 @@
   top: 14px;
   left: 0;
   pointer-events: none;
+  transition: left 0.05s linear;
 }
 
 @media (max-width: 600px) {
@@ -73,11 +74,7 @@
       <div class="progress-bar-track">
         <div class="progress-bar-fill"></div>
       </div>
-      <div class="progress-bar-arrow-under" style="position: absolute; top: 14px; left: 0; pointer-events: none;">
-        <svg width="18" height="12" viewBox="0 0 18 12" style="display: block; transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="9,10 2,0 16,0" fill="#888"/>
-        </svg>
-      </div>
+      <!-- Arrow removed -->
     </div>
     <div class="progress-bar-thumb" style="background: none; box-shadow: none; width: 20px; height: 30px; padding: 0; display: flex; align-items: center; justify-content: center; flex: 0 0 auto;">
       <svg viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="30"><rect width="20" height="30" rx="4" fill="rgba(214, 215, 215, 1)"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 12.5C12.5 13.8807 11.3807 15 10 15C8.61929 15 7.5 13.8807 7.5 12.5C7.5 11.1193 8.61929 10 10 10C11.3807 10 12.5 11.1193 12.5 12.5ZM10 15C7.2385 15 5 17.2386 5 20H15C15 17.2386 12.7614 15 10 15Z" fill="rgba(182, 183, 184, 1)"></path></svg>
@@ -87,22 +84,9 @@
 <script>
 window.onload = function() {
   var fill = document.querySelector('.progress-bar-fill');
-  var arrow = document.querySelector('.progress-bar-arrow-under');
-  var track = document.querySelector('.progress-bar-track');
   var targetPercent = 80;
   var duration = 500; // ms
   var start = null;
-  var arrowWidth = 18;
-  var animating = true;
-
-  function updateArrow() {
-    // Always position arrow relative to the track
-    var fillWidth = fill.offsetWidth;
-    var leftPx = fillWidth - arrowWidth / 2;
-    if (leftPx < -arrowWidth / 2) leftPx = -arrowWidth / 2;
-    if (leftPx > track.offsetWidth - arrowWidth) leftPx = track.offsetWidth - arrowWidth / 2;
-    arrow.style.left = leftPx + 'px';
-  }
 
   function animateFill(ts) {
     if (!start) start = ts;
@@ -110,33 +94,15 @@ window.onload = function() {
     var eased = 1 - Math.pow(1 - progress, 4);
     var currentPercent = eased * targetPercent;
     fill.style.width = currentPercent + '%';
-    updateArrow();
     if (progress < 1) {
       requestAnimationFrame(animateFill);
     } else {
       fill.style.width = targetPercent + '%';
-      updateArrow();
-      animating = false;
     }
   }
-
-  function continuousArrowSync() {
-    updateArrow();
-    if (animating) {
-      requestAnimationFrame(continuousArrowSync);
-    }
-  }
-
-  window.addEventListener('resize', updateArrow);
-  window.addEventListener('scroll', updateArrow);
-
-  // Set initial position
-  updateArrow();
 
   setTimeout(function() {
-    animating = true;
     requestAnimationFrame(animateFill);
-    requestAnimationFrame(continuousArrowSync);
   }, 50);
 };
 </script>
