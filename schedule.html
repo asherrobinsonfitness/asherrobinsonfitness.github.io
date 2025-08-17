@@ -22,25 +22,37 @@
     
     <!-- CSS to ensure iClosed widgets and popups appear above ProveSource widget -->
     <style>
-        /* Elevate ALL iClosed elements above ProveSource */
+        /* Main embedded iClosed widget - keep at normal z-index */
         .iclosed-widget,
         .iclosed-widget iframe,
-        .iclosed-widget *,
-        [data-cta-widget],
-        [data-cta-widget] *,
+        .iclosed-widget * {
+            z-index: auto !important;
+            position: static !important;
+        }
+        
+        /* Footer CTA widget and its popups - elevate above ProveSource */
+        [data-cta-widget="CQ4T8rf3-GSO"],
+        [data-cta-widget="CQ4T8rf3-GSO"] *,
+        script[data-cta-widget="CQ4T8rf3-GSO"] + *,
+        script[data-cta-widget="CQ4T8rf3-GSO"] ~ * {
+            z-index: 999999 !important;
+            position: relative !important;
+        }
+        
+        /* Main CTA widget popups - elevate above ProveSource */
+        [data-cta-widget="_F7s4HIkvGJO"] + *,
+        [data-cta-widget="_F7s4HIkvGJO"] ~ *,
         .iclosed-confirmation,
         .iclosed-success,
         .iclosed-thank-you,
         .iclosed-popup,
         .iclosed-modal,
-        .iclosed-overlay,
-        .iclosed-cta,
-        .iclosed-button {
+        .iclosed-overlay {
             z-index: 999999 !important;
             position: relative !important;
         }
         
-        /* Target ProveSource widget specifically to ensure it stays below iClosed */
+        /* Target ProveSource widget specifically to ensure it stays below iClosed popups */
         .provesrc-widget,
         .provesrc-widget *,
         [data-provesrc],
@@ -50,10 +62,12 @@
             z-index: 1000 !important;
         }
         
-        /* Additional specificity for dynamically created elements */
-        div[class*="iclosed"],
-        iframe[src*="iclosed.io"],
-        div[id*="iclosed"] {
+        /* Additional specificity for dynamically created popup elements */
+        div[class*="iclosed-confirmation"],
+        div[class*="iclosed-success"],
+        div[class*="iclosed-thank-you"],
+        div[class*="iclosed-popup"],
+        div[class*="iclosed-modal"] {
             z-index: 999999 !important;
             position: relative !important;
         }
