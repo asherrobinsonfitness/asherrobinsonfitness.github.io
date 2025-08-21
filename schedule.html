@@ -12,39 +12,57 @@
     <link rel="preconnect" href="https://fast.vidalytics.com">
     <link rel="preconnect" href="https://app.iclosed.io">
     <link rel="preconnect" href="https://connect.facebook.net">
-    <style>:root{--space-2:1rem;--space-4:2rem;--space-5:2.5rem;--space-6:3rem;--primary:#06f;--text:#222;--text-secondary:#717171}*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;font-display:swap}body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}.container{display:flex;flex-direction:column;background:linear-gradient(135deg,#f8f9fa 0,#e3eafc 100%);min-height:100vh}.content{margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:var(--space-5);width:100%;max-width:600px;padding:var(--space-6) 1.5rem var(--space-6)}.headline{font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-.015em;color:var(--text);margin-bottom:var(--space-2)}.subheadline{font-size:1.25rem;color:var(--text-secondary);line-height:1.5;letter-spacing:-.005em;max-width:450px;margin:0 auto}.callout{color:var(--text);font-weight:500;font-size:1rem;line-height:1.2;max-width:450px;margin:0 auto;margin-bottom:var(--space-2)}.report-img{width:100%;max-width:600px;margin:0 auto}.video-container{position:relative;width:100%;max-width:600px;height:0;padding-bottom:56.25%;overflow:hidden;border-radius:8px;background:#000;margin:0 auto}.continue{background-color:var(--primary);color:#fff;border:none;padding:14px 20px;border-radius:6px;font-weight:600;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:.5em;width:100%}.continue .continue-text{flex:1 1 auto;text-align:left}.continue .continue-arrow{flex:0 0 auto;margin-left:.5em;font-size:1.2em;display:flex;align-items:center;position:relative}.continue .continue-arrow svg{display:block;width:20px;height:21px}#mainCtaBtn{align-self:center}/* Ensure iClosed widget appears above everything */[data-url*="iclosed.io"],.iclosed-widget,.iclosed-confirmation,.iclosed-success,.iclosed-thank-you,.iclosed-popup,.iclosed-modal{z-index:999999 !important;position:relative !important}/* Target any iClosed related elements that might be dynamically added */[class*="iclosed"],[id*="iclosed"]{z-index:999999 !important;position:relative !important}@media (max-width:768px){.content{gap:var(--space-4);padding:var(--space-4) 1.25rem var(--space-4)}.headline{font-size:1.875rem}.subheadline{font-size:1rem}.callout{font-size:.875rem}}
+    <style>:root{--space-2:1rem;--space-4:2rem;--space-5:2.5rem;--space-6:3rem;--primary:#06f;--text:#222;--text-secondary:#717171}*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;font-display:swap}body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}.container{display:flex;flex-direction:column;background:linear-gradient(135deg,#f8f9fa 0,#e3eafc 100%);min-height:100vh}.content{margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:var(--space-5);width:100%;max-width:600px;padding:var(--space-6) 1.5rem var(--space-6)}.headline{font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-.015em;color:var(--text);margin-bottom:var(--space-2)}.subheadline{font-size:1.25rem;color:var(--text-secondary);line-height:1.5;letter-spacing:-.005em;max-width:450px;margin:0 auto}</style>
+    <script async>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1575468926630270');fbq('track','PageView');window.addEventListener('DOMContentLoaded',function(){const e=new URLSearchParams(window.location.search),t=e.get('iclosedEmail'),n=e.get('iclosedName'),o=e.get('iclosedPhone');let a='',i='';if(n){const e=n.split(' ');a=e[0]||'',i=e.slice(1).join(' ')||''}function c(e){const t=`; ${document.cookie}`,n=t.split(`; ${e}=`);if(2===n.length)return n.pop().split(';').shift();return null}window.fbq&&fbq('track','ViewContent',{content_name:'Training Video',content_type:'video',value:20,currency:'USD',em:t?t.toLowerCase():void 0,fn:a?a.toLowerCase():void 0,ln:i?i.toLowerCase():void 0,ph:o||void 0,external_id:t?btoa(t).substring(0,12):void 0,fbc:c('_fbc'),fbp:c('_fbp'),event_source_url:window.location.href,event_id:'view_training_'+Date.now().toString()});setTimeout(function(){window.fbq&&fbq('trackCustom','VideoEngagement',{milestone:'50_percent',content_name:'Training Video',value:30,currency:'USD',event_source_url:window.location.href,event_id:'video_50_'+Date.now().toString()})},12e4);setTimeout(function(){window.fbq&&fbq('trackCustom','VideoEngagement',{milestone:'95_percent',content_name:'Training Video',value:40,currency:'USD',event_source_url:window.location.href,event_id:'video_95_'+Date.now().toString()})},228e3)});</script>
+    <noscript><img height=1 src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
+            style=display:none width=1 loading="lazy"></noscript>
+    <style media="print" onload="this.media='all'">
+        :root{--space-2:1rem;--space-4:2rem;--space-5:2.5rem;--space-6:3rem;--primary:#06f;--text:#222;--text-secondary:#717171}*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;font-display:swap}body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}.container{display:flex;flex-direction:column;background:linear-gradient(135deg,#f8f9fa 0,#e3eafc 100%);min-height:100vh}.content{margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:var(--space-5);width:100%;max-width:600px;padding:var(--space-6) 1.5rem var(--space-6)}.headline{font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-.015em;color:var(--text);margin-bottom:var(--space-2)}.subheadline{font-size:1.25rem;color:var(--text-secondary);line-height:1.5;letter-spacing:-.005em;max-width:450px;margin:0 auto}.callout{color:var(--text);font-weight:500;font-size:1rem;line-height:1.2;max-width:450px;margin:0 auto;margin-bottom:var(--space-2);display:flex;flex-direction:row;align-items:center;justify-content:center;gap:2px}.report-img{width:100%;max-width:600px;margin:0 auto}.video-container{position:relative;width:100%;max-width:600px;height:0;padding-bottom:56.25%;overflow:hidden;border-radius:8px;background:#000;margin:0 auto}.continue{background-color:var(--primary);color:#fff;border:none;padding:14px 20px;border-radius:6px;font-weight:600;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:.5em;width:100%}.continue .continue-text{flex:1 1 auto;text-align:left}.continue .continue-arrow{flex:0 0 auto;margin-left:.5em;font-size:1.2em;display:flex;align-items:center;position:relative}.continue .arrow-separator{display:inline-block;width:1px;height:24px;background:#f8f9fa;margin-right:.7em;margin-left:.7em;opacity:.5}.continue .continue-arrow svg{display:block;width:20px;height:21px}#mainCtaBtn{align-self:center}@media (max-width:768px){.content{gap:var(--space-4);padding:var(--space-4) 1.25rem var(--space-4)}.headline{font-size:1.875rem}.subheadline{font-size:1rem}.callout{font-size:.875rem}}
     </style>
+
+    <!-- CSS to ensure iClosed widget appears above ProveSource widget -->
     <style>
-        /* Force ONLY the main iClosed widget to appear above ProveSource */
-        .iclosed-widget[data-url*="iclosed.io"] {
+        /* Ensure iClosed widget and its popups appear above everything */
+        .lift,
+        .lift iframe,
+        .lift *, {
             z-index: 999999 !important;
             position: relative !important;
         }
-        
-        /* Target iClosed popup/confirmation elements that appear when widget is used */
-        .iclosed-confirmation,
-        .iclosed-success,
-        .iclosed-thank-you,
-        .iclosed-popup,
-        .iclosed-modal {
-            z-index: 999999 !important;
-            position: relative !important;
-        }
-        
-        /* Ensure ProveSource widget stays below iClosed */
-        [class*="provesrc"],
-        [id*="provesrc"],
+
+        /* Target ProveSource widget specifically to ensure it stays below */
         .provesrc-widget,
-        .provesrc-popup {
+        .provesrc-widget *,
+        [data-provesrc],
+        [data-provesrc] *,
+        .provesrc-popup,
+        .provesrc-modal {
             z-index: 1 !important;
         }
+
+        /* Additional specificity for any dynamically created elements */
+        iframe[src*="https://app.iclosed.io/assets/widget.js"],
+        div[class*="lift"],
+        div[id*="lift"] {
+            z-index: 999999 !important;
+            position: relative !important;
+        }
     </style>
+
     <div class=container>
         <div class=content id=mainContent>
             <div class=header-group>
+                <p class=callout style="font-weight:700;text-transform:uppercase;"><span
+                    style=display:flex;justify-content:center;align-items:center;height:1rem;overflow:visible>
+                    <img src="https://img-pull.b-cdn.net/003281ba7c21433796898f69f119dc0669518c04405041fe8550eb5e91c21567-sm.jpg" alt="Profile 1" style="width:2em;height:2em;border-radius:50%;object-fit:cover;margin-right:-0.5em;border:2px solid #f8f9fa;">
+                    <img src="https://img-pull.b-cdn.net/3af0d31a386344bbaa6a5d6ba10dc939c1b1cfa9f7cc469e88732cf3661ca419-sm.jpg" alt="Profile 2" style="width:2em;height:2em;border-radius:50%;object-fit:cover;margin-right:-0.5em;border:2px solid #f8f9fa;">
+                    <img src="https://img-pull.b-cdn.net/79e521d3cafb4654a5b80bf187619634d1e8259c276d4229a36c5afed12869ca-sm.jpg" alt="Profile 3" style="width:2em;height:2em;border-radius:50%;object-fit:cover;margin-right:-0.5em;border:2px solid #f8f9fa;">
+                    <img src="https://img-pull.b-cdn.net/b15899ede0fd487585294996bac099efc667bde160d54d2b9af5f564256b123d-sm.jpg" alt="Profile 4" style="width:2em;height:2em;border-radius:50%;object-fit:cover;margin-right:-0.5em;border:2px solid #f8f9fa;">
+                    <img src="https://img-pull.b-cdn.net/d1292cba78ed409981703eb1cc3cd7946e18464400034f4db23aecb303350309-sm.jpg" alt="Profile 5" style="width:2em;height:2em;border-radius:50%;object-fit:cover;border:2px solid #f8f9fa;">
+                    </span>Trusted by 98+ men</p>
                 <h1 class=headline>Almost Done! Last Step!!</h1>
-                <p class=subheadline>Watch the video, then schedule your orientation below to claim your spot. (Only 5
-                    spots left.)
+                <p class=subheadline>Watch the video, then schedule your Discovery Call below to claim your spot.
+
             </div>
             <div class="report-img video-container" id=wistia-lazy-container>
                 <div style=width:100%;position:relative;padding-top:56.25% id=vidalytics_embed_Lpdj55HEUfqQVzMF></div>
@@ -67,6 +85,6 @@
                     style=color:#888;text-decoration:underline>Terms</a>  |  <a href=https://iclosed.io/privacy-policy/
                     style=color:#888;text-decoration:underline>Privacy Policy</a></div>
         </footer>
-        <script async data-cta-widget=CQ4T8rf3-GSO src=https://app.iclosed.io/assets/widget.js></script>
+        <script async class=lift id="lift" data-cta-widget=CQ4T8rf3-GSO src=https://app.iclosed.io/assets/widget.js></script>
         <script async>!function(t,e,n,s,c,a,r){t[n]=t[n]||function(){(t[n].q=t[n].q||[]).push(arguments)},(a=e.createElement(s)).async=1,a.src="https://www.clarity.ms/tag/sfyqsuskz2",(r=e.getElementsByTagName(s)[0]).parentNode.insertBefore(a,r)}(window,document,"clarity","script")</script>
             <!-- Start of Async ProveSource Code --><script>!function(o,i){window.provesrc&&window.console&&console.error&&console.error("ProveSource is included twice in this page."),window.provesrc={dq:[],display:function(){this.dq.push(arguments)}},o._provesrcAsyncInit=function(){window.provesrc.init({apiKey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2NjRmYzNmYTFkOWYyMTZhNGRlZmQyZTciLCJpYXQiOjE3MTY1MDM1NDZ9.jRcGK4FkASOl5Ta_8ksIt4mc7OpbW39_Pg_YRjP_tpU",v:"0.0.4"})};var r=i.createElement("script");r.type="text/javascript",r.async=!0,r["ch"+"ar"+"set"]="UTF-8",r.src="https://cdn.provesrc.com/provesrc.js";var e=i.getElementsByTagName("script")[0];e.parentNode.insertBefore(r,e)}(window,document);</script><!-- End of Async ProveSource Code -->
