@@ -393,14 +393,18 @@
                         </div>
                         <div style=display:flex;flex-direction:column;gap:var(--space-1)><input
                                 class="input-field input-bordered" id=modalEmail placeholder="Email *" required
-                                type=email></div><button class=continue
-                            style=width:100%;display:flex;justify-content:center;align-items:center
-                            type=submit>Submit</button>
-                        <p style=font-size:11px;color:var(--text);text-align:left>By submitting, I agree to <a
+                                type=email></div>
+                        <div style=display:flex;align-items:flex-start;gap:8px>
+                            <input type="checkbox" id="modalAgreement" required style="margin-top:2px;min-width:16px;height:16px;cursor:pointer;background-color:#f9fafb;border:none;border-radius:6px;box-shadow:inset 0 0 0 1px var(--border);appearance:none;-webkit-appearance:none;position:relative;">
+                            <label for="modalAgreement" style=font-size:11px;color:var(--text);text-align:left;cursor:pointer;line-height:1.4;margin:0>By submitting, I agree to <a
                                 href=https://iclosed.io/terms/
                                 style=color:var(--text);font-weight:600;text-decoration:underline>Terms</a> & <a
                                 href=https://iclosed.io/privacy-policy/
-                                style=color:var(--text);font-weight:600;text-decoration:underline>Privacy Policy</a>
+                                style=color:var(--text);font-weight:600;text-decoration:underline>Privacy Policy</a>, and I agree to receive text messages.</label>
+                        </div>
+                        <button class=continue
+                            style=width:100%;display:flex;justify-content:center;align-items:center
+                            type=submit>Submit</button>
                     </form>
                 </div>
             </div>
@@ -449,14 +453,18 @@
                             </div>
                             <div style=display:flex;flex-direction:column;gap:var(--space-1)><input
                                     class="input-field input-bordered" id=customModalEmail placeholder="Email *"
-                                    required type=email></div><button class=continue
-                                style=width:100%;display:flex;justify-content:center;align-items:center
-                                type=submit>Submit</button>
-                            <p style=font-size:11px;color:var(--text);text-align:left>By submitting, I agree to <a
+                                    required type=email></div>
+                            <div style=display:flex;align-items:flex-start;gap:8px;margin-bottom:var(--space-2)>
+                                <input type="checkbox" id="customModalAgreement" required style="margin-top:2px;min-width:16px;height:16px;cursor:pointer;background-color:#f9fafb;border:none;border-radius:6px;box-shadow:inset 0 0 0 1px var(--border);appearance:none;-webkit-appearance:none;position:relative;">
+                                <label for="customModalAgreement" style=font-size:11px;color:var(--text);text-align:left;cursor:pointer;line-height:1.4;margin:0>By submitting, I agree to <a
                                     href=https://iclosed.io/terms/
                                     style=color:var(--text);font-weight:600;text-decoration:underline>Terms</a> & <a
                                     href=https://iclosed.io/privacy-policy/
-                                    style=color:var(--text);font-weight:600;text-decoration:underline>Privacy Policy</a>
+                                    style=color:var(--text);font-weight:600;text-decoration:underline>Privacy Policy</a>, and I agree to receive text messages.</label>
+                            </div>
+                            <button class=continue
+                                style=width:100%;display:flex;justify-content:center;align-items:center
+                                type=submit>Submit</button>
                         </form>
                     </div>
                 </div>
