@@ -612,12 +612,13 @@
                 .limited-widget {
                     width: 100%;
                     max-width: 600px;
-                    padding: 14px 16px;
+                    padding: 16px 16px 10px;
                     border-radius: 8px;
                     background: #fff;
                     border: 1px solid var(--border);
                     color: var(--text);
                     text-align: left;
+                    position: relative;
                 }
                 .limited-row {
                     display: flex;
@@ -628,9 +629,9 @@
                 }
                 .limited-title { font-weight: 700; letter-spacing: .02em; font-size: 1rem; }
                 .limited-meta { background: rgba(0,102,255,.08); color: var(--text); padding: 6px 10px; border-radius: 999px; font-weight: 700; }
-                .spots-bar { position: relative; width: 100%; height: 8px; background: #ebeef7; border-radius: 999px; overflow: hidden; }
-                .spots-fill { position: absolute; left: 0; top: 0; height: 100%; width: 90%; background: var(--primary); border-top-left-radius: 999px; border-bottom-left-radius: 999px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
-                .legend { display: flex; align-items: center; gap: 16px; margin-top: 10px; color: var(--text-secondary); font-size: .875rem; }
+                .spots-bar { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #ebeef7; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; overflow: hidden; }
+                .spots-fill { position: absolute; left: 0; top: 0; height: 100%; width: 90%; background: var(--primary); border-top-left-radius: 8px; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+                .legend { display: flex; align-items: center; gap: 16px; color: var(--text-secondary); font-size: .875rem; }
                 .legend-item { display: flex; align-items: center; gap: 8px; }
                 .legend-dot { width: 8px; height: 8px; border-radius: 999px; background: #d1d7e8; }
                 .legend-dot.taken { background: var(--primary); }
@@ -639,9 +640,7 @@
                 }
             </style>
             <div class="limited-widget" aria-live=polite>
-                <div class=limited-row>
-                    <div class=limited-title>30 limited spots</div>
-                </div>
+                
                 <div class=spots-bar>
                     <div class=spots-fill></div>
                 </div>
