@@ -26,7 +26,7 @@
             <div class=header-group>
 
                 <h1 class=headline>Almost Done! Last Step!!</h1>
-                <p class=subheadline>Watch the video, then schedule your 6-Week Transformation Orientation.
+                <p class=subheadline>Watch the video, then schedule your 6-Week Transformation Orientation. (Only 3 spots left.)
 
             </div>
             <div class="report-img video-container" id=wistia-lazy-container>
@@ -35,6 +35,7 @@
             </div>
             <div class=iclosed-widget data-url=https://app.iclosed.io/e/asherrobinsonfitness/call
                 style=width:100%;height:620px title="Call w/ Asher"></div>
+            <script async data-cta-widget=_F7s4HIkvGJO src=https://app.iclosed.io/assets/widget.js></script>
             <script defer>function loadVideo(){var e=document.getElementById("wistia-lazy-container");e&&e.querySelector("#vidalytics_embed_Lpdj55HEUfqQVzMF iframe")}window.addEventListener("load",loadVideo);</script>
             <script defer>document.addEventListener('DOMContentLoaded',function(){const e=new MutationObserver(function(e){e.forEach(function(e){if('childList'===e.type&&e.addedNodes.length>0){const e=document.querySelectorAll('.iclosed-confirmation, .iclosed-success, .iclosed-thank-you');if(e.length>0){if(window.fbq){const e=new URLSearchParams(window.location.search),t=e.get('iclosedEmail'),n=e.get('iclosedName'),o=e.get('iclosedPhone');let a='',i='';if(n){const e=n.split(' ');a=e[0]||'',i=e.slice(1).join(' ')||''}function c(e){const t=`; ${document.cookie}`,n=t.split(`; ${e}=`);if(2===n.length)return n.pop().split(';').shift();return null}fbq('track','Schedule',{content_name:'6-Week Weight Loss Call',content_category:'Training',value:50,currency:'USD',em:t?t.toLowerCase():void 0,fn:a?a.toLowerCase():void 0,ln:i?i.toLowerCase():void 0,ph:o||void 0,external_id:t?btoa(t).substring(0,12):void 0,fbc:c('_fbc'),fbp:c('_fbp'),event_source_url:window.location.href,event_id:'schedule_training_'+Date.now().toString()})}e.disconnect()}}})});e.observe(document.body,{childList:!0,subtree:!0})});</script>
         </div>
@@ -50,241 +51,52 @@
                     style=color:#888;text-decoration:underline>Privacy Policy</a></div>
         </footer>
         <script>
-            // Ultra-reliable dual widget loading system
-            (function() {
-                let scriptLoaded = false;
-                let loadAttempts = 0;
-                const maxAttempts = 5;
-                const baseDelay = 1000; // 1 second base delay
+            // Enhanced lift widget loading with retry mechanism
+            function loadLiftWidget(retryCount = 0) {
+                const maxRetries = 3;
+                const retryDelay = 2000; // 2 seconds
                 
-                // Strategy 1: Preload the widget script
-                function preloadWidget() {
-                    const link = document.createElement('link');
-                    link.rel = 'preload';
-                    link.as = 'script';
-                    link.href = 'https://app.iclosed.io/assets/widget.js';
-                    link.crossOrigin = 'anonymous';
-                    document.head.appendChild(link);
+                // Remove existing lift widget if it exists
+                const existingLift = document.getElementById('lift');
+                if (existingLift) {
+                    existingLift.remove();
                 }
                 
-                // Strategy 2: Load the iClosed script once and initialize both widgets
-                function loadiClosedScript(retryCount = 0) {
-                    if (scriptLoaded) return;
-                    
-                    loadAttempts++;
-                    console.log('iClosed script load attempt:', loadAttempts);
-                    
-                    // Remove existing scripts if they exist
-                    const existingScripts = document.querySelectorAll('script[src*="app.iclosed.io/assets/widget.js"]');
-                    existingScripts.forEach(script => script.remove());
-                    
-                    // Create new script element
-                    const script = document.createElement('script');
-                    script.src = 'https://app.iclosed.io/assets/widget.js';
-                    script.async = true;
-                    script.crossOrigin = 'anonymous';
-                    
-                    // Add comprehensive error handling
-                    script.onerror = function(error) {
-                        console.warn('iClosed script failed to load, attempt:', retryCount + 1, error);
-                        
-                        if (retryCount < maxAttempts - 1) {
-                            // Progressive delay: 1s, 2s, 4s, 8s
-                            const delay = baseDelay * Math.pow(2, retryCount);
-                            setTimeout(() => {
-                                loadiClosedScript(retryCount + 1);
-                            }, delay);
-                        } else {
-                            console.error('iClosed script failed to load after', maxAttempts, 'attempts');
-                            tryAlternativeLoading();
-                        }
-                    };
-                    
-                    // Add success handler with verification
-                    script.onload = function() {
-                        console.log('iClosed script loaded, initializing widgets...');
-                        
-                        // Initialize both widgets after script loads
+                // Create new script element
+                const script = document.createElement('script');
+                script.className = 'lift';
+                script.id = 'lift';
+                script.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
+                script.src = 'https://app.iclosed.io/assets/widget.js';
+                script.async = true;
+                
+                // Add error handling
+                script.onerror = function() {
+                    console.warn('Lift widget failed to load, attempt:', retryCount + 1);
+                    if (retryCount < maxRetries) {
                         setTimeout(() => {
-                            initializeBothWidgets();
-                        }, 500);
-                    };
-                    
-                    // Append to document
-                    document.head.appendChild(script);
-                }
-                
-                // Strategy 3: Initialize both widgets
-                function initializeBothWidgets() {
-                    console.log('Initializing both widgets...');
-                    
-                    // Initialize scheduling widget (already has the div)
-                    const schedulingWidget = document.querySelector('.iclosed-widget[data-url]');
-                    if (schedulingWidget) {
-                        console.log('Scheduling widget div found');
+                            loadLiftWidget(retryCount + 1);
+                        }, retryDelay * (retryCount + 1)); // Exponential backoff
+                    } else {
+                        console.error('Lift widget failed to load after', maxRetries, 'attempts');
+                        // Optional: Show fallback content or notification
                     }
-                    
-                    // Initialize lift widget
-                    const liftScript = document.createElement('script');
-                    liftScript.className = 'lift';
-                    liftScript.id = 'lift';
-                    liftScript.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
-                    document.head.appendChild(liftScript);
-                    
-                    // Verify both widgets are working
-                    setTimeout(() => {
-                        const hasSchedulingWidget = document.querySelector('.iclosed-widget[data-url]');
-                        const hasLiftWidget = document.querySelector('[data-cta-widget="CQ4T8rf3-GSO"]');
-                        
-                        if (hasSchedulingWidget && hasLiftWidget) {
-                            scriptLoaded = true;
-                            console.log('Both widgets initialized successfully');
-                        } else {
-                            console.warn('Widgets not fully initialized, retrying...');
-                            if (loadAttempts < maxAttempts) {
-                                setTimeout(() => {
-                                    loadiClosedScript(loadAttempts);
-                                }, 2000);
-                            }
-                        }
-                    }, 1000);
-                }
+                };
                 
-                // Strategy 4: Alternative loading methods
-                function tryAlternativeLoading() {
-                    console.log('Trying alternative loading methods...');
-                    
-                    // Method 1: Try loading with defer instead of async
-                    const script = document.createElement('script');
-                    script.src = 'https://app.iclosed.io/assets/widget.js';
-                    script.defer = true;
-                    script.crossOrigin = 'anonymous';
-                    
-                    script.onload = function() {
-                        console.log('Alternative loading method successful');
-                        initializeBothWidgets();
-                    };
-                    
-                    script.onerror = function() {
-                        console.error('Alternative loading also failed');
-                        tryFetchAndEval();
-                    };
-                    
-                    document.head.appendChild(script);
-                }
+                // Add success handler
+                script.onload = function() {
+                    console.log('Lift widget loaded successfully');
+                };
                 
-                // Strategy 5: Fetch and eval as last resort
-                function tryFetchAndEval() {
-                    console.log('Trying fetch and eval method...');
-                    
-                    fetch('https://app.iclosed.io/assets/widget.js', {
-                        method: 'GET',
-                        mode: 'cors',
-                        cache: 'no-cache'
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.text();
-                    })
-                    .then(scriptText => {
-                        // Create script element and execute
-                        const script = document.createElement('script');
-                        script.textContent = scriptText;
-                        document.head.appendChild(script);
-                        
-                        console.log('Fetch and eval method successful');
-                        initializeBothWidgets();
-                    })
-                    .catch(error => {
-                        console.error('All loading methods failed:', error);
-                        showWidgetFallback();
-                    });
-                }
-                
-                // Strategy 6: User notification fallback
-                function showWidgetFallback() {
-                    console.log('Showing widget fallback notification');
-                    const fallback = document.createElement('div');
-                    fallback.style.cssText = `
-                        position: fixed;
-                        bottom: 20px;
-                        right: 20px;
-                        background: #06f;
-                        color: white;
-                        padding: 12px 16px;
-                        border-radius: 6px;
-                        font-size: 14px;
-                        z-index: 10000;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    `;
-                    fallback.innerHTML = 'Widgets loading... Please refresh if needed.';
-                    document.body.appendChild(fallback);
-                    
-                    setTimeout(() => {
-                        if (fallback.parentNode) {
-                            fallback.parentNode.removeChild(fallback);
-                        }
-                    }, 5000);
-                }
-                
-                // Strategy 7: Multiple initialization triggers
-                function initializeWidgets() {
-                    if (scriptLoaded) return;
-                    
-                    // Try loading immediately
-                    loadiClosedScript();
-                    
-                    // Also try after a short delay
-                    setTimeout(() => {
-                        if (!scriptLoaded) {
-                            loadiClosedScript();
-                        }
-                    }, 500);
-                    
-                    // And after page is fully loaded
-                    setTimeout(() => {
-                        if (!scriptLoaded) {
-                            loadiClosedScript();
-                        }
-                    }, 2000);
-                }
-                
-                // Strategy 8: Register service worker for caching
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then(function(registration) {
-                            console.log('Service Worker registered successfully');
-                        })
-                        .catch(function(error) {
-                            console.log('Service Worker registration failed');
-                        });
-                }
-                
-                // Start preloading immediately
-                preloadWidget();
-                
-                // Initialize with multiple triggers
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', initializeWidgets);
-                } else {
-                    initializeWidgets();
-                }
-                
-                // Also try on window load
-                window.addEventListener('load', () => {
-                    if (!scriptLoaded) {
-                        setTimeout(initializeWidgets, 1000);
-                    }
-                });
-                
-                // Periodic check to ensure widgets are still working
-                setInterval(() => {
-                    if (!scriptLoaded && loadAttempts < maxAttempts) {
-                        console.log('Periodic widget check - attempting reload');
-                        loadiClosedScript();
-                    }
-                }, 10000); // Check every 10 seconds
-                
-            })();
+                // Append to document
+                document.head.appendChild(script);
+            }
+            
+            // Load widget when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadLiftWidget);
+            } else {
+                loadLiftWidget();
+            }
         </script>
         <script async>!function(t,e,n,s,c,a,r){t[n]=t[n]||function(){(t[n].q=t[n].q||[]).push(arguments)},(a=e.createElement(s)).async=1,a.src="https://www.clarity.ms/tag/sfyqsuskz2",(r=e.getElementsByTagName(s)[0]).parentNode.insertBefore(a,r)}(window,document,"clarity","script")</script>
