@@ -612,7 +612,7 @@
                 .limited-widget {
                     width: 100%;
                     max-width: 600px;
-                    padding: 28px 16px 10px;
+                    padding: 16px;
                     border-radius: 8px;
                     background: #fff;
                     border: 1px solid var(--border);
@@ -629,7 +629,7 @@
                 }
                 .limited-title { font-weight: 700; letter-spacing: .02em; font-size: 1rem; }
                 .limited-meta { background: rgba(0,102,255,.08); color: var(--text); padding: 6px 10px; border-radius: 999px; font-weight: 700; }
-                .spots-bar { position: absolute; left: 10px; right: 10px; top: 8px; height: 6px; background: #ebeef7; border-radius: 999px; overflow: hidden; }
+                .spots-bar { position: relative; left: auto; right: auto; top: auto; height: 6px; background: #ebeef7; border-radius: 999px; overflow: hidden; margin: 6px 0 10px; }
                 .spots-fill { position: absolute; left: 0; top: 0; height: 100%; width: 90%; background: var(--primary); border-top-left-radius: 999px; border-bottom-left-radius: 999px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
                 .legend { display: flex; align-items: center; gap: 16px; color: var(--text-secondary); font-size: .875rem; }
                 .legend-item { display: flex; align-items: center; gap: 8px; }
@@ -640,7 +640,7 @@
                 }
             </style>
             <div class="limited-widget" aria-live=polite>
-                
+                <div class=limited-title style="margin-bottom:8px;">30 limited spots</div>
                 <div class=spots-bar>
                     <div class=spots-fill></div>
                 </div>
