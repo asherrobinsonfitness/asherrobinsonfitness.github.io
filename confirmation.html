@@ -302,13 +302,22 @@
                 <p class=subheadline>Watch the video below so that you can get the most out of our meeting.
             </div>
             <div class="main-video-container report-img" id=wistia-lazy-container>
-                <div style=width:100%;position:relative;padding-top:56.25% id=vidalytics_embed_Lpdj55HEUfqQVzMF></div>
-                <script
-                    defer>!function (t, a, n, e, d, c, i, o, r) { c = "_" + n.toLowerCase(), o = n + "L", t[n] || (t[n] = {}), t[o] || (t[o] = {}), t[c] || (t[c] = {}); var s = "Loader", l = t[c][s], p = t[o][s + "Script"]; t[o][s + "Loaded"], p || (p = function (e, t) { i ? t() : ((r = a.createElement("script")).type = "text/javascript", r.async = 1, r.src = e, r.readyState ? r.onreadystatechange = function () { "loaded" !== r.readyState && "complete" != r.readyState || (r.onreadystatechange = null, t()) } : r.onload = function () { t() }, a.getElementsByTagName("head")[0].appendChild(r)) }), p(d + "loader.min.js", function () { if (!l) { var e = t[o][s]; l = new e } l.loadScript(d + "player.min.js", function () { var e = t[n].Embed; (i = new e).run("vidalytics_embed_Lpdj55HEUfqQVzMF") }) }) }(window, document, "Vidalytics", 0, "https://fast.vidalytics.com/embeds/swbCvzMu/Lpdj55HEUfqQVzMF/")</script>
+                <div id="vidalytics_embed_zRZjzgyv9CUwdMBX" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+                <script type="text/javascript">
+                    (function (v, i, d, a, l, y, t, c, s) {
+                        y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
+                        if (!vsl){vsl=function(u,cb){
+                            if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
+                            if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
+                            i.getElementsByTagName("head")[0].appendChild(s);
+                        };}
+                        vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
+                    })(window, document, 'Vidalytics', 'vidalytics_embed_zRZjzgyv9CUwdMBX', 'https://fast.vidalytics.com/embeds/swbCvzMu/zRZjzgyv9CUwdMBX/');
+                </script>
             </div>
             <div id="custom-meeting-widget"
                 style="width:100%;background-color:#fff;border-radius:8px;border:1px solid #e0e0e0;padding:16px;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:left;">
-                
+
 
                 <div
                     style="background-color:#e7f7ea;border-radius:6px;padding:6px 12px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;border:1px solid #2e7d32;">
@@ -387,7 +396,7 @@
                 </div>
             </div>
 
-            
+
 
 
         </div>
@@ -482,45 +491,70 @@
                 .video-modal {
                     display: none;
                     position: fixed;
-                    top: 0;
-                    left: 0;
+                    inset: 0;
                     width: 100%;
                     height: 100%;
-                    background-color: rgba(0, 0, 0, .9);
+                    background: rgba(0, 0, 0, .5);
                     z-index: 1000;
-                    align-items: center;
-                    justify-content: center
+                    align-items: flex-end;
+                    justify-content: center;
+                    transition: background .2s ease
                 }
 
                 .video-modal-content {
                     position: relative;
-                    width: 90%;
-                    max-width: 800px
+                    width: 100%;
+                    max-width: 760px;
+                    background: #fff;
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px;
+                    box-shadow: 0 -8px 24px rgba(0, 0, 0, .15)
+                }
+
+                .video-modal-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    padding: 12px 12px 0 12px
+                }
+
+                .video-modal-title {
+                    font-size: 1.375rem;
+                    font-weight: 600;
+                    line-height: 1.2;
+                    color: var(--text);
+                    padding: 12px 16px 8px 16px
                 }
 
                 .video-modal-close {
-                    position: absolute;
-                    top: -40px;
-                    right: 0;
-                    color: #fff;
-                    font-size: 30px;
-                    font-weight: 700;
-                    cursor: pointer
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    background: #f2f2f2;
+                    cursor: pointer;
+                    border: 1px solid #e5e5e5
+                }
+
+                .video-modal-body {
+                    padding: 8px 16px 16px 16px
                 }
 
                 .video-modal iframe {
                     width: 100%;
-                    height: 450px;
-                    border: none
+                    height: auto;
+                    aspect-ratio: 16 / 9;
+                    border: none;
+                    border-radius: 8px;
+                    background: #000;
+                    display: block
                 }
 
                 @media (max-width:768px) {
                     .video-modal-content {
-                        width: 95%
-                    }
-
-                    .video-modal iframe {
-                        height: 56.25vw
+                        width: 100%
                     }
                 }
             </style>
@@ -718,10 +752,22 @@
             </ul>
 
             <div class="video-modal" id="videoModal">
-                <div class="video-modal-content">
-                    <span class="video-modal-close">&times;</span>
-                    <iframe allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-                        allowfullscreen></iframe>
+                <div class="video-modal-content" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+                    <div class="video-modal-header">
+                        <button class="video-modal-close" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <h3 id="videoModalTitle" class="video-modal-title">Question</h3>
+                    <div class="video-modal-body">
+                        <iframe allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+                            allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -730,11 +776,15 @@
                     const modal = document.getElementById('videoModal');
                     const modalIframe = modal.querySelector('iframe');
                     const closeBtn = modal.querySelector('.video-modal-close');
+                    const modalTitle = document.getElementById('videoModalTitle');
                     const faqItems = document.querySelectorAll('.faq-item');
 
                     faqItems.forEach(item => {
                         item.addEventListener('click', function () {
                             const videoSrc = this.getAttribute('data-video');
+                            const questionEl = this.querySelector('.faq-question');
+                            const question = questionEl ? questionEl.textContent : 'FAQ';
+                            modalTitle.textContent = question;
                             modalIframe.src = videoSrc;
                             modal.style.display = 'flex';
                             document.body.style.overflow = 'hidden';
@@ -754,22 +804,52 @@
                             document.body.style.overflow = '';
                         }
                     });
+
+                    window.addEventListener('keydown', function (e) {
+                        if (e.key === 'Escape' && modal.style.display === 'flex') {
+                            modalIframe.src = '';
+                            modal.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
                 });
             </script>
+        </div>
+    </div>
+    <div class=container>
+        <div class=content id=mainContent>
+            <h2 class=section-title>Program Overview</h2>
+
+            <div class="main-video-container report-img" id=wistia-lazy-container>
+                <div id="Lpdj55HEUfqQVzMF" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+                <script type="text/javascript">
+                    (function (v, i, d, a, l, y, t, c, s) {
+                        y = '_' + d.toLowerCase(); if (!v[y]) { v[y] = {} } if (!v[y].embeds) { v[y].embeds = {} }
+                        t = function () { if (v[d] && v[d].Embed) { var ve = v[d].Embed; c = new ve(); c.run(a); c.loadCss(); } else { setTimeout(t, 1000) } }; s = new XMLHttpRequest(); s.open("GET", l + '?ac=' + (new Date()).getTime(), true);
+                        s.onreadystatechange = function () { if (s.readyState == 4) { if ((s.status == 200 || s.status == 304)) { var sd = JSON.parse(s.responseText); v[y].embeds[a] = { type: "video", options: sd }; t(); } } }; s.send();
+                    })(window, document, 'Vidalytics', 'Lpdj55HEUfqQVzMF', 'https://fast.vidalytics.com/embeds/swbCvzMu/Lpdj55HEUfqQVzMF/player.settings.json');
+                </script>
+            </div>
+
         </div>
         <footer
             style="width:100%;max-width:100vw;padding:2rem 1rem 1.5rem 1rem;margin:0 auto 0;box-sizing:border-box;text-align:center;font-size:13px;color:#888;background:0 0">
             <div style=margin-bottom:.5rem>This site is not a part of the Facebook website or Facebook Inc. or Meta
-                Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a
+                Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is
+                a
                 trademark of FACEBOOK, Inc.</div>
             <div style=margin-bottom:.5rem>Results may vary. This site does not offer medical advice. Always consult
                 with a qualified healthcare professional before starting any diet or exercise program.</div>
             <div style=margin-bottom:.5rem><a href=https://iclosed.io/terms/
                     style=color:#888;text-decoration:underline>Terms</a>  |  <a href=https://iclosed.io/privacy-policy/
-                    style=color:#888;text-decoration:underline>Privacy Policy</a></div>
+                    style=color:#888;text-decoration:underline>Privacy
+                    Policy</a></div>
         </footer>
     </div>
-    
+
+
+
+
     <script
         defer>document.addEventListener("DOMContentLoaded", function () { window.addEventListener("error", function (e) { return e.preventDefault(), !0 }), document.cookie = "SameSite=None; Secure" })</script>
     <!-- Microsoft Clarity script removed to prevent data leaks -->
@@ -887,7 +967,7 @@
             if (name) {
                 document.getElementById('guest-name').textContent = name.trim();
                 document.querySelector('.guest-initial').textContent = name.trim().charAt(0).toUpperCase();
-                
+
                 // Update the main headline with first name
                 const firstName = name.trim().split(' ')[0];
                 document.getElementById('main-headline').textContent = firstName + ", You're Scheduled";
@@ -971,119 +1051,119 @@
             }
         </style>
         <script type="text/javascript">
-        
-        // LOL CONFETTI!!!
-        //-----------Var Inits--------------
-        canvas = document.getElementById("confetticanvas");
-        ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        cx = ctx.canvas.width/2;
-        cy = ctx.canvas.height/2;
 
-        let confetti = [];
-        const confettiCount = 300;
-        const gravity = 0.5;
-        const terminalVelocity = 5;
-        const drag = 0.075;
-        const colors = [
-        { front: '#ffbe0b', back: '#fb5607'}, // red
-        { front: '#ff006e', back: '#8338ec'}, // orange
-        { front: '#3a86ff', back: '#5390d9'}
-        ];
-
-        //-----------Functions--------------
-        resizeCanvas = () => {
+            // LOL CONFETTI!!!
+            //-----------Var Inits--------------
+            canvas = document.getElementById("confetticanvas");
+            ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            cx = ctx.canvas.width/2;
-            cy = ctx.canvas.height/2;
-        }
+            cx = ctx.canvas.width / 2;
+            cy = ctx.canvas.height / 2;
 
-        randomRange = (min, max) => Math.random() * (max - min) + min
+            let confetti = [];
+            const confettiCount = 300;
+            const gravity = 0.5;
+            const terminalVelocity = 5;
+            const drag = 0.075;
+            const colors = [
+                { front: '#ffbe0b', back: '#fb5607' }, // red
+                { front: '#ff006e', back: '#8338ec' }, // orange
+                { front: '#3a86ff', back: '#5390d9' }
+            ];
 
-        initConfetti = () => {
-        for (let i = 0; i < confettiCount; i++) {
-            confetti.push({
-            color      : colors[Math.floor(randomRange(0, colors.length))],
-            dimensions : {
-                x: randomRange(10, 20),
-                y: randomRange(10, 30),
-            },
-            position   : {
-                x: randomRange(0, canvas.width),
-                y: canvas.height - 1,
-            },
-            rotation   : randomRange(0, 2 * Math.PI),
-            scale      : {
-                x: 1,
-                y: 1,
-            },
-            velocity   : {
-                x: randomRange(-25, 25),
-                y: randomRange(0, -50),
-            },
+            //-----------Functions--------------
+            resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                cx = ctx.canvas.width / 2;
+                cy = ctx.canvas.height / 2;
+            }
+
+            randomRange = (min, max) => Math.random() * (max - min) + min
+
+            initConfetti = () => {
+                for (let i = 0; i < confettiCount; i++) {
+                    confetti.push({
+                        color: colors[Math.floor(randomRange(0, colors.length))],
+                        dimensions: {
+                            x: randomRange(10, 20),
+                            y: randomRange(10, 30),
+                        },
+                        position: {
+                            x: randomRange(0, canvas.width),
+                            y: canvas.height - 1,
+                        },
+                        rotation: randomRange(0, 2 * Math.PI),
+                        scale: {
+                            x: 1,
+                            y: 1,
+                        },
+                        velocity: {
+                            x: randomRange(-25, 25),
+                            y: randomRange(0, -50),
+                        },
+                    });
+                }
+            }
+
+            //---------Render-----------
+            render = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                confetti.forEach((confetto, index) => {
+                    let width = (confetto.dimensions.x * confetto.scale.x);
+                    let height = (confetto.dimensions.y * confetto.scale.y);
+
+                    // Move canvas to position and rotate
+                    ctx.translate(confetto.position.x, confetto.position.y);
+                    ctx.rotate(confetto.rotation);
+
+                    // Apply forces to velocity
+                    confetto.velocity.x -= confetto.velocity.x * drag;
+                    confetto.velocity.y = Math.min(confetto.velocity.y + gravity, terminalVelocity);
+                    confetto.velocity.x += Math.random() > 0.5 ? Math.random() : -Math.random();
+
+                    // Set position
+                    confetto.position.x += confetto.velocity.x;
+                    confetto.position.y += confetto.velocity.y;
+
+                    // Delete confetti when out of frame
+                    if (confetto.position.y >= canvas.height) confetti.splice(index, 1);
+
+                    // Loop confetto x position
+                    if (confetto.position.x > canvas.width) confetto.position.x = 0;
+                    if (confetto.position.x < 0) confetto.position.x = canvas.width;
+
+                    // Spin confetto by scaling y
+                    confetto.scale.y = Math.cos(confetto.position.y * 0.1);
+                    ctx.fillStyle = confetto.scale.y > 0 ? confetto.color.front : confetto.color.back;
+
+                    // Draw confetti
+                    ctx.fillRect(-width / 2, -height / 2, width, height);
+
+                    // Reset transform matrix
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                });
+
+                // Fire off another round of confetti
+                //   if (confetti.length <= 10) initConfetti();
+
+                window.requestAnimationFrame(render);
+            }
+
+
+
+            //----------Resize----------
+            window.addEventListener('resize', function () {
+                resizeCanvas();
             });
-        }
-        }
 
-        //---------Render-----------
-        render = () => {  
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        confetti.forEach((confetto, index) => {
-            let width = (confetto.dimensions.x * confetto.scale.x);
-            let height = (confetto.dimensions.y * confetto.scale.y);
-            
-            // Move canvas to position and rotate
-            ctx.translate(confetto.position.x, confetto.position.y);
-            ctx.rotate(confetto.rotation);
-            
-            // Apply forces to velocity
-            confetto.velocity.x -= confetto.velocity.x * drag;
-            confetto.velocity.y = Math.min(confetto.velocity.y + gravity, terminalVelocity);
-            confetto.velocity.x += Math.random() > 0.5 ? Math.random() : -Math.random();
-            
-            // Set position
-            confetto.position.x += confetto.velocity.x;
-            confetto.position.y += confetto.velocity.y;
-            
-            // Delete confetti when out of frame
-            if (confetto.position.y >= canvas.height) confetti.splice(index, 1);
-
-            // Loop confetto x position
-            if (confetto.position.x > canvas.width) confetto.position.x = 0;
-            if (confetto.position.x < 0) confetto.position.x = canvas.width;
-
-            // Spin confetto by scaling y
-            confetto.scale.y = Math.cos(confetto.position.y * 0.1);
-            ctx.fillStyle = confetto.scale.y > 0 ? confetto.color.front : confetto.color.back;
-            
-            // Draw confetti
-            ctx.fillRect(-width / 2, -height / 2, width, height);
-            
-            // Reset transform matrix
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-        });
-
-        // Fire off another round of confetti
-        //   if (confetti.length <= 10) initConfetti();
-
-        window.requestAnimationFrame(render);
-        }
-
-
-
-        //----------Resize----------
-        window.addEventListener('resize', function () {
-            resizeCanvas();
-        });
-
-        // Confetti!!
-        setTimeout(function(){ 
-            initConfetti();
-            render();
-        }, 400);
+            // Confetti!!
+            setTimeout(function () {
+                initConfetti();
+                render();
+            }, 400);
 
         </script>
     </div>
