@@ -30,23 +30,23 @@
 
             </div>
             <div class="report-img video-container" id=wistia-lazy-container>
-                <div id="vidalytics_embed_taDFLba4j2wjSxnM" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
-                <script type="text/javascript">
-                (function (v, i, d, a, l, y, t, c, s) {
-                    y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
-                    if (!vsl){vsl=function(u,cb){
-                        if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
-                        if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
-                        i.getElementsByTagName("head")[0].appendChild(s);
-                    };}
-                    vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
-                })(window, document, 'Vidalytics', 'vidalytics_embed_taDFLba4j2wjSxnM', 'https://fast.vidalytics.com/embeds/swbCvzMu/taDFLba4j2wjSxnM/');
-                </script>
+                <div style=width:100%;position:relative;padding-top:56.25% id=vidalytics_embed_Lpdj55HEUfqQVzMF></div>
+                <script async>!function(t,a,n,e,d,c,i,o,r){c="_"+n.toLowerCase(),o=n+"L",t[n]||(t[n]={}),t[o]||(t[o]={}),t[c]||(t[c]={});var s="Loader",l=t[c][s],p=t[o][s+"Script"];t[o][s+"Loaded"],p||(p=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),p(d+"loader.min.js",function(){if(!l){var e=t[o][s];l=new e}l.loadScript(d+"player.min.js",function(){var e=t[n].Embed;(i=new e).run("vidalytics_embed_Lpdj55HEUfqQVzMF")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Lpdj55HEUfqQVzMF/")</script>
+
+
+
+
+
+
+
+
+
+
             </div>
             <div class=iclosed-widget data-url=https://app.iclosed.io/e/asherrobinsonfitness/call
                 style=width:100%;height:620px title="Call w/ Asher"></div>
             <script async data-cta-widget=_F7s4HIkvGJO src=https://app.iclosed.io/assets/widget.js></script>
-            <script defer>function loadVideo(){var e=document.getElementById("wistia-lazy-container");e&&e.querySelector("#vidalytics_embed_taDFLba4j2wjSxnM iframe")}window.addEventListener("load",loadVideo);</script>
+            <script defer>function loadVideo(){var e=document.getElementById("wistia-lazy-container");e&&e.querySelector("#vidalytics_embed_Lpdj55HEUfqQVzMF iframe")}window.addEventListener("load",loadVideo);</script>
             <script defer>document.addEventListener('DOMContentLoaded',function(){const e=new MutationObserver(function(e){e.forEach(function(e){if('childList'===e.type&&e.addedNodes.length>0){const e=document.querySelectorAll('.iclosed-confirmation, .iclosed-success, .iclosed-thank-you');if(e.length>0){if(window.fbq){const e=new URLSearchParams(window.location.search),t=e.get('iclosedEmail'),n=e.get('iclosedName'),o=e.get('iclosedPhone');let a='',i='';if(n){const e=n.split(' ');a=e[0]||'',i=e.slice(1).join(' ')||''}function c(e){const t=`; ${document.cookie}`,n=t.split(`; ${e}=`);if(2===n.length)return n.pop().split(';').shift();return null}fbq('track','Schedule',{content_name:'6-Week Weight Loss Call',content_category:'Training',value:50,currency:'USD',em:t?t.toLowerCase():void 0,fn:a?a.toLowerCase():void 0,ln:i?i.toLowerCase():void 0,ph:o||void 0,external_id:t?btoa(t).substring(0,12):void 0,fbc:c('_fbc'),fbp:c('_fbp'),event_source_url:window.location.href,event_id:'schedule_training_'+Date.now().toString()})}e.disconnect()}}})});e.observe(document.body,{childList:!0,subtree:!0})});</script>
         </div>
         <footer
@@ -65,13 +65,13 @@
             function loadLiftWidget(retryCount = 0) {
                 const maxRetries = 3;
                 const retryDelay = 2000; // 2 seconds
-                
+
                 // Remove existing lift widget if it exists
                 const existingLift = document.getElementById('lift');
                 if (existingLift) {
                     existingLift.remove();
                 }
-                
+
                 // Create new script element
                 const script = document.createElement('script');
                 script.className = 'lift';
@@ -79,7 +79,7 @@
                 script.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
                 script.src = 'https://app.iclosed.io/assets/widget.js';
                 script.async = true;
-                
+
                 // Add error handling
                 script.onerror = function() {
                     console.warn('Lift widget failed to load, attempt:', retryCount + 1);
@@ -92,16 +92,16 @@
                         // Optional: Show fallback content or notification
                     }
                 };
-                
+
                 // Add success handler
                 script.onload = function() {
                     console.log('Lift widget loaded successfully');
                 };
-                
+
                 // Append to document
                 document.head.appendChild(script);
             }
-            
+
             // Load widget when DOM is ready
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', loadLiftWidget);
