@@ -292,41 +292,79 @@
         <script
             async>!function (t, e, n, s, c, a, r) { t[n] = t[n] || function () { (t[n].q = t[n].q || []).push(arguments) }, (a = e.createElement(s)).async = 1, a.src = "https://www.clarity.ms/tag/sfyqsuskz2", (r = e.getElementsByTagName(s)[0]).parentNode.insertBefore(a, r) }(window, document, "clarity", "script")</script>
         <script>
+            // iClosed Lift Widget begin
             function loadLiftWidget(retryCount = 0) {
-                const maxRetries = 3;
+                const maxRetries = 5;
                 const retryDelay = 2000; // 2 seconds
 
                 // Remove existing lift widget if it exists
-                const existingLift = document.getElementById('lift');
+                const existingLift = document.getElementById('lift-widget');
                 if (existingLift) {
                     existingLift.remove();
                 }
 
                 // Create new script element
                 const script = document.createElement('script');
-                script.className = 'lift';
-                script.id = 'lift';
-                script.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
+                script.id = 'lift-widget';
+                script.type = 'text/javascript';
                 script.src = 'https://app.iclosed.io/assets/widget.js';
+                script.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
                 script.async = true;
 
-                // Add error handling
+                // Add success handler
+                script.onload = function () {
+                    console.log('Lift widget loaded successfully');
+                };
+
+                // Add error handling with retry
                 script.onerror = function () {
                     console.warn('Lift widget failed to load, attempt:', retryCount + 1);
-                    @@ -92, 16 + 92, 16 @@ <h1 class=headline>Almost Done! Last Step!!</h1>
-                    // Optional: Show fallback content or notification
-                }
-            };
+                    
+                    if (retryCount < maxRetries) {
+                        setTimeout(function() {
+                            loadLiftWidget(retryCount + 1);
+                        }, retryDelay);
+                    } else {
+                        console.error('Lift widget failed to load after', maxRetries, 'attempts');
+                        // Try alternative loading method as fallback
+                        loadLiftWidgetFallback();
+                    }
+                };
 
-            // Add success handler
-            script.onload = function () {
-                console.log('Lift widget loaded successfully');
-            };
+                // Append to document
+                document.head.appendChild(script);
+            }
 
-            // Append to document
-            document.head.appendChild(script);
-        }
+            // Fallback loading method
+            function loadLiftWidgetFallback() {
+                console.log('Attempting fallback lift widget loading...');
+                
+                // Try direct script tag approach
+                const fallbackScript = document.createElement('script');
+                fallbackScript.type = 'text/javascript';
+                fallbackScript.src = 'https://app.iclosed.io/assets/widget.js';
+                fallbackScript.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
+                fallbackScript.async = true;
+                
+                fallbackScript.onload = function() {
+                    console.log('Fallback lift widget loaded successfully');
+                };
+                
+                fallbackScript.onerror = function() {
+                    console.error('Fallback lift widget also failed to load');
+                };
+                
+                document.head.appendChild(fallbackScript);
+            }
 
             // Load widget when DOM is ready
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadLiftWidget);</script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    loadLiftWidget();
+                });
+            } else {
+                // DOM already loaded
+                loadLiftWidget();
+            }
+            // iClosed Lift Widget end
+        </script>
