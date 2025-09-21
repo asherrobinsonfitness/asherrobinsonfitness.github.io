@@ -13,783 +13,46 @@
     <link rel="preconnect" href="https://app.iclosed.io">
     <link rel="preconnect" href="https://connect.facebook.net">
     <link rel="dns-prefetch" href="https://app.iclosed.io">
-    <style>
-        :root {
-            --space-2: 1rem;
-            --space-4: 2rem;
-            --space-5: 2.5rem;
-            --space-6: 3rem;
-            --primary: #06f;
-            --text: #222;
-            --text-secondary: #717171
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-            font-display: swap
-        }
-
-        body {
-            color: var(--text);
-            line-height: 1.5;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, #f8f9fa 0, #e3eafc 100%);
-            min-height: 100vh
-        }
-
-        .content {
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-5);
-            width: 100%;
-            max-width: 600px;
-            padding: var(--space-6) 1.5rem var(--space-6)
-        }
-
-        .headline {
-            font-size: 2.5rem;
-            font-weight: 500;
-            line-height: 1.15;
-            letter-spacing: -.015em;
-            color: var(--text);
-            margin-bottom: var(--space-2)
-        }
-
-        .subheadline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            letter-spacing: -.005em;
-            max-width: 450px;
-            margin: 0 auto
-        }
-    </style>
-    <script
-        async>!function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s) }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1575468926630270'); fbq('track', 'PageView'); window.addEventListener('DOMContentLoaded', function () { const e = new URLSearchParams(window.location.search), t = e.get('iclosedEmail'), n = e.get('iclosedName'), o = e.get('iclosedPhone'); let a = '', i = ''; if (n) { const e = n.split(' '); a = e[0] || '', i = e.slice(1).join(' ') || '' } function c(e) { const t = `; ${document.cookie}`, n = t.split(`; ${e}=`); if (2 === n.length) return n.pop().split(';').shift(); return null } window.fbq && fbq('track', 'ViewContent', { content_name: 'Training Video', content_type: 'video', value: 20, currency: 'USD', em: t ? t.toLowerCase() : void 0, fn: a ? a.toLowerCase() : void 0, ln: i ? i.toLowerCase() : void 0, ph: o || void 0, external_id: t ? btoa(t).substring(0, 12) : void 0, fbc: c('_fbc'), fbp: c('_fbp'), event_source_url: window.location.href, event_id: 'view_training_' + Date.now().toString() }); setTimeout(function () { window.fbq && fbq('trackCustom', 'VideoEngagement', { milestone: '50_percent', content_name: 'Training Video', value: 30, currency: 'USD', event_source_url: window.location.href, event_id: 'video_50_' + Date.now().toString() }) }, 12e4); setTimeout(function () { window.fbq && fbq('trackCustom', 'VideoEngagement', { milestone: '95_percent', content_name: 'Training Video', value: 40, currency: 'USD', event_source_url: window.location.href, event_id: 'video_95_' + Date.now().toString() }) }, 228e3) });</script>
+    <style>:root{--space-2:1rem;--space-4:2rem;--space-5:2.5rem;--space-6:3rem;--primary:#06f;--text:#222;--text-secondary:#717171}*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;font-display:swap}body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}.container{display:flex;flex-direction:column;background:linear-gradient(135deg,#f8f9fa 0,#e3eafc 100%);min-height:100vh}.content{margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:var(--space-5);width:100%;max-width:600px;padding:var(--space-6) 1.5rem var(--space-6)}.headline{font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-.015em;color:var(--text);margin-bottom:var(--space-2)}.subheadline{font-size:1.25rem;color:var(--text-secondary);line-height:1.5;letter-spacing:-.005em;max-width:450px;margin:0 auto}</style>
+    <script async>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1575468926630270');fbq('track','PageView');window.addEventListener('DOMContentLoaded',function(){const e=new URLSearchParams(window.location.search),t=e.get('iclosedEmail'),n=e.get('iclosedName'),o=e.get('iclosedPhone');let a='',i='';if(n){const e=n.split(' ');a=e[0]||'',i=e.slice(1).join(' ')||''}function c(e){const t=`; ${document.cookie}`,n=t.split(`; ${e}=`);if(2===n.length)return n.pop().split(';').shift();return null}window.fbq&&fbq('track','ViewContent',{content_name:'Training Video',content_type:'video',value:20,currency:'USD',em:t?t.toLowerCase():void 0,fn:a?a.toLowerCase():void 0,ln:i?i.toLowerCase():void 0,ph:o||void 0,external_id:t?btoa(t).substring(0,12):void 0,fbc:c('_fbc'),fbp:c('_fbp'),event_source_url:window.location.href,event_id:'view_training_'+Date.now().toString()});setTimeout(function(){window.fbq&&fbq('trackCustom','VideoEngagement',{milestone:'50_percent',content_name:'Training Video',value:30,currency:'USD',event_source_url:window.location.href,event_id:'video_50_'+Date.now().toString()})},12e4);setTimeout(function(){window.fbq&&fbq('trackCustom','VideoEngagement',{milestone:'95_percent',content_name:'Training Video',value:40,currency:'USD',event_source_url:window.location.href,event_id:'video_95_'+Date.now().toString()})},228e3)});</script>
     <noscript><img height=1 src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
             style=display:none width=1 loading="lazy"></noscript>
     <style media="print" onload="this.media='all'">
-        :root {
-            --space-2: 1rem;
-            --space-4: 2rem;
-            --space-5: 2.5rem;
-            --space-6: 3rem;
-            --primary: #06f;
-            --text: #222;
-            --text-secondary: #717171
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-            font-display: swap
-        }
-
-        body {
-            color: var(--text);
-            line-height: 1.5;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, #f8f9fa 0, #e3eafc 100%);
-            min-height: 100vh
-        }
-
-        .content {
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-5);
-            width: 100%;
-            max-width: 600px;
-            padding: var(--space-6) 1.5rem var(--space-6)
-        }
-
-        .headline {
-            font-size: 2.5rem;
-            font-weight: 500;
-            line-height: 1.15;
-            letter-spacing: -.015em;
-            color: var(--text);
-            margin-bottom: var(--space-2)
-        }
-
-        .subheadline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            letter-spacing: -.005em;
-            max-width: 450px;
-            margin: 0 auto
-        }
-
-        .callout {
-            color: var(--text);
-            font-weight: 500;
-            font-size: 1rem;
-            line-height: 1.2;
-            max-width: 450px;
-            margin: 0 auto;
-            margin-bottom: var(--space-2);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            gap: 6px
-        }
-
-        .report-img {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            height: 0;
-            padding-bottom: 56.25%;
-            overflow: hidden;
-            border-radius: 8px;
-            background: #000;
-            margin: 0 auto
-        }
-
-        .continue {
-            background-color: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-align: left;
-            gap: .5em;
-        }
-
-        .continue .continue-text {
-            flex: 1 1 auto;
-            text-align: left
-        }
-
-        .continue .continue-arrow {
-            flex: 0 0 auto;
-            margin-left: .5em;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            position: relative
-        }
-
-        .continue .arrow-separator {
-            display: inline-block;
-            width: 1px;
-            height: 24px;
-            background: #f8f9fa;
-            margin-right: .7em;
-            margin-left: .7em;
-            opacity: .5
-        }
-
-        .continue .continue-arrow svg {
-            display: block;
-            width: 20px;
-            height: 21px
-        }
-
-        #mainCtaBtn {
-            align-self: center
-        }
-
-        @media (max-width:768px) {
-            .content {
-                gap: var(--space-4);
-                padding: var(--space-4) 1.25rem var(--space-4)
-            }
-
-            .headline {
-                font-size: 1.875rem
-            }
-
-            .subheadline {
-                font-size: 1rem
-            }
-
-            .callout {
-                font-size: .875rem
-            }
-        }
+        :root{--space-2:1rem;--space-4:2rem;--space-5:2.5rem;--space-6:3rem;--primary:#06f;--text:#222;--text-secondary:#717171}*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;font-display:swap}body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}.container{display:flex;flex-direction:column;background:linear-gradient(135deg,#f8f9fa 0,#e3eafc 100%);min-height:100vh}.content{margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:var(--space-5);width:100%;max-width:600px;padding:var(--space-6) 1.5rem var(--space-6)}.headline{font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-.015em;color:var(--text);margin-bottom:var(--space-2)}.subheadline{font-size:1.25rem;color:var(--text-secondary);line-height:1.5;letter-spacing:-.005em;max-width:450px;margin:0 auto}.callout{color:var(--text);font-weight:500;font-size:1rem;line-height:1.2;max-width:450px;margin:0 auto;margin-bottom:var(--space-2);display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px}.report-img{width:100%;max-width:600px;margin:0 auto}.video-container{position:relative;width:100%;max-width:600px;height:0;padding-bottom:56.25%;overflow:hidden;border-radius:8px;background:#000;margin:0 auto}.continue{background-color:var(--primary);color:#fff;border:none;padding:14px 20px;border-radius:6px;font-weight:600;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:.5em;width:100%}.continue .continue-text{flex:1 1 auto;text-align:left}.continue .continue-arrow{flex:0 0 auto;margin-left:.5em;font-size:1.2em;display:flex;align-items:center;position:relative}.continue .arrow-separator{display:inline-block;width:1px;height:24px;background:#f8f9fa;margin-right:.7em;margin-left:.7em;opacity:.5}.continue .continue-arrow svg{display:block;width:20px;height:21px}#mainCtaBtn{align-self:center}@media (max-width:768px){.content{gap:var(--space-4);padding:var(--space-4) 1.25rem var(--space-4)}.headline{font-size:1.875rem}.subheadline{font-size:1rem}.callout{font-size:.875rem}}
     </style>
 
     <div class=container>
         <div class=content id=mainContent>
-
             <div class=header-group>
                 <div class="callout" style="font-weight: 700; letter-spacing: .02rem;">MEN AGES 25-40</div>
                 <h1 class=headline>6-Week Full Body Transformation</h1>
-                <p class=subheadline>Lose 12+ pounds in the next 42 days with online personal training. Guaranteed.
+                <p class=subheadline>Lose 12+ pounds in the next 42 days with online personal training or your money back.
 
 
 
             </div>
-            <style>
-                :root {
-                    --space-1: .5rem;
-                    --space-2: 1rem;
-                    --space-3: 1.5rem;
-                    --space-4: 2rem;
-                    --space-5: 2.5rem;
-                    --space-6: 3rem;
-                    --primary: #06f;
-                    --background: #f8f9fa;
-                    --text: #222;
-                    --text-secondary: #717171;
-                    --border: #c1c7cd;
-                    --premium-shadow: 0 8px 32px rgba(0, 0, 0, .18)
-                }
-
-                * {
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif
-                }
-
-                body {
-                    color: var(--text);
-                    line-height: 1.5;
-                    font-size: 16px;
-                    -webkit-font-smoothing: antialiased
-                }
-
-                .container {
-                    display: flex;
-                    flex-direction: column;
-                    background: linear-gradient(135deg, #f8f9fa 0, #e3eafc 100%);
-                    min-height: 100vh
-                }
-
-                .content,
-                .content2 {
-                    margin: 0 auto;
-                    text-align: center;
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-5);
-                    width: 100%;
-                    max-width: 600px;
-                    padding: var(--space-6) 1.5rem var(--space-6)
-                }
-
-                .content2 {
-                    margin: 0 auto var(--space-5)
-                }
-
-                .headline {
-                    font-size: 2.5rem;
-                    font-weight: 500;
-                    line-height: 1.15;
-                    letter-spacing: -.015em;
-                    color: var(--text)
-                }
-
-                .merriweather {
-                    font-family: inherit !important;
-                    text-decoration: none !important
-                }
-
-                .subheadline {
-                    font-size: 1.25rem;
-                    color: var(--text-secondary);
-                    line-height: 1.5;
-                    letter-spacing: -.005em;
-                    max-width: 450px;
-                    margin: 0 auto
-                }
-
-                .callout {
-                    color: var(--text);
-                    font-weight: 500;
-                    font-size: 1rem;
-                    line-height: 1.2;
-                    max-width: 450px;
-                    margin: 0 auto;
-                    margin-bottom: var(--space-2)
-                }
-
-                .report-img {
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 0 auto
-                }
-
-                .video-container {
-                    position: relative;
-                    width: 100%;
-                    max-width: 600px;
-                    height: 0;
-                    padding-bottom: 56.25%;
-                    overflow: hidden;
-                    border-radius: 8px;
-                    background: #000;
-                    margin: 0 auto
-                }
-
-                .continue {
-                    background-color: var(--primary);
-                    color: #fff;
-                    border: none;
-                    padding: 14px 20px;
-                    border-radius: 6px;
-                    font-weight: 600;
-                    font-size: 16px;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    text-align: left;
-                    gap: .5em
-                }
-
-                .continue .continue-text {
-                    flex: 1 1 auto;
-                    text-align: left
-                }
-
-                .continue .continue-arrow {
-                    flex: 0 0 auto;
-                    margin-left: .5em;
-                    font-size: 1.2em;
-                    display: flex;
-                    align-items: center;
-                    position: relative
-                }
-
-                .continue .arrow-separator {
-                    display: inline-block;
-                    width: 1px;
-                    height: 1em;
-                    background: #f8f9fa;
-                    margin-right: .7em;
-                    margin-left: .7em;
-                    opacity: .5;
-                    align-self: center
-                }
-
-                .continue .continue-arrow svg {
-                    display: block;
-                    width: 20px;
-                    height: 21px
-                }
-
-                #mainCtaBtn {
-                    align-self: center
-                }
-
-                .mainbtn {
-                    background-color: var(--primary);
-                    color: #fff;
-                    border: none;
-                    padding: 20px 32px;
-                    border-radius: 6px;
-                    font-size: 1.35rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    letter-spacing: .01em;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    gap: .5rem;
-                    box-shadow: 0 0 24px rgba(0, 0, 0, .18), inset 0 0 1px rgba(0, 0, 0, .32)
-                }
-
-                .mainbtn .mainbtn-text {
-                    font-size: 1.35rem;
-                    font-weight: 700;
-                    line-height: 1;
-                    color: #fff
-                }
-
-                .mainbtn .mainbtn-subtext {
-                    font-size: 1rem;
-                    font-weight: 400;
-                    color: #eaf3ff;
-                    margin-top: 2px;
-                    line-height: 1;
-                    letter-spacing: .01em
-                }
-
-                button[type=submit]:disabled {
-                    cursor: not-allowed
-                }
-
-                .form-wrapper {
-                    width: 100%;
-                    max-width: 450px;
-                    margin: 0 auto;
-                    position: relative
-                }
-
-                .form-title {
-                    color: var(--text);
-                    font-weight: 700;
-                    font-size: 1.125rem;
-                    line-height: 1.2;
-                    padding: 0;
-                    background-color: var(--background);
-                    text-align: center;
-                    margin-bottom: var(--space-1)
-                }
-
-                .form-subtitle {
-                    color: var(--text);
-                    font-size: 1.125rem;
-                    margin-bottom: var(--space-3);
-                    line-height: 1.4;
-                    text-align: center
-                }
-
-                .calendar-wrapper {
-                    width: 100%;
-                    background-color: var(--background)
-                }
-
-                @keyframes pulse-shadow {
-                    0% {
-                        box-shadow: inset 0 0 0 2px #f9fafb
-                    }
-
-                    50% {
-                        box-shadow: inset 0 0 0 2px #06f
-                    }
-
-                    100% {
-                        box-shadow: inset 0 0 0 2px #f9fafb
-                    }
-                }
-
-                .pulse-input {
-                    animation: pulse-shadow 1s infinite;
-                    border: none !important
-                }
-
-                .valid-input {
-                    animation: none;
-                    box-shadow: inset 0 0 0 1px var(--border) !important;
-                    border: none !important
-                }
-
-                .modal-overlay {
-                    display: none;
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, .7);
-                    z-index: 1000;
-                    justify-content: center;
-                    align-items: center;
-                    backdrop-filter: blur(5px);
-                    -webkit-backdrop-filter: blur(5px)
-                }
-
-                .modal-content {
-                    width: 100%;
-                    max-width: 600px;
-                    padding: 0 1.5rem
-                }
-
-                .modal {
-                    background-color: #fff;
-                    border-radius: 8px;
-                    max-width: 600px;
-                    width: 90%;
-                    padding: 20px;
-                    position: relative;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, .15)
-                }
-
-                ::placeholder {
-                    color: var(--text-secondary);
-                    opacity: 1
-                }
-
-                :-ms-input-placeholder {
-                    color: var(--text-secondary)
-                }
-
-                ::-ms-input-placeholder {
-                    color: var(--text-secondary)
-                }
-
-                @media (max-width:768px) {
-
-                    .content,
-                    .content2 {
-                        gap: var(--space-4);
-                        padding: var(--space-4) 1.25rem var(--space-4)
-                    }
-
-                    .content2 {
-                        margin: 0 auto var(--space-4)
-                    }
-
-                    .headline {
-                        font-size: 1.875rem
-                    }
-
-                    .subheadline {
-                        font-size: 1rem
-                    }
-
-                    .callout {
-                        font-size: .875rem
-                    }
-
-                    .form-title {
-                        font-size: 1rem
-                    }
-
-                    .form-subtitle {
-                        font-size: .875rem
-                    }
-
-                    .modal-content {
-                        padding: 0 1.25rem
-                    }
-                }
-
-                .input-field {
-                    background-color: #f9fafb;
-                    padding: 14px;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 16px
-                }
-
-                .input-bordered {
-                    box-shadow: inset 0 0 0 1px var(--border);
-                    width: 100%
-                }
-            </style>
-
-            <div style="width:100%;display:flex;flex-direction:column;align-items:center;">
-                <button class=continue style=width:auto;display:flex;justify-content:center;align-items:center;gap:0;
-                    type=button id=signUpBtn><span class=continue-text>Access the training</span>
-                    <div class=arrow-separator></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" />
-                    </svg>
-                </button>
-            </div>
-
-            <style>
-                .limited-widget {
-                    width: 100%;
-                    max-width: 600px;
-                    padding: 12px 16px;
-                    border-radius: 8px;
-                    background: #fff;
-                    border: 1px solid var(--border);
-                    color: var(--text);
-                    text-align: left;
-                    position: relative;
-                }
-                .limited-row {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 10px;
-                    margin-bottom: 10px;
-                }
-                .limited-title { font-weight: 700; letter-spacing: .02em; font-size: 1rem; }
-                .limited-meta { background: rgba(0,102,255,.08); color: var(--text); padding: 6px 10px; border-radius: 999px; font-weight: 700; }
-                .spots-bar { position: relative; left: auto; right: auto; top: auto; height: 6px; background: #ebeef7; border-radius: 999px; overflow: hidden; margin: 6px 0 10px; }
-                .spots-fill { position: absolute; left: 0; top: 0; height: 100%; width: 90%; background: var(--primary); border-top-left-radius: 999px; border-bottom-left-radius: 999px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
-                .legend { display: flex; align-items: center; gap: 16px; color: var(--text-secondary); font-size: .875rem; }
-                .legend-item { display: flex; align-items: center; gap: 8px; }
-                .legend-dot { width: 8px; height: 8px; border-radius: 999px; background: #d1d7e8; }
-                .legend-dot.taken { background: var(--primary); }
-                @media (max-width:768px){
-                    .limited-title{ font-size: .95rem; }
-                }
-            </style>
-            
-            
             <div class="report-img video-container" id=wistia-lazy-container>
-                <img style=width:100%; cursor:pointer; src="https://img-pull.b-cdn.net/charlie_mulligan_vsl_gif.gif"
-                    id=reportImage></img>
-            </div>
-
-            <ul style="list-style: none; padding: 0; max-width: 600px; text-align: left;">
-                <li style="margin-bottom: 1rem; color: var(--text); display: flex; align-items: stretch;">
-                    <div
-                        style="width: 3px; background: rgba(34,34,34,.25); border-radius: 2px; margin-right: 12px; flex-shrink: 0;">
-                    </div>
-                    <div>
-                        <div style="font-weight:700; margin:0 0 2px 0;">Workouts that fit your life</div>
-                        <div style="color: var(--text-secondary);">Quick 45-min sessions, 3 times a week.</div>
-                    </div>
-                </li>
-                <li style="margin-bottom: 1rem; color: var(--text); display: flex; align-items: stretch;">
-                    <div
-                        style="width: 3px; background: rgba(34,34,34,.25); border-radius: 2px; margin-right: 12px; flex-shrink: 0;">
-                    </div>
-                    <div>
-                        <div style="font-weight:700; margin:0 0 2px 0;">Eat the foods you love</div>
-                        <div style="color: var(--text-secondary);">Yes, you can still have pizza and beer.</div>
-                    </div>
-                </li>
-                <li style="margin-bottom: 1rem; color: var(--text); display: flex; align-items: stretch;">
-                    <div
-                        style="width: 3px; background: rgba(34,34,34,.25); border-radius: 2px; margin-right: 12px; flex-shrink: 0;">
-                    </div>
-                    <div>
-                        <div style="font-weight:700; margin:0 0 2px 0;">Accountability that keeps you going</div>
-                        <div style="color: var(--text-secondary);">How to make sure you stay on track and don’t fall off.
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-            <div style=display:none id=customModalOverlay class=modal-overlay>
-                <div style=display:flex;align-items:center;justify-content:center;height:100vh class=modal-content>
-                    <div style="width:100%;max-width:450px;margin:0 auto;position:relative" class=form-wrapper>
-                        <div style="border:1px solid var(--border);border-radius:8px;background-color:#fff">
-                            <div style=display:flex;align-items:center;justify-content:center;padding:15px>
-                                <div style=display:flex;align-items:center;margin-right:20px>
-                                    <div
-                                        style=width:10px;height:10px;border-radius:50%;background-color:var(--primary);margin-right:10px>
-                                    </div><span style=font-size:.875rem;line-height:1.4;color:var(--text)>Complete the
-                                        form</span>
-                                </div>
-                                <div style=display:flex;align-items:center>
-                                    <div
-                                        style=width:10px;height:10px;border-radius:50%;background-color:#e0e0e0;margin-right:10px>
-                                    </div><span style=font-size:.875rem;line-height:1.4;color:#a0a0a0>Watch the training</span>
-                                </div>
-                            </div>
-                            <hr style="width:100%;border:0;height:1px;background-color:var(--border);margin:0 auto">
-                            <form id=customModalForm
-                                style=display:flex;flex-direction:column;gap:var(--space-2);padding:20px>
-                                <div style=display:flex;flex-direction:column;gap:var(--space-1)
-                                    id=customModalPhoneField><input class="input-field pulse-input" id=customModalPhone
-                                        placeholder="Phone Number *" required type=tel maxlength=17></div>
-                                <div style=display:flex;gap:var(--space-2) id=customModalNameFields>
-                                    <div style=flex:1;display:flex;flex-direction:column;gap:var(--space-1)>
-                                        <input class="input-field input-bordered" id=customModalFname
-                                            placeholder="First Name *" required>
-                                    </div>
-                                    <div style=flex:1;display:flex;flex-direction:column;gap:var(--space-1)>
-                                        <input class="input-field input-bordered" id=customModalLname
-                                            placeholder="Last Name *" required>
-                                    </div>
-                                </div>
-
-                                <div style=display:flex;flex-direction:column;gap:var(--space-1)><input
-                                        class="input-field input-bordered" id=customModalEmail placeholder="Email *"
-                                        required type=email></div>
-                                <div style="display:flex;align-items:flex-start;gap:8px;">
-                                    <input type="checkbox" id="termsCheckbox"
-                                        style="margin-top:2px;flex-shrink:0;width:16px;height:16px;background-color:#f9fafb;border:1px solid var(--border);border-radius:6px;accent-color:var(--primary);">
-                                    <label for="termsCheckbox"
-                                        style="font-size:11px;color:var(--text);text-align:left;margin:0;cursor:pointer;">I
-                                        agree
-                                        to <a href=https://iclosed.io/terms/
-                                            style=color:var(--text);font-weight:600;text-decoration:underline>Terms</a>
-                                        & <a href=https://iclosed.io/privacy-policy/
-                                            style=color:var(--text);font-weight:600;text-decoration:underline>Privacy
-                                            Policy</a> and to receive text messages.</label>
-                                </div>
-                                <button class=continue
-                                    style=width:100%;display:flex;justify-content:center;align-items:center
-                                    type=submit>Submit</button>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script>(function () { var modalOverlay = document.getElementById('customModalOverlay'); function showModal() { modalOverlay.style.display = 'flex' } function hideModal() { modalOverlay.style.display = 'none' } modalOverlay.addEventListener('click', function (e) { var formWrapper = modalOverlay.querySelector('.form-wrapper'); if (!formWrapper.contains(e.target)) hideModal() }); document.addEventListener('mouseleave', function (e) { if (e.clientY <= 0) showModal() }); var reportImage = document.getElementById('reportImage'); if (reportImage) { reportImage.addEventListener('click', showModal) } var signUpBtn = document.getElementById('signUpBtn'); if (signUpBtn) { signUpBtn.addEventListener('click', showModal) } function syncField(source, target) { source.addEventListener('input', function () { if (target.value !== source.value) target.value = source.value }); target.addEventListener('input', function () { if (source.value !== target.value) source.value = target.value }) } var email = document.getElementById('customModalEmail'); var fname = document.getElementById('customModalFname'); var lname = document.getElementById('customModalLname'); var phone = document.getElementById('customModalPhone'); var inlineEmail = document.getElementById('modalEmail'); var inlineFname = document.getElementById('modalFname'); var inlineLname = document.getElementById('modalLname'); var inlinePhone = document.getElementById('modalPhone'); syncField(email, inlineEmail); syncField(fname, inlineFname); syncField(lname, inlineLname); syncField(phone, inlinePhone); function isValidEmail(val) { return /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(val).toLowerCase()) } function updatePhoneAnimation() { if (phone) { var val = phone.value; if (val && val.trim() !== '' && val !== '+1 ') { phone.classList.remove('pulse-input'); phone.classList.add('valid-input'); inlinePhone.classList.remove('pulse-input'); inlinePhone.classList.add('valid-input') } else { phone.classList.remove('valid-input'); phone.classList.add('pulse-input'); inlinePhone.classList.remove('valid-input'); inlinePhone.classList.add('pulse-input') } } } phone.addEventListener('input', updatePhoneAnimation); inlinePhone.addEventListener('input', updatePhoneAnimation); updatePhoneAnimation(); function formatPhoneNumber(input) { var cursorPos = input.selectionStart; var oldVal = input.value; var oldLength = oldVal.length; if (!input.value.startsWith('+1 ')) { input.value = '+1 ' + input.value.replace(/^\+1\s*/, ''); } var digits = input.value.replace(/\D/g, ''); if (digits.startsWith('1') && digits.length > 1) { digits = digits.substring(1); } if (digits.length === 0) { input.value = '+1 '; } else if (digits.length === 1 && digits === '1') { input.value = '+1 '; } else if (digits.length <= 3) { input.value = '+1 (' + digits; } else if (digits.length <= 6) { input.value = '+1 (' + digits.substring(0, 3) + ') ' + digits.substring(3); } else { input.value = '+1 (' + digits.substring(0, 3) + ') ' + digits.substring(3, 6) + '-' + digits.substring(6, 10); } var newLength = input.value.length; var lengthDiff = newLength - oldLength; if (cursorPos < 3) { input.setSelectionRange(3, 3); } else { var newPos = Math.max(3, cursorPos + lengthDiff); input.setSelectionRange(newPos, newPos); } } phone.addEventListener('input', function (e) { var isNearlyEmpty = this.value.length <= 5; var isDeleting = e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward'; if (isDeleting && isNearlyEmpty && this.value.trim() === '+1') { this.value = ''; return; } if (this.value && !this.value.startsWith('+1 ')) { this.value = '+1 ' + this.value.replace(/^\+1\s*/, ''); } if (this.value) { formatPhoneNumber(phone); } }); inlinePhone.addEventListener('input', function (e) { var isNearlyEmpty = this.value.length <= 5; var isDeleting = e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward'; if (isDeleting && isNearlyEmpty && this.value.trim() === '+1') { this.value = ''; return; } if (this.value && !this.value.startsWith('+1 ')) { this.value = '+1 ' + this.value.replace(/^\+1\s*/, ''); } if (this.value) { formatPhoneNumber(inlinePhone); } }); phone.addEventListener('focus', function () { }); inlinePhone.addEventListener('focus', function () { }); phone.addEventListener('keydown', function (e) { if (e.key.length > 1 && e.key !== 'Backspace' && e.key !== 'Delete') return; if (!this.value || this.value.trim() === '') { this.value = '+1 '; this.setSelectionRange(3, 3); } }); inlinePhone.addEventListener('keydown', function (e) { if (e.key.length > 1 && e.key !== 'Backspace' && e.key !== 'Delete') return; if (!this.value || this.value.trim() === '') { this.value = '+1 '; this.setSelectionRange(3, 3); } }); function preventPrefixDeletion(e) { if (!this.value || this.value.trim() === '') { return; } var cursorPos = this.selectionStart; var selectionLength = this.selectionEnd - this.selectionStart; if ((e.key === 'Backspace' || e.key === 'Delete') && (cursorPos <= 3 || (cursorPos <= 3 && selectionLength > 0))) { if (selectionLength === this.value.length) { return; } if (this.value.length > 3) { e.preventDefault(); } } } phone.addEventListener('keydown', preventPrefixDeletion); inlinePhone.addEventListener('keydown', preventPrefixDeletion); function fixPhoneDisplay() { if (!phone.value || phone.value.trim() === '' || phone.value === '+1 ') { phone.value = ''; } else if (phone.value === '+1 (1' || phone.value === '+1 (' || phone.value === '+1 (1)' || phone.value.match(/^\+1\s*\(\s*1?\s*\)?$/)) { phone.value = ''; } if (!inlinePhone.value || inlinePhone.value.trim() === '' || inlinePhone.value === '+1 ') { inlinePhone.value = ''; } else if (inlinePhone.value === '+1 (1' || inlinePhone.value === '+1 (' || inlinePhone.value === '+1 (1)' || inlinePhone.value.match(/^\+1\s*\(\s*1?\s*\)?$/)) { inlinePhone.value = ''; } } phone.addEventListener('blur', fixPhoneDisplay); inlinePhone.addEventListener('blur', fixPhoneDisplay); phone.addEventListener('keyup', fixPhoneDisplay); inlinePhone.addEventListener('keyup', fixPhoneDisplay); setTimeout(fixPhoneDisplay, 100); document.getElementById('customModalForm').addEventListener('submit', function (t) { t.preventDefault(); var email = document.getElementById('customModalEmail').value; var fname = document.getElementById('customModalFname').value; var lname = document.getElementById('customModalLname').value; var phone = document.getElementById('customModalPhone').value.replace(/\D/g, ''); var name = fname + ' ' + lname; if (window.fbq) { fbq('track', 'Lead', { value: 10, currency: 'USD', em: email ? email.toLowerCase() : undefined, fn: fname ? fname.toLowerCase() : undefined, ln: lname ? lname.toLowerCase() : undefined, ph: phone ? phone : undefined, external_id: btoa(email).substring(0, 12), lead_id: Date.now().toString(), fbc: getCookie('_fbc'), fbp: getCookie('_fbp'), subscription_id: 'free_training', event_source_url: window.location.href, event_id: 'lead_' + Date.now().toString() }) } window.location.href = `https://www.asherrobinsonfitness.com/schedule?iclosedEmail=${encodeURIComponent(email)}&iclosedName=${encodeURIComponent(name)}&iclosedPhone=${encodeURIComponent(phone)}` }); function getCookie(name) { const value = `; ${document.cookie}`; const parts = value.split(`; ${name}=`); if (parts.length === 2) return parts.pop().split(';').shift(); return null } })();</script>
-            <script>
-                // Preload schedule page for faster redirect
-                (function () {
-                    var schedulePreloaded = false;
-                    function preloadSchedule() {
-                        if (!schedulePreloaded) {
-                            var link = document.createElement('link');
-                            link.rel = 'prefetch';
-                            link.href = 'https://www.asherrobinsonfitness.com/schedule';
-                            document.head.appendChild(link);
-                            schedulePreloaded = true;
+                <div id="vidalytics_embed_94OYKjFYXxjIdi0d"
+                    style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+                <script type="text/javascript">
+                    (function (v, i, d, a, l, y, t, c, s) {
+                        y = '_' + d.toLowerCase(); c = d + 'L'; if (!v[d]) { v[d] = {}; } if (!v[c]) { v[c] = {}; } if (!v[y]) { v[y] = {}; } var vl = 'Loader', vli = v[y][vl], vsl = v[c][vl + 'Script'], vlf = v[c][vl + 'Loaded'], ve = 'Embed';
+                        if (!vsl) {
+                            vsl = function (u, cb) {
+                                if (t) { cb(); return; } s = i.createElement("script"); s.type = "text/javascript"; s.async = 1; s.src = u;
+                                if (s.readyState) { s.onreadystatechange = function () { if (s.readyState === "loaded" || s.readyState == "complete") { s.onreadystatechange = null; vlf = 1; cb(); } }; } else { s.onload = function () { vlf = 1; cb(); }; }
+                                i.getElementsByTagName("head")[0].appendChild(s);
+                            };
                         }
-                    }
-
-                    // Start preloading when user starts typing in any form field
-                    var fields = ['customModalEmail', 'customModalFname', 'customModalLname', 'customModalPhone'];
-                    fields.forEach(function (fieldId) {
-                        var field = document.getElementById(fieldId);
-                        if (field) {
-                            field.addEventListener('input', preloadSchedule);
-                        }
-                    });
-                })();
-
-                // Debug form submission
-                document.addEventListener('DOMContentLoaded', function () {
-                    var form = document.getElementById('customModalForm');
-                    if (form) {
-                        console.log('Form found:', form);
-                        form.addEventListener('submit', function (e) {
-                            console.log('Form submit event triggered!');
-                            e.preventDefault();
-
-                            var email = document.getElementById('customModalEmail').value;
-                            var fname = document.getElementById('customModalFname').value;
-                            var lname = document.getElementById('customModalLname').value;
-                            var phone = document.getElementById('customModalPhone').value.replace(/\D/g, '');
-                            var name = fname + ' ' + lname;
-
-                            console.log('Form data:', { email, fname, lname, phone, name });
-
-                            var redirectUrl = 'https://www.asherrobinsonfitness.com/schedule?iclosedEmail=' + encodeURIComponent(email) + '&iclosedName=' + encodeURIComponent(name) + '&iclosedPhone=' + encodeURIComponent(phone);
-                            console.log('Redirecting to:', redirectUrl);
-
-                            window.location.href = redirectUrl;
-                        });
-                    } else {
-                        console.log('Form not found!');
-                    }
-                });
-            </script>
-            <script>function loadVideo() { var e = document.getElementById("wistia-lazy-container"); e && e.querySelector("#vidalytics_embed_Lpdj55HEUfqQVzMF iframe") } window.addEventListener("load", loadVideo)</script>
-            <script>!function (t, e, n, s, c, a, r) { t[n] = t[n] || function () { (t[n].q = t[n].q || []).push(arguments) }, (a = e.createElement(s)).async = 1, a.src = "https://www.clarity.ms/tag/sfyqsuskz2", (r = e.getElementsByTagName(s)[0]).parentNode.insertBefore(a, r) }(window, document, "clarity", "script")</script>
+                        vsl(l + 'loader.min.js', function () { if (!vli) { var vlc = v[c][vl]; vli = new vlc(); } vli.loadScript(l + 'player.min.js', function () { var vec = v[d][ve]; t = new vec(); t.run(a); }); });
+                    })(window, document, 'Vidalytics', 'vidalytics_embed_94OYKjFYXxjIdi0d', 'https://fast.vidalytics.com/embeds/swbCvzMu/94OYKjFYXxjIdi0d/');
+                </script>
+            </div>
+            <div class=iclosed-widget data-url=https://app.iclosed.io/e/asherrobinsonfitness/call
+                style=width:100%;height:620px title="Call w/ Asher"></div>
+            <script async data-cta-widget=_F7s4HIkvGJO src=https://app.iclosed.io/assets/widget.js></script>
+            <script defer>function loadVideo(){var e=document.getElementById("wistia-lazy-container");e&&e.querySelector("iframe")}window.addEventListener("load",loadVideo);</script>
+            <script defer>document.addEventListener('DOMContentLoaded',function(){const e=new MutationObserver(function(e){e.forEach(function(e){if('childList'===e.type&&e.addedNodes.length>0){const e=document.querySelectorAll('.iclosed-confirmation, .iclosed-success, .iclosed-thank-you');if(e.length>0){if(window.fbq){const e=new URLSearchParams(window.location.search),t=e.get('iclosedEmail'),n=e.get('iclosedName'),o=e.get('iclosedPhone');let a='',i='';if(n){const e=n.split(' ');a=e[0]||'',i=e.slice(1).join(' ')||''}function c(e){const t=`; ${document.cookie}`,n=t.split(`; ${e}=`);if(2===n.length)return n.pop().split(';').shift();return null}fbq('track','Schedule',{content_name:'6-Week Weight Loss Call',content_category:'Training',value:50,currency:'USD',em:t?t.toLowerCase():void 0,fn:a?a.toLowerCase():void 0,ln:i?i.toLowerCase():void 0,ph:o||void 0,external_id:t?btoa(t).substring(0,12):void 0,fbc:c('_fbc'),fbp:c('_fbp'),event_source_url:window.location.href,event_id:'schedule_training_'+Date.now().toString()})}e.disconnect()}}})});e.observe(document.body,{childList:!0,subtree:!0})});</script>
         </div>
         <footer
             style="width:100%;max-width:100vw;padding:2rem 1rem 1.5rem 1rem;margin:0 auto 0;box-sizing:border-box;text-align:center;font-size:13px;color:#888;background:0 0">
@@ -807,13 +70,13 @@
             function loadLiftWidget(retryCount = 0) {
                 const maxRetries = 3;
                 const retryDelay = 2000; // 2 seconds
-
+                
                 // Remove existing lift widget if it exists
                 const existingLift = document.getElementById('lift');
                 if (existingLift) {
                     existingLift.remove();
                 }
-
+                
                 // Create new script element
                 const script = document.createElement('script');
                 script.className = 'lift';
@@ -821,9 +84,9 @@
                 script.setAttribute('data-cta-widget', 'CQ4T8rf3-GSO');
                 script.src = 'https://app.iclosed.io/assets/widget.js';
                 script.async = true;
-
+                
                 // Add error handling
-                script.onerror = function () {
+                script.onerror = function() {
                     console.warn('Lift widget failed to load, attempt:', retryCount + 1);
                     if (retryCount < maxRetries) {
                         setTimeout(() => {
@@ -834,16 +97,16 @@
                         // Optional: Show fallback content or notification
                     }
                 };
-
+                
                 // Add success handler
-                script.onload = function () {
+                script.onload = function() {
                     console.log('Lift widget loaded successfully');
                 };
-
+                
                 // Append to document
                 document.head.appendChild(script);
             }
-
+            
             // Load widget when DOM is ready
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', loadLiftWidget);
@@ -851,5 +114,4 @@
                 loadLiftWidget();
             }
         </script>
-        <script
-            async>!function (t, e, n, s, c, a, r) { t[n] = t[n] || function () { (t[n].q = t[n].q || []).push(arguments) }, (a = e.createElement(s)).async = 1, a.src = "https://www.clarity.ms/tag/sfyqsuskz2", (r = e.getElementsByTagName(s)[0]).parentNode.insertBefore(a, r) }(window, document, "clarity", "script")</script>
+        <script async>!function(t,e,n,s,c,a,r){t[n]=t[n]||function(){(t[n].q=t[n].q||[]).push(arguments)},(a=e.createElement(s)).async=1,a.src="https://www.clarity.ms/tag/sfyqsuskz2",(r=e.getElementsByTagName(s)[0]).parentNode.insertBefore(a,r)}(window,document,"clarity","script")</script>
