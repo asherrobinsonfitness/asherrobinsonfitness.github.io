@@ -9,7 +9,7 @@
     <meta content="index, follow" name=robots>
     <meta content=upgrade-insecure-requests http-equiv=Content-Security-Policy>
     <meta content="public, max-age=31536000, immutable, stale-while-revalidate=86400" http-equiv=Cache-Control>
-    
+    <link rel="preconnect" href="https://fast.vidalytics.com">
     <link rel="preconnect" href="https://app.iclosed.io">
     <link rel="preconnect" href="https://connect.facebook.net">
     <link rel="dns-prefetch" href="https://app.iclosed.io">
@@ -33,25 +33,27 @@
 
             </div>
             <div class="report-img video-container" id=wistia-lazy-container>
-                <video poster="https://storage.googleapis.com/icons-vs/videos/thumbnails/launch_video_thumbnail.png" playsinline preload="metadata" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
-                    <source src="video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <button type="button" aria-label="Play video" class="vs-video-player-overlay vs-video-player_vs_video_player_overlay__QDFeb" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:transparent;border:0;cursor:pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 276" fill="none" width="72" height="80">
-                        <title>play button</title>
-                        <g filter="url(#filter0_d_583_2831)"><path d="M54.4972 30C46.9605 30 40.0001 36.043 40.0001 44.5033V211.476C39.9887 214.043 40.6602 216.567 41.9456 218.789C43.231 221.01 45.084 222.849 47.3141 224.116C49.5442 225.383 52.0711 226.033 54.6351 225.999C57.1992 225.965 59.7079 225.247 61.9035 223.921L200.969 140.462C203.113 139.175 204.888 137.353 206.12 135.175C207.352 132.997 208 130.536 208 128.033C208 125.53 207.352 123.069 206.12 120.891C204.888 118.713 203.113 116.891 200.969 115.604L61.9143 32.0906C59.6771 30.7331 57.1132 30.0104 54.4972 30Z" fill="white"></path></g>
-                        <defs>
-                            <filter id="filter0_d_583_2831" x="0" y="0" width="248" height="276" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="10"></feOffset><feGaussianBlur stdDeviation="20"></feGaussianBlur><feComposite in2="hardAlpha" operator="out"></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_583_2831"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_583_2831" result="shape"></feBlend></filter>
-                        </defs>
-                    </svg>
-                </button>
+                <div id="vidalytics_embed_94OYKjFYXxjIdi0d"
+                    style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+                <script type="text/javascript">
+                    (function (v, i, d, a, l, y, t, c, s) {
+                        y = '_' + d.toLowerCase(); c = d + 'L'; if (!v[d]) { v[d] = {}; } if (!v[c]) { v[c] = {}; } if (!v[y]) { v[y] = {}; } var vl = 'Loader', vli = v[y][vl], vsl = v[c][vl + 'Script'], vlf = v[c][vl + 'Loaded'], ve = 'Embed';
+                        if (!vsl) {
+                            vsl = function (u, cb) {
+                                if (t) { cb(); return; } s = i.createElement("script"); s.type = "text/javascript"; s.async = 1; s.src = u;
+                                if (s.readyState) { s.onreadystatechange = function () { if (s.readyState === "loaded" || s.readyState == "complete") { s.onreadystatechange = null; vlf = 1; cb(); } }; } else { s.onload = function () { vlf = 1; cb(); }; }
+                                i.getElementsByTagName("head")[0].appendChild(s);
+                            };
+                        }
+                        vsl(l + 'loader.min.js', function () { if (!vli) { var vlc = v[c][vl]; vli = new vlc(); } vli.loadScript(l + 'player.min.js', function () { var vec = v[d][ve]; t = new vec(); t.run(a); }); });
+                    })(window, document, 'Vidalytics', 'vidalytics_embed_94OYKjFYXxjIdi0d', 'https://fast.vidalytics.com/embeds/swbCvzMu/94OYKjFYXxjIdi0d/');
+                </script>
             </div>
-            <script defer>document.addEventListener('DOMContentLoaded',function(){var container=document.getElementById('wistia-lazy-container');if(!container)return;var video=container.querySelector('video');var overlay=container.querySelector('.vs-video-player-overlay');if(!video||!overlay)return;function hideOverlay(){overlay.style.display='none'}function ensureControls(){if(!video.hasAttribute('controls')){video.setAttribute('controls','')}}function playVideo(){ensureControls();video.play();hideOverlay()}overlay.addEventListener('click',playVideo);video.addEventListener('play',hideOverlay);});</script>
             <div class=iclosed-widget data-url=https://app.iclosed.io/e/asherrobinsonfitness/call
                 style=width:100%;height:620px title="Call w/ Asher"></div>
             <script async data-cta-widget=_F7s4HIkvGJO src=https://app.iclosed.io/assets/widget.js></script>
-            
+            <script
+                defer>function loadVideo() { var e = document.getElementById("wistia-lazy-container"); e && e.querySelector("iframe") } window.addEventListener("load", loadVideo);</script>
             <script
                 defer>document.addEventListener('DOMContentLoaded', function () { const e = new MutationObserver(function (e) { e.forEach(function (e) { if ('childList' === e.type && e.addedNodes.length > 0) { const e = document.querySelectorAll('.iclosed-confirmation, .iclosed-success, .iclosed-thank-you'); if (e.length > 0) { if (window.fbq) { const e = new URLSearchParams(window.location.search), t = e.get('iclosedEmail'), n = e.get('iclosedName'), o = e.get('iclosedPhone'); let a = '', i = ''; if (n) { const e = n.split(' '); a = e[0] || '', i = e.slice(1).join(' ') || '' } function c(e) { const t = `; ${document.cookie}`, n = t.split(`; ${e}=`); if (2 === n.length) return n.pop().split(';').shift(); return null } fbq('track', 'Schedule', { content_name: '6-Week Weight Loss Call', content_category: 'Training', value: 50, currency: 'USD', em: t ? t.toLowerCase() : void 0, fn: a ? a.toLowerCase() : void 0, ln: i ? i.toLowerCase() : void 0, ph: o || void 0, external_id: t ? btoa(t).substring(0, 12) : void 0, fbc: c('_fbc'), fbp: c('_fbp'), event_source_url: window.location.href, event_id: 'schedule_training_' + Date.now().toString() }) } e.disconnect() } } }) }); e.observe(document.body, { childList: !0, subtree: !0 }) });</script>
         </div>
