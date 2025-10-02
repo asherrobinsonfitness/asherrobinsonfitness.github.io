@@ -294,6 +294,85 @@
             }
         }
     </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            .container { background: linear-gradient(135deg, #0d0e10 0, #1a1d29 100%) !important; }
+            body, .content, .headline, .callout,
+            h1, h2, h3, h4, h5, h6, p, span, div, a, label, li { color: #F8FAFC !important; }
+            .subheadline, footer, footer * { color: #bfbfbf !important; }
+            
+            /* Make the bottom section with Common Questions pure black */
+            div[style*="background-color:#fff"][style*="display:flex"][style*="flex-direction:column"] {
+                background-color: #000 !important;
+            }
+            
+            /* Dark mode styling for FAQ items */
+            .faq-item {
+                background-color: #1a1a1a !important;
+                border: 1px solid #333 !important;
+            }
+            
+            .faq-question {
+                color: #F8FAFC !important;
+            }
+            
+            .faq-watch {
+                color: #bfbfbf !important;
+            }
+        }
+        
+        /* Ensure the meeting widget is completely unaffected by dark mode */
+        #custom-meeting-widget {
+            background-color: #fff !important;
+            border-color: #e0e0e0 !important;
+        }
+        
+        /* General text elements in widget */
+        #custom-meeting-widget h3,
+        #custom-meeting-widget p:not([style*="color:#4CAF50"]):not([style*="color:#FF9800"]) {
+            color: #000 !important;
+        }
+        
+        /* Material icons in widget */
+        #custom-meeting-widget .material-icons {
+            color: #000 !important;
+        }
+        
+        /* HR separator */
+        #custom-meeting-widget hr {
+            background-color: #e0e0e0 !important;
+        }
+        
+        /* Green confirmation banner - preserve original styling */
+        #custom-meeting-widget > div:first-child {
+            background-color: #e7f7ea !important;
+            border-color: #2e7d32 !important;
+        }
+        
+        #custom-meeting-widget > div:first-child span {
+            color: #2e7d32 !important;
+        }
+        
+        /* Green checkmark on profile pic - preserve original styling */
+        #custom-meeting-widget div[style*="background-color:#4CAF50"] {
+            background-color: #4CAF50 !important;
+        }
+        
+        /* Status colors remain unchanged */
+        #custom-meeting-widget p[style*="color:#4CAF50"] {
+            color: #4CAF50 !important;
+        }
+        
+        #custom-meeting-widget p[style*="color:#FF9800"] {
+            color: #FF9800 !important;
+        }
+        
+        /* Guest profile pic background - preserve original styling */
+        #custom-meeting-widget .guest-initial {
+            background-color: #e0e0e0 !important;
+            color: #757575 !important;
+        }
+    </style>
 
     <div class=container>
         <div class=content id=mainContent>
@@ -419,6 +498,7 @@
                     padding: 0;
                     border-radius: 8px;
                     background-color: #f8f9fa;
+                    border: 1px solid #e0e0e0;
                     cursor: pointer;
                     display: flex;
                     overflow: hidden
@@ -564,7 +644,7 @@
 
             <ul class="faq-list">
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -583,7 +663,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -602,7 +682,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -621,7 +701,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -640,7 +720,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -659,7 +739,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -678,7 +758,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -697,7 +777,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -716,7 +796,7 @@
                 </li>
 
                 <li class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -735,7 +815,7 @@
                 </li>
 
                 <li style="margin-bottom: 0;" class="faq-item"
-                    data-video="https://iframe.mediadelivery.net/embed/465977/787fcad4-eb4c-4492-b2ec-3da7212a770d?autoplay=true">
+                    data-video="videoo.mp4">
                     <div class="faq-thumbnail">
                         <img class="faq-thumbnail-img" loading="lazy"
                             src="https://img-pull.b-cdn.net/man-texting-gym(552).webp" alt="Video thumbnail">
@@ -754,67 +834,55 @@
                 </li>
             </ul>
 
-            <div class="video-modal" id="videoModal">
-                <div class="video-modal-content" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
-                    <div class="video-modal-header">
-                        <button class="video-modal-close" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-                    <h3 id="videoModalTitle" class="video-modal-title">Question</h3>
-                    <div class="video-modal-body">
-                        <iframe allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-                            allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
+            <video id="faqFullscreenVideo" preload="metadata" style="display:none"></video>
 
             <script defer>
                 document.addEventListener('DOMContentLoaded', function () {
-                    const modal = document.getElementById('videoModal');
-                    const modalIframe = modal.querySelector('iframe');
-                    const closeBtn = modal.querySelector('.video-modal-close');
-                    const modalTitle = document.getElementById('videoModalTitle');
                     const faqItems = document.querySelectorAll('.faq-item');
+                    const video = document.getElementById('faqFullscreenVideo');
+
+                    async function playFullscreen() {
+                        try {
+                            if (video.requestFullscreen) await video.requestFullscreen();
+                            else if (video.webkitRequestFullscreen) await video.webkitRequestFullscreen();
+                            else if (video.msRequestFullscreen) await video.msRequestFullscreen();
+                        } catch (e) {
+                            // ignore
+                        }
+                        try { await video.play(); } catch (e) { /* ignore */ }
+                    }
 
                     faqItems.forEach(item => {
                         item.addEventListener('click', function () {
-                            const videoSrc = this.getAttribute('data-video');
-                            const questionEl = this.querySelector('.faq-question');
-                            const question = questionEl ? questionEl.textContent : 'FAQ';
-                            modalTitle.textContent = question;
-                            modalIframe.src = videoSrc;
-                            modal.style.display = 'flex';
-                            document.body.style.overflow = 'hidden';
+                            const src = this.getAttribute('data-video') || 'videoo.mp4';
+                            if (video.src !== src) {
+                                video.pause();
+                                video.removeAttribute('src');
+                                video.load();
+                                video.src = src;
+                            }
+                            video.style.display = 'block';
+                            video.currentTime = 0;
+                            playFullscreen();
                         });
                     });
 
-                    closeBtn.addEventListener('click', function () {
-                        modalIframe.src = '';
-                        modal.style.display = 'none';
-                        document.body.style.overflow = '';
-                    });
-
-                    window.addEventListener('click', function (event) {
-                        if (event.target === modal) {
-                            modalIframe.src = '';
-                            modal.style.display = 'none';
-                            document.body.style.overflow = '';
+                    document.addEventListener('keydown', function (e) {
+                        if (e.key === 'Escape') {
+                            video.pause();
+                            video.style.display = 'none';
                         }
                     });
 
-                    window.addEventListener('keydown', function (e) {
-                        if (e.key === 'Escape' && modal.style.display === 'flex') {
-                            modalIframe.src = '';
-                            modal.style.display = 'none';
-                            document.body.style.overflow = '';
+                    video.addEventListener('ended', function(){
+                        if (document.fullscreenElement || document.webkitFullscreenElement) {
+                            if (document.exitFullscreen) document.exitFullscreen();
+                            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
                         }
+                        video.style.display = 'none';
                     });
+
+                    video.addEventListener('enterpictureinpicture', function(){ video.pause(); });
                 });
             </script>
         </div>
