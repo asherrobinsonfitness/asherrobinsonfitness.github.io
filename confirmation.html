@@ -293,6 +293,16 @@
                 font-size: 1.1rem
             }
         }
+        @media (min-width:1024px) {
+            .content { max-width: 760px; }
+            .subheadline, .callout { max-width: 640px; }
+            .report-img, .main-video-container, .video-container { max-width: 800px; }
+        }
+        @media (min-width:1280px) {
+            .content { max-width: 880px; }
+            .subheadline, .callout { max-width: 72ch; }
+            .report-img, .main-video-container, .video-container { max-width: 960px; }
+        }
     </style>
     <style>
         @media (prefers-color-scheme: dark) {
@@ -640,6 +650,16 @@
                     .video-modal-content {
                         width: 100%
                     }
+                }
+            </style>
+            <style>
+                @media (min-width:1024px) {
+                    .faq-list {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 1.25rem 1.25rem;
+                    }
+                    .faq-item { margin-bottom: 0; }
                 }
             </style>
 
