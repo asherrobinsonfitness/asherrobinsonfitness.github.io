@@ -895,24 +895,6 @@
                     const video = document.getElementById('faqModalVideo');
                     const timelineProgress = modal.querySelector('.faq-video-timeline-progress');
                     let timelineAnimationId = null;
-                    
-                    // Preload all FAQ videos
-                    const videoSources = new Set();
-                    faqItems.forEach(item => {
-                        const src = item.getAttribute('data-video') || 'video.mp4';
-                        videoSources.add(src);
-                    });
-                    
-                    // Create hidden video elements to preload all videos
-                    const preloadVideos = [];
-                    videoSources.forEach(src => {
-                        const preloadVideo = document.createElement('video');
-                        preloadVideo.src = src;
-                        preloadVideo.preload = 'auto';
-                        preloadVideo.style.display = 'none';
-                        document.body.appendChild(preloadVideo);
-                        preloadVideos.push(preloadVideo);
-                    });
 
                     function updateTimeline() {
                         if (video.duration > 0) {
@@ -943,13 +925,13 @@
                         try { video.pause(); } catch(e) {}
                         video.removeAttribute('src');
                         video.load();
-                        // Set source and load
-                        video.src = src;
-                        video.load();
+                        // Append autoplay param for mp4 or streams
+                        const finalSrc = src;
+                        video.src = finalSrc;
                         modal.setAttribute('aria-hidden', 'false');
                         // Reset timeline
                         timelineProgress.style.width = '0%';
-                        // Autoplay attempt - should be instant since video is preloaded
+                        // Autoplay attempt
                         video.currentTime = 0;
                         const playPromise = video.play();
                         if (playPromise && typeof playPromise.then === 'function') {
