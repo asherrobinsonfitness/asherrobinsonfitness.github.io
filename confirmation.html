@@ -863,13 +863,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                     <div class="faq-video-aspect">
-                        <video id="faqModalVideo" playsinline preload="none" loop webkit-playsinline></video>
+                        <video id="faqModalVideo" playsinline preload="metadata" loop></video>
                         <div class="faq-video-timeline">
                             <div class="faq-video-timeline-progress"></div>
-                        </div>
-                        <div id="video-loading-indicator" class="video-loading-indicator" style="display: none;">
-                            <div class="loading-spinner"></div>
-                            <p>Loading video...</p>
                         </div>
                     </div>
                 </div>
@@ -888,50 +884,6 @@
                 @media (max-width: 640px) { .faq-video-close { top:-50px; right:0; } }
                 @media (prefers-color-scheme: dark) { .faq-video-dialog { color:#fff; } }
                 .faq-video-modal[aria-hidden="false"] { display:block; }
-                
-                /* Loading indicator styles */
-                .video-loading-indicator {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    text-align: center;
-                    color: #fff;
-                    z-index: 10;
-                    background: rgba(0, 0, 0, 0.7);
-                    padding: 20px;
-                    border-radius: 8px;
-                    backdrop-filter: blur(4px);
-                }
-                
-                .loading-spinner {
-                    width: 30px;
-                    height: 30px;
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-top: 2px solid #fff;
-                    border-radius: 50%;
-                    animation: spin 0.8s linear infinite;
-                    margin: 0 auto 8px;
-                }
-                
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                
-                /* Mobile-specific optimizations */
-                @media (max-width: 768px) {
-                    .video-loading-indicator {
-                        padding: 15px;
-                        font-size: 14px;
-                    }
-                    
-                    .loading-spinner {
-                        width: 25px;
-                        height: 25px;
-                        border-width: 2px;
-                    }
-                }
             </style>
             <script defer>
                 document.addEventListener('DOMContentLoaded', function () {
@@ -942,106 +894,7 @@
                     const closeBtn = modal.querySelector('.faq-video-close');
                     const video = document.getElementById('faqModalVideo');
                     const timelineProgress = modal.querySelector('.faq-video-timeline-progress');
-                    const loadingIndicator = document.getElementById('video-loading-indicator');
                     let timelineAnimationId = null;
-                    
-                    // Smart mobile-optimized video preloading system
-                    const videoCache = new Map();
-                    const preloadedVideos = new Set();
-                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    const isSlowConnection = navigator.connection && (navigator.connection.effectiveType === 'slow-2g' || navigator.connection.effectiveType === '2g');
-                    
-                    // Only preload on fast connections and desktop
-                    const shouldPreload = !isMobile && !isSlowConnection;
-                    
-                    // Smart preloading function
-                    function smartPreloadVideos() {
-                        if (!shouldPreload) {
-                            console.log('Skipping preload on mobile/slow connection for better performance');
-                            return;
-                        }
-                        
-                        const uniqueVideos = new Set();
-                        faqItems.forEach(item => {
-                            const videoSrc = item.getAttribute('data-video') || 'video.mp4';
-                            uniqueVideos.add(videoSrc);
-                        });
-                        
-                        // Only preload the first video initially
-                        const firstVideo = Array.from(uniqueVideos)[0];
-                        if (firstVideo && !preloadedVideos.has(firstVideo)) {
-                            preloadSingleVideo(firstVideo);
-                        }
-                        
-                        // Preload others after a delay to not overwhelm mobile
-                        setTimeout(() => {
-                            uniqueVideos.forEach((videoSrc, index) => {
-                                if (index > 0) { // Skip first video (already preloaded)
-                                    setTimeout(() => {
-                                        if (!preloadedVideos.has(videoSrc)) {
-                                            preloadSingleVideo(videoSrc);
-                                        }
-                                    }, index * 2000); // 2 second delay between each video
-                                }
-                            });
-                        }, 3000); // Wait 3 seconds before starting additional preloads
-                    }
-                    
-                    function preloadSingleVideo(videoSrc) {
-                        if (preloadedVideos.has(videoSrc)) return;
-                        
-                        preloadedVideos.add(videoSrc);
-                        
-                        // Create a hidden video element for preloading
-                        const preloadVideo = document.createElement('video');
-                        preloadVideo.preload = 'metadata'; // Use metadata instead of auto for faster initial load
-                        preloadVideo.style.display = 'none';
-                        preloadVideo.muted = true;
-                        preloadVideo.src = videoSrc;
-                        
-                        // Store the preloaded video element
-                        videoCache.set(videoSrc, preloadVideo);
-                        
-                        // Add to DOM to start preloading
-                        document.body.appendChild(preloadVideo);
-                        
-                        // Add event listeners
-                        preloadVideo.addEventListener('canplaythrough', () => {
-                            console.log('Video preloaded and ready:', videoSrc);
-                        });
-                        
-                        preloadVideo.addEventListener('error', (e) => {
-                            console.warn('Failed to preload video:', videoSrc, e);
-                        });
-                        
-                        console.log('Preloading video:', videoSrc);
-                    }
-                    
-                    // Start smart preloading
-                    smartPreloadVideos();
-                    
-                    // Mobile-specific: Preload video on hover/touch for instant loading
-                    if (isMobile) {
-                        faqItems.forEach(item => {
-                            const videoSrc = item.getAttribute('data-video') || 'video.mp4';
-                            
-                            // Preload on touch start for instant loading
-                            item.addEventListener('touchstart', function() {
-                                if (!videoCache.has(videoSrc)) {
-                                    console.log('Preloading video on touch:', videoSrc);
-                                    preloadSingleVideo(videoSrc);
-                                }
-                            }, { once: true, passive: true });
-                            
-                            // Also preload on mouse enter (for devices that support both)
-                            item.addEventListener('mouseenter', function() {
-                                if (!videoCache.has(videoSrc)) {
-                                    console.log('Preloading video on hover:', videoSrc);
-                                    preloadSingleVideo(videoSrc);
-                                }
-                            }, { once: true });
-                        });
-                    }
 
                     function updateTimeline() {
                         if (video.duration > 0) {
@@ -1068,85 +921,29 @@
                     }
 
                     function openModalWith(src) {
+                        // Reset source to force reload
+                        try { video.pause(); } catch(e) {}
+                        video.removeAttribute('src');
+                        video.load();
+                        // Append autoplay param for mp4 or streams
+                        const finalSrc = src;
+                        video.src = finalSrc;
                         modal.setAttribute('aria-hidden', 'false');
+                        // Reset timeline
                         timelineProgress.style.width = '0%';
-                        
-                        // Mobile-optimized instant loading
-                        if (isMobile) {
-                            // On mobile, use optimized loading without preload
-                            try { video.pause(); } catch(e) {}
-                            video.src = src;
-                            video.currentTime = 0;
-                            video.preload = 'auto'; // Force preload for this specific video
-                            
-                            // Show loading indicator briefly
-                            loadingIndicator.style.display = 'block';
-                            
-                            // Hide loading indicator when video can play
-                            video.addEventListener('canplay', () => {
-                                loadingIndicator.style.display = 'none';
-                                const playPromise = video.play();
-                                if (playPromise && typeof playPromise.then === 'function') {
-                                    playPromise.then(() => {
-                                        startTimelineAnimation();
-                                    }).catch(() => {/* ignore */});
-                                }
-                            }, { once: true });
-                            
-                            // Fallback timeout for loading indicator
-                            setTimeout(() => {
-                                if (loadingIndicator.style.display !== 'none') {
-                                    loadingIndicator.style.display = 'none';
-                                }
-                            }, 3000);
-                            
-                        } else {
-                            // Desktop: Use preloaded video if available for instant loading
-                            const preloadedVideo = videoCache.get(src);
-                            
-                            if (preloadedVideo && preloadedVideo.readyState >= 3) {
-                                // Video is preloaded and ready to play - instant loading!
-                                try { video.pause(); } catch(e) {}
-                                video.src = src;
-                                video.currentTime = 0;
-                                
-                                // Play immediately since video is preloaded
-                                const playPromise = video.play();
-                                if (playPromise && typeof playPromise.then === 'function') {
-                                    playPromise.then(() => {
-                                        startTimelineAnimation();
-                                    }).catch(() => {/* ignore */});
-                                }
-                            } else {
-                                // Show loading indicator for non-preloaded videos
-                                loadingIndicator.style.display = 'block';
-                                
-                                // Fallback to original loading method
-                                try { video.pause(); } catch(e) {}
-                                video.removeAttribute('src');
-                                video.load();
-                                video.src = src;
-                                video.currentTime = 0;
-                                
-                                // Hide loading indicator when video can play
-                                video.addEventListener('canplay', () => {
-                                    loadingIndicator.style.display = 'none';
-                                }, { once: true });
-                                
-                                const playPromise = video.play();
-                                if (playPromise && typeof playPromise.then === 'function') {
-                                    playPromise.then(() => {
-                                        startTimelineAnimation();
-                                    }).catch(() => {/* ignore */});
-                                }
-                            }
+                        // Autoplay attempt
+                        video.currentTime = 0;
+                        const playPromise = video.play();
+                        if (playPromise && typeof playPromise.then === 'function') {
+                            playPromise.then(() => {
+                                startTimelineAnimation();
+                            }).catch(() => {/* ignore */});
                         }
                     }
 
                     function closeModal() {
                         modal.setAttribute('aria-hidden', 'true');
                         stopTimelineAnimation();
-                        loadingIndicator.style.display = 'none';
                         try { video.pause(); } catch(e) {}
                         video.removeAttribute('src');
                         video.load();
