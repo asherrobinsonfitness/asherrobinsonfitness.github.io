@@ -867,6 +867,10 @@
                         <div class="faq-video-timeline">
                             <div class="faq-video-timeline-progress"></div>
                         </div>
+                        <div id="video-loading-indicator" class="video-loading-indicator" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            <p>Loading video...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -884,6 +888,32 @@
                 @media (max-width: 640px) { .faq-video-close { top:-50px; right:0; } }
                 @media (prefers-color-scheme: dark) { .faq-video-dialog { color:#fff; } }
                 .faq-video-modal[aria-hidden="false"] { display:block; }
+                
+                /* Loading indicator styles */
+                .video-loading-indicator {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    color: #fff;
+                    z-index: 10;
+                }
+                
+                .loading-spinner {
+                    width: 40px;
+                    height: 40px;
+                    border: 3px solid rgba(255, 255, 255, 0.3);
+                    border-top: 3px solid #fff;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto 10px;
+                }
+                
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
             </style>
             <script defer>
                 document.addEventListener('DOMContentLoaded', function () {
@@ -894,7 +924,54 @@
                     const closeBtn = modal.querySelector('.faq-video-close');
                     const video = document.getElementById('faqModalVideo');
                     const timelineProgress = modal.querySelector('.faq-video-timeline-progress');
+                    const loadingIndicator = document.getElementById('video-loading-indicator');
                     let timelineAnimationId = null;
+                    
+                    // Video preloading system
+                    const videoCache = new Map();
+                    const preloadedVideos = new Set();
+                    
+                    // Preload all FAQ videos in the background
+                    function preloadVideos() {
+                        const uniqueVideos = new Set();
+                        faqItems.forEach(item => {
+                            const videoSrc = item.getAttribute('data-video') || 'video.mp4';
+                            uniqueVideos.add(videoSrc);
+                        });
+                        
+                        uniqueVideos.forEach(videoSrc => {
+                            if (!preloadedVideos.has(videoSrc)) {
+                                preloadedVideos.add(videoSrc);
+                                
+                                // Create a hidden video element for preloading
+                                const preloadVideo = document.createElement('video');
+                                preloadVideo.preload = 'auto';
+                                preloadVideo.style.display = 'none';
+                                preloadVideo.muted = true; // Mute for autoplay compatibility
+                                preloadVideo.src = videoSrc;
+                                
+                                // Store the preloaded video element
+                                videoCache.set(videoSrc, preloadVideo);
+                                
+                                // Add to DOM to start preloading
+                                document.body.appendChild(preloadVideo);
+                                
+                                // Add event listeners to track loading progress
+                                preloadVideo.addEventListener('canplaythrough', () => {
+                                    console.log('Video preloaded and ready:', videoSrc);
+                                });
+                                
+                                preloadVideo.addEventListener('error', (e) => {
+                                    console.warn('Failed to preload video:', videoSrc, e);
+                                });
+                                
+                                console.log('Preloading video:', videoSrc);
+                            }
+                        });
+                    }
+                    
+                    // Start preloading immediately
+                    preloadVideos();
 
                     function updateTimeline() {
                         if (video.duration > 0) {
@@ -921,29 +998,54 @@
                     }
 
                     function openModalWith(src) {
-                        // Reset source to force reload
-                        try { video.pause(); } catch(e) {}
-                        video.removeAttribute('src');
-                        video.load();
-                        // Append autoplay param for mp4 or streams
-                        const finalSrc = src;
-                        video.src = finalSrc;
                         modal.setAttribute('aria-hidden', 'false');
-                        // Reset timeline
                         timelineProgress.style.width = '0%';
-                        // Autoplay attempt
-                        video.currentTime = 0;
-                        const playPromise = video.play();
-                        if (playPromise && typeof playPromise.then === 'function') {
-                            playPromise.then(() => {
-                                startTimelineAnimation();
-                            }).catch(() => {/* ignore */});
+                        
+                        // Use preloaded video if available for instant loading
+                        const preloadedVideo = videoCache.get(src);
+                        
+                        if (preloadedVideo && preloadedVideo.readyState >= 3) {
+                            // Video is preloaded and ready to play - instant loading!
+                            try { video.pause(); } catch(e) {}
+                            video.src = src;
+                            video.currentTime = 0;
+                            
+                            // Play immediately since video is preloaded
+                            const playPromise = video.play();
+                            if (playPromise && typeof playPromise.then === 'function') {
+                                playPromise.then(() => {
+                                    startTimelineAnimation();
+                                }).catch(() => {/* ignore */});
+                            }
+                        } else {
+                            // Show loading indicator for non-preloaded videos
+                            loadingIndicator.style.display = 'block';
+                            
+                            // Fallback to original loading method
+                            try { video.pause(); } catch(e) {}
+                            video.removeAttribute('src');
+                            video.load();
+                            video.src = src;
+                            video.currentTime = 0;
+                            
+                            // Hide loading indicator when video can play
+                            video.addEventListener('canplay', () => {
+                                loadingIndicator.style.display = 'none';
+                            }, { once: true });
+                            
+                            const playPromise = video.play();
+                            if (playPromise && typeof playPromise.then === 'function') {
+                                playPromise.then(() => {
+                                    startTimelineAnimation();
+                                }).catch(() => {/* ignore */});
+                            }
                         }
                     }
 
                     function closeModal() {
                         modal.setAttribute('aria-hidden', 'true');
                         stopTimelineAnimation();
+                        loadingIndicator.style.display = 'none';
                         try { video.pause(); } catch(e) {}
                         video.removeAttribute('src');
                         video.load();
