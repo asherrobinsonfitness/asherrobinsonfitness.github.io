@@ -9,10 +9,10 @@
     <meta content="index, follow" name=robots>
     <meta content=upgrade-insecure-requests http-equiv=Content-Security-Policy>
     <meta content="public, max-age=31536000, immutable, stale-while-revalidate=86400" http-equiv=Cache-Control>
-    <link rel="preconnect" href="https://fast.vidalytics.com">
-    <link rel="preconnect" href="https://app.iclosed.io">
-    <link rel="preconnect" href="https://connect.facebook.net">
-    <link rel="dns-prefetch" href="https://app.iclosed.io">
+    <link rel="preconnect" href="https://fast.vidalytics.com" crossorigin>
+    <link rel="preconnect" href="https://app.iclosed.io" crossorigin>
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+    <link rel="dns-prefetch" href="https://www.facebook.com">
     <style>
         @media (prefers-color-scheme: dark) {
             body { background-color: #000 !important; }
@@ -22,8 +22,82 @@
             .subheadline, footer, footer * { color: #bfbfbf !important; }
         }
     </style>
-    <script
-        async>!function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s) }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1575468926630270'); fbq('track', 'PageView'); window.addEventListener('DOMContentLoaded', function () { const e = new URLSearchParams(window.location.search), t = e.get('iclosedEmail'), n = e.get('iclosedName'), o = e.get('iclosedPhone'); let a = '', i = ''; if (n) { const e = n.split(' '); a = e[0] || '', i = e.slice(1).join(' ') || '' } function c(e) { const t = `; ${document.cookie}`, n = t.split(`; ${e}=`); if (2 === n.length) return n.pop().split(';').shift(); return null } window.fbq && fbq('track', 'ViewContent', { content_name: 'Training Video', content_type: 'video', value: 20, currency: 'USD', em: t ? t.toLowerCase() : void 0, fn: a ? a.toLowerCase() : void 0, ln: i ? i.toLowerCase() : void 0, ph: o || void 0, external_id: t ? btoa(t).substring(0, 12) : void 0, fbc: c('_fbc'), fbp: c('_fbp'), event_source_url: window.location.href, event_id: 'view_training_' + Date.now().toString() }); setTimeout(function () { window.fbq && fbq('trackCustom', 'VideoEngagement', { milestone: '50_percent', content_name: 'Training Video', value: 30, currency: 'USD', event_source_url: window.location.href, event_id: 'video_50_' + Date.now().toString() }) }, 12e4); setTimeout(function () { window.fbq && fbq('trackCustom', 'VideoEngagement', { milestone: '95_percent', content_name: 'Training Video', value: 40, currency: 'USD', event_source_url: window.location.href, event_id: 'video_95_' + Date.now().toString() }) }, 228e3) });</script>
+    <script defer>
+        !function (f, b, e, v, n, t, s) { 
+            if (f.fbq) return; 
+            n = f.fbq = function () { 
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) 
+            }; 
+            if (!f._fbq) f._fbq = n; 
+            n.push = n; 
+            n.loaded = !0; 
+            n.version = '2.0'; 
+            n.queue = []; 
+            t = b.createElement(e); 
+            t.async = !0; 
+            t.src = v; 
+            s = b.getElementsByTagName(e)[0]; 
+            s.parentNode.insertBefore(t, s) 
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'); 
+        
+        // Initialize Facebook Pixel after DOM is ready
+        window.addEventListener('DOMContentLoaded', function () { 
+            fbq('init', '1575468926630270'); 
+            fbq('track', 'PageView'); 
+            
+            const e = new URLSearchParams(window.location.search), 
+                  t = e.get('iclosedEmail'), 
+                  n = e.get('iclosedName'), 
+                  o = e.get('iclosedPhone'); 
+            let a = '', i = ''; 
+            if (n) { 
+                const e = n.split(' '); 
+                a = e[0] || ''; 
+                i = e.slice(1).join(' ') || '' 
+            } 
+            function c(e) { 
+                const t = `; ${document.cookie}`, 
+                      n = t.split(`; ${e}=`); 
+                if (2 === n.length) return n.pop().split(';').shift(); 
+                return null 
+            } 
+            window.fbq && fbq('track', 'ViewContent', { 
+                content_name: 'Training Video', 
+                content_type: 'video', 
+                value: 20, 
+                currency: 'USD', 
+                em: t ? t.toLowerCase() : void 0, 
+                fn: a ? a.toLowerCase() : void 0, 
+                ln: i ? i.toLowerCase() : void 0, 
+                ph: o || void 0, 
+                external_id: t ? btoa(t).substring(0, 12) : void 0, 
+                fbc: c('_fbc'), 
+                fbp: c('_fbp'), 
+                event_source_url: window.location.href, 
+                event_id: 'view_training_' + Date.now().toString() 
+            }); 
+            setTimeout(function () { 
+                window.fbq && fbq('trackCustom', 'VideoEngagement', { 
+                    milestone: '50_percent', 
+                    content_name: 'Training Video', 
+                    value: 30, 
+                    currency: 'USD', 
+                    event_source_url: window.location.href, 
+                    event_id: 'video_50_' + Date.now().toString() 
+                }) 
+            }, 12e4); 
+            setTimeout(function () { 
+                window.fbq && fbq('trackCustom', 'VideoEngagement', { 
+                    milestone: '95_percent', 
+                    content_name: 'Training Video', 
+                    value: 40, 
+                    currency: 'USD', 
+                    event_source_url: window.location.href, 
+                    event_id: 'video_95_' + Date.now().toString() 
+                }) 
+            }, 228e3) 
+        });
+    </script>
     <noscript><img height=1 src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
             style=display:none width=1 loading="lazy"></noscript>
     <style>
@@ -122,7 +196,17 @@
             overflow: hidden;
             border-radius: 8px;
             background: #000;
-            margin: 0 auto
+            margin: 0 auto;
+            contain: layout;
+        }
+        
+        /* Critical above-the-fold styles */
+        .container {
+            contain: layout style;
+        }
+        
+        .content {
+            contain: layout style;
         }
 
         @media (max-width: 768px) {
@@ -193,18 +277,21 @@
             <div class="report-img video-container" id=wistia-lazy-container>
                 <div id="vidalytics_embed_94OYKjFYXxjIdi0d"
                     style="width: 100%; position:relative; padding-top: 56.25%;"></div>
-                <script type="text/javascript">
-                    (function (v, i, d, a, l, y, t, c, s) {
-                        y = '_' + d.toLowerCase(); c = d + 'L'; if (!v[d]) { v[d] = {}; } if (!v[c]) { v[c] = {}; } if (!v[y]) { v[y] = {}; } var vl = 'Loader', vli = v[y][vl], vsl = v[c][vl + 'Script'], vlf = v[c][vl + 'Loaded'], ve = 'Embed';
-                        if (!vsl) {
-                            vsl = function (u, cb) {
-                                if (t) { cb(); return; } s = i.createElement("script"); s.type = "text/javascript"; s.async = 1; s.src = u;
-                                if (s.readyState) { s.onreadystatechange = function () { if (s.readyState === "loaded" || s.readyState == "complete") { s.onreadystatechange = null; vlf = 1; cb(); } }; } else { s.onload = function () { vlf = 1; cb(); }; }
-                                i.getElementsByTagName("head")[0].appendChild(s);
-                            };
-                        }
-                        vsl(l + 'loader.min.js', function () { if (!vli) { var vlc = v[c][vl]; vli = new vlc(); } vli.loadScript(l + 'player.min.js', function () { var vec = v[d][ve]; t = new vec(); t.run(a); }); });
-                    })(window, document, 'Vidalytics', 'vidalytics_embed_94OYKjFYXxjIdi0d', 'https://fast.vidalytics.com/embeds/swbCvzMu/94OYKjFYXxjIdi0d/');
+                <script type="text/javascript" defer>
+                    // Defer video loading until after critical content
+                    window.addEventListener('DOMContentLoaded', function() {
+                        (function (v, i, d, a, l, y, t, c, s) {
+                            y = '_' + d.toLowerCase(); c = d + 'L'; if (!v[d]) { v[d] = {}; } if (!v[c]) { v[c] = {}; } if (!v[y]) { v[y] = {}; } var vl = 'Loader', vli = v[y][vl], vsl = v[c][vl + 'Script'], vlf = v[c][vl + 'Loaded'], ve = 'Embed';
+                            if (!vsl) {
+                                vsl = function (u, cb) {
+                                    if (t) { cb(); return; } s = i.createElement("script"); s.type = "text/javascript"; s.async = 1; s.src = u;
+                                    if (s.readyState) { s.onreadystatechange = function () { if (s.readyState === "loaded" || s.readyState == "complete") { s.onreadystatechange = null; vlf = 1; cb(); } }; } else { s.onload = function () { vlf = 1; cb(); }; }
+                                    i.getElementsByTagName("head")[0].appendChild(s);
+                                };
+                            }
+                            vsl(l + 'loader.min.js', function () { if (!vli) { var vlc = v[c][vl]; vli = new vlc(); } vli.loadScript(l + 'player.min.js', function () { var vec = v[d][ve]; t = new vec(); t.run(a); }); });
+                        })(window, document, 'Vidalytics', 'vidalytics_embed_94OYKjFYXxjIdi0d', 'https://fast.vidalytics.com/embeds/swbCvzMu/94OYKjFYXxjIdi0d/');
+                    });
                 </script>
             </div>
             <p class=subheadline>Watch the video, then fill out the form below and book a call to get started.</p>
@@ -212,6 +299,8 @@
             <div class=content2>
             <div class=iclosed-widget data-url=https://app.iclosed.io/e/asherrobinsonfitness/call
                 style=width:100%;height:620px title="Call w/ Asher"></div>
+            <link rel="preload" href="https://app.iclosed.io/embeds/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+            <noscript><link rel="stylesheet" href="https://app.iclosed.io/embeds/index.css"></noscript>
             <script async data-cta-widget=_F7s4HIkvGJO src=https://app.iclosed.io/assets/widget.js></script>
             <script
                 defer>document.addEventListener('DOMContentLoaded', function () { const e = new MutationObserver(function (e) { e.forEach(function (e) { if ('childList' === e.type && e.addedNodes.length > 0) { const e = document.querySelectorAll('.iclosed-confirmation, .iclosed-success, .iclosed-thank-you'); if (e.length > 0) { if (window.fbq) { const e = new URLSearchParams(window.location.search), t = e.get('iclosedEmail'), n = e.get('iclosedName'), o = e.get('iclosedPhone'); let a = '', i = ''; if (n) { const e = n.split(' '); a = e[0] || '', i = e.slice(1).join(' ') || '' } function c(e) { const t = `; ${document.cookie}`, n = t.split(`; ${e}=`); if (2 === n.length) return n.pop().split(';').shift(); return null } fbq('track', 'Schedule', { content_name: '6-Week Weight Loss Call', content_category: 'Training', value: 50, currency: 'USD', em: t ? t.toLowerCase() : void 0, fn: a ? a.toLowerCase() : void 0, ln: i ? i.toLowerCase() : void 0, ph: o || void 0, external_id: t ? btoa(t).substring(0, 12) : void 0, fbc: c('_fbc'), fbp: c('_fbp'), event_source_url: window.location.href, event_id: 'schedule_training_' + Date.now().toString() }) } e.disconnect() } } }) }); e.observe(document.body, { childList: !0, subtree: !0 }) });</script>
@@ -228,5 +317,3 @@
                     style=color:#888;text-decoration:underline>Privacy Policy</a></div>
         </footer>
         <script async data-cta-widget=CQ4T8rf3-GSO src=https://app.iclosed.io/assets/widget.js></script>
-        <script
-            async>!function (t, e, n, s, c, a, r) { t[n] = t[n] || function () { (t[n].q = t[n].q || []).push(arguments) }, (a = e.createElement(s)).async = 1, a.src = "https://www.clarity.ms/tag/sfyqsuskz2", (r = e.getElementsByTagName(s)[0]).parentNode.insertBefore(a, r) }(window, document, "clarity", "script")</script>
