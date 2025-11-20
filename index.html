@@ -42,12 +42,21 @@
 
             .top-banner {
                 background-color: #161616 !important;
-                border-bottom-color: #282828 !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, .4) !important
+                border-bottom-color: #282828 !important
             }
 
-            .container {
-                box-shadow: inset 0 8px 12px -4px rgba(0, 0, 0, .3) !important
+            .hero-helper-banner {
+                color: #F8FAFC !important
+            }
+
+            .hero-helper-banner::after {
+                background: #282828 !important
+            }
+
+            .helper-arrow {
+                background: #0e1525;
+                color: #F8FAFC;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .6)
             }
 
             .top-banner .banner-text {
@@ -132,8 +141,88 @@
             flex-direction: column;
             min-height: 100vh;
             contain: layout style;
-            background: #fcfcfc;
-            box-shadow: inset 0 8px 12px -4px rgba(15, 23, 42, .08)
+            background: #fcfcfc
+        }
+
+        .hero-helper-banner {
+            width: 100%;
+            padding: 1.125rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            color: var(--text);
+            position: relative;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: helperBannerIn .75s ease forwards .2s
+        }
+
+        .hero-helper-banner::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: #c0c7cf;
+            opacity: 0;
+            transform: translateY(-4px);
+            animation: helperBorderIn .6s ease forwards .35s
+        }
+
+        .hero-helper-banner span {
+            opacity: 0;
+            animation: helperTextIn .7s ease forwards .35s
+        }
+
+        .helper-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 1px 2px rgba(15, 23, 42, .18);
+            font-size: 18px;
+            color: #111827;
+            transform: rotate(90deg)
+        }
+
+        @keyframes helperBannerIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes helperBorderIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes helperTextIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
         }
 
         .content {
@@ -345,8 +434,7 @@
             justify-content: center;
             gap: 0.75rem;
             flex-wrap: wrap;
-            border-bottom: 1px solid #c0c7cf;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, .12)
+            border-bottom: 1px solid #c0c7cf
         }
 
         .top-banner .new-badge {
@@ -436,7 +524,8 @@
 <body>
     <div class=top-banner><span class=new-badge><span>NEW</span></span><span class=banner-text>FREE 6-Week Full Body
             Transformation</span></div>
-    <div class=container>
+        <div class=container>
+        <div class=hero-helper-banner><span>Watch the video, then book a call</span></div>
         <div class=hero-grid>
             <div class=content id=mainContent>
                 <div class=header-group>
