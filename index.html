@@ -104,6 +104,11 @@
                 background-color: #F8FAFC !important;
                 color: #000 !important
             }
+
+            .callout {
+                background-color: #2a2a2a !important;
+                border-color: #3a3a3a !important;
+            }
         }
     </style>
     <script
@@ -154,7 +159,8 @@
             justify-content: center;
             gap: 0.75rem;
             font-weight: 400;
-            color: var(--text);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
             position: relative;
             max-height: 0;
             padding-top: 0;
@@ -212,8 +218,8 @@
             to {
                 max-height: 100px;
                 opacity: 1;
-                padding-top: 1.125rem;
-                padding-bottom: 1.125rem;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
                 line-height: normal
             }
         }
@@ -247,7 +253,7 @@
             flex-direction: column;
             gap: 1.25rem;
             width: 100%;
-            padding: var(--space-4) 1.5rem var(--space-4);
+            padding: var(--space-5) 1.5rem var(--space-4);
             contain: layout style
         }
 
@@ -282,35 +288,49 @@
 
         .headline {
             font-size: 1.75rem;
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.15;
-            letter-spacing: -.015em;
+            letter-spacing: -.02em;
             color: var(--text);
+            margin-top: 0.5rem;
             margin-bottom: var(--space-2)
         }
 
         .subheadline {
             font-size: 1rem;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
             letter-spacing: -.005em;
             max-width: 450px;
-            margin: 0 auto
+            margin: 0 auto;
+            margin-top: 0.25rem
+        }
+
+        .header-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 0.5rem
         }
 
         .callout {
             color: var(--text);
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.875rem;
             line-height: 1.2;
-            max-width: 450px;
+            width: fit-content;
             margin: 0 auto;
-            margin-bottom: var(--space-2);
+            margin-bottom: 0.75rem;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 6px
+            gap: 6px;
+            background-color: #f5f5f5;
+            border-radius: 9999px;
+            padding: 0.375rem 1rem;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
         .video-container {
@@ -421,11 +441,20 @@
 
             .hero-grid>.content .callout {
                 justify-content: flex-start;
-                max-width: 100%
+                width: fit-content;
+                margin-left: 0;
+                margin-right: auto
+            }
+
+            .headline {
+                font-size: 2rem
             }
         }
 
         @media(min-width:1280px) {
+            .headline {
+                font-size: 2.25rem
+            }
         }
 
         @keyframes bounce {
@@ -443,7 +472,7 @@
         .top-banner {
             background-color: #f0f0f0;
             width: 100%;
-            padding: 0.75rem 1.5rem;
+            padding: 0.625rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -502,8 +531,8 @@
 
         .top-banner .banner-text {
             color: #222;
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 500;
+            font-size: 0.9375rem;
             letter-spacing: -0.01em
         }
 
@@ -544,7 +573,7 @@
         <div class=hero-grid>
             <div class=content id=mainContent>
                 <div class=header-group>
-                    <div class=callout style=font-weight:400;letter-spacing:.02rem>For Men Ages 25-44</div>
+                    <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
                     <h1 class=headline style=font-weight:600>Lose 15 lbs in 6 Weeks... FREE</h1>
                     <p class=subheadline>Get your custom diet + workout plan and coach you over 42 days so you stay consistent and see results.</p>
                 </div>
