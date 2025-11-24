@@ -44,6 +44,10 @@
                 border-bottom-color: #282828 !important
             }
 
+            .footer-line {
+                border-bottom-color: #282828 !important
+            }
+
             .hero-helper-banner {
                 color: #bfbfbf !important;
                 font-weight: 400 !important
@@ -197,28 +201,6 @@
             will-change: opacity
         }
 
-        .helper-arrow {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #e5e7eb;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 1px 2px rgba(15, 23, 42, .1);
-            color: var(--text);
-            margin: 0 0.25rem;
-            flex-shrink: 0;
-            vertical-align: middle;
-            line-height: 1
-        }
-
-        .helper-arrow svg {
-            width: 10px;
-            height: 10px;
-            display: block
-        }
-
         @keyframes helperBannerIn {
             from {
                 max-height: 0;
@@ -266,7 +248,7 @@
             flex-direction: column;
             gap: 1.25rem;
             width: 100%;
-            padding: var(--space-5) 1.5rem var(--space-4);
+            padding: var(--space-5) 1.5rem;
             contain: layout style
         }
 
@@ -277,7 +259,7 @@
             flex-direction: column;
             gap: 0;
             width: 100%;
-            padding: var(--space-4) 1.5rem var(--space-4)
+            padding: var(--space-5) 1.5rem
         }
 
         .hero-grid {
@@ -286,7 +268,12 @@
             display: flex;
             flex-direction: column;
             gap: var(--space-5);
-            padding: 0 1.5rem var(--space-5)
+            padding: 0 var(--space-5)
+        }
+
+        .footer-container {
+            margin: 0 auto;
+            padding: 0 var(--space-5)
         }
 
         .hero-grid>.content,
@@ -380,9 +367,14 @@
                 margin: 0
             }
 
+            .footer-container {
+                margin: 0;
+                padding: 0
+            }
+
             .content {
                 gap: var(--space-4);
-                padding: var(--space-4) 1.25rem var(--space-4);
+                padding: var(--space-4) 1.25rem;
                 max-width: 600px
             }
 
@@ -417,8 +409,12 @@
                 display: grid;
                 grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
                 align-items: start;
-                padding: 0 2rem var(--space-4);
+                padding: 0 var(--space-4);
                 gap: 0
+            }
+
+            .footer-container {
+                padding: 0 var(--space-4);
             }
 
             .hero-grid>.content {
@@ -484,6 +480,11 @@
             justify-content: center;
             gap: 0.75rem;
             flex-wrap: wrap;
+            border-bottom: 1px solid #c0c7cf
+        }
+
+        .footer-line {
+            width: 100%;
             border-bottom: 1px solid #c0c7cf
         }
 
@@ -574,15 +575,7 @@
     <div class=container>
         <div class=hero-helper-banner>
             <span style="font-weight: 400; display: inline-flex; align-items: center;">
-                <span style="font-weight: 600;">Watch the video</span>&nbsp;
-                <span class=helper-arrow
-                    style="display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;">
-                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        style="display: block;">
-                        <path d="M4.5 3L7 6L4.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </span>&nbsp;
+                <span style="font-weight: 600;">Watch the video</span>&nbsp;&rsaquo;&nbsp;
                 <span style="color:var(--text-secondary);">Book a call</span>
             </span>
         </div>
@@ -614,7 +607,7 @@
         </div>
     </div>
     <footer
-        style="width:100%;max-width:100vw;padding:2.5rem 1.5rem 2rem 1.5rem;margin:0 auto 0;box-sizing:border-box;font-size:13px;color:var(--text-secondary);background:#f0f0f0;border-top:1px solid #c0c7cf">
+        style="width:100%;max-width:100vw;padding:2.5rem 1.5rem;margin:0 auto 0;box-sizing:border-box;font-size:13px;color:var(--text-secondary);background:#f0f0f0;border-top:1px solid #c0c7cf">
         <style>
             @media(min-width:1024px) {
                 footer {
@@ -623,31 +616,54 @@
                 }
             }
         </style>
-        <div style=max-width:1200px;margin:0 auto>
-            <div style=display:flex;flex-direction:column;gap:1.5rem>
-                <div
-                    style=display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem>
-                    <div style=display:flex;flex-direction:column;gap:0.75rem;flex:1;min-width:200px>
-                        <div style=font-size:13px;color:var(--text-secondary)>© 2025 Asher Robinson LLC. All rights
-                            reserved.</div>
-                        <div style=display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;font-size:13px>
-                            <a href=https://iclosed.io/terms/ style=color:#06f;text-decoration:none>Terms of Use</a>
-                            <span style=color:var(--text-secondary);opacity:0.4>·</span>
-                            <a href=https://iclosed.io/privacy-policy/ style=color:#06f;text-decoration:none>Privacy
-                                Policy</a>
-                        </div>
+        <div class="footer-container">
+            <style>
+                @media(max-width: 700px) {
+                    .footer-row {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                        gap: 1rem !important;
+                    }
+
+                    .footer-left,
+                    .footer-right {
+                        justify-content: flex-start !important;
+                        width: 100% !important;
+                        min-width: 0 !important;
+                        max-width: 100% !important;
+                    }
+                }
+            </style>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Disclaimer text block: full width -->
+                <div style="font-size:12px; line-height:1.6; color:var(--text-secondary); opacity:0.8; width:100%;">
+                    <div style="margin-bottom: 0.75rem;">This site is not a part of the Facebook website or Meta
+                        Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK
+                        is a trademark of Meta Platforms, Inc.</div>
+                    <div>Results may vary. This site does not offer medical advice. Always consult with a qualified
+                        healthcare professional before starting any diet or exercise program.</div>
+                </div>
+
+                <!-- 1px horizontal break line -->
+                <div class="footer-line"></div>
+
+                <!-- Footer row: left and right aligned items -->
+                <div class="footer-row"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 1.5rem; width: 100%;">
+                    <div class="footer-left"
+                        style="font-size:13px; color:var(--text-secondary); flex:1; min-width: 200px;">
+                        © 2025 Asher Robinson LLC. All rights reserved.
                     </div>
-                    <div
-                        style=display:flex;flex-direction:column;gap:0.75rem;font-size:12px;line-height:1.6;color:var(--text-secondary);opacity:0.8;flex:1;min-width:200px;max-width:500px>
-                        <div>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this
-                            site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta
-                            Platforms, Inc.</div>
-                        <div>Results may vary. This site does not offer medical advice. Always consult with a qualified
-                            healthcare professional before starting any diet or exercise program.</div>
+                    <div class="footer-right"
+                        style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; font-size:13px; flex:1; justify-content: flex-end; min-width: 200px;">
+                        <a href="https://iclosed.io/terms/" style="color:#06f; text-decoration:none;">Terms of Use</a>
+                        <a href="https://iclosed.io/privacy-policy/" style="color:#06f; text-decoration:none;">Privacy
+                            Policy</a>
                     </div>
                 </div>
             </div>
         </div>
+
     </footer>
     <script
         type=module>const loadFooterWidget=()=>{const script=document.createElement("script");script.async=true;script.src="https://app.iclosed.io/assets/widget.js";script.dataset.ctaWidget="CQ4T8rf3-GSO";document.head.appendChild(script)};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loadFooterWidget);else loadFooterWidget();</script>
