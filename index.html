@@ -430,12 +430,17 @@
         }
 
         @media(min-width:1280px) {
+            .hero-helper-banner::after {
+                display: none;
+            }
+
             .hero-grid {
                 display: grid;
                 grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
                 align-items: stretch;
                 padding: 0;
-                gap: 0
+                gap: 0;
+                border-top: 1px solid #c0c7cf;
             }
 
             .hero-grid>.content,
@@ -510,6 +515,10 @@
         }
 
         @media(prefers-color-scheme:dark) and (min-width:1280px) {
+            .hero-grid {
+                border-top-color: #282828;
+            }
+
             .hero-grid>.content2 {
                 border-left-color: #282828;
             }
