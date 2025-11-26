@@ -133,10 +133,6 @@
             --space-5: 2.5rem;
             --space-6: 3rem;
             --desktop-grid-pad: 4rem;
-            --panel-bg: #eef2ff;
-            --panel-bg-dark: #0a1222;
-            --panel-text: #0b1220;
-            --panel-text-dark: #F8FAFC;
             --primary: #06f;
             --text: #222;
             --text-secondary: #717171
@@ -436,8 +432,6 @@
             .hero-grid>.content2 {
                 align-items: flex-start;
                 text-align: left;
-                background-color: var(--panel-bg);
-                color: var(--panel-text);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -445,6 +439,7 @@
                 min-height: 100%;
                 padding-top: var(--space-5);
                 padding-bottom: var(--space-5);
+                border-left: 1px solid #c0c7cf;
             }
 
             .hero-grid>.content2 .iclosed-widget {
@@ -494,8 +489,7 @@
 
         @media(prefers-color-scheme:dark) and (min-width:1024px) {
             .hero-grid>.content2 {
-                background-color: var(--panel-bg-dark);
-                color: var(--panel-text-dark);
+                border-left-color: #282828;
             }
         }
 
