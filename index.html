@@ -203,6 +203,12 @@
             will-change: opacity
         }
 
+        .hero-helper-banner svg {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
         @keyframes helperBannerIn {
             from {
                 max-height: 0;
@@ -360,7 +366,7 @@
             box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
-        @media(max-width:768px) {
+        @media(max-width:1279px) {
             .hero-grid {
                 gap: 0;
                 padding: 0;
@@ -372,15 +378,16 @@
                 padding: 0
             }
 
+            .content2 {
+                padding: 0 1.25rem var(--space-4)
+            }
+        }
+
+        @media(max-width:768px) {
             .content {
                 gap: var(--space-4);
                 padding: var(--space-4) 1.25rem;
                 max-width: 600px
-            }
-
-            .content2 {
-                gap: var(--space-4);
-                padding: 0 1.25rem var(--space-4)
             }
 
             .headline {
@@ -405,16 +412,30 @@
         }
 
         @media(min-width:1024px) {
+            .footer-container {
+                padding: 0 var(--space-4);
+            }
+
+            .headline {
+                font-size: 2rem
+            }
+
+            .video-container {
+                max-width: 800px
+            }
+
+            .report-img {
+                max-width: 800px
+            }
+        }
+
+        @media(min-width:1280px) {
             .hero-grid {
                 display: grid;
                 grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
                 align-items: stretch;
                 padding: 0;
                 gap: 0
-            }
-
-            .footer-container {
-                padding: 0 var(--space-4);
             }
 
             .hero-grid>.content,
@@ -457,6 +478,7 @@
             }
 
             .hero-grid>.content .header-group {
+                width: 100%;
                 align-items: center;
                 text-align: center;
             }
@@ -475,26 +497,6 @@
             }
 
             .headline {
-                font-size: 2rem
-            }
-
-            .video-container {
-                max-width: 800px
-            }
-
-            .report-img {
-                max-width: 800px
-            }
-        }
-
-        @media(prefers-color-scheme:dark) and (min-width:1024px) {
-            .hero-grid>.content2 {
-                border-left-color: #282828;
-            }
-        }
-
-        @media(min-width:1280px) {
-            .headline {
                 font-size: 2.25rem
             }
 
@@ -504,6 +506,12 @@
 
             .report-img {
                 max-width: 960px
+            }
+        }
+
+        @media(prefers-color-scheme:dark) and (min-width:1280px) {
+            .hero-grid>.content2 {
+                border-left-color: #282828;
             }
         }
 
@@ -610,8 +618,11 @@
             Transformation</span></div>
     <div class=container>
         <div class=hero-helper-banner>
-            <span style="font-weight: 400; display: inline-flex; align-items: center;">
-                <span style="font-weight: 600;">Watch the video</span>&nbsp;&rsaquo;&nbsp;
+            <span style="font-weight: 400; display: inline-flex; align-items: center; gap: 0.75rem;">
+                <span style="font-weight: 600;">Watch the video</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="11" viewBox="0 0 6 11" style="display: inline-block; vertical-align: middle; flex-shrink: 0;">
+                    <polyline points=".675 .925 5.323 5.5 .675 10.075" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"/>
+                </svg>
                 <span style="color:var(--text-secondary);">Schedule an orientation</span>
             </span>
         </div>
@@ -620,7 +631,7 @@
                 <div class=header-group>
                     <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
                     <h1 class=headline style=font-weight:600>Lose 15 lbs in 6 Weeks... FREE</h1>
-                    <p class=subheadline>Get a custom diet + workout plan and 42 days of coaching to help you stay consistent and see results.</p>
+                    <p class=subheadline>Put down a refundable $599 deposit and win it back when you hit the goal.</p>
                 </div>
                 <div class="report-img video-container" id="wistia-lazy-container">
                     <div id="vidalytics_embed_w16b_M3FYuXt0MAX"
