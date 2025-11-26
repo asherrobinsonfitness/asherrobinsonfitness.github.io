@@ -119,6 +119,7 @@
                 background-color: #282828 !important;
                 border-color: #282828 !important;
             }
+
         }
     </style>
     <script
@@ -131,6 +132,11 @@
             --space-4: 2rem;
             --space-5: 2.5rem;
             --space-6: 3rem;
+            --desktop-grid-pad: 4rem;
+            --panel-bg: #eef2ff;
+            --panel-bg-dark: #0a1222;
+            --panel-text: #0b1220;
+            --panel-text-dark: #F8FAFC;
             --primary: #06f;
             --text: #222;
             --text-secondary: #717171
@@ -336,8 +342,8 @@
         .video-container {
             position: relative;
             width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
+            height: auto;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 8px;
             background: #000;
@@ -405,9 +411,9 @@
         @media(min-width:1024px) {
             .hero-grid {
                 display: grid;
-                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-                align-items: start;
-                padding: 0 var(--space-4);
+                grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+                align-items: stretch;
+                padding: 0;
                 gap: 0
             }
 
@@ -415,31 +421,62 @@
                 padding: 0 var(--space-4);
             }
 
+            .hero-grid>.content,
+            .hero-grid>.content2 {
+                padding-left: var(--desktop-grid-pad);
+                padding-right: var(--desktop-grid-pad);
+            }
+
             .hero-grid>.content {
+                align-self: start;
                 text-align: left;
                 align-items: flex-start
             }
 
             .hero-grid>.content2 {
                 align-items: flex-start;
-                text-align: left
+                text-align: left;
+                background-color: var(--panel-bg);
+                color: var(--panel-text);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-self: stretch;
+                min-height: 100%;
+                padding-top: var(--space-5);
+                padding-bottom: var(--space-5);
+            }
+
+            .hero-grid>.content2 .iclosed-widget {
+                align-self: stretch;
+                width: 100%;
             }
 
             .hero-grid>.content .header-group,
             .hero-grid>.content .callout,
             .hero-grid>.content .headline,
             .hero-grid>.content .subheadline {
-                text-align: left;
                 margin-left: 0;
                 margin-right: 0;
                 max-width: 100%
             }
 
-            .hero-grid>.content .callout {
-                justify-content: flex-start;
+            .hero-grid>.content .header-group {
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero-grid>.content .header-group .callout,
+            .hero-grid>.content .header-group .headline,
+            .hero-grid>.content .header-group .subheadline {
+                text-align: center;
+            }
+
+            .hero-grid>.content .header-group .callout {
+                justify-content: center;
                 width: fit-content;
-                margin-left: 0;
-                margin-right: auto
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .headline {
@@ -452,6 +489,13 @@
 
             .report-img {
                 max-width: 800px
+            }
+        }
+
+        @media(prefers-color-scheme:dark) and (min-width:1024px) {
+            .hero-grid>.content2 {
+                background-color: var(--panel-bg-dark);
+                color: var(--panel-text-dark);
             }
         }
 
@@ -582,8 +626,7 @@
                 <div class=header-group>
                     <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
                     <h1 class=headline style=font-weight:600>Lose 15 lbs in 6 Weeks... FREE</h1>
-                    <p class=subheadline>Get your custom diet + workout plan and coach you over 42 days so you stay
-                        consistent and see results.</p>
+                    <p class=subheadline>Get a custom diet + workout plan and 42 days of coaching to help you stay consistent and see results.</p>
                 </div>
                 <div class="report-img video-container" id="wistia-lazy-container">
                     <div id="vidalytics_embed_w16b_M3FYuXt0MAX"
