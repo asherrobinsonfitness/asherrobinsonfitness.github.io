@@ -254,10 +254,13 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
             width: 100%;
             padding: var(--space-5) 1.5rem;
             contain: layout style
+        }
+
+        .content .header-group {
+            margin-bottom: var(--space-4)
         }
 
         .content2 {
@@ -385,7 +388,6 @@
 
         @media(max-width:768px) {
             .content {
-                gap: var(--space-4);
                 padding: var(--space-4) 1.25rem;
                 max-width: 600px
             }
