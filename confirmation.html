@@ -30,6 +30,7 @@
     <link rel=preconnect href=https://connect.facebook.net crossorigin>
     <link rel=dns-prefetch href=https://www.facebook.com>
     <link rel=preconnect href=https://iframe.mediadelivery.net crossorigin>
+    <link href=https://fonts.googleapis.com/icon?family=Material+Icons rel=stylesheet>
     <style>
         @media(prefers-color-scheme:dark) {
             body {
@@ -151,12 +152,29 @@
                 fill: #fff !important
             }
 
-            .call-details-widget,
-            .call-details-widget iframe,
-            .call-details-widget > * {
-                background-color: #fff !important;
-                border-radius: 8px !important
+            #custom-meeting-widget [style*="color:#2e7d32"] {
+                color: #2e7d32 !important
             }
+
+            #custom-meeting-widget [style*="color:#4CAF50"] {
+                color: #4CAF50 !important
+            }
+
+            #custom-meeting-widget [style*="color:#FF9800"] {
+                color: #FF9800 !important
+            }
+
+            #custom-meeting-widget h3,
+            #custom-meeting-widget p:not([style*="color:#4CAF50"]):not([style*="color:#FF9800"]):not([style*="color:#2e7d32"]),
+            #custom-meeting-widget span:not([style*="color:#2e7d32"]),
+            #custom-meeting-widget div:not([style*="color:#2e7d32"]):not([style*="color:#4CAF50"]):not([style*="color:#FF9800"]) {
+                color: #000 !important
+            }
+
+            #custom-meeting-widget .material-icons {
+                color: #000 !important
+            }
+
 
         }
     </style>
@@ -292,10 +310,14 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 0;
             width: 100%;
             padding: var(--space-5) 1.5rem;
             contain: layout style
+        }
+
+        .content .header-group {
+            margin-bottom: var(--space-4)
         }
 
         .content#faqContent {
@@ -440,8 +462,8 @@
             margin-bottom: 1.5rem;
             padding: 0;
             border-radius: 8px;
-            background-color: #222222;
-            border: 1px solid #3d3d3d;
+            background-color: #fafafa;
+            border: 1px solid #fbfbfb;
             cursor: pointer;
             display: flex;
             overflow: hidden;
@@ -449,8 +471,8 @@
         }
 
         .faq-item:hover {
-            background-color: #333333;
-            border-color: #4c4c4c;
+            background-color: #f0f0f0;
+            border-color: #e8e8e8;
         }
 
         .faq-thumbnail {
@@ -503,6 +525,19 @@
             font-size: .8rem;
             color: var(--text-secondary);
             text-align: left
+        }
+
+        #custom-meeting-widget {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: left;
+            box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
         .faq-video-modal {
@@ -884,7 +919,9 @@
     <div class=top-banner><span class=new-badge><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" fill="#dc2626"></path><path d="M12 9v4" stroke="#fff" stroke-width="2" stroke-linecap="round"></path><path d="M12 17h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg></span><span class=banner-text>Wait — don't leave this page yet.</span></div>
     <div class=container>
         <div class=hero-helper-banner>
-            <span style="font-weight: 400; display: inline-flex; align-items: center; gap: 0.75rem;">Please watch the video below</span>
+            <span style="font-weight: 400; display: inline-flex; align-items: center; gap: 0.75rem;">
+                <span style="font-weight: 600;">Please watch the video below</span>
+            </span>
         </div>
         <div class=hero-grid>
             <div class=content id=mainContent>
@@ -912,10 +949,62 @@
                 </div>
             </div>
             <div class=content2>
-                <!-- iClosed widget begin -->
-                <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px; background-color: #fff; border-radius: 8px; overflow: hidden;"></div>
-                <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
-                <!-- iClosed widget end -->
+                <div id=custom-meeting-widget>
+                    <div style="background-color:#e7f7ea;border-radius:6px;padding:6px 12px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;border:1px solid #2e7d32">
+                        <span style=color:#2e7d32;font-weight:400;font-size:14px;text-align:center><strong>Email sent.</strong> Awaiting your confirmation.</span>
+                    </div>
+                    <div style=margin-bottom:16px>
+                        <div style=display:flex;align-items:center;margin-bottom:12px>
+                            <div style=position:relative;margin-right:12px>
+                                <img src=https://img-pull.b-cdn.net/profilepicdraft.PNG alt="Asher Robinson" style=width:40px;height:40px;border-radius:50%;object-fit:cover>
+                                <div style=position:absolute;bottom:2px;right:2px;background-color:#4CAF50;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center>
+                                    <svg xmlns=http://www.w3.org/2000/svg width=10 height=10 viewBox="0 0 24 24" fill=white><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="font-size:14px;margin:0 0 3px 0;font-weight:600">Asher Robinson</h3>
+                                <p style=margin:0;color:#4CAF50;font-size:13px;font-weight:500>Confirmed</p>
+                            </div>
+                        </div>
+                        <div style=display:flex;align-items:center>
+                            <div style=position:relative;margin-right:12px>
+                                <div class=guest-initial style=width:40px;height:40px;border-radius:50%;background-color:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:18px;color:#757575;font-weight:500>A</div>
+                            </div>
+                            <div>
+                                <h3 style="font-size:14px;margin:0 0 3px 0;font-weight:600" id=guest-name>Guest</h3>
+                                <p style=margin:0;color:#FF9800;font-size:13px;font-weight:500>Awaiting confirmation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border:0;height:1px;background-color:#e0e0e0;margin:16px 0">
+                    <div style=display:flex;justify-content:space-between;align-items:center;margin-bottom:12px>
+                        <div style=display:flex;align-items:center>
+                            <div style=width:20px;margin-right:12px;display:flex;align-items:center;justify-content:center>
+                                <span class=material-icons style=font-size:20px;color:#000>event</span>
+                            </div>
+                            <p style=font-weight:700;margin:0;color:#000;font-size:15px>Date</p>
+                        </div>
+                        <p id=meeting-date style=margin:0;color:#000;font-size:14px;text-align:right>Loading...</p>
+                    </div>
+                    <div style=display:flex;justify-content:space-between;align-items:center;margin-bottom:12px>
+                        <div style=display:flex;align-items:center>
+                            <div style=width:20px;margin-right:12px;display:flex;align-items:center;justify-content:center>
+                                <span class=material-icons style=font-size:20px;color:#000>schedule</span>
+                            </div>
+                            <p style=font-weight:700;margin:0;color:#000;font-size:15px>Time</p>
+                        </div>
+                        <p id=meeting-time style=margin:0;color:#000;font-size:14px;text-align:right>Loading...</p>
+                    </div>
+                    <div style=display:flex;justify-content:space-between;align-items:center;margin-bottom:0>
+                        <div style=display:flex;align-items:center>
+                            <div style=width:20px;margin-right:12px;display:flex;align-items:center;justify-content:center>
+                                <span class=material-icons style=font-size:20px;color:#000>location_on</span>
+                            </div>
+                            <p style=font-weight:700;margin:0;color:#000;font-size:15px>Where</p>
+                        </div>
+                        <p id=meeting-location style=margin:0;color:#000;font-size:14px;text-align:right>Google Meet (link in email)</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class=content id=faqContent>
@@ -1116,7 +1205,7 @@
 
     </footer>
     <script defer>document.addEventListener("DOMContentLoaded",function(){window.addEventListener("error",function(e){return e.preventDefault(),!0}),document.cookie="SameSite=None; Secure"});</script>
-    <script defer>document.addEventListener('DOMContentLoaded',function(){const urlParams=new URLSearchParams(window.location.search);const name=urlParams.get('invitee_full_name');const email=urlParams.get('invitee_email');const startTime=urlParams.get('event_start_time');const endTime=urlParams.get('event_end_time');console.log('Name from URL:',name);console.log('Email from URL:',email);console.log('Start time from URL:',startTime);console.log('End time from URL:',endTime);const hasRequiredInfo=name&&email&&startTime;if(!hasRequiredInfo){const content2=document.querySelector('.content2');if(content2){content2.style.display='none'}const mainContent=document.querySelector('.hero-grid>.content');if(mainContent){mainContent.style.maxWidth='100%';mainContent.style.width='100%'}const heroGrid=document.querySelector('.hero-grid');if(heroGrid){heroGrid.style.display='flex';heroGrid.style.flexDirection='column'}}if(name){const firstName=name.trim().split(' ')[0];const calloutText=document.getElementById('callout-text');if(calloutText){calloutText.textContent='Congratulations, '+firstName+'!'}}else{const calloutText=document.getElementById('callout-text');if(calloutText){calloutText.textContent='Congratulations!'}}});</script>
+    <script defer>document.addEventListener('DOMContentLoaded',function(){const urlParams=new URLSearchParams(window.location.search);const name=urlParams.get('invitee_full_name');const email=urlParams.get('invitee_email');const startTime=urlParams.get('event_start_time');const endTime=urlParams.get('event_end_time');console.log('Name from URL:',name);console.log('Email from URL:',email);console.log('Start time from URL:',startTime);console.log('End time from URL:',endTime);const hasRequiredInfo=name&&email&&startTime;if(!hasRequiredInfo){const content2=document.querySelector('.content2');if(content2){content2.style.display='none'}const mainContent=document.querySelector('.hero-grid>.content');if(mainContent){mainContent.style.maxWidth='100%';mainContent.style.width='100%'}const heroGrid=document.querySelector('.hero-grid');if(heroGrid){heroGrid.style.display='flex';heroGrid.style.flexDirection='column'}}if(name){const guestNameEl=document.getElementById('guest-name');const guestInitialEl=document.querySelector('.guest-initial');if(guestNameEl){guestNameEl.textContent=name.trim()}if(guestInitialEl){guestInitialEl.textContent=name.trim().charAt(0).toUpperCase()}const firstName=name.trim().split(' ')[0];const calloutText=document.getElementById('callout-text');if(calloutText){calloutText.textContent='Congratulations, '+firstName+'!'}}else{const calloutText=document.getElementById('callout-text');if(calloutText){calloutText.textContent='Congratulations!'}}if(startTime&&endTime){try{const start=new Date(startTime);const end=new Date(endTime);if(isNaN(start.getTime())||isNaN(end.getTime())){throw new Error('Invalid date')}const dateOptions={weekday:'long',month:'long',day:'numeric'};const timeOptions={hour:'numeric',minute:'2-digit',hour12:true};const dateStr=start.toLocaleDateString('en-US',dateOptions);const startTimeStr=start.toLocaleTimeString('en-US',timeOptions);const endTimeStr=end.toLocaleTimeString('en-US',timeOptions);const formattedDate=dateStr;const formattedTime=`${startTimeStr}-${endTimeStr}(EST)`;const meetingDateEl=document.getElementById('meeting-date');const meetingTimeEl=document.getElementById('meeting-time');if(meetingDateEl){meetingDateEl.textContent=formattedDate}if(meetingTimeEl){meetingTimeEl.textContent=formattedTime}console.log('Formatted date:',formattedDate);console.log('Formatted time:',formattedTime)}catch(error){console.error('Error formatting time:',error);const meetingDateEl=document.getElementById('meeting-date');const meetingTimeEl=document.getElementById('meeting-time');if(meetingDateEl){meetingDateEl.textContent="Date details loading..."}if(meetingTimeEl){meetingTimeEl.textContent="Time details loading..."}}}else{const meetingDateEl=document.getElementById('meeting-date');const meetingTimeEl=document.getElementById('meeting-time');if(meetingDateEl){meetingDateEl.textContent="Sunday, July 20"}if(meetingTimeEl){meetingTimeEl.textContent="07:30 PM - 08:00 PM (EST)"}}const meetingLocationEl=document.getElementById('meeting-location');if(meetingLocationEl){meetingLocationEl.textContent='Google Meet (link in email)'}});</script>
     <div class=col-12>
         <canvas id=confetticanvas></canvas>
         <script type=text/javascript>canvas=document.getElementById("confetticanvas");ctx=canvas.getContext("2d");canvas.width=window.innerWidth;canvas.height=window.innerHeight;cx=ctx.canvas.width/2;cy=ctx.canvas.height/2;let confetti=[];const confettiCount=300;const gravity=0.5;const terminalVelocity=5;const drag=0.075;const colors=[{front:'#ffbe0b',back:'#fb5607'},{front:'#ff006e',back:'#8338ec'},{front:'#3a86ff',back:'#5390d9'}];resizeCanvas=()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;cx=ctx.canvas.width/2;cy=ctx.canvas.height/2};randomRange=(min,max)=>Math.random()*(max-min)+min;initConfetti=()=>{for(let i=0;i<confettiCount;i++){confetti.push({color:colors[Math.floor(randomRange(0,colors.length))],dimensions:{x:randomRange(10,20),y:randomRange(10,30)},position:{x:randomRange(0,canvas.width),y:canvas.height-1},rotation:randomRange(0,2*Math.PI),scale:{x:1,y:1},velocity:{x:randomRange(-25,25),y:randomRange(0,-50)}})}};render=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);confetti.forEach((confetto,index)=>{let width=(confetto.dimensions.x*confetto.scale.x);let height=(confetto.dimensions.y*confetto.scale.y);ctx.translate(confetto.position.x,confetto.position.y);ctx.rotate(confetto.rotation);confetto.velocity.x-=confetto.velocity.x*drag;confetto.velocity.y=Math.min(confetto.velocity.y+gravity,terminalVelocity);confetto.velocity.x+=Math.random()>0.5?Math.random():-Math.random();confetto.position.x+=confetto.velocity.x;confetto.position.y+=confetto.velocity.y;if(confetto.position.y>=canvas.height)confetti.splice(index,1);if(confetto.position.x>canvas.width)confetto.position.x=0;if(confetto.position.x<0)confetto.position.x=canvas.width;confetto.scale.y=Math.cos(confetto.position.y*0.1);ctx.fillStyle=confetto.scale.y>0?confetto.color.front:confetto.color.back;ctx.fillRect(-width/2,-height/2,width,height);ctx.setTransform(1,0,0,1,0,0)});window.requestAnimationFrame(render)};window.addEventListener('resize',function(){resizeCanvas()});setTimeout(function(){initConfetti();render()},400);</script>
