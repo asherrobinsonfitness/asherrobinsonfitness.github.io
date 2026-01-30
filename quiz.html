@@ -43,7 +43,6 @@
             width: 100%;
         }
 
-
         .progress-container {
             flex: 1;
             display: flex;
@@ -64,13 +63,13 @@
         .progress-fill {
             height: 100%;
             background: var(--selected-border);
-            width: 20%;
+            width: 12.5%;
             transition: width 0.3s ease;
         }
 
         .progress-indicator {
             position: absolute;
-            left: 20%;
+            left: 12.5%;
             top: 50%;
             transform: translate(-50%, -50%);
             width: 0;
@@ -92,6 +91,15 @@
             width: 100%;
         }
 
+        .question-container {
+            width: 100%;
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
         .question {
             font-size: 1.5rem;
             font-weight: 600;
@@ -100,6 +108,15 @@
             margin-bottom: 2rem;
             text-align: center;
             color: var(--text);
+        }
+
+        .question-hint {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: -1.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
         }
 
         .options-container {
@@ -160,6 +177,117 @@
             fill: #fff;
         }
 
+        .input-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--selected-border);
+        }
+
+        .unit-selector {
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fff;
+            color: var(--text);
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        .unit-selector:focus {
+            outline: none;
+            border-color: var(--selected-border);
+        }
+
+        .image-selector-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .image-option {
+            aspect-ratio: 1;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--unselected-bg);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .image-option:hover {
+            border-color: var(--selected-border);
+            background: var(--selected-bg);
+        }
+
+        .image-option.selected {
+            border-color: var(--selected-border);
+            background: #fff;
+        }
+
+        .image-option .image-placeholder {
+            width: 100%;
+            height: 60%;
+            background: #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-option .label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .image-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 24px;
+            height: 24px;
+            background: var(--selected-border);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
 
         @media(max-width: 768px) {
             .header {
@@ -182,7 +310,7 @@
             }
 
             .progress-indicator {
-                left: 20%;
+                left: 12.5%;
                 border-left-color: #717171;
             }
 
@@ -198,6 +326,10 @@
             .option-button {
                 padding: 0.875rem 1rem;
                 font-size: 0.9375rem;
+            }
+
+            .image-selector-container {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -226,6 +358,18 @@
                 border-color: var(--selected-border);
             }
 
+            .input-field,
+            .unit-selector {
+                background: #282828;
+                border-color: #404040;
+                color: #F8FAFC;
+            }
+
+            .image-option {
+                background: #282828;
+                border-color: #404040;
+            }
+
             .progress-bar {
                 background: #404040;
             }
@@ -244,74 +388,372 @@
     <div class=header>
         <div class=progress-container>
             <div class=progress-bar>
-                <div class=progress-fill></div>
-                <div class=progress-indicator></div>
+                <div class=progress-fill id="progressFill"></div>
+                <div class=progress-indicator id="progressIndicator"></div>
             </div>
         </div>
     </div>
 
     <div class=main-content>
-        <h1 class=question>What's your top fitness goal?</h1>
-        <div class=options-container>
-            <button class="option-button selected" data-value="lose-weight">
-                <span>Lose weight</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+        <!-- Q1: Height -->
+        <div class="question-container active" data-question="1">
+            <h1 class=question>Height</h1>
+            <div class=input-container>
+                <div class=input-group>
+                    <input type="number" class="input-field" id="heightValue" placeholder="Enter height" min="0" step="0.1">
+                    <select class="unit-selector" id="heightUnit">
+                        <option value="ft">ft/in</option>
+                        <option value="cm">cm</option>
+                    </select>
                 </div>
-            </button>
-            <button class=option-button data-value="get-toned">
-                <span>Get toned</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+                <div id="heightInches">
+                    <input type="number" class="input-field" id="inchesValue" placeholder="Inches" min="0" max="11" step="1">
                 </div>
-            </button>
-            <button class=option-button data-value="increase-muscle">
-                <span>Increase muscle mass</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+            </div>
+        </div>
+
+        <!-- Q2: Bodyweight -->
+        <div class="question-container" data-question="2">
+            <h1 class=question>Current bodyweight</h1>
+            <div class=input-container>
+                <div class=input-group>
+                    <input type="number" class="input-field" id="weightValue" placeholder="Enter weight" min="0" step="0.1">
+                    <select class="unit-selector" id="weightUnit">
+                        <option value="lbs">lbs</option>
+                        <option value="kg">kg</option>
+                    </select>
                 </div>
-            </button>
-            <button class=option-button data-value="improve-health">
-                <span>Improve health and longevity</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+            </div>
+        </div>
+
+        <!-- Q3: Physique -->
+        <div class="question-container" data-question="3">
+            <h1 class=question>Which image best matches your current physique?</h1>
+            <p class=question-hint>👉 This is your body fat proxy.</p>
+            <div class=image-selector-container>
+                <div class="image-option" data-value="lean">
+                    <div class=image-placeholder>Image</div>
+                    <div class=label>Clearly lean / athletic</div>
                 </div>
-            </button>
-            <button class=option-button data-value="improve-athlete">
-                <span>Improve as an athlete or competitor</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+                <div class="image-option" data-value="average">
+                    <div class=image-placeholder>Image</div>
+                    <div class=label>Average / some softness</div>
                 </div>
-            </button>
-            <button class=option-button data-value="not-sure">
-                <span>I'm not sure</span>
-                <div class=checkmark>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
+                <div class="image-option" data-value="overweight">
+                    <div class=image-placeholder>Image</div>
+                    <div class=label>Overweight</div>
                 </div>
-            </button>
+                <div class="image-option" data-value="obese">
+                    <div class=image-placeholder>Image</div>
+                    <div class=label>Obese</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4: Training Experience -->
+        <div class="question-container" data-question="4">
+            <h1 class=question>How long have you been resistance training consistently?</h1>
+            <p class=question-hint>👉 Needed for FFMI context.</p>
+            <div class=options-container>
+                <button class="option-button" data-value="never">
+                    <span>Never</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="on-off">
+                    <span>On and off</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="6-12">
+                    <span>6–12 months</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="1plus">
+                    <span>1+ years</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Q5: What stops you -->
+        <div class="question-container" data-question="5">
+            <h1 class=question>When you've tried to get lean before, what usually stops you?</h1>
+            <div class=options-container>
+                <button class="option-button" data-value="stress">
+                    <span>I fall off when life gets stressful</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="skinny-fat">
+                    <span>I lose weight but look "flat" / skinny-fat</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="plateau">
+                    <span>I plateau and don't know what to change</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="regain">
+                    <span>I regain the weight later</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Q6: Restarts -->
+        <div class="question-container" data-question="6">
+            <h1 class=question>How many times have you "started over" in the last 2 years?</h1>
+            <div class=options-container>
+                <button class="option-button" data-value="0-1">
+                    <span>0–1</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="2-3">
+                    <span>2–3</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="4-5">
+                    <span>4–5</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="6plus">
+                    <span>6+</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Q7: Consistency -->
+        <div class="question-container" data-question="7">
+            <h1 class=question>Right now, how consistent are you week to week?</h1>
+            <div class=options-container>
+                <button class="option-button" data-value="0-2">
+                    <span>0–2 days on track</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="3-4">
+                    <span>3–4 days</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="5-6">
+                    <span>5–6 days</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="7">
+                    <span>7 days</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Q8: Success definition -->
+        <div class="question-container" data-question="8">
+            <h1 class=question>What does "success" actually mean to you?</h1>
+            <p class=question-hint>(Not scale weight.)</p>
+            <div class=options-container>
+                <button class="option-button" data-value="abs">
+                    <span>Visible abs</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="lean">
+                    <span>Lean / athletic look</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+                <button class="option-button" data-value="confident">
+                    <span>Just feeling confident in my body again</span>
+                    <div class=checkmark>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
-
     <script>
-        document.querySelectorAll('.option-button').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+        const quizData = {};
+        let currentQuestion = 1;
+        const totalQuestions = 8;
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressIndicator').style.left = progress + '%';
+        }
+
+        function showQuestion(num) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.querySelector(`[data-question="${num}"]`).classList.add('active');
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                // Save data and redirect to results
+                localStorage.setItem('quizData', JSON.stringify(quizData));
+                window.location.href = 'results.html';
+            }
+        }
+
+        // Q1: Height input
+        function checkHeightComplete() {
+            const value = document.getElementById('heightValue').value;
+            const unit = document.getElementById('heightUnit').value;
+            if (!value) return false;
+            
+            if (unit === 'cm') {
+                return true;
+            } else {
+                const inches = document.getElementById('inchesValue').value;
+                return inches && inches !== '';
+            }
+        }
+
+        function saveHeightAndNext() {
+            if (checkHeightComplete()) {
+                const value = document.getElementById('heightValue').value;
+                const unit = document.getElementById('heightUnit').value;
+                quizData.height = { value, unit };
+                if (unit === 'ft') {
+                    quizData.height.inches = document.getElementById('inchesValue').value;
+                }
+                setTimeout(nextQuestion, 500);
+            }
+        }
+
+        // Initialize height unit display
+        document.getElementById('heightUnit').addEventListener('change', function() {
+            const inchesDiv = document.getElementById('heightInches');
+            if (this.value === 'ft') {
+                inchesDiv.style.display = 'block';
+            } else {
+                inchesDiv.style.display = 'none';
+                document.getElementById('inchesValue').value = '';
+                if (document.getElementById('heightValue').value) {
+                    saveHeightAndNext();
+                }
+            }
+        });
+
+        // Set initial state
+        if (document.getElementById('heightUnit').value === 'ft') {
+            document.getElementById('heightInches').style.display = 'block';
+        } else {
+            document.getElementById('heightInches').style.display = 'none';
+        }
+
+        document.getElementById('heightValue').addEventListener('input', saveHeightAndNext);
+        document.getElementById('inchesValue').addEventListener('input', saveHeightAndNext);
+
+        // Q2: Weight input
+        document.getElementById('weightValue').addEventListener('input', function() {
+            const value = this.value;
+            const unit = document.getElementById('weightUnit').value;
+            if (value) {
+                quizData.weight = { value, unit };
+                setTimeout(nextQuestion, 500);
+            }
+        });
+
+        // Q3: Image selector
+        document.querySelectorAll('[data-question="3"] .image-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('[data-question="3"] .image-option').forEach(opt => opt.classList.remove('selected'));
                 this.classList.add('selected');
+                quizData.physique = this.dataset.value;
+                setTimeout(nextQuestion, 500);
             });
         });
+
+        // Q4-Q8: Multiple choice with auto-advance
+        [4, 5, 6, 7, 8].forEach(qNum => {
+            document.querySelectorAll(`[data-question="${qNum}"] .option-button`).forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll(`[data-question="${qNum}"] .option-button`).forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const questionKey = ['', '', '', 'training', 'stops', 'restarts', 'consistency', 'success'][qNum];
+                    quizData[questionKey] = this.dataset.value;
+                    
+                    setTimeout(nextQuestion, 500);
+                });
+            });
+        });
+
+        updateProgress();
     </script>
 </body>
 
