@@ -472,7 +472,7 @@
             overflow: hidden;
             background: #94a3b8;
             aspect-ratio: 1 / 1;
-            touch-action: none;
+            touch-action: pan-y;
         }
 
         .before-after-base,
@@ -1049,6 +1049,32 @@
             range.addEventListener('input', (event) => {
                 updateSlider(event.target.value);
             });
+
+            // Enhanced touch handling for mobile: allow vertical scrolling, prevent horizontal page scroll
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isDragging = false;
+
+            widget.addEventListener('touchstart', function (e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isDragging = false;
+            }, { passive: true });
+
+            widget.addEventListener('touchmove', function (e) {
+                if (!isDragging && e.touches.length > 0) {
+                    const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+                    const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+                    
+                    // If horizontal movement is greater than vertical, it's a slider drag
+                    if (deltaX > deltaY && deltaX > 10) {
+                        isDragging = true;
+                        // Don't prevent default - let the range input handle it
+                        // The touch-action: pan-y CSS already prevents horizontal page scroll
+                    }
+                    // If vertical movement is greater, allow page scroll (default behavior)
+                }
+            }, { passive: true });
         });
     </script>
 </body>
