@@ -406,6 +406,26 @@
             background-color: #0052cc;
         }
 
+        .quiz-pricing {
+            width: 100%;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .quiz-pricing-amount {
+            font-weight: 500;
+        }
+
+        .quiz-pricing-original {
+            color: var(--text-secondary);
+            text-decoration: line-through;
+        }
+
+        .quiz-pricing-note {
+            font-weight: 400;
+        }
+
         .video-container {
             position: relative;
             width: 100%;
@@ -722,8 +742,8 @@
             }
 
             .hero-grid>.content2 {
-                align-items: flex-start;
-                text-align: left;
+                align-items: center;
+                text-align: center;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -935,6 +955,13 @@
                         <span class="primary-button-icon">→</span>
                     </span>
                 </button>
+                <div class="quiz-pricing">
+                    <span class="quiz-pricing-amount">
+                        <span class="quiz-pricing-original">$199</span>
+                        <span>$99</span>
+                    </span>
+                    <span class="quiz-pricing-note"> first month. Cancel anytime.</span>
+                </div>
             </div>
         </div>
         <div class=content id=resultsContent>
