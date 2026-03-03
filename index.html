@@ -488,11 +488,15 @@
             font-weight: 600;
             letter-spacing: 0.13em;
             text-transform: uppercase;
-            color: #222;
+            color: var(--text-secondary);
             position: absolute;
             inset: 0.9rem 1.25rem auto;
             pointer-events: none;
             z-index: 3;
+        }
+
+        .results-card-header span {
+            color: var(--text-secondary);
         }
 
         .before-after-wrapper {
@@ -656,8 +660,9 @@
                 color: #bfbfbf !important;
             }
 
-            .results-card-header {
-                color: rgba(255, 255, 255, 0.9) !important;
+            .results-card-header,
+            .results-card-header span {
+                color: #bfbfbf !important;
             }
         }
 
