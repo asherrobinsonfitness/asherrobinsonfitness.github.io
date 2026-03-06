@@ -369,12 +369,11 @@
         }
 
         .primary-button {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 460px;
-            padding: 0.9rem 1.5rem;
+            justify-content: center;
+            width: auto;
+            padding: 0.9rem 2rem;
             border-radius: 8px;
             background-color: var(--primary);
             color: #fff;
@@ -388,22 +387,7 @@
         }
 
         .primary-button-label {
-            flex: 1;
-            text-align: left;
-        }
-
-        .primary-button-right {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding-left: 1rem;
-            margin-left: 1rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.35);
-        }
-
-        .primary-button-icon {
-            font-size: 1.1rem;
-            line-height: 1;
+            text-align: center;
         }
 
         .primary-button:hover {
@@ -934,7 +918,7 @@
             <div class=content id=mainContent>
                 <div class=header-group>
                     <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
-                    <h1 class=headline style=font-weight:600>1:1 Fat Loss Coaching</h1>
+                    <h1 class=headline style=font-weight:600>Online Personal Training</h1>
                     <p class=subheadline>Dedicated coaching and support to help you train for what’s next.</p>
                 </div>
                 <div class="report-img video-container">
@@ -975,10 +959,7 @@
                 </div>
                 <button class="primary-button"
                     onclick="window.location.href='https://app.iclosed.io/e/asherrobinsonfitness/call'">
-                    <span class="primary-button-label">Get Started</span>
-                    <span class="primary-button-right">
-                        <span class="primary-button-icon">→</span>
-                    </span>
+                    <span class="primary-button-label">Apply for Coaching</span>
                 </button>
                 <div class="quiz-pricing">
                     <div class="quiz-pricing-amount">$50 first month, then $199/month.</div>
