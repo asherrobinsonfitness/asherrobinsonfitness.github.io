@@ -296,6 +296,22 @@
             background-color: #f0f0f0;
         }
 
+        .results-card-layout {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .results-card-text {
+            flex: 1;
+            order: 2;
+        }
+
+        .results-card-visual {
+            flex: 1;
+            order: 1;
+        }
+
         .section-title {
             font-size: 1.75rem;
             font-weight: 600;
@@ -446,10 +462,6 @@
             justify-content: center;
         }
 
-        .results-widget-desktop {
-            display: none;
-        }
-
         .results-card {
             background-color: #ffffff;
             border-radius: 8px;
@@ -462,6 +474,10 @@
             gap: 0;
             width: 100%;
             max-width: 460px;
+        }
+
+        .benefits-card {
+            padding: 0;
         }
 
         .results-card-header {
@@ -578,39 +594,30 @@
             border-radius: 999px;
         }
 
-        .results-card-footer {
+        .benefits-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .benefits-item {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1.5rem;
-            font-size: 0.8rem;
-            color: #6b7280;
-            padding: 1rem;
-            border-top: 1px solid #e5e7eb;
-            background: #ffffff;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: var(--text);
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        .results-card-footer .results-meta-left {
-            text-align: left;
-            flex: 0 0 auto;
+        .benefits-item:last-child {
+            border-bottom: none;
         }
 
-        .results-card-footer .results-meta-right {
-            text-align: right;
-            flex: 0 0 auto;
-        }
-
-        .results-meta-label {
-            text-transform: uppercase;
-            font-size: 0.7rem;
-            color: #9ca3af;
-            margin-bottom: 0.15rem;
-        }
-
-        .results-meta-value {
-            font-weight: 500;
-            color: #111827;
-            font-size: 0.9rem;
+        .benefits-number {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 400;
         }
 
         @media(prefers-color-scheme:dark) {
@@ -627,21 +634,21 @@
                 background-color: #222222 !important;
             }
 
-            .results-card-footer {
-                background: #222222 !important;
-                border-top-color: #3d3d3d !important;
-            }
-
-            .results-meta-value {
-                color: #F8FAFC !important;
-            }
-
-            .results-meta-label {
-                color: #bfbfbf !important;
-            }
-
             .results-card-header {
                 color: rgba(255, 255, 255, 0.9) !important;
+            }
+
+            .benefits-item {
+                border-bottom-color: #3d3d3d;
+                color: #F8FAFC;
+            }
+
+            .benefits-item:last-child {
+                border-bottom: none;
+            }
+
+            .benefits-number {
+                color: #9ca3af;
             }
         }
 
@@ -793,13 +800,36 @@
                 max-width: 960px
             }
 
-            .results-widget-desktop {
-                display: flex;
-                margin-bottom: var(--space-4);
+            .results-card {
+                max-width: 960px;
             }
 
-            .content#resultsContent {
-                display: none;
+            .results-card-layout {
+                flex-direction: row;
+                gap: var(--space-5);
+            }
+
+            .results-card-text {
+                order: 1;
+                text-align: left;
+                min-width: 0;
+            }
+
+            .results-card-visual {
+                order: 2;
+                min-width: 0;
+            }
+
+            .results-card .benefits-item {
+                justify-content: flex-start;
+            }
+
+            .results-card .benefits-item:last-child {
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .results-card-visual .before-after-wrapper {
+                border-radius: 0 8px 8px 0;
             }
         }
 
@@ -811,6 +841,10 @@
 
             .hero-grid>.content2 {
                 border-left-color: #282828;
+            }
+
+            .results-card .benefits-item:last-child {
+                border-bottom-color: #3d3d3d;
             }
         }
 
@@ -940,34 +974,6 @@
                 </div>
             </div>
             <div class=content2>
-                <div class="results-widget results-widget-desktop">
-                    <div class="results-card">
-                        <div class="before-after-wrapper" data-before-after-widget>
-                            <img class="before-after-base" loading="lazy"
-                                src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
-                                alt="Before transformation - full body">
-                            <div class="before-after-overlay">
-                                <img loading="lazy" src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
-                                    alt="After transformation - full body">
-                            </div>
-                            <div class="before-after-divider">
-                                <div class="before-after-handle">
-                                    <div class="before-after-handle-icon">
-                                        <span>←</span>
-                                        <span>→</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="results-card-header">
-                                <span>Before</span>
-                                <span>After</span>
-                            </div>
-                            <input class="before-after-range" type="range" min="0" max="100" value="50"
-                                aria-label="Drag to compare before and after">
-                        </div>
-                        
-                    </div>
-                </div>
                 <button class="primary-button"
                     onclick="window.location.href='https://app.iclosed.io/e/asherrobinsonfitness/call'">
                     <span class="primary-button-label">Apply for Coaching</span>
@@ -979,39 +985,42 @@
             </div>
         </div>
         <div class=content id=resultsContent>
-            <div class="results-widget results-widget-mobile">
-                <div class="results-card">
-                    <div class="before-after-wrapper" data-before-after-widget>
-                        <img class="before-after-base" loading="lazy"
-                            src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
-                            alt="Before transformation - full body">
-                        <div class="before-after-overlay">
-                            <img loading="lazy" src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
-                                alt="After transformation - full body">
+            <div class="results-widget">
+                <div class="results-card benefits-card">
+                    <div class="results-card-layout">
+                        <div class="results-card-text">
+                            <ul class="benefits-list">
+                                <li class="benefits-item"><span class="benefits-number">01</span> Get more career opportunities</li>
+                                <li class="benefits-item"><span class="benefits-number">02</span> Boost your self-confidence</li>
+                                <li class="benefits-item"><span class="benefits-number">03</span> Make a stronger first impression</li>
+                                <li class="benefits-item"><span class="benefits-number">04</span> Improve your dating life</li>
+                                <li class="benefits-item"><span class="benefits-number">05</span> Enhance your quality of life</li>
+                            </ul>
                         </div>
-                        <div class="before-after-divider">
-                            <div class="before-after-handle">
-                                <div class="before-after-handle-icon">
-                                    <span>←</span>
-                                    <span>→</span>
+                        <div class="results-card-visual" data-before-after-widget>
+                            <div class="before-after-wrapper">
+                                <img class="before-after-base" loading="lazy"
+                                    src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
+                                    alt="Before transformation - full body">
+                                <div class="before-after-overlay">
+                                    <img loading="lazy" src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
+                                        alt="After transformation - full body">
                                 </div>
+                                <div class="before-after-divider">
+                                    <div class="before-after-handle">
+                                        <div class="before-after-handle-icon">
+                                            <span>←</span>
+                                            <span>→</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="results-card-header">
+                                    <span>Before</span>
+                                    <span>After</span>
+                                </div>
+                                <input class="before-after-range" type="range" min="0" max="100" value="50"
+                                    aria-label="Drag to compare before and after">
                             </div>
-                        </div>
-                        <div class="results-card-header">
-                            <span>Before</span>
-                            <span>After</span>
-                        </div>
-                        <input class="before-after-range" type="range" min="0" max="100" value="50"
-                            aria-label="Drag to compare before and after">
-                    </div>
-                    <div class="results-card-footer">
-                        <div class="results-meta-left">
-                            <div class="results-meta-label">Visualisation</div>
-                            <div class="results-meta-value">15 Pounds</div>
-                        </div>
-                        <div class="results-meta-right">
-                            <div class="results-meta-label">Timeline</div>
-                            <div class="results-meta-value">6 Weeks</div>
                         </div>
                     </div>
                 </div>
@@ -1105,7 +1114,6 @@
                     updateSlider(event.target.value);
                 });
 
-                // Enhanced touch handling for mobile: allow vertical scrolling, prevent horizontal page scroll
                 let touchStartX = 0;
                 let touchStartY = 0;
                 let isDragging = false;
@@ -1120,14 +1128,9 @@
                     if (!isDragging && e.touches.length > 0) {
                         const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
                         const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
-                        
-                        // If horizontal movement is greater than vertical, it's a slider drag
                         if (deltaX > deltaY && deltaX > 10) {
                             isDragging = true;
-                            // Don't prevent default - let the range input handle it
-                            // The touch-action: pan-y CSS already prevents horizontal page scroll
                         }
-                        // If vertical movement is greater, allow page scroll (default behavior)
                     }
                 }, { passive: true });
             });
