@@ -505,6 +505,32 @@
             touch-action: pan-y;
         }
 
+        .before-after-mobile {
+            display: block;
+        }
+
+        .before-after-static-desktop {
+            display: none;
+            position: relative;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            background: #ffffff;
+            aspect-ratio: 3 / 4;
+        }
+
+        .before-after-static-inner {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .before-after-static-inner img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         .before-after-base,
         .before-after-overlay img {
             width: 100%;
@@ -604,7 +630,7 @@
         .benefits-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1.25rem;
             padding: 1rem 1.25rem;
             font-size: 1rem;
             color: var(--text);
@@ -628,6 +654,10 @@
             }
 
             .before-after-wrapper {
+                background: #222222 !important;
+            }
+
+            .before-after-static-desktop {
                 background: #222222 !important;
             }
 
@@ -806,7 +836,7 @@
             }
 
             .results-card {
-                max-width: 960px;
+                max-width: 100%;
             }
 
             .results-card-layout {
@@ -826,8 +856,17 @@
 
             .results-card-visual {
                 order: 2;
+                flex: 1;
                 min-width: 0;
                 border-bottom: none;
+            }
+
+            .before-after-mobile {
+                display: none;
+            }
+
+            .before-after-static-desktop {
+                display: block;
             }
 
             .results-card .benefits-item {
@@ -1011,8 +1050,9 @@
                                 <li class="benefits-item"><span class="benefits-number">05</span> Enhance your quality of life</li>
                             </ul>
                         </div>
-                        <div class="results-card-visual" data-before-after-widget>
-                            <div class="before-after-wrapper">
+                        <div class="results-card-visual">
+                            <!-- Mobile: slider -->
+                            <div class="before-after-wrapper before-after-mobile" data-before-after-widget>
                                 <img class="before-after-base" loading="lazy"
                                     src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
                                     alt="Before transformation - full body">
@@ -1034,6 +1074,22 @@
                                 </div>
                                 <input class="before-after-range" type="range" min="0" max="100" value="50"
                                     aria-label="Drag to compare before and after">
+                            </div>
+
+                            <!-- Desktop: static side-by-side images -->
+                            <div class="before-after-wrapper before-after-static-desktop">
+                                <div class="before-after-static-inner">
+                                    <img loading="lazy"
+                                        src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
+                                        alt="Before transformation - full body">
+                                    <img loading="lazy"
+                                        src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
+                                        alt="After transformation - full body">
+                                </div>
+                                <div class="results-card-header">
+                                    <span>Before</span>
+                                    <span>After</span>
+                                </div>
                             </div>
                         </div>
                     </div>
