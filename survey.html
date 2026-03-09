@@ -1327,46 +1327,55 @@
                     id: 'age',
                     label: 'Age',
                     path: 'age',
-                    question: 'How old are you?',
+                    question: 'What’s your age?',
                     options: [
-                        { value: '18_24', label: '18–24' },
-                        { value: '25_34', label: '25–34' },
-                        { value: '35_44', label: '35–44' },
-                        { value: '45_54', label: '45–54' },
-                        { value: '55_plus', label: '55+' }
+                        { value: '17_or_younger', label: '17 or younger' },
+                        { value: '18_29', label: '18-29' },
+                        { value: '30_39', label: '30-39' },
+                        { value: '40_49', label: '40-49' },
+                        { value: '50_59', label: '50-59' },
+                        { value: '60_or_older', label: '60 or older' }
                     ]
                 },
                 {
                     id: 'coach_gender',
                     label: 'Coach Gender',
                     path: 'gender',
-                    question: "Do you prefer your coach's gender?",
+                    question: 'What do you prefer?',
                     options: [
-                        { value: 'no_preference', label: 'No preference' },
+                        { value: 'female', label: 'Female coach' },
                         { value: 'male', label: 'Male coach' },
-                        { value: 'female', label: 'Female coach' }
+                        { value: 'no_preference', label: 'No preference' }
                     ]
                 },
                 {
                     id: 'coach_style',
                     label: 'Coach Style',
                     path: 'style',
-                    question: "What's your ideal coaching style?",
+                    question: 'Describe your ideal coach',
                     options: [
-                        { value: 'supportive', label: 'Supportive & encouraging' },
-                        { value: 'direct', label: 'Direct & no-nonsense' },
-                        { value: 'balanced', label: 'A balanced mix of both' }
+                        { value: 'high_energy', label: 'High-energy' },
+                        { value: 'tough_love', label: 'Knows when to give me tough love' },
+                        { value: 'calm_cool_collected', label: 'Calm, cool and collected' },
+                        { value: 'always_positive', label: 'Always Positive' },
+                        { value: 'drill_sergeant', label: 'Drill sergeant' },
+                        { value: 'sense_of_humor', label: 'Has a sense of humor' },
+                        { value: 'analytical_results_driven', label: 'Analytical and results-driven' },
+                        { value: 'strictly_business', label: 'Strictly business' },
+                        { value: 'personalize_workouts', label: 'Goes the extra mile to personalize my workouts' }
                     ]
                 },
                 {
                     id: 'coach_intensity',
                     label: 'Coach Intensity',
                     path: 'intensity',
-                    question: 'How intense do you want your coaching to feel?',
+                    question: 'What level of intensity do you want from your coach?',
                     options: [
-                        { value: 'easygoing', label: 'Easygoing' },
-                        { value: 'moderate', label: 'Moderate' },
-                        { value: 'high_intensity', label: 'High intensity' }
+                        { value: 'not_intense', label: 'Not intense' },
+                        { value: 'a_little_intense', label: 'A little intense' },
+                        { value: 'somewhat_intense', label: 'Somewhat intense' },
+                        { value: 'intense', label: 'Intense' },
+                        { value: 'very_intense', label: 'Very intense' }
                     ]
                 }
             ];
@@ -1481,7 +1490,7 @@
                         } else {
                             console.log('Survey complete', answers);
                             // Redirect to coach selection page after the last question is answered
-                            window.location.href = '/coach.html';
+                            window.location.href = 'coach.html';
                         }
                     });
 
