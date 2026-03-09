@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=5">
+    <title>Choose Your Coach | Asher Robinson Fitness</title>
+    <meta name=description content="Choose your coach and get started with personalized training from Asher Robinson Fitness.">
+    <meta name=robots content="index,follow">
+    <link rel=canonical href=https://asherrobinsonfitness.com/coach>
+    <style>
+        @media(prefers-color-scheme:dark) {
+            body { background-color: #1c1c1c !important }
+            .container { background: #1c1c1c !important }
+            body, .content, .headline, h1, h2, h3, p, span, div, a, label { color: #F8FAFC !important }
+            .subheadline { color: #bfbfbf !important }
+            .coach-card, .timeline-card { background: #282828 !important; border-color: #3d3d3d !important }
+            .coach-card-tag { background: #333 !important; color: #F8FAFC !important }
+        }
+    </style>
+    <style>
+        :root {
+            --space-2: 1rem;
+            --space-4: 2rem;
+            --space-5: 2.5rem;
+            --space-6: 3rem;
+            --primary: #06f;
+            --text: #222;
+            --text-secondary: #717171;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif; }
+
+        body {
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            background: #f7f7f7;
+        }
+
+        .container { display: flex; flex-direction: column; background: #f7f7f7; min-height: 100vh; }
+
+        .content {
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 520px;
+            padding: var(--space-5) 1.5rem;
+        }
+
+        .content .header-group {
+            margin-bottom: var(--space-4);
+        }
+
+        .header-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .headline {
+            font-size: 1.75rem;
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            color: var(--text);
+            margin-top: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+
+        .subheadline {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            letter-spacing: -.005em;
+            max-width: 450px;
+            margin: 0 auto;
+            margin-top: 0.25rem;
+        }
+
+        .coach-card {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin-bottom: var(--space-4);
+        }
+        .coach-card-img-wrap {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: #e8e8e8;
+        }
+        .coach-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .coach-card-img-wrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .coach-card-badge {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.9rem;
+            z-index: 2;
+            padding: 0.25rem 0.95rem;
+            border-radius: 8px;
+            background: rgba(102, 102, 102, 0.95);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.16);
+        }
+        .coach-name {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            z-index: 2;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .coach-card-bio {
+            padding: 1.25rem 1.25rem 0;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+        .coach-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem 1.25rem;
+        }
+        .coach-card-tag {
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: #f0f0f0;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .track-record {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: auto;
+            padding: 0.9rem 1.25rem;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
+            transition: background-color 0.15s ease;
+        }
+
+        .primary-button-label {
+            flex: 1;
+            text-align: center;
+        }
+
+        .primary-button:hover {
+            background-color: #0052cc;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: var(--space-4) 1.25rem;
+                max-width: 600px;
+            }
+
+            .headline {
+                font-size: 1.75rem;
+            }
+
+            .subheadline {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main class="content">
+            <div class="header-group">
+                <h1 class="headline">Personalized coaching recommendations, just for you</h1>
+                <p class="subheadline">Pick your coach and then confirm your spot. You can always change later if needed.</p>
+            </div>
+
+            <article class="coach-card">
+                <div class="coach-card-img-wrap">
+                    <img src="https://i.postimg.cc/zXgTvr0r/97f35b09-3b04-4377-aeaf-b0c2300e9ece.webp" alt="Coach Asher" loading="lazy" />
+                    <span class="coach-card-badge">LIMITED SPOTS</span>
+                    <h2 class="coach-name">Coach Asher</h2>
+                </div>
+                <p class="coach-card-bio">Previously: Personal trainer and transformation specialist. Asher is a former athlete specializing in helping men ages 25–44 achieve their goals.</p>
+                <div class="coach-card-tags">
+                    <span class="coach-card-tag">Sports Performance</span>
+                    <span class="coach-card-tag">Strength Training</span>
+                    <span class="coach-card-tag">Weight Loss</span>
+                    <span class="coach-card-tag">Bodybuilding</span>
+                    <span class="coach-card-tag">Powerlifting</span>
+                </div>
+            </article>
+
+            <p class="track-record">The coach of your choice will have a proven track record of helping clients lose weight.</p>
+
+            <button type="button" class="primary-button" onclick="window.location.href='payment.html'">
+                <span class="primary-button-label">Train with Asher</span>
+            </button>
+        </main>
+    </div>
+</body>
+
+</html>
+
