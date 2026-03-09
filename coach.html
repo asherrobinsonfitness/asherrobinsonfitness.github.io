@@ -157,14 +157,6 @@
             color: var(--text);
         }
 
-        .track-record {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-            text-align: center;
-            margin-bottom: var(--space-4);
-        }
-
         .primary-button {
             display: inline-flex;
             align-items: center;
@@ -207,6 +199,10 @@
                 font-size: 1rem;
             }
         }
+
+        @media (min-width: 1024px) {
+            .headline { font-size: 2rem; }
+        }
     </style>
 </head>
 
@@ -233,8 +229,6 @@
                     <span class="coach-card-tag">Powerlifting</span>
                 </div>
             </article>
-
-            <p class="track-record">The coach of your choice will have a proven track record of helping clients lose weight.</p>
 
             <button type="button" class="primary-button" onclick="window.location.href='payment.html'">
                 <span class="primary-button-label">Train with Asher</span>
