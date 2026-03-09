@@ -1531,18 +1531,6 @@
                 }
             });
 
-            // Ensure the current question is registered in history so mobile back/forward works reliably
-            (function registerInitialState() {
-                const step = steps[currentStepIndex];
-                if (!step || !window.history || typeof window.history.replaceState !== 'function') return;
-                try {
-                    const initialUrl = urlForStep(step);
-                    window.history.replaceState({ stepId: step.id }, '', initialUrl + window.location.search);
-                } catch (e) {
-                    // ignore history errors
-                }
-            })();
-
             renderStep();
         });
     </script>
