@@ -365,6 +365,10 @@
             margin-bottom: 0.5rem
         }
 
+        .hero-header-desktop {
+            display: none;
+        }
+
         .callout {
             color: var(--text);
             font-weight: 500;
@@ -463,6 +467,14 @@
             justify-content: center;
         }
 
+        .results-widget-mobile {
+            display: flex;
+        }
+
+        .results-widget-desktop {
+            display: none;
+        }
+
         .results-card {
             background-color: #ffffff;
             border-radius: 8px;
@@ -503,32 +515,6 @@
             background: #ffffff;
             aspect-ratio: 1 / 1;
             touch-action: pan-y;
-        }
-
-        .before-after-mobile {
-            display: block;
-        }
-
-        .before-after-static-desktop {
-            display: none;
-            position: relative;
-            border-radius: 8px 8px 0 0;
-            overflow: hidden;
-            background: #ffffff;
-            aspect-ratio: 3 / 4;
-        }
-
-        .before-after-static-inner {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        .before-after-static-inner img {
-            width: 50%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
 
         .before-after-base,
@@ -645,6 +631,64 @@
             color: var(--text-secondary);
             font-size: 0.95rem;
             font-weight: 400;
+            flex-shrink: 0;
+        }
+
+        .results-card-desktop {
+            width: 100%;
+            max-width: 960px;
+            display: flex;
+            overflow: hidden;
+            padding: 1.25rem; /* shared padding for text + images */
+            column-gap: 1.25rem; /* gap between text and image sections */
+        }
+
+        .results-desktop-text {
+            flex: 1;
+        }
+
+        .results-desktop-visual {
+            flex: 1;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .results-desktop-images {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .results-desktop-image-inner {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background-color: #f5f5f5; /* subtle, neutral card bg */
+        }
+
+        .results-desktop-image-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .results-desktop-image-label {
+            position: absolute;
+            top: 0.55rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            z-index: 2;
+        }
+
+        .results-desktop-image-label--right {
+            left: 50%;
         }
 
         @media(prefers-color-scheme:dark) {
@@ -654,10 +698,6 @@
             }
 
             .before-after-wrapper {
-                background: #222222 !important;
-            }
-
-            .before-after-static-desktop {
                 background: #222222 !important;
             }
 
@@ -684,6 +724,10 @@
 
             .benefits-number {
                 color: #bfbfbf !important;
+            }
+
+            .results-desktop-image-inner {
+                background-color: #2a2a2a; /* subtle contrast against #222 card */
             }
         }
 
@@ -827,6 +871,18 @@
                 font-size: 2.25rem
             }
 
+            /* Move hero header to button column on desktop */
+            .hero-header-main {
+                display: none;
+            }
+
+            .hero-header-desktop {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                margin-bottom: 0.75rem;
+            }
+
             .video-container {
                 max-width: 960px
             }
@@ -835,50 +891,34 @@
                 max-width: 960px
             }
 
+            .results-widget-mobile {
+                display: none;
+            }
+
+            .results-widget-desktop {
+                display: flex;
+            }
+
             .results-card {
                 max-width: 100%;
             }
 
-            .results-card-layout {
+            .results-card-desktop {
+                display: flex;
                 flex-direction: row;
-                gap: 0;
+                align-items: stretch;
             }
 
-            .results-card-text {
-                order: 1;
-                flex: 1;
-                text-align: left;
-                min-width: 0;
+            .results-desktop-text {
                 display: flex;
                 flex-direction: column;
-                border-right: 1px solid #e5e7eb;
             }
 
-            .results-card-visual {
-                order: 2;
+            .results-desktop-text .benefits-list {
                 flex: 1;
-                min-width: 0;
-                border-bottom: none;
-            }
-
-            .before-after-mobile {
-                display: none;
-            }
-
-            .before-after-static-desktop {
-                display: block;
-            }
-
-            .results-card .benefits-item {
-                justify-content: flex-start;
-            }
-
-            .results-card .benefits-item:last-child {
-                border-bottom: 1px solid #e5e7eb;
-            }
-
-            .results-card-visual .before-after-wrapper {
-                border-radius: 0 8px 8px 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
         }
 
@@ -1003,7 +1043,7 @@
     <div class=container>
         <div class=hero-grid>
             <div class=content id=mainContent>
-                <div class=header-group>
+                <div class="header-group hero-header-main">
                     <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
                     <h1 class=headline style=font-weight:600>Online Personal Training</h1>
                     <p class=subheadline>Dedicated coaching and support to help you train for what’s next.</p>
@@ -1027,6 +1067,11 @@
                 </div>
             </div>
             <div class=content2>
+                <div class="header-group hero-header-desktop">
+                    <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
+                    <h1 class=headline style=font-weight:600>Online Personal Training</h1>
+                    <p class=subheadline>Dedicated coaching and support to help you train for what’s next.</p>
+                </div>
                 <button class="primary-button"
                     onclick="window.location.href='https://app.iclosed.io/e/asherrobinsonfitness/call'">
                     <span class="primary-button-label">Apply for Coaching</span>
@@ -1038,7 +1083,8 @@
             </div>
         </div>
         <div class=content id=resultsContent>
-            <div class="results-widget">
+            <!-- Mobile / tablet widget: slider + benefits -->
+            <div class="results-widget results-widget-mobile">
                 <div class="results-card benefits-card">
                     <div class="results-card-layout">
                         <div class="results-card-text">
@@ -1051,8 +1097,7 @@
                             </ul>
                         </div>
                         <div class="results-card-visual">
-                            <!-- Mobile: slider -->
-                            <div class="before-after-wrapper before-after-mobile" data-before-after-widget>
+                            <div class="before-after-wrapper" data-before-after-widget>
                                 <img class="before-after-base" loading="lazy"
                                     src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
                                     alt="Before transformation - full body">
@@ -1075,21 +1120,36 @@
                                 <input class="before-after-range" type="range" min="0" max="100" value="50"
                                     aria-label="Drag to compare before and after">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <!-- Desktop: static side-by-side images -->
-                            <div class="before-after-wrapper before-after-static-desktop">
-                                <div class="before-after-static-inner">
-                                    <img loading="lazy"
-                                        src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
-                                        alt="Before transformation - full body">
-                                    <img loading="lazy"
-                                        src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
-                                        alt="After transformation - full body">
-                                </div>
-                                <div class="results-card-header">
-                                    <span>Before</span>
-                                    <span>After</span>
-                                </div>
+            <!-- Desktop widget: text + side-by-side images -->
+            <div class="results-widget results-widget-desktop">
+                <div class="results-card benefits-card results-card-desktop">
+                    <div class="results-desktop-text">
+                        <ul class="benefits-list">
+                            <li class="benefits-item"><span class="benefits-number">01</span> Get more career opportunities</li>
+                            <li class="benefits-item"><span class="benefits-number">02</span> Boost your self-confidence</li>
+                            <li class="benefits-item"><span class="benefits-number">03</span> Make a stronger first impression</li>
+                            <li class="benefits-item"><span class="benefits-number">04</span> Improve your dating life</li>
+                            <li class="benefits-item"><span class="benefits-number">05</span> Enhance your quality of life</li>
+                        </ul>
+                    </div>
+                    <div class="results-desktop-visual">
+                        <div class="results-desktop-images">
+                            <div class="results-desktop-image-inner">
+                                <span class="results-desktop-image-label">Before</span>
+                                <img loading="lazy"
+                                    src="https://i.postimg.cc/wvHwgXWM/fatme.webp"
+                                    alt="Before transformation - full body">
+                            </div>
+                            <div class="results-desktop-image-inner">
+                                <span class="results-desktop-image-label results-desktop-image-label--right">After</span>
+                                <img loading="lazy"
+                                    src="https://i.postimg.cc/76DKw3Bf/thinme.webp"
+                                    alt="After transformation - full body">
                             </div>
                         </div>
                     </div>
