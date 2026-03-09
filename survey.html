@@ -1067,17 +1067,29 @@
         .survey-main {
             flex: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1.5rem;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: var(--space-4) 1.25rem 2.5rem;
         }
 
         .survey-card {
             width: 100%;
-            max-width: 460px;
+            max-width: 100%;
             border-radius: 0;
             box-shadow: none;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .survey-inner {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
         }
 
         .survey-steps-pill {
@@ -1107,11 +1119,15 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: -0.55rem;
+            bottom: 0.12rem;
             width: 4px;
             height: 4px;
             border-radius: 999px;
             background-color: #111827;
+        }
+
+        .survey-step--completed {
+            color: var(--text);
         }
 
         .survey-question {
@@ -1206,7 +1222,7 @@
             align-items: center;
             justify-content: center;
             min-width: 160px;
-            transition: background-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+            transition: none;
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -1214,7 +1230,6 @@
         .survey-prev-step:hover {
             background-color: #ebebeb;
             color: var(--text);
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
         }
 
         @media (max-width: 480px) {
@@ -1236,7 +1251,8 @@
                 color: var(--text-secondary) !important;
             }
 
-            .survey-step--active {
+            .survey-step--active,
+            .survey-step--completed {
                 color: #f9fafb !important;
             }
 
@@ -1268,31 +1284,33 @@
             }
 
             .survey-prev-step:hover {
-                background-color: #1f2933;
+                background-color: #252525;
                 color: #f9fafb;
             }
         }
     </style>
 </head>
 
-<body class="survey-page">
-    <div class="survey-main">
-        <div class="survey-card">
-            <div class="survey-steps-pill" aria-hidden="true" id="survey-steps-pill">
-                <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
-                <span class="survey-step" data-step-id="age">Age</span>
-                <span class="survey-step" data-step-id="coach_gender">Gender</span>
-                <span class="survey-step" data-step-id="coach_style">Style</span>
-                <span class="survey-step" data-step-id="coach_intensity">Intensity</span>
-            </div>
-            <h1 class="survey-question" id="survey-question-text">What's your top fitness goal?</h1>
-            <form id="fitness-goal-form">
-                <div class="survey-options" id="survey-options-container">
-                    <!-- options will be injected by script -->
+<body>
+    <div class="container">
+        <div class="content" id="mainContent">
+            <div class="survey-inner">
+                <div class="survey-steps-pill" aria-hidden="true" id="survey-steps-pill">
+                    <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
+                    <span class="survey-step" data-step-id="age">Age</span>
+                    <span class="survey-step" data-step-id="coach_gender">Gender</span>
+                    <span class="survey-step" data-step-id="coach_style">Style</span>
+                    <span class="survey-step" data-step-id="coach_intensity">Intensity</span>
                 </div>
-            </form>
-            <div style="display:flex; justify-content:center;">
-                <button type="button" class="survey-prev-step" id="survey-prev-step">Previous step</button>
+                <h1 class="survey-question" id="survey-question-text">What's your top fitness goal?</h1>
+                <form id="fitness-goal-form">
+                    <div class="survey-options" id="survey-options-container">
+                        <!-- options will be injected by script -->
+                    </div>
+                </form>
+                <div style="display:flex; justify-content:center;">
+                    <button type="button" class="survey-prev-step" id="survey-prev-step">Previous step</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1375,10 +1393,20 @@
                     const spans = stepsPill.querySelectorAll('.survey-step');
                     spans.forEach((span) => {
                         const stepId = span.getAttribute('data-step-id');
-                        if (stepId === step.id) {
+                        const indexForSpan = steps.findIndex(s => s.id === stepId);
+                        const isActive = stepId === step.id;
+                        const isCompleted = indexForSpan > -1 && indexForSpan < currentStepIndex && answers[steps[indexForSpan].id];
+
+                        if (isActive) {
                             span.classList.add('survey-step--active');
                         } else {
                             span.classList.remove('survey-step--active');
+                        }
+
+                        if (isCompleted) {
+                            span.classList.add('survey-step--completed');
+                        } else {
+                            span.classList.remove('survey-step--completed');
                         }
                     });
                 }
