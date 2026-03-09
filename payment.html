@@ -76,7 +76,6 @@
             line-height: 1.15;
             letter-spacing: -.02em;
             color: var(--text);
-            margin-top: var(--space-2);
             margin-bottom: var(--space-2);
         }
 
@@ -164,19 +163,6 @@
             font-size: 0.8rem;
             font-weight: 500;
             color: var(--text);
-        }
-
-        .summary-muted {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .summary-muted::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.7);
-            pointer-events: none;
         }
 
         /* Payment card */
@@ -331,12 +317,12 @@
 <body>
     <div class="container">
         <main class="content">
-            <div class="header-group summary-muted">
+            <div class="header-group">
                 <h1 class="headline">Personalized coaching recommendations, just for you</h1>
-                <p class="subheadline">You're one step away! Pick your coach to join and crush your first workout. You can always change later if needed.</p>
+                <p class="subheadline">Pick your coach and then confirm your spot. You can always change later if needed.</p>
             </div>
 
-            <article class="coach-card summary-muted">
+            <article class="coach-card">
                 <div class="coach-card-img-wrap">
                     <img src="https://i.postimg.cc/zXgTvr0r/97f35b09-3b04-4377-aeaf-b0c2300e9ece.webp" alt="Coach Asher" loading="lazy" />
                     <span class="coach-card-badge">LIMITED SPOTS</span>
