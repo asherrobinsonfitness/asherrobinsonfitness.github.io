@@ -543,7 +543,7 @@
                     </div>
                 </section>
 
-                <section class="payment-section" aria-label="Payment">
+                <section class="payment-section" id="paymentSection" aria-label="Payment">
                     <button type="button" class="primary-button" id="gpayBtn" aria-label="Pay with Google Pay">
                         <span class="gpay-icon">G Pay</span> Pay with Google Pay
                     </button>
@@ -591,8 +591,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var gpayBtn = document.getElementById('gpayBtn');
-            if (gpayBtn && typeof gpayBtn.scrollIntoView === 'function') {
-                gpayBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            var paymentSection =
+                document.getElementById('paymentSection') ||
+                (gpayBtn && typeof gpayBtn.closest === 'function' ? gpayBtn.closest('.payment-section') : null) ||
+                (gpayBtn ? gpayBtn.parentElement : null);
+
+            if (paymentSection && typeof paymentSection.scrollIntoView === 'function') {
+                paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     </script>
