@@ -19,6 +19,7 @@
             footer { color: #bfbfbf !important }
             footer a { color: #06f !important }
             .payment-card, .coach-card, .timeline-card { background: #282828 !important; border-color: #3d3d3d !important }
+            .payment-step-icon { color: #111827 !important; }
             .coach-card-tag { background: #333 !important; color: #F8FAFC !important }
             .rare-find { background: #333 !important; border-color: #444 !important; color: #F8FAFC !important }
             .promo-input { background: #333 !important; border-color: #444 !important; color: #F8FAFC !important }
@@ -281,6 +282,13 @@
             font-weight: 700;
         }
 
+        .payment-step-icon {
+            font-weight: 800;
+            font-size: 0.85rem;
+            line-height: 1;
+            color: #111827;
+        }
+
         /* Promo */
         .promo-wrap { margin-bottom: 1.25rem; }
         .promo-input {
@@ -460,6 +468,37 @@
             <div class="content payment-inner">
                 <section class="payment-hero-image-wrap" aria-hidden="true">
                     <img src="https://i.postimg.cc/nchLrbZr/162cbb4a-ab1f-4e0c-a09b-9db296514bbb.webp" alt="Client training outdoors with dumbbells" loading="lazy" />
+                </section>
+
+                <section class="timeline-card" aria-label="Next steps after you sign up">
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true"><span class="payment-step-icon">1</span></span>
+                        <div>
+                            <div class="title">Download the Coaching App</div>
+                            <div class="desc">You'll receive an email immediately with a link to download the app.</div>
+                        </div>
+                    </div>
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true"><span class="payment-step-icon">2</span></span>
+                        <div>
+                            <div class="title">Book Your Onboarding Call</div>
+                            <div class="desc">Inside the app you'll schedule a quick call with me so I can learn about your goals.</div>
+                        </div>
+                    </div>
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true"><span class="payment-step-icon">3</span></span>
+                        <div>
+                            <div class="title">Get Your Custom Plan</div>
+                            <div class="desc">You'll receive your personalized workouts, nutrition targets, and progress tracking.</div>
+                        </div>
+                    </div>
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true"><span class="payment-step-icon">4</span></span>
+                        <div>
+                            <div class="title">Start Your First Week</div>
+                            <div class="desc">You’ll begin your program and check in with me directly through the app.</div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="timeline-card" aria-label="Payment breakdown and trial timeline">
