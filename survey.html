@@ -420,9 +420,10 @@
             display: none;
         }
 
-        .primary-button:hover {
-            /* keep design static, only subtle color change if desired */
-            background-color: #0052cc;
+        @media (hover: hover) and (pointer: fine) {
+            .primary-button:hover {
+                background-color: #0052cc;
+            }
         }
 
         .quiz-pricing {
@@ -1169,8 +1170,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .survey-option:hover {
-            background-color: #ebebeb;
+        @media (hover: hover) and (pointer: fine) {
+            .survey-option:hover {
+                background-color: #ebebeb;
+            }
         }
 
         .survey-option-label {
