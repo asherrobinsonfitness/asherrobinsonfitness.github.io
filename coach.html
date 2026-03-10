@@ -50,6 +50,15 @@
             max-width: 520px;
             padding: var(--space-5) 1.5rem;
         }
+        .coach-top-content {
+            max-width: 920px;
+        }
+        .coach-header-only {
+            padding-bottom: 0;
+        }
+        .coach-main {
+            padding-top: 0;
+        }
 
         .content .header-group {
             margin-bottom: var(--space-4);
@@ -209,12 +218,14 @@
 
 <body>
     <div class="container">
-        <main class="content">
+        <header class="content coach-top-content coach-header-only">
             <div class="header-group">
                 <h1 class="headline">Congrats, You're a Fit!</h1>
                 <p class="subheadline">Based on your answers, you look like a strong candidate for coaching.</p>
             </div>
+        </header>
 
+        <main class="content coach-main">
             <article class="coach-card">
                 <div class="coach-card-img-wrap">
                     <img src="https://i.postimg.cc/zXgTvr0r/97f35b09-3b04-4377-aeaf-b0c2300e9ece.webp" alt="Coach Asher" loading="lazy" />
