@@ -1534,6 +1534,8 @@
                     }
 
                     button.addEventListener('click', () => {
+
+                        button.blur(); // prevents auto focus on next question
                         if (isTransitioning) return;
                         isTransitioning = true;
                         answers[step.id] = opt.value;
