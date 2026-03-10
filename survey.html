@@ -1370,6 +1370,7 @@
                     question: 'If accepted, are you ready to start coaching?',
                     options: [
                         { value: 'yes', label: "Yes, I'm ready" },
+                        { value: 'no', label: "Not yet" },
                         { value: 'looking', label: 'Just looking around' }
                     ]
                 }
@@ -1487,7 +1488,7 @@
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
                             (step.id === 'age' && (opt.value !== '25_34' && opt.value !== '35_44')) ||
                             (step.id === 'plan' && (opt.value === 'maybe' || opt.value === 'no')) ||
-                            (step.id === 'start' && opt.value === 'looking');
+                            (step.id === 'start' && (opt.value === 'looking' || opt.value === 'no'));
 
                         if (shouldSendToConfirmation) {
                             redirectToConfirmation();
