@@ -85,7 +85,6 @@
             color: var(--text-secondary);
             line-height: 1.6;
             letter-spacing: -.005em;
-            max-width: 450px;
             margin: 0 auto;
             margin-top: 0.25rem;
         }
@@ -199,6 +198,13 @@
             .content {
                 padding: var(--space-4) 1.25rem;
                 max-width: 600px;
+            }
+
+            .content.coach-header-only {
+                padding-bottom: 0;
+            }
+            .content.coach-main {
+                padding-top: 0;
             }
 
             .headline {
