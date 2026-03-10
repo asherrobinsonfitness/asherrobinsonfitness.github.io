@@ -1265,9 +1265,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .survey-prev-step:hover {
-            background-color: #ebebeb;
-            color: var(--text);
+        @media (hover: hover) and (pointer: fine) {
+            .survey-prev-step:hover {
+                background-color: #ebebeb;
+                color: var(--text);
+            }
         }
 
         @media (max-width: 480px) {
