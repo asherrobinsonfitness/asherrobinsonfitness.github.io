@@ -183,6 +183,7 @@
             text-decoration: none;
             box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
             transition: background-color 0.15s ease;
+            position: relative;
         }
 
         .primary-button-label {
@@ -192,6 +193,25 @@
 
         .primary-button:hover {
             background-color: #0052cc;
+        }
+
+        .button-spinner {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-top-color: #ffffff;
+            animation: button-spin 0.7s linear infinite;
+        }
+
+        @keyframes button-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
@@ -243,11 +263,63 @@
                 </div>
             </article>
 
-            <button type="button" class="primary-button" onclick="window.location.href='payment.html'">
+            <button type="button" class="primary-button" id="start-coaching-button">
                 <span class="primary-button-label">Start Coaching with Asher</span>
             </button>
         </main>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const button = document.getElementById('start-coaching-button');
+            if (!button) return;
+
+            const resetButton = () => {
+                button.dataset.loading = 'false';
+                button.disabled = false;
+
+                const label = button.querySelector('.primary-button-label');
+                if (label) {
+                    label.style.display = '';
+                }
+
+                const spinner = button.querySelector('.button-spinner');
+                if (spinner) {
+                    spinner.remove();
+                }
+            };
+
+            resetButton();
+
+            window.addEventListener('pageshow', function () {
+                // handles back/forward cache restores too
+                resetButton();
+            });
+
+            button.addEventListener('click', function () {
+                if (button.dataset.loading === 'true') return;
+                button.dataset.loading = 'true';
+                button.disabled = true;
+
+                const label = button.querySelector('.primary-button-label');
+                if (label) {
+                    label.style.display = 'none';
+                }
+
+                let spinner = button.querySelector('.button-spinner');
+                if (!spinner) {
+                    spinner = document.createElement('span');
+                    spinner.className = 'button-spinner';
+                    spinner.setAttribute('aria-hidden', 'true');
+                    button.appendChild(spinner);
+                }
+
+                // small delay so spinner is perceptible and feels responsive
+                setTimeout(function () {
+                    window.location.href = 'payment.html' + window.location.search;
+                }, 500);
+            });
+        });
+    </script>
 </body>
 
 </html>
