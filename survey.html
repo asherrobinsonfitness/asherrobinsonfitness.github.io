@@ -1298,9 +1298,8 @@
                 <div class="survey-steps-pill" aria-hidden="true" id="survey-steps-pill">
                     <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
                     <span class="survey-step" data-step-id="age">Age</span>
-                    <span class="survey-step" data-step-id="coach_gender">Gender</span>
-                    <span class="survey-step" data-step-id="coach_style">Style</span>
-                    <span class="survey-step" data-step-id="coach_intensity">Intensity</span>
+                    <span class="survey-step" data-step-id="tracking">Tracking</span>
+                    <span class="survey-step" data-step-id="acceptance">Acceptance</span>
                 </div>
                 <h1 class="survey-question" id="survey-question-text">What's your top fitness goal?</h1>
                 <form id="fitness-goal-form">
@@ -1320,14 +1319,14 @@
                 {
                     id: 'goal',
                     label: 'Your Goal',
-                    path: '',
-                    question: "What's your top fitness goal?",
+                    path: 'goal',
+                    question: "What’s your main goal right now?",
                     options: [
-                        { value: 'lose_weight', label: 'Lose weight' },
-                        { value: 'get_toned', label: 'Get toned' },
-                        { value: 'increase_muscle', label: 'Increase muscle mass' },
-                        { value: 'health_longevity', label: 'Improve health and longevity' },
-                        { value: 'athlete_competitor', label: 'Improve as an athlete or competitor' },
+                        { value: 'lose_10_20', label: 'Lose 10-20 pounds' },
+                        { value: 'lose_20_40', label: 'Lose 20-40 pounds' },
+                        { value: 'lose_40_plus', label: 'Lose 40+ pounds' },
+                        { value: 'build_muscle', label: 'Build muscle' },
+                        { value: 'improve_fitness', label: 'Just improve general fitness' },
                         { value: 'not_sure', label: "I'm not sure" }
                     ]
                 },
@@ -1338,52 +1337,33 @@
                     question: 'What’s your age?',
                     options: [
                         { value: '17_or_younger', label: '17 or younger' },
-                        { value: '18_29', label: '18-29' },
-                        { value: '30_39', label: '30-39' },
-                        { value: '40_49', label: '40-49' },
-                        { value: '50_59', label: '50-59' },
-                        { value: '60_or_older', label: '60 or older' }
+                        { value: '18_24', label: '18-24' },
+                        { value: '25_34', label: '25-34' },
+                        { value: '35_44', label: '35-44' },
+                        { value: '45_54', label: '45-54' },
+                        { value: '55_or_older', label: '55 or older' }
                     ]
                 },
                 {
-                    id: 'coach_gender',
-                    label: 'Coach Gender',
-                    path: 'gender',
-                    question: 'What do you prefer?',
+                    id: 'tracking',
+                    label: 'Tracking',
+                    path: 'tracking',
+                    question: 'Are you willing to track your food and workouts?',
                     options: [
-                        { value: 'female', label: 'Female coach' },
-                        { value: 'male', label: 'Male coach' },
-                        { value: 'no_preference', label: 'No preference' }
+                        { value: 'Yes', label: 'Yes' },
+                        { value: 'Maybe', label: 'Maybe' },
+                        { value: 'No', label: 'No' }
                     ]
                 },
                 {
-                    id: 'coach_style',
-                    label: 'Coach Style',
-                    path: 'style',
-                    question: 'Describe your ideal coach',
+                    id: 'acceptance',
+                    label: 'Acceptance',
+                    path: 'acceptance',
+                    question: 'If accepted, are you ready to start coaching?',
                     options: [
-                        { value: 'high_energy', label: 'High-energy' },
-                        { value: 'tough_love', label: 'Knows when to give me tough love' },
-                        { value: 'calm_cool_collected', label: 'Calm, cool and collected' },
-                        { value: 'always_positive', label: 'Always Positive' },
-                        { value: 'drill_sergeant', label: 'Drill sergeant' },
-                        { value: 'sense_of_humor', label: 'Has a sense of humor' },
-                        { value: 'analytical_results_driven', label: 'Analytical and results-driven' },
-                        { value: 'strictly_business', label: 'Strictly business' },
-                        { value: 'personalize_workouts', label: 'Goes the extra mile to personalize my workouts' }
-                    ]
-                },
-                {
-                    id: 'coach_intensity',
-                    label: 'Coach Intensity',
-                    path: 'intensity',
-                    question: 'What level of intensity do you want from your coach?',
-                    options: [
-                        { value: 'not_intense', label: 'Not intense' },
-                        { value: 'a_little_intense', label: 'A little intense' },
-                        { value: 'somewhat_intense', label: 'Somewhat intense' },
-                        { value: 'intense', label: 'Intense' },
-                        { value: 'very_intense', label: 'Very intense' }
+                        { value: 'yes', label: 'Yes' },
+                        { value: 'questions', label: 'I have questions' },
+                        { value: 'looking_around', label: 'Just looking around' },
                     ]
                 }
             ];
