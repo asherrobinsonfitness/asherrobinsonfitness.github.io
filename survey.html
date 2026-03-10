@@ -30,6 +30,12 @@
     <link rel=preconnect href=https://connect.facebook.net crossorigin>
     <link rel=dns-prefetch href=https://www.facebook.com>
     <style>
+        body.no-hover .survey-option:hover,
+        body.no-hover .survey-prev-step:hover {
+            background-color: inherit;
+            color: inherit;
+        }
+
         @media(prefers-color-scheme:dark) {
             body {
                 background-color: #1c1c1c !important
@@ -421,9 +427,9 @@
         }
 
 
-            .primary-button:hover {
-                background-color: #0052cc;
-            }
+        .primary-button:hover {
+            background-color: #0052cc;
+        }
 
 
         .quiz-pricing {
@@ -1170,9 +1176,9 @@
         }
 
 
-            .survey-option:hover {
-                background-color: #ebebeb;
-            }
+        .survey-option:hover {
+            background-color: #ebebeb;
+        }
 
 
         .survey-option-label {
@@ -1266,10 +1272,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-            .survey-prev-step:hover {
-                background-color: #ebebeb;
-                color: var(--text);
-            }
+        .survey-prev-step:hover {
+            background-color: #ebebeb;
+            color: var(--text);
+        }
 
         @media (max-width: 480px) {
             .survey-main {
@@ -1530,6 +1536,9 @@
                     }
 
                     button.addEventListener('click', () => {
+
+                        document.body.classList.add('no-hover');
+
                         button.blur(); // prevents auto focus on next question
 
                         if (isTransitioning) return;
@@ -1591,6 +1600,11 @@
                 }
 
                 renderStep();
+
+                setTimeout(() => {
+                    document.body.classList.remove('no-hover');
+                }, 50);
+
                 isTransitioning = false;
             };
 
