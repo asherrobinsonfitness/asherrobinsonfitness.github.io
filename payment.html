@@ -26,6 +26,7 @@
             .secondary-button:hover { background: #404040 !important }
             #paymentContent { background-color: #161616 !important; }
             #paymentTop { border-bottom-color: #282828 !important; }
+            #paymentTop::before { background: #1c1c1c !important; }
         }
     </style>
     <style>
@@ -69,6 +70,16 @@
         #paymentTop {
             width: 100%;
             border-bottom: 1px solid #c0c7cf;
+            position: relative;
+        }
+        #paymentTop::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #f7f7f7;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 3;
         }
 
         .header-group {
@@ -150,27 +161,49 @@
             color: #fff;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        .coach-card-bio {
-            padding: 1.25rem 1.25rem 0;
+        .coach-overlay {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 2;
             text-align: left;
-            font-size: 0.9rem;
-            line-height: 1.55;
-            color: var(--text-secondary);
         }
-        .coach-card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 1rem 1.25rem 1.25rem;
+        .coach-overlay .coach-name {
+            position: static;
+            margin: 0 0 0.35rem;
         }
-        .coach-card-tag {
-            padding: 0.35rem 0.75rem;
-            border-radius: 999px;
-            background: #f0f0f0;
-            font-size: 0.8rem;
+        .coach-overlay .coach-overlay-sub {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.35;
             font-weight: 500;
-            color: var(--text);
+            color: rgba(255,255,255,0.92);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.35);
         }
+        .coach-card-info {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            z-index: 2;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .coach-card-info svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255,255,255,0.9);
+        }
+        .coach-card-bio { display: none; }
+        .coach-card-tags { display: none; }
+        .coach-card-tag { display: none; }
 
         /* Payment card */
         .payment-card {
@@ -406,7 +439,7 @@
         <main id="paymentTop">
             <div class="content">
                 <div class="header-group">
-                    <h1 class="headline">Personalized coaching recommendations, just for you</h1>
+                    <h1 class="headline">You're a Fit!</h1>
                     <p class="subheadline">Pick your coach and then confirm your spot. You can always change later if needed.</p>
                 </div>
 
@@ -414,15 +447,10 @@
                     <div class="coach-card-img-wrap">
                         <img src="https://i.postimg.cc/zXgTvr0r/97f35b09-3b04-4377-aeaf-b0c2300e9ece.webp" alt="Coach Asher" loading="lazy" />
                         <span class="coach-card-badge">LIMITED SPOTS</span>
+                    <div class="coach-overlay">
                         <h2 class="coach-name">Coach Asher</h2>
+                        <p class="coach-overlay-sub">Past experience: Personal trainer and transformation specialist.</p>
                     </div>
-                    <p class="coach-card-bio">Previously: Personal trainer and transformation specialist. Asher is a former athlete specializing in helping men ages 25–44 achieve their goals.</p>
-                    <div class="coach-card-tags">
-                        <span class="coach-card-tag">Sports Performance</span>
-                        <span class="coach-card-tag">Strength Training</span>
-                        <span class="coach-card-tag">Weight Loss</span>
-                        <span class="coach-card-tag">Bodybuilding</span>
-                        <span class="coach-card-tag">Powerlifting</span>
                     </div>
                 </article>
             </div>
@@ -484,9 +512,7 @@
 
                     <div class="payment-legal">
                         <p class="payment-terms">
-                            By confirming your payment, you allow Busy Barbell to charge you for this payment and future payments in accordance with their terms.<br><br>
-                            By paying, you agree to Link’s Terms and Privacy.
-                        </p>
+                            By confirming your payment, you allow Busy Barbell to charge you for this payment and future payments in accordance with their terms.</p>
                     </div>
                 </section>
             </div>
