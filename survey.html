@@ -1301,11 +1301,12 @@
             <div class="survey-inner">
                 <div class="survey-steps-pill" aria-hidden="true" id="survey-steps-pill">
                     <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
-                    <span class="survey-step" data-step-id="age">Age</span>
-                    <span class="survey-step" data-step-id="tracking">Tracking</span>
-                    <span class="survey-step" data-step-id="acceptance">Acceptance</span>
+                    <span class="survey-step" data-step-id="struggle">Struggle</span>
+                    <span class="survey-step" data-step-id="attempts">Attempts</span>
+                    <span class="survey-step" data-step-id="plan">Commitment</span>
+                    <span class="survey-step" data-step-id="start">Start</span>
                 </div>
-                <h1 class="survey-question" id="survey-question-text">What's your top fitness goal?</h1>
+                <h1 class="survey-question" id="survey-question-text">How much weight do you want to lose?</h1>
                 <form id="fitness-goal-form">
                     <div class="survey-options" id="survey-options-container">
                         <!-- options will be injected by script -->
@@ -1322,52 +1323,61 @@
             const steps = [
                 {
                     id: 'goal',
-                    label: 'Your Goal',
+                    label: 'Goal',
                     path: 'goal',
-                    question: "What's your top fitness goal?",
+                    question: 'How much weight do you want to lose?',
                     options: [
-                        { value: 'lose_10_20', label: 'Lose 10-20 pounds' },
-                        { value: 'lose_20_40', label: 'Lose 20-40 pounds' },
-                        { value: 'lose_40_plus', label: 'Lose 40+ pounds' },
+                        { value: '10_20', label: '10–20 lbs' },
+                        { value: '20_40', label: '20–40 lbs' },
+                        { value: '40_plus', label: '40+ lbs' },
                         { value: 'build_muscle', label: 'Build muscle' },
-                        { value: 'improve_fitness', label: 'Just improve general fitness' },
-                        { value: 'not_sure', label: "I'm not sure" }
+                        { value: 'improve_fitness', label: 'Improve general fitness' },
+                        { value: 'not_sure', label: 'Not sure' }
                     ]
                 },
                 {
-                    id: 'age',
-                    label: 'Age',
-                    path: 'age',
-                    question: 'What’s your age?',
+                    id: 'struggle',
+                    label: 'Struggle',
+                    path: 'struggle',
+                    question: 'What’s been the biggest challenge?',
                     options: [
-                        { value: '17_or_younger', label: '17 or younger' },
-                        { value: '18_24', label: '18-24' },
-                        { value: '25_34', label: '25-34' },
-                        { value: '35_44', label: '35-44' },
-                        { value: '45_54', label: '45-54' },
-                        { value: '55_or_older', label: '55 or older' }
+                        { value: 'cant_stick_diets', label: "Can't stick to diets" },
+                        { value: 'dont_know_workouts', label: "Don't know what workouts work" },
+                        { value: 'gain_weight_back', label: 'Lose weight then gain it back' },
+                        { value: 'no_accountability', label: 'No accountability' },
+                        { value: 'no_time', label: 'No time' }
                     ]
                 },
                 {
-                    id: 'tracking',
-                    label: 'Tracking',
-                    path: 'tracking',
-                    question: 'Are you willing to track your food and workouts?',
+                    id: 'attempts',
+                    label: 'Attempts',
+                    path: 'attempts',
+                    question: 'Have you tried to lose weight before?',
                     options: [
-                        { value: 'Yes', label: 'Yes' },
-                        { value: 'Maybe', label: 'Maybe' },
-                        { value: 'No', label: 'No' }
+                        { value: 'many_times', label: 'Many times' },
+                        { value: 'few_times', label: 'A few times' },
+                        { value: 'first_attempt', label: 'First serious attempt' }
                     ]
                 },
                 {
-                    id: 'acceptance',
-                    label: 'Acceptance',
-                    path: 'acceptance',
-                    question: 'If accepted, are you ready to start coaching?',
+                    id: 'plan',
+                    label: 'Commitment',
+                    path: 'plan',
+                    question: 'Are you willing to follow a structured plan?',
+                    options: [
+                        { value: 'yes', label: 'Yes' },
+                        { value: 'maybe', label: 'Maybe' },
+                        { value: 'no', label: 'No' }
+                    ]
+                },
+                {
+                    id: 'start',
+                    label: 'Start',
+                    path: 'start',
+                    question: 'If accepted, are you ready to start this week?',
                     options: [
                         { value: 'yes', label: "Yes, I'm ready" },
-                        { value: 'questions', label: 'I have a few questions' },
-                        { value: 'looking_around', label: 'Just looking around' },
+                        { value: 'looking', label: 'Just looking around' }
                     ]
                 }
             ];
@@ -1475,6 +1485,20 @@
 
                     button.addEventListener('click', () => {
                         answers[step.id] = opt.value;
+
+                        const redirectToConfirmation = () => {
+                            window.location.href = '/confirmation.html' + window.location.search;
+                        };
+
+                        const shouldSendToConfirmation =
+                            (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
+                            (step.id === 'plan' && (opt.value === 'maybe' || opt.value === 'no')) ||
+                            (step.id === 'start' && opt.value === 'looking');
+
+                        if (shouldSendToConfirmation) {
+                            redirectToConfirmation();
+                            return;
+                        }
 
                         // auto-advance to next step if there is one
                         if (currentStepIndex < steps.length - 1) {
