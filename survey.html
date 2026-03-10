@@ -1324,10 +1324,6 @@
                 color: #f9fafb;
             }
 
-            .survey-option:hover {
-                background-color: #252525;
-            }
-
             .survey-option.selected {
                 --selected-bg: #303030;
                 background-color: #303030;
@@ -1340,6 +1336,12 @@
             .survey-prev-step {
                 background-color: transparent;
                 color: #9ca3af;
+            }
+        }
+
+        @media(prefers-color-scheme:dark) and (hover: hover) and (pointer: fine) {
+            .survey-option:hover {
+                background-color: #252525;
             }
 
             .survey-prev-step:hover {
@@ -1534,8 +1536,8 @@
                     }
 
                     button.addEventListener('click', () => {
-
                         button.blur(); // prevents auto focus on next question
+
                         if (isTransitioning) return;
                         isTransitioning = true;
                         answers[step.id] = opt.value;
