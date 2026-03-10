@@ -1197,6 +1197,23 @@
             display: none;
         }
 
+        .survey-option.loading .survey-option-indicator {
+            opacity: 1;
+            transform: scale(1);
+            border-color: #d1d5db;
+            background-color: transparent;
+        }
+
+        .survey-option.loading .survey-option-indicator::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            border: 2px solid #d1d5db;
+            border-top-color: var(--primary);
+            animation: survey-spinner 0.7s linear infinite;
+        }
+
         .survey-option.selected {
             --selected-bg: #e5e7eb;
             border: 1px solid var(--primary);
@@ -1212,11 +1229,21 @@
             background-color: var(--primary);
         }
 
-        .survey-option.selected .survey-option-indicator::before {
+        .survey-option.selected:not(.loading) .survey-option-indicator::before {
             content: "✓";
             font-size: 0.9rem;
             line-height: 1;
             color: var(--selected-bg);
+        }
+
+        @keyframes survey-spinner {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .survey-prev-step {
@@ -1396,6 +1423,8 @@
                 }
             ];
 
+            
+
             const getBaseSurveyPath = () => {
                 const path = window.location.pathname || '';
                 const markerIndex = path.indexOf('/survey');
@@ -1411,8 +1440,11 @@
                 return `${base}/${step.path}`;
             };
 
+            const MIN_STEP_DELAY_MS = 400;
+
             let currentStepIndex = 0;
             const answers = {};
+            let isTransitioning = false;
 
             const questionEl = document.getElementById('survey-question-text');
             const optionsContainer = document.getElementById('survey-options-container');
@@ -1498,7 +1530,15 @@
                     }
 
                     button.addEventListener('click', () => {
+                        if (isTransitioning) return;
+                        isTransitioning = true;
                         answers[step.id] = opt.value;
+
+                        // show loading spinner on the selected option
+                        optionsContainer.querySelectorAll('.survey-option').forEach(btn => {
+                            btn.classList.remove('loading');
+                        });
+                        button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
                             window.location.href = '/confirmation.html' + window.location.search;
@@ -1510,19 +1550,23 @@
                             (step.id === 'plan' && (opt.value === 'maybe' || opt.value === 'no')) ||
                             (step.id === 'start' && (opt.value === 'looking' || opt.value === 'no'));
 
-                        if (shouldSendToConfirmation) {
-                            redirectToConfirmation();
-                            return;
-                        }
+                        const goNext = () => {
+                            if (shouldSendToConfirmation) {
+                                redirectToConfirmation();
+                                return;
+                            }
 
-                        // auto-advance to next step if there is one
-                        if (currentStepIndex < steps.length - 1) {
-                            setStepIndex(currentStepIndex + 1, true);
-                        } else {
-                            console.log('Survey complete', answers);
-                            // Redirect to coach selection page after the last question is answered
-                            window.location.href = '/coach.html';
-                        }
+                            // auto-advance to next step if there is one
+                            if (currentStepIndex < steps.length - 1) {
+                                setStepIndex(currentStepIndex + 1, true);
+                            } else {
+                                console.log('Survey complete', answers);
+                                // Redirect to coach selection page after the last question is answered
+                                window.location.href = '/coach.html';
+                            }
+                        };
+
+                        setTimeout(goNext, MIN_STEP_DELAY_MS);
                     });
 
                     optionsContainer.appendChild(button);
@@ -1545,6 +1589,7 @@
                 }
 
                 renderStep();
+                isTransitioning = false;
             };
 
             if (prevButton) {
