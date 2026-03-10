@@ -1200,18 +1200,17 @@
         .survey-option.loading .survey-option-indicator {
             opacity: 1;
             transform: scale(1);
-            border-color: #d1d5db;
-            background-color: transparent;
         }
 
         .survey-option.loading .survey-option-indicator::before {
             content: "";
-            width: 14px;
-            height: 14px;
+            width: 100%;
+            height: 100%;
             border-radius: 999px;
-            border: 2px solid #d1d5db;
-            border-top-color: var(--primary);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-top-color: #ffffff;
             animation: survey-spinner 0.7s linear infinite;
+            box-sizing: border-box;
         }
 
         .survey-option.selected {
@@ -1226,7 +1225,7 @@
             opacity: 1;
             transform: scale(1);
             border-color: transparent;
-            background-color: var(--primary);
+            background-color: transparent;
         }
 
         .survey-option.selected:not(.loading) .survey-option-indicator::before {
@@ -1235,6 +1234,7 @@
             line-height: 1;
             color: var(--selected-bg);
         }
+
 
         @keyframes survey-spinner {
             from {
@@ -1342,7 +1342,6 @@
                 color: #f9fafb;
             }
         }
-
     </style>
 </head>
 
@@ -1423,7 +1422,7 @@
                 }
             ];
 
-            
+
 
             const getBaseSurveyPath = () => {
                 const path = window.location.pathname || '';
