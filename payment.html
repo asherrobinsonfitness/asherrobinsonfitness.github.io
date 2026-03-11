@@ -131,18 +131,6 @@
         }
     </style>
     <style>
-        #stripe-payment-element iframe {
-            background: transparent !important;
-        }
-
-        #stripe-payment-element .StripeElement {
-            background: transparent !important;
-            padding: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-
-
         #stripe-payment-element {
             margin-bottom: 1rem;
         }
@@ -1050,7 +1038,7 @@
                 appearance: {
                     theme: darkMode ? 'night' : 'stripe',
                     variables: {
-                        colorBackground: darkMode ? '#161616' : '#f0f0f0',
+                        colorBackground: darkMode ? '#282828' : '#f0f0f0',
                         colorText: darkMode ? '#F8FAFC' : '#222222',
                         colorTextSecondary: darkMode ? '#bfbfbf' : '#717171',
                         colorTextPlaceholder: darkMode ? '#bfbfbf' : '#717171',
@@ -1065,12 +1053,6 @@
                         spacingGridRow: '1rem',
                     },
                     rules: darkMode ? {
-                        '.Block': {
-                            backgroundColor: 'transparent',
-                            boxShadow: 'none',
-                            border: 'none',
-                            padding: '0',
-                        },
                         '.Input': {
                             border: '1px solid #3d3d3d',
                             boxShadow: 'none',
@@ -1104,12 +1086,6 @@
                             fontWeight: '600',
                         },
                     } : {
-                        '.Block': {
-                            backgroundColor: 'transparent',
-                            boxShadow: 'none',
-                            border: 'none',
-                            padding: '0',
-                        },
                         '.Input': {
                             border: '1px solid #e8e8e8',
                             boxShadow: 'none',
