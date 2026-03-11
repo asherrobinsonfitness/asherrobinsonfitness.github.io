@@ -140,6 +140,45 @@
             --text-secondary: #717171;
         }
 
+        .timeline-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-trial-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+        }
+
+        /* The icon wrapper needs positioning context */
+        .payment-trial-item .icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            z-index: 1;
+        }
+
+        /* Vertical line drawn downward from each icon, except the last */
+        .payment-trial-item:not(:last-child) .icon::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            /* Adjust height to match your item spacing */
+            height: calc(100% + 24px);
+            /* tweak this value to match your row gap */
+            background: #f5f5f5;
+            /* or whatever color fits your design */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -812,10 +851,11 @@
                 <section class="timeline-card" aria-label="Payment breakdown and trial timeline">
                     <div class="payment-trial-item payment-trial-item--today">
                         <span class="icon" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                                <circle cx="8" cy="8" r="7" fill="#111827"></circle>
-                                <path d="M4.5 8.2L6.8 10.5L11.5 5.8" fill="none" stroke="#ffffff" stroke-width="1.6"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#1e1e1e" stroke-width="2"></circle>
+                                <path d="M8 12L11 15L16 9" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
                             </svg>
                         </span>
                         <div>
@@ -827,12 +867,10 @@
                     </div>
                     <div class="payment-trial-item">
                         <span class="icon" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                                 <path
-                                    d="M8 2.5C6.34 2.5 5 3.84 5 5.5V7.7C5 8.03 4.88 8.36 4.67 8.62L3.6 9.96C3.26 10.38 3.56 11 4.1 11H11.9C12.44 11 12.74 10.38 12.4 9.96L11.33 8.62C11.12 8.36 11 8.03 11 7.7V5.5C11 3.84 9.66 2.5 8 2.5Z"
+                                    d="M12 2C8.97 2 6.5 4.47 6.5 7.5V11.5L4.71 13.29C4.08 13.92 4.52 15 5.41 15H18.59C19.48 15 19.92 13.92 19.29 13.29L17.5 11.5V7.5C17.5 4.47 15.03 2 12 2ZM12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22Z"
                                     fill="#111827"></path>
-                                <path d="M6.75 12.25C7.02 12.72 7.48 13 8 13C8.52 13 8.98 12.72 9.25 12.25" fill="none"
-                                    stroke="#111827" stroke-width="1.2" stroke-linecap="round"></path>
                             </svg>
                         </span>
                         <div>
@@ -842,13 +880,11 @@
                     </div>
                     <div class="payment-trial-item">
                         <span class="icon" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                                <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" fill="none" stroke="#111827"
-                                    stroke-width="1.2"></rect>
-                                <path d="M5 2V4.5M11 2V4.5" stroke="#111827" stroke-width="1.2" stroke-linecap="round">
-                                </path>
-                                <path d="M3.5 6.5H12.5" stroke="#111827" stroke-width="1.2" stroke-linecap="round">
-                                </path>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8ZM9 14H7V12H9V14ZM13 14H11V12H13V14ZM17 14H15V12H17V14ZM9 18H7V16H9V18ZM13 18H11V16H13V18ZM17 18H15V16H17V18Z"
+                                    fill="#111827"></path>
                             </svg>
                         </span>
                         <div>
