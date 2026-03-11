@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=5">
+    <title>Complete Your Sign Up | Asher Robinson Fitness</title>
+    <meta name=description
+        content="Complete your sign up for personalized coaching with Asher Robinson Fitness. Secure payment.">
+    <meta name=robots content="index,follow">
+    <link rel=canonical href=https://asherrobinsonfitness.com/payment>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        @media(prefers-color-scheme:dark) {
+            body {
+                background-color: #1c1c1c !important
+            }
+
+            .struck {
+                color: #bfbfbf !important;
+            }
+
+            .desc {
+                color: #bfbfbf !important;
+            }
+
+            .container {
+                background: #1c1c1c !important
+            }
+
+            footer {
+                background: #161616 !important;
+                border-top-color: #282828 !important
+            }
+
+            .footer-line {
+                border-bottom-color: #282828 !important
+            }
+
+            body,
+            .content,
+            .headline,
+            .section-title,
+            h1,
+            h2,
+            h3,
+            p,
+            span,
+            div,
+            a,
+            label {
+                color: #F8FAFC !important
+            }
+
+            .subheadline,
+            .payment-muted {
+                color: #bfbfbf !important
+            }
+
+            footer {
+                color: #bfbfbf !important
+            }
+
+            footer a {
+                color: #06f !important
+            }
+
+            .payment-card,
+            .coach-card,
+            .timeline-card {
+                background: #282828 !important;
+                border-color: #3d3d3d !important
+            }
+
+            .payment-step-icon {
+                color: #111827 !important;
+            }
+
+            .coach-card-tag {
+                background: #333 !important;
+                color: #F8FAFC !important
+            }
+
+            .rare-find {
+                background: #333 !important;
+                border-color: #444 !important;
+                color: #F8FAFC !important
+            }
+
+            .promo-input {
+                background: #333 !important;
+                border-color: #444 !important;
+                color: #F8FAFC !important
+            }
+
+            .secondary-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.75rem;
+                width: auto;
+                padding: 0.9rem 1.25rem;
+                border-radius: 8px;
+                background-color: var(--primary);
+                color: #fff;
+                font-weight: 600;
+                font-size: 1rem;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
+                transition: background-color 0.15s ease;
+                position: relative;
+            }
+
+            .secondary-button:hover {
+                background-color: #0052cc;
+            }
+
+            #paymentContent {
+                background-color: #161616 !important;
+            }
+
+            #paymentTop {
+                border-bottom-color: #282828 !important;
+            }
+
+            #paymentTop::before {
+                background: #1c1c1c !important;
+            }
+        }
+    </style>
+    <style>
+        #stripe-payment-element {
+            margin-bottom: 1rem;
+        }
+
+        #payment-form {
+            width: 100%;
+        }
+
+        #submit-stripe {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: auto;
+            padding: 0.9rem 1.25rem;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
+            transition: background-color 0.15s ease;
+            position: relative;
+        }
+
+        #submit-stripe:hover {
+            background-color: #0052cc;
+        }
+
+        #submit-stripe:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #stripe-message {
+            font-size: 0.8rem;
+            color: #e53e3e;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        :root {
+            --space-2: 1rem;
+            --space-4: 2rem;
+            --space-5: 2.5rem;
+            --space-6: 3rem;
+            --primary: #06f;
+            --text: #222;
+            --text-secondary: #717171;
+        }
+
+        .timeline-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-trial-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.1rem;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-trial-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            /* half of 24px icon width, to center the line */
+            top: 24px;
+            /* start below the icon */
+            bottom: -1.1rem;
+            /* reach down to the top of the next item */
+            width: 2px;
+            background: #f5f5f5;
+            z-index: 0;
+        }
+
+        .payment-trial-item .icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: #f5f5f5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+            position: relative;
+            z-index: 1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+        }
+
+        body {
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            background: #f7f7f7;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background: #f7f7f7;
+            min-height: 100vh;
+        }
+
+        .content {
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 520px;
+            padding: var(--space-5) 1.5rem;
+        }
+
+        .payment-top-content {
+            max-width: 720px;
+        }
+
+        .payment-header-only {
+            padding-bottom: 0;
+        }
+
+        .payment-top-main {
+            padding-top: 0;
+        }
+
+        .content .header-group {
+            margin-bottom: var(--space-4);
+        }
+
+        /* Top section wrapper (full-width background + divider) */
+        #paymentTop {
+            width: 100%;
+            border-bottom: 1px solid #c0c7cf;
+            position: relative;
+        }
+
+        #paymentTop::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #f7f7f7;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .header-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .headline {
+            font-size: 1.75rem;
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            color: var(--text);
+            margin-bottom: var(--space-2);
+        }
+
+        .subheadline {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            letter-spacing: -.005em;
+            margin: 0 auto;
+            margin-top: 0.25rem;
+        }
+
+        /* Coach card - Viktor/Dakoda style: image on top, bio and tags below */
+        .coach-card {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .coach-card-img-wrap {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: #e8e8e8;
+        }
+
+        .coach-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .coach-card-img-wrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .coach-card-badge {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.9rem;
+            z-index: 2;
+            padding: 0.25rem 0.95rem;
+            border-radius: 8px;
+            background: rgba(102, 102, 102, 0.95);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+        }
+
+        .coach-name {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            z-index: 2;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .coach-overlay {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 2;
+            text-align: left;
+        }
+
+        .coach-overlay .coach-name {
+            position: static;
+            margin: 0 0 0.35rem;
+        }
+
+        .coach-overlay .coach-overlay-sub {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.35;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.92);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
+        .coach-card-info {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            z-index: 2;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .coach-card-info svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255, 255, 255, 0.9);
+        }
+
+        .coach-card-bio {
+            display: none;
+        }
+
+        .coach-card-tags {
+            display: none;
+        }
+
+        .coach-card-tag {
+            display: none;
+        }
+
+        /* Payment card */
+        .payment-card {
+            width: 100%;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem 1.5rem 1.75rem;
+            margin-bottom: var(--space-4);
+        }
+
+        .payment-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .payment-price .struck {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .payment-price .due {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .payment-price .icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        /* Timeline card (separate from payment) */
+        .timeline-card {
+            width: 100%;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem 1.5rem 1.75rem;
+            margin-bottom: var(--space-4);
+        }
+
+        .timeline-card {
+            position: relative;
+            text-align: left;
+        }
+
+        .payment-trial-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.1rem;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-trial-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .payment-trial-item .icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: #f5f5f5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+        }
+
+        .payment-trial-item .title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .payment-trial-item .desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+        }
+
+        .payment-trial-item--today .title {
+            font-size: 1rem;
+        }
+
+        .payment-trial-item--today .title .struck {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            margin-right: 0.25rem;
+        }
+
+        .payment-trial-item--today .title .due {
+            font-weight: 700;
+        }
+
+        .payment-step-icon {
+            font-weight: 800;
+            font-size: 0.85rem;
+            line-height: 1;
+            color: #111827;
+        }
+
+        /* Promo */
+        .promo-wrap {
+            margin-bottom: 1.25rem;
+        }
+
+        .promo-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e8e8e8;
+            background: #f5f5f5;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .promo-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .promo-applied {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            font-size: 0.9rem;
+        }
+
+        .promo-applied code {
+            font-weight: 600;
+            color: #166534;
+        }
+
+        .promo-applied .check {
+            color: #16a34a;
+            font-weight: 700;
+            margin-right: 0.25rem;
+        }
+
+        .promo-remove {
+            color: #06f;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .primary-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            border-radius: 8px;
+            background: #222;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: background 0.15s ease;
+        }
+
+        .primary-button:hover {
+            background: #333;
+        }
+
+        .primary-button .gpay-icon {
+            margin-right: 0.5rem;
+            font-weight: 700;
+        }
+
+        #submit-stripe {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.9rem 1.25rem;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
+            transition: background-color 0.15s ease;
+            position: relative;
+        }
+
+        #submit-stripe:hover {
+            background-color: #0052cc;
+        }
+
+        /* Legal */
+        .payment-legal {
+            margin-top: 1.25rem;
+        }
+
+        .payment-muted {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .payment-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .payment-checkbox input {
+            margin-top: 0.25rem;
+        }
+
+        .payment-checkbox label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .payment-terms {
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .payment-terms a {
+            color: #06f;
+            text-decoration: none;
+        }
+
+        .payment-terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Payment hero image (below coach card) */
+        .payment-hero-image-wrap {
+            width: 100%;
+            max-width: 720px;
+            border-radius: 24px;
+            overflow: hidden;
+            margin: 0 auto var(--space-4);
+            box-shadow: 0 18px 55px rgba(15, 23, 42, 0.25);
+        }
+
+        .payment-hero-image-wrap img {
+            width: 100%;
+            height: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Payment section outer background (full width) */
+        #paymentContent {
+            width: 100%;
+            background-color: #f0f0f0;
+        }
+
+        .payment-hero-wide {
+            width: 100%;
+            padding: var(--space-5) 1.5rem 0;
+        }
+
+        /* Inner constrained payment content */
+        .payment-section {
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .payment-section-header {
+            margin-bottom: 1.25rem;
+        }
+
+        .payment-section-header .payment-price {
+            margin-bottom: 0.75rem;
+        }
+
+        .payment-section-divider {
+            height: 1px;
+            background: #ececec;
+            margin: 0 0 1.5rem;
+        }
+
+        footer {
+            width: 100%;
+            padding: 2.5rem 1.5rem;
+            margin-top: auto;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: #f0f0f0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-container {
+            margin: 0 auto;
+            padding: 0 var(--space-5);
+            max-width: 1200px;
+        }
+
+        .footer-disclaimer {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            width: 100%;
+        }
+
+        .footer-disclaimer-p {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-disclaimer-p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer-line {
+            width: 100%;
+            border-bottom: 1px solid #c0c7cf;
+            margin-bottom: 0;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-left {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .footer-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .footer-right a {
+            color: #06f;
+            text-decoration: none;
+        }
+
+        .footer-right a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .footer-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-left,
+            .footer-right {
+                justify-content: flex-start;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            footer {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: var(--space-4) 1.25rem;
+                max-width: 600px;
+            }
+
+            .content.payment-header-only {
+                padding-bottom: 0;
+            }
+
+            .content.payment-top-main {
+                padding-top: 0;
+            }
+
+            .headline {
+                font-size: 1.75rem;
+            }
+
+            .subheadline {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            footer {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .headline {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main id="paymentTop">
+            <header class="content payment-top-content payment-header-only">
+                <div class="header-group">
+                    <h1 class="headline">Congrats, You're a Fit!</h1>
+                    <p class="subheadline">Based on your answers, you look like a strong candidate for coaching.</p>
+                </div>
+            </header>
+            <div class="content payment-top-main">
+                <article class="coach-card">
+                    <div class="coach-card-img-wrap">
+                        <img src="https://i.postimg.cc/zXgTvr0r/97f35b09-3b04-4377-aeaf-b0c2300e9ece.webp"
+                            alt="Coach Asher" loading="lazy" />
+                        <span class="coach-card-badge">LIMITED SPOTS</span>
+                        <div class="coach-overlay">
+                            <h2 class="coach-name">Coach Asher</h2>
+                            <p class="coach-overlay-sub">Online men's weight loss and transformation coach.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <div id="paymentContent">
+            <div class="content payment-inner">
+                <section class="timeline-card" aria-label="Payment breakdown and trial timeline">
+                    <div class="payment-trial-item payment-trial-item--today">
+                        <span class="icon" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#1e1e1e" stroke-width="2"></circle>
+                                <path d="M8 12L11 15L16 9" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <div class="title">
+                                <span class="struck">$199</span>
+                                <span class="due">$50 Due Today</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M12 2C8.97 2 6.5 4.47 6.5 7.5V11.5L4.71 13.29C4.08 13.92 4.52 15 5.41 15H18.59C19.48 15 19.92 13.92 19.29 13.29L17.5 11.5V7.5C17.5 4.47 15.03 2 12 2ZM12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22Z"
+                                    fill="#111827"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <div class="title">Day 25: Trial Reminder</div>
+                            <div class="desc">I'll email you 5 days before your first billing date.</div>
+                        </div>
+                    </div>
+                    <div class="payment-trial-item">
+                        <span class="icon" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8ZM9 14H7V12H9V14ZM13 14H11V12H13V14ZM17 14H15V12H17V14ZM9 18H7V16H9V18ZM13 18H11V16H13V18ZM17 18H15V16H17V18Z"
+                                    fill="#111827"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <div class="title">Day 30: Trial Ends</div>
+                            <div class="desc">Love it or get a full refund within 30 days. $199/month after your first
+                                month. Cancel any time.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="payment-section" id="paymentSection" aria-label="Payment">
+                    <form id="payment-form">
+                        <div id="express-checkout-element" style="margin-bottom: 1rem;"></div>
+                        <div id="stripe-payment-element"></div>
+                        <div id="stripe-message" role="alert" style="display:none;"></div>
+                        <button type="submit" id="submit-stripe">
+                            <span id="submit-stripe-text">Submit</span>
+                        </button>
+                    </form>
+
+                    <div class="payment-legal">
+                        <p class="payment-terms">
+                            By confirming your payment, you authorize Asher Robinson LLC to charge you for this payment
+                            and future payments in accordance with the terms.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var promoInput = document.getElementById('promoInput');
+            var promoApplied = document.getElementById('promoApplied');
+            var promoCodeDisplay = document.getElementById('promoCodeDisplay');
+            var promoRemove = document.getElementById('promoRemove');
+
+            function showPromoApplied(code) {
+                promoCodeDisplay.textContent = code || 'Promo applied';
+                promoApplied.hidden = false;
+                promoApplied.style.display = '';
+                promoInput.style.display = 'none';
+            }
+            function hidePromoApplied() {
+                promoApplied.hidden = true;
+                promoApplied.style.display = 'none';
+                promoInput.style.display = '';
+                promoInput.value = '';
+            }
+
+            promoInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    var code = promoInput.value.trim();
+                    if (code) showPromoApplied(code);
+                }
+            });
+            promoRemove.addEventListener('click', hidePromoApplied);
+        })();
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                var paymentContent = document.getElementById('paymentContent');
+                if (paymentContent) {
+                    var rect = paymentContent.getBoundingClientRect();
+                    var target = rect.bottom + window.pageYOffset - window.innerHeight;
+                    var start = window.pageYOffset;
+                    var distance = target - start;
+                    var duration = 800;
+                    var startTime = null;
+
+                    function ease(t) {
+                        return 1 - Math.pow(1 - t, 4);
+                    }
+
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        window.scrollTo(0, start + distance * ease(progress));
+                        if (progress < 1) requestAnimationFrame(step);
+                    }
+
+                    requestAnimationFrame(step);
+                }
+            }, 300);
+        });
+    </script>
+    <script>
+        // ---- REPLACE THESE ----
+        const STRIPE_PUBLISHABLE_KEY = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
+
+        async function initStripe() {
+            const res = await fetch('/.netlify/functions/create-payment-intent');
+            const { clientSecret, customerId } = await res.json();
+
+            const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            const elements = stripe.elements({
+                clientSecret,
+                appearance: { theme: 'stripe' },
+                loader: 'auto',
+            });
+
+            const paymentElement = elements.create('payment', {
+                layout: {
+                    type: 'accordion',
+                    defaultCollapsed: false,
+                    radios: true,
+                    spacedAccordionItems: false,
+                }
+            });
+            paymentElement.mount('#stripe-payment-element');
+
+            const expressCheckoutElement = elements.create('expressCheckout');
+            expressCheckoutElement.mount('#express-checkout-element');
+
+            const form = document.getElementById('payment-form');
+            const submitBtn = document.getElementById('submit-stripe');
+            const submitText = document.getElementById('submit-stripe-text');
+            const messageDiv = document.getElementById('stripe-message');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitText.textContent = 'Processing…';
+                messageDiv.style.display = 'none';
+
+                const { error, setupIntent } = await stripe.confirmSetup({
+                    elements,
+                    confirmParams: { return_url: window.location.href },
+                    redirect: 'if_required',
+                });
+
+                if (error) {
+                    messageDiv.textContent = error.message;
+                    messageDiv.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Pay $199 Today';
+                    return;
+                }
+
+                // Create the subscription
+                const subRes = await fetch('/.netlify/functions/create-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId,
+                        paymentMethodId: setupIntent.payment_method,
+                    }),
+                });
+
+                const { status } = await subRes.json();
+
+                if (status === 'active' || status === 'trialing') {
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                } else {
+                    messageDiv.textContent = 'Something went wrong. Please try again.';
+                    messageDiv.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Pay $199 Today';
+                }
+            });
+        }
+
+        initStripe();
+    </script>
+</body>
+
+</html>
