@@ -615,10 +615,6 @@
             padding: var(--space-5) 1.5rem 0;
         }
 
-        .payment-inner {
-            padding-top: 0;
-        }
-
         /* Inner constrained payment content */
         .payment-section {
             width: 100%;
@@ -891,32 +887,33 @@
         })();
     </script>
     <script>
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                var paymentContent = document.getElementById('paymentContent');
-                if (paymentContent) {
-                    var target = paymentContent.getBoundingClientRect().top + window.pageYOffset;
-                    var start = window.pageYOffset;
-                    var distance = target - start;
-                    var duration = 800;
-                    var startTime = null;
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            var paymentContent = document.getElementById('paymentContent');
+            if (paymentContent) {
+                var rect = paymentContent.getBoundingClientRect();
+                var target = rect.bottom + window.pageYOffset - window.innerHeight;
+                var start = window.pageYOffset;
+                var distance = target - start;
+                var duration = 800;
+                var startTime = null;
 
-                    function ease(t) {
-                        return 1 - Math.pow(1 - t, 4); // ease-out quart (fast start, very slow end)
-                    }
-
-                    function step(timestamp) {
-                        if (!startTime) startTime = timestamp;
-                        var progress = Math.min((timestamp - startTime) / duration, 1);
-                        window.scrollTo(0, start + distance * ease(progress));
-                        if (progress < 1) requestAnimationFrame(step);
-                    }
-
-                    requestAnimationFrame(step);
+                function ease(t) {
+                    return 1 - Math.pow(1 - t, 4);
                 }
-            }, 300);
-        });
-    </script>
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    var progress = Math.min((timestamp - startTime) / duration, 1);
+                    window.scrollTo(0, start + distance * ease(progress));
+                    if (progress < 1) requestAnimationFrame(step);
+                }
+
+                requestAnimationFrame(step);
+            }
+        }, 300);
+    });
+</script>
 </body>
 
 </html>
