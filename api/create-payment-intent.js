@@ -7,7 +7,7 @@ exports.handler = async () => {
     // Create a SetupIntent to collect payment details
     const setupIntent = await stripe.setupIntents.create({
         customer: customer.id,
-        automatic_payment_methods: { enabled: true },
+        payment_method_types: ['card'],
         metadata: {
             price_id: 'price_1T9nICKD9V1PzEruqvloHk4v',
         },
