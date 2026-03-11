@@ -151,7 +151,7 @@
         }
 
         .payment-top-content {
-            max-width: 920px;
+            max-width: 720px;
         }
 
         .payment-header-only {
@@ -791,7 +791,13 @@
                         alt="Client training outdoors with dumbbells" loading="lazy" />
                 </section>
             </div>
-            <div class="content payment-inner" tyle="padding-top: 0;">
+            <header class="content payment-top-content payment-header-only" style="padding-top: 0;">
+                <div class="header-group">
+                    <h1 class="headline">Asher has a proven track record of helping clients lose weight</h1>
+                    <p class="subheadline">“I'll create a personalized, sustainable plan that focuses on building healthy habits, helping you to achieve lasting results.”</p>
+                </div>
+            </header>
+            <div class="content payment-inner" style="padding-top: 0;">
                 <section class="timeline-card" aria-label="Next steps after you sign up">
                     <div class="payment-trial-item">
                         <span class="icon" aria-hidden="true"><span class="payment-step-icon">1</span></span>
@@ -922,16 +928,18 @@
             promoRemove.addEventListener('click', hidePromoApplied);
         })();
     </script>
-<script>
-    window.addEventListener('load', function () {
-        var paymentContent = document.getElementById('paymentContent');
-
-        if (paymentContent) {
-            var top = paymentContent.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-        }
-    });
-</script>
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                var paymentContent = document.getElementById('paymentContent');
+    
+                if (paymentContent) {
+                    var top = paymentContent.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                }
+            }, 300);
+        });
+    </script>
 </body>
 
 </html>
