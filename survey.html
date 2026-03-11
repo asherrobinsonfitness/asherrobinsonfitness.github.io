@@ -1357,8 +1357,8 @@
                 <div class="survey-steps-pill" aria-hidden="true" id="survey-steps-pill">
                     <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
                     <span class="survey-step" data-step-id="age">Age</span>
-                    <span class="survey-step" data-step-id="plan">Commitment</span>
-                    <span class="survey-step" data-step-id="start">Start</span>
+                    <span class="survey-step" data-step-id="gym">Gym</span>
+                    <span class="survey-step" data-step-id="commitment">Commitment</span>
                 </div>
                 <h1 class="survey-question" id="survey-question-text">What is your top fitness goal?</h1>
                 <form id="fitness-goal-form">
@@ -1402,27 +1402,29 @@
                     ]
                 },
                 {
-                    id: 'plan',
+                    id: 'gym',
+                    label: 'Gym',
+                    path: 'gym',
+                    question: 'Do you have access to a gym?',
+                    options: [
+                        { value: 'yes', label: "Yes" },
+                        { value: 'no', label: "No" },
+                        { value: 'join', label: 'I plan to join a gym' },
+                        { value: 'home', label: 'I have weight equipment at home' }
+                    ]
+                },
+                {
+                    id: 'commitment',
                     label: 'Commitment',
-                    path: 'plan',
+                    path: 'commitment',
                     question: 'Willing to track food and workouts?',
                     options: [
                         { value: 'yes', label: 'Yes' },
                         { value: 'maybe', label: 'Maybe' },
                         { value: 'no', label: 'No' }
                     ]
-                },
-                {
-                    id: 'start',
-                    label: 'Start',
-                    path: 'start',
-                    question: 'Ready to start now?',
-                    options: [
-                        { value: 'yes', label: "Yes, I'm ready" },
-                        { value: 'no', label: "Not yet" },
-                        { value: 'looking', label: 'Just looking around' }
-                    ]
                 }
+
             ];
 
 
@@ -1551,8 +1553,8 @@
                         const shouldSendToConfirmation =
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
                             (step.id === 'age' && (opt.value !== '25_34' && opt.value !== '35_44')) ||
-                            (step.id === 'plan' && (opt.value === 'maybe' || opt.value === 'no')) ||
-                            (step.id === 'start' && (opt.value === 'looking' || opt.value === 'no'));
+                            (step.id === 'gym' && (opt.value === 'no')) ||
+                            (step.id === 'commitment' && (opt.value === 'maybe' || opt.value === 'no'));
 
                         const goNext = () => {
                             if (shouldSendToConfirmation) {
