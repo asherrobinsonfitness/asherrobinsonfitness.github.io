@@ -1027,7 +1027,7 @@
         const STRIPE_PUBLISHABLE_KEY = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
 
         async function initStripe() {
-            const res = await fetch('/api/functions/create-payment-intent');
+            const res = await fetch('/api/create-payment-intent');
             const { clientSecret, customerId } = await res.json();
 
             const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
@@ -1076,7 +1076,7 @@
                 }
 
                 // Create the subscription
-                const subRes = await fetch('/api/functions/create-subscription', {
+                const subRes = await fetch('/api/create-subscription', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
