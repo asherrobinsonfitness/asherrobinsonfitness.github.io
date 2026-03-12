@@ -213,6 +213,15 @@
             width: 100%;
         }
 
+        /* Inside the First/Last name row, control vertical spacing separately */
+        .payment-input-row .payment-input-group {
+            margin-bottom: 0;
+        }
+
+        .payment-input-row .payment-input-group + .payment-input-group {
+            margin-left: 0;
+        }
+
         .payment-input {
             width: 100%;
             padding: 0.8rem 1rem;
@@ -912,6 +921,11 @@
 
             .payment-input-row {
                 flex-direction: column;
+            }
+
+            /* On small screens, add a tight vertical gap just between First/Last */
+            .payment-input-row .payment-input-group + .payment-input-group {
+                margin-top: 0.5rem;
             }
 
             .headline {
