@@ -991,6 +991,11 @@
             var promoCodeDisplay = document.getElementById('promoCodeDisplay');
             var promoRemove = document.getElementById('promoRemove');
 
+            // If promo elements are not present on the page, skip this logic entirely.
+            if (!promoInput || !promoApplied || !promoCodeDisplay || !promoRemove) {
+                return;
+            }
+
             function showPromoApplied(code) {
                 promoCodeDisplay.textContent = code || 'Promo applied';
                 promoApplied.hidden = false;
@@ -1124,6 +1129,7 @@
 
             paymentRequest.canMakePayment().then(function (result) {
                 if (result) {
+                    // Apple Pay (or another wallet) is available
                     paymentRequestButton.mount('#payment-request-button');
                     // Also mirror the same Apple Pay button below the card form for the second layout
                     const cloneContainer = paymentRequestButtonSecondaryContainer;
@@ -1141,7 +1147,19 @@
                         secondaryButton.mount('#payment-request-button-secondary');
                     }
                 } else {
-                    applePayAndToggle.style.display = 'none';
+                    // Apple Pay not available: hide just the Apple Pay containers,
+                    // but keep the card flow visible and working.
+                    if (paymentRequestButtonContainer) {
+                        paymentRequestButtonContainer.style.display = 'none';
+                    }
+                    if (paymentRequestButtonSecondaryContainer) {
+                        paymentRequestButtonSecondaryContainer.style.display = 'none';
+                    }
+                    // Show the card form by default and hide the toggle button.
+                    form.style.display = 'block';
+                    if (showCardButton) {
+                        showCardButton.style.display = 'none';
+                    }
                 }
             });
 
