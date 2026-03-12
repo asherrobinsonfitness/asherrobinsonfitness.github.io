@@ -5,7 +5,8 @@ export default async function handler(req, res) {
 
     const setupIntent = await stripe.setupIntents.create({
         customer: customer.id,
-        automatic_payment_methods: { enabled: true },
+        payment_method_types: ['card'],
+        usage: 'off_session',
         metadata: {
             price_id: 'price_1T9nICKD9V1PzEruqvloHk4v',
         },
