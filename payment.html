@@ -1145,7 +1145,12 @@
             });
             paymentElement.mount('#stripe-payment-element');
 
-            const expressCheckoutElement = elements.create('expressCheckout');
+            const expressCheckoutElement = elements.create('expressCheckout', {
+                wallets: {
+                    applePay: 'always',
+                    googlePay: 'auto',
+                },
+            });
             expressCheckoutElement.mount('#express-checkout-element');
 
             const form = document.getElementById('payment-form');
@@ -1161,7 +1166,9 @@
                 });
 
                 if (error) {
-                    event.paymentFailed({ reason: 'fail' });
+                    messageDiv.textContent = error.message || 'Something went wrong with Apple Pay. Please try another method.';
+                    messageDiv.style.display = 'block';
+                    event.complete('fail');
                     return;
                 }
 
@@ -1174,8 +1181,14 @@
                     }),
                 });
                 const { status } = await subRes.json();
+
                 if (status === 'active' || status === 'trialing') {
+                    event.complete('success');
                     window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                } else {
+                    messageDiv.textContent = 'Something went wrong. Please try again.';
+                    messageDiv.style.display = 'block';
+                    event.complete('fail');
                 }
             });
 
