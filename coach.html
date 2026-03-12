@@ -315,7 +315,9 @@
 
                 // small delay so spinner is perceptible and feels responsive
                 setTimeout(function () {
-                    window.location.href = 'payment.html' + window.location.search;
+                    var params = new URLSearchParams(window.location.search);
+                    params.set('from', 'coach');
+                    window.location.href = 'payment.html?' + params.toString();
                 }, 500);
             });
         });
