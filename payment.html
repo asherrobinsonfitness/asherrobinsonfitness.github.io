@@ -1214,7 +1214,7 @@
                 var paymentContent = document.getElementById('paymentContent');
                 if (paymentContent) {
                     var rect = paymentContent.getBoundingClientRect();
-                    var target = rect.top + window.pageYOffset - window.innerHeight;
+                    var target = rect.top + window.pageYOffset;
                     var start = window.pageYOffset;
                     var distance = target - start;
                     var duration = 800;
