@@ -769,9 +769,9 @@
         }
 
         .payment-terms {
+            margin-top: 0.75rem;
             font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: .75rem;
         }
 
         .payment-terms a {
@@ -781,21 +781,6 @@
 
         .payment-terms a:hover {
             text-decoration: underline;
-        }
-
-        /* Cancel / refund reassurance line */
-        .payment-reassurance {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.35rem;
-            margin-top: 0.6rem;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
-
-        .payment-reassurance svg {
-            flex-shrink: 0;
         }
 
         /* Payment hero image (below coach card) */
@@ -969,18 +954,6 @@
             flex-shrink: 0;
         }
 
-        /* Next steps heading */
-        .next-steps-heading {
-            width: 100%;
-            max-width: 520px;
-            margin: var(--space-4) auto 0.75rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: -.005em;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
         @media (max-width: 700px) {
             .footer-row {
                 flex-direction: column;
@@ -1134,23 +1107,11 @@
                             <div class="payment-input-group payment-card-row">
                                 <div id="card-element" class="payment-card-element"></div>
                             </div>
-                            <p class="payment-terms">
-                                By confirming your payment, you authorize Asher Robinson LLC to charge you for this payment
-                                and future payments in accordance with the terms.
-                            </p>
                         </div>
 
                         <button type="submit" id="submit-stripe">
                             <span id="submit-stripe-text">Begin Coaching • $50 Today</span>
                         </button>
-
-                        <p class="payment-reassurance">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 12l2 2 4-4" stroke="#717171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 3a9 9 0 100 18A9 9 0 0012 3z" stroke="#717171" stroke-width="2"/>
-                            </svg>
-                            Cancel anytime &nbsp;•&nbsp; 30-day refund
-                        </p>
 
                         <div id="stripe-message" role="alert" style="display:none; margin-top:0.75rem;"></div>
 
@@ -1159,9 +1120,12 @@
                         </div>
                     </form>
 
+                    <div class="payment-legal">
+                        <p class="payment-terms">
+                            By confirming your payment, you authorize Asher Robinson LLC to charge you for this payment
+                            and future payments in accordance with the terms.<br style="margin-bottom: .75rem;">Cancel anytime • 30-day refund
+                    </div>
                 </section>
-
-                <p class="next-steps-heading">What happens after I pay?</p>
 
                 <!-- Next Steps Widget -->
                 <section class="next-steps-widget" aria-label="What happens after payment">
