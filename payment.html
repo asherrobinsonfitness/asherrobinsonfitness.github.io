@@ -185,6 +185,49 @@
             --text-secondary: #717171;
         }
 
+        .payment-input-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .payment-input-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .payment-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 999px;
+            border: 1px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            font-size: 0.95rem;
+            color: var(--text);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .payment-input::placeholder {
+            color: #c0c0c0;
+        }
+
+        .payment-input:focus {
+            border-color: #d0d0d0;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
+        }
+
+        .payment-card-row {
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+        }
+
+        .payment-card-element {
+            padding: 0.6rem 1rem;
+        }
+
         .timeline-card {
             display: flex;
             flex-direction: column;
@@ -954,8 +997,33 @@
 
                     <form id="payment-form" style="margin-top: 1.5rem; display: none;">
                         <div id="card-form-fields">
-                            <div id="card-element" style="margin-bottom: 1rem;"></div>
+                            <div class="payment-input-group">
+                                <input id="email" type="email" name="email" autocomplete="email" required
+                                    placeholder="Email" class="payment-input" />
+                            </div>
+                            <div class="payment-input-row">
+                                <div class="payment-input-group">
+                                    <input id="firstName" type="text" name="firstName" autocomplete="given-name"
+                                        required placeholder="First Name" class="payment-input" />
+                                </div>
+                                <div class="payment-input-group">
+                                    <input id="lastName" type="text" name="lastName" autocomplete="family-name"
+                                        required placeholder="Last Name" class="payment-input" />
+                                </div>
+                            </div>
+                            <div class="payment-input-group">
+                                <input id="phone" type="tel" name="phone" autocomplete="tel" required
+                                    placeholder="Phone Number" class="payment-input" />
+                            </div>
+                            <div class="payment-input-group payment-card-row">
+                                <div id="card-element" class="payment-card-element"></div>
+                            </div>
                         </div>
+
+                        <p class="payment-muted" style="margin-top:0.5rem; margin-bottom:1rem;">
+                            To verify your card we place a temporary authorization hold of $1.00. You will not be
+                            charged and the hold is released automatically within 7 days.
+                        </p>
 
                         <button type="submit" id="submit-stripe">
                             <span id="submit-stripe-text">Submit</span>
@@ -1098,6 +1166,10 @@
             const applePayAndToggle = document.getElementById('apple-pay-and-card-toggle');
             const paymentRequestButtonContainer = document.getElementById('payment-request-button');
             const paymentRequestButtonSecondaryContainer = document.getElementById('payment-request-button-secondary');
+            const emailInput = document.getElementById('email');
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const phoneInput = document.getElementById('phone');
 
             // Set up Apple Pay / Payment Request
             const paymentRequest = stripe.paymentRequest({
@@ -1178,6 +1250,9 @@
                     body: JSON.stringify({
                         customerId,
                         paymentMethodId: setupIntent.payment_method,
+                        email: emailInput ? emailInput.value : undefined,
+                        name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
+                        phone: phoneInput ? phoneInput.value : undefined,
                     }),
                 });
 
@@ -1208,6 +1283,11 @@
                 const { error, setupIntent } = await stripe.confirmCardSetup(clientSecret, {
                     payment_method: {
                         card: cardElement,
+                        billing_details: {
+                            email: emailInput ? emailInput.value : undefined,
+                            name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
+                            phone: phoneInput ? phoneInput.value : undefined,
+                        },
                     },
                 });
 
