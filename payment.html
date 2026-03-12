@@ -202,13 +202,15 @@
 
         .payment-input-group {
             margin-bottom: 0.75rem;
+            flex: 1 1 0;
+            min-width: 0;
         }
 
         .payment-input-row {
             display: flex;
             gap: 0.75rem;
             margin-bottom: 0.75rem;
-            align-items: stretch;
+            width: 100%;
         }
 
         .payment-input {
@@ -958,7 +960,7 @@
             </div>
         </main>
 
-        <div id="paymentContent" style="opacity:0; pointer-events:none;">
+        <div id="paymentContent">
             <div class="content payment-inner">
                 <section class="timeline-card" aria-label="Payment breakdown and trial timeline">
                     <div class="payment-trial-item payment-trial-item--today">
@@ -1100,41 +1102,30 @@
     </script>
     <script>
         window.addEventListener('load', function () {
-            // If the user came from coach.html (or we passed a flag), scroll after Stripe is ready.
-            var params = new URLSearchParams(window.location.search);
-            var shouldScrollToPayment = params.get('from') === 'coach';
-
-            function smoothScrollToPayment() {
+            setTimeout(function () {
                 var paymentContent = document.getElementById('paymentContent');
-                if (!paymentContent) return;
+                if (paymentContent) {
+                    var rect = paymentContent.getBoundingClientRect();
+                    var target = rect.bottom + window.pageYOffset - window.innerHeight;
+                    var start = window.pageYOffset;
+                    var distance = target - start;
+                    var duration = 800;
+                    var startTime = null;
 
-                var rect = paymentContent.getBoundingClientRect();
-                var target = rect.bottom + window.pageYOffset - window.innerHeight;
-                var start = window.pageYOffset;
-                var distance = target - start;
-                var duration = 800;
-                var startTime = null;
+                    function ease(t) {
+                        return 1 - Math.pow(1 - t, 4);
+                    }
 
-                function ease(t) {
-                    return 1 - Math.pow(1 - t, 4);
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        window.scrollTo(0, start + distance * ease(progress));
+                        if (progress < 1) requestAnimationFrame(step);
+                    }
+
+                    requestAnimationFrame(step);
                 }
-
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    var progress = Math.min((timestamp - startTime) / duration, 1);
-                    window.scrollTo(0, start + distance * ease(progress));
-                    if (progress < 1) requestAnimationFrame(step);
-                }
-
-                requestAnimationFrame(step);
-            }
-
-            // Expose the scroll function so initStripe can call it when ready.
-            window.__scrollToPaymentIfNeeded = function () {
-                if (shouldScrollToPayment) {
-                    smoothScrollToPayment();
-                }
-            };
+            }, 300);
         });
     </script>
     <script>
@@ -1346,17 +1337,6 @@
                     submitText.textContent = 'Pay $199 Today';
                 }
             });
-
-            // At this point, all Stripe elements are mounted and ready.
-            var paymentContent = document.getElementById('paymentContent');
-            if (paymentContent) {
-                paymentContent.style.opacity = '1';
-                paymentContent.style.pointerEvents = 'auto';
-            }
-
-            if (window.__scrollToPaymentIfNeeded) {
-                window.__scrollToPaymentIfNeeded();
-            }
         }
 
         initStripe();
