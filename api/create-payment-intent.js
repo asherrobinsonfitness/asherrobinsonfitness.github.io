@@ -2,17 +2,17 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
     const customer = await stripe.customers.create();
-
-    const setupIntent = await stripe.setupIntents.create({
+    
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: 5000, // $50
+        currency: 'usd',
         customer: customer.id,
+        setup_future_usage: 'off_session',
         automatic_payment_methods: { enabled: true },
-        metadata: {
-            price_id: 'price_1T9nICKD9V1PzEruqvloHk4v',
-        },
     });
 
     res.status(200).json({
-        clientSecret: setupIntent.client_secret,
+        clientSecret: paymentIntent.client_secret,
         customerId: customer.id,
     });
 }
