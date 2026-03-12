@@ -994,34 +994,7 @@
             promoRemove.addEventListener('click', hidePromoApplied);
         })();
     </script>
-    <script>
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                var paymentContent = document.getElementById('paymentContent');
-                if (paymentContent) {
-                    var rect = paymentContent.getBoundingClientRect();
-                    var target = rect.bottom + window.pageYOffset - window.innerHeight;
-                    var start = window.pageYOffset;
-                    var distance = target - start;
-                    var duration = 800;
-                    var startTime = null;
-
-                    function ease(t) {
-                        return 1 - Math.pow(1 - t, 4);
-                    }
-
-                    function step(timestamp) {
-                        if (!startTime) startTime = timestamp;
-                        var progress = Math.min((timestamp - startTime) / duration, 1);
-                        window.scrollTo(0, start + distance * ease(progress));
-                        if (progress < 1) requestAnimationFrame(step);
-                    }
-
-                    requestAnimationFrame(step);
-                }
-            }, 300);
-        });
-    </script>
+    
     <script>
         // ---- REPLACE THESE ----
         const STRIPE_PUBLISHABLE_KEY = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
@@ -1053,23 +1026,83 @@
                         spacingGridRow: '1rem',
                     },
                     rules: darkMode ? {
-                        '.Block': { backgroundColor: 'transparent', boxShadow: 'none', border: 'none', padding: '0' },
-                        '.Input': { border: '1px solid #3d3d3d', boxShadow: 'none', padding: '0.75rem 1rem', fontSize: '0.9rem', backgroundColor: '#333333' },
-                        '.Input:focus': { border: '1px solid #0066ff', boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)' },
-                        '.Label': { fontSize: '0.85rem', fontWeight: '600', color: '#F8FAFC', marginBottom: '0.35rem' },
-                        '.Tab': { border: '1px solid #3d3d3d', boxShadow: 'none', backgroundColor: '#282828' },
-                        '.Tab:hover': { backgroundColor: '#333333' },
-                        '.Tab--selected': { border: '1px solid #0066ff', boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)' },
-                        '.TabLabel': { fontWeight: '600' },
+                        '.Block': {
+                            backgroundColor: 'transparent',
+                            boxShadow: 'none',
+                            border: 'none',
+                            padding: '0',
+                        },
+                        '.Input': {
+                            border: '1px solid #3d3d3d',
+                            boxShadow: 'none',
+                            padding: '0.75rem 1rem',
+                            fontSize: '0.9rem',
+                            backgroundColor: '#333333',
+                        },
+                        '.Input:focus': {
+                            border: '1px solid #0066ff',
+                            boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)',
+                        },
+                        '.Label': {
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            color: '#F8FAFC',
+                            marginBottom: '0.35rem',
+                        },
+                        '.Tab': {
+                            border: '1px solid #3d3d3d',
+                            boxShadow: 'none',
+                            backgroundColor: '#282828',
+                        },
+                        '.Tab:hover': {
+                            backgroundColor: '#333333',
+                        },
+                        '.Tab--selected': {
+                            border: '1px solid #0066ff',
+                            boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)',
+                        },
+                        '.TabLabel': {
+                            fontWeight: '600',
+                        },
                     } : {
-                        '.Block': { backgroundColor: 'transparent', boxShadow: 'none', border: 'none', padding: '0' },
-                        '.Input': { border: '1px solid #e8e8e8', boxShadow: 'none', padding: '0.75rem 1rem', fontSize: '0.9rem', backgroundColor: '#ffffff' },
-                        '.Input:focus': { border: '1px solid #0066ff', boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)' },
-                        '.Label': { fontSize: '0.85rem', fontWeight: '600', color: '#222222', marginBottom: '0.35rem' },
-                        '.Tab': { border: '1px solid #e8e8e8', boxShadow: 'none', backgroundColor: '#f0f0f0' },
-                        '.Tab:hover': { backgroundColor: '#f5f5f5' },
-                        '.Tab--selected': { border: '1px solid #0066ff', boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)' },
-                        '.TabLabel': { fontWeight: '600' },
+                        '.Block': {
+                            backgroundColor: 'transparent',
+                            boxShadow: 'none',
+                            border: 'none',
+                            padding: '0',
+                        },
+                        '.Input': {
+                            border: '1px solid #e8e8e8',
+                            boxShadow: 'none',
+                            padding: '0.75rem 1rem',
+                            fontSize: '0.9rem',
+                            backgroundColor: '#ffffff',
+                        },
+                        '.Input:focus': {
+                            border: '1px solid #0066ff',
+                            boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)',
+                        },
+                        '.Label': {
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            color: '#222222',
+                            marginBottom: '0.35rem',
+                        },
+                        '.Tab': {
+                            border: '1px solid #e8e8e8',
+                            boxShadow: 'none',
+                            backgroundColor: '#f0f0f0',
+                        },
+                        '.Tab:hover': {
+                            backgroundColor: '#f5f5f5',
+                        },
+                        '.Tab--selected': {
+                            border: '1px solid #0066ff',
+                            boxShadow: '0 0 0 3px rgba(0, 102, 255, 0.1)',
+                        },
+                        '.TabLabel': {
+                            fontWeight: '600',
+                        },
                     },
                 },
                 loader: 'auto',
@@ -1085,6 +1118,31 @@
             });
             paymentElement.mount('#stripe-payment-element');
 
+            paymentElement.on('ready', function () {
+    var paymentContent = document.getElementById('paymentContent');
+    if (paymentContent) {
+        var rect = paymentContent.getBoundingClientRect();
+        var target = rect.bottom + window.pageYOffset - window.innerHeight;
+        var start = window.pageYOffset;
+        var distance = target - start;
+        var duration = 800;
+        var startTime = null;
+
+        function ease(t) {
+            return 1 - Math.pow(1 - t, 4);
+        }
+
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            window.scrollTo(0, start + distance * ease(progress));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+    }
+});
+
             const expressCheckoutElement = elements.create('expressCheckout');
             expressCheckoutElement.mount('#express-checkout-element');
 
@@ -1093,25 +1151,8 @@
             const submitText = document.getElementById('submit-stripe-text');
             const messageDiv = document.getElementById('stripe-message');
 
-            async function createSubscription(paymentMethodId) {
-                const subRes = await fetch('/api/create-subscription', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ customerId, paymentMethodId }),
-                });
-                const { status } = await subRes.json();
-                if (status === 'active' || status === 'trialing') {
-                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
-                } else {
-                    messageDiv.textContent = 'Something went wrong. Please try again.';
-                    messageDiv.style.display = 'block';
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Pay $50 Today';
-                }
-            }
-
             expressCheckoutElement.on('confirm', async (event) => {
-                const { error, paymentIntent } = await stripe.confirmPayment({
+                const { error, setupIntent } = await stripe.confirmSetup({
                     elements,
                     confirmParams: { return_url: window.location.href },
                     redirect: 'if_required',
@@ -1122,7 +1163,18 @@
                     return;
                 }
 
-                await createSubscription(paymentIntent.payment_method);
+                const subRes = await fetch('/api/create-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId,
+                        paymentMethodId: setupIntent.payment_method,
+                    }),
+                });
+                const { status } = await subRes.json();
+                if (status === 'active' || status === 'trialing') {
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                }
             });
 
             form.addEventListener('submit', async (e) => {
@@ -1131,7 +1183,7 @@
                 submitText.textContent = 'Processing…';
                 messageDiv.style.display = 'none';
 
-                const { error, paymentIntent } = await stripe.confirmPayment({
+                const { error, setupIntent } = await stripe.confirmSetup({
                     elements,
                     confirmParams: { return_url: window.location.href },
                     redirect: 'if_required',
@@ -1141,11 +1193,29 @@
                     messageDiv.textContent = error.message;
                     messageDiv.style.display = 'block';
                     submitBtn.disabled = false;
-                    submitText.textContent = 'Pay $50 Today';
+                    submitText.textContent = 'Pay $199 Today';
                     return;
                 }
 
-                await createSubscription(paymentIntent.payment_method);
+                const subRes = await fetch('/api/create-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId,
+                        paymentMethodId: setupIntent.payment_method,
+                    }),
+                });
+
+                const { status } = await subRes.json();
+
+                if (status === 'active' || status === 'trialing') {
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                } else {
+                    messageDiv.textContent = 'Something went wrong. Please try again.';
+                    messageDiv.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Pay $199 Today';
+                }
             });
         }
 
