@@ -1015,15 +1015,8 @@
                 </section>
 
                 <section class="payment-section" id="paymentSection" aria-label="Payment">
-                    <div id="apple-pay-and-card-toggle">
-                        <div id="payment-request-button"></div>
-                        <button type="button" id="show-card-button" class="primary-button"
-                            style="margin-top: 0.75rem; background:#f7f7f7; color: var(--text); border:1px solid #e0e0e0;">
-                            Pay with Card
-                        </button>
-                    </div>
 
-                    <form id="payment-form" style="display: none;">
+                    <form id="payment-form">
                         <div id="card-form-fields">
                             <div class="payment-input-group">
                                 <input id="email" type="email" name="email" autocomplete="email" required
@@ -1185,9 +1178,6 @@
             const submitBtn = document.getElementById('submit-stripe');
             const submitText = document.getElementById('submit-stripe-text');
             const messageDiv = document.getElementById('stripe-message');
-            const showCardButton = document.getElementById('show-card-button');
-            const applePayAndToggle = document.getElementById('apple-pay-and-card-toggle');
-            const paymentRequestButtonContainer = document.getElementById('payment-request-button');
             const paymentRequestButtonSecondaryContainer = document.getElementById('payment-request-button-secondary');
             const emailInput = document.getElementById('email');
             const firstNameInput = document.getElementById('firstName');
@@ -1218,38 +1208,12 @@
             });
 
             paymentRequest.canMakePayment().then(function (result) {
-                if (result) {
-                    // Apple Pay (or another wallet) is available
-                    paymentRequestButton.mount('#payment-request-button');
-                    // Also mirror the same Apple Pay button below the card form for the second layout
-                    const cloneContainer = paymentRequestButtonSecondaryContainer;
-                    if (cloneContainer) {
-                        const secondaryButton = elements.create('paymentRequestButton', {
-                            paymentRequest,
-                            style: {
-                                paymentRequestButton: {
-                                    type: 'plain',
-                                    theme: 'dark',
-                                    height: '48px',
-                                },
-                            },
-                        });
-                        secondaryButton.mount('#payment-request-button-secondary');
-                    }
-                } else {
-                    // Apple Pay not available: hide just the Apple Pay containers,
-                    // but keep the card flow visible and working.
-                    if (paymentRequestButtonContainer) {
-                        paymentRequestButtonContainer.style.display = 'none';
-                    }
-                    if (paymentRequestButtonSecondaryContainer) {
-                        paymentRequestButtonSecondaryContainer.style.display = 'none';
-                    }
-                    // Show the card form by default and hide the toggle button.
-                    form.style.display = 'block';
-                    if (showCardButton) {
-                        showCardButton.style.display = 'none';
-                    }
+                if (result && paymentRequestButtonSecondaryContainer) {
+                    // Apple Pay (or another wallet) is available – show the button below the submit button
+                    paymentRequestButton.mount('#payment-request-button-secondary');
+                } else if (paymentRequestButtonSecondaryContainer) {
+                    // Apple Pay not available – hide its container, card form always visible
+                    paymentRequestButtonSecondaryContainer.style.display = 'none';
                 }
             });
 
@@ -1289,12 +1253,6 @@
                     messageDiv.textContent = 'Something went wrong. Please try again.';
                     messageDiv.style.display = 'block';
                 }
-            });
-
-            // Toggle to show card form when "Pay with Card" is clicked
-            showCardButton.addEventListener('click', function () {
-                form.style.display = 'block';
-                showCardButton.style.display = 'none';
             });
 
             form.addEventListener('submit', async (e) => {
