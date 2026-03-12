@@ -944,12 +944,33 @@
                 </section>
 
                 <section class="payment-section" id="paymentSection" aria-label="Payment">
-                    <form id="payment-form">
-                        <div id="card-element" style="margin-bottom: 1rem;"></div>
-                        <div id="stripe-message" role="alert" style="display:none;"></div>
-                        <button type="submit" id="submit-stripe">
-                            <span id="submit-stripe-text">Pay $50 Today</span>
+                    <div id="apple-pay-and-card-toggle">
+                        <div id="payment-request-button"></div>
+                        <button type="button" id="show-card-button" class="primary-button"
+                            style="margin-top: 0.75rem; background:#f7f7f7; color: var(--text); border:1px solid #e0e0e0;">
+                            Pay with Card
                         </button>
+                    </div>
+
+                    <form id="payment-form" style="margin-top: 1.5rem; display: none;">
+                        <div id="card-form-fields">
+                            <div id="card-element" style="margin-bottom: 1rem;"></div>
+                        </div>
+
+                        <p class="payment-muted" style="margin-top:0.5rem; margin-bottom:1rem;">
+                            To verify your card we place a temporary authorization hold of $1.00. You will not be
+                            charged and the hold is released automatically within 7 days.
+                        </p>
+
+                        <button type="submit" id="submit-stripe">
+                            <span id="submit-stripe-text">Submit</span>
+                        </button>
+
+                        <div id="stripe-message" role="alert" style="display:none; margin-top:0.75rem;"></div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <div id="payment-request-button-secondary"></div>
+                        </div>
                     </form>
 
                     <div class="payment-legal">
@@ -1073,6 +1094,97 @@
             const submitBtn = document.getElementById('submit-stripe');
             const submitText = document.getElementById('submit-stripe-text');
             const messageDiv = document.getElementById('stripe-message');
+            const showCardButton = document.getElementById('show-card-button');
+            const applePayAndToggle = document.getElementById('apple-pay-and-card-toggle');
+            const paymentRequestButtonContainer = document.getElementById('payment-request-button');
+            const paymentRequestButtonSecondaryContainer = document.getElementById('payment-request-button-secondary');
+
+            // Set up Apple Pay / Payment Request
+            const paymentRequest = stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: {
+                    label: 'Asher Robinson Fitness',
+                    amount: 5000, // $50.00
+                },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
+
+            const paymentRequestButton = elements.create('paymentRequestButton', {
+                paymentRequest,
+                style: {
+                    paymentRequestButton: {
+                        type: 'plain',
+                        theme: 'dark',
+                        height: '48px',
+                    },
+                },
+            });
+
+            paymentRequest.canMakePayment().then(function (result) {
+                if (result) {
+                    paymentRequestButton.mount('#payment-request-button');
+                    // Also mirror the same Apple Pay button below the card form for the second layout
+                    const cloneContainer = paymentRequestButtonSecondaryContainer;
+                    if (cloneContainer) {
+                        const secondaryButton = elements.create('paymentRequestButton', {
+                            paymentRequest,
+                            style: {
+                                paymentRequestButton: {
+                                    type: 'plain',
+                                    theme: 'dark',
+                                    height: '48px',
+                                },
+                            },
+                        });
+                        secondaryButton.mount('#payment-request-button-secondary');
+                    }
+                } else {
+                    applePayAndToggle.style.display = 'none';
+                }
+            });
+
+            paymentRequest.on('paymentmethod', async (ev) => {
+                messageDiv.style.display = 'none';
+
+                const { error, setupIntent } = await stripe.confirmCardSetup(clientSecret, {
+                    payment_method: ev.paymentMethod.id,
+                });
+
+                if (error) {
+                    ev.complete('fail');
+                    messageDiv.textContent = error.message || 'Something went wrong. Please try another method.';
+                    messageDiv.style.display = 'block';
+                    return;
+                }
+
+                const subRes = await fetch('/api/create-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId,
+                        paymentMethodId: setupIntent.payment_method,
+                    }),
+                });
+
+                const { status } = await subRes.json();
+
+                if (status === 'active' || status === 'trialing') {
+                    ev.complete('success');
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                } else {
+                    ev.complete('fail');
+                    messageDiv.textContent = 'Something went wrong. Please try again.';
+                    messageDiv.style.display = 'block';
+                }
+            });
+
+            // Toggle to show card form when "Pay with Card" is clicked
+            showCardButton.addEventListener('click', function () {
+                form.style.display = 'block';
+                showCardButton.style.display = 'none';
+            });
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
