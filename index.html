@@ -204,6 +204,65 @@
             padding: 0 var(--space-5)
         }
 
+        .site-footer {
+            width: 100%;
+            max-width: 100vw;
+            padding: 2.5rem 1.5rem;
+            margin: 0 auto;
+            box-sizing: border-box;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: #f0f0f0;
+            border-top: 1px solid #c0c7cf;
+        }
+
+        .footer-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .footer-disclaimer {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            width: 100%;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .footer-left {
+            font-size: 13px;
+            color: var(--text-secondary);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            font-size: 13px;
+            flex: 1;
+            justify-content: flex-end;
+            min-width: 200px;
+        }
+
+        .footer-right a {
+            color: #06f;
+            text-decoration: none;
+        }
+
         .hero-grid>.content,
         .hero-grid>.content2 {
             margin: 0;
@@ -243,7 +302,7 @@
 
         .callout {
             color: var(--text);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.875rem;
             line-height: 1.2;
             width: fit-content;
@@ -697,13 +756,14 @@
             .report-img {
                 max-width: 800px
             }
+
+            .site-footer {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
         }
 
         @media(min-width:1280px) {
-            .hero-helper-banner::after {
-                display: none;
-            }
-
             .hero-grid {
                 display: grid;
                 grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
@@ -839,6 +899,22 @@
             width: 100%;
             border-bottom: 1px solid #c0c7cf
         }
+
+        @media(max-width: 700px) {
+            .footer-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-left,
+            .footer-right {
+                justify-content: flex-start;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+        }
     </style>
     <style>
         @media(prefers-color-scheme:dark) {
@@ -856,8 +932,8 @@
         <div class=hero-grid>
             <div class=content id=mainContent>
                 <div class=header-group>
-                    <div class=callout style=font-weight:600;letter-spacing:.02rem>For Men Ages 25-44</div>
-                    <h1 class=headline style=font-weight:600>1-on-1 Fat Loss Coaching</h1>
+                    <div class=callout>For Men Ages 25-44</div>
+                    <h1 class=headline>1-on-1 Fat Loss Coaching</h1>
                     <p class=subheadline>Personal coaching and accountability to help you lose weight and keep it off.</p>
                 </div>
                 <div class="report-img video-container">
@@ -968,37 +1044,11 @@
             </div>
         </div>
     </div>
-    <footer
-        style="width:100%;max-width:100vw;padding:2.5rem 1.5rem;margin:0 auto 0;box-sizing:border-box;font-size:13px;color:var(--text-secondary);background:#f0f0f0;border-top:1px solid #c0c7cf">
-        <style>
-            @media(min-width:1024px) {
-                footer {
-                    padding-left: 2rem !important;
-                    padding-right: 2rem !important
-                }
-            }
-        </style>
+    <footer class="site-footer">
         <div class="footer-container">
-            <style>
-                @media(max-width: 700px) {
-                    .footer-row {
-                        flex-direction: column !important;
-                        align-items: flex-start !important;
-                        gap: 1rem !important;
-                    }
-
-                    .footer-left,
-                    .footer-right {
-                        justify-content: flex-start !important;
-                        width: 100% !important;
-                        min-width: 0 !important;
-                        max-width: 100% !important;
-                    }
-                }
-            </style>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="footer-layout">
                 <!-- Disclaimer text block: full width -->
-                <div style="font-size:12px; line-height:1.6; color:var(--text-secondary); opacity:0.8; width:100%;">
+                <div class="footer-disclaimer">
                     <div style="margin-bottom: 0.75rem;">This site is not a part of the Facebook website or Meta
                         Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK
                         is a trademark of Meta Platforms, Inc.</div>
@@ -1010,16 +1060,13 @@
                 <div class="footer-line"></div>
 
                 <!-- Footer row: left and right aligned items -->
-                <div class="footer-row"
-                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 1.5rem; width: 100%;">
-                    <div class="footer-left"
-                        style="font-size:13px; color:var(--text-secondary); flex:1; min-width: 200px;">
+                <div class="footer-row">
+                    <div class="footer-left">
                         © 2026 Asher Robinson LLC. All rights reserved.
                     </div>
-                    <div class="footer-right"
-                        style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; font-size:13px; flex:1; justify-content: flex-end; min-width: 200px;">
-                        <a href="https://iclosed.io/terms/" style="color:#06f; text-decoration:none;">Terms of Use</a>
-                        <a href="https://iclosed.io/privacy-policy/" style="color:#06f; text-decoration:none;">Privacy
+                    <div class="footer-right">
+                        <a href="https://iclosed.io/terms/">Terms of Use</a>
+                        <a href="https://iclosed.io/privacy-policy/">Privacy
                             Policy</a>
                     </div>
                 </div>
@@ -1033,45 +1080,56 @@
     <!-- iClosed Lift Widget end -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const widgets = document.querySelectorAll('[data-before-after-widget]');
+            var widgets = document.querySelectorAll('[data-before-after-widget]');
             if (!widgets.length) return;
 
-            widgets.forEach((widget) => {
-                const range = widget.querySelector('.before-after-range');
-                const overlay = widget.querySelector('.before-after-overlay');
-                const divider = widget.querySelector('.before-after-divider');
+            widgets.forEach(function (widget) {
+                var range = widget.querySelector('.before-after-range');
+                var overlay = widget.querySelector('.before-after-overlay');
+                var divider = widget.querySelector('.before-after-divider');
                 if (!range || !overlay || !divider) return;
 
-                const updateSlider = (value) => {
-                    const v = Math.min(100, Math.max(0, Number(value) || 50));
-                    overlay.style.clipPath = `inset(0 0 0 ${v}%)`;
-                    divider.style.left = `${v}%`;
-                };
+                function updateSlider(value) {
+                    var v = Math.min(100, Math.max(0, Number(value) || 50));
+                    overlay.style.clipPath = 'inset(0 0 0 ' + v + '%)';
+                    divider.style.left = v + '%';
+                }
 
                 updateSlider(range.value || 50);
-                range.addEventListener('input', (event) => {
+                range.addEventListener('input', function (event) {
                     updateSlider(event.target.value);
                 });
 
-                let touchStartX = 0;
-                let touchStartY = 0;
-                let isDragging = false;
+                var isDragging = false;
+                var rect = null;
+
+                function positionFromTouch(touch) {
+                    if (!rect) rect = widget.getBoundingClientRect();
+                    var x = touch.clientX - rect.left;
+                    var ratio = x / rect.width;
+                    return Math.min(100, Math.max(0, ratio * 100));
+                }
 
                 widget.addEventListener('touchstart', function (e) {
-                    touchStartX = e.touches[0].clientX;
-                    touchStartY = e.touches[0].clientY;
-                    isDragging = false;
+                    if (!e.touches.length) return;
+                    isDragging = true;
+                    rect = widget.getBoundingClientRect();
+                    var value = positionFromTouch(e.touches[0]);
+                    range.value = value;
+                    updateSlider(value);
                 }, { passive: true });
 
                 widget.addEventListener('touchmove', function (e) {
-                    if (!isDragging && e.touches.length > 0) {
-                        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
-                        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
-                        if (deltaX > deltaY && deltaX > 10) {
-                            isDragging = true;
-                        }
-                    }
+                    if (!isDragging || !e.touches.length) return;
+                    var value = positionFromTouch(e.touches[0]);
+                    range.value = value;
+                    updateSlider(value);
                 }, { passive: true });
+
+                widget.addEventListener('touchend', function () {
+                    isDragging = false;
+                    rect = null;
+                });
             });
         });
     </script>
