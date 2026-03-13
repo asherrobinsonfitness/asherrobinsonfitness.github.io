@@ -325,6 +325,13 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
         }
 
+        .primary-button-divider {
+            display: inline-block;
+            width: 1px;
+            height: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.35);
+        }
+
         body {
             color: var(--text);
             line-height: 1.5;
@@ -1111,7 +1118,9 @@
                         </div>
 
                         <button type="submit" id="submit-stripe">
-                            <span id="submit-stripe-text">Begin Coaching • $50 Today</span>
+                            <span id="submit-stripe-text">Begin coaching</span>
+                            <span class="primary-button-divider" aria-hidden="true"></span>
+                            <span>$50 Today</span>
                         </button>
 
                         <div id="stripe-message" role="alert" style="display:none; margin-top:0.75rem;"></div>
