@@ -817,6 +817,7 @@
                 display: grid;
                 grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
                 align-items: stretch;
+                min-height: 100vh;
                 padding: 0;
                 gap: 0;
                 border-top: 1px solid #c0c7cf;
@@ -1028,12 +1029,13 @@
                 <div class="mobile-cta-wrapper">
                     <button class="primary-button"
                         onclick="window.location.href='https://www.youtube.com/@asherrobinsonfitness'">
-                        <span class="primary-button-label">Watch My Free Content</span>
+                        <span class="primary-button-label">Watch Free Content on YouTube</span>
                         <span class="primary-button-divider" aria-hidden="true"></span>
                         <span class="primary-button-arrow">→</span>
                     </button>
                     <div class="quiz-pricing">
-                        <div class="quiz-pricing-note">This button takes you to my YouTube channel.</div>
+                        <div class="quiz-pricing-amount">This button takes you to my YouTube channel.</div>
+                        <div class="quiz-pricing-note">Watch my free fat loss content.</div>
                     </div>
                 </div>
             </div>
@@ -1050,6 +1052,65 @@
             </div>
         </div>
     </div>
+    <footer
+        style="width:100%;max-width:100vw;padding:2.5rem 1.5rem;margin:0 auto 0;box-sizing:border-box;font-size:13px;color:var(--text-secondary);background:#f0f0f0;border-top:1px solid #c0c7cf">
+        <style>
+            @media(min-width:1024px) {
+                footer {
+                    padding-left: 2rem !important;
+                    padding-right: 2rem !important
+                }
+            }
+        </style>
+        <div class="footer-container">
+            <style>
+                @media(max-width: 700px) {
+                    .footer-row {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                        gap: 1rem !important;
+                    }
+
+                    .footer-left,
+                    .footer-right {
+                        justify-content: flex-start !important;
+                        width: 100% !important;
+                        min-width: 0 !important;
+                        max-width: 100% !important;
+                    }
+                }
+            </style>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Disclaimer text block: full width -->
+                <div style="font-size:12px; line-height:1.6; color:var(--text-secondary); opacity:0.8; width:100%;">
+                    <div style="margin-bottom: 0.75rem;">This site is not a part of the Facebook website or Meta
+                        Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK
+                        is a trademark of Meta Platforms, Inc.</div>
+                    <div>Results may vary. This site does not offer medical advice. Always consult with a qualified
+                        healthcare professional before starting any diet or exercise program.</div>
+                </div>
+
+                <!-- 1px horizontal break line -->
+                <div class="footer-line"></div>
+
+                <!-- Footer row: left and right aligned items -->
+                <div class="footer-row"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 1.5rem; width: 100%;">
+                    <div class="footer-left"
+                        style="font-size:13px; color:var(--text-secondary); flex:1; min-width: 200px;">
+                        © 2026 Asher Robinson LLC. All rights reserved.
+                    </div>
+                    <div class="footer-right"
+                        style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; font-size:13px; flex:1; justify-content: flex-end; min-width: 200px;">
+                        <a href="https://iclosed.io/terms/" style="color:#06f; text-decoration:none;">Terms of Use</a>
+                        <a href="https://iclosed.io/privacy-policy/" style="color:#06f; text-decoration:none;">Privacy
+                            Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
     <script defer>document.addEventListener("DOMContentLoaded",function(){window.addEventListener("error",function(e){return e.preventDefault(),!0}),document.cookie="SameSite=None; Secure"});</script>
     <script defer>document.addEventListener('DOMContentLoaded',function(){const urlParams=new URLSearchParams(window.location.search);const name=urlParams.get('invitee_full_name');console.log('Name from URL:',name);const calloutText=document.getElementById('callout-text');if(name){const firstName=name.trim().split(' ')[0];if(calloutText){calloutText.textContent='Thank you for applying, '+firstName+'!'}}else{if(calloutText){calloutText.textContent='Thank you for applying';}}});</script>
     
