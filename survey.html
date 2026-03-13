@@ -659,9 +659,7 @@
             display: flex;
             overflow: hidden;
             padding: 1.25rem;
-            /* shared padding for text + images */
             column-gap: 1.25rem;
-            /* gap between text and image sections */
         }
 
         .results-desktop-text {
@@ -686,7 +684,6 @@
             overflow: hidden;
             position: relative;
             background-color: #f5f5f5;
-            /* subtle, neutral card bg */
         }
 
         .results-desktop-image-inner img {
@@ -750,7 +747,6 @@
 
             .results-desktop-image-inner {
                 background-color: #2a2a2a;
-                /* subtle contrast against #222 card */
             }
         }
 
@@ -1007,12 +1003,10 @@
             box-sizing: border-box;
             background: linear-gradient(357.5deg, #354a67 1.59%, #314660 21.23%, #25354e 58.6%, #6c87ac 97.4%);
             box-shadow: 0 2px 3px rgb(0 0 0 / 6%), inset 0 0 2px 0.5px #001c40, inset 0 -1px 3px #d7ebff;
-            /* glossy bubble + soft outer */
             position: relative;
             overflow: hidden
         }
 
-        /* top glossy highlight */
         .top-banner .new-badge::before {
             content: "";
             position: absolute;
@@ -1078,7 +1072,6 @@
             flex-direction: column;
         }
 
-        /* Match payment.html's main column width */
         .content#mainContent {
             max-width: 520px;
         }
@@ -1245,7 +1238,6 @@
             color: var(--selected-bg);
         }
 
-
         @keyframes survey-spinner {
             from {
                 transform: rotate(0deg);
@@ -1400,7 +1392,7 @@
                     id: 'age',
                     label: 'Age',
                     path: 'age',
-                    question: 'What’s your age?',
+                    question: 'What\u2019s your age?',
                     options: [
                         { value: '17_or_younger', label: "17 or younger" },
                         { value: '18_24', label: "18-24" },
@@ -1433,27 +1425,18 @@
                         { value: 'maybe', label: 'Maybe' }
                     ]
                 }
-
             ];
 
-
-
-            const getBaseSurveyUrl = () => {
-                // Best practice for static sites: link directly to the real file.
-                // Use a relative URL so it works from any directory.
-                return 'survey.html';
-            };
+            const getBaseSurveyUrl = () => 'survey.html';
 
             const urlForStep = (step) => {
                 const base = getBaseSurveyUrl();
                 const params = new URLSearchParams(window.location.search || '');
-
                 if (step && step.path) {
                     params.set('step', step.path);
                 } else {
                     params.delete('step');
                 }
-
                 const query = params.toString();
                 return query ? `${base}?${query}` : base;
             };
@@ -1469,28 +1452,20 @@
             const stepsPill = document.getElementById('survey-steps-pill');
             const prevButton = document.getElementById('survey-prev-step');
 
-            // Initialize current step from URL if it matches one of the step paths
+            // Initialize current step from URL
             (function initStepFromUrl() {
                 const params = new URLSearchParams(window.location.search || '');
                 const slugFromQuery = params.get('step');
-
                 if (slugFromQuery) {
                     const idx = steps.findIndex(s => s.path === slugFromQuery);
-                    if (idx >= 0) {
-                        currentStepIndex = idx;
-                        return;
-                    }
+                    if (idx >= 0) { currentStepIndex = idx; return; }
                 }
-
-                // Fallback: support legacy /survey/slug paths if rewrites are configured
                 const path = window.location.pathname || '';
                 const match = path.match(/\/survey\/([^/]+)/);
                 const slugFromPath = match ? match[1] : null;
                 if (slugFromPath) {
                     const idx = steps.findIndex(s => s.path === slugFromPath);
-                    if (idx >= 0) {
-                        currentStepIndex = idx;
-                    }
+                    if (idx >= 0) currentStepIndex = idx;
                 }
             })();
 
@@ -1500,7 +1475,7 @@
 
                 questionEl.textContent = step.question;
 
-                // Update steps pill active state
+                // Update steps pill
                 if (stepsPill) {
                     const spans = stepsPill.querySelectorAll('.survey-step');
                     spans.forEach((span) => {
@@ -1508,28 +1483,14 @@
                         const indexForSpan = steps.findIndex(s => s.id === stepId);
                         const isActive = stepId === step.id;
                         const isCompleted = indexForSpan > -1 && indexForSpan < currentStepIndex && answers[steps[indexForSpan].id];
-
-                        if (isActive) {
-                            span.classList.add('survey-step--active');
-                        } else {
-                            span.classList.remove('survey-step--active');
-                        }
-
-                        if (isCompleted) {
-                            span.classList.add('survey-step--completed');
-                        } else {
-                            span.classList.remove('survey-step--completed');
-                        }
+                        span.classList.toggle('survey-step--active', isActive);
+                        span.classList.toggle('survey-step--completed', isCompleted);
                     });
                 }
 
-                // Show / hide previous button
+                // Show/hide previous button
                 if (prevButton) {
-                    if (currentStepIndex === 0) {
-                        prevButton.style.visibility = 'hidden';
-                    } else {
-                        prevButton.style.visibility = 'visible';
-                    }
+                    prevButton.style.visibility = currentStepIndex === 0 ? 'hidden' : 'visible';
                 }
 
                 // Render options
@@ -1560,16 +1521,12 @@
                     }
 
                     button.addEventListener('click', () => {
-                        button.blur(); // prevents auto focus on next question
-
+                        button.blur();
                         if (isTransitioning) return;
                         isTransitioning = true;
                         answers[step.id] = opt.value;
 
-                        // show loading spinner on the selected option
-                        optionsContainer.querySelectorAll('.survey-option').forEach(btn => {
-                            btn.classList.remove('loading');
-                        });
+                        optionsContainer.querySelectorAll('.survey-option').forEach(btn => btn.classList.remove('loading'));
                         button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
@@ -1587,13 +1544,15 @@
                                 redirectToConfirmation();
                                 return;
                             }
-
-                            // auto-advance to next step if there is one
                             if (currentStepIndex < steps.length - 1) {
-                                setStepIndex(currentStepIndex + 1, true);
+                                // Push next step into history so browser back returns here
+                                const nextIndex = currentStepIndex + 1;
+                                const nextStep = steps[nextIndex];
+                                window.history.pushState({ stepIndex: nextIndex }, '', urlForStep(nextStep));
+                                currentStepIndex = nextIndex;
+                                renderStep();
+                                isTransitioning = false;
                             } else {
-                                console.log('Survey complete', answers);
-                                // Redirect to coach selection page after the last question is answered
                                 window.location.href = 'coach.html' + window.location.search;
                             }
                         };
@@ -1603,59 +1562,41 @@
 
                     optionsContainer.appendChild(button);
                 });
-
             };
 
-            const setStepIndex = (newIndex, pushToHistory) => {
-                if (newIndex < 0 || newIndex >= steps.length) return;
-                currentStepIndex = newIndex;
-
-                const step = steps[currentStepIndex];
-                if (pushToHistory && window.history && typeof window.history.pushState === 'function') {
-                    try {
-                        const newUrl = urlForStep(step);
-                        window.history.pushState({ stepId: step.id }, '', newUrl);
-                    } catch (e) {
-                        // ignore history errors
-                    }
-                }
-
-                renderStep();
-                isTransitioning = false;
-            };
-
+            // "Previous step" button calls history.back() — identical to the browser back button.
+            // Both are handled by the popstate listener below, so they always stay in sync.
             if (prevButton) {
                 prevButton.addEventListener('click', () => {
-                    if (currentStepIndex > 0) {
-                        setStepIndex(currentStepIndex - 1, true);
-                    }
+                    window.history.back();
                 });
             }
 
-            // Handle browser back/forward to move between questions
-            window.addEventListener('popstate', () => {
-                const params = new URLSearchParams(window.location.search || '');
-                const slug = params.get('step');
-
+            // Single source of truth for going backwards — handles both browser back AND the button
+            window.addEventListener('popstate', (event) => {
+                isTransitioning = false;
                 let idx = 0;
-                if (slug) {
-                    const found = steps.findIndex(s => s.path === slug);
-                    if (found >= 0) idx = found;
+                if (event.state && typeof event.state.stepIndex === 'number') {
+                    idx = event.state.stepIndex;
+                } else {
+                    const params = new URLSearchParams(window.location.search || '');
+                    const slug = params.get('step');
+                    if (slug) {
+                        const found = steps.findIndex(s => s.path === slug);
+                        if (found >= 0) idx = found;
+                    }
                 }
-
-                if (idx !== currentStepIndex) {
-                    currentStepIndex = idx;
-                    renderStep();
-                }
+                currentStepIndex = Math.max(0, Math.min(idx, steps.length - 1));
+                renderStep();
             });
 
+            // Stamp the initial state so browser back from step 0 has a clean baseline
+            window.history.replaceState({ stepIndex: currentStepIndex }, '', urlForStep(steps[currentStepIndex]));
             renderStep();
 
-            // When returning from another page via back/forward cache, DOMContentLoaded won't fire.
-            // pageshow always fires, so we re-render based on the current URL step.
+            // bfcache restore — pageshow fires even when DOMContentLoaded doesn't
             window.addEventListener('pageshow', () => {
                 isTransitioning = false;
-
                 const params = new URLSearchParams(window.location.search || '');
                 const slug = params.get('step');
                 const idx = slug ? steps.findIndex(s => s.path === slug) : 0;
