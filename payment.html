@@ -1375,46 +1375,42 @@
             });
 
             paymentRequest.on('paymentmethod', async (ev) => {
-    messageDiv.style.display = 'none';
+                messageDiv.style.display = 'none';
 
-    const { error, setupIntent } = await stripe.confirmSetup({
-        clientSecret,
-        confirmParams: {
-            payment_method: ev.paymentMethod.id,
-            return_url: 'https://asherrobinsonfitness.com/welcome',
-        },
-        redirect: 'if_required',
-    });
+                const { error, setupIntent } = await stripe.confirmCardSetup(clientSecret, {
+                    payment_method: ev.paymentMethod.id,
+                });
 
-    if (error) {
-        ev.complete('fail');
-        messageDiv.textContent = error.message || 'Something went wrong. Please try another method.';
-        messageDiv.style.display = 'block';
-        return;
-    }
+                if (error) {
+                    ev.complete('fail');
+                    messageDiv.textContent = error.message || 'Something went wrong. Please try another method.';
+                    messageDiv.style.display = 'block';
+                    return;
+                }
 
-    const subRes = await fetch('/api/create-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            customerId,
-            paymentMethodId: setupIntent.payment_method,
-            email: emailInput ? emailInput.value : undefined,
-            name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
-        }),
-    });
+                const subRes = await fetch('/api/create-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId,
+                        paymentMethodId: setupIntent.payment_method,
+                        email: emailInput ? emailInput.value : undefined,
+                        name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
+                        phone: phoneInput ? phoneInput.value : undefined,
+                    }),
+                });
 
-    const { status } = await subRes.json();
+                const { status } = await subRes.json();
 
-    if (status === 'active' || status === 'trialing') {
-        ev.complete('success');
-        window.location.href = 'https://asherrobinsonfitness.com/welcome';
-    } else {
-        ev.complete('fail');
-        messageDiv.textContent = 'Something went wrong. Please try again.';
-        messageDiv.style.display = 'block';
-    }
-});
+                if (status === 'active' || status === 'trialing') {
+                    ev.complete('success');
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                } else {
+                    ev.complete('fail');
+                    messageDiv.textContent = 'Something went wrong. Please try again.';
+                    messageDiv.style.display = 'block';
+                }
+            });
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
