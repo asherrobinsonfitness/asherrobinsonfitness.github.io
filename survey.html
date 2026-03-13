@@ -1360,16 +1360,6 @@
 </head>
 
 <body>
-    <script>
-        // Normalize URL: remove .html from /survey.html paths
-        (function () {
-            var path = window.location.pathname || '';
-            if (path.endsWith('/survey.html')) {
-                var newPath = path.replace(/\/survey\.html$/, '/survey');
-                window.location.replace(newPath + window.location.search + window.location.hash);
-            }
-        })();
-    </script>
     <div class="container">
         <div class="content" id="mainContent">
             <div class="survey-inner">
@@ -1448,17 +1438,14 @@
 
 
 
-            const getBaseSurveyPath = () => {
-                const path = window.location.pathname || '';
-                const match = path.match(/^(.*?)(\/survey(?:\.html)?)(?:\/.*)?$/);
-                if (match) {
-                    return match[1] + '/survey';
-                }
-                return '/survey';
+            const getBaseSurveyUrl = () => {
+                // Best practice for static sites: link directly to the real file.
+                // Use a relative URL so it works from any directory.
+                return 'survey.html';
             };
 
             const urlForStep = (step) => {
-                const base = getBaseSurveyPath();
+                const base = getBaseSurveyUrl();
                 const params = new URLSearchParams(window.location.search || '');
 
                 if (step && step.path) {
@@ -1586,7 +1573,7 @@
                         button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
-                            window.location.href = '/confirmation' + window.location.search;
+                            window.location.href = 'confirmation.html' + window.location.search;
                         };
 
                         const shouldSendToConfirmation =
@@ -1607,7 +1594,7 @@
                             } else {
                                 console.log('Survey complete', answers);
                                 // Redirect to coach selection page after the last question is answered
-                                window.location.href = '/coach' + window.location.search;
+                                window.location.href = 'coach.html' + window.location.search;
                             }
                         };
 
@@ -1663,6 +1650,18 @@
             });
 
             renderStep();
+
+            // When returning from another page via back/forward cache, DOMContentLoaded won't fire.
+            // pageshow always fires, so we re-render based on the current URL step.
+            window.addEventListener('pageshow', () => {
+                isTransitioning = false;
+
+                const params = new URLSearchParams(window.location.search || '');
+                const slug = params.get('step');
+                const idx = slug ? steps.findIndex(s => s.path === slug) : 0;
+                currentStepIndex = idx >= 0 ? idx : 0;
+                renderStep();
+            });
         });
     </script>
 </body>
