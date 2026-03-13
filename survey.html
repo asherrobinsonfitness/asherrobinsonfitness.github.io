@@ -128,6 +128,10 @@
                 border-bottom-color: #282828 !important;
             }
 
+            .footer-line {
+                border-bottom-color: #282828 !important
+            }
+
         }
     </style>
     <script
@@ -144,6 +148,11 @@
             --primary: #06f;
             --text: #222;
             --text-secondary: #717171
+        }
+
+        .footer-line {
+            width: 100%;
+            border-bottom: 1px solid #c0c7cf
         }
 
         * {
@@ -1351,6 +1360,16 @@
 </head>
 
 <body>
+    <script>
+        // Normalize URL: remove .html from /survey.html paths
+        (function () {
+            var path = window.location.pathname || '';
+            if (path.endsWith('/survey.html')) {
+                var newPath = path.replace(/\/survey\.html$/, '/survey');
+                window.location.replace(newPath + window.location.search + window.location.hash);
+            }
+        })();
+    </script>
     <div class="container">
         <div class="content" id="mainContent">
             <div class="survey-inner">
@@ -1431,17 +1450,25 @@
 
             const getBaseSurveyPath = () => {
                 const path = window.location.pathname || '';
-                const markerIndex = path.indexOf('/survey');
-                if (markerIndex !== -1) {
-                    return path.slice(0, markerIndex) + '/survey';
+                const match = path.match(/^(.*?)(\/survey(?:\.html)?)(?:\/.*)?$/);
+                if (match) {
+                    return match[1] + '/survey';
                 }
                 return '/survey';
             };
 
             const urlForStep = (step) => {
                 const base = getBaseSurveyPath();
-                if (!step || !('path' in step) || !step.path) return base;
-                return `${base}/${step.path}`;
+                const params = new URLSearchParams(window.location.search || '');
+
+                if (step && step.path) {
+                    params.set('step', step.path);
+                } else {
+                    params.delete('step');
+                }
+
+                const query = params.toString();
+                return query ? `${base}?${query}` : base;
             };
 
             const MIN_STEP_DELAY_MS = 400;
@@ -1457,11 +1484,23 @@
 
             // Initialize current step from URL if it matches one of the step paths
             (function initStepFromUrl() {
+                const params = new URLSearchParams(window.location.search || '');
+                const slugFromQuery = params.get('step');
+
+                if (slugFromQuery) {
+                    const idx = steps.findIndex(s => s.path === slugFromQuery);
+                    if (idx >= 0) {
+                        currentStepIndex = idx;
+                        return;
+                    }
+                }
+
+                // Fallback: support legacy /survey/slug paths if rewrites are configured
                 const path = window.location.pathname || '';
                 const match = path.match(/\/survey\/([^/]+)/);
-                const slug = match ? match[1] : null;
-                if (slug) {
-                    const idx = steps.findIndex(s => s.path === slug);
+                const slugFromPath = match ? match[1] : null;
+                if (slugFromPath) {
+                    const idx = steps.findIndex(s => s.path === slugFromPath);
                     if (idx >= 0) {
                         currentStepIndex = idx;
                     }
@@ -1547,7 +1586,7 @@
                         button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
-                            window.location.href = '/confirmation.html' + window.location.search;
+                            window.location.href = '/confirmation' + window.location.search;
                         };
 
                         const shouldSendToConfirmation =
@@ -1568,7 +1607,7 @@
                             } else {
                                 console.log('Survey complete', answers);
                                 // Redirect to coach selection page after the last question is answered
-                                window.location.href = '/coach.html';
+                                window.location.href = '/coach' + window.location.search;
                             }
                         };
 
@@ -1588,7 +1627,7 @@
                 if (pushToHistory && window.history && typeof window.history.pushState === 'function') {
                     try {
                         const newUrl = urlForStep(step);
-                        window.history.pushState({ stepId: step.id }, '', newUrl + window.location.search);
+                        window.history.pushState({ stepId: step.id }, '', newUrl);
                     } catch (e) {
                         // ignore history errors
                     }
@@ -1608,9 +1647,8 @@
 
             // Handle browser back/forward to move between questions
             window.addEventListener('popstate', () => {
-                const path = window.location.pathname || '';
-                const match = path.match(/\/survey\/([^/]+)/);
-                const slug = match ? match[1] : null;
+                const params = new URLSearchParams(window.location.search || '');
+                const slug = params.get('step');
 
                 let idx = 0;
                 if (slug) {
