@@ -6,7 +6,12 @@ const FIRST_MONTH_PROMO_CODE = 'firstmonth50';
 const FIRST_MONTH_PROMO_ID = 'promo_1TAskzKD9V1PzEruJOEDLUBu';
 
 export default async function handler(req, res) {
-    const { customerId, paymentMethodId, email, name, phone, promotionCode } = req.body;
+    res.setHeader('Access-Control-Allow-Origin', 'https://asherrobinsonfitness.com');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') return res.status(200).end();
+
+        const { customerId, paymentMethodId, email, name, phone, promotionCode } = req.body;
 
     await stripe.paymentMethods.attach(paymentMethodId, {
         customer: customerId,
