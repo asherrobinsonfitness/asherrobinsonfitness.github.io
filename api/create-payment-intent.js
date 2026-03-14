@@ -1,7 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-    const customer = await stripe.customers.create();
+    res.setHeader('Access-Control-Allow-Origin', 'https://asherrobinsonfitness.com');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') return res.status(200).end();
+
+        const customer = await stripe.customers.create();
 
     const setupIntent = await stripe.setupIntents.create({
         customer: customer.id,
