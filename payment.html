@@ -1507,7 +1507,7 @@
             const cardElements = stripe.elements({ clientSecret, appearance });
             const paymentElement = cardElements.create('payment', {
                 layout: 'tabs',
-                wallets: { applePay: 'never', googlePay: 'never' }, // handled by Express Checkout above
+                wallets: { applePay: 'auto', googlePay: 'never' }, // handled by Express Checkout above
             });
             paymentElement.mount('#stripe-payment-element');
 
