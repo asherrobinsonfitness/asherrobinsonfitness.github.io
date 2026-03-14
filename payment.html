@@ -1038,6 +1038,30 @@
                 font-size: 2rem;
             }
         }
+    
+        /* Order summary (inside timeline-card) */
+        .order-summary { margin-bottom: 0; }
+        .order-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.55rem; }
+        .order-row:last-child { margin-bottom: 0; }
+        .order-product { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+        .order-billed { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem; }
+        .order-price { font-weight: 600; font-size: 0.95rem; }
+        .order-divider { height: 1px; background: #f0f0f0; margin: 0.75rem 0; }
+        .order-label { font-size: 0.88rem; color: var(--text-secondary); }
+        .order-value { font-size: 0.88rem; }
+        .order-tax-note { color: var(--text-secondary); font-style: italic; }
+        .order-promo-tag { display: flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; font-weight: 600; background: #f0f0f0; border-radius: 6px; padding: 0.2rem 0.6rem; flex-shrink: 0; flex-wrap: wrap; max-width: 70%; }
+        .order-promo-sub { font-weight: 400; color: var(--text-secondary); font-size: 0.78rem; }
+        .order-discount { color: #16a34a; font-weight: 600; font-size: 0.88rem; }
+        .order-total-row { margin-top: 0.1rem; }
+        .order-total-label { font-weight: 700; font-size: 1rem; }
+        .order-total-value { font-weight: 700; font-size: 1.1rem; }
+        .order-timeline-divider { height: 1px; background: #f0f0f0; margin: 1.25rem 0 1.1rem; }
+        @media(prefers-color-scheme:dark) {
+            .order-divider { background: #3d3d3d; }
+            .order-timeline-divider { background: #3d3d3d; }
+            .order-promo-tag { background: #333; }
+        }
     </style>
 </head>
 
@@ -1066,23 +1090,43 @@
 
         <div id="paymentContent">
             <div class="content payment-inner">
-                <section class="timeline-card" aria-label="Payment breakdown and trial timeline">
-                    <div class="payment-trial-item payment-trial-item--today">
-                        <span class="icon" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="#1e1e1e" stroke-width="2"></circle>
-                                <path d="M8 12L11 15L16 9" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                            </svg>
-                        </span>
-                        <div>
-                            <div class="title">
-                                <span class="struck">$199</span>
-                                <span class="due">$50 Due Today</span>
+                <section class="timeline-card" aria-label="Order summary and billing timeline">
+
+                    <!-- Cost breakdown -->
+                    <div class="order-summary">
+                        <div class="order-row">
+                            <div>
+                                <div class="order-product">Online Coaching w/ Asher</div>
+                                <div class="order-billed">Billed monthly</div>
                             </div>
+                            <div class="order-price">$199.00</div>
+                        </div>
+                        <div class="order-divider"></div>
+                        <div class="order-row">
+                            <span class="order-label">Subtotal</span>
+                            <span class="order-value">$199.00</span>
+                        </div>
+                        <div class="order-row">
+                            <div class="order-promo-tag">
+                                <span>🏷</span> FIRSTMONTH50
+                                <span class="order-promo-sub">— $149 off first month</span>
+                            </div>
+                            <span class="order-discount">−$149.00</span>
+                        </div>
+                        <div class="order-row">
+                            <span class="order-label">Tax</span>
+                            <span class="order-value order-tax-note">Calculated at checkout</span>
+                        </div>
+                        <div class="order-divider"></div>
+                        <div class="order-row order-total-row">
+                            <span class="order-total-label">Total due today</span>
+                            <span class="order-total-value">$50.00</span>
                         </div>
                     </div>
+
+                    <!-- Billing timeline -->
+                    <div class="order-timeline-divider"></div>
+
                     <div class="payment-trial-item">
                         <span class="icon" aria-hidden="true">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -1107,8 +1151,7 @@
                         </span>
                         <div>
                             <div class="title">Day 30: First Billing Date</div>
-                            <div class="desc">Love it or get a full refund within 30 days. $199/month after your first
-                                month. Cancel any time.</div>
+                            <div class="desc">Love it or get a full refund within 30 days. $199/month after your first month. Cancel any time.</div>
                         </div>
                     </div>
                 </section>
