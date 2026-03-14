@@ -1172,8 +1172,22 @@
 
                     <form id="payment-form">
                         <div id="card-form-fields">
+                            <div class="payment-input-group">
+                                <input id="email" type="email" name="email" autocomplete="email" required
+                                    placeholder="Email" class="payment-input" />
+                            </div>
+                            <div class="payment-input-row">
+                                <div class="payment-input-group">
+                                    <input id="firstName" type="text" name="firstName" autocomplete="given-name"
+                                        required placeholder="First Name" class="payment-input" />
+                                </div>
+                                <div class="payment-input-group">
+                                    <input id="lastName" type="text" name="lastName" autocomplete="family-name" required
+                                        placeholder="Last Name" class="payment-input" />
+                                </div>
+                            </div>
                             <!-- Apple Pay / Google Pay / Link via Express Checkout Element -->
-                            <div id="express-checkout-element"></div>
+                            <div id="express-checkout-element" style="min-height:48px;"></div>
 
                             <!-- Divider shown only when wallets are available -->
                             <div class="wallet-divider" id="wallet-divider" style="display:none;">
@@ -1184,6 +1198,15 @@
 
                             <!-- Card via Payment Element -->
                             <div id="stripe-payment-element"></div>
+
+                            <!-- Promo code -->
+                            <div class="promo-wrap">
+                                <input id="promoInput" type="text" class="promo-input" placeholder="Promo code (optional)" autocomplete="off" />
+                                <div id="promoApplied" hidden style="display:none;">
+                                    <span><span class="check">✓</span> <code id="promoCodeDisplay"></code> applied</span>
+                                    <button type="button" id="promoRemove" class="promo-remove">Remove</button>
+                                </div>
+                            </div>
                         </div>
 
                         <button type="submit" id="submit-stripe">
@@ -1428,22 +1451,24 @@
 
             expressCheckout.on('ready', ({ availablePaymentMethods }) => {
                 const walletDivider = document.getElementById('wallet-divider');
-                if (availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean)) {
+                const expressWrap = document.getElementById('express-checkout-element');
+                if (!availablePaymentMethods) {
+                    // No wallets on this device — hide the element so it takes no space
+                    if (expressWrap) expressWrap.style.display = 'none';
+                } else {
+                    // At least one wallet available — show the "or pay by card" divider
                     if (walletDivider) walletDivider.style.display = 'flex';
                 }
             });
 
             expressCheckout.on('confirm', async (event) => {
+                // NOTE: Do NOT call expressElements.submit() here — the Express Checkout
+                // Element manages its own submission. Calling submit() inside confirm
+                // aborts the Apple Pay / Google Pay sheet silently.
                 const emailInput = document.getElementById('email');
                 const firstNameInput = document.getElementById('firstName');
                 const lastNameInput = document.getElementById('lastName');
                 const messageDiv = document.getElementById('stripe-message');
-
-                const { error: submitError } = await expressElements.submit();
-                if (submitError) {
-                    event.paymentFailed({ reason: 'fail' });
-                    return;
-                }
 
                 // Create a PaymentIntent server-side for the $50 wallet charge
                 const walletRes = await fetch('/api/create-wallet-charge', {
