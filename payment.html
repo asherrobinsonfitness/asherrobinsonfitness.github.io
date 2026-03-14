@@ -169,6 +169,61 @@
             margin-bottom: 1rem;
         }
 
+        /* Express Checkout (Apple Pay / Google Pay) */
+        #express-checkout-element {
+            margin-bottom: 0.5rem;
+        }
+        .wallet-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.85rem 0;
+        }
+        .wallet-divider-line {
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        .wallet-divider-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* Promo code */
+        .promo-wrap { margin-bottom: 1.25rem; }
+        .promo-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e8e8e8;
+            background: #f5f5f5;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .promo-input::placeholder { color: var(--text-secondary); }
+        .promo-applied {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            font-size: 0.9rem;
+        }
+        .promo-applied code { font-weight: 600; color: #166534; }
+        .promo-applied .check { color: #16a34a; font-weight: 700; margin-right: 0.25rem; }
+        .promo-remove { color: #06f; background: none; border: none; cursor: pointer; font-size: 0.85rem; text-decoration: underline; }
+
+        /* Dark mode extras */
+        @media(prefers-color-scheme:dark) {
+            .wallet-divider-line { background: #3d3d3d; }
+            .wallet-divider-text { color: #bfbfbf; }
+            .promo-input { background: #333 !important; border-color: #444 !important; color: #F8FAFC !important; }
+        }
+
         #payment-form {
             width: 100%;
         }
@@ -1131,7 +1186,27 @@
                                         placeholder="Last Name" class="payment-input" />
                                 </div>
                             </div>
+                            <!-- Apple Pay / Google Pay / Link via Express Checkout Element -->
+                            <div id="express-checkout-element"></div>
+
+                            <!-- Divider shown only when wallets are available -->
+                            <div class="wallet-divider" id="wallet-divider" style="display:none;">
+                                <div class="wallet-divider-line"></div>
+                                <span class="wallet-divider-text">or pay by card</span>
+                                <div class="wallet-divider-line"></div>
+                            </div>
+
+                            <!-- Card via Payment Element -->
                             <div id="stripe-payment-element"></div>
+
+                            <!-- Promo code -->
+                            <div class="promo-wrap">
+                                <input id="promoInput" type="text" class="promo-input" placeholder="Promo code (optional)" autocomplete="off" />
+                                <div id="promoApplied" hidden style="display:none;">
+                                    <span><span class="check">✓</span> <code id="promoCodeDisplay"></code> applied</span>
+                                    <button type="button" id="promoRemove" class="promo-remove">Remove</button>
+                                </div>
+                            </div>
                         </div>
 
                         <button type="submit" id="submit-stripe">
@@ -1141,10 +1216,6 @@
                         </button>
 
                         <div id="stripe-message" role="alert" style="display:none; margin-top:0.75rem;"></div>
-
-                        <div style="margin-top: .75rem;">
-                            <div id="payment-request-button-secondary"></div>
-                        </div>
                     </form>
 
                     <div class="payment-legal">
@@ -1331,8 +1402,17 @@
         });
     </script>
     <script>
-        // ---- REPLACE THESE ----
         const STRIPE_PUBLISHABLE_KEY = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
+
+        function getAppliedPromoCode() {
+            const promoApplied = document.getElementById('promoApplied');
+            if (promoApplied && !promoApplied.hidden) {
+                const el = document.getElementById('promoCodeDisplay');
+                return el ? el.textContent.trim() : null;
+            }
+            const input = document.getElementById('promoInput');
+            return (input && input.value.trim()) ? input.value.trim() : null;
+        }
 
         async function initStripe() {
             const res = await fetch('/api/create-payment-intent');
@@ -1341,11 +1421,7 @@
             const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
             const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-            // The Payment Element natively supports card, Apple Pay, Google Pay,
-            // and Link — no separate paymentRequest setup needed.
-            const elements = stripe.elements({
-                clientSecret,
-                appearance: {
+            const appearance = {
                     theme: darkMode ? 'night' : 'stripe',
                     variables: {
                         colorBackground: darkMode ? '#282828' : '#f0f0f0',
@@ -1362,23 +1438,76 @@
                         spacingUnit: '4px',
                         spacingGridRow: '1rem',
                     },
-                },
+            };
+
+            // ── Express Checkout Element (Apple Pay / Google Pay / Link) ──────────
+            // Uses its own elements instance in 'payment' mode for the immediate $50 charge.
+            const expressElements = stripe.elements({ mode: 'payment', amount: 5000, currency: 'usd', appearance });
+            const expressCheckout = expressElements.create('expressCheckout', {
+                buttonType: { applePay: 'plain', googlePay: 'plain' },
+                buttonHeight: 48,
+            });
+            expressCheckout.mount('#express-checkout-element');
+
+            expressCheckout.on('ready', ({ availablePaymentMethods }) => {
+                const walletDivider = document.getElementById('wallet-divider');
+                if (availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean)) {
+                    if (walletDivider) walletDivider.style.display = 'flex';
+                }
             });
 
-            // Single Payment Element: handles card, Apple Pay, Google Pay, and Link.
-            const paymentElement = elements.create('payment', {
+            expressCheckout.on('confirm', async (event) => {
+                const emailInput = document.getElementById('email');
+                const firstNameInput = document.getElementById('firstName');
+                const lastNameInput = document.getElementById('lastName');
+                const messageDiv = document.getElementById('stripe-message');
+
+                const { error: submitError } = await expressElements.submit();
+                if (submitError) {
+                    event.paymentFailed({ reason: 'fail' });
+                    return;
+                }
+
+                // Create a PaymentIntent server-side for the $50 wallet charge
+                const walletRes = await fetch('/api/create-wallet-charge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: event.billingDetails?.email || emailInput?.value.trim() || undefined,
+                        name: event.billingDetails?.name || [firstNameInput?.value.trim(), lastNameInput?.value.trim()].filter(Boolean).join(' ') || undefined,
+                        phone: event.billingDetails?.phone || undefined,
+                        promotionCode: getAppliedPromoCode(),
+                    }),
+                });
+                const walletData = await walletRes.json();
+
+                if (!walletData.clientSecret) {
+                    event.paymentFailed({ reason: 'fail' });
+                    return;
+                }
+
+                const { error } = await stripe.confirmPayment({
+                    clientSecret: walletData.clientSecret,
+                    confirmParams: { return_url: 'https://asherrobinsonfitness.com/welcome' },
+                    redirect: 'if_required',
+                });
+
+                if (error) {
+                    event.paymentFailed({ reason: 'fail' });
+                    messageDiv.textContent = error.message;
+                    messageDiv.style.display = 'block';
+                } else {
+                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
+                }
+            });
+
+            // ── Card Payment Element (SetupIntent flow) ───────────────────────────
+            const cardElements = stripe.elements({ clientSecret, appearance });
+            const paymentElement = cardElements.create('payment', {
                 layout: 'tabs',
-                wallets: {
-                    applePay: 'auto',
-                    googlePay: 'auto',
-                },
+                wallets: { applePay: 'never', googlePay: 'never' }, // handled by Express Checkout above
             });
             paymentElement.mount('#stripe-payment-element');
-
-            // Hide the secondary wallet button container — wallets are built into
-            // the Payment Element now.
-            const walletContainer = document.getElementById('payment-request-button-secondary');
-            if (walletContainer) walletContainer.style.display = 'none';
 
             const form = document.getElementById('payment-form');
             const submitBtn = document.getElementById('submit-stripe');
@@ -1388,16 +1517,6 @@
             const firstNameInput = document.getElementById('firstName');
             const lastNameInput = document.getElementById('lastName');
             const phoneInput = document.getElementById('phone');
-
-            // Promo code: read the currently-applied code (set by the promo UI below).
-            function getAppliedPromoCode() {
-                const promoApplied = document.getElementById('promoApplied');
-                if (promoApplied && !promoApplied.hidden) {
-                    const codeEl = document.getElementById('promoCodeDisplay');
-                    return codeEl ? codeEl.textContent.trim() : null;
-                }
-                return null;
-            }
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1410,9 +1529,8 @@
                     lastNameInput ? lastNameInput.value.trim() : '',
                 ].filter(Boolean).join(' ');
 
-                // Confirm the SetupIntent using the Payment Element.
                 const { error, setupIntent } = await stripe.confirmSetup({
-                    elements,
+                    elements: cardElements,
                     confirmParams: {
                         return_url: 'https://asherrobinsonfitness.com/welcome',
                         payment_method_data: {
@@ -1434,7 +1552,6 @@
                     return;
                 }
 
-                // SetupIntent confirmed — now create the subscription server-side.
                 const subRes = await fetch('/api/create-subscription', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
