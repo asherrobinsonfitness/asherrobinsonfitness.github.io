@@ -1131,9 +1131,7 @@
                                         placeholder="Last Name" class="payment-input" />
                                 </div>
                             </div>
-                            <div class="payment-input-group payment-card-row">
-                                <div id="card-element" class="payment-card-element"></div>
-                            </div>
+                            <div id="stripe-payment-element"></div>
                         </div>
 
                         <button type="submit" id="submit-stripe">
@@ -1343,7 +1341,10 @@
             const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
             const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+            // The Payment Element natively supports card, Apple Pay, Google Pay,
+            // and Link — no separate paymentRequest setup needed.
             const elements = stripe.elements({
+                clientSecret,
                 appearance: {
                     theme: darkMode ? 'night' : 'stripe',
                     variables: {
@@ -1364,102 +1365,39 @@
                 },
             });
 
-            const cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        color: darkMode ? '#F8FAFC' : '#222222',
-                        fontSize: '16px',
-                        '::placeholder': {
-                            color: darkMode ? '#bfbfbf' : '#717171',
-                        },
-                    },
-                    invalid: {
-                        color: '#e53e3e',
-                    },
+            // Single Payment Element: handles card, Apple Pay, Google Pay, and Link.
+            const paymentElement = elements.create('payment', {
+                layout: 'tabs',
+                wallets: {
+                    applePay: 'auto',
+                    googlePay: 'auto',
                 },
             });
-            cardElement.mount('#card-element');
+            paymentElement.mount('#stripe-payment-element');
+
+            // Hide the secondary wallet button container — wallets are built into
+            // the Payment Element now.
+            const walletContainer = document.getElementById('payment-request-button-secondary');
+            if (walletContainer) walletContainer.style.display = 'none';
 
             const form = document.getElementById('payment-form');
             const submitBtn = document.getElementById('submit-stripe');
             const submitText = document.getElementById('submit-stripe-text');
             const messageDiv = document.getElementById('stripe-message');
-            const paymentRequestButtonSecondaryContainer = document.getElementById('payment-request-button-secondary');
             const emailInput = document.getElementById('email');
             const firstNameInput = document.getElementById('firstName');
             const lastNameInput = document.getElementById('lastName');
             const phoneInput = document.getElementById('phone');
 
-            // Set up Apple Pay / Payment Request
-            const paymentRequest = stripe.paymentRequest({
-                country: 'US',
-                currency: 'usd',
-                total: {
-                    label: 'Asher Robinson Fitness',
-                    amount: 5000, // $50.00
-                },
-                requestPayerName: true,
-                requestPayerEmail: true,
-            });
-
-            const paymentRequestButton = elements.create('paymentRequestButton', {
-                paymentRequest,
-                style: {
-                    paymentRequestButton: {
-                        type: 'plain',
-                        theme: 'dark',
-                        height: '48px',
-                    },
-                },
-            });
-
-            paymentRequest.canMakePayment().then(function (result) {
-                if (result && paymentRequestButtonSecondaryContainer) {
-                    // Apple Pay (or another wallet) is available – show the button below the submit button
-                    paymentRequestButton.mount('#payment-request-button-secondary');
-                } else if (paymentRequestButtonSecondaryContainer) {
-                    // Apple Pay not available – hide its container, card form always visible
-                    paymentRequestButtonSecondaryContainer.style.display = 'none';
+            // Promo code: read the currently-applied code (set by the promo UI below).
+            function getAppliedPromoCode() {
+                const promoApplied = document.getElementById('promoApplied');
+                if (promoApplied && !promoApplied.hidden) {
+                    const codeEl = document.getElementById('promoCodeDisplay');
+                    return codeEl ? codeEl.textContent.trim() : null;
                 }
-            });
-
-            paymentRequest.on('paymentmethod', async (ev) => {
-                messageDiv.style.display = 'none';
-
-                const { error, setupIntent } = await stripe.confirmCardSetup(clientSecret, {
-                    payment_method: ev.paymentMethod.id,
-                });
-
-                if (error) {
-                    ev.complete('fail');
-                    messageDiv.textContent = error.message || 'Something went wrong. Please try another method.';
-                    messageDiv.style.display = 'block';
-                    return;
-                }
-
-                const subRes = await fetch('/api/create-subscription', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        customerId,
-                        paymentMethodId: setupIntent.payment_method,
-                        email: emailInput ? emailInput.value : undefined,
-                        name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
-                        phone: phoneInput ? phoneInput.value : undefined,
-                    }),
-                });
-
-                const { status } = await subRes.json();
-
-                if (status === 'active' || status === 'trialing') {
-                    ev.complete('success');
-                    window.location.href = 'https://asherrobinsonfitness.com/welcome';
-                } else {
-                    ev.complete('fail');
-                    messageDiv.textContent = 'Something went wrong. Please try again.';
-                    messageDiv.style.display = 'block';
-                }
-            });
+                return null;
+            }
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1467,31 +1405,46 @@
                 submitText.textContent = 'Processing…';
                 messageDiv.style.display = 'none';
 
-                const { error, setupIntent } = await stripe.confirmCardSetup(clientSecret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            email: emailInput ? emailInput.value : undefined,
-                            name: `${firstNameInput ? firstNameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim(),
-                            phone: phoneInput ? phoneInput.value : undefined,
+                const fullName = [
+                    firstNameInput ? firstNameInput.value.trim() : '',
+                    lastNameInput ? lastNameInput.value.trim() : '',
+                ].filter(Boolean).join(' ');
+
+                // Confirm the SetupIntent using the Payment Element.
+                const { error, setupIntent } = await stripe.confirmSetup({
+                    elements,
+                    confirmParams: {
+                        return_url: 'https://asherrobinsonfitness.com/welcome',
+                        payment_method_data: {
+                            billing_details: {
+                                name: fullName || undefined,
+                                email: emailInput ? emailInput.value.trim() : undefined,
+                                phone: phoneInput ? phoneInput.value.trim() : undefined,
+                            },
                         },
                     },
+                    redirect: 'if_required',
                 });
 
                 if (error) {
                     messageDiv.textContent = error.message;
                     messageDiv.style.display = 'block';
                     submitBtn.disabled = false;
-                    submitText.textContent = 'Pay $50 Today';
+                    submitText.textContent = 'Begin Coaching';
                     return;
                 }
 
+                // SetupIntent confirmed — now create the subscription server-side.
                 const subRes = await fetch('/api/create-subscription', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         customerId,
                         paymentMethodId: setupIntent.payment_method,
+                        email: emailInput ? emailInput.value.trim() : undefined,
+                        name: fullName || undefined,
+                        phone: phoneInput ? phoneInput.value.trim() : undefined,
+                        promotionCode: getAppliedPromoCode(),
                     }),
                 });
 
@@ -1503,7 +1456,7 @@
                     messageDiv.textContent = 'Something went wrong. Please try again.';
                     messageDiv.style.display = 'block';
                     submitBtn.disabled = false;
-                    submitText.textContent = 'Pay $199 Today';
+                    submitText.textContent = 'Begin Coaching';
                 }
             });
         }
