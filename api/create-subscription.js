@@ -1,7 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+// The customer-facing promo code for the $50 first month offer
+const FIRST_MONTH_PROMO_CODE = 'firstmonth50';
+// The Stripe promotion code API ID for the $50 first month offer
+const FIRST_MONTH_PROMO_ID = 'promo_1TAskzKD9V1PzEruJOEDLUBu';
+
 export default async function handler(req, res) {
-    const { customerId, paymentMethodId, email, name, phone } = req.body;
+    const { customerId, paymentMethodId, email, name, phone, promotionCode } = req.body;
 
     await stripe.paymentMethods.attach(paymentMethodId, {
         customer: customerId,
@@ -17,10 +22,34 @@ export default async function handler(req, res) {
 
     await stripe.customers.update(customerId, customerUpdate);
 
+    // Resolve the promotion code: use the provided code if valid,
+    // otherwise always apply the default first-month $50 promo.
+    let resolvedPromoId = FIRST_MONTH_PROMO_ID;
+
+    if (promotionCode && promotionCode.toLowerCase() !== FIRST_MONTH_PROMO_CODE.toLowerCase()) {
+        // Look up the customer-facing code in Stripe to get its ID
+        try {
+            const promoCodes = await stripe.promotionCodes.list({
+                code: promotionCode,
+                active: true,
+                limit: 1,
+            });
+            if (promoCodes.data.length > 0) {
+                resolvedPromoId = promoCodes.data[0].id;
+            }
+            // If not found, fall back to the default first-month promo
+        } catch (err) {
+            // Fall back to default promo on lookup error
+        }
+    }
+
     const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: 'price_1T9nICKD9V1PzEruqvloHk4v' }],
         default_payment_method: paymentMethodId,
+        discounts: [{ promotion_code: resolvedPromoId }],
+        automatic_tax: { enabled: true },
+        collection_method: 'charge_automatically',
     });
 
     res.status(200).json({ subscriptionId: subscription.id, status: subscription.status });
