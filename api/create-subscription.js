@@ -22,12 +22,9 @@ export default async function handler(req, res) {
 
     await stripe.customers.update(customerId, customerUpdate);
 
-    // Resolve the promotion code: use the provided code if valid,
-    // otherwise always apply the default first-month $50 promo.
+    // Resolve the promotion code
     let resolvedPromoId = FIRST_MONTH_PROMO_ID;
-
     if (promotionCode && promotionCode.toLowerCase() !== FIRST_MONTH_PROMO_CODE.toLowerCase()) {
-        // Look up the customer-facing code in Stripe to get its ID
         try {
             const promoCodes = await stripe.promotionCodes.list({
                 code: promotionCode,
@@ -37,17 +34,14 @@ export default async function handler(req, res) {
             if (promoCodes.data.length > 0) {
                 resolvedPromoId = promoCodes.data[0].id;
             }
-            // If not found, fall back to the default first-month promo
-        } catch (err) {
-            // Fall back to default promo on lookup error
-        }
+        } catch (err) { /* fall back to default */ }
     }
 
     const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: 'price_1T9nICKD9V1PzEruqvloHk4v' }],
         default_payment_method: paymentMethodId,
-        discounts: [{ promotion_code: resolvedPromoId }],
+        promotion_code: resolvedPromoId,
         automatic_tax: { enabled: true },
         collection_method: 'charge_automatically',
     });
