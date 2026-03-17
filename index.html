@@ -24,7 +24,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Lose 15 pounds in 6 weeks for free with personal coaching. Personalized diet and training for men ages 25-44.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Personalized diet and training optimization program for men ages 25-44","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"6-week transformation program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Variables */
-:root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#222;--muted:#555;--border:#c0c7cf;--card-border:#e5e7eb}
+:root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#222;--muted:#555;--border:#c0c7cf;--card-border:#c8cdd4}
 
 /* Reset */
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -39,15 +39,15 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .results-section{background:#f0f0f0;padding:var(--pad) 1.5rem;display:flex;justify-content:center;width:100%}
 
 /* Hero text */
-.callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#f5f5f5;border-radius:8px;padding:.375rem 1rem;letter-spacing:.02rem}
+.callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#ebebeb;border-radius:8px;padding:.375rem 1rem;letter-spacing:.02rem}
 .headline{font-size:1.75rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin-top:.5rem;margin-bottom:1rem}
 .subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
 
 /* Video */
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#000;box-shadow:0 2px 8px rgb(0 0 0/10%)}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#000}
 
 /* CTA button */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;padding:.9rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;border:none;cursor:pointer;text-decoration:none;box-shadow:0 4px 6px rgba(15,23,42,.15);transition:background .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;padding:.9rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
 .btn:hover{background:#0052cc}
 .btn-label{flex:1;text-align:center}
 .btn-divider{display:none;width:1px;height:1.5rem;background:rgba(255,255,255,.35);flex-shrink:0}
@@ -56,19 +56,19 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .pricing-amount{font-weight:600}
 
 /* Card */
-.card{background:#fff;border-radius:12px;border:1px solid var(--card-border);box-shadow:0 4px 20px rgba(15,23,42,.1);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
+.card{background:#fff;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
 .benefits-list{list-style:none}
-.benefit{display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;font-size:1rem;border-bottom:1px solid #e5e7eb}
+.benefit{display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;font-size:1rem;border-bottom:1px solid #c8cdd4}
 .benefit:last-child{border-bottom:none}
 .benefit-num{color:var(--muted);font-size:.95rem;font-weight:400;flex-shrink:0}
 
 /* Before/after slider */
-.ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #e5e7eb;touch-action:pan-y;cursor:ew-resize;user-select:none}
+.ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #c8cdd4;touch-action:pan-y;cursor:ew-resize;user-select:none}
 .ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
 .ba-after{clip-path:inset(0 0 0 50%)}
-.ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(255,255,255,.85);z-index:2;pointer-events:none}
-.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.35);color:#fff;font-size:12px;gap:5px}
-.ba-labels{position:absolute;inset:.9rem 1.25rem auto;display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);z-index:3;pointer-events:none}
+.ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(0,0,0,.35);z-index:2;pointer-events:none}
+.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;gap:5px}
+.ba-labels{position:absolute;inset:.9rem 1.25rem auto;display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:3;pointer-events:none}
 
 /* Desktop results card */
 .card-desk{max-width:960px;display:flex;flex-direction:row;align-items:stretch;padding:1.25rem;gap:1.25rem}
@@ -130,7 +130,7 @@ footer a{color:var(--blue);text-decoration:none}
   .subheadline,.benefit-num,.desk-img-label{color:#a0a0a0}
   .callout{background:#2a2a2a}
   .results-section{background:#161616}
-  .card{background:#222;border-color:#3d3d3d;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+  .card{background:#222;border-color:#3d3d3d}
   .benefit{border-color:#3d3d3d}
   .ba-wrap{border-color:#3d3d3d}
   .desk-img{background:#2a2a2a}
