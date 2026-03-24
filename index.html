@@ -60,7 +60,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .benefits-list{list-style:none}
 .benefit{display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;font-size:1rem;border-bottom:1px solid #c8cdd4}
 .benefit:last-child{border-bottom:none}
-.benefit-num{color:var(--muted);font-size:.95rem;font-weight:400;flex-shrink:0}
+.benefit-num{width:28px;height:28px;border-radius:8px;background:#ebebeb;color:var(--text);font-size:.8rem;font-weight:600;flex-shrink:0;display:flex;align-items:center;justify-content:center;letter-spacing:.01em}
 
 /* Before/after slider */
 .ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #c8cdd4;touch-action:pan-y;cursor:ew-resize;user-select:none}
@@ -129,6 +129,7 @@ footer a{color:#0052cc;text-decoration:none}
   .headline,.callout,.pricing,.pricing-amount,.benefit,.ba-labels,.desk-img-label{color:#f8fafc}
   .subheadline,.benefit-num{color:#a0a0a0}
   .callout{background:#2a2a2a}
+  .benefit-num{background:#2a2a2a;color:#a0a0a0}
   .results-section{background:#161616}
   .card{background:#222;border-color:#3d3d3d}
   .benefit{border-color:#3d3d3d}
@@ -159,17 +160,16 @@ footer a{color:#0052cc;text-decoration:none}
         <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
       </div>
       <div class="video-wrap" id="videoContainer">
-        <video id="mainVideo" playsinline preload="auto" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
+        <video id="mainVideo" playsinline preload="auto" poster="video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
           <source src="video.mp4" type="video/mp4">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.65rem 1.1rem .65rem .75rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
-            <span style="width:28px;height:28px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <!-- Triangle shifted 1px right for optical centering (play buttons read left-heavy) -->
-              <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1" stroke-linejoin="round"/></svg>
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
+            Watch the Video
+            <span style="width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="9" height="11" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
             </span>
-            Click to Play
           </button>
         </div>
       </div>
@@ -200,11 +200,11 @@ footer a{color:#0052cc;text-decoration:none}
         <div class="ba-labels"><span>Before</span><span>After</span></div>
       </div>
       <ul class="benefits-list">
-        <li class="benefit"><span class="benefit-num">01</span> Look lean and athletic</li>
-        <li class="benefit"><span class="benefit-num">02</span> Feel confident in your body</li>
-        <li class="benefit"><span class="benefit-num">03</span> Make a stronger first impression</li>
-        <li class="benefit"><span class="benefit-num">04</span> Get more attention from women</li>
-        <li class="benefit"><span class="benefit-num">05</span> Feel stronger and healthier</li>
+        <li class="benefit"><div class="benefit-num">01</div> Look lean and athletic</li>
+        <li class="benefit"><div class="benefit-num">02</div> Feel confident in your body</li>
+        <li class="benefit"><div class="benefit-num">03</div> Make a stronger first impression</li>
+        <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
+        <li class="benefit"><div class="benefit-num">05</div> Feel stronger and healthier</li>
       </ul>
     </div>
 
@@ -213,11 +213,11 @@ footer a{color:#0052cc;text-decoration:none}
       <div class="card card-desk">
         <div class="desk-text">
           <ul class="benefits-list">
-            <li class="benefit"><span class="benefit-num">01</span> Look lean, athletic, and capable</li>
-            <li class="benefit"><span class="benefit-num">02</span> Stop feeling self-conscious about your body</li>
-            <li class="benefit"><span class="benefit-num">03</span> Walk into any room with real confidence</li>
-            <li class="benefit"><span class="benefit-num">04</span> Get more attention from women</li>
-            <li class="benefit"><span class="benefit-num">05</span> Feel stronger, healthier, and more in control</li>
+            <li class="benefit"><div class="benefit-num">01</div> Look lean, athletic, and capable</li>
+            <li class="benefit"><div class="benefit-num">02</div> Stop feeling self-conscious about your body</li>
+            <li class="benefit"><div class="benefit-num">03</div> Walk into any room with real confidence</li>
+            <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
+            <li class="benefit"><div class="benefit-num">05</div> Feel stronger, healthier, and more in control</li>
           </ul>
         </div>
         <div class="desk-imgs">
@@ -294,7 +294,8 @@ footer a{color:#0052cc;text-decoration:none}
   // Attempt 1: autoplay with sound (works if user has interacted before or browser allows)
   vid.muted = false;
   vid.play().then(function(){
-    // Success — playing with sound, no overlay needed
+    // Success — playing with sound, show controls, no overlay needed
+    vid.controls = true;
     hideOverlay();
   }).catch(function(){
     // Attempt 2: autoplay muted (acts as animated thumbnail)
@@ -306,6 +307,11 @@ footer a{color:#0052cc;text-decoration:none}
       // Fully blocked — show static overlay, wait for click
       showOverlay();
     });
+  });
+
+  // Pause on last frame (don't loop or show black screen)
+  vid.addEventListener('ended', function(){
+    vid.pause();
   });
 })();
 </script>
