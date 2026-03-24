@@ -20,7 +20,7 @@
 <meta name="twitter:title" content="Lose 15 Pounds in 6-Weeks for Free | Asher Robinson Fitness">
 <meta name="twitter:description" content="Lose 15 pounds in 6-weeks for free with personal coaching. Personalized diet and training for men ages 25-44.">
 <meta name="twitter:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG">
-<link rel="preconnect" href="https://fast.vidalytics.com" crossorigin>
+
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Lose 15 pounds in 6 weeks for free with personal coaching. Personalized diet and training for men ages 25-44.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Personalized diet and training optimization program for men ages 25-44","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"6-week transformation program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Variables */
@@ -158,9 +158,20 @@ footer a{color:#0052cc;text-decoration:none}
         <h1 class="headline">Get Lean with 1:1 Coaching</h1>
         <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
       </div>
-      <div class="video-wrap">
-        <div id="vidalytics_embed_JK96M1JZg1x3Vu9l" style="width:100%;position:relative;padding-top:56.25%"></div>
-        <script>(function(v,i,d,a,l,y,t,c,s){y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl+'Script'],vlf=v[c][vl+'Loaded'],ve='Embed';if(!vsl){vsl=function(u,cb){if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}i.getElementsByTagName("head")[0].appendChild(s);};}vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});})(window,document,'Vidalytics','vidalytics_embed_JK96M1JZg1x3Vu9l','https://fast.vidalytics.com/embeds/swbCvzMu/JK96M1JZg1x3Vu9l/');</script>
+      <div class="video-wrap" id="videoContainer">
+        <video id="mainVideo" playsinline preload="auto" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
+          <source src="video.mp4" type="video/mp4">
+        </video>
+        <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
+        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.65rem 1.1rem .65rem .75rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
+            <span style="width:28px;height:28px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <!-- Triangle shifted 1px right for optical centering (play buttons read left-heavy) -->
+              <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1" stroke-linejoin="round"/></svg>
+            </span>
+            Watch the Video
+          </button>
+        </div>
       </div>
     </div>
 
@@ -242,6 +253,62 @@ footer a{color:#0052cc;text-decoration:none}
     </div>
   </div>
 </footer>
+
+<script>
+/* ── Self-hosted video: Vidalytics-style autoplay logic ── */
+(function(){
+  var vid    = document.getElementById('mainVideo');
+  var overlay = document.getElementById('ctpOverlay');
+  var ctpBtn  = document.getElementById('ctpBtn');
+  if(!vid) return;
+
+  function showOverlay(){
+    overlay.style.display = 'flex';
+    // Video keeps playing silently as animated thumbnail — loop it
+    vid.loop = true;
+  }
+
+  function hideOverlay(){
+    overlay.style.display = 'none';
+  }
+
+  // CTP button hover: color change only, no grow
+  ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
+  ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
+
+  // When user clicks the CTP button: restart with sound, show controls
+  ctpBtn.addEventListener('click', function(){
+    vid.loop = false;
+    vid.muted = false;
+    vid.currentTime = 0;
+    vid.controls = true;
+    vid.play().then(function(){
+      hideOverlay();
+    }).catch(function(){
+      // If still blocked, at least unmute and keep playing
+      vid.muted = false;
+      hideOverlay();
+    });
+  });
+
+  // Attempt 1: autoplay with sound (works if user has interacted before or browser allows)
+  vid.muted = false;
+  vid.play().then(function(){
+    // Success — playing with sound, no overlay needed
+    hideOverlay();
+  }).catch(function(){
+    // Attempt 2: autoplay muted (acts as animated thumbnail)
+    vid.muted = true;
+    vid.loop = true;
+    vid.play().then(function(){
+      showOverlay();
+    }).catch(function(){
+      // Fully blocked — show static overlay, wait for click
+      showOverlay();
+    });
+  });
+})();
+</script>
 
 <script>
 (function(){
