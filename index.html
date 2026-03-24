@@ -68,7 +68,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Before/after slider */
 .ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #c8cdd4;touch-action:pan-y;cursor:ew-resize;user-select:none}
 .ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
-.ba-after{clip-path:inset(0 0 0 50%)}
+.ba-after{clip-path:inset(0 50% 0 0)}
 .ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(0,0,0,.35);z-index:2;pointer-events:none}
 .ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;gap:5px}
 .ba-labels{position:absolute;inset:.9rem 1.25rem auto;display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:3;pointer-events:none}
@@ -199,8 +199,8 @@ footer a{color:#0052cc;text-decoration:none}
     <!-- Mobile: slider on top, list below -->
     <div class="results-mobile card">
       <div class="ba-wrap" id="baSlider">
-        <img class="ba-img" loading="lazy" src="https://i.postimg.cc/FRMqk8sP/me.webp" alt="Before transformation">
-        <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/FRMqk8sP/me.webp" alt="After transformation" id="baAfter">
+        <img class="ba-img" loading="lazy" src="https://i.postimg.cc/FRMqk8sP/me.webp" alt="After transformation">
+        <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/Mp0d9XZ1/before.webp" alt="Before transformation" id="baAfter">
         <div class="ba-line" id="baLine"><div class="ba-handle"><span>←</span><span>→</span></div></div>
         <div class="ba-labels"><span>Before</span><span>After</span></div>
       </div>
@@ -228,7 +228,7 @@ footer a{color:#0052cc;text-decoration:none}
         <div class="desk-imgs">
           <div class="desk-img">
             <span class="desk-img-label">Before</span>
-            <img loading="lazy" src="https://i.postimg.cc/FRMqk8sP/me.webp" alt="Before transformation">
+            <img loading="lazy" src="https://i.postimg.cc/Mp0d9XZ1/before.webp" alt="Before transformation">
           </div>
           <div class="desk-img">
             <span class="desk-img-label">After</span>
@@ -327,7 +327,7 @@ footer a{color:#0052cc;text-decoration:none}
 
   function set(p){
     p = Math.max(0, Math.min(100, p));
-    after.style.clipPath = 'inset(0 0 0 ' + p + '%)';
+    after.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
     line.style.left = p + '%';
   }
   set(50);
