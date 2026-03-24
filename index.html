@@ -21,6 +21,9 @@
 <meta name="twitter:description" content="Lose 15 pounds in 6-weeks for free with personal coaching. Personalized diet and training for men ages 25-44.">
 <meta name="twitter:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG">
 
+<!-- Preload the video poster so it paints immediately on first load -->
+<link rel="preload" as="image" href="https://i.postimg.cc/NLqn56VF/video-thumb.webp" fetchpriority="high">
+
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Lose 15 pounds in 6 weeks for free with personal coaching. Personalized diet and training for men ages 25-44.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Personalized diet and training optimization program for men ages 25-44","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"6-week transformation program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Variables */
@@ -160,12 +163,14 @@ footer a{color:#0052cc;text-decoration:none}
         <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
       </div>
       <div class="video-wrap" id="videoContainer">
-        <video id="mainVideo" playsinline preload="auto" poster="video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
+        <!-- preload="none" keeps the video file from blocking page load; the poster covers the gap.
+             fetchpriority="high" tells the browser this element matters above the fold. -->
+        <video id="mainVideo" playsinline preload="none" fetchpriority="high" poster="https://i.postimg.cc/NLqn56VF/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
           <source src="video.mp4" type="video/mp4">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.65rem .45rem .65rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
             Watch the Video
             <span style="width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
               <svg width="9" height="11" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
@@ -257,14 +262,13 @@ footer a{color:#0052cc;text-decoration:none}
 <script>
 /* ── Self-hosted video: Vidalytics-style autoplay logic ── */
 (function(){
-  var vid    = document.getElementById('mainVideo');
+  var vid     = document.getElementById('mainVideo');
   var overlay = document.getElementById('ctpOverlay');
   var ctpBtn  = document.getElementById('ctpBtn');
   if(!vid) return;
 
   function showOverlay(){
     overlay.style.display = 'flex';
-    // Video keeps playing silently as animated thumbnail — loop it
     vid.loop = true;
   }
 
@@ -277,7 +281,7 @@ footer a{color:#0052cc;text-decoration:none}
   ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
 
   // Clicking anywhere on the overlay (full video area) plays the video
-  ctpOverlay.addEventListener('click', function(){
+  overlay.addEventListener('click', function(){
     vid.loop = false;
     vid.muted = false;
     vid.currentTime = 0;
@@ -285,31 +289,29 @@ footer a{color:#0052cc;text-decoration:none}
     vid.play().then(function(){
       hideOverlay();
     }).catch(function(){
-      // If still blocked, at least unmute and keep playing
       vid.muted = false;
       hideOverlay();
     });
   });
 
-  // Attempt 1: autoplay with sound (works if user has interacted before or browser allows)
+  // Attempt 1: autoplay with sound
   vid.muted = false;
   vid.play().then(function(){
-    // Success — playing with sound, show controls, no overlay needed
     vid.controls = true;
     hideOverlay();
   }).catch(function(){
-    // Attempt 2: autoplay muted (acts as animated thumbnail)
+    // Attempt 2: autoplay muted (animated thumbnail)
     vid.muted = true;
     vid.loop = true;
     vid.play().then(function(){
       showOverlay();
     }).catch(function(){
-      // Fully blocked — show static overlay, wait for click
+      // Fully blocked — static poster + overlay
       showOverlay();
     });
   });
 
-  // Pause on last frame (don't loop or show black screen)
+  // Pause on last frame
   vid.addEventListener('ended', function(){
     vid.pause();
   });
@@ -344,7 +346,7 @@ footer a{color:#0052cc;text-decoration:none}
       var dx = Math.abs(e.clientX - startX);
       var dy = Math.abs(e.clientY - startY);
       if(dx < 4 && dy < 4) return;
-      if(dy > dx) return; // vertical — let scroll handle it
+      if(dy > dx) return;
       dragging = true;
       wrap.setPointerCapture(e.pointerId);
     }
