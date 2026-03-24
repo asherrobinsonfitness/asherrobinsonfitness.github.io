@@ -164,8 +164,8 @@ footer a{color:#0052cc;text-decoration:none}
           <source src="video.mp4" type="video/mp4">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
-        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
+        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.65rem .45rem .65rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
             Watch the Video
             <span style="width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
               <svg width="9" height="11" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
@@ -276,8 +276,8 @@ footer a{color:#0052cc;text-decoration:none}
   ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
   ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
 
-  // When user clicks the CTP button: restart with sound, show controls
-  ctpBtn.addEventListener('click', function(){
+  // Clicking anywhere on the overlay (full video area) plays the video
+  ctpOverlay.addEventListener('click', function(){
     vid.loop = false;
     vid.muted = false;
     vid.currentTime = 0;
