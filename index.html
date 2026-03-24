@@ -326,7 +326,7 @@ footer a{color:#0052cc;text-decoration:none}
   var line  = document.getElementById('baLine');
 
   function set(p){
-    p = Math.max(0, Math.min(100, p));
+    p = Math.max(5, Math.min(95, p));
     after.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
     line.style.left = p + '%';
   }
