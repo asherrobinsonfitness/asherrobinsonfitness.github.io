@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG">
 
 <!-- Preload the video poster so it paints immediately on first load -->
-<link rel="preload" as="image" href="https://i.postimg.cc/NLqn56VF/video-thumb.webp" fetchpriority="high">
+<link rel="preload" as="image" href="https://img-pull.b-cdn.net/video-thumb.webp" fetchpriority="high">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Lose 15 pounds in 6 weeks for free with personal coaching. Personalized diet and training for men ages 25-44.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Personalized diet and training optimization program for men ages 25-44","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"6-week transformation program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
@@ -230,9 +230,10 @@ footer a{color:#0052cc;text-decoration:none}
         <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
       </div>
       <div class="video-wrap" id="videoContainer">
-        <!-- preload="none" keeps the video file from blocking page load; the poster covers the gap.
-             fetchpriority="high" tells the browser this element matters above the fold. -->
-        <video id="mainVideo" playsinline preload="none" fetchpriority="high" poster="https://i.postimg.cc/NLqn56VF/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
+        <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
+             a small amount; preload="none" can cause play() to fail on mobile before any data loads.
+             webkit-playsinline is required for older iOS Safari inline playback. -->
+        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://img-pull.b-cdn.net/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
           <source src="video.mp4" type="video/mp4">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
@@ -290,6 +291,7 @@ footer a{color:#0052cc;text-decoration:none}
     <!-- Mobile: slider on top, list below -->
     <div class="results-mobile card">
       <div class="ba-wrap" id="baSlider">
+        <!-- TODO: upload me.webp + before.webp to your BunnyCDN and swap the primary src to img-pull.b-cdn.net/me.webp etc. The onerror falls back to postimg.cc in the meantime. -->
         <img class="ba-img" loading="lazy" src="https://i.postimg.cc/FRMqk8sP/me.webp" alt="After transformation">
         <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/Mp0d9XZ1/before.webp" alt="Before transformation" id="baAfter">
         <div class="ba-line" id="baLine"><div class="ba-handle"><span>←</span><span>→</span></div></div>
@@ -351,12 +353,16 @@ footer a{color:#0052cc;text-decoration:none}
 </footer>
 
 <script>
-/* ── Self-hosted video: Vidalytics-style autoplay logic ── */
+/* ── Mobile-safe autoplay with poster-first skeleton ── */
 (function(){
   var vid     = document.getElementById('mainVideo');
   var overlay = document.getElementById('ctpOverlay');
   var ctpBtn  = document.getElementById('ctpBtn');
-  if(!vid) return;
+  if(!vid || !overlay || !ctpBtn) return;
+
+  /* ── Poster skeleton: show poster immediately so there's no blank box
+        while the video loads. The <video poster> attribute handles this
+        natively; this just ensures the overlay doesn't hide it. ── */
 
   function showOverlay(){
     overlay.style.display = 'flex';
@@ -367,44 +373,89 @@ footer a{color:#0052cc;text-decoration:none}
     overlay.style.display = 'none';
   }
 
-  // CTP button hover: color change only, no grow
+  // CTP button hover
   ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
   ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
 
-  // Clicking anywhere on the overlay (full video area) plays the video
+  // Clicking anywhere on the overlay plays the video with sound
   overlay.addEventListener('click', function(){
-    vid.loop = false;
-    vid.muted = false;
+    vid.loop    = false;
+    vid.muted   = false;
+    vid.controls = true;
     vid.currentTime = 0;
-    vid.controls = true;
-    vid.play().then(function(){
-      hideOverlay();
-    }).catch(function(){
-      vid.muted = false;
-      hideOverlay();
-    });
+    var p = vid.play();
+    if(p !== undefined){
+      p.then(function(){ hideOverlay(); }).catch(function(){
+        // If unmuted play still fails (rare), just show controls and hide overlay
+        hideOverlay();
+      });
+    } else {
+      hideOverlay(); // older Safari returns undefined
+    }
   });
 
-  // Attempt 1: autoplay with sound
-  vid.muted = false;
-  vid.play().then(function(){
-    vid.controls = true;
-    hideOverlay();
-  }).catch(function(){
-    // Attempt 2: autoplay muted (animated thumbnail)
-    vid.muted = true;
-    vid.loop = true;
-    vid.play().then(function(){
-      showOverlay();
-    }).catch(function(){
-      // Fully blocked — static poster + overlay
-      showOverlay();
-    });
-  });
+  /* ── Autoplay strategy ──
+     1. Try unmuted autoplay (desktop Chrome/Firefox allows this sometimes)
+     2. Fall back to muted autoplay (the "animated thumbnail" / looping preview)
+     3. If all autoplay is blocked (Instagram WebView, strict Safari), show
+        static poster + "Watch the Video" overlay button.
 
-  // Pause on last frame
+     IMPORTANT: On mobile, play() must be called after the browser has
+     loaded at least metadata. We wait for 'loadedmetadata' before attempting
+     autoplay so the promise doesn't reject immediately due to no data.
+  ── */
+
+  function attemptAutoplay(){
+    // Attempt 1: unmuted autoplay
+    vid.muted = false;
+    var p1 = vid.play();
+    if(p1 === undefined){
+      // Old Safari — treat as success (it played)
+      vid.controls = true;
+      hideOverlay();
+      return;
+    }
+    p1.then(function(){
+      vid.controls = true;
+      hideOverlay();
+    }).catch(function(){
+      // Attempt 2: muted autoplay (animated thumbnail loop)
+      vid.muted = true;
+      vid.loop  = true;
+      var p2 = vid.play();
+      if(p2 === undefined){
+        showOverlay();
+        return;
+      }
+      p2.then(function(){
+        showOverlay(); // playing muted — show "Watch the Video" on top
+      }).catch(function(){
+        // Attempt 3: fully blocked — static poster + overlay
+        showOverlay();
+      });
+    });
+  }
+
+  // Wait for metadata so mobile browsers have enough data to attempt play()
+  if(vid.readyState >= 1){ // HAVE_METADATA
+    attemptAutoplay();
+  } else {
+    vid.addEventListener('loadedmetadata', function onMeta(){
+      vid.removeEventListener('loadedmetadata', onMeta);
+      attemptAutoplay();
+    });
+    // Safety timeout: if metadata never fires (network blocked in some WebViews),
+    // fall back to showing the static poster + overlay after 3s
+    setTimeout(function(){
+      if(vid.readyState < 1 && overlay.style.display === 'none'){
+        showOverlay();
+      }
+    }, 3000);
+  }
+
+  // Pause on last frame (don't loop if playing unmuted with sound)
   vid.addEventListener('ended', function(){
-    vid.pause();
+    if(!vid.loop) vid.pause();
   });
 })();
 </script>
