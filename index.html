@@ -26,6 +26,13 @@
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Lose 15 pounds in 6 weeks for free with personal coaching. Personalized diet and training for men ages 25-44.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Lose 15 Pounds in 6 Weeks for Free","description":"Personalized diet and training optimization program for men ages 25-44","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"6-week transformation program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
+/* Header group visibility */
+.header-group--desktop{display:none}
+@media(min-width:1280px){
+  .header-group--mobile{display:none}
+  .header-group--desktop{display:flex;flex-direction:column;margin-bottom:var(--pad-sm);text-align:center}
+}
+
 /* Variables */
 :root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#222;--muted:#555;--border:#c0c7cf;--card-border:#c8cdd4}
 
@@ -76,13 +83,74 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Desktop results card */
 .card-desk{max-width:960px;display:flex;flex-direction:row;align-items:stretch;padding:1.25rem;gap:1.25rem}
 .desk-text{flex:1;display:flex;flex-direction:column}
-.desk-text .benefits-list{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.desk-text .benefits-list{flex:1;display:flex;flex-direction:column}
 .desk-imgs{flex:1;display:flex;gap:1rem}
 .desk-img{flex:1;border-radius:10px;overflow:hidden;position:relative;background:#f5f5f5}
 .desk-img img{width:100%;height:100%;object-fit:cover;display:block}
 .desk-img-label{position:absolute;top:.55rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:1}
 
-/* Footer */
+/* CTA Widget */
+.cta-widget{display:none}
+.mobile-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%}
+@media(min-width:1280px){
+  .mobile-cta{display:none}
+
+  /* col-right stretches to video height */
+  .col-right{display:flex;align-items:stretch}
+
+  /* Widget fills col-right height */
+  .cta-widget{
+    display:flex;flex-direction:column;
+    width:100%;height:100%;
+    border-radius:16px;overflow:hidden;
+    border:1px solid var(--card-border);
+    background:#fff;
+  }
+  .cta-widget__header{
+    padding:1.5rem 1.5rem 1.25rem;
+    text-align:center;
+  }
+  .cta-widget__header .callout{margin:0 auto .75rem}
+  .cta-widget__header .header-group--desktop{margin-bottom:0;text-align:center}
+  .cta-widget__body{
+    padding:1.25rem 1.5rem 1.5rem;
+    display:flex;flex-direction:column;
+    align-items:center;gap:.75rem;
+    flex:1;justify-content:center;
+  }
+
+  /* Button: full width with arrow + divider visible */
+  .cta-widget__body .btn{
+    width:100%;border-radius:10px;
+    padding:1rem 1.25rem;font-size:1.05rem;
+    justify-content:space-between;
+  }
+  .cta-widget__body .btn .btn-label{text-align:left}
+  .cta-widget__body .btn .btn-divider{display:block !important}
+  .cta-widget__body .btn .btn-arrow{display:inline !important}
+
+  /* Pricing: match mobile colors exactly */
+  .cta-widget__body .pricing{color:var(--text);text-align:center;font-size:.9rem}
+  .cta-widget__body .pricing-amount{color:var(--text);font-weight:600}
+
+  /* Benefits list: evenly spaced */
+  .desk-text{flex:2}
+  .desk-text .benefits-list{height:100%;display:flex;flex-direction:column}
+  .desk-text .benefits-list .benefit{flex:1;padding:0 1.25rem}
+  .desk-imgs{flex:3}
+}
+
+/* Widget light/dark mode */
+@media(prefers-color-scheme:light){
+  .cta-widget{background:#fff;border-color:var(--card-border)}
+}
+@media(prefers-color-scheme:dark) and (min-width:1280px){
+  .cta-widget{background:#222;border-color:#3d3d3d}
+  .cta-widget__body .pricing{color:#f8fafc}
+  .cta-widget__body .pricing-amount{color:#f8fafc}
+}
+
+
 footer{background:#f0f0f0;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:13px;color:var(--muted)}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
 .footer-disclaimer{font-size:12px;line-height:1.6;opacity:.85}
@@ -114,11 +182,11 @@ footer a{color:#0052cc;text-decoration:none}
 }
 @media(min-width:1280px){
   .hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:stretch;border-top:1px solid var(--border)}
-  .col-left{padding:var(--pad) var(--desk-pad);align-self:start}
-  .col-right{padding:var(--pad) var(--desk-pad);border-left:1px solid var(--border);justify-content:center;min-height:100%}
+  .col-left{padding:var(--pad) 1rem var(--pad) 2rem;align-self:start}
+  .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-height:100%}
   .headline{font-size:2.25rem}
   .video-wrap{max-width:100%}
-  .results-section{padding:var(--pad) var(--desk-pad)}
+  .results-section{padding:var(--pad) 2rem}
   .results-mobile{display:none}
   .results-desktop{display:flex;justify-content:center;width:100%}
   .card{max-width:100%}
@@ -147,7 +215,6 @@ footer a{color:#0052cc;text-decoration:none}
 }
 @media(prefers-color-scheme:dark) and (min-width:1280px){
   .hero-grid{border-top-color:#282828}
-  .col-right{border-left-color:#282828}
 }
 </style>
 </head>
@@ -157,7 +224,7 @@ footer a{color:#0052cc;text-decoration:none}
   <div class="hero-grid">
 
     <div class="col-left">
-      <div class="header-group">
+      <div class="header-group header-group--mobile">
         <div class="callout">For Men Ages 25-44</div>
         <h1 class="headline">Get Lean with 1:1 Coaching</h1>
         <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
@@ -170,7 +237,7 @@ footer a{color:#0052cc;text-decoration:none}
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;box-shadow:0 2px 16px rgba(0,0,0,.35)">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
             Watch the Video
             <span style="width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
               <svg width="9" height="11" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
@@ -181,14 +248,38 @@ footer a{color:#0052cc;text-decoration:none}
     </div>
 
     <div class="col-right">
-      <button class="btn" onclick="window.location.href='survey.html'+window.location.search">
-        <span class="btn-label">Apply for Coaching</span>
-        <span class="btn-divider" aria-hidden="true"></span>
-        <span class="btn-arrow">→</span>
-      </button>
-      <div class="pricing">
-        <div class="pricing-amount">$50 first month, then $199/month.</div>
-        <div>Cancel within 30 days for a full refund.</div>
+      <!-- Mobile: just button + pricing (no widget) -->
+      <div class="mobile-cta">
+        <button class="btn" onclick="window.location.href='survey.html'+window.location.search">
+          <span class="btn-label">Apply for Coaching</span>
+          <span class="btn-divider" aria-hidden="true"></span>
+          <span class="btn-arrow">→</span>
+        </button>
+        <div class="pricing">
+          <div class="pricing-amount">$50 first month, then $199/month.</div>
+          <div>Cancel within 30 days for a full refund.</div>
+        </div>
+      </div>
+      <!-- Desktop: full widget card -->
+      <div class="cta-widget">
+        <div class="cta-widget__header">
+          <div class="header-group header-group--desktop">
+            <div class="callout">For Men Ages 25-44</div>
+            <h1 class="headline">Get Lean with 1:1 Coaching</h1>
+            <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
+          </div>
+        </div>
+        <div class="cta-widget__body">
+          <button class="btn" onclick="window.location.href='survey.html'+window.location.search">
+            <span class="btn-label">Apply for Coaching</span>
+            <span class="btn-divider" aria-hidden="true"></span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="pricing">
+            <div class="pricing-amount">$50 first month, then $199/month.</div>
+            <div>Cancel within 30 days for a full refund.</div>
+          </div>
+        </div>
       </div>
     </div>
 
