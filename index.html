@@ -199,9 +199,6 @@ footer a{color:#0052cc;text-decoration:none}
 .card-inner-pad--table{padding:.75rem 1rem 1rem}
 .card-inner-pad .ba-wrap{border-radius:8px;border:1px solid var(--card-border)}
 .card-inner-pad--table .compare-table{border:1px solid var(--card-border);border-radius:8px;overflow:hidden}
-.card-inner-pad--table .compare-header{border-bottom:1px solid var(--card-border)}
-.card-inner-pad--table .compare-row{border-bottom:1px solid var(--card-border)}
-.card-inner-pad--table .compare-row:last-child{border-bottom:none}
 @media(max-width:767px){
   .card-inner-pad{padding:.875rem .875rem 0}
   .card-inner-pad--table{padding:.625rem .875rem .875rem}
@@ -209,11 +206,11 @@ footer a{color:#0052cc;text-decoration:none}
 
 /* Compare table — native to page */
 .compare-table{display:flex;flex-direction:column;width:100%}
-.compare-header{display:grid;grid-template-columns:1fr 1fr;padding:.55rem 1.25rem .45rem;border-bottom:1px solid var(--card-border);gap:.5rem}
+.compare-header{display:grid;grid-template-columns:1fr 1fr;padding:.55rem 1.25rem .45rem;border-bottom:1px solid #dde0e4;gap:.5rem}
 .compare-col-head{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
 .compare-col-head--old{color:#b94040}
 .compare-col-head--new{color:#2a8a5e}
-.compare-row{display:grid;grid-template-columns:1fr 1fr;padding:.8rem 1.25rem;border-bottom:1px solid var(--card-border);align-items:center;gap:.75rem}
+.compare-row{display:grid;grid-template-columns:1fr 1fr;padding:.8rem 1.25rem;border-bottom:1px solid #dde0e4;align-items:center;gap:.75rem}
 .compare-row:last-child{border-bottom:none}
 .compare-old{font-size:.875rem;color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(180,60,60,.5);line-height:1.45;letter-spacing:-.005em}
 .compare-new{font-size:.875rem;color:var(--text);font-weight:500;line-height:1.45;letter-spacing:-.005em}
@@ -241,8 +238,8 @@ footer a{color:#0052cc;text-decoration:none}
   .ba-wrap{border-color:#3d3d3d}
   .ba-line{background:rgba(255,255,255,.85)}
   .desk-img{background:#2a2a2a}
-  .compare-header{border-color:#3d3d3d}
-  .compare-row{border-color:#3d3d3d}
+  .compare-header{border-color:#333}
+  .compare-row{border-color:#333}
   .card-inner-pad .ba-wrap{border-color:#3d3d3d}
   .card-inner-pad--table .compare-table{border-color:#3d3d3d}
   .compare-new{color:#f8fafc}
@@ -343,7 +340,7 @@ footer a{color:#0052cc;text-decoration:none}
         <div class="compare-table">
           <div class="compare-header">
             <span class="compare-col-head compare-col-head--old">The Old Way</span>
-            <span class="compare-col-head compare-col-head--new">The Minimum Effective Dose</span>
+            <span class="compare-col-head compare-col-head--new">The New Way</span>
           </div>
           <div class="compare-row">
             <span class="compare-old">5-day training splits</span>
@@ -376,7 +373,7 @@ footer a{color:#0052cc;text-decoration:none}
           <div class="compare-table">
             <div class="compare-header">
               <span class="compare-col-head compare-col-head--old">The Old Way</span>
-              <span class="compare-col-head compare-col-head--new">The Minimum Effective Dose</span>
+              <span class="compare-col-head compare-col-head--new">The New Way</span>
             </div>
             <div class="compare-row">
               <span class="compare-old">5-day training splits</span>
