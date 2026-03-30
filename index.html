@@ -80,13 +80,51 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;gap:5px}
 .ba-labels{position:absolute;inset:.9rem 1.25rem auto;display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:3;pointer-events:none}
 
-/* Desktop results card */
-.card-desk{max-width:960px;display:flex;flex-direction:row;align-items:stretch;padding:1.25rem;gap:1.25rem}
+/* Desktop images — inset wrapper with animated border */
+.desk-imgs{flex:1;padding:1rem}
+.desk-imgs-inner{
+  position:relative;
+  display:flex;gap:.75rem;
+  height:100%;
+  padding:.75rem;
+  border-radius:10px;
+  box-sizing:border-box;
+}
+/* SVG border drawn over the inner wrapper */
+.imgs-border-svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:4;
+  overflow:visible;
+}
+.imgs-border-path-bg{
+  fill:none;
+  stroke:var(--card-border);
+  stroke-width:1.5;
+}
+.imgs-border-path-anim{
+  fill:none;
+  stroke:rgba(0,102,255,.55);
+  stroke-width:2;
+  stroke-linecap:round;
+  filter:drop-shadow(0 0 3px rgba(0,102,255,.35));
+}
+.desk-imgs-inner .desk-img{
+  border-radius:7px;overflow:hidden;flex:1;
+  position:relative;background:#f5f5f5;min-height:0;
+}
+.desk-imgs-inner .desk-img img{width:100%;height:100%;object-fit:cover;display:block}
+.desk-img-label{color:#fff !important}
+
+@media(prefers-color-scheme:dark){
+  .imgs-border-path-bg{stroke:#3d3d3d}
+  .desk-imgs-inner .desk-img{background:#2a2a2a}
+}
+
+
+.card-desk{max-width:960px;display:flex;flex-direction:row;align-items:stretch;padding:0;gap:0}
 .desk-text{flex:1;display:flex;flex-direction:column}
 .desk-text .benefits-list{flex:1;display:flex;flex-direction:column}
-.desk-imgs{flex:1;display:flex;gap:1rem}
-.desk-img{flex:1;border-radius:10px;overflow:hidden;position:relative;background:#f5f5f5}
-.desk-img img{width:100%;height:100%;object-fit:cover;display:block}
 .desk-img-label{position:absolute;top:.55rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:1}
 
 /* CTA Widget */
@@ -214,6 +252,27 @@ footer a{color:#0052cc;text-decoration:none}
 .compare-row:last-child{border-bottom:none}
 .compare-old{font-size:.875rem;color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(180,60,60,.5);line-height:1.45;letter-spacing:-.005em}
 .compare-new{font-size:.875rem;color:var(--text);font-weight:500;line-height:1.45;letter-spacing:-.005em}
+/* Desktop compare table wrapper — inset with border, fills height */
+.desk-compare-wrap{
+  padding:1rem;
+  height:100%;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+}
+.desk-compare-wrap .compare-table{
+  flex:1;
+  border:1px solid var(--card-border);
+  border-radius:8px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.desk-compare-wrap .compare-row{flex:1}
+@media(prefers-color-scheme:dark){
+  .desk-compare-wrap .compare-table{border-color:#3d3d3d}
+}
+
 @media(min-width:1280px){
   .desk-text{flex:1}
   .desk-imgs{flex:1}
@@ -370,41 +429,49 @@ footer a{color:#0052cc;text-decoration:none}
     <div class="results-desktop">
       <div class="card card-desk">
         <div class="desk-text">
-          <div class="compare-table">
-            <div class="compare-header">
-              <span class="compare-col-head compare-col-head--old">The Old Way</span>
-              <span class="compare-col-head compare-col-head--new">The New Way</span>
-            </div>
-            <div class="compare-row">
-              <span class="compare-old">5-day training splits</span>
-              <span class="compare-new">3 × 45-min sessions per week</span>
-            </div>
-            <div class="compare-row">
-              <span class="compare-old">Calorie tracking every meal</span>
-              <span class="compare-new">Protein in your first two meals</span>
-            </div>
-            <div class="compare-row">
-              <span class="compare-old">$3–5K upfront commitment</span>
-              <span class="compare-new">$99 to start, no long-term lock-in</span>
-            </div>
-            <div class="compare-row">
-              <span class="compare-old">Cookie-cutter 12-week plan</span>
-              <span class="compare-new">Plan built around your real schedule</span>
-            </div>
-            <div class="compare-row">
-              <span class="compare-old">Falls apart when life does</span>
-              <span class="compare-new">Designed to survive real life</span>
+          <div class="desk-compare-wrap">
+            <div class="compare-table">
+              <div class="compare-header">
+                <span class="compare-col-head compare-col-head--old">The Old Way</span>
+                <span class="compare-col-head compare-col-head--new">The New Way</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-old">5-day training splits</span>
+                <span class="compare-new">3 × 45-min sessions per week</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-old">Calorie tracking every meal</span>
+                <span class="compare-new">Protein in your first two meals</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-old">$3–5K upfront commitment</span>
+                <span class="compare-new">$99 to start, no long-term lock-in</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-old">Cookie-cutter 12-week plan</span>
+                <span class="compare-new">Plan built around your real schedule</span>
+              </div>
+              <div class="compare-row">
+                <span class="compare-old">Falls apart when life does</span>
+                <span class="compare-new">Designed to survive real life</span>
+              </div>
             </div>
           </div>
         </div>
         <div class="desk-imgs">
-          <div class="desk-img">
-            <span class="desk-img-label">Before</span>
-            <img loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation">
-          </div>
-          <div class="desk-img">
-            <span class="desk-img-label">After</span>
-            <img loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
+          <div class="desk-imgs-inner" id="deskImgsInner">
+            <svg class="imgs-border-svg" id="imgsBorderSvg" xmlns="http://www.w3.org/2000/svg">
+              <path class="imgs-border-path-bg"   id="imgsBorderPathBg"/>
+              <path class="imgs-border-path-anim" id="imgsBorderPathAnim"/>
+            </svg>
+            <div class="desk-img">
+              <span class="desk-img-label">Before</span>
+              <img loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation">
+            </div>
+            <div class="desk-img">
+              <span class="desk-img-label">After</span>
+              <img loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
+            </div>
           </div>
         </div>
       </div>
@@ -577,6 +644,69 @@ footer a{color:#0052cc;text-decoration:none}
 
   wrap.addEventListener('pointerup',     function(){ dragging = false; });
   wrap.addEventListener('pointercancel', function(){ dragging = false; });
+})();
+</script>
+<script>
+(function(){
+  var svgEl     = document.getElementById('imgsBorderSvg');
+  var pathBg    = document.getElementById('imgsBorderPathBg');
+  var pathAnim  = document.getElementById('imgsBorderPathAnim');
+  if(!svgEl || !pathBg || !pathAnim) return;
+
+  var R = 10; // border-radius to match CSS
+
+  // Build a clockwise rounded-rect SVG path string
+  function roundedRectPath(x, y, w, h, r){
+    return [
+      'M', x+r, y,
+      'L', x+w-r, y,
+      'Q', x+w, y,   x+w, y+r,
+      'L', x+w, y+h-r,
+      'Q', x+w, y+h, x+w-r, y+h,
+      'L', x+r, y+h,
+      'Q', x,   y+h, x, y+h-r,
+      'L', x, y+r,
+      'Q', x, y,     x+r, y,
+      'Z'
+    ].join(' ');
+  }
+
+  function setup(){
+    var inner = document.getElementById('deskImgsInner');
+    if(!inner) return;
+    var w = inner.offsetWidth;
+    var h = inner.offsetHeight;
+    if(!w || !h) return;
+
+    var inset = 1; // inset so stroke doesn't clip
+    var d = roundedRectPath(inset, inset, w - inset*2, h - inset*2, R);
+
+    pathBg.setAttribute('d', d);
+    pathAnim.setAttribute('d', d);
+
+    // Use getTotalLength for exact perimeter
+    var perim   = pathBg.getTotalLength();
+    var segLen  = perim * 0.14;  // ~14% segment — subtle, not a full quarter
+    var gap     = perim - segLen;
+
+    pathAnim.style.strokeDasharray  = segLen.toFixed(2) + ' ' + gap.toFixed(2);
+    pathAnim.style.strokeDashoffset = '0';
+
+    var styleId = 'imgs-anim-kf';
+    var el = document.getElementById(styleId);
+    if(el) el.remove();
+    var s = document.createElement('style');
+    s.id = styleId;
+    // 6s duration — slow, calm travel
+    s.textContent =
+      '@keyframes imgsBorderRun{to{stroke-dashoffset:-' + perim.toFixed(2) + '}}' +
+      '#imgsBorderPathAnim{animation:imgsBorderRun 6s linear infinite}';
+    document.head.appendChild(s);
+  }
+
+  if(document.readyState === 'complete'){ setup(); }
+  else { window.addEventListener('load', setup); }
+  window.addEventListener('resize', function(){ setTimeout(setup, 50); });
 })();
 </script>
 </body>
