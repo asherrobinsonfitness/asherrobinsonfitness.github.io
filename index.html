@@ -73,7 +73,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .benefit-num{width:28px;height:28px;border-radius:8px;background:#ebebeb;color:var(--text);font-size:.8rem;font-weight:600;flex-shrink:0;display:flex;align-items:center;justify-content:center;letter-spacing:.01em}
 
 /* Before/after slider */
-.ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #c8cdd4;touch-action:pan-y;cursor:ew-resize;user-select:none}
+.ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
 .ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
 .ba-after{clip-path:inset(0 50% 0 0)}
 .ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(0,0,0,.35);z-index:2;pointer-events:none}
@@ -194,6 +194,38 @@ footer a{color:#0052cc;text-decoration:none}
   .card{max-width:100%}
 }
 
+/* Mobile card inner padding — inset sections from card edges */
+.card-inner-pad{padding:1rem 1rem 0}
+.card-inner-pad--table{padding:.75rem 1rem 1rem}
+.card-inner-pad .ba-wrap{border-radius:8px;border:1px solid var(--card-border)}
+.card-inner-pad--table .compare-table{border:1px solid var(--card-border);border-radius:8px;overflow:hidden}
+.card-inner-pad--table .compare-header{border-bottom:1px solid var(--card-border)}
+.card-inner-pad--table .compare-row{border-bottom:1px solid var(--card-border)}
+.card-inner-pad--table .compare-row:last-child{border-bottom:none}
+@media(max-width:767px){
+  .card-inner-pad{padding:.875rem .875rem 0}
+  .card-inner-pad--table{padding:.625rem .875rem .875rem}
+}
+
+/* Compare table — native to page */
+.compare-table{display:flex;flex-direction:column;width:100%}
+.compare-header{display:grid;grid-template-columns:1fr 1fr;padding:.55rem 1.25rem .45rem;border-bottom:1px solid var(--card-border);gap:.5rem}
+.compare-col-head{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
+.compare-col-head--old{color:#b94040}
+.compare-col-head--new{color:#2a8a5e}
+.compare-row{display:grid;grid-template-columns:1fr 1fr;padding:.8rem 1.25rem;border-bottom:1px solid var(--card-border);align-items:center;gap:.75rem}
+.compare-row:last-child{border-bottom:none}
+.compare-old{font-size:.875rem;color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(180,60,60,.5);line-height:1.45;letter-spacing:-.005em}
+.compare-new{font-size:.875rem;color:var(--text);font-weight:500;line-height:1.45;letter-spacing:-.005em}
+@media(min-width:1280px){
+  .desk-text{flex:1}
+  .desk-imgs{flex:1}
+  .desk-text .compare-table{height:100%;display:flex;flex-direction:column}
+  .desk-text .compare-header{flex-shrink:0}
+  .desk-text .compare-row{flex:1}
+  .compare-old,.compare-new{font-size:.85rem}
+}
+
 /* Dark mode */
 @media(prefers-color-scheme:dark){
   body,.container{background:#1c1c1c}
@@ -209,6 +241,12 @@ footer a{color:#0052cc;text-decoration:none}
   .ba-wrap{border-color:#3d3d3d}
   .ba-line{background:rgba(255,255,255,.85)}
   .desk-img{background:#2a2a2a}
+  .compare-header{border-color:#3d3d3d}
+  .compare-row{border-color:#3d3d3d}
+  .card-inner-pad .ba-wrap{border-color:#3d3d3d}
+  .card-inner-pad--table .compare-table{border-color:#3d3d3d}
+  .compare-new{color:#f8fafc}
+  .compare-old{color:#6b6b6b}
   footer{background:#161616;border-top-color:#282828;color:#a0a0a0}
   footer .copyright{color:#f8fafc}
   .footer-divider{border-color:#282828}
@@ -292,33 +330,75 @@ footer a{color:#0052cc;text-decoration:none}
 
     <!-- Mobile: slider on top, list below -->
     <div class="results-mobile card">
-      <div class="ba-wrap" id="baSlider">
-        <!-- TODO: upload me.webp + before.webp to your BunnyCDN and swap the primary src to img-pull.b-cdn.net/me.webp etc. The onerror falls back to postimg.cc in the meantime. -->
-        <img class="ba-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
-        <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation" id="baAfter">
-        <div class="ba-line" id="baLine"><div class="ba-handle"><span>←</span><span>→</span></div></div>
-        <div class="ba-labels"><span>Before</span><span>After</span></div>
+      <div class="card-inner-pad">
+        <div class="ba-wrap" id="baSlider">
+          <!-- TODO: upload me.webp + before.webp to your BunnyCDN and swap the primary src to img-pull.b-cdn.net/me.webp etc. The onerror falls back to postimg.cc in the meantime. -->
+          <img class="ba-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
+          <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation" id="baAfter">
+          <div class="ba-line" id="baLine"><div class="ba-handle"><span>←</span><span>→</span></div></div>
+          <div class="ba-labels"><span>Before</span><span>After</span></div>
+        </div>
       </div>
-      <ul class="benefits-list">
-        <li class="benefit"><div class="benefit-num">01</div> Look lean and athletic</li>
-        <li class="benefit"><div class="benefit-num">02</div> Feel confident in your body</li>
-        <li class="benefit"><div class="benefit-num">03</div> Make a stronger first impression</li>
-        <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
-        <li class="benefit"><div class="benefit-num">05</div> Feel stronger and healthier</li>
-      </ul>
+      <div class="card-inner-pad card-inner-pad--table">
+        <div class="compare-table">
+          <div class="compare-header">
+            <span class="compare-col-head compare-col-head--old">The Old Way</span>
+            <span class="compare-col-head compare-col-head--new">The Minimum Effective Dose</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-old">5-day training splits</span>
+            <span class="compare-new">3 × 45-min sessions per week</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-old">Calorie tracking every meal</span>
+            <span class="compare-new">Protein in your first two meals</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-old">$3–5K upfront commitment</span>
+            <span class="compare-new">$99 to start, no long-term lock-in</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-old">Cookie-cutter 12-week plan</span>
+            <span class="compare-new">Plan built around your real schedule</span>
+          </div>
+          <div class="compare-row">
+            <span class="compare-old">Falls apart when life does</span>
+            <span class="compare-new">Designed to survive real life</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Desktop: text + side-by-side images -->
     <div class="results-desktop">
       <div class="card card-desk">
         <div class="desk-text">
-          <ul class="benefits-list">
-            <li class="benefit"><div class="benefit-num">01</div> Look lean, athletic, and capable</li>
-            <li class="benefit"><div class="benefit-num">02</div> Stop feeling self-conscious about your body</li>
-            <li class="benefit"><div class="benefit-num">03</div> Walk into any room with real confidence</li>
-            <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
-            <li class="benefit"><div class="benefit-num">05</div> Feel stronger, healthier, and more in control</li>
-          </ul>
+          <div class="compare-table">
+            <div class="compare-header">
+              <span class="compare-col-head compare-col-head--old">The Old Way</span>
+              <span class="compare-col-head compare-col-head--new">The Minimum Effective Dose</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-old">5-day training splits</span>
+              <span class="compare-new">3 × 45-min sessions per week</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-old">Calorie tracking every meal</span>
+              <span class="compare-new">Protein in your first two meals</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-old">$3–5K upfront commitment</span>
+              <span class="compare-new">$99 to start, no long-term lock-in</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-old">Cookie-cutter 12-week plan</span>
+              <span class="compare-new">Plan built around your real schedule</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-old">Falls apart when life does</span>
+              <span class="compare-new">Designed to survive real life</span>
+            </div>
+          </div>
         </div>
         <div class="desk-imgs">
           <div class="desk-img">
