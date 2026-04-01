@@ -30,7 +30,6 @@
 .header-group--desktop{display:none}
 @media(min-width:1280px){
   .header-group--mobile{display:none}
-  .header-group--desktop{display:flex;flex-direction:column;margin-bottom:var(--pad-sm);text-align:center}
 }
 
 /* Variables */
@@ -46,7 +45,45 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .col-left{padding:var(--pad) 1.5rem;display:flex;flex-direction:column;text-align:center}
 .col-left .header-group{margin-bottom:var(--pad-sm)}
 .col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-.results-section{background:#f0f0f0;padding:var(--pad) 1.5rem;display:flex;justify-content:center;width:100%}
+.results-section{background:#f0f0f0;padding:var(--pad) 1.5rem;width:100%}
+
+/* 3-block grid */
+.blocks-grid{display:grid;grid-template-columns:1fr;gap:1rem;width:100%}
+@media(min-width:768px){.blocks-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* Block base */
+.block{background:#fff;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;display:flex;flex-direction:column}
+.block-header{padding:.85rem 1.1rem .75rem;border-bottom:1px solid var(--card-border)}
+.block-tag{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.3rem}
+.block-title{font-size:1rem;font-weight:600;line-height:1.2;color:var(--text)}
+.block-body{padding:.85rem 1.1rem;flex:1}
+
+/* Old vs New comparison block */
+.compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.15rem}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{margin:0}
+.compare-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.compare-label--old{color:#b34a3a}
+.compare-label--new{color:var(--text)}
+.compare-item{display:flex;align-items:flex-start;gap:.45rem;font-size:.85rem;line-height:1.5;color:var(--muted);padding:.15rem 0}
+.compare-item--old{text-decoration:line-through;opacity:.7}
+.compare-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:.45rem}
+.compare-dot--old{background:#c9534f}
+.compare-dot--new{background:#3aaa6e}
+
+/* Deliverables block */
+.del-item{display:flex;align-items:baseline;gap:.6rem;font-size:.82rem;line-height:1.5;color:var(--text);padding:.22rem 0;border-bottom:1px solid #f0f0f0}
+.del-item:last-child{border-bottom:none}
+.del-check{font-size:.75rem;color:#3aaa6e;flex-shrink:0;margin-top:.15rem}
+
+/* Before/After block */
+.ba-block-wrap{position:relative;width:100%;cursor:ew-resize;touch-action:pan-y;user-select:none}
+.ba-block-img{width:100%;height:auto;display:block;pointer-events:none;-webkit-user-drag:none}
+.ba-block-after{position:absolute;inset:0;clip-path:inset(0 50% 0 0)}
+.ba-block-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(255,255,255,.7);z-index:2;pointer-events:none}
+.ba-block-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;gap:4px;z-index:3}
+.ba-block-labels{position:absolute;inset:.75rem 1rem auto;display:flex;justify-content:space-between;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;z-index:4;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.ba-block-caption{padding:.75rem 1rem;font-size:.8rem;color:var(--muted);text-align:center;border-top:1px solid var(--card-border)}
 
 /* Hero text */
 .callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#ebebeb;border-radius:8px;padding:.375rem 1rem;letter-spacing:.02rem}
@@ -67,89 +104,70 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 
 /* Card */
 .card{background:#fff;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
-.benefits-list{list-style:none}
-.benefit{display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;font-size:1rem;border-bottom:1px solid #c8cdd4}
-.benefit:last-child{border-bottom:none}
-.benefit-num{width:28px;height:28px;border-radius:8px;background:#ebebeb;color:var(--text);font-size:.8rem;font-weight:600;flex-shrink:0;display:flex;align-items:center;justify-content:center;letter-spacing:.01em}
 
-/* Before/after slider */
-.ba-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;border-bottom:1px solid #c8cdd4;touch-action:pan-y;cursor:ew-resize;user-select:none}
-.ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
-.ba-after{clip-path:inset(0 50% 0 0)}
-.ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(0,0,0,.35);z-index:2;pointer-events:none}
-.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;gap:5px}
-.ba-labels{position:absolute;inset:.9rem 1.25rem auto;display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:3;pointer-events:none}
-
-/* Desktop results card */
-.card-desk{max-width:960px;display:flex;flex-direction:row;align-items:stretch;padding:1.25rem;gap:1.25rem}
-.desk-text{flex:1;display:flex;flex-direction:column}
-.desk-text .benefits-list{flex:1;display:flex;flex-direction:column}
-.desk-imgs{flex:1;display:flex;gap:1rem}
-.desk-img{flex:1;border-radius:10px;overflow:hidden;position:relative;background:#f5f5f5}
-.desk-img img{width:100%;height:100%;object-fit:cover;display:block}
-.desk-img-label{position:absolute;top:.55rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text);z-index:1}
-
-/* CTA Widget */
+/* CTA Widget (desktop): same copy + button + .pricing as mobile; narrow column via hero grid */
 .cta-widget{display:none}
 .mobile-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%}
 @media(min-width:1280px){
   .mobile-cta{display:none}
+  .col-right{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;width:100%}
 
-  /* col-right stretches to video height */
-  .col-right{display:flex;align-items:stretch}
-
-  /* Widget fills col-right height */
   .cta-widget{
-    display:flex;flex-direction:column;
-    width:100%;height:100%;
-    border-radius:16px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:stretch;
+    justify-content:flex-start;
+    width:100%;
+    box-sizing:border-box;
+    padding:0;
+    border-radius:12px;
     border:1px solid var(--card-border);
     background:#fff;
-  }
-  .cta-widget__header{
-    padding:1.1rem 1.1rem .9rem;
-    text-align:center;
-  }
-  .cta-widget__header .callout{margin:0 auto .5rem;font-size:.8rem;padding:.3rem .75rem}
-  .cta-widget__header .header-group--desktop{margin-bottom:0;text-align:center}
-  .cta-widget__header .headline{font-size:1.4rem;margin-bottom:.5rem}
-  .cta-widget__header .subheadline{font-size:.85rem;line-height:1.45}
-  .cta-widget__body{
-    padding:.9rem 1.1rem 1.1rem;
-    display:flex;flex-direction:column;
-    align-items:center;gap:.6rem;
-    flex:1;justify-content:center;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
   }
 
-  /* Button: full width with arrow + divider visible */
-  .cta-widget__body .btn{
-    width:100%;border-radius:10px;
-    padding:.85rem 1rem;font-size:.95rem;
+  .cta-widget__section{display:flex;flex-direction:column;align-items:flex-start;text-align:left;flex-shrink:0}
+
+  .cta-widget__section--copy{
+    gap:.55rem;
+    padding:1.1rem 1.1rem 1rem;
+  }
+  .cta-widget__section--copy .callout{
+    margin:0;
+    align-self:flex-start;
+  }
+
+  .cta-widget__title{
+    font-size:1.45rem;font-weight:600;line-height:1.2;
+    letter-spacing:-.02em;color:var(--text);width:100%;
+  }
+  .cta-widget__section--copy .subheadline{
+    margin:.2rem 0 0;text-align:left;max-width:none;
+    font-size:1rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);
+  }
+
+  .cta-widget__footer{
+    flex-shrink:0;
+    padding:0 1.1rem 1rem;
+    display:flex;flex-direction:column;align-items:stretch;gap:.75rem;
+  }
+  .cta-widget__footer .pricing{
+    width:100%;
+  }
+  .cta-widget__footer .btn{
+    width:100%;
+    padding:.9rem 1.25rem;
+    font-size:1rem;
     justify-content:space-between;
   }
-  .cta-widget__body .btn .btn-label{text-align:left}
-  .cta-widget__body .btn .btn-divider{display:block !important}
-  .cta-widget__body .btn .btn-arrow{display:inline !important}
-
-  /* Pricing: match mobile colors exactly */
-  .cta-widget__body .pricing{color:var(--text);text-align:center;font-size:.82rem}
-  .cta-widget__body .pricing-amount{color:var(--text);font-weight:600}
-
-  /* Benefits list: evenly spaced */
-  .desk-text{flex:2}
-  .desk-text .benefits-list{height:100%;display:flex;flex-direction:column}
-  .desk-text .benefits-list .benefit{flex:1;padding:0 1.25rem}
-  .desk-imgs{flex:3}
+  .cta-widget__footer .btn .btn-label{text-align:left;flex:1}
+  .cta-widget__footer .btn .btn-divider{display:block !important}
+  .cta-widget__footer .btn .btn-arrow{display:inline !important}
 }
 
-/* Widget light/dark mode */
-@media(prefers-color-scheme:light){
-  .cta-widget{background:#fff;border-color:var(--card-border)}
-}
 @media(prefers-color-scheme:dark) and (min-width:1280px){
   .cta-widget{background:#222;border-color:#3d3d3d}
-  .cta-widget__body .pricing{color:#f8fafc}
-  .cta-widget__body .pricing-amount{color:#f8fafc}
+  .cta-widget__title{color:#f8fafc}
+  .cta-widget__section--copy .subheadline{color:#a0a0a0}
 }
 
 
@@ -174,8 +192,6 @@ footer a{color:#0052cc;text-decoration:none}
 }
 @media(max-width:1279px){
   .col-right{padding:0 1.25rem var(--pad-sm)}
-  .results-desktop{display:none}
-  .results-mobile{display:flex;justify-content:center;width:100%}
 }
 @media(min-width:1024px){
   .headline{font-size:2rem}
@@ -183,14 +199,12 @@ footer a{color:#0052cc;text-decoration:none}
   footer{padding-left:2rem;padding-right:2rem}
 }
 @media(min-width:1280px){
-  .hero-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);align-items:stretch;border-top:1px solid var(--border)}
-  .col-left{padding:var(--pad) 1rem var(--pad) 2rem;align-self:start}
-  .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-height:100%}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;border-top:1px solid var(--border)}
+  .col-left{padding:var(--pad) 1rem var(--pad) 2rem;min-width:0}
+  .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-height:0;min-width:22rem;max-width:23rem}
   .headline{font-size:2.25rem}
   .video-wrap{max-width:100%}
   .results-section{padding:var(--pad) 2rem}
-  .results-mobile{display:none}
-  .results-desktop{display:flex;justify-content:center;width:100%}
   .card{max-width:100%}
 }
 
@@ -214,6 +228,14 @@ footer a{color:#0052cc;text-decoration:none}
   .footer-divider{border-color:#282828}
   footer a{color:#4d94ff}
   .video-wrap{border-color:#282828}
+  .block{background:#222;border-color:#3d3d3d}
+  .block-header{border-color:#3d3d3d}
+  .block-title{color:#f8fafc}
+  .compare-item{color:#a0a0a0}
+  .compare-item--old{color:#a0a0a0}
+  .compare-divider{border-color:#3d3d3d}
+  .del-item{color:#f8fafc;border-color:#2a2a2a}
+  .ba-block-caption{border-color:#3d3d3d}
 }
 @media(prefers-color-scheme:dark) and (min-width:1280px){
   .hero-grid{border-top-color:#282828}
@@ -263,17 +285,17 @@ footer a{color:#0052cc;text-decoration:none}
           <div>Cancel within 30 days for a full refund.</div>
         </div>
       </div>
-      <!-- Desktop: full widget card -->
-      <div class="cta-widget">
-        <div class="cta-widget__header">
-          <div class="header-group header-group--desktop">
-            <div class="callout">For Men Ages 25-44</div>
-            <h1 class="headline">Get Lean with 1:1 Coaching</h1>
-            <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
-          </div>
+      <!-- Desktop: full widget card (height synced to video in JS) -->
+      <div class="cta-widget" id="ctaWidget">
+
+        <div class="cta-widget__section cta-widget__section--copy">
+          <div class="callout">For Men Ages 25–44</div>
+          <div class="cta-widget__title">Get Lean with 1:1 Coaching</div>
+          <p class="subheadline">Personalized workouts, nutrition, and accountability to help you lose fat and keep it off.</p>
         </div>
-        <div class="cta-widget__body">
-          <button class="btn" onclick="window.location.href='survey.html'+window.location.search">
+
+        <div class="cta-widget__footer">
+          <button class="btn" type="button" onclick="window.location.href='survey.html'+window.location.search">
             <span class="btn-label">Apply for Coaching</span>
             <span class="btn-divider" aria-hidden="true"></span>
             <span class="btn-arrow">→</span>
@@ -283,56 +305,80 @@ footer a{color:#0052cc;text-decoration:none}
             <div>Cancel within 30 days for a full refund.</div>
           </div>
         </div>
+
       </div>
     </div>
 
   </div>
 
   <div class="results-section">
+    <div class="blocks-grid">
 
-    <!-- Mobile: slider on top, list below -->
-    <div class="results-mobile card">
-      <div class="ba-wrap" id="baSlider">
-        <!-- TODO: upload me.webp + before.webp to your BunnyCDN and swap the primary src to img-pull.b-cdn.net/me.webp etc. The onerror falls back to postimg.cc in the meantime. -->
-        <img class="ba-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
-        <img class="ba-img ba-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation" id="baAfter">
-        <div class="ba-line" id="baLine"><div class="ba-handle"><span>←</span><span>→</span></div></div>
-        <div class="ba-labels"><span>Before</span><span>After</span></div>
-      </div>
-      <ul class="benefits-list">
-        <li class="benefit"><div class="benefit-num">01</div> Look lean and athletic</li>
-        <li class="benefit"><div class="benefit-num">02</div> Feel confident in your body</li>
-        <li class="benefit"><div class="benefit-num">03</div> Make a stronger first impression</li>
-        <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
-        <li class="benefit"><div class="benefit-num">05</div> Feel stronger and healthier</li>
-      </ul>
-    </div>
-
-    <!-- Desktop: text + side-by-side images -->
-    <div class="results-desktop">
-      <div class="card card-desk">
-        <div class="desk-text">
-          <ul class="benefits-list">
-            <li class="benefit"><div class="benefit-num">01</div> Look lean, athletic, and capable</li>
-            <li class="benefit"><div class="benefit-num">02</div> Stop feeling self-conscious about your body</li>
-            <li class="benefit"><div class="benefit-num">03</div> Walk into any room with real confidence</li>
-            <li class="benefit"><div class="benefit-num">04</div> Get more attention from women</li>
-            <li class="benefit"><div class="benefit-num">05</div> Feel stronger, healthier, and more in control</li>
-          </ul>
+      <!-- Block 1: Old Way vs New Way -->
+      <div class="block">
+        <div class="block-header">
+          <div class="block-tag">The method</div>
+          <div class="block-title">Old Way vs. New Way</div>
         </div>
-        <div class="desk-imgs">
-          <div class="desk-img">
-            <span class="desk-img-label">Before</span>
-            <img loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation">
-          </div>
-          <div class="desk-img">
-            <span class="desk-img-label">After</span>
-            <img loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
+        <div class="block-body">
+          <div class="compare-grid">
+            <div class="compare-col">
+              <div class="compare-label compare-label--old">The old way</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>6 days in the gym</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>Hours of cardio</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>Meal prep every Sunday</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>Chicken, rice &amp; broccoli only</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>No eating out</div>
+              <div class="compare-item compare-item--old"><span class="compare-dot compare-dot--old"></span>Burn out after 2 weeks</div>
+            </div>
+            <div class="compare-col">
+              <div class="compare-label compare-label--new">The new way</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>3 lifting sessions per week</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>Daily step goal instead of endless cardio</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>Flexible nutrition targets</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>Eat out and still make progress</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>Weekly accountability</div>
+              <div class="compare-item"><span class="compare-dot compare-dot--new"></span>Results you can actually maintain</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+      <!-- Block 2: Deliverables -->
+      <div class="block">
+        <div class="block-header">
+          <div class="block-tag">What's included</div>
+          <div class="block-title">Everything You Need To Get Lean</div>
+        </div>
+        <div class="block-body">
+          <div class="del-item"><span class="del-check">✓</span>Personalized workout plan</div>
+          <div class="del-item"><span class="del-check">✓</span>Flexible nutrition targets</div>
+          <div class="del-item"><span class="del-check">✓</span>Weekly accountability check-ins</div>
+          <div class="del-item"><span class="del-check">✓</span>Daily habit tracking</div>
+          <div class="del-item"><span class="del-check">✓</span>Direct message support</div>
+          <div class="del-item"><span class="del-check">✓</span>Form review &amp; feedback</div>
+          <div class="del-item"><span class="del-check">✓</span>Progress tracking</div>
+          <div class="del-item"><span class="del-check">✓</span>Plan adjustments based on results</div>
+          <div class="del-item"><span class="del-check">✓</span>Simple supplement recommendations</div>
+          <div class="del-item"><span class="del-check">✓</span>Full access to your coaching system</div>
+        </div>
+      </div>
+
+      <!-- Block 3: Before / After slider -->
+      <div class="block">
+        <div class="block-header">
+          <div class="block-tag">Real results</div>
+          <div class="block-title">The Transformation</div>
+        </div>
+        <div class="ba-block-wrap" id="baSlider">
+          <img class="ba-block-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
+          <img class="ba-block-img ba-block-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation" id="baAfter">
+          <div class="ba-block-line" id="baLine"><div class="ba-block-handle"><span>←</span><span>→</span></div></div>
+          <div class="ba-block-labels"><span>Before</span><span>After</span></div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 </main>
@@ -460,6 +506,39 @@ footer a{color:#0052cc;text-decoration:none}
     if(!vid.loop) vid.pause();
   });
 })();
+
+/* Desktop: CTA card height matches .video-wrap (border box) */
+(function(){
+  var mq = window.matchMedia('(min-width:1280px)');
+  var videoWrap = document.querySelector('.col-left .video-wrap');
+  var widget = document.getElementById('ctaWidget');
+  if(!videoWrap || !widget) return;
+
+  function apply(){
+    if(!mq.matches){
+      widget.style.height = '';
+      return;
+    }
+    widget.style.height = videoWrap.getBoundingClientRect().height + 'px';
+  }
+
+  if(mq.addEventListener){
+    mq.addEventListener('change', apply);
+  } else {
+    mq.addListener(apply);
+  }
+  window.addEventListener('resize', apply);
+  window.addEventListener('load', apply);
+
+  if(typeof ResizeObserver !== 'undefined'){
+    new ResizeObserver(apply).observe(videoWrap);
+  }
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(apply);
+  }
+  apply();
+})();
 </script>
 
 <script>
@@ -476,30 +555,26 @@ footer a{color:#0052cc;text-decoration:none}
   }
   set(50);
 
-  var dragging = false;
-  var startX, startY;
+  var isDown = false;
 
   wrap.addEventListener('pointerdown', function(e){
-    startX = e.clientX;
-    startY = e.clientY;
-    dragging = false;
-  });
-
-  wrap.addEventListener('pointermove', function(e){
-    if(!dragging){
-      var dx = Math.abs(e.clientX - startX);
-      var dy = Math.abs(e.clientY - startY);
-      if(dx < 4 && dy < 4) return;
-      if(dy > dx) return;
-      dragging = true;
-      wrap.setPointerCapture(e.pointerId);
-    }
+    isDown = true;
+    wrap.setPointerCapture(e.pointerId);
     var r = wrap.getBoundingClientRect();
     set((e.clientX - r.left) / r.width * 100);
   });
 
-  wrap.addEventListener('pointerup',     function(){ dragging = false; });
-  wrap.addEventListener('pointercancel', function(){ dragging = false; });
+  wrap.addEventListener('pointermove', function(e){
+    if(!isDown) return;
+    var r = wrap.getBoundingClientRect();
+    set((e.clientX - r.left) / r.width * 100);
+  });
+
+  function end(){
+    isDown = false;
+  }
+  wrap.addEventListener('pointerup', end);
+  wrap.addEventListener('pointercancel', end);
 })();
 </script>
 </body>
