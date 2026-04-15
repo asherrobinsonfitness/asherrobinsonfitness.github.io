@@ -124,6 +124,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Hero text */
 .callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#ebebeb;border-radius:8px;padding:.375rem 1rem;letter-spacing:.02rem}
 .headline{font-size:1.75rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin-top:.5rem;margin-bottom:1rem}
+.section-title{
+  font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;
+  margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem;
+}
 .subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
 
 /* Video */
@@ -314,6 +318,61 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 
+/* Common Questions (FAQ) */
+.common-questions{background:#f0f0f0;border-top:1px solid var(--border);padding:var(--pad) 1.5rem}
+.common-questions__inner{max-width:900px;margin:0 auto}
+.faq-list{display:flex;flex-direction:column;gap:.75rem}
+.faq-item{
+  border-radius:12px;
+  border:1px solid var(--card-border);
+  background:#fff;
+  overflow:hidden;
+}
+.faq-item__summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem 1.1rem;
+  font-size:1rem;
+  font-weight:600;
+  line-height:1.35;
+  letter-spacing:-.02em;
+  color:var(--text);
+  user-select:none;
+}
+.faq-item__summary::-webkit-details-marker{display:none}
+.faq-item__summary::after{
+  content:"";
+  flex-shrink:0;
+  width:.45rem;
+  height:.45rem;
+  border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);
+  transform:rotate(45deg);
+  margin-top:-.2rem;
+  transition:transform .2s ease;
+}
+.faq-item[open] .faq-item__summary::after{transform:rotate(-135deg);margin-top:.15rem}
+.faq-item__body{
+  padding:0 1.1rem 1.1rem;
+  border-top:1px solid transparent;
+}
+.faq-item[open] .faq-item__body{
+  border-top-color:var(--card-border);
+  padding-top:.85rem;
+}
+.faq-item__body p{
+  font-size:1rem;
+  line-height:1.6;
+  letter-spacing:-.005em;
+  color:var(--text);
+  margin:0;
+}
+.faq-item__body p+p{margin-top:.75rem}
+
 footer{background:#f0f0f0;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:13px;color:var(--muted)}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
 .footer-disclaimer{font-size:12px;line-height:1.6;opacity:.85}
@@ -331,6 +390,7 @@ footer a{color:#0052cc;text-decoration:none}
   .btn-divider{display:block}
   .btn-arrow{display:inline}
   .results-section{padding:var(--pad-sm) 1.25rem}
+  .common-questions{padding:var(--pad-sm) 1.25rem}
   .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
 }
 @media(max-width:1279px){
@@ -339,6 +399,7 @@ footer a{color:#0052cc;text-decoration:none}
 }
 @media(min-width:1024px){
   .headline{font-size:2rem}
+  .section-title{font-size:1.75rem}
   .video-wrap{max-width:800px;margin:0 auto}
   footer{padding-left:2rem;padding-right:2rem}
 }
@@ -348,8 +409,10 @@ footer a{color:#0052cc;text-decoration:none}
   .col-left{padding:var(--pad) 1rem var(--pad) 2rem;min-width:0}
   .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-width:0;width:100%;max-width:24rem;box-sizing:border-box}
   .headline{font-size:2.25rem}
+  .section-title{font-size:2rem}
   .video-wrap{max-width:100%}
   .results-section{padding:var(--pad) 2rem}
+  .common-questions{padding:var(--pad) 2rem}
   .card{max-width:100%}
 }
 
@@ -358,7 +421,7 @@ footer a{color:#0052cc;text-decoration:none}
   body,.container{background:#1c1c1c}
   .hero-grid{background:#1c1c1c;border-bottom-color:#282828}
   .col-left,.col-right{background:#1c1c1c}
-  .headline,.callout,.pricing,.pricing-amount,.benefit,.ba-labels,.desk-img-label{color:#f8fafc}
+  .headline,.section-title,.callout,.pricing,.pricing-amount,.benefit,.ba-labels,.desk-img-label{color:#f8fafc}
   .subheadline,.benefit-num{color:#a0a0a0}
   .callout{background:#2a2a2a}
   .benefit-num{background:#2a2a2a;color:#a0a0a0}
@@ -378,6 +441,12 @@ footer a{color:#0052cc;text-decoration:none}
   .block-body p{color:#f8fafc}
   .block--has-media .ba-block-wrap{border-top-color:#3d3d3d}
   .ba-block-caption{border-color:#3d3d3d}
+  .common-questions{background:#161616;border-top-color:#282828}
+  .faq-item{background:#222;border-color:#3d3d3d}
+  .faq-item__summary{color:#f8fafc}
+  .faq-item__summary::after{border-color:#a0a0a0}
+  .faq-item[open] .faq-item__body{border-top-color:#3d3d3d}
+  .faq-item__body p{color:#f8fafc}
 }
 @media(prefers-color-scheme:dark) and (min-width:1280px){
   .hero-grid{border-top-color:#282828}
@@ -524,6 +593,35 @@ footer a{color:#0052cc;text-decoration:none}
 
     </div>
   </div>
+
+  <section class="common-questions" aria-labelledby="common-questions-heading">
+    <div class="common-questions__inner">
+      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-item__summary">You have no testimonials — how do I know this works?</summary>
+          <div class="faq-item__body">
+            <p>That’s the right question to ask, and I respect that you asked it.</p>
+            <p>The Lean Floor Method isn’t something I invented — it’s what the science of minimum effective dose has pointed to for years. I used it myself to go from 175 lbs at 17% body fat to 158 lbs at 9% in under 8 weeks. That before/after is real, it’s documented, and it’s what I’ll replicate for you. At $50 with a free-month guarantee, you’re not betting on my experience — you’re betting on a system with a safety net.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary">I’ve tried this before and it didn’t work.</summary>
+          <div class="faq-item__body">
+            <p>You’re right that most plans fail — and it’s almost never the person’s fault.</p>
+            <p>Every plan you’ve quit before was built around optimal conditions — meal prep, 5-day training, cutting your favorite foods. The Lean Floor Method is built for the exact conditions where those plans fail: busy weeks, social meals, low-motivation days. If your previous plan had a disruption protocol, you’d still be on it.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary">$50 is too cheap — this can’t be serious coaching.</summary>
+          <div class="faq-item__body">
+            <p>I get it — price signals quality, and this price is lower than you’d expect.</p>
+            <p>The price is intentional. I’m building a track record, and I want to make it a completely frictionless decision for you. The coaching is real — weekly adjustments, daily access, custom programming. The price will increase as I add case studies. This is the best time to get in. But if you’re still skeptical, follow the plan for 30 days: if you haven’t lost at least 4 lbs, your first month is refunded.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
 </div>
 </main>
 
