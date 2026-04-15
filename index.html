@@ -45,7 +45,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .col-left{padding:var(--pad) 1.5rem;display:flex;flex-direction:column;text-align:center}
 .col-left .header-group{margin-bottom:var(--pad-sm)}
 .col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-.results-section{background:#f0f0f0;padding:var(--pad) 1.5rem;width:100%}
+.results-section{background:#f0f0f0;padding:var(--pad) 1.5rem 0;width:100%}
 
 /* Results: 1 col mobile; desktop = two columns, equal card height, variable width */
 .blocks-grid{display:grid;grid-template-columns:1fr;gap:1rem;width:100%;align-items:stretch}
@@ -81,36 +81,50 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   background:#fff;
   border:1px solid var(--card-border);
 }
-.block-inner{padding:1.1rem 1.1rem 1rem}
+.block-inner{padding:1.2rem 1.15rem 1.05rem}
 .block-heading{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-  margin:0 0 .75rem;
-  font-size:1rem;
+  margin:0 0 .85rem;
+  font-size:1.125rem;
   font-weight:600;
-  line-height:1.2;
-  letter-spacing:-.02em;
+  line-height:1.25;
+  letter-spacing:-.025em;
   color:var(--text);
-}
-.block-accent{
-  width:3px;
-  height:1.05em;
-  border-radius:2px;
-  flex-shrink:0;
-  background:var(--blue);
 }
 .block-body{flex:1}
 .block-body p{
   font-size:1rem;
-  line-height:1.6;
+  font-weight:400;
+  line-height:1.65;
   letter-spacing:-.005em;
   color:var(--text);
   margin:0;
 }
-.block-body p+p{margin-top:.75rem}
+.block-body p+p{margin-top:.7rem}
+.block-body .pill-list{
+  margin-top:1.05rem;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  align-content:flex-start;
+  gap:.4rem .45rem;
+  width:100%;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  font-size:.8125rem;
+  font-weight:500;
+  line-height:1.35;
+  letter-spacing:-.01em;
+  color:var(--text);
+  background:#ebebeb;
+  border:1px solid var(--card-border);
+  border-radius:999px;
+  padding:.35rem .7rem;
+}
 .block--has-media .block-inner{padding-bottom:.85rem}
-.block--has-media .ba-block-wrap{border-top:1px solid var(--card-border)}
+/* Border only when media sits below a heading block (not when slider is first) */
+.block--has-media .block-inner + .ba-block-wrap{border-top:1px solid var(--card-border)}
 
 /* Before/After block */
 .ba-block-wrap{position:relative;width:100%;cursor:ew-resize;touch-action:pan-y;user-select:none}
@@ -119,7 +133,25 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .ba-block-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(255,255,255,.7);z-index:2;pointer-events:none}
 .ba-block-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;gap:4px;z-index:3}
 .ba-block-labels{position:absolute;inset:.75rem 1rem auto;display:flex;justify-content:space-between;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;z-index:4;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-.ba-block-caption{padding:.75rem 1rem;font-size:.8rem;color:var(--muted);text-align:center;border-top:1px solid var(--card-border)}
+.ba-block-caption{
+  padding:.75rem 1.1rem 1rem;
+  border-top:1px solid var(--card-border);
+}
+.ba-block-caption p{
+  font-size:1rem;
+  line-height:1.6;
+  letter-spacing:-.005em;
+  color:var(--text);
+  margin:0;
+  text-align:left;
+}
+.ba-caption-arrow,.ba-handle-arrow{
+  display:inline-block;
+  vertical-align:-.15em;
+  flex-shrink:0;
+}
+.ba-caption-arrow{width:1.1em;height:1.1em;color:inherit}
+.ba-handle-arrow{width:12px;height:12px;color:inherit}
 
 /* Hero text */
 .callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#ebebeb;border-radius:8px;padding:.375rem 1rem;letter-spacing:.02rem}
@@ -178,7 +210,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     display:flex;
     align-items:stretch;
     justify-content:center;
-    padding:.5rem .55rem;
+    padding:0;
     box-sizing:border-box;
   }
 
@@ -318,8 +350,8 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 
-/* Common Questions (FAQ) */
-.common-questions{background:#f0f0f0;border-top:1px solid var(--border);padding:var(--pad) 1.5rem}
+/* Common Questions (FAQ) — same band as .results-section; gap only, no divider */
+.common-questions{background:#f0f0f0;padding:1.75rem 1.5rem var(--pad)}
 .common-questions__inner{max-width:900px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:.75rem}
 .faq-item{
@@ -389,8 +421,8 @@ footer a{color:#0052cc;text-decoration:none}
   .btn-label{text-align:left}
   .btn-divider{display:block}
   .btn-arrow{display:inline}
-  .results-section{padding:var(--pad-sm) 1.25rem}
-  .common-questions{padding:var(--pad-sm) 1.25rem}
+  .results-section{padding:var(--pad-sm) 1.25rem 0}
+  .common-questions{padding:1.5rem 1.25rem var(--pad-sm)}
   .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
 }
 @media(max-width:1279px){
@@ -411,8 +443,8 @@ footer a{color:#0052cc;text-decoration:none}
   .headline{font-size:2.25rem}
   .section-title{font-size:2rem}
   .video-wrap{max-width:100%}
-  .results-section{padding:var(--pad) 2rem}
-  .common-questions{padding:var(--pad) 2rem}
+  .results-section{padding:var(--pad) 2rem 0}
+  .common-questions{padding:1.75rem 2rem var(--pad)}
   .card{max-width:100%}
 }
 
@@ -439,9 +471,11 @@ footer a{color:#0052cc;text-decoration:none}
   .block{background:#222;border-color:#3d3d3d}
   .block-heading{color:#f8fafc}
   .block-body p{color:#f8fafc}
-  .block--has-media .ba-block-wrap{border-top-color:#3d3d3d}
+  .pill{background:#2a2a2a;color:#e8eaed;border-color:#3d3d3d}
+  .block--has-media .block-inner + .ba-block-wrap{border-top-color:#3d3d3d}
   .ba-block-caption{border-color:#3d3d3d}
-  .common-questions{background:#161616;border-top-color:#282828}
+  .ba-block-caption p{color:#f8fafc}
+  .common-questions{background:#161616}
   .faq-item{background:#222;border-color:#3d3d3d}
   .faq-item__summary{color:#f8fafc}
   .faq-item__summary::after{border-color:#a0a0a0}
@@ -556,12 +590,16 @@ footer a{color:#0052cc;text-decoration:none}
       <!-- Block 1 -->
       <div class="block">
         <div class="block-inner">
-          <h2 class="block-heading"><span class="block-accent" aria-hidden="true"></span>How it works</h2>
+          <h2 class="block-heading">How it works</h2>
           <div class="block-body">
-            <p>Most plans fall apart because they're built for someone with no job, no social life, and nothing to eat but chicken and rice.</p>
-            <p>This isn't that.</p>
-            <p>Three strength sessions a week. A daily calorie and protein target - not a meal plan. And a system that keeps working on the weeks when life doesn't cooperate.</p>
-            <p>You track two numbers. You train three days. Everything else adjusts around your life, not the other way around.</p>
+            <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
+            <p>You train, track two numbers, and everything else gets adjusted around real life.</p>
+            <div class="pill-list" role="list">
+              <span class="pill" role="listitem">3 strength sessions/week</span>
+              <span class="pill" role="listitem">Calories + protein targets</span>
+              <span class="pill" role="listitem">Built for busy weeks</span>
+              <span class="pill" role="listitem">Adjusts around your life</span>
+            </div>
           </div>
         </div>
       </div>
@@ -569,26 +607,36 @@ footer a{color:#0052cc;text-decoration:none}
       <!-- Block 2 -->
       <div class="block">
         <div class="block-inner">
-          <h2 class="block-heading"><span class="block-accent" aria-hidden="true"></span>What you get</h2>
+          <h2 class="block-heading">What you get</h2>
           <div class="block-body">
-            <p>A custom training program built for your schedule and gym setup. Daily calorie and protein targets based on your body and goal. Weekly check-ins where your numbers get adjusted based on actual results. Same-day messaging when you have a question. Progress tracking so you can see exactly what's working.</p>
-            <p>No guesswork. No generic plans. No being ignored after you pay.</p>
+            <p>Everything is built around your schedule, your gym setup, and your actual progress.</p>
+            <p>No guesswork. No generic plan. No being ignored after you pay.</p>
+            <div class="pill-list" role="list">
+              <span class="pill" role="listitem">Custom training program</span>
+              <span class="pill" role="listitem">Daily calorie targets</span>
+              <span class="pill" role="listitem">Daily protein targets</span>
+              <span class="pill" role="listitem">Weekly check-ins</span>
+              <span class="pill" role="listitem">Same-day messaging</span>
+              <span class="pill" role="listitem">Progress tracking</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Before/After: visible below 1280px only (desktop uses widget hero) -->
       <div class="block block--has-media block--results-ba-mobile">
-        <div class="block-inner">
-          <h2 class="block-heading"><span class="block-accent" aria-hidden="true"></span>Real results</h2>
-        </div>
         <div class="ba-block-wrap">
           <img class="ba-block-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
           <img class="ba-block-img ba-block-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation">
-          <div class="ba-block-line"><div class="ba-block-handle"><span>←</span><span>→</span></div></div>
+          <div class="ba-block-line"><div class="ba-block-handle">
+            <svg class="ba-handle-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="ba-handle-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div></div>
           <div class="ba-block-labels"><span>Before</span><span>After</span></div>
         </div>
-        <div class="ba-block-caption">My own results - 175 lbs -> 158 lbs. 8 weeks. Same system I'll build for you.</div>
+        <div class="ba-block-caption">
+          <p>My own results: 175 lbs <svg class="ba-caption-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 158 lbs in 8 weeks. Using the same system I'll build for you.</p>
+        </div>
       </div>
 
     </div>
@@ -599,24 +647,23 @@ footer a{color:#0052cc;text-decoration:none}
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary">You have no testimonials — how do I know this works?</summary>
+          <summary class="faq-item__summary">You have no testimonials. How do I know this works?</summary>
           <div class="faq-item__body">
             <p>That’s the right question to ask, and I respect that you asked it.</p>
-            <p>The Lean Floor Method isn’t something I invented — it’s what the science of minimum effective dose has pointed to for years. I used it myself to go from 175 lbs at 17% body fat to 158 lbs at 9% in under 8 weeks. That before/after is real, it’s documented, and it’s what I’ll replicate for you. At $50 with a free-month guarantee, you’re not betting on my experience — you’re betting on a system with a safety net.</p>
+            <p>I’m not doing anything fancy here. 3 workouts per week, no special diet, just track your protein and calories.<br><br>I used this approach myself to go from 175 lbs at ~17% body fat to 158 lbs at ~9% in under 8 weeks. That before/after is real, it’s documented, and it’s what I’ll replicate for you.<br><br>At $50 for the first 30 days, you’re not betting on my experience. You’re betting on a proven system with a safety net. No risk.</p>
           </div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary">I’ve tried this before and it didn’t work.</summary>
           <div class="faq-item__body">
-            <p>You’re right that most plans fail — and it’s almost never the person’s fault.</p>
-            <p>Every plan you’ve quit before was built around optimal conditions — meal prep, 5-day training, cutting your favorite foods. The Lean Floor Method is built for the exact conditions where those plans fail: busy weeks, social meals, low-motivation days. If your previous plan had a disruption protocol, you’d still be on it.</p>
+            <p>You’re right that most plans fail, and it’s almost never the person’s fault.</p>
+            <p>Every plan you’ve quit before was built around optimal conditions. Meal prep, 5-day training splits, and cutting your favorite foods.<br><br>My coaching is built for the exact conditions where those plans fail: busy weeks, social meals, and low-motivation days. If your previous attempts had worked with your lifestyle, you’d still be following it.</p>
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary">$50 is too cheap — this can’t be serious coaching.</summary>
+          <summary class="faq-item__summary">$50 is too cheap. This can’t be serious coaching.</summary>
           <div class="faq-item__body">
-            <p>I get it — price signals quality, and this price is lower than you’d expect.</p>
-            <p>The price is intentional. I’m building a track record, and I want to make it a completely frictionless decision for you. The coaching is real — weekly adjustments, daily access, custom programming. The price will increase as I add case studies. This is the best time to get in. But if you’re still skeptical, follow the plan for 30 days: if you haven’t lost at least 4 lbs, your first month is refunded.</p>
+            <p>I get it. Price signals quality, and this price is lower than you’d expect.<br><br>To be clear, $50 is for the first 30 days. I want to prove that I can help you. After that, it's $199/month.<br><br>The price is intentional. I’m building a track record, and I want to make it a completely frictionless decision for you. My coaching is real, weekly adjustments, daily messaging, and custom programming. The price will increase as I add case studies of successful clients. This is the best time to get in.<br><br>If you’re still skeptical, follow the plan for 30 days, and if you don’t see meaningful progress, I'll refund you, no questions asked.</p>
           </div>
         </details>
       </div>
