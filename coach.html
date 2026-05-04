@@ -313,11 +313,28 @@
                     button.appendChild(spinner);
                 }
 
-                // small delay so spinner is perceptible and feels responsive
-                setTimeout(function () {
-                    var stripeCheckout = 'https://buy.stripe.com/7sY9AU0qXgpIbMr98H0000g';
-                    window.location.href = stripeCheckout + window.location.search;
-                }, 500);
+                var checkoutUrl = 'https://buy.stripe.com/7sY9AU0qXgpIbMr98H0000g' + window.location.search;
+
+                var finished = false;
+                function goToCheckout() {
+                    if (finished) return;
+                    finished = true;
+                    window.location.replace(checkoutUrl);
+                }
+
+                var fallbackTimer = setTimeout(goToCheckout, 15000);
+
+                var preloader = document.createElement('iframe');
+                preloader.setAttribute('title', '');
+                preloader.setAttribute('aria-hidden', 'true');
+                preloader.tabIndex = -1;
+                preloader.style.cssText = 'position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;clip:rect(0,0,0,0)';
+                preloader.addEventListener('load', function () {
+                    clearTimeout(fallbackTimer);
+                    goToCheckout();
+                });
+                preloader.src = checkoutUrl;
+                document.body.appendChild(preloader);
             });
         });
     </script>
