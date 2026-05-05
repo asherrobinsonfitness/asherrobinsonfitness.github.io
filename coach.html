@@ -316,7 +316,18 @@
                 // small delay so spinner is perceptible and feels responsive
                 setTimeout(function () {
                     var stripeCheckout = 'https://buy.stripe.com/7sY9AU0qXgpIbMr98H0000g?prefilled_promo_code=firstmonth50';
-                    window.location.href = stripeCheckout + window.location.search;
+
+                    // Merge any incoming query params (e.g. ?commitment=...) into the Stripe URL
+                    // without introducing a second "?" which would break the promo code.
+                    var targetUrl = new URL(stripeCheckout);
+                    var incomingParams = new URLSearchParams(window.location.search || '');
+                    incomingParams.forEach(function (value, key) {
+                        if (!targetUrl.searchParams.has(key)) {
+                            targetUrl.searchParams.set(key, value);
+                        }
+                    });
+
+                    window.location.href = targetUrl.toString();
                 }, 500);
             });
         });
