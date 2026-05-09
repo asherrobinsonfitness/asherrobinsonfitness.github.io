@@ -323,24 +323,7 @@
         /* ── PAYMENT FORM ── */
         #payment-form { width: 100%; }
 
-        /* Skeleton shimmer — shared by both Address and Payment elements */
-        .address-element-wrap {
-            position: relative;
-            margin-bottom: 1.25rem;
-        }
-
-        #address-element-skeleton {
-            position: absolute;
-            inset: 0;
-            min-height: 260px;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%);
-            background-size: 200% 100%;
-            animation: skeleton-shimmer 1.5s ease-in-out infinite;
-            transition: opacity 0.25s ease;
-            z-index: 1;
-        }
-
+        /* Skeleton shimmer — sits behind the Stripe iframe while it loads */
         .payment-element-wrap {
             position: relative;
             margin-bottom: 1rem;
@@ -709,12 +692,6 @@
                 <div class="or-divider">or pay with card</div>
             </div>
 
-            <div class="section-label">BILLING DETAILS /</div>
-            <div class="address-element-wrap">
-                <div id="address-element-skeleton"></div>
-                <div id="address-element"></div>
-            </div>
-
             <div class="section-label" id="card-section-label">CARD DETAILS /</div>
 
             <form id="payment-form">
@@ -958,52 +935,7 @@
             }
         });
 
-        /* ── Address Element — collects billing address; fires accessible change events for tax ── */
-        const addressElementDiv = document.getElementById('address-element');
-        if (addressElementDiv) addressElementDiv.style.visibility = 'hidden';
-
-        const addressElement = elements.create('address', {
-            mode: 'billing',
-            defaultValues: { address: { country: 'US' } },
-        });
-
-        addressElement.on('ready', () => {
-            const skeleton = document.getElementById('address-element-skeleton');
-            if (skeleton) { skeleton.style.opacity = '0'; setTimeout(() => { skeleton.style.display = 'none'; }, 260); }
-            if (addressElementDiv) addressElementDiv.style.visibility = '';
-        });
-
-        let taxDebounce = null;
-        addressElement.on('change', async (event) => {
-            if (!event.complete) return;                    // wait until address is fully filled
-            const addr = event.value && event.value.address;
-            if (!addr || !addr.country) return;
-
-            clearTimeout(taxDebounce);
-            taxDebounce = setTimeout(async () => {
-                const taxEl = document.getElementById('tax-value');
-                if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
-                try {
-                    const r    = await fetch('/api/calculate-tax', {
-                        method:  'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body:    JSON.stringify({ address: addr }),
-                    });
-                    const data = await r.json();
-                    if (typeof data.tax === 'number') {
-                        setTaxDisplay(data.tax);
-                    } else {
-                        setTaxDisplay(null);
-                    }
-                } catch (_) {
-                    setTaxDisplay(null);
-                }
-            }, 400);
-        });
-
-        addressElement.mount('#address-element');
-
-        /* ── Payment Element: card only — address collected above by Address Element ── */
+        /* ── Payment Element: card, bank, etc. Wallets suppressed (Express Checkout handles them) ── */
         const paymentElementDiv = document.getElementById('payment-element');
         if (paymentElementDiv) paymentElementDiv.style.visibility = 'hidden';
 
@@ -1011,7 +943,6 @@
             layout: { type: 'tabs', defaultCollapsed: false },
             wallets: { applePay: 'never', googlePay: 'never' },
             terms:   { card: 'never' },
-            fields:  { billingDetails: { address: 'never' } },
         });
 
         paymentElement.on('ready', () => {
@@ -1024,6 +955,47 @@
         });
 
         paymentElement.mount('#payment-element');
+
+        /* ── Tax: update when billing address changes ── */
+        let taxDebounce = null;
+        let lastPostal  = '';
+        paymentElement.on('change', (event) => {
+            const addr = event.value && event.value.billingDetails && event.value.billingDetails.address;
+            if (!addr || !addr.country || !addr.postal_code) return;
+            // Only re-fetch when postal code actually changes (avoids spam on every keystroke)
+            const key = addr.country + ':' + addr.postal_code;
+            if (key === lastPostal) return;
+            lastPostal = key;
+            clearTimeout(taxDebounce);
+            taxDebounce = setTimeout(async () => {
+                const taxEl = document.getElementById('tax-value');
+                if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
+                try {
+                    const r    = await fetch('/api/calculate-tax', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            subscriptionId,
+                            address: {
+                                line1:       addr.line1       || '',
+                                city:        addr.city        || '',
+                                state:       addr.state       || '',
+                                postal_code: addr.postal_code,
+                                country:     addr.country,
+                            },
+                        }),
+                    });
+                    const data = await r.json();
+                    if (typeof data.tax === 'number') {
+                        setTaxDisplay(data.tax);
+                    } else {
+                        setTaxDisplay(null);
+                    }
+                } catch (_) {
+                    setTaxDisplay(null);
+                }
+            }, 700);
+        });
 
         /* ── Form submit ── */
         const form    = document.getElementById('payment-form');
