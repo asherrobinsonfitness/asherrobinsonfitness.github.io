@@ -296,7 +296,6 @@
         }
         .order-row:last-child { margin-bottom: 0; }
         .order-row-label { font-size: 0.9rem; color: var(--text); }
-        .order-row-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem; }
         .order-row-value { font-size: 0.9rem; font-weight: 600; color: var(--text); flex-shrink: 0; margin-left: 1rem; }
         .order-discount-value { color: #16a34a !important; }
         .order-total-row { display: flex; justify-content: space-between; align-items: center; }
@@ -362,30 +361,48 @@
 
         .after-steps {
             display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .after-card {
+            display: flex;
             flex-direction: row;
-            align-items: stretch;
+            align-items: center;
+            gap: 0.85rem;
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            padding: 1.1rem 0;
+            padding: 0.85rem 1rem;
         }
 
-        .after-item {
+        /* Thumbnail frame matches source assets 520×352 (aspect ≈ 1.477 / 65:44) */
+        .after-card__media {
+            flex-shrink: 0;
+            width: 5rem;
+            aspect-ratio: 520 / 352;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--input-bg);
+            line-height: 0;
+        }
+
+        .after-card__media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .after-card__body {
             flex: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 0 0.9rem;
             gap: 0.35rem;
-        }
-
-        .after-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0.1rem;
+            text-align: left;
         }
 
         .after-label {
@@ -393,19 +410,14 @@
             font-size: 0.78rem;
             color: var(--text);
             line-height: 1.25;
+            text-align: left;
         }
 
         .after-desc {
             font-size: 0.7rem;
             color: var(--text-secondary);
             line-height: 1.4;
-        }
-
-        .after-sep {
-            width: 1px;
-            background: var(--border);
-            align-self: stretch;
-            flex-shrink: 0;
+            text-align: left;
         }
 
         /* ── EXPRESS CHECKOUT ── */
@@ -594,6 +606,17 @@
         }
         #submit-stripe:hover { background: var(--primary-hover); }
         #submit-stripe:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        #submit-stripe .payment-btn-arrow {
+            display: inline-block;
+            margin-left: 0.35rem;
+            transition: transform 0.22s ease;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            #submit-stripe:hover .payment-btn-arrow {
+                transform: translateX(4px);
+            }
+        }
 
         /* ── SECURITY BADGE + LEGAL ── */
         .security-badge {
@@ -869,11 +892,6 @@
         .timeline-icon svg circle,
         .timeline-icon svg rect { fill: var(--icon-stroke) !important; }
 
-        .after-icon svg path,
-        .after-icon svg rect,
-        .after-icon svg line,
-        .after-icon svg circle { stroke: var(--icon-stroke) !important; }
-
         .payment-form-col::-webkit-scrollbar-thumb,
         .order-summary-col::-webkit-scrollbar-thumb {
             background: rgba(255,255,255,0.1);
@@ -937,7 +955,6 @@
                 <div class="order-row">
                     <div>
                         <div class="order-row-label">Online Coaching w/ Asher</div>
-                        <div class="order-row-sub">Billed monthly after first month</div>
                     </div>
                     <div class="order-row-value">$199/mo</div>
                 </div>
@@ -999,7 +1016,7 @@
             <div class="form-cta-area">
                 <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
                 <button type="submit" id="submit-stripe" form="payment-form">
-                    <span id="submit-stripe-text">Begin Coaching</span>
+                    <span id="submit-stripe-text">Begin Coaching</span><span class="payment-btn-arrow" aria-hidden="true">→</span>
                 </button>
                 <p class="payment-legal">
                     By clicking the button above, you authorize Asher Robinson LLC to charge you per our <a href="https://iclosed.io/terms/">Terms &amp; Services</a>.
@@ -1017,38 +1034,32 @@
             <div class="after-section">
                 <div class="after-heading">What happens after I pay?</div>
                 <div class="after-steps" role="list">
-                    <div class="after-item" role="listitem">
-                        <div class="after-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                <rect x="6" y="1" width="12" height="20" rx="2.5" stroke="#111827" stroke-width="1.75"/>
-                                <path d="M12 8v5" stroke="#111827" stroke-width="1.75" stroke-linecap="round"/>
-                                <path d="M9.5 10.5L12 13l2.5-2.5" stroke="#111827" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                                <line x1="9" y1="18" x2="15" y2="18" stroke="#111827" stroke-width="1.75" stroke-linecap="round"/>
-                            </svg>
+                    <div class="after-card" role="listitem">
+                        <div class="after-card__media">
+                            <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
                         </div>
-                        <div class="after-label">Download the App</div>
-                        <div class="after-desc">Get the coaching app on your phone</div>
+                        <div class="after-card__body">
+                            <div class="after-label">Download the App</div>
+                            <div class="after-desc">Get the coaching app on your phone</div>
+                        </div>
                     </div>
-                    <div class="after-sep" aria-hidden="true"></div>
-                    <div class="after-item" role="listitem">
-                        <div class="after-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 12l2 2 4-4" stroke="#111827" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 3a9 9 0 100 18A9 9 0 0012 3z" stroke="#111827" stroke-width="1.75"/>
-                            </svg>
+                    <div class="after-card" role="listitem">
+                        <div class="after-card__media">
+                            <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
                         </div>
-                        <div class="after-label">Complete Onboarding</div>
-                        <div class="after-desc">Tailor your plan to your goals</div>
+                        <div class="after-card__body">
+                            <div class="after-label">Complete Onboarding</div>
+                            <div class="after-desc">Tailor your plan to your goals</div>
+                        </div>
                     </div>
-                    <div class="after-sep" aria-hidden="true"></div>
-                    <div class="after-item" role="listitem">
-                        <div class="after-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                                <path d="M13 2L4.09 12.11a1 1 0 00.77 1.64H11l-1 8 8.91-10.11A1 1 0 0018 10h-6.09L13 2z" stroke="#111827" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                    <div class="after-card" role="listitem">
+                        <div class="after-card__media">
+                            <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
                         </div>
-                        <div class="after-label">Start Training</div>
-                        <div class="after-desc">Your first workout will be ready immediately</div>
+                        <div class="after-card__body">
+                            <div class="after-label">Start Training</div>
+                            <div class="after-desc">Your first workout will be ready immediately</div>
+                        </div>
                     </div>
                 </div>
             </div>
