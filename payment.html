@@ -112,7 +112,11 @@
             align-items: start;
         }
 
-        .payment-form-col { padding: 2.5rem 2.5rem; }
+        .payment-form-col {
+            padding: 2.5rem 2.5rem;
+            background: var(--bottom-bg);
+            --form-col-pad-x: 2.5rem;
+        }
         .order-summary-col { padding: 2.5rem 2.5rem; }
         .payment-form-content,
         .order-summary-top-content,
@@ -305,6 +309,11 @@
             margin-top: 1.75rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
+            /* Full-bleed divider while keeping content padding aligned */
+            margin-left: calc(-1 * var(--form-col-pad-x));
+            margin-right: calc(-1 * var(--form-col-pad-x));
+            padding-left: var(--form-col-pad-x);
+            padding-right: var(--form-col-pad-x);
         }
 
         .after-heading {
@@ -646,6 +655,7 @@
                 overflow-y: auto;
                 overscroll-behavior: contain;
                 padding: 2.5rem 2.75rem;
+                --form-col-pad-x: 2.75rem;
             }
 
             /* Keep section padding independent; cap only inner content width */
@@ -696,16 +706,16 @@
             .order-summary-col {
                 padding: 1.5rem 1.25rem 0.25rem;
                 border-right: none;
-                border-bottom: none;
+                border-bottom: 1px solid var(--border-strong);
             }
 
             .payment-form-col {
                 padding: 1rem 1.25rem 2.5rem;
+                --form-col-pad-x: 1.25rem;
             }
             .after-section {
-                border-top: none;
-                margin-top: 2rem;
-                padding-top: 0;
+                margin-top: 1.5rem;
+                padding-top: 1.25rem;
             }
 
             .coach-card-wrap { max-width: 100%; }
