@@ -48,7 +48,7 @@
             --pad: 2.5rem;
             --pad-sm: 2rem;
             /* Equal space above / below the desktop order-summary split rule */
-            --section-split-pad: 1.25rem;
+            --section-split-pad: var(--pad);
             /* Matches payment nav bar height for mobile overlay positioning */
             --payment-nav-h: 3rem;
         }
@@ -173,7 +173,7 @@
         }
 
         .section-label {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .sub-section-label {
@@ -490,20 +490,26 @@
             margin-bottom: 1rem;
         }
 
-        /* ── FULL-BLEED DIVIDER (left col — matches vertical center border exactly) ── */
-        .order-divider-full {
+        /* ── FULL-BLEED DIVIDERS (left col + right col — match vertical column padding) ── */
+        .order-divider-full,
+        .form-divider-full {
             display: block;
             height: 0;
             border: none;
             border-top: 1px solid var(--border-strong);
-            /* Horizontal bleed uses same value as column horizontal padding (--order-col-pad-x).
-               Vertical margins keep space above/below the rule symmetric on desktop. */
-            margin: var(--section-split-pad) calc(-1 * var(--order-col-pad-x));
-            width: calc(100% + 2 * var(--order-col-pad-x));
             box-sizing: border-box;
         }
+        .order-divider-full {
+            margin: var(--section-split-pad) calc(-1 * var(--order-col-pad-x));
+            width: calc(100% + 2 * var(--order-col-pad-x));
+        }
+        .form-divider-full {
+            margin: var(--section-split-pad) calc(-1 * var(--form-col-pad-x));
+            width: calc(100% + 2 * var(--form-col-pad-x));
+        }
         @media (max-width: 760px) {
-            .order-divider-full { display: none; }
+            .order-divider-full,
+            .form-divider-full { display: none; }
         }
 
         /* ── COACHING PLAN PRICING (now in left col) ── */
@@ -737,6 +743,11 @@
                 margin-bottom: 0;
             }
             .order-summary-col .form-pricing {
+                padding-top: 0;
+            }
+            .after-section {
+                border-top: none;
+                margin-top: 0;
                 padding-top: 0;
             }
         }
@@ -1018,6 +1029,8 @@
                     Your information is encrypted and secure.
                 </p>
             </div>
+
+            <hr class="form-divider-full" aria-hidden="true">
 
             <!-- What happens after I pay — always last, on both mobile and desktop -->
             <div class="after-section">
