@@ -344,11 +344,15 @@
 
         .primary-button-arrow {
             display: none;
+            transition: transform 0.22s ease;
         }
 
         @media (hover: hover) and (pointer: fine) {
             .primary-button:hover {
                 background-color: #0052cc;
+            }
+            .primary-button:hover .primary-button-arrow {
+                transform: translateX(4px);
             }
         }
 
@@ -693,6 +697,7 @@
                 display: inline-flex;
                 margin-left: 0.5rem;
                 font-size: 1.1rem;
+                transition: transform 0.22s ease;
             }
         }
 
