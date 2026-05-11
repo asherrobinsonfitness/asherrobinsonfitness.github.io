@@ -44,6 +44,8 @@
             --input-border: #3a3a3a;
             --bottom-bg: #161616;
             --icon-stroke: #e5e7eb;
+            /* Matches payment nav bar height for mobile overlay positioning */
+            --payment-nav-h: 3rem;
         }
 
         body {
@@ -58,6 +60,48 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* ── Full-width top bar (Back + mobile Details) ── */
+        .payment-nav {
+            flex-shrink: 0;
+            width: 100%;
+            min-height: var(--payment-nav-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.625rem 1.25rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border-strong);
+            position: relative;
+            z-index: 250;
+        }
+
+        .payment-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .payment-back-label {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .payment-back-icon {
+            flex-shrink: 0;
+            color: var(--text-secondary);
         }
 
         /* ═══ TWO-COLUMN LAYOUT ═══ */
@@ -569,6 +613,10 @@
 
             .page-wrapper { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
+            .payment-nav {
+                padding: 0.625rem 2rem;
+            }
+
             .payment-layout {
                 flex: 1;
                 min-height: 0;
@@ -628,7 +676,7 @@
         .order-summary-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             margin-bottom: 0;
         }
         /* Section label inside the header manages its own spacing via card-wrap margin-top */
@@ -698,10 +746,10 @@
                 transform: rotate(180deg);
             }
 
-            /* Fixed overlay panel (slides down from top) */
+            /* Fixed overlay panel (slides down from below top nav) */
             .details-panel {
                 position: fixed;
-                top: 0;
+                top: var(--payment-nav-h);
                 left: 0;
                 right: 0;
                 z-index: 200;
@@ -709,15 +757,15 @@
                 transform: translateY(-100%);
                 transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
                 overflow-y: auto;
-                max-height: 85vh;
+                max-height: calc(85vh - var(--payment-nav-h));
                 border-bottom: 1px solid var(--border);
             }
             .details-panel.is-open {
                 transform: translateY(0);
             }
 
-            /* Inner padding for overlay content — top clears the "Close ↑" toggle */
-            .details-panel-inner { padding: 3rem 1.25rem 1.75rem; }
+            /* Toggle lives in .payment-nav — normal panel padding */
+            .details-panel-inner { padding: 1.25rem 1.25rem 1.75rem; }
         }
 
         /* ── BACKDROP for mobile details overlay ── */
@@ -759,6 +807,21 @@
 <body>
 <div class="page-wrapper">
 
+    <nav class="payment-nav" aria-label="Checkout">
+        <button type="button" class="payment-back" onclick="history.back()" aria-label="Go back">
+            <svg class="payment-back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="payment-back-label">Back</span>
+        </button>
+        <button class="details-toggle" id="details-toggle" type="button" aria-expanded="false" aria-controls="details-panel">
+            <span class="details-toggle-text">Details</span>
+            <svg class="details-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </nav>
+
     <!-- ═══ TWO-COLUMN LAYOUT ═══ -->
     <div class="payment-layout">
 
@@ -767,12 +830,6 @@
             <div class="order-summary-top-content">
             <div class="order-summary-header">
                 <div class="section-label">ORDER SUMMARY /</div>
-                <button class="details-toggle" id="details-toggle" type="button" aria-expanded="false" aria-controls="details-panel">
-                    <span class="details-toggle-text">Details</span>
-                    <svg class="details-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
             </div>
 
             <div class="coach-card-wrap">
