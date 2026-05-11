@@ -44,6 +44,11 @@
             --input-border: #3a3a3a;
             --bottom-bg: #161616;
             --icon-stroke: #e5e7eb;
+            /* Match index-live.html section rhythm */
+            --pad: 2.5rem;
+            --pad-sm: 2rem;
+            /* Equal space above / below the desktop order-summary split rule */
+            --section-split-pad: 1.25rem;
             /* Matches payment nav bar height for mobile overlay positioning */
             --payment-nav-h: 3rem;
         }
@@ -113,11 +118,14 @@
         }
 
         .payment-form-col {
-            padding: 2.5rem 2.5rem;
+            padding: var(--pad) 2.5rem;
             background: var(--bottom-bg);
             --form-col-pad-x: 2.5rem;
         }
-        .order-summary-col { padding: 2.5rem 2.5rem; }
+        .order-summary-col {
+            padding: var(--pad) 2.5rem;
+            --order-col-pad-x: 2.5rem;
+        }
         .payment-form-content,
         .order-summary-top-content,
         .order-summary-bottom-content {
@@ -447,9 +455,11 @@
             height: 0;
             border: none;
             border-top: 1px solid var(--border-strong);
-            /* bleed out of the column padding so it touches both walls */
-            margin: 0 -2.75rem;
-            width: calc(100% + 5.5rem);
+            /* Horizontal bleed uses same value as column horizontal padding (--order-col-pad-x).
+               Vertical margins keep space above/below the rule symmetric on desktop. */
+            margin: var(--section-split-pad) calc(-1 * var(--order-col-pad-x));
+            width: calc(100% + 2 * var(--order-col-pad-x));
+            box-sizing: border-box;
         }
         @media (max-width: 760px) {
             .order-divider-full { display: none; }
@@ -647,14 +657,15 @@
                 overflow-y: auto;
                 overscroll-behavior: contain;
                 border-right: 1px solid var(--border-strong);
-                padding: 2.5rem 2.75rem;
+                padding: var(--pad) 2.75rem;
+                --order-col-pad-x: 2.75rem;
             }
 
             .payment-form-col {
                 height: 100%;
                 overflow-y: auto;
                 overscroll-behavior: contain;
-                padding: 2.5rem 2.75rem;
+                padding: var(--pad) 2.75rem;
                 --form-col-pad-x: 2.75rem;
             }
 
@@ -677,6 +688,16 @@
                 border-radius: 999px;
             }
 
+        }
+
+        /* Desktop: split-rule spacing only on the <hr>; remove stacked margin / padding */
+        @media (min-width: 761px) {
+            .order-summary-top-content .product-info {
+                margin-bottom: 0;
+            }
+            .order-summary-col .form-pricing {
+                padding-top: 0;
+            }
         }
 
         /* ── DETAILS PANEL INNER (base/desktop — no padding) ── */
@@ -704,13 +725,14 @@
             .payment-layout { grid-template-columns: 1fr; gap: 0; }
 
             .order-summary-col {
-                padding: 1.5rem 1.25rem 0.25rem;
+                padding: var(--pad-sm) 1.25rem var(--pad-sm);
+                --order-col-pad-x: 1.25rem;
                 border-right: none;
                 border-bottom: 1px solid var(--border-strong);
             }
 
             .payment-form-col {
-                padding: 1rem 1.25rem 2.5rem;
+                padding: var(--pad-sm) 1.25rem var(--pad-sm);
                 --form-col-pad-x: 1.25rem;
             }
             .after-section {
