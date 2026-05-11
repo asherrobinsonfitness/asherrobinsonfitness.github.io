@@ -269,6 +269,9 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Border only when media sits below a heading block (not when slider is first) */
 .block--has-media .block-inner + .ba-block-wrap{border-top:1px solid var(--card-border)}
 
+/* Mobile before/after side-by-side */
+.ba-mobile-dual{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;padding:.6rem;background:transparent !important}
+.ba-mobile-dual img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;border-radius:8px;display:block}
 /* Before/After block */
 .ba-block-wrap{position:relative;width:100%;cursor:ew-resize;touch-action:pan-y;user-select:none}
 .ba-block-img{width:100%;height:auto;display:block;pointer-events:none;-webkit-user-drag:none}
@@ -654,14 +657,12 @@ footer a{color:#4d94ff;text-decoration:none}
               <div class="ba-dual__photo" data-ba-side="left">
                 <div class="ba-dual__img-wrap">
                   <img class="ba-dual__img" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before coaching">
-                  <span class="ba-dual__tag">Before</span>
                 </div>
               </div>
               <div class="ba-dual__spacer" aria-hidden="true"></div>
               <div class="ba-dual__photo" data-ba-side="right">
                 <div class="ba-dual__img-wrap">
                   <img class="ba-dual__img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After coaching">
-                  <span class="ba-dual__tag">After</span>
                 </div>
               </div>
             </div>
@@ -801,19 +802,9 @@ footer a{color:#4d94ff;text-decoration:none}
       </div>
 
       <!-- Before/After: visible below 1280px only (desktop uses widget hero) -->
-      <div class="block block--has-media block--results-ba-mobile">
-        <div class="ba-block-wrap">
-          <img class="ba-block-img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation">
-          <img class="ba-block-img ba-block-after" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation">
-          <div class="ba-block-line"><div class="ba-block-handle">
-            <svg class="ba-handle-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <svg class="ba-handle-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div></div>
-          <div class="ba-block-labels"><span>Before</span><span>After</span></div>
-        </div>
-        <div class="ba-block-caption">
-          <p>My own results: 175 lbs <svg class="ba-caption-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 158 lbs in 8 weeks. Using the same system I'll build for you.</p>
-        </div>
+      <div class="block block--results-ba-mobile ba-mobile-dual">
+        <img src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before transformation" loading="lazy">
+        <img src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation" loading="lazy">
       </div>
 
     </div>
