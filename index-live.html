@@ -154,7 +154,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   border-top:1px solid var(--card-border);
 }
 .block--wyget{background:#222 !important;border:1px solid var(--card-border) !important;border-radius:12px !important;overflow:hidden !important;box-shadow:0 4px 20px rgba(0,0,0,.22)}
-.block--wyget .block-heading{margin-bottom:1rem}
+.block--wyget .block-heading{margin-bottom:1rem;font-size:1.4rem}
 .wyget-list{display:flex;flex-direction:column;gap:1.05rem}
 .wyget-row{
   display:flex;
@@ -230,7 +230,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   width:2.25rem;
   height:2.25rem;
   border-radius:50%;
-  background:#2e2e2e;
+  background:#161616;
   border:1px solid var(--card-border);
   display:flex;
   align-items:center;
@@ -243,22 +243,27 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 /* Story blocks (2 & 3) */
 .block--story .block-inner{display:flex;flex-direction:column}
-.block--story .block-story__top{
+.block--story .block-story__header{
   display:flex;
-  align-items:flex-start;
+  align-items:stretch;
   justify-content:space-between;
-  margin-bottom:.85rem;
+  gap:.85rem;
+  margin-bottom:.6rem;
 }
-.block--story .block-story__top .block-num{margin-bottom:0}
+.block--story .block-story__left{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-width:0;
+}
 .block-story__thumb{
   width:7.25rem;
-  aspect-ratio:520 / 352;
+  flex-shrink:0;
   border-radius:8px;
   overflow:hidden;
-  flex-shrink:0;
 }
 .block-story__thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.block--story .block-heading{font-size:1.4rem;margin-bottom:.6rem}
+.block--story .block-heading{font-size:1.4rem;margin-bottom:0}
 .block--story .block-body p{font-size:.9rem;color:var(--muted)}
 .block--has-media .block-inner{padding-bottom:.85rem}
 /* Border only when media sits below a heading block (not when slider is first) */
@@ -703,10 +708,10 @@ footer a{color:#4d94ff;text-decoration:none}
     <div class="blocks-grid">
 
       <!-- Block 1: What you get (single card, rows like payment “after pay”) -->
-      <div class=”block block--story”>
-        <div class=”block-inner”>
-          <div class=”block-num”>1</div>
-          <h2 class=”block-heading”>What you get</h2>
+      <div class="block block--wyget">
+        <div class="block-inner">
+          <div class="block-num">1</div>
+          <h2 class="block-heading">What you get</h2>
           <div class="wyget-list" role="list">
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
@@ -760,13 +765,15 @@ footer a{color:#4d94ff;text-decoration:none}
       <!-- Block 2 -->
       <div class="block block--story">
         <div class="block-inner">
-          <div class="block-story__top">
-            <div class="block-num">2</div>
+          <div class="block-story__header">
+            <div class="block-story__left">
+              <div class="block-num">2</div>
+              <h2 class="block-heading">How it works</h2>
+            </div>
             <div class="block-story__thumb">
               <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
             </div>
           </div>
-          <h2 class="block-heading">How it works</h2>
           <div class="block-body">
             <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
             <p>You train, track two numbers, and everything else gets adjusted around real life.</p>
@@ -777,13 +784,15 @@ footer a{color:#4d94ff;text-decoration:none}
       <!-- Block 3 -->
       <div class="block block--story">
         <div class="block-inner">
-          <div class="block-story__top">
-            <div class="block-num">3</div>
+          <div class="block-story__header">
+            <div class="block-story__left">
+              <div class="block-num">3</div>
+              <h2 class="block-heading">Why it works</h2>
+            </div>
             <div class="block-story__thumb">
               <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
             </div>
           </div>
-          <h2 class="block-heading">Why it works</h2>
           <div class="block-body">
             <p>Most people don’t fail from lack of motivation—they fail from lack of structure and quick feedback.</p>
             <p>This coaching stays close to your numbers, fixes problems early, and keeps progress moving instead of resetting every few weeks.</p>
