@@ -64,26 +64,58 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
 
-/* Results: 1 col mobile; desktop = two columns, equal card height, variable width */
+/* Results: 1 col mobile; desktop = same row height (stretch), column width from content */
 .blocks-grid{display:grid;grid-template-columns:1fr;gap:1rem;width:100%;align-items:stretch}
 @media(min-width:1280px){
   .blocks-grid{
     display:flex;
     flex-direction:row;
+    flex-wrap:nowrap;
     align-items:stretch;
+    justify-content:flex-start;
     gap:1rem;
+    width:100%;
+    min-width:0;
+    overflow-x:auto;
+    padding-bottom:.25rem;
   }
   .blocks-grid>.block{
     display:flex;
     flex-direction:column;
-    min-width:0;
+    align-self:stretch;
+    min-height:0;
+  }
+  .blocks-grid>.block--wyget{
+    flex:0 0 auto;
+    width:max-content;
+    min-width:min-content;
+    max-width:none;
+  }
+  .block--wyget .block-inner{
+    width:max-content;
+    max-width:none;
+  }
+  .blocks-grid>.block--feature{
     flex:1 1 0;
+    min-width:0;
+    width:auto;
+    max-width:none;
   }
   .blocks-grid>.block .block-inner{
     flex:1;
     display:flex;
     flex-direction:column;
+    min-height:0;
   }
+  .block--wyget .wyget-row__title,
+  .block--wyget .wyget-row__desc{
+    white-space:nowrap;
+  }
+  .block--wyget .wyget-row__body{
+    flex:0 0 auto;
+    min-width:max-content;
+  }
+  .block--feature .block-body{flex:1}
   .block--results-ba-mobile{display:none !important}
 }
 
@@ -95,6 +127,74 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   flex-direction:column;
   background:#222;
   border:1px solid var(--card-border);
+}
+@media(min-width:1280px){
+  .block.block--wyget{overflow:visible}
+}
+.block--feature .block__media{
+  width:100%;
+  aspect-ratio:1920 / 1080;
+  flex-shrink:0;
+  overflow:hidden;
+  background:linear-gradient(180deg,#2e343c 0%,#23272e 100%);
+}
+.block--feature .block__media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:top;
+  display:block;
+}
+.block--feature .block-inner{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  border-top:1px solid var(--card-border);
+}
+.block--wyget{box-shadow:0 4px 20px rgba(0,0,0,.22)}
+.block--wyget .block-heading{margin-bottom:1rem}
+.wyget-list{display:flex;flex-direction:column;gap:1.05rem}
+.wyget-row{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:.85rem;
+}
+.wyget-row__media{
+  flex-shrink:0;
+  width:5rem;
+  aspect-ratio:520 / 352;
+  border-radius:8px;
+  overflow:hidden;
+  background:#2a2a2a;
+  line-height:0;
+}
+.wyget-row__media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+.wyget-row__body{
+  flex:0 1 auto;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+  text-align:left;
+}
+.wyget-row__title{
+  font-weight:600;
+  font-size:.8125rem;
+  line-height:1.25;
+  letter-spacing:-.01em;
+  color:var(--text);
+}
+.wyget-row__desc{
+  font-size:.78rem;
+  line-height:1.4;
+  color:var(--muted);
 }
 .block-inner{padding:1.2rem 1.15rem 1.05rem}
 .block-heading{
@@ -115,27 +215,13 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   margin:0;
 }
 .block-body p+p{margin-top:.7rem}
-.block-body .pill-list{
-  margin-top:1.05rem;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:flex-start;
-  align-content:flex-start;
-  gap:.4rem .45rem;
-  width:100%;
-}
-.pill{
-  display:inline-flex;
-  align-items:center;
-  font-size:.8125rem;
-  font-weight:500;
-  line-height:1.35;
-  letter-spacing:-.01em;
-  color:var(--text);
-  background:#2a2a2a;
-  border:1px solid var(--card-border);
-  border-radius:999px;
-  padding:.35rem .7rem;
+.block--feature .block-body > p:first-of-type,
+.blocks-grid > .block--feature:nth-child(2) .block-body > p:nth-of-type(2),
+.blocks-grid > .block--feature:nth-child(3) .block-body > p:nth-of-type(2){
+  font-size:.78rem;
+  line-height:1.45;
+  letter-spacing:-.005em;
+  color:var(--muted);
 }
 .block--has-media .block-inner{padding-bottom:.85rem}
 /* Border only when media sits below a heading block (not when slider is first) */
@@ -185,7 +271,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .btn:hover{background:#0052cc}
 .btn-label{flex:1;text-align:center}
 .btn-divider{display:none;width:1px;height:1.5rem;background:rgba(255,255,255,.35);flex-shrink:0}
-.btn-arrow{display:none}
+.btn-arrow{display:none;transition:transform .22s ease}
+@media(hover:hover) and (pointer:fine){
+  .btn:hover .btn-arrow{transform:translateX(4px)}
+}
 .pricing{font-size:.9rem;text-align:center}
 .pricing-amount{font-weight:600}
 
@@ -314,35 +403,25 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     overflow:visible;
   }
 
-  .cta-widget__section{display:flex;flex-direction:column;align-items:flex-start;text-align:left;flex-shrink:0}
+  .cta-widget__section{display:flex;flex-direction:column;align-items:center;text-align:center;flex-shrink:0}
 
   .cta-widget__section--copy{
     gap:.6rem;
     padding:1rem 1.25rem .9rem;
   }
-  /* Strip the pill — callout becomes a plain small-caps label above the headline */
+  /* Callout uses same pill as mobile hero (.callout base styles) */
   .cta-widget__section--copy .callout{
-    background:none;
-    border:none;
-    border-radius:0;
-    padding:0;
-    margin:0;
-    width:auto;
-    display:block;
-    font-size:.75rem;
-    font-weight:600;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:var(--text);
-    align-self:flex-start;
+    align-self:center;
+    margin:0 auto .75rem;
+    text-transform:none;
   }
 
   .cta-widget__title{
     font-size:1.5rem;font-weight:600;line-height:1.2;
-    letter-spacing:-.025em;color:var(--text);width:100%;text-align:left;
+    letter-spacing:-.025em;color:var(--text);width:100%;text-align:center;
   }
   .cta-widget__section--copy .subheadline{
-    margin:.2rem 0 0;text-align:left;max-width:none;
+    margin:.2rem auto 0;text-align:center;max-width:100%;
     font-size:.95rem;line-height:1.55;letter-spacing:-.005em;color:var(--muted);
   }
 
@@ -586,55 +665,84 @@ footer a{color:#4d94ff;text-decoration:none}
   <div class="results-section">
     <div class="blocks-grid">
 
-      <!-- Block 1 -->
-      <div class="block">
+      <!-- Block 1: What you get (single card, rows like payment “after pay”) -->
+      <div class="block block--wyget">
         <div class="block-inner">
-          <h2 class="block-heading">How it works</h2>
-          <div class="block-body">
-            <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
-            <p>You train, track two numbers, and everything else gets adjusted around real life.</p>
-            <div class="pill-list" role="list">
-              <span class="pill" role="listitem">3 strength sessions/week</span>
-              <span class="pill" role="listitem">Calories + protein targets</span>
-              <span class="pill" role="listitem">Built for busy weeks</span>
-              <span class="pill" role="listitem">Adjusts around your life</span>
+          <h2 class="block-heading">What you get</h2>
+          <div class="wyget-list" role="list">
+            <div class="wyget-row" role="listitem">
+              <div class="wyget-row__media">
+                <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+              </div>
+              <div class="wyget-row__body">
+                <div class="wyget-row__title">Custom training program</div>
+                <div class="wyget-row__desc">Built for your schedule, equipment, and level—not a generic PDF.</div>
+              </div>
+            </div>
+            <div class="wyget-row" role="listitem">
+              <div class="wyget-row__media">
+                <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+              </div>
+              <div class="wyget-row__body">
+                <div class="wyget-row__title">Daily calorie targets</div>
+                <div class="wyget-row__desc">Clear daily targets so you always know if you’re on track.</div>
+              </div>
+            </div>
+            <div class="wyget-row" role="listitem">
+              <div class="wyget-row__media">
+                <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+              </div>
+              <div class="wyget-row__body">
+                <div class="wyget-row__title">Weekly check-ins</div>
+                <div class="wyget-row__desc">A structured weekly review so we adjust before a stall sets in.</div>
+              </div>
+            </div>
+            <div class="wyget-row" role="listitem">
+              <div class="wyget-row__media">
+                <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+              </div>
+              <div class="wyget-row__body">
+                <div class="wyget-row__title">Same-day messaging</div>
+                <div class="wyget-row__desc">Quick answers when your week shifts and you need a fast tweak.</div>
+              </div>
+            </div>
+            <div class="wyget-row" role="listitem">
+              <div class="wyget-row__media">
+                <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+              </div>
+              <div class="wyget-row__body">
+                <div class="wyget-row__title">Progress tracking</div>
+                <div class="wyget-row__desc">Simple logging so we both see what’s working, week to week.</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Block 2 -->
-      <div class="block">
+      <div class="block block--feature">
+        <div class="block__media">
+          <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="1920" height="1080" alt="" decoding="async" loading="lazy">
+        </div>
         <div class="block-inner">
-          <h2 class="block-heading">What you get</h2>
+          <h2 class="block-heading">How it works</h2>
           <div class="block-body">
-            <p>Everything is built around your schedule, your gym setup, and your actual progress.</p>
-            <p>No guesswork. No generic plan. No being ignored after you pay.</p>
-            <div class="pill-list" role="list">
-              <span class="pill" role="listitem">Custom training program</span>
-              <span class="pill" role="listitem">Daily calorie targets</span>
-              <span class="pill" role="listitem">Daily protein targets</span>
-              <span class="pill" role="listitem">Weekly check-ins</span>
-              <span class="pill" role="listitem">Same-day messaging</span>
-              <span class="pill" role="listitem">Progress tracking</span>
-            </div>
+            <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
+            <p>You train, track two numbers, and everything else gets adjusted around real life.</p>
           </div>
         </div>
       </div>
 
-      <!-- Block 3 (placeholder) -->
-      <div class="block">
+      <!-- Block 3 -->
+      <div class="block block--feature">
+        <div class="block__media">
+          <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="1920" height="1080" alt="" decoding="async" loading="lazy">
+        </div>
         <div class="block-inner">
-          <h2 class="block-heading">How it works</h2>
+          <h2 class="block-heading">Why it works</h2>
           <div class="block-body">
-            <p>Most plans fall apart because they're built for a perfect week, not a real life.</p>
-            <p>You train, track two numbers, and everything else gets adjusted around real life.</p>
-            <div class="pill-list" role="list">
-              <span class="pill" role="listitem">3 strength sessions/week</span>
-              <span class="pill" role="listitem">Calories + protein targets</span>
-              <span class="pill" role="listitem">Built for busy weeks</span>
-              <span class="pill" role="listitem">Adjusts around your life</span>
-            </div>
+            <p>Most people don’t fail from lack of motivation—they fail from lack of structure and quick feedback.</p>
+            <p>This coaching stays close to your numbers, fixes problems early, and keeps progress moving instead of resetting every few weeks.</p>
           </div>
         </div>
       </div>
