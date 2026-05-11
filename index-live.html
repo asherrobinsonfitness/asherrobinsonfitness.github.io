@@ -62,7 +62,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .col-left{padding:var(--pad) 1.5rem;display:flex;flex-direction:column;text-align:center}
 .col-left .header-group{margin-bottom:var(--pad-sm)}
 .col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-.results-section{background:#161616;padding:var(--pad) 1.5rem 0;width:100%}
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
 
 /* Results: 1 col mobile; desktop = two columns, equal card height, variable width */
 .blocks-grid{display:grid;grid-template-columns:1fr;gap:1rem;width:100%;align-items:stretch}
@@ -371,14 +371,11 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 /* Common Questions (FAQ) — same band as results; constrained divider provides separation */
-.common-questions{background:#161616;padding:0 1.5rem var(--pad)}
+.common-questions{background:#161616;padding:var(--pad) 1.5rem var(--pad)}
 .section-divider{
-  border:none;
-  border-top:1px solid var(--border);
-  margin:0 0 2.75rem;
-  width:100%;
+  display:none;
 }
-.common-questions__inner{max-width:680px;margin:0 auto}
+.common-questions__inner{max-width:472px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:.75rem}
 .faq-item{
   border-radius:12px;
@@ -440,8 +437,8 @@ footer a{color:#4d94ff;text-decoration:none}
   .btn-label{text-align:left}
   .btn-divider{display:block}
   .btn-arrow{display:inline}
-  .results-section{padding:var(--pad-sm) 1.25rem 0}
-  .common-questions{padding:0 1.25rem var(--pad-sm)}
+  .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
+  .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
   .section-divider{margin-bottom:2.25rem}
   .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
 }
@@ -457,14 +454,14 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 @media(min-width:1280px){
   /* Desktop sidebar: 28rem base — ~65/35 split at 1280px; scales up at wider viewports */
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 28rem;align-items:start;border-top:1px solid var(--border)}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 28rem;align-items:start;border-top:0}
   .col-left{padding:var(--pad) 1rem var(--pad) 2rem;min-width:0}
   .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-width:0;width:100%;max-width:28rem;box-sizing:border-box}
   .headline{font-size:2.25rem}
   .section-title{font-size:2rem}
   .video-wrap{max-width:100%}
   .results-section{padding:var(--pad) 2rem var(--pad)}
-  .common-questions{padding:0 2rem var(--pad)}
+  .common-questions{padding:var(--pad) 2rem var(--pad)}
   .section-divider{margin-bottom:2.75rem}
   .card{max-width:100%}
 }
