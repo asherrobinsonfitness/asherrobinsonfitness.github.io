@@ -4,7 +4,7 @@
 <head>
     <meta charset=UTF-8>
     <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=5">
-    <title>Complete Sign-up</title>
+    <title>Complete Your Sign Up | Asher Robinson Fitness</title>
     <meta name=description content="Complete your sign up for personalized coaching with Asher Robinson Fitness. Secure payment.">
     <meta name=robots content="index,follow">
     <link rel=canonical href=https://asherrobinsonfitness.com/payment>
@@ -735,16 +735,14 @@
                 margin: 0 auto;
             }
 
-            /* subtle scrollbars */
-            .payment-form-col::-webkit-scrollbar,
-            .order-summary-col::-webkit-scrollbar { width: 5px; }
-            .payment-form-col::-webkit-scrollbar-track,
-            .order-summary-col::-webkit-scrollbar-track { background: transparent; }
-            .payment-form-col::-webkit-scrollbar-thumb,
-            .order-summary-col::-webkit-scrollbar-thumb {
-                background: rgba(0,0,0,0.1);
-                border-radius: 999px;
+            /* hide scrollbars on the split columns while keeping scroll */
+            .payment-form-col,
+            .order-summary-col {
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
+            .payment-form-col::-webkit-scrollbar,
+            .order-summary-col::-webkit-scrollbar { display: none; }
 
         }
 
@@ -914,10 +912,6 @@
         .timeline-icon svg circle,
         .timeline-icon svg rect { fill: var(--icon-stroke) !important; }
 
-        .payment-form-col::-webkit-scrollbar-thumb,
-        .order-summary-col::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1);
-        }
     </style>
 </head>
 
