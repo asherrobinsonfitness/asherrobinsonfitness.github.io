@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Online Fat Loss Coaching</title>
+<title>Lose 15 Pounds in 6-Weeks for Free | Asher Robinson Fitness</title>
 <meta name="description" content="Lose 15 pounds in 6-weeks for free with personal coaching. Personalized diet and training for men ages 25-44.">
 <meta name="robots" content="index,follow">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -547,7 +547,8 @@ footer a{color:#4d94ff;text-decoration:none}
   .card{max-width:100%}
   /* Story blocks: image flows in flex column between heading and body */
   .block--story .block-inner{position:static}
-  .block--story .block-story__header{padding-right:0}
+  .block--story .block-story__header{padding-right:0;order:1}
+  .block--story .block-body{order:2}
   .block-story__thumb{
     position:static;
     width:100%;
@@ -555,7 +556,9 @@ footer a{color:#4d94ff;text-decoration:none}
     right:auto;
     aspect-ratio:520/352;
     border-radius:8px;
-    margin-bottom:.75rem;
+    margin-top:.75rem;
+    margin-bottom:0;
+    order:3;
   }
 }
 @media(min-width:1440px){
