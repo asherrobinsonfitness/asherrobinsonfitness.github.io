@@ -939,7 +939,8 @@
             padding: 0.625rem 1.25rem;
             background: #1c1c1c;
             border-bottom: 1px solid #3a3a3a;
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 250;
         }
 
@@ -965,13 +966,27 @@
         }
 
         .payment-back-label {
-            text-decoration: underline;
-            text-underline-offset: 2px;
+            text-decoration: none;
+        }
+
+        .payment-back {
+            color: var(--text-secondary, #9ca3af);
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
+            margin: -0.3rem -0.5rem;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .payment-back:hover {
+                background-color: rgba(235,235,235,0.1);
+                color: #f9fafb;
+            }
         }
 
         .payment-back-icon {
             flex-shrink: 0;
-            color: var(--text-secondary);
+            color: inherit;
         }
 
         @media (min-width: 761px) {
@@ -1074,7 +1089,7 @@
         .survey-option {
             border-radius: 8px;
             border: 1px solid transparent;
-            background-color: #f9fafb;
+            background-color: #2a2a2a;
             color: var(--text);
             padding: 0.9rem 1.25rem;
             display: flex;
@@ -1089,12 +1104,12 @@
 
         @media (hover: hover) and (pointer: fine) {
             .survey-option:hover {
-                background-color: #ebebeb;
+                background-color: #333;
             }
         }
 
         .survey-option.pressing {
-            background-color: #ebebeb;
+            background-color: #333;
         }
 
         .survey-option-label {
@@ -1138,24 +1153,24 @@
         }
 
         .survey-option.selected {
-            --selected-bg: #e5e7eb;
+            --selected-bg: #303030;
             border: 1px solid var(--primary);
             background-color: var(--selected-bg);
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .survey-option.selected .survey-option-indicator {
             opacity: 1;
             transform: scale(1);
             border-color: transparent;
-            background-color: transparent;
+            background-color: var(--primary);
         }
 
         .survey-option.selected:not(.loading) .survey-option-indicator::before {
             content: "✓";
             font-size: 0.9rem;
             line-height: 1;
-            color: var(--selected-bg);
+            color: #fff;
         }
 
         @keyframes survey-spinner {
@@ -1189,8 +1204,8 @@
 
         @media (hover: hover) and (pointer: fine) {
             .survey-prev-step:hover {
-                background-color: #ebebeb;
-                color: var(--text);
+                background-color: #252525;
+                color: #f9fafb;
             }
         }
 
@@ -1219,62 +1234,6 @@
             }
         }
 
-        @media(prefers-color-scheme:dark) {
-            .survey-steps-pill {
-                background-color: #161616;
-                border-color: #3d3d3d;
-            }
-
-            .survey-step {
-                color: var(--text-secondary) !important;
-            }
-
-            .survey-step--active,
-            .survey-step--completed {
-                color: #f9fafb !important;
-            }
-
-            .survey-step--active::after {
-                background-color: #f9fafb;
-            }
-
-            .survey-option {
-                background-color: #2a2a2a;
-                border: 1px solid transparent;
-                color: #f9fafb;
-            }
-
-            .survey-option.selected {
-                --selected-bg: #303030;
-                background-color: #303030;
-            }
-
-            .survey-option.selected .survey-option-indicator {
-                background-color: var(--primary);
-            }
-
-            .survey-prev-step {
-                background-color: transparent;
-                color: #9ca3af;
-            }
-        }
-
-        @media(prefers-color-scheme:dark) and (hover: hover) and (pointer: fine) {
-            .survey-option:hover {
-                background-color: #252525;
-            }
-
-            .survey-prev-step:hover {
-                background-color: #252525;
-                color: #f9fafb;
-            }
-        }
-
-        @media(prefers-color-scheme:dark) {
-            .survey-option.pressing {
-                background-color: #252525;
-            }
-        }
     </style>
 </head>
 
