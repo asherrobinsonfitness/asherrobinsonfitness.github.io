@@ -79,7 +79,8 @@
             padding: 0.625rem 1.25rem;
             background: var(--bg);
             border-bottom: 1px solid var(--border-strong);
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 250;
         }
 
@@ -105,13 +106,27 @@
         }
 
         .payment-back-label {
-            text-decoration: underline;
-            text-underline-offset: 2px;
+            text-decoration: none;
+        }
+
+        .payment-back {
+            color: var(--text-secondary);
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
+            margin: -0.3rem -0.5rem;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .payment-back:hover {
+                background-color: #ebebeb1a;
+                color: var(--text);
+            }
         }
 
         .payment-back-icon {
             flex-shrink: 0;
-            color: var(--text-secondary);
+            color: inherit;
         }
 
         /* ═══ TWO-COLUMN LAYOUT ═══ */
@@ -357,6 +372,7 @@
             font-weight: 600;
             color: var(--text);
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .after-steps {
@@ -819,18 +835,29 @@
                 border: none;
                 font-size: 0.85rem;
                 font-weight: 500;
-                color: var(--text);
-                text-decoration: underline;
+                color: var(--text-secondary);
+                text-decoration: underline dotted;
                 text-underline-offset: 2px;
                 cursor: pointer;
-                padding: 0;
                 line-height: 1;
                 flex-shrink: 0;
                 position: relative;
                 z-index: 201;
+                border-radius: 6px;
+                padding: 0.3rem 0.5rem;
+                margin: -0.3rem -0.5rem;
+                transition: background-color 0.15s ease, color 0.15s ease;
+                outline: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+            @media (hover: hover) and (pointer: fine) {
+                .details-toggle:hover {
+                    background-color: #ebebeb1a;
+                    color: var(--text);
+                }
             }
             .details-chevron {
-                color: var(--text-secondary);
+                color: inherit;
                 transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
                 flex-shrink: 0;
             }
@@ -1022,9 +1049,8 @@
                     By clicking the button above, you authorize Asher Robinson LLC to charge you per our <a href="https://iclosed.io/terms/">Terms &amp; Services</a>.
                 </p>
                 <p class="security-badge">
-                    <svg width="14" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6L12 2z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
-                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z"/>
                     </svg>
                     Your information is encrypted and secure.
                 </p>
