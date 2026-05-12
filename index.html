@@ -279,6 +279,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 .pricing{font-size:.9rem;text-align:center}
 .pricing-amount{font-weight:600}
+.price-row{display:flex;align-items:center;width:100%;gap:.25rem}
+.price-row__was{font-size:.9rem;color:var(--muted);text-decoration:line-through}
+.price-row__now{font-size:.9rem;font-weight:700;color:var(--text)}
+.price-row__badge{margin-left:auto;font-size:.75rem;font-weight:700;color:#16a34a;background:rgba(22,163,74,.1);border:1px solid #16a34a;border-radius:6px;padding:.25rem .6rem;white-space:nowrap;letter-spacing:.04em}
 
 /* Card */
 .card{background:#222;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
@@ -678,13 +682,18 @@ footer a{color:#4d94ff;text-decoration:none}
     <div class="col-right" id="colRight">
       <!-- Mobile: just button + pricing (no widget) -->
       <div class="mobile-cta">
+        <div class="price-row">
+          <span class="price-row__was">$199</span>
+          <span class="price-row__now">$50</span>
+          <span class="price-row__badge">FIRST MONTH</span>
+        </div>
         <button class="btn" onclick="window.location.href='/survey'+window.location.search">
           <span class="btn-label">Apply for Coaching</span>
           <span class="btn-divider" aria-hidden="true"></span>
           <span class="btn-arrow">→</span>
         </button>
         <div class="pricing">
-          <div class="pricing-amount">$50 first month, then $199/month.</div>
+          <div class="pricing-amount">$50 first month, then $199nth.</div>
           <div>See progress in 30 days or get a full refund.</div>
         </div>
       </div>
@@ -721,6 +730,11 @@ footer a{color:#4d94ff;text-decoration:none}
         </div>
 
         <div class="cta-widget__footer">
+          <div class="price-row">
+            <span class="price-row__was">$199</span>
+            <span class="price-row__now">$50</span>
+            <span class="price-row__badge">FIRST MONTH</span>
+          </div>
           <button class="btn" type="button" onclick="window.location.href='/survey'+window.location.search">
             <span class="btn-label">Apply for Coaching</span>
             <span class="btn-divider" aria-hidden="true"></span>
@@ -736,7 +750,7 @@ footer a{color:#4d94ff;text-decoration:none}
           <ul class="pricing-bullets">
             <li>
               <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
-              <span>$50 first month, then $199/month.</span>
+              <span>$50 first month, then $199nth.</span>
             </li>
             <li>
               <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
