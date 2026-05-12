@@ -1491,14 +1491,16 @@
             window.history.replaceState({ stepIndex: currentStepIndex }, '', urlForStep(steps[currentStepIndex]));
             renderStep();
 
-            // bfcache restore — pageshow fires even when DOMContentLoaded doesn't
-            window.addEventListener('pageshow', () => {
+            // bfcache restore — pageshow fires when returning via browser back/forward
+            window.addEventListener('pageshow', (event) => {
                 isTransitioning = false;
-                const params = new URLSearchParams(window.location.search || '');
-                const slug = params.get('step');
-                const idx = slug ? steps.findIndex(s => s.path === slug) : 0;
-                currentStepIndex = idx >= 0 ? idx : 0;
-                renderStep();
+                if (event.persisted) {
+                    // Returning from payment or elsewhere — wipe state and restart from Goal
+                    Object.keys(answers).forEach(k => delete answers[k]);
+                    currentStepIndex = 0;
+                    window.history.replaceState({ stepIndex: 0 }, '', urlForStep(steps[0]));
+                    renderStep();
+                }
             });
         });
     </script>
