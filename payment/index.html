@@ -208,9 +208,8 @@
             position: relative;
             aspect-ratio: 85.6 / 54;
             background: #000;
-            box-shadow: 0 6px 28px rgba(0,0,0,0.22);
             cursor: default;
-            transition: transform 0.12s ease, box-shadow 0.12s ease;
+            transition: transform 0.12s ease;
             will-change: transform;
             /* Force GPU layer so border-radius clips cleanly with no sub-pixel halo */
             transform: translateZ(0);
@@ -348,7 +347,6 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 1px 3px rgba(15,23,42,0.18);
             position: relative;
             z-index: 1;
         }
@@ -389,7 +387,6 @@
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             padding: 0.85rem 1rem;
         }
 
@@ -575,7 +572,6 @@
             line-height: 1.45;
             white-space: normal;
             width: 190px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.15s;
@@ -622,7 +618,6 @@
             font-size: 1rem;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(15,23,42,0.15);
             transition: background 0.15s ease;
             margin-bottom: 0.75rem;
         }
@@ -1183,14 +1178,14 @@
         const { paymentIntent, error } = await stripe.retrievePaymentIntent(pics);
 
         if (error || !paymentIntent) {
-            if (form) form.innerHTML = `<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">${(error && error.message) || 'Something went wrong.'}</div><div><a href="payment.html" style="color:#06f;font-size:.9rem">Try again</a></div></div>`;
+            if (form) form.innerHTML = `<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">${(error && error.message) || 'Something went wrong.'}</div><div><a href="/payment" style="color:#06f;font-size:.9rem">Try again</a></div></div>`;
             return true;
         }
 
         if (paymentIntent.status === 'succeeded') {
             window.location.href = 'https://asherrobinsonfitness.com/welcome';
         } else {
-            if (form) form.innerHTML = `<div class="redirect-loading"><div class="redirect-text">Payment status: ${paymentIntent.status}. <a href="payment.html" style="color:#06f">Try again</a></div></div>`;
+            if (form) form.innerHTML = `<div class="redirect-loading"><div class="redirect-text">Payment status: ${paymentIntent.status}. <a href="/payment" style="color:#06f">Try again</a></div></div>`;
         }
 
         return true;
@@ -1394,7 +1389,7 @@
 
         card.addEventListener('mouseleave', () => {
             if (animFrame) cancelAnimationFrame(animFrame);
-            card.style.transition = 'transform 0.45s ease, box-shadow 0.45s ease';
+            card.style.transition = 'transform 0.45s ease';
             card.style.transform  = 'perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)';
             card.style.boxShadow  = '';
             setTimeout(() => { card.style.transition = ''; }, 450);
