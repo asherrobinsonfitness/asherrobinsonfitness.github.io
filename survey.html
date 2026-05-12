@@ -308,7 +308,6 @@
             border-radius: 8px;
             padding: 0.375rem 1rem;
             border: 1px solid #3d3d3d;
-            box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
         .primary-button {
@@ -326,7 +325,6 @@
             border: none;
             cursor: pointer;
             text-decoration: none;
-            box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);
             transition: background-color 0.15s ease;
         }
 
@@ -386,7 +384,6 @@
             background: #000;
             margin: 0 auto;
             contain: layout;
-            box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
         .report-img {
@@ -398,7 +395,6 @@
         .iclosed-widget {
             contain: layout;
             border-radius: 8px;
-            box-shadow: 0 2px 3px rgb(0 0 0 / 6%);
         }
 
         .results-widget {
@@ -419,7 +415,6 @@
             background-color: #222222;
             border-radius: 8px;
             border: 1px solid #3d3d3d;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
             padding: 0;
             overflow: hidden;
             display: flex;
@@ -504,7 +499,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
         }
 
         .before-after-handle-icon {
@@ -865,7 +859,6 @@
             line-height: 1;
             box-sizing: border-box;
             background: linear-gradient(357.5deg, #354a67 1.59%, #314660 21.23%, #25354e 58.6%, #6c87ac 97.4%);
-            box-shadow: 0 2px 3px rgb(0 0 0 / 6%), inset 0 0 2px 0.5px #001c40, inset 0 -1px 3px #d7ebff;
             position: relative;
             overflow: hidden
         }
@@ -1020,7 +1013,6 @@
             width: 100%;
             max-width: 100%;
             border-radius: 0;
-            box-shadow: none;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -1097,7 +1089,7 @@
             justify-content: space-between;
             font-size: 0.98rem;
             cursor: pointer;
-            transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+            transition: background-color 0.12s ease, border-color 0.12s ease;
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -1156,7 +1148,6 @@
             --selected-bg: #303030;
             border: 1px solid var(--primary);
             background-color: var(--selected-bg);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .survey-option.selected .survey-option-indicator {
@@ -1239,7 +1230,7 @@
 
 <body>
     <nav class="payment-nav payment-nav--survey" aria-label="Survey">
-        <a class="payment-back" id="survey-back-home" href="index.html" aria-label="Back to home">
+        <a class="payment-back" id="survey-back-home" href="/" aria-label="Back to home">
             <svg class="payment-back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -1271,7 +1262,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const surveyHomeBack = document.getElementById('survey-back-home');
             if (surveyHomeBack) {
-                surveyHomeBack.href = 'index.html' + (window.location.search || '');
+                surveyHomeBack.href = '/' + (window.location.search || '');
             }
 
             const steps = [
@@ -1326,7 +1317,7 @@
                 }
             ];
 
-            const getBaseSurveyUrl = () => 'survey.html';
+            const getBaseSurveyUrl = () => '/survey';
 
             const urlForStep = (step) => {
                 const base = getBaseSurveyUrl();
@@ -1430,7 +1421,7 @@
                         button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
-                            window.location.href = 'confirmation.html' + window.location.search;
+                            window.location.href = '/confirmation' + window.location.search;
                         };
 
                         const shouldSendToConfirmation =
@@ -1456,7 +1447,7 @@
                                 const redirectParams = new URLSearchParams(window.location.search || '');
                                 redirectParams.delete('step');
                                 Object.entries(answers).forEach(function(entry) { redirectParams.set(entry[0], entry[1]); });
-                                window.location.href = 'payment.html?' + redirectParams.toString();
+                                window.location.href = '/payment?' + redirectParams.toString();
                             }
                         };
 
