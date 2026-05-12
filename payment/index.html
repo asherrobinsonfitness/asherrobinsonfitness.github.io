@@ -1097,6 +1097,15 @@
 <div id="details-backdrop" aria-hidden="true"></div>
 
 <script>
+    // Guard: redirect to survey if required answer params are missing
+    (function guardPaymentPage() {
+        const required = ['goal', 'age', 'gym', 'commitment'];
+        const params = new URLSearchParams(window.location.search || '');
+        if (!required.every(p => params.has(p))) {
+            window.location.replace('/survey');
+        }
+    })();
+
     const STRIPE_PK = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
 
     /* ── Stripe appearance theming ── */
