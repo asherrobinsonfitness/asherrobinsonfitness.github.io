@@ -64,59 +64,27 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
 
-/* Results: 1 col mobile; desktop = same row height (stretch), column width from content */
-.blocks-grid{display:grid;grid-template-columns:1fr;gap:1rem;width:100%;align-items:stretch}
+/* Results: 1 col mobile; desktop = 3-column equal-width row */
+.blocks-grid{display:flex;flex-direction:column;gap:1rem;width:100%}
 @media(min-width:1280px){
   .blocks-grid{
-    display:flex;
     flex-direction:row;
-    flex-wrap:nowrap;
     align-items:stretch;
-    justify-content:flex-start;
     gap:1rem;
-    width:100%;
-    min-width:0;
-    overflow-x:auto;
-    padding-bottom:.25rem;
+    max-width:calc(944px + 2rem);
+    margin:0 auto;
   }
   .blocks-grid>.block{
-    display:flex;
-    flex-direction:column;
-    align-self:stretch;
-    min-height:0;
-  }
-  .blocks-grid>.block--wyget{
-    flex:0 0 auto;
-    width:max-content;
-    min-width:min-content;
-    max-width:none;
-  }
-  .block--wyget .block-inner{
-    width:max-content;
-    max-width:none;
-  }
-  .blocks-grid>.block--feature,
-  .blocks-grid>.block--story{
     flex:1 1 0;
     min-width:0;
-    width:auto;
-    max-width:none;
   }
-  .blocks-grid>.block .block-inner{
+  .block.block--wyget{overflow:visible}
+  .block--wyget .block-inner{
     flex:1;
     display:flex;
     flex-direction:column;
     min-height:0;
   }
-  .block--wyget .wyget-row__title,
-  .block--wyget .wyget-row__desc{
-    white-space:nowrap;
-  }
-  .block--wyget .wyget-row__body{
-    flex:0 0 auto;
-    min-width:max-content;
-  }
-  .block--feature .block-body,
   .block--story .block-body{flex:1}
   .block--results-ba-mobile{display:none !important}
 }
@@ -179,7 +147,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   object-position:center;
 }
 .wyget-row__body{
-  flex:0 1 auto;
+  flex:1 1 0;
   min-width:0;
   display:flex;
   flex-direction:column;
@@ -242,28 +210,19 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   margin-bottom:.9rem;
 }
 /* Story blocks (2 & 3) */
-.block--story .block-inner{display:flex;flex-direction:column}
-.block--story .block-story__header{
-  display:flex;
-  align-items:stretch;
-  justify-content:space-between;
-  gap:.85rem;
-  margin-bottom:.6rem;
-}
-.block--story .block-story__left{
-  display:flex;
-  flex-direction:column;
-  flex:1;
-  min-width:0;
-}
+.block--story .block-inner{display:flex;flex-direction:column;position:relative}
+.block--story .block-story__header{margin-bottom:.6rem;padding-right:calc(7.25rem + .75rem)}
 .block-story__thumb{
+  position:absolute;
+  top:1.2rem;
+  right:1.15rem;
   width:7.25rem;
-  flex-shrink:0;
+  aspect-ratio:520/352;
   border-radius:8px;
   overflow:hidden;
 }
 .block-story__thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.block--story .block-heading{font-size:1.4rem;margin-bottom:0}
+.block--story .block-heading{font-size:1.4rem;margin-bottom:.6rem}
 .block--story .block-body p{font-size:.9rem;color:var(--muted)}
 .block--has-media .block-inner{padding-bottom:.85rem}
 /* Border only when media sits below a heading block (not when slider is first) */
@@ -598,9 +557,80 @@ footer a{color:#4d94ff;text-decoration:none}
   .col-right{max-width:32rem}
 }
 
+/* ── Scroll-triggered popup nav ── */
+.scroll-nav{
+  position:fixed;
+  top:.75rem;
+  left:50%;
+  transform:translateX(-50%) translateY(calc(-100% - 1.5rem));
+  width:calc(100% - 2rem);
+  max-width:600px;
+  z-index:900;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+.scroll-nav.is-visible{
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+.scroll-nav__inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  padding:.5rem .5rem .5rem 1.1rem;
+  background:rgba(22,22,22,.82);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--card-border);
+  border-radius:12px;
+  box-shadow:0 6px 28px rgba(0,0,0,.45);
+}
+.scroll-nav__title{
+  font-size:.8125rem;
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  min-width:0;
+}
+.scroll-nav__cta{
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.45rem .75rem;
+  background:var(--blue);
+  color:#fff;
+  font-size:.8rem;
+  font-weight:600;
+  border-radius:8px;
+  text-decoration:none;
+  white-space:nowrap;
+  border:none;
+  cursor:pointer;
+  transition:background .15s;
+}
+@media(hover:hover) and (pointer:fine){
+  .scroll-nav__cta:hover{background:#0052cc}
+  .scroll-nav__cta:hover .scroll-nav__arrow{transform:translateX(4px)}
+}
+.scroll-nav__arrow{transition:transform .22s ease}
 </style>
 </head>
 <body>
+
+<!-- Scroll-triggered sticky nav -->
+<div class="scroll-nav" id="scrollNav" aria-hidden="true" role="navigation" aria-label="Quick apply">
+  <div class="scroll-nav__inner">
+    <span class="scroll-nav__title">Online Coaching w/ Asher</span>
+    <button class="scroll-nav__cta" onclick="window.location.href='survey.html'+window.location.search">
+      Apply<span class="scroll-nav__arrow">→</span>
+    </button>
+  </div>
+</div>
+
 <main>
 <div class="container">
   <div class="hero-grid">
@@ -767,13 +797,11 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--story">
         <div class="block-inner">
           <div class="block-story__header">
-            <div class="block-story__left">
-              <div class="block-num">2</div>
-              <h2 class="block-heading">How it works</h2>
-            </div>
-            <div class="block-story__thumb">
-              <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-            </div>
+            <div class="block-num">2</div>
+            <h2 class="block-heading">How it works</h2>
+          </div>
+          <div class="block-story__thumb">
+            <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
           </div>
           <div class="block-body">
             <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
@@ -786,13 +814,11 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--story">
         <div class="block-inner">
           <div class="block-story__header">
-            <div class="block-story__left">
-              <div class="block-num">3</div>
-              <h2 class="block-heading">Why it works</h2>
-            </div>
-            <div class="block-story__thumb">
-              <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-            </div>
+            <div class="block-num">3</div>
+            <h2 class="block-heading">Why it works</h2>
+          </div>
+          <div class="block-story__thumb">
+            <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
           </div>
           <div class="block-body">
             <p>Most people don’t fail from lack of motivation—they fail from lack of structure and quick feedback.</p>
@@ -1283,6 +1309,21 @@ footer a{color:#4d94ff;text-decoration:none}
       }
     });
   });
+})();
+</script>
+
+<!-- Scroll nav observer -->
+<script>
+(function(){
+  var nav = document.getElementById('scrollNav');
+  var target = document.getElementById('colRight');
+  if(!nav || !target) return;
+  var io = new IntersectionObserver(function(entries){
+    var visible = entries[0].isIntersecting;
+    nav.classList.toggle('is-visible', !visible);
+    nav.setAttribute('aria-hidden', visible ? 'true' : 'false');
+  }, { threshold: 0 });
+  io.observe(target);
 })();
 </script>
 </body>
