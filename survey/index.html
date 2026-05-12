@@ -1337,6 +1337,17 @@
             const answers = {};
             let isTransitioning = false;
 
+            // Read answer values from URL params into the answers object.
+            // Called on every popstate so back/forward always reflects the real state.
+            const syncAnswersFromUrl = () => {
+                const params = new URLSearchParams(window.location.search || '');
+                steps.forEach(s => {
+                    const val = params.get(s.id);
+                    if (val) answers[s.id] = val;
+                    else delete answers[s.id];
+                });
+            };
+
             const questionEl = document.getElementById('survey-question-text');
             const optionsContainer = document.getElementById('survey-options-container');
             const stepsPill = document.getElementById('survey-steps-pill');
@@ -1409,7 +1420,10 @@
                         button.classList.add('loading');
 
                         const redirectToConfirmation = () => {
-                            window.location.href = '/confirmation' + window.location.search;
+                            const confirmParams = new URLSearchParams(window.location.search || '');
+                            confirmParams.set(step.id, opt.value);
+                            confirmParams.delete('step');
+                            window.location.href = '/confirmation?' + confirmParams.toString();
                         };
 
                         const shouldSendToConfirmation =
@@ -1427,7 +1441,10 @@
                                 // Push next step into history so browser back returns here
                                 const nextIndex = currentStepIndex + 1;
                                 const nextStep = steps[nextIndex];
-                                window.history.pushState({ stepIndex: nextIndex }, '', urlForStep(nextStep));
+                                const nextParams = new URLSearchParams(window.location.search || '');
+                                nextParams.set(step.id, opt.value);
+                                nextParams.set('step', nextStep.path);
+                                window.history.pushState({ stepIndex: nextIndex }, '', `${getBaseSurveyUrl()}?${nextParams}`);
                                 currentStepIndex = nextIndex;
                                 renderStep();
                                 isTransitioning = false;
@@ -1469,9 +1486,7 @@
                     }
                 }
                 currentStepIndex = Math.max(0, Math.min(idx, steps.length - 1));
-                // Clear the answer for the step we're returning to so it renders fresh
-                const stepId = steps[currentStepIndex] && steps[currentStepIndex].id;
-                if (stepId) delete answers[stepId];
+                syncAnswersFromUrl();
                 renderStep();
             });
 
