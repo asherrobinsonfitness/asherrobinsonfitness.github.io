@@ -1342,22 +1342,10 @@
             const stepsPill = document.getElementById('survey-steps-pill');
             const prevButton = document.getElementById('survey-prev-step');
 
-            // Initialize current step from URL
-            (function initStepFromUrl() {
-                const params = new URLSearchParams(window.location.search || '');
-                const slugFromQuery = params.get('step');
-                if (slugFromQuery) {
-                    const idx = steps.findIndex(s => s.path === slugFromQuery);
-                    if (idx >= 0) { currentStepIndex = idx; return; }
-                }
-                const path = window.location.pathname || '';
-                const match = path.match(/\/survey\/([^/]+)/);
-                const slugFromPath = match ? match[1] : null;
-                if (slugFromPath) {
-                    const idx = steps.findIndex(s => s.path === slugFromPath);
-                    if (idx >= 0) currentStepIndex = idx;
-                }
-            })();
+            // Always start at step 0 on a fresh page load.
+            // Answers live only in JS memory — jumping to a mid-step URL with no answers
+            // would leave the progress bar in a broken half-completed state.
+            currentStepIndex = 0;
 
             const renderStep = () => {
                 const step = steps[currentStepIndex];
