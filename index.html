@@ -280,7 +280,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
  * bubble_left  = video_center + 36.5px (75% mark of video) = 50% - 85px.
  * bubble_width = 280px → aspect ratio ≈ 3:1 at all single-column widths.
  */
-.block--bubble .block-story__thumb video{left:max(calc(50% - 122px), calc(73px + 1.15rem)) !important}
+.block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:max(calc(50% - 122px), calc(73px + 1.15rem)) !important}
 .chat-bubble{
   position:absolute;
   top:28%;
@@ -291,7 +291,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   z-index:10;
 }
 @media(min-width:1280px){
-  .block--bubble .block-story__thumb video{left:24% !important}
+  .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
   .chat-bubble{left:35%;width:auto;right:5%}
 }
 .chat-bubble__blur{
@@ -557,8 +557,8 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 .faq-item__body p+p{margin-top:.75rem}
 
-/* story blocks: video replaces img */
-.block-story__thumb video{position:absolute;top:0;left:50%;transform:translateX(-50%);height:125%;width:auto;display:block}
+/* story blocks: video/img fills thumb */
+.block-story__thumb video,.block-story__thumb img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:125%;width:auto;display:block}
 @media(min-width:1280px) and (hover:hover) and (pointer:fine){
   .wyget-row{
     position:relative;
@@ -946,9 +946,7 @@ footer a{color:#4d94ff;text-decoration:none}
             <h2 class="block-heading">How it works</h2>
           </div>
           <div class="block-story__thumb">
-            <video autoplay loop muted playsinline webkit-playsinline>
-              <source src="pro-hero-video.webm" type="video/webm">
-            </video>
+            <img src="coach-check-in-phone-still.webp" alt="">
             <div class="chat-bubble" aria-hidden="true">
               <div class="chat-bubble__blur"></div>
               <svg class="chat-bubble__bg" viewBox="0 0 270 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
