@@ -570,38 +570,21 @@ footer a{color:#4d94ff;text-decoration:none}
   .col-right{max-width:32rem}
 }
 
-/* ── Scroll-triggered popup nav ── */
-.scroll-nav{
-  position:fixed;
-  top:.75rem;
-  left:50%;
-  transform:translateX(-50%) translateY(calc(-100% - 1.5rem));
-  width:calc(100% - 2rem);
-  max-width:600px;
+/* ── Persistent top nav ── */
+.site-nav{
+  position:sticky;
+  top:0;
   z-index:900;
-  visibility:hidden;
-  transition:transform .35s cubic-bezier(.4,0,.2,1), visibility 0s linear .35s;
-  pointer-events:none;
-}
-.scroll-nav.is-visible{
-  transform:translateX(-50%) translateY(0);
-  visibility:visible;
-  pointer-events:auto;
-  transition:transform .35s cubic-bezier(.4,0,.2,1), visibility 0s linear 0s;
-}
-.scroll-nav__inner{
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:.75rem;
-  padding:.5rem .5rem .5rem 1.1rem;
-  background:rgba(22,22,22,.82);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border:1px solid var(--card-border);
-  border-radius:12px;
+  gap:1rem;
+  padding:.625rem 1.25rem;
+  background:#1c1c1c;
+  border-bottom:1px solid #3a3a3a;
 }
-.scroll-nav__title{
+.site-nav__wordmark{
   font-size:.8125rem;
   font-weight:600;
   color:var(--text);
@@ -609,13 +592,38 @@ footer a{color:#4d94ff;text-decoration:none}
   overflow:hidden;
   text-overflow:ellipsis;
   min-width:0;
+  flex-shrink:1;
 }
-.scroll-nav__cta{
+.site-nav__links{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:1.75rem;
+}
+.site-nav__link{
+  font-size:.8125rem;
+  font-weight:500;
+  color:rgba(255,255,255,.65);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color .15s;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  line-height:1;
+}
+@media(hover:hover) and (pointer:fine){
+  .site-nav__link:hover{color:#fff}
+}
+.site-nav__cta{
   flex-shrink:0;
   display:inline-flex;
   align-items:center;
-  gap:.5rem;
-  padding:.45rem .75rem;
+  gap:.4rem;
+  padding:.45rem .85rem;
   background:var(--blue);
   color:#fff;
   font-size:.8rem;
@@ -627,24 +635,37 @@ footer a{color:#4d94ff;text-decoration:none}
   cursor:pointer;
   transition:background .15s;
 }
+.site-nav__arrow{transition:transform .22s ease}
 @media(hover:hover) and (pointer:fine){
-  .scroll-nav__cta:hover{background:#0052cc}
-  .scroll-nav__cta:hover .scroll-nav__arrow{transform:translateX(4px)}
+  .site-nav__cta:hover{background:#0052cc}
+  .site-nav__cta:hover .site-nav__arrow{transform:translateX(3px)}
 }
-.scroll-nav__arrow{transition:transform .22s ease}
+@media(min-width:761px){
+  .site-nav{padding:.625rem 2rem}
+}
+@media(max-width:760px){
+  .site-nav__links{display:none}
+  .site-nav{
+    transform:translateY(-100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .site-nav.is-visible{
+    transform:translateY(0);
+  }
+}
 </style>
 </head>
 <body>
 
-<!-- Scroll-triggered sticky nav -->
-<div class="scroll-nav" id="scrollNav" aria-hidden="true" role="navigation" aria-label="Quick apply">
-  <div class="scroll-nav__inner">
-    <span class="scroll-nav__title">Online Coaching w/ Asher</span>
-    <button class="scroll-nav__cta" onclick="window.location.href='/survey'+window.location.search">
-      Apply<span class="scroll-nav__arrow">→</span>
-    </button>
+<!-- Persistent top nav -->
+<nav class="site-nav" aria-label="Site navigation">
+  <span class="site-nav__wordmark">Online Coaching w/ Asher</span>
+  <div class="site-nav__links">
+    <button class="site-nav__link" onclick="scrollToSection('how-it-works')">How it Works</button>
+    <button class="site-nav__link" onclick="scrollToSection('faq')">FAQ</button>
   </div>
-</div>
+  <button class="site-nav__cta" onclick="window.location.href='/survey'+window.location.search">Apply<span class="site-nav__arrow">→</span></button>
+</nav>
 
 <main>
 <div class="container">
@@ -750,7 +771,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
   </div>
 
-  <div class="results-section">
+  <div class="results-section" id="how-it-works">
     <div class="blocks-grid">
 
       <!-- Block 1: What you get (single card, rows like payment “after pay”) -->
@@ -851,7 +872,7 @@ footer a{color:#4d94ff;text-decoration:none}
     </div>
   </div>
 
-  <section class="common-questions" aria-labelledby="common-questions-heading">
+  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
     <hr class="section-divider" aria-hidden="true">
     <div class="common-questions__inner">
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
@@ -1327,19 +1348,33 @@ footer a{color:#4d94ff;text-decoration:none}
 })();
 </script>
 
-<!-- Scroll nav observer -->
 <script>
+function scrollToSection(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var nav = document.querySelector('.site-nav');
+  var offset = nav ? nav.getBoundingClientRect().height : 0;
+  var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+}
+
+// Mobile: slide nav in once the CTA button scrolls out of view
 (function(){
-  var nav = document.getElementById('scrollNav');
-  var target = document.getElementById('colRight');
+  function isMobile(){ return window.innerWidth <= 760; }
+  var nav = document.querySelector('.site-nav');
+  var target = document.getElementById('ctaWidget');
   if(!nav || !target) return;
   var io = new IntersectionObserver(function(entries){
-    var visible = entries[0].isIntersecting;
-    nav.classList.toggle('is-visible', !visible);
-    nav.setAttribute('aria-hidden', visible ? 'true' : 'false');
+    if(!isMobile()) return;
+    nav.classList.toggle('is-visible', !entries[0].isIntersecting);
   }, { threshold: 0 });
   io.observe(target);
+  // On desktop resize, always show nav (no transform)
+  window.addEventListener('resize', function(){
+    if(!isMobile()) nav.classList.remove('is-visible');
+  });
 })();
 </script>
+
 </body>
 </html>
