@@ -295,6 +295,17 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
   .chat-bubble{left:calc(24% + 38px);width:auto;right:5%}
 }
+/* Block 3 phone fan stack
+ * Main image: 152px wide (height:100% of 13rem thumb).
+ * Side images: 137px wide (height:90%). 25% overlap = 34px.
+ * left-behind : right edge at main_left+34 = 50%-42px → left = 50%-179px
+ * right-behind: left edge at main_right-34 = 50%+42px
+ * Composition spans 50%-179px to 50%+179px — perfectly centred.
+ */
+.block-story__thumb .phone-behind{top:auto;bottom:0;height:90%;transform:none}
+.block-story__thumb .phone-behind--left{left:calc(50% - 179px)}
+.block-story__thumb .phone-behind--right{left:calc(50% + 42px)}
+.block-story__thumb .phone-main{height:100%}
 .chat-bubble__blur{
   position:absolute;
   inset:0;
@@ -971,9 +982,9 @@ footer a{color:#4d94ff;text-decoration:none}
             <h2 class="block-heading">Why it works</h2>
           </div>
           <div class="block-story__thumb">
-            <video autoplay loop muted playsinline webkit-playsinline>
-              <source src="pro-hero-video.webm" type="video/webm">
-            </video>
+            <img class="phone-behind phone-behind--left" src="coach-check-in-phone-still.webp" alt="">
+            <img class="phone-behind phone-behind--right" src="coach-check-in-phone-still.webp" alt="">
+            <img class="phone-main" src="coach-check-in-phone-still.webp" alt="">
           </div>
           <div class="block-body">
             <p>Most people don’t fail from lack of motivation—they fail from lack of structure and quick feedback.</p>
