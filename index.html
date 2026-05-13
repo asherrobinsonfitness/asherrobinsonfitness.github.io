@@ -280,12 +280,13 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
  * bubble_left  = video_center + 36.5px (75% mark of video) = 50% - 85px.
  * bubble_width = 280px → aspect ratio ≈ 3:1 at all single-column widths.
  */
-.block--bubble .block-story__thumb video{left:calc(50% - 122px) !important}
+.block--bubble .block-story__thumb video{left:max(calc(50% - 122px), calc(73px + 1.15rem)) !important}
 .chat-bubble{
   position:absolute;
   top:28%;
-  left:calc(50% - 85px);
-  width:280px;
+  left:max(calc(50% - 85px), calc(110px + 1.15rem));
+  right:1.5rem;
+  max-width:280px;
   pointer-events:none;
   z-index:10;
 }
