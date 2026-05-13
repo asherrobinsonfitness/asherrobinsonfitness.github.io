@@ -205,11 +205,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   font-weight:600;
   color:var(--text);
   flex-shrink:0;
-  margin-bottom:.9rem;
 }
+/* Number + heading inline row (block 1) */
+.block-header-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem}
+.block-header-row .block-heading{margin-bottom:0}
 /* Story blocks (2 & 3) */
 .block--story .block-inner{display:flex;flex-direction:column;padding-bottom:0}
-.block--story .block-story__header{margin-bottom:.6rem;order:1}
+.block--story .block-story__header{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;order:1}
+.block--story .block-story__header .block-heading{margin-bottom:0}
 .block--story .block-body{order:2}
 .block-story__thumb{
   position:relative;
@@ -832,8 +835,10 @@ footer a{color:#4d94ff;text-decoration:none}
       <!-- Block 1: What you get (single card, rows like payment “after pay”) -->
       <div class="block block--wyget">
         <div class="block-inner">
-          <div class="block-num">1</div>
-          <h2 class="block-heading">What you get</h2>
+          <div class="block-header-row">
+            <div class="block-num">1</div>
+            <h2 class="block-heading">What you get</h2>
+          </div>
           <div class="wyget-list" role="list">
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
