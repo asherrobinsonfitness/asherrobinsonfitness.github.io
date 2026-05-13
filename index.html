@@ -576,6 +576,7 @@ footer a{color:#4d94ff;text-decoration:none}
   top:0;
   z-index:900;
   width:100%;
+  min-height:3rem;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -583,6 +584,7 @@ footer a{color:#4d94ff;text-decoration:none}
   padding:.625rem 1.25rem;
   background:#1c1c1c;
   border-bottom:1px solid #3a3a3a;
+  box-sizing:border-box;
 }
 .site-nav__wordmark{
   font-size:.8125rem;
@@ -664,7 +666,7 @@ footer a{color:#4d94ff;text-decoration:none}
   <span class="site-nav__wordmark">Online Coaching w/ Asher</span>
   <div class="site-nav__links">
     <button class="site-nav__link" onclick="scrollToSection('how-it-works')">How it Works</button>
-    <button class="site-nav__link" onclick="scrollToSection('faq')">FAQ</button>
+    <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
   </div>
   <button class="site-nav__cta" onclick="window.location.href='/survey'+window.location.search">Apply<span class="site-nav__arrow">→</span></button>
 </nav>
