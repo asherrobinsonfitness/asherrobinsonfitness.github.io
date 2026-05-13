@@ -450,6 +450,12 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     object-position:center top;
     vertical-align:top;
   }
+  .cta-widget .ba-dual__img-wrap{
+    transition:transform 0.12s ease;
+    will-change:transform;
+    transform:translateZ(0);
+    -webkit-mask-image:-webkit-radial-gradient(white,black);
+  }
   .ba-dual__tag{
     position:absolute;
     top:.5rem;
@@ -465,12 +471,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     pointer-events:none;
   }
   .ba-dual{
-    border:1px solid var(--card-border);
     border-radius:9px;
-    padding:.6rem;
   }
   .ba-dual__row{
-    gap:.6rem;
+    gap:1.25rem;
   }
   .ba-dual__spacer{
     display:none;
@@ -484,17 +488,26 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   }
   /* Callout uses same pill as mobile hero (.callout base styles) */
   .cta-widget__section--copy .callout{
-    align-self:center;
-    margin:0 auto .2rem;
-    text-transform:none;
+    background:none;
+    border:none;
+    border-radius:0;
+    padding:0;
+    margin:0;
+    font-size:.875rem;
+    font-weight:600;
+    color:var(--text);
+    text-align:left;
+    justify-content:flex-start;
+    align-self:flex-start;
+    width:100%;
   }
 
   .cta-widget__title{
     font-size:1.5rem;font-weight:600;line-height:1.2;
-    letter-spacing:-.025em;color:var(--text);width:100%;text-align:center;
+    letter-spacing:-.025em;color:var(--text);width:100%;text-align:left;
   }
   .cta-widget__section--copy .subheadline{
-    margin:.2rem auto 0;text-align:center;max-width:100%;
+    margin:.2rem auto 0;text-align:left;max-width:100%;
     font-size:.95rem;line-height:1.55;letter-spacing:-.005em;color:var(--muted);
   }
 
@@ -1329,6 +1342,34 @@ function scrollToSection(id) {
     if(!isMobile()) nav.classList.remove('is-visible');
   });
 })();
+</script>
+
+<script>
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.querySelectorAll('.cta-widget .ba-dual__img-wrap').forEach(function(card){
+    var animFrame = null;
+    var MAX_TILT = 10;
+    card.addEventListener('mousemove', function(e){
+      if(animFrame) cancelAnimationFrame(animFrame);
+      animFrame = requestAnimationFrame(function(){
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width  - 0.5;
+        var y = (e.clientY - rect.top)  / rect.height - 0.5;
+        var ry =  x * MAX_TILT;
+        var rx = -y * MAX_TILT;
+        card.style.transform = 'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
+        card.style.boxShadow = (-ry*1.5)+'px '+(rx*1.5+8)+'px 40px rgba(0,0,0,0.3)';
+      });
+    });
+    card.addEventListener('mouseleave', function(){
+      if(animFrame) cancelAnimationFrame(animFrame);
+      card.style.transition = 'transform 0.45s ease';
+      card.style.transform  = 'perspective(700px) rotateX(0deg) rotateY(0deg)';
+      card.style.boxShadow  = '';
+      setTimeout(function(){ card.style.transition = ''; }, 450);
+    });
+  });
+}
 </script>
 
 </body>
