@@ -275,16 +275,17 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px}
 
 /* Chat bubble overlay
- * Below 1280px: thumb height is fixed 13rem → video is 146px wide.
- * video_center = 50% - 122px centres the composition (video_left = bubble_right_margin).
- * bubble_left  = video_center + 36.5px (75% mark of video) = 50% - 85px.
+ * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
+ * img_center = 50% - 121px centres the composition (img_left = bubble_right_margin).
+ * bubble_left = img_center + 38px (75% mark of img) = 50% - 83px.
  * bubble_width = 280px → aspect ratio ≈ 3:1 at all single-column widths.
  */
-.block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:max(calc(50% - 122px), calc(73px + 1.15rem)) !important}
+.block--bubble .block-story__thumb img{height:100%}
+.block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:max(calc(50% - 121px), calc(76px + 1.15rem)) !important}
 .chat-bubble{
   position:absolute;
   top:28%;
-  left:max(calc(50% - 85px), calc(110px + 1.15rem));
+  left:max(calc(50% - 83px), calc(114px + 1.15rem));
   right:1.5rem;
   max-width:280px;
   pointer-events:none;
@@ -292,7 +293,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 @media(min-width:1280px){
   .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
-  .chat-bubble{left:35%;width:auto;right:5%}
+  .chat-bubble{left:calc(24% + 38px);width:auto;right:5%}
 }
 .chat-bubble__blur{
   position:absolute;
