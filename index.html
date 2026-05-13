@@ -464,14 +464,16 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     text-shadow:0 1px 4px rgba(0,0,0,.55);
     pointer-events:none;
   }
-  .ba-dual__outline{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    z-index:4;
-    overflow:visible;
+  .ba-dual{
+    border:1px solid var(--card-border);
+    border-radius:9px;
+    padding:.6rem;
+  }
+  .ba-dual__row{
+    gap:.6rem;
+  }
+  .ba-dual__spacer{
+    display:none;
   }
 
   .cta-widget__section{display:flex;flex-direction:column;align-items:center;text-align:center;flex-shrink:0}
@@ -699,8 +701,10 @@ footer a{color:#4d94ff;text-decoration:none}
   justify-content:space-between;
   gap:1rem;
   padding:.625rem 1.25rem;
-  background:#1c1c1c;
-  border-bottom:1px solid #3a3a3a;
+  background:rgba(28,28,28,0.82);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(58,58,58,0.7);
   box-sizing:border-box;
 }
 .site-nav__wordmark{
@@ -835,12 +839,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
         <div class="cta-widget__hero" aria-label="Before and after comparison">
           <div class="ba-dual" id="baDual">
-            <svg class="ba-dual__outline" id="baDualOutline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path id="baDualBorderPath" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-            </svg>
-            <!-- Canvas draws comet trail + dot every frame via rAF -->
-            <canvas id="baDualCanvas" aria-hidden="true" style="position:absolute;pointer-events:none;z-index:5;display:block"></canvas>
-            <div class="ba-dual__row">
+<div class="ba-dual__row">
               <div class="ba-dual__photo" data-ba-side="left">
                 <div class="ba-dual__img-wrap">
                   <img class="ba-dual__img" loading="lazy" src="https://i.postimg.cc/VN7xZdxy/beseven.png" alt="Before coaching">
@@ -1208,180 +1207,6 @@ footer a{color:#4d94ff;text-decoration:none}
   apply();
 })();
 
-/* Desktop widget: one continuous outline (quadratic corners + bridge); canvas comet trail + dot */
-(function(){
-  var mq       = window.matchMedia('(min-width:1280px)');
-  var gapHalf  = 5;      // half-height of bridge passage
-  var pad      = 5;      // outline breathing room outside each photo
-  var DUR      = 18000;  // animation period (ms)
-  var TRAIL    = 55;     // trail length in path-pixels
-  var STEPS    = 28;     // segments — more = smoother gradient
-
-  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
-
-  /*
-   * Builds one closed path tracing both photos:
-   *  - pad px breathing room outside each photo edge
-   *  - convex rounding (cr) on all 4 photo corners
-   *  - smaller convex rounding (crB) on the 4 H-bridge junction corners
-   */
-  function buildPath(root, L, R){
-    var rb  = root.getBoundingClientRect();
-    var w   = Math.max(1, rb.width);
-    var h   = Math.max(1, rb.height);
-    var ol  = { x: L.left - rb.left, y: L.top - rb.top, w: L.width, h: L.height };
-    var or_ = { x: R.left - rb.left, y: R.top - rb.top, w: R.width, h: R.height };
-
-    var xL = ol.x  - pad, yL = ol.y  - pad, wL = ol.w  + 2*pad, hL = ol.h  + 2*pad, rxL = xL + wL;
-    var xR = or_.x - pad, yR = or_.y - pad, wR = or_.w + 2*pad, hR = or_.h + 2*pad, rxR = xR + wR;
-
-    var cr  = Math.max(4, Math.min(14, wL/2-1, hL/2-1, wR/2-1, hR/2-1));
-    var crB = Math.max(2, Math.min(Math.round(cr*0.45), 6));
-
-    var cy  = (Math.min(yL,yR) + Math.max(yL+hL,yR+hR)) / 2;
-    var y1  = cy - gapHalf;
-    var y2  = cy + gapHalf;
-    var vTop = Math.max(yL+cr, yR+cr) + crB + 2;
-    var vBot = Math.min(yL+hL-cr, yR+hR-cr) - crB - 2;
-    y1 = clamp(y1, vTop, vBot);
-    y2 = clamp(y2, vTop, vBot);
-    if(y1 > y2){ var sw=y1; y1=y2; y2=sw; }
-    if(y2-y1 < 6){
-      y1 = clamp(cy-3, vTop, vBot-6);
-      y2 = clamp(cy+3, y1+6, vBot);
-    }
-
-    var d = [];
-    d.push('M', xL+wL/2, yL+hL);
-    d.push('L', rxL-cr, yL+hL);   d.push('Q', rxL, yL+hL, rxL, yL+hL-cr);
-    d.push('L', rxL, y2+crB);     d.push('Q', rxL, y2, rxL+crB, y2);
-    d.push('L', xR-crB, y2);      d.push('Q', xR, y2, xR, y2+crB);
-    d.push('L', xR, yR+hR-cr);    d.push('Q', xR, yR+hR, xR+cr, yR+hR);
-    d.push('L', rxR-cr, yR+hR);   d.push('Q', rxR, yR+hR, rxR, yR+hR-cr);
-    d.push('L', rxR, yR+cr);      d.push('Q', rxR, yR, rxR-cr, yR);
-    d.push('L', xR+cr, yR);       d.push('Q', xR, yR, xR, yR+cr);
-    d.push('L', xR, y1-crB);      d.push('Q', xR, y1, xR-crB, y1);
-    d.push('L', rxL+crB, y1);     d.push('Q', rxL, y1, rxL, y1-crB);
-    d.push('L', rxL, yL+cr);      d.push('Q', rxL, yL, rxL-cr, yL);
-    d.push('L', xL+cr, yL);       d.push('Q', xL, yL, xL, yL+cr);
-    d.push('L', xL, yL+hL-cr);    d.push('Q', xL, yL+hL, xL+cr, yL+hL);
-    d.push('L', xL+wL/2, yL+hL);  d.push('Z');
-    return { d: d.join(' '), w: w, h: h };
-  }
-
-  var totalLen    = 0;
-  var rafActive   = false;
-  var canvasExtra = pad + 2;   // px by which canvas buffer extends beyond baDual on each side
-
-  function animTick(){
-    if(!mq.matches){ rafActive = false; return; }
-    var pathEl = document.getElementById('baDualBorderPath');
-    var canvas = document.getElementById('baDualCanvas');
-    if(!pathEl || !canvas || totalLen <= 0){ rafActive = false; return; }
-    var ctx = canvas.getContext('2d');
-    if(!ctx){ rafActive = false; return; }
-
-    var pos = totalLen - (Date.now() % DUR) / DUR * totalLen;
-
-    // Clear the full buffer, then translate so path coords (which can be negative by ~pad px) map correctly
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.translate(canvasExtra, canvasExtra);
-
-    // Draw comet trail: STEPS short segments from tail (transparent) → head (bright)
-    if(pathEl.getPointAtLength){
-      var prevPt = null;
-      for(var s = 0; s <= STEPS; s++){
-        var t  = ((pos + TRAIL - s * TRAIL / STEPS) % totalLen + totalLen) % totalLen;
-        var pt = pathEl.getPointAtLength(t);
-
-        if(prevPt !== null){
-          var frac  = s / STEPS;
-          var alpha = Math.pow(frac, 1.3) * 0.90;
-          var lw    = 0.6 + frac * 2.0;
-          ctx.beginPath();
-          ctx.moveTo(prevPt.x, prevPt.y);
-          ctx.lineTo(pt.x, pt.y);
-          ctx.strokeStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
-          ctx.lineWidth   = lw;
-          ctx.lineCap     = 'round';
-          ctx.stroke();
-        }
-        prevPt = pt;
-      }
-
-      // Draw main dot on top of trail
-      var dotPt = pathEl.getPointAtLength(pos);
-      ctx.beginPath();
-      ctx.arc(dotPt.x, dotPt.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.94)';
-      ctx.fill();
-    }
-
-    ctx.restore();
-    requestAnimationFrame(animTick);
-  }
-
-  function startAnim(){
-    if(!rafActive && mq.matches){
-      rafActive = true;
-      requestAnimationFrame(animTick);
-    }
-  }
-
-  function apply(){
-    if(!mq.matches) return;
-    var root   = document.getElementById('baDual');
-    var svg    = document.getElementById('baDualOutline');
-    var pathEl = document.getElementById('baDualBorderPath');
-    var canvas = document.getElementById('baDualCanvas');
-    if(!root || !svg || !pathEl) return;
-    var wraps = root.querySelectorAll('.ba-dual__img-wrap');
-    if(wraps.length < 2) return;
-    var o = buildPath(root, wraps[0].getBoundingClientRect(), wraps[1].getBoundingClientRect());
-    if(!o.d) return;
-    svg.setAttribute('viewBox', '0 0 ' + o.w + ' ' + o.h);
-    pathEl.setAttribute('d', o.d);
-    // Size and position the canvas so it extends canvasExtra px beyond baDual on every side.
-    // This ensures path coordinates that are negative (due to pad) are within canvas bounds.
-    if(canvas){
-      canvasExtra       = pad + 2;
-      var cw            = Math.round(o.w + canvasExtra * 2);
-      var ch            = Math.round(o.h + canvasExtra * 2);
-      canvas.width      = cw;
-      canvas.height     = ch;
-      canvas.style.top    = '-' + canvasExtra + 'px';
-      canvas.style.left   = '-' + canvasExtra + 'px';
-      canvas.style.width  = cw + 'px';
-      canvas.style.height = ch + 'px';
-    }
-    if(pathEl.getTotalLength) totalLen = pathEl.getTotalLength();
-    startAnim();
-  }
-
-  var root = document.getElementById('baDual');
-  if(!root) return;
-
-  function schedule(){
-    if(!mq.matches) return;
-    requestAnimationFrame(apply);
-  }
-
-  window.addEventListener('resize', schedule);
-  window.addEventListener('load', schedule);
-  if(mq.addEventListener) mq.addEventListener('change', schedule);
-  [].forEach.call(root.querySelectorAll('.ba-dual__img'), function(img){
-    img.addEventListener('load', function(){
-      schedule();
-      window.dispatchEvent(new Event('resize'));
-    });
-  });
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
-  if(typeof ResizeObserver !== 'undefined'){
-    new ResizeObserver(schedule).observe(root);
-  }
-  schedule();
-})();
 
 </script>
 
