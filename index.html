@@ -646,6 +646,7 @@ footer a{color:#4d94ff;text-decoration:none}
 @media(max-width:760px){
   .site-nav__links{display:none}
   .site-nav{
+    position:fixed;
     transform:translateY(-100%);
     transition:transform .35s cubic-bezier(.4,0,.2,1);
   }
@@ -1362,7 +1363,7 @@ function scrollToSection(id) {
 (function(){
   function isMobile(){ return window.innerWidth <= 760; }
   var nav = document.querySelector('.site-nav');
-  var target = document.getElementById('ctaWidget');
+  var target = document.querySelector('.mobile-cta');
   if(!nav || !target) return;
   var io = new IntersectionObserver(function(entries){
     if(!isMobile()) return;
