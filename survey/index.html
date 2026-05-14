@@ -4,7 +4,7 @@
 <head>
     <meta charset=UTF-8>
     <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=5">
-    <title>Apply for Coaching</title>
+    <title>Lose 15 Pounds in 6-Weeks for Free | Asher Robinson Fitness</title>
     <meta name=description
         content="Lose 15 pounds in 6-weeks for free with personal coaching. Personalized diet and training for men ages 25-44.">
     <meta name=robots content="index,follow">
@@ -1308,7 +1308,7 @@
                     id: 'commitment',
                     label: 'Commitment',
                     path: 'commitment',
-                    question: 'Will you track food/weight/workouts?',
+                    question: 'Are you willing to track your food, body weight, and workouts?',
                     options: [
                         { value: 'yes', label: 'Yes' },
                         { value: 'no', label: 'No' },
@@ -1337,8 +1337,6 @@
             const answers = {};
             let isTransitioning = false;
 
-            // Read answer values from URL params into the answers object.
-            // Called on every popstate so back/forward always reflects the real state.
             const syncAnswersFromUrl = () => {
                 const params = new URLSearchParams(window.location.search || '');
                 steps.forEach(s => {
@@ -1428,7 +1426,7 @@
 
                         const shouldSendToConfirmation =
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
-                            (step.id === 'age' && (opt.value !== '25_34' && opt.value !== '35_44')) ||
+                            (step.id === 'age' && (opt.value === '17_or_younger' || opt.value === '55_or_older')) ||
                             (step.id === 'gym' && (opt.value === 'no')) ||
                             (step.id === 'commitment' && (opt.value === 'maybe' || opt.value === 'no'));
 
