@@ -295,6 +295,29 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
   .chat-bubble{left:calc(24% + 38px);width:auto;right:5%}
 }
+/* Phone frame wrapper + video screen overlay (block 3) */
+.block--bubble .block-story__thumb .phone-wrap{
+  position:absolute;top:0;
+  left:max(calc(50% - 121px), calc(76px + 1.15rem));
+  transform:translateX(-50%);
+  height:125%;aspect-ratio:819/1121;
+}
+.block--bubble .block-story__thumb .phone-wrap>img{
+  position:static!important;width:100%!important;height:100%!important;
+  left:auto!important;top:auto!important;transform:none!important;
+}
+.block--bubble .block-story__thumb .phone-screen-video{
+  position:absolute;top:25%;left:50%;transform:translateX(-50%);
+  width:83%;bottom:0;border-radius:8px 8px 0 0;overflow:hidden;z-index:2;
+}
+.block--bubble .block-story__thumb .phone-screen-video video{
+  position:static!important;width:100%!important;height:100%!important;
+  left:auto!important;top:auto!important;transform:none!important;
+  object-fit:cover;object-position:50% 65%;display:block;
+}
+@media(min-width:1280px){
+  .block--bubble .block-story__thumb .phone-wrap{left:24%;}
+}
 /* Phone fan stack — scales with card width.
  * available = 100% - 2.3rem (thumb content area matching block-inner padding).
  * main_w    = available / 2.35  (composition = main + 2×0.675×main = 2.35×main)
@@ -835,11 +858,9 @@ footer a{color:#4d94ff;text-decoration:none}
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .45rem .45rem 1.1rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:999px;color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:8px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
+            <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
             Watch Video
-            <span style="width:26px;height:26px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="9" height="11" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="black" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-            </span>
           </button>
         </div>
       </div>
@@ -1002,7 +1023,12 @@ footer a{color:#4d94ff;text-decoration:none}
             <h2 class="block-heading">Why it works</h2>
           </div>
           <div class="block-story__thumb">
-            <img src="coach-check-in-phone-still.webp" alt="">
+            <div class="phone-wrap">
+              <img src="coach-check-in-phone-still.webp" alt="">
+              <div class="phone-screen-video">
+                <video src="andrew-pro-homepage-video.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+              </div>
+            </div>
             <div class="chat-bubble" aria-hidden="true">
               <div class="chat-bubble__body">
                 <div class="chat-bubble__blur"></div>
