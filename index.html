@@ -572,19 +572,18 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   color:var(--muted);
   transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
 }
-.faq-item[open] .faq-chevron{transform:rotate(180deg)}
-.faq-item__body{
+.faq-item--open .faq-chevron{transform:rotate(180deg)}
+.faq-item__body-inner{
   padding:.85rem 1.1rem 1.1rem;
-  border-top:1px solid var(--card-border);
 }
-.faq-item__body p{
+.faq-item__body-inner p{
   font-size:1rem;
   line-height:1.6;
   letter-spacing:-.005em;
   color:var(--text);
   margin:0;
 }
-.faq-item__body p+p{margin-top:.75rem}
+.faq-item__body-inner p+p{margin-top:.75rem}
 
 /* story blocks: video/img fills thumb */
 .block-story__thumb video,.block-story__thumb img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:125%;width:auto;display:block}
@@ -1021,51 +1020,51 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="faq-list">
         <details class="faq-item">
           <summary class="faq-item__summary"><span>You have no testimonials. How do I know this works?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>I don’t have client results yet. What I have is my own: 175 lbs at 17% body fat to 158 lbs at 9% in 8 weeks using the exact system I’ll build for you. At $50 with a full refund guarantee, you’re not betting on my track record. You’re betting on the system.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Every plan you’ve quit was built for a perfect week. Mine is built for a real one. Three workouts, two numbers to track, everything else adjusts around your life. If your last attempt had worked with your schedule, you’d still be doing it.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>$50 is too cheap. Is this serious coaching?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>$50 is the first month. After that it’s $199. The price is low because I want zero financial risk on your end while I prove what I can do. The coaching is real: custom program, daily targets, weekly check-ins, same-day messaging.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>Does this include nutrition coaching?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Yes. You get a daily calorie target and a daily protein target built around your lifestyle. No meal plan, no foods you have to eat or avoid.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>How much time does this take each week?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Three gym sessions, 45 to 60 minutes each. Two minutes a day to log your food. That’s it.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>What does coaching look like after I pay?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Everything runs through an app on your phone. Your training program, check-ins, and direct messaging with me are all in one place. I respond the same day.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>What does the refund actually look like?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>You email me. I refund you. No form, no waiting period, no questions. I also send a reminder on day 25 so you’re not surprised by a charge.</p>
-          </div>
+          </div></div>
         </details>
         <details class="faq-item">
           <summary class="faq-item__summary"><span>Can I cancel anytime?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body">
+          <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Yes. No contract, no cancellation fee.</p>
-          </div>
+          </div></div>
         </details>
       </div>
     </div>
@@ -1262,14 +1261,6 @@ footer a{color:#4d94ff;text-decoration:none}
 </script>
 
 <script>
-/* ── FAQ smooth expand/collapse via Web Animations API ──
- *
- * Why WAAPI instead of CSS transitions:
- * <details> briefly renders content at full height before JS can set
- * maxHeight:0, causing a visible flash then shrink. WAAPI keyframes are
- * applied at the compositor level — before the first paint — so the
- * starting keyframe is committed with zero flicker.
- */
 (function () {
   var DUR  = 380;
   var EASE = 'cubic-bezier(0.4,0,0.2,1)';
@@ -1279,32 +1270,34 @@ footer a{color:#4d94ff;text-decoration:none}
     var body    = el.querySelector('.faq-item__body');
     if (!summary || !body) return;
 
-    /* Take permanent control of body visibility.
-     * Overrides the UA display:none so the element is always laid out —
-     * scrollHeight is always accurate, and the UA never snaps it. */
-    body.style.display  = 'block';
-    body.style.overflow = 'hidden';
+    body.style.display   = 'block';
+    body.style.overflow  = 'hidden';
     body.style.maxHeight = el.open ? 'none' : '0';
+    if (el.open) el.classList.add('faq-item--open');
 
     summary.addEventListener('click', function (e) {
       e.preventDefault();
 
       if (el.open) {
-        /* ── CLOSE ── flip chevron now, animate body shut */
+        /* CLOSE: rotate chevron now; keep [open] until animation finishes
+           so the body stays visible for the full duration of the animation */
+        el.classList.remove('faq-item--open');
         var fromH = body.scrollHeight;
-        el.removeAttribute('open');
         var anim = body.animate(
           [{ maxHeight: fromH + 'px' }, { maxHeight: '0px' }],
-          { duration: DUR, easing: EASE }
+          { duration: DUR, easing: EASE, fill: 'forwards' }
         );
-        anim.onfinish = function () { body.style.maxHeight = '0'; };
-
+        anim.onfinish = function () {
+          el.removeAttribute('open');
+          anim.cancel();
+          body.style.maxHeight = '0';
+        };
       } else {
-        /* ── OPEN ── flip chevron now, animate body open */
+        /* OPEN: set [open] so body is rendered, add class, animate open */
         el.setAttribute('open', '');
-        /* Anchor the inline start value so WAAPI knows to begin from 0 */
+        el.classList.add('faq-item--open');
         body.style.maxHeight = '0';
-        var toH = body.scrollHeight; // accurate because display:block is permanent
+        var toH = body.scrollHeight;
         var anim = body.animate(
           [{ maxHeight: '0px' }, { maxHeight: toH + 'px' }],
           { duration: DUR, easing: EASE }
