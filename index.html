@@ -308,27 +308,41 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .block-story__thumb .phone-behind{width:calc((100% - 2.3rem) * 0.9 / 2.35);height:auto;top:auto;bottom:0;transform:none}
 .block-story__thumb .phone-behind--left{left:1.15rem}
 .block-story__thumb .phone-behind--right{left:calc(50% + (100% - 2.3rem) * 0.275 / 2.35)}
+/* Body: pure CSS shape. border-radius + border + clip-path are all
+   resolution-independent — corners are mathematically perfect at every size. */
+.chat-bubble__body{
+  position:relative;
+  border-radius:16px 16px 16px 0;
+  border:1px solid #3d3d3d;
+  overflow:hidden;
+}
 .chat-bubble__blur{
   position:absolute;
   inset:0;
+  border-radius:16px 16px 16px 0;
+  clip-path:inset(0 round 16px 16px 16px 0);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='270' height='80'%3E%3Cpath d='M0.34%2079.31C0.4%2079.27%204.97%2076.36%204.97%2071.63C4.97%2071.36%205.03%2071.09%205.06%2070.79L5.33%2048.96V17.65C5.33%208.09%2013.04%200.34%2022.56%200.34H251.78C261.3%200.34%20269%208.09%20269%2017.65V61.99C269%2071.55%20261.3%2079.31%20251.78%2079.31H21.05C16.7%2079.31%2011.85%2078.6%207.53%2079.11C6.39%2079.24%205.03%2079.31%203.37%2079.31H0.34Z' fill='black'/%3E%3C/svg%3E");
-  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='270' height='80'%3E%3Cpath d='M0.34%2079.31C0.4%2079.27%204.97%2076.36%204.97%2071.63C4.97%2071.36%205.03%2071.09%205.06%2070.79L5.33%2048.96V17.65C5.33%208.09%2013.04%200.34%2022.56%200.34H251.78C261.3%200.34%20269%208.09%20269%2017.65V61.99C269%2071.55%20261.3%2079.31%20251.78%2079.31H21.05C16.7%2079.31%2011.85%2078.6%207.53%2079.11C6.39%2079.24%205.03%2079.31%203.37%2079.31H0.34Z' fill='black'/%3E%3C/svg%3E");
-  -webkit-mask-size:100% 100%;
-  mask-size:100% 100%;
+  background:rgba(36,36,36,0.62);
 }
-.chat-bubble__bg{
+/* Tail: separate fixed-size SVG (5×9 CSS px). width/height are explicit
+   pixel values so the SVG never stretches — its bezier never distorts.
+   Right + bottom strokes overlap the body's left + bottom borders to
+   form one seamless continuous outline. */
+.chat-bubble__tail{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  bottom:0;
+  left:-5px;
+  width:5px;
+  height:9px;
+  overflow:visible;
+  pointer-events:none;
 }
 .chat-bubble__text{
   position:relative;
   z-index:1;
   display:block;
-  padding:.75rem .95rem .75rem 1.25rem;
+  padding:.55rem .85rem .6rem 1rem;
   color:var(--text);
   font-size:.85rem;
   line-height:1.5;
@@ -990,11 +1004,13 @@ footer a{color:#4d94ff;text-decoration:none}
           <div class="block-story__thumb">
             <img src="coach-check-in-phone-still.webp" alt="">
             <div class="chat-bubble" aria-hidden="true">
-              <div class="chat-bubble__blur"></div>
-              <svg class="chat-bubble__bg" viewBox="0 0 270 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M0.34 79.31C0.4 79.27 4.97 76.36 4.97 71.63C4.97 71.36 5.03 71.09 5.06 70.79L5.33 48.96V17.65C5.33 8.09 13.04 0.34 22.56 0.34H251.78C261.3 0.34 269 8.09 269 17.65V61.99C269 71.55 261.3 79.31 251.78 79.31H21.05C16.7 79.31 11.85 78.6 7.53 79.11C6.39 79.24 5.03 79.31 3.37 79.31H0.34Z" fill="#242424" fill-opacity="0.62" stroke="#3d3d3d" stroke-width="1" vector-effect="non-scaling-stroke"/>
+              <div class="chat-bubble__body">
+                <div class="chat-bubble__blur"></div>
+                <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay on course. 💪</p>
+              </div>
+              <svg class="chat-bubble__tail" viewBox="0 0 5 9" width="5" height="9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M0 9 C0.1 8.95, 5 5.9, 5 0 L5 9 Z" fill="#242424" fill-opacity="0.62" stroke="#3d3d3d" stroke-width="1" vector-effect="non-scaling-stroke"/>
               </svg>
-              <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay on course. 💪</p>
             </div>
           </div>
           <div class="block-body">
