@@ -15,12 +15,17 @@ export default async function handler(req, res) {
         // Try with automatic_tax first (requires Stripe Tax enabled in dashboard).
         // Falls back silently if not configured so the payment form never breaks.
         let subscription;
+        const paymentSettings = {
+            save_default_payment_method: 'on_subscription',
+            payment_method_types: ['card', 'link'],
+        };
+
         try {
             subscription = await stripe.subscriptions.create({
                 customer: customer.id,
                 items: [{ price: PRICE_ID }],
                 payment_behavior: 'default_incomplete',
-                payment_settings: { save_default_payment_method: 'on_subscription' },
+                payment_settings: paymentSettings,
                 discounts: [{ promotion_code: PROMO_ID }],
                 automatic_tax: { enabled: true },
                 expand: ['latest_invoice.payment_intent'],
@@ -31,7 +36,7 @@ export default async function handler(req, res) {
                 customer: customer.id,
                 items: [{ price: PRICE_ID }],
                 payment_behavior: 'default_incomplete',
-                payment_settings: { save_default_payment_method: 'on_subscription' },
+                payment_settings: paymentSettings,
                 discounts: [{ promotion_code: PROMO_ID }],
                 expand: ['latest_invoice.payment_intent'],
             });
