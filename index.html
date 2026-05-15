@@ -1032,7 +1032,7 @@ footer a{color:#4d94ff;text-decoration:none}
             <div class="chat-bubble" aria-hidden="true">
               <div class="chat-bubble__body">
                 <div class="chat-bubble__blur"></div>
-                <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay on course. 💪</p>
+                <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay the course. 💪</p>
               </div>
               <svg class="chat-bubble__tail" viewBox="0 0 5 9" width="5" height="9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M0 9 C0.1 8.95, 5 5.9, 5 0 L5 9 Z" fill="#242424" fill-opacity="0.62" stroke="#3d3d3d" stroke-width="1" vector-effect="non-scaling-stroke"/>
@@ -1229,15 +1229,21 @@ footer a{color:#4d94ff;text-decoration:none}
   var widget = document.getElementById('ctaWidget');
   if(!videoWrap || !widget) return;
 
-  function apply(){
+  function setHeight(vh){
     if(!mq.matches){
       widget.style.height = '';
       widget.style.minHeight = '';
       return;
     }
-    var vh = videoWrap.getBoundingClientRect().height;
     widget.style.height = vh + 'px';
     widget.style.minHeight = vh + 'px';
+  }
+
+  function apply(){
+    if(!mq.matches){ setHeight(0); return; }
+    requestAnimationFrame(function(){
+      setHeight(videoWrap.getBoundingClientRect().height);
+    });
   }
 
   if(mq.addEventListener){
@@ -1249,7 +1255,9 @@ footer a{color:#4d94ff;text-decoration:none}
   window.addEventListener('load', apply);
 
   if(typeof ResizeObserver !== 'undefined'){
-    new ResizeObserver(apply).observe(videoWrap);
+    new ResizeObserver(function(entries){
+      setHeight(entries[0].contentRect.height);
+    }).observe(videoWrap);
   }
 
   if(document.fonts && document.fonts.ready){
