@@ -17,7 +17,6 @@ export default async function handler(req, res) {
         let subscription;
         const paymentSettings = {
             save_default_payment_method: 'on_subscription',
-            payment_method_types: ['card', 'link'],
         };
 
         try {
