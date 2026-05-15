@@ -887,13 +887,13 @@ footer a{color:#4d94ff;text-decoration:none}
 <div class="ba-dual__row">
               <div class="ba-dual__photo" data-ba-side="left">
                 <div class="ba-dual__img-wrap">
-                  <img class="ba-dual__img" loading="lazy" src="https://i.postimg.cc/RZXM7HmG/beseven.webp" alt="Before coaching">
+                  <img class="ba-dual__img" src="https://i.postimg.cc/RZXM7HmG/beseven.webp" alt="Before coaching">
                 </div>
               </div>
               <div class="ba-dual__spacer" aria-hidden="true"></div>
               <div class="ba-dual__photo" data-ba-side="right">
                 <div class="ba-dual__img-wrap">
-                  <img class="ba-dual__img" loading="lazy" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After coaching">
+                  <img class="ba-dual__img" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After coaching">
                 </div>
               </div>
             </div>
@@ -1026,7 +1026,7 @@ footer a{color:#4d94ff;text-decoration:none}
             <div class="phone-wrap">
               <img src="https://i.postimg.cc/63BN262j/coach-check-in-phone-still.webp" alt="">
               <div class="phone-screen-video">
-                <video src="andrew-pro-homepage-video.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
+                <video id="phoneVideo" data-src="andrew-pro-homepage-video.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
               </div>
             </div>
             <div class="chat-bubble" aria-hidden="true">
@@ -1238,7 +1238,6 @@ footer a{color:#4d94ff;text-decoration:none}
     var vh = videoWrap.getBoundingClientRect().height;
     widget.style.height = vh + 'px';
     widget.style.minHeight = vh + 'px';
-    window.dispatchEvent(new Event('resize'));
   }
 
   if(mq.addEventListener){
@@ -1321,10 +1320,9 @@ footer a{color:#4d94ff;text-decoration:none}
       e.preventDefault();
 
       if (el.open) {
-        /* CLOSE: rotate chevron now; keep [open] until animation finishes
-           so the body stays visible for the full duration of the animation */
-        el.classList.remove('faq-item--open');
+        /* CLOSE: read height before mutating to avoid forced reflow */
         var fromH = body.scrollHeight;
+        el.classList.remove('faq-item--open');
         var anim = body.animate(
           [{ maxHeight: fromH + 'px' }, { maxHeight: '0px' }],
           { duration: DUR, easing: EASE, fill: 'forwards' }
@@ -1339,12 +1337,15 @@ footer a{color:#4d94ff;text-decoration:none}
         el.setAttribute('open', '');
         el.classList.add('faq-item--open');
         body.style.maxHeight = '0';
-        var toH = body.scrollHeight;
-        var anim = body.animate(
-          [{ maxHeight: '0px' }, { maxHeight: toH + 'px' }],
-          { duration: DUR, easing: EASE }
-        );
-        anim.onfinish = function () { body.style.maxHeight = 'none'; };
+        /* rAF defers the scrollHeight read until after paint to avoid forced reflow */
+        requestAnimationFrame(function(){
+          var toH = body.scrollHeight;
+          var anim = body.animate(
+            [{ maxHeight: '0px' }, { maxHeight: toH + 'px' }],
+            { duration: DUR, easing: EASE }
+          );
+          anim.onfinish = function () { body.style.maxHeight = 'none'; };
+        });
       }
     });
   });
@@ -1407,5 +1408,19 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
 }
 </script>
 
+<script>
+(function(){
+  var v = document.getElementById('phoneVideo');
+  if(!v) return;
+  var io = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){
+      v.src = v.dataset.src;
+      v.load();
+      io.disconnect();
+    }
+  }, {rootMargin:'200px'});
+  io.observe(v);
+})();
+</script>
 </body>
 </html>
