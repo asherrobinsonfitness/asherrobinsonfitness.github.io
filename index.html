@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  var __abCookie = document.cookie.match(/ab_variant=([ab])/);
+  var __abVariant = __abCookie ? __abCookie[1] : (Math.random() < 0.5 ? 'a' : 'b');
+  if (!__abCookie) {
+    document.cookie = 'ab_variant=' + __abVariant + ';max-age=2592000;path=/';
+  }
+  window.__abVariant = __abVariant;
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Online Fat Loss Coaching</title>
 <meta name="description" content="Lose 15 pounds in 6-weeks for free with personal coaching. Personalized diet and training for men ages 25-44.">
@@ -1428,6 +1436,15 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
     }
   }, {rootMargin:'200px'});
   io.observe(v);
+})();
+</script>
+<script>
+(function() {
+  if (window.__abVariant !== 'b') return;
+  var B_HEADLINE = "I Dropped 17 Pounds In 8 Weeks. Now I\u2019ll Help You Do The Same.";
+  document.querySelectorAll('.headline, .cta-widget__title').forEach(function(el) {
+    el.textContent = B_HEADLINE;
+  });
 })();
 </script>
 </body>
