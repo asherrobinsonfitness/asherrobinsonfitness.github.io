@@ -1127,8 +1127,12 @@
 <script>
     // Guard: redirect to survey if required answer params are missing
     (function guardPaymentPage() {
-        const required = ['goal', 'age', 'gym', 'commitment'];
         const params = new URLSearchParams(window.location.search || '');
+        // When Stripe redirects back after 3DS/bank auth, the URL has
+        // payment_intent_client_secret but not the survey params — skip the guard
+        // so handleRedirectReturn() can complete the payment.
+        if (params.has('payment_intent_client_secret')) return;
+        const required = ['goal', 'age', 'gym', 'commitment'];
         if (!required.every(p => params.has(p))) {
             window.location.replace('/survey');
         }
@@ -1219,7 +1223,7 @@
             return true;
         }
 
-        if (paymentIntent.status === 'succeeded') {
+        if (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing') {
             window.location.href = 'https://asherrobinsonfitness.com/welcome';
         } else {
             if (form) form.innerHTML = `<div class="redirect-loading"><div class="redirect-text">Payment status: ${paymentIntent.status}. <a href="/payment" style="color:#06f">Try again</a></div></div>`;
@@ -1289,10 +1293,15 @@
             if (section) section.style.display = hasAny ? '' : 'none';
         });
 
-        expressCheckoutElement.on('confirm', async () => {
+        expressCheckoutElement.on('confirm', async (event) => {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
-                confirmParams: { return_url: returnUrl },
+                confirmParams: {
+                    return_url: returnUrl,
+                    payment_method_data: {
+                        billing_details: event.billingDetails,
+                    },
+                },
                 redirect: 'if_required',
             });
             if (error) { showError(error.message || 'Something went wrong. Please try again.'); return; }
