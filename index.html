@@ -1148,7 +1148,12 @@ footer a{color:#4d94ff;text-decoration:none}
 
   function hideOverlay(){
     overlay.style.display = 'none';
-    if(poster) poster.style.display = 'none';
+  }
+
+  if(poster){
+    vid.addEventListener('playing', function(){
+      poster.style.display = 'none';
+    }, { once: true });
   }
 
   // CTP button hover
