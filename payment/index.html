@@ -1283,6 +1283,19 @@
             buttonType:  { applePay: 'plain', googlePay: 'plain', link: 'pay' },
             layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
             paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
+            applePay: {
+                recurringPaymentRequest: {
+                    paymentDescription: 'Online Coaching with Asher',
+                    regularBilling: {
+                        amount: 19900,
+                        label: 'Online Coaching — Monthly',
+                        recurringPaymentIntervalUnit: 'month',
+                        recurringPaymentIntervalCount: 1,
+                    },
+                    billingAgreement: 'First month $50, then $199/month. Cancel anytime.',
+                    managementURL: 'https://asherrobinsonfitness.com',
+                },
+            },
         });
         expressCheckoutElement.mount('#express-checkout-element');
 
