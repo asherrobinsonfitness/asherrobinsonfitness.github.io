@@ -1030,6 +1030,7 @@
             font-size: 0.9rem;
             margin: 0 auto var(--space-4);
             white-space: nowrap;
+            position: relative;
         }
 
         .survey-step {
@@ -1039,23 +1040,22 @@
 
         .survey-step--active {
             color: #f9fafb;
-            position: relative;
         }
 
-        .survey-step--active::after {
-            content: "";
+        .survey-step--completed {
+            color: var(--text);
+        }
+
+        .survey-step-dot {
             position: absolute;
-            left: 50%;
-            bottom: -0.3rem;
+            bottom: 0.3rem;
             width: 4px;
             height: 4px;
             border-radius: 999px;
             background-color: #f9fafb;
             transform: translateX(-50%);
-        }
-
-        .survey-step--completed {
-            color: var(--text);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
         }
 
         .survey-question {
@@ -1080,10 +1080,9 @@
             padding: 0.9rem 1.25rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             font-size: 0.98rem;
             cursor: pointer;
-            transition: background-color 0.12s ease, border-color 0.12s ease;
+            transition: background-color 0.12s ease;
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -1103,69 +1102,36 @@
             text-align: left;
         }
 
-        .survey-option-indicator {
-            width: 22px;
-            height: 22px;
-            border-radius: 999px;
-            border: 2px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            background-color: transparent;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.12s ease, transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+        @keyframes slideExitForward {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(-24px); }
+        }
+        @keyframes slideExitBackward {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(24px); }
+        }
+        @keyframes slideEnterForward {
+            from { opacity: 0; transform: translateX(24px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideEnterBackward {
+            from { opacity: 0; transform: translateX(-24px); }
+            to   { opacity: 1; transform: translateX(0); }
         }
 
-        .survey-option-indicator-inner {
-            display: none;
+        .survey-content.slide-exit-forward {
+            animation: slideExitForward 0.18s ease-out forwards;
+            pointer-events: none;
         }
-
-        .survey-option.loading .survey-option-indicator {
-            opacity: 1;
-            transform: scale(1);
+        .survey-content.slide-exit-backward {
+            animation: slideExitBackward 0.18s ease-out forwards;
+            pointer-events: none;
         }
-
-        .survey-option.loading .survey-option-indicator::before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            border-radius: 999px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-top-color: #ffffff;
-            animation: survey-spinner 0.7s linear infinite;
-            box-sizing: border-box;
+        .survey-content.slide-enter-forward {
+            animation: slideEnterForward 0.22s ease-out forwards;
         }
-
-        .survey-option.selected {
-            --selected-bg: #303030;
-            border: 1px solid var(--primary);
-            background-color: var(--selected-bg);
-        }
-
-        .survey-option.selected .survey-option-indicator {
-            opacity: 1;
-            transform: scale(1);
-            border-color: transparent;
-            background-color: var(--primary);
-        }
-
-        .survey-option.selected:not(.loading) .survey-option-indicator::before {
-            content: "✓";
-            font-size: 0.9rem;
-            line-height: 1;
-            color: #fff;
-        }
-
-        @keyframes survey-spinner {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+        .survey-content.slide-enter-backward {
+            animation: slideEnterBackward 0.22s ease-out forwards;
         }
 
         .survey-prev-step {
@@ -1303,15 +1269,18 @@
                     <span class="survey-step" data-step-id="age">Age</span>
                     <span class="survey-step" data-step-id="gym">Gym</span>
                     <span class="survey-step" data-step-id="commitment">Commitment</span>
+                    <span class="survey-step-dot" id="survey-step-dot" aria-hidden="true"></span>
                 </div>
-                <h1 class="survey-question" id="survey-question-text">What is your top fitness goal?</h1>
-                <form id="fitness-goal-form">
-                    <div class="survey-options" id="survey-options-container">
-                        <!-- options will be injected by script -->
+                <div id="survey-content">
+                    <h1 class="survey-question" id="survey-question-text">What is your top fitness goal?</h1>
+                    <form id="fitness-goal-form">
+                        <div class="survey-options" id="survey-options-container">
+                            <!-- options will be injected by script -->
+                        </div>
+                    </form>
+                    <div style="display:flex; justify-content:center;">
+                        <button type="button" class="survey-prev-step" id="survey-prev-step">Previous step</button>
                     </div>
-                </form>
-                <div style="display:flex; justify-content:center;">
-                    <button type="button" class="survey-prev-step" id="survey-prev-step">Previous step</button>
                 </div>
             </div>
         </div>
@@ -1389,8 +1358,6 @@
                 return query ? `${base}?${query}` : base;
             };
 
-            const MIN_STEP_DELAY_MS = 400;
-
             let currentStepIndex = 0;
             const answers = {};
             let isTransitioning = false;
@@ -1409,36 +1376,41 @@
             const stepsPill = document.getElementById('survey-steps-pill');
             const prevButton = document.getElementById('survey-prev-step');
 
-            // Always start at step 0 on a fresh page load.
-            // Answers live only in JS memory — jumping to a mid-step URL with no answers
-            // would leave the progress bar in a broken half-completed state.
             currentStepIndex = 0;
 
-            const renderStep = () => {
+            const moveDot = (instant) => {
+                const dot = document.getElementById('survey-step-dot');
+                const activeSpan = stepsPill && stepsPill.querySelector('.survey-step--active');
+                if (!dot || !activeSpan || !stepsPill) return;
+                const pillRect = stepsPill.getBoundingClientRect();
+                const spanRect = activeSpan.getBoundingClientRect();
+                const centerX = spanRect.left - pillRect.left + spanRect.width / 2;
+                if (instant) {
+                    dot.style.transition = 'none';
+                    dot.style.left = centerX + 'px';
+                    requestAnimationFrame(() => { dot.style.transition = ''; });
+                } else {
+                    dot.style.left = centerX + 'px';
+                }
+            };
+
+            const updatePill = (instant) => {
                 const step = steps[currentStepIndex];
-                if (!step || !questionEl || !optionsContainer) return;
+                if (!stepsPill) return;
+                const spans = stepsPill.querySelectorAll('.survey-step');
+                spans.forEach((span) => {
+                    const stepId = span.getAttribute('data-step-id');
+                    const indexForSpan = steps.findIndex(s => s.id === stepId);
+                    const isActive = stepId === step.id;
+                    const isCompleted = indexForSpan > -1 && indexForSpan < currentStepIndex && answers[steps[indexForSpan].id];
+                    span.classList.toggle('survey-step--active', isActive);
+                    span.classList.toggle('survey-step--completed', isCompleted);
+                });
+                moveDot(instant);
+            };
 
-                questionEl.textContent = step.question;
-
-                // Update steps pill
-                if (stepsPill) {
-                    const spans = stepsPill.querySelectorAll('.survey-step');
-                    spans.forEach((span) => {
-                        const stepId = span.getAttribute('data-step-id');
-                        const indexForSpan = steps.findIndex(s => s.id === stepId);
-                        const isActive = stepId === step.id;
-                        const isCompleted = indexForSpan > -1 && indexForSpan < currentStepIndex && answers[steps[indexForSpan].id];
-                        span.classList.toggle('survey-step--active', isActive);
-                        span.classList.toggle('survey-step--completed', isCompleted);
-                    });
-                }
-
-                // Show/hide previous button
-                if (prevButton) {
-                    prevButton.style.visibility = currentStepIndex === 0 ? 'hidden' : 'visible';
-                }
-
-                // Render options
+            const buildOptions = () => {
+                const step = steps[currentStepIndex];
                 optionsContainer.innerHTML = '';
                 step.options.forEach((opt) => {
                     const button = document.createElement('button');
@@ -1450,18 +1422,8 @@
                     labelSpan.className = 'survey-option-label';
                     labelSpan.textContent = opt.label;
 
-                    const indicator = document.createElement('span');
-                    indicator.className = 'survey-option-indicator';
-                    indicator.setAttribute('aria-hidden', 'true');
-
-                    const indicatorInner = document.createElement('span');
-                    indicatorInner.className = 'survey-option-indicator-inner';
-                    indicator.appendChild(indicatorInner);
-
                     button.appendChild(labelSpan);
-                    button.appendChild(indicator);
 
-                    // Mobile press feedback (touch devices don't get :hover)
                     button.addEventListener('touchstart', () => button.classList.add('pressing'), { passive: true });
                     button.addEventListener('touchend', () => button.classList.remove('pressing'), { passive: true });
                     button.addEventListener('touchcancel', () => button.classList.remove('pressing'), { passive: true });
@@ -1472,62 +1434,81 @@
                         isTransitioning = true;
                         answers[step.id] = opt.value;
 
-                        optionsContainer.querySelectorAll('.survey-option').forEach(btn => btn.classList.remove('loading'));
-                        button.classList.add('loading');
-
-                        const redirectToConfirmation = () => {
-                            const confirmParams = new URLSearchParams(window.location.search || '');
-                            confirmParams.set(step.id, opt.value);
-                            confirmParams.delete('step');
-                            window.location.href = '/not-a-fit?' + confirmParams.toString();
-                        };
-
                         const shouldSendToConfirmation =
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
                             (step.id === 'age' && (opt.value === '17_or_younger' || opt.value === '55_or_older')) ||
                             (step.id === 'gym' && (opt.value === 'no' || opt.value === 'home')) ||
                             (step.id === 'commitment' && (opt.value === 'maybe' || opt.value === 'no'));
 
-                        const goNext = () => {
-                            if (shouldSendToConfirmation) {
-                                redirectToConfirmation();
-                                return;
-                            }
-                            if (currentStepIndex < steps.length - 1) {
-                                // Push next step into history so browser back returns here
-                                const nextIndex = currentStepIndex + 1;
-                                const nextStep = steps[nextIndex];
-                                const nextParams = new URLSearchParams(window.location.search || '');
-                                nextParams.set(step.id, opt.value);
-                                nextParams.set('step', nextStep.path);
-                                window.history.pushState({ stepIndex: nextIndex }, '', `${getBaseSurveyUrl()}?${nextParams}`);
-                                currentStepIndex = nextIndex;
-                                renderStep();
-                                isTransitioning = false;
-                            } else {
-                                const redirectParams = new URLSearchParams(window.location.search || '');
-                                redirectParams.delete('step');
-                                Object.entries(answers).forEach(function(entry) { redirectParams.set(entry[0], entry[1]); });
-                                window.location.href = '/complete-sign-up?' + redirectParams.toString();
-                            }
-                        };
+                        if (shouldSendToConfirmation) {
+                            const confirmParams = new URLSearchParams(window.location.search || '');
+                            confirmParams.set(step.id, opt.value);
+                            confirmParams.delete('step');
+                            window.location.href = '/not-a-fit?' + confirmParams.toString();
+                            return;
+                        }
 
-                        setTimeout(goNext, MIN_STEP_DELAY_MS);
+                        if (currentStepIndex < steps.length - 1) {
+                            const nextIndex = currentStepIndex + 1;
+                            const nextStep = steps[nextIndex];
+                            const nextParams = new URLSearchParams(window.location.search || '');
+                            nextParams.set(step.id, opt.value);
+                            nextParams.set('step', nextStep.path);
+                            window.history.pushState({ stepIndex: nextIndex }, '', `${getBaseSurveyUrl()}?${nextParams}`);
+                            currentStepIndex = nextIndex;
+                            renderStep('forward');
+                        } else {
+                            const redirectParams = new URLSearchParams(window.location.search || '');
+                            redirectParams.delete('step');
+                            Object.entries(answers).forEach(function(entry) { redirectParams.set(entry[0], entry[1]); });
+                            window.location.href = '/complete-sign-up?' + redirectParams.toString();
+                        }
                     });
 
                     optionsContainer.appendChild(button);
                 });
             };
 
-            // "Previous step" button calls history.back() — identical to the browser back button.
-            // Both are handled by the popstate listener below, so they always stay in sync.
+            const updateContent = () => {
+                const step = steps[currentStepIndex];
+                questionEl.textContent = step.question;
+                if (prevButton) {
+                    prevButton.style.visibility = currentStepIndex === 0 ? 'hidden' : 'visible';
+                }
+                buildOptions();
+            };
+
+            const renderStep = (direction) => {
+                if (!direction) {
+                    updatePill(true);
+                    updateContent();
+                    return;
+                }
+
+                const content = document.getElementById('survey-content');
+                const exitClass = 'slide-exit-' + direction;
+                const enterClass = 'slide-enter-' + direction;
+
+                updatePill();
+                content.classList.add(exitClass);
+
+                setTimeout(() => {
+                    content.classList.remove(exitClass);
+                    updateContent();
+                    content.classList.add(enterClass);
+                    content.addEventListener('animationend', () => {
+                        content.classList.remove(enterClass);
+                        isTransitioning = false;
+                    }, { once: true });
+                }, 180);
+            };
+
             if (prevButton) {
                 prevButton.addEventListener('click', () => {
                     window.history.back();
                 });
             }
 
-            // Single source of truth for going backwards — handles both browser back AND the button
             window.addEventListener('popstate', (event) => {
                 isTransitioning = false;
                 let idx = 0;
@@ -1543,18 +1524,15 @@
                 }
                 currentStepIndex = Math.max(0, Math.min(idx, steps.length - 1));
                 syncAnswersFromUrl();
-                renderStep();
+                renderStep('backward');
             });
 
-            // Stamp the initial state so browser back from step 0 has a clean baseline
             window.history.replaceState({ stepIndex: currentStepIndex }, '', urlForStep(steps[currentStepIndex]));
             renderStep();
 
-            // bfcache restore — pageshow fires when returning via browser back/forward
             window.addEventListener('pageshow', (event) => {
                 isTransitioning = false;
                 if (event.persisted) {
-                    // Returning from payment or elsewhere — wipe state and restart from Goal
                     Object.keys(answers).forEach(k => delete answers[k]);
                     currentStepIndex = 0;
                     window.history.replaceState({ stepIndex: 0 }, '', urlForStep(steps[0]));
