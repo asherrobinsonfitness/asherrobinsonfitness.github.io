@@ -839,7 +839,7 @@ footer a{color:#4d94ff;text-decoration:none}
 .legal-overlay.active { display: flex; animation: legalFade .18s ease; }
 @keyframes legalFade { from { opacity: 0 } to { opacity: 1 } }
 .legal-modal {
-  background: #161616; border: 1px solid #272727; border-radius: 12px;
+  background: #222; border: 1px solid var(--card-border, #3d3d3d); border-radius: 12px;
   width: 100%; max-width: 700px; max-height: 88vh; display: flex;
   flex-direction: column;
   animation: legalSlide .2s ease;
@@ -850,10 +850,10 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 .legal-modal-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 1.5rem; border-bottom: 1px solid #222; flex-shrink: 0;
+  padding: .625rem 1.5rem; border-bottom: 1px solid var(--card-border, #3d3d3d); flex-shrink: 0;
 }
 .legal-modal-title {
-  font-size: .9rem; font-weight: 700; color: #f0f0f0;
+  font-size: .8125rem; font-weight: 600; color: #F8FAFC;
 }
 .legal-modal-close {
   background: transparent; border: none; color: rgba(255,255,255,.65); width: 30px; height: 30px;
@@ -868,26 +868,26 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 .legal-modal-body::-webkit-scrollbar { display: none; }
 .legal-modal-body h2 {
-  font-size: 1.375rem; font-weight: 700; color: #f0f0f0;
+  font-size: 1.375rem; font-weight: 700; color: var(--text);
   margin-bottom: .375rem; line-height: 1.3;
 }
 .legal-modal-body .legal-effective {
-  font-size: .75rem; color: #555; margin-bottom: 1.75rem;
+  font-size: .75rem; color: #9ca3af; margin-bottom: 1.75rem;
 }
 .legal-modal-body h3 {
-  font-size: .875rem; font-weight: 700; color: #777; margin: 1.75rem 0 .625rem;
-  padding-top: 1.375rem; border-top: 1px solid #1e1e1e;
+  font-size: .875rem; font-weight: 700; color: var(--text); margin: 1.75rem 0 .625rem;
+  padding-top: 1.375rem; border-top: 1px solid var(--card-border, #3d3d3d);
 }
 .legal-modal-body p {
-  font-size: .875rem; line-height: 1.8; color: #999; margin-bottom: .75rem;
+  font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .75rem;
 }
 .legal-modal-body ul { margin: 0 0 .875rem 1.125rem; }
 .legal-modal-body ul li {
-  font-size: .875rem; line-height: 1.8; color: #999; margin-bottom: .25rem;
+  font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .25rem;
 }
 .legal-modal-body a { color: #4d94ff; text-decoration: none; }
 .legal-modal-body a:hover { color: #4d94ff; }
-.legal-modal-body strong { color: #d0d0d0; font-weight: 600; }
+.legal-modal-body strong { color: var(--text); font-weight: 600; }
 </style>
 </head>
 <body>
