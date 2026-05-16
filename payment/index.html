@@ -978,10 +978,9 @@
 .legal-modal-close:hover { background: rgba(235,235,235,.1); color: #fff; }
 .legal-modal-body {
   overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1;
-  scrollbar-width: thin; scrollbar-color: #333 transparent;
+  scrollbar-width: none;
 }
-.legal-modal-body::-webkit-scrollbar { width: 5px; }
-.legal-modal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+.legal-modal-body::-webkit-scrollbar { display: none; }
 .legal-modal-body h2 {
   font-size: 1.375rem; font-weight: 700; color: #f0f0f0;
   margin-bottom: .375rem; line-height: 1.3;
@@ -1126,9 +1125,8 @@
                 <button type="submit" id="submit-stripe" form="payment-form">
                     <span id="submit-stripe-text">Begin Coaching</span>
                 </button>
-                <p class="payment-legal">
-                    By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms &amp; Services</button>. By purchasing, you confirm you are 18 or older. Coaching is not medical advice — consult a physician before starting any diet or exercise program.
-                </p>
+                <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
+                <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
                 <p class="security-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z"/>
@@ -1568,7 +1566,7 @@
       <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
 
       <h3>5. Cancellation</h3>
-      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period — you will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
 
       <h3>6. 30-Day Results Guarantee</h3>
       <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
@@ -1635,9 +1633,9 @@
       <h3>4. Sharing of Information</h3>
       <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
       <ul>
-        <li><strong>Stripe, Inc.</strong> — payment processing, subject to Stripe's Privacy Policy</li>
-        <li><strong>Meta Platforms, Inc.</strong> — advertising measurement via the Meta Pixel</li>
-        <li><strong>Coaching app provider</strong> — delivery of your training and check-in program</li>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
       </ul>
       <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
 
