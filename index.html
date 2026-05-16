@@ -832,21 +832,34 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 .legal-link:hover { color: #4d94ff; }
 .legal-overlay {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55);
   backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem;
+  perspective: 1000px;
+  opacity: 0; visibility: hidden; pointer-events: none;
 }
-.legal-overlay.active { display: flex; animation: legalFade .18s ease; }
-@keyframes legalFade { from { opacity: 0 } to { opacity: 1 } }
+.legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
+.legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes legalFadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes legalFadeOut { from { opacity: 1 } to { opacity: 0 } }
 .legal-modal {
   background: #222; border: 1px solid var(--card-border, #3d3d3d); border-radius: 12px;
   width: 100%; max-width: 700px; max-height: 88vh; display: flex;
   flex-direction: column;
-  animation: legalSlide .2s ease;
 }
-@keyframes legalSlide {
-  from { transform: translateY(18px); opacity: 0 }
-  to   { transform: translateY(0); opacity: 1 }
+.legal-overlay.active .legal-modal {
+  animation: legalFlipIn .34s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes legalFlipIn {
+  from { transform: rotateY(-90deg) scale(0.9); }
+  to   { transform: rotateY(0deg) scale(1); }
+}
+.legal-overlay.closing .legal-modal {
+  animation: legalFlipOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes legalFlipOut {
+  from { transform: rotateY(0deg) scale(1); }
+  to   { transform: rotateY(90deg) scale(0.9); }
 }
 .legal-modal-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -1632,22 +1645,25 @@ function openLegal(which) {
 function closeLegal(which) {
   var overlay = document.getElementById('modal-' + which);
   if (!overlay) return;
-  overlay.classList.remove('active');
-  document.body.style.overflow = '';
+  overlay.classList.add('closing');
+  setTimeout(function() {
+    overlay.classList.remove('active', 'closing');
+    document.body.style.overflow = '';
+  }, 340);
 }
 document.querySelectorAll('.legal-overlay').forEach(function(overlay) {
   overlay.addEventListener('click', function(e) {
     if (e.target === overlay) {
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
+      var id = overlay.id.replace('modal-', '');
+      closeLegal(id);
     }
   });
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     document.querySelectorAll('.legal-overlay.active').forEach(function(o) {
-      o.classList.remove('active');
-      document.body.style.overflow = '';
+      var id = o.id.replace('modal-', '');
+      closeLegal(id);
     });
   }
 });
