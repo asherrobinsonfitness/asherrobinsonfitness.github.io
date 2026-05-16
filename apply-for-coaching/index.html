@@ -1271,7 +1271,7 @@
                     <span class="survey-step" data-step-id="commitment">Commitment</span>
                     <span class="survey-step-dot" id="survey-step-dot" aria-hidden="true"></span>
                 </div>
-                <div id="survey-content">
+                <div id="survey-content" class="survey-content">
                     <h1 class="survey-question" id="survey-question-text">What is your top fitness goal?</h1>
                     <form id="fitness-goal-form">
                         <div class="survey-options" id="survey-options-container">
@@ -1496,10 +1496,15 @@
                     content.classList.remove(exitClass);
                     updateContent();
                     content.classList.add(enterClass);
-                    content.addEventListener('animationend', () => {
+                    let settled = false;
+                    const finish = () => {
+                        if (settled) return;
+                        settled = true;
                         content.classList.remove(enterClass);
                         isTransitioning = false;
-                    }, { once: true });
+                    };
+                    content.addEventListener('animationend', finish, { once: true });
+                    setTimeout(finish, 280);
                 }, 180);
             };
 
