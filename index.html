@@ -864,10 +864,9 @@ footer a{color:#4d94ff;text-decoration:none}
 .legal-modal-close:hover { background: rgba(235,235,235,.1); color: #fff; }
 .legal-modal-body {
   overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1;
-  scrollbar-width: thin; scrollbar-color: #333 transparent;
+  scrollbar-width: none;
 }
-.legal-modal-body::-webkit-scrollbar { width: 5px; }
-.legal-modal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+.legal-modal-body::-webkit-scrollbar { display: none; }
 .legal-modal-body h2 {
   font-size: 1.375rem; font-weight: 700; color: #f0f0f0;
   margin-bottom: .375rem; line-height: 1.3;
@@ -1524,7 +1523,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
       <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
 
       <h3>5. Cancellation</h3>
-      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period — you will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
 
       <h3>6. 30-Day Results Guarantee</h3>
       <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
@@ -1591,9 +1590,9 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
       <h3>4. Sharing of Information</h3>
       <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
       <ul>
-        <li><strong>Stripe, Inc.</strong> — payment processing, subject to Stripe's Privacy Policy</li>
-        <li><strong>Meta Platforms, Inc.</strong> — advertising measurement via the Meta Pixel</li>
-        <li><strong>Coaching app provider</strong> — delivery of your training and check-in program</li>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
       </ul>
       <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
 
