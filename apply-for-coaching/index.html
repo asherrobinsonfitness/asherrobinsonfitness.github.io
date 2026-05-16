@@ -1048,7 +1048,7 @@
 
         .survey-step-dot {
             position: absolute;
-            bottom: 0.3rem;
+            bottom: 0.4rem;
             width: 4px;
             height: 4px;
             border-radius: 999px;
@@ -1100,6 +1100,40 @@
         .survey-option-label {
             flex: 1;
             text-align: left;
+        }
+
+        .survey-option-indicator {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.12s ease, transform 0.12s ease;
+        }
+
+        .survey-option.loading .survey-option-indicator {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .survey-option.loading .survey-option-indicator::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-top-color: #ffffff;
+            animation: survey-spinner 0.7s linear infinite;
+            box-sizing: border-box;
+        }
+
+        @keyframes survey-spinner {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
         }
 
         @keyframes slideExitForward {
@@ -1185,6 +1219,41 @@
             }
         }
 
+.naf-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem;
+}
+.naf-overlay.active { display: flex; animation: legalFade .18s ease; }
+.naf-modal-box {
+  max-width: 460px;
+  max-height: none;
+}
+.naf-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.25rem 2rem 2rem;
+  gap: 0.75rem;
+}
+.naf-modal-body h2 {
+  font-size: 1.375rem; font-weight: 700; color: var(--text);
+  line-height: 1.3; margin: 0;
+}
+.naf-modal-body p {
+  font-size: .875rem; line-height: 1.8; color: #9ca3af; margin: 0;
+}
+.naf-modal-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 0.75rem; padding: 0.75rem 2.5rem; border-radius: 8px;
+  background-color: var(--primary); color: #fff; font-weight: 600;
+  font-size: 1rem; border: none; cursor: pointer; text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .naf-modal-btn:hover { background-color: #0052cc; }
+}
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
   font-size: .8125rem; color: #4d94ff; text-decoration: none;
@@ -1268,7 +1337,7 @@
                     <span class="survey-step survey-step--active" data-step-id="goal">Goal</span>
                     <span class="survey-step" data-step-id="age">Age</span>
                     <span class="survey-step" data-step-id="gym">Gym</span>
-                    <span class="survey-step" data-step-id="commitment">Commitment</span>
+                    <span class="survey-step" data-step-id="commitment">Tracking</span>
                     <span class="survey-step-dot" id="survey-step-dot" aria-hidden="true"></span>
                 </div>
                 <div id="survey-content" class="survey-content">
@@ -1311,12 +1380,12 @@
                     path: 'age',
                     question: 'What\u2019s your age?',
                     options: [
-                        { value: '17_or_younger', label: "17 or younger" },
-                        { value: '18_24', label: "18-24" },
-                        { value: '25_34', label: '25-34' },
-                        { value: '35_44', label: '35-44' },
-                        { value: '45_54', label: '45-54' },
-                        { value: '55_or_older', label: '55 or older' }
+                        { value: '17_or_younger', label: '17 or younger' },
+                        { value: '18_29', label: '18-29' },
+                        { value: '30_39', label: '30-39' },
+                        { value: '40_49', label: '40-49' },
+                        { value: '50_59', label: '50-59' },
+                        { value: '60_or_older', label: '60 or older' }
                     ]
                 },
                 {
@@ -1333,7 +1402,7 @@
                 },
                 {
                     id: 'commitment',
-                    label: 'Commitment',
+                    label: 'Tracking',
                     path: 'commitment',
                     question: 'Are you willing to track your food, body weight, and workouts?',
                     options: [
@@ -1409,6 +1478,31 @@
                 moveDot(instant);
             };
 
+            const showNafModal = (stepId, value) => {
+                isTransitioning = false;
+                const headlines = {
+                    goal: 'Wrong fit',
+                    age: 'Age requirement',
+                    gym: 'Gym access required',
+                    commitment: 'Tracking required'
+                };
+                let explanation = '';
+                if (stepId === 'goal') {
+                    explanation = "This is a fat loss coaching program. If fat loss isn't your main goal right now, I'm not the right coach for you.";
+                } else if (stepId === 'age' && value === '17_or_younger') {
+                    explanation = 'I work with men 18 and older. Come back when that changes.';
+                } else if (stepId === 'age') {
+                    explanation = "My coaching isn't designed for your age range, and I'd rather be upfront than take your money and underdeliver.";
+                } else if (stepId === 'gym') {
+                    explanation = "The training side of this program requires a commercial gym. Without it, I can't get the results I'd need to stand behind. If you get access to a gym, come back and reapply.";
+                } else if (stepId === 'commitment') {
+                    explanation = "Tracking is mandatory for my coaching.";
+                }
+                document.getElementById('naf-modal-title').textContent = headlines[stepId] || '';
+                document.getElementById('naf-modal-explanation').textContent = explanation;
+                document.getElementById('naf-modal').classList.add('active');
+            };
+
             const buildOptions = () => {
                 const step = steps[currentStepIndex];
                 optionsContainer.innerHTML = '';
@@ -1424,6 +1518,11 @@
 
                     button.appendChild(labelSpan);
 
+                    const indicator = document.createElement('span');
+                    indicator.className = 'survey-option-indicator';
+                    indicator.setAttribute('aria-hidden', 'true');
+                    button.appendChild(indicator);
+
                     button.addEventListener('touchstart', () => button.classList.add('pressing'), { passive: true });
                     button.addEventListener('touchend', () => button.classList.remove('pressing'), { passive: true });
                     button.addEventListener('touchcancel', () => button.classList.remove('pressing'), { passive: true });
@@ -1436,27 +1535,28 @@
 
                         const shouldSendToConfirmation =
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
-                            (step.id === 'age' && (opt.value === '17_or_younger' || opt.value === '55_or_older')) ||
+                            (step.id === 'age' && (opt.value === '17_or_younger' || opt.value === '60_or_older')) ||
                             (step.id === 'gym' && (opt.value === 'no' || opt.value === 'home')) ||
                             (step.id === 'commitment' && (opt.value === 'maybe' || opt.value === 'no'));
 
+                        button.classList.add('loading');
+
                         if (shouldSendToConfirmation) {
-                            const confirmParams = new URLSearchParams(window.location.search || '');
-                            confirmParams.set(step.id, opt.value);
-                            confirmParams.delete('step');
-                            window.location.href = '/not-a-fit?' + confirmParams.toString();
+                            showNafModal(step.id, opt.value);
                             return;
                         }
 
                         if (currentStepIndex < steps.length - 1) {
-                            const nextIndex = currentStepIndex + 1;
-                            const nextStep = steps[nextIndex];
-                            const nextParams = new URLSearchParams(window.location.search || '');
-                            nextParams.set(step.id, opt.value);
-                            nextParams.set('step', nextStep.path);
-                            window.history.pushState({ stepIndex: nextIndex }, '', `${getBaseSurveyUrl()}?${nextParams}`);
-                            currentStepIndex = nextIndex;
-                            renderStep('forward');
+                            setTimeout(() => {
+                                const nextIndex = currentStepIndex + 1;
+                                const nextStep = steps[nextIndex];
+                                const nextParams = new URLSearchParams(window.location.search || '');
+                                nextParams.set(step.id, opt.value);
+                                nextParams.set('step', nextStep.path);
+                                window.history.pushState({ stepIndex: nextIndex }, '', `${getBaseSurveyUrl()}?${nextParams}`);
+                                currentStepIndex = nextIndex;
+                                renderStep('forward');
+                            }, 400);
                         } else {
                             const redirectParams = new URLSearchParams(window.location.search || '');
                             redirectParams.delete('step');
@@ -1546,6 +1646,17 @@
             });
         });
     </script>
+<!-- NOT A FIT MODAL -->
+<div class="naf-overlay" id="naf-modal" role="alertdialog" aria-modal="true" aria-labelledby="naf-modal-title">
+  <div class="legal-modal naf-modal-box">
+    <div class="naf-modal-body">
+      <h2 id="naf-modal-title"></h2>
+      <p id="naf-modal-explanation"></p>
+      <a href="/" class="naf-modal-btn">Got It</a>
+    </div>
+  </div>
+</div>
+
 <!-- TERMS OF SERVICE MODAL -->
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
