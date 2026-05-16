@@ -28,14 +28,8 @@
     <style>
         :root {
             --space-2: 1rem;
-            --space-4: 2rem;
             --space-5: 2.5rem;
-            --space-6: 3rem;
-            --desktop-grid-pad: 4rem;
-            --primary: #06f;
             --text: #f8fafc;
-            --text-secondary: #9ca3af;
-            --payment-nav-h: 3rem;
         }
 
         * {
@@ -57,81 +51,13 @@
             flex-direction: column;
         }
 
-        .payment-nav {
-            flex-shrink: 0;
-            width: 100%;
-            min-height: var(--payment-nav-h);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            padding: 0.625rem 1.25rem;
-            background: #1c1c1c;
-            border-bottom: 1px solid #3a3a3a;
-            position: sticky;
-            top: 0;
-            z-index: 250;
-        }
-
-        .payment-nav--survey {
-            justify-content: flex-start;
-        }
-
-        .payment-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: none;
-            border: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary, #9ca3af);
-            cursor: pointer;
-            padding: 0.3rem 0.5rem;
-            margin: -0.3rem -0.5rem;
-            line-height: 1;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .payment-back:hover {
-                background-color: rgba(235, 235, 235, 0.1);
-                color: #f9fafb;
-            }
-        }
-
-        .payment-back-icon {
-            flex-shrink: 0;
-            color: inherit;
-        }
-
-        @media (min-width: 761px) {
-            .payment-nav {
-                padding: 0.625rem 2rem;
-            }
-        }
-
         .headline {
             font-size: 1.75rem;
             font-weight: 600;
             line-height: 1.15;
             letter-spacing: -.02em;
             color: var(--text);
-            margin-top: 0.5rem;
-            margin-bottom: var(--space-2);
-        }
-
-        .subheadline {
-            font-size: 1rem;
-            line-height: 1.6;
-            letter-spacing: -.005em;
-            max-width: 450px;
-            margin: 0 auto;
-            margin-top: 0.25rem;
+            margin-bottom: 1.25rem;
         }
 
         .not-a-fit-main {
@@ -146,7 +72,50 @@
 
         .not-a-fit-inner {
             width: 100%;
-            max-width: 480px;
+            max-width: 420px;
+        }
+
+        .naf-icon {
+            margin-bottom: 1.25rem;
+        }
+
+        .naf-reason {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 10px;
+            padding: 0.875rem 1.125rem;
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .naf-reason-label {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .naf-reason-question {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #9ca3af;
+            margin-bottom: 0.3rem;
+        }
+
+        .naf-reason-answer {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .naf-body {
+            font-size: 1rem;
+            line-height: 1.65;
+            letter-spacing: -.005em;
+            color: var(--text);
         }
 
         @media (min-width: 1024px) {
@@ -158,47 +127,71 @@
 </head>
 
 <body>
-    <nav class="payment-nav payment-nav--survey" aria-label="Survey">
-        <a class="payment-back" href="/survey" aria-label="Back to survey">
-            <svg class="payment-back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Apply for Coaching</span>
-        </a>
-    </nav>
-
     <main class="not-a-fit-main">
         <div class="not-a-fit-inner">
-            <h1 class="headline" id="naf-heading">This program isn't the right fit.</h1>
-            <p class="subheadline" id="naf-body" style="color: var(--text);"></p>
+            <div class="naf-icon" aria-hidden="true">
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#ef4444"/>
+                    <path d="M18 18L36 36M36 18L18 36" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="headline">This program isn’t the right fit.</h1>
+            <div class="naf-reason" id="naf-reason">
+                <span class="naf-reason-label">Your answer</span>
+                <p class="naf-reason-question" id="naf-question"></p>
+                <p class="naf-reason-answer" id="naf-answer"></p>
+            </div>
+            <p class="naf-body" id="naf-body"></p>
         </div>
     </main>
 
     <script>
         (function () {
-            var params = new URLSearchParams(window.location.search || '');
-            var goal = params.get('goal');
-            var age = params.get('age');
-            var gym = params.get('gym');
-            var commitment = params.get('commitment');
+            var params = new URLSearchParams(window.location.search || "");
+            var goal = params.get("goal");
+            var age = params.get("age");
+            var gym = params.get("gym");
+            var commitment = params.get("commitment");
 
-            var body = '';
+            var question = "";
+            var answer = "";
+            var explanation = "";
 
-            if (goal === 'build_muscle' || goal === 'improve_fitness' || goal === 'not_sure') {
-                body = "This is a fat loss program. If that’s not your goal right now, I’m not the right coach for you.";
-            } else if (age === '17_or_younger') {
-                body = "I work with men 18 and older. Come back when that changes.";
-            } else if (age === '55_or_older') {
-                body = "My coaching is built for men under 55. The targets and methods aren’t designed for your age range, and I’d rather be upfront than take your money and underdeliver.";
-            } else if (gym === 'no' || gym === 'home') {
-                body = "The training side of this program requires a commercial gym. Without it, I can’t get you the results I’d need to stand behind. If you get access to a gym, come back and reapply.";
-            } else if (commitment === 'maybe' || commitment === 'no') {
-                body = "Tracking food, bodyweight, and workouts isn’t optional. It’s how the program works. If you’re not ready for that, the results won’t be there. Come back when you are.";
+            if (goal === "build_muscle" || goal === "improve_fitness" || goal === "not_sure") {
+                var goalLabels = { "build_muscle": "Build muscle", "improve_fitness": "Improve general fitness", "not_sure": "Not sure" };
+                question = "What is your top fitness goal?";
+                answer = goalLabels[goal] || goal;
+                explanation = "This is a fat loss program. If that’s not your goal right now, I’m not the right coach for you.";
+            } else if (age === "17_or_younger") {
+                question = "What’s your age?";
+                answer = "17 or younger";
+                explanation = "I work with men 18 and older. Come back when that changes.";
+            } else if (age === "55_or_older") {
+                question = "What’s your age?";
+                answer = "55 or older";
+                explanation = "My coaching is built for men under 55. The targets and methods aren’t designed for your age range, and I’d rather be upfront than take your money and underdeliver.";
+            } else if (gym === "no" || gym === "home") {
+                var gymLabels = { "no": "No", "home": "I have weight equipment at home" };
+                question = "Do you have access to a gym?";
+                answer = gymLabels[gym] || gym;
+                explanation = "The training side of this program requires a commercial gym. Without it, I can’t get you the results I’d need to stand behind. If you get access to a gym, come back and reapply.";
+            } else if (commitment === "maybe" || commitment === "no") {
+                var commitmentLabels = { "maybe": "Maybe", "no": "No" };
+                question = "Are you willing to track your food, body weight, and workouts?";
+                answer = commitmentLabels[commitment] || commitment;
+                explanation = "Tracking food, bodyweight, and workouts isn’t optional. It’s how the program works. If you’re not ready for that, the results won’t be there. Come back when you are.";
             } else {
-                body = "Based on your answers, this program isn’t the right fit for you right now.";
+                explanation = "Based on your answers, this program isn’t the right fit for you right now.";
             }
 
-            document.getElementById('naf-body').textContent = body;
+            if (question && answer) {
+                document.getElementById("naf-question").textContent = question;
+                document.getElementById("naf-answer").textContent = answer;
+            } else {
+                document.getElementById("naf-reason").style.display = "none";
+            }
+
+            document.getElementById("naf-body").textContent = explanation;
         })();
     </script>
 </body>
