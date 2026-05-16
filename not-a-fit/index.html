@@ -27,9 +27,9 @@
 
     <style>
         :root {
-            --space-2: 1rem;
             --space-5: 2.5rem;
             --text: #f8fafc;
+            --muted: #a0a0a0;
         }
 
         * {
@@ -57,7 +57,8 @@
             line-height: 1.15;
             letter-spacing: -.02em;
             color: var(--text);
-            margin-bottom: 1.25rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .not-a-fit-main {
@@ -113,9 +114,11 @@
 
         .naf-body {
             font-size: 1rem;
-            line-height: 1.65;
+            line-height: 1.6;
             letter-spacing: -.005em;
-            color: var(--text);
+            color: var(--muted);
+            max-width: 450px;
+            margin: 0.25rem auto 1.25rem;
         }
 
         @media (min-width: 1024px) {
@@ -135,13 +138,13 @@
                     <path d="M18 18L36 36M36 18L18 36" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <h1 class="headline">This program isn’t the right fit.</h1>
+            <h1 class="headline">This program isn’t the right fit</h1>
+            <p class="naf-body" id="naf-body"></p>
             <div class="naf-reason" id="naf-reason">
                 <span class="naf-reason-label">Your answer</span>
                 <p class="naf-reason-question" id="naf-question"></p>
                 <p class="naf-reason-answer" id="naf-answer"></p>
             </div>
-            <p class="naf-body" id="naf-body"></p>
         </div>
     </main>
 
