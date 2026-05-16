@@ -1228,6 +1228,7 @@
 .naf-modal-box {
   max-width: 460px;
   max-height: none;
+  animation: none;
 }
 .naf-modal-body {
   display: flex;
@@ -1499,10 +1500,6 @@
                 }
                 document.getElementById('naf-modal-title').textContent = headlines[stepId] || '';
                 document.getElementById('naf-modal-explanation').textContent = explanation;
-                const nafBox = document.querySelector('#naf-modal .legal-modal');
-                nafBox.style.animation = 'none';
-                nafBox.offsetHeight;
-                nafBox.style.animation = '';
                 document.getElementById('naf-modal').classList.add('active');
                 document.body.style.overflow = 'hidden';
             };
