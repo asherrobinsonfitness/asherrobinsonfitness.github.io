@@ -1483,13 +1483,13 @@
                             const confirmParams = new URLSearchParams(window.location.search || '');
                             confirmParams.set(step.id, opt.value);
                             confirmParams.delete('step');
-                            window.location.href = '/confirmation?' + confirmParams.toString();
+                            window.location.href = '/not-a-fit?' + confirmParams.toString();
                         };
 
                         const shouldSendToConfirmation =
                             (step.id === 'goal' && (opt.value === 'build_muscle' || opt.value === 'improve_fitness' || opt.value === 'not_sure')) ||
                             (step.id === 'age' && (opt.value === '17_or_younger' || opt.value === '55_or_older')) ||
-                            (step.id === 'gym' && (opt.value === 'no')) ||
+                            (step.id === 'gym' && (opt.value === 'no' || opt.value === 'home')) ||
                             (step.id === 'commitment' && (opt.value === 'maybe' || opt.value === 'no'));
 
                         const goNext = () => {
@@ -1627,7 +1627,7 @@
       <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
 
       <h3>13. Contact</h3>
-      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:#4d94ff;text-decoration:none">asherapple2@gmail.com</a></p>
     </div>
   </div>
 </div>
@@ -1689,7 +1689,7 @@
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
 
       <h3>11. Contact</h3>
-      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:#4d94ff;text-decoration:none">asherapple2@gmail.com</a></p>
     </div>
   </div>
 </div>
