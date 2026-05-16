@@ -854,12 +854,14 @@ footer a{color:#4d94ff;text-decoration:none}
   font-size: .8125rem; font-weight: 600; color: #F8FAFC;
 }
 .legal-modal-close {
-  background: transparent; border: none; color: rgba(255,255,255,.65); width: 30px; height: 30px;
-  border-radius: 50%; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .15s, color .15s; flex-shrink: 0;
+  background: none; border: none; color: rgba(255,255,255,.65);
+  border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500;
+  padding: .3rem .5rem; line-height: 1; white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease; flex-shrink: 0;
 }
-.legal-modal-close:hover { background: rgba(235,235,235,.1); color: #fff; }
+@media(hover:hover) and (pointer:fine){
+  .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; }
+}
 .legal-modal-body {
   overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1;
   scrollbar-width: none;
@@ -1496,7 +1498,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
   <div class="legal-modal">
     <div class="legal-modal-header">
       <span class="legal-modal-title" id="terms-title">Terms of Service</span>
-      <button class="legal-modal-close" onclick="closeLegal('terms')" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="legal-modal-close" onclick="closeLegal('terms')" aria-label="Close">Close</button>
     </div>
     <div class="legal-modal-body">
       <h2>Terms of Service</h2>
@@ -1561,7 +1563,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
   <div class="legal-modal">
     <div class="legal-modal-header">
       <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
-      <button class="legal-modal-close" onclick="closeLegal('privacy')" aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="legal-modal-close" onclick="closeLegal('privacy')" aria-label="Close">Close</button>
     </div>
     <div class="legal-modal-body">
       <h2>Privacy Policy</h2>
