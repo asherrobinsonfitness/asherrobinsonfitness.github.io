@@ -158,12 +158,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.5rem 1.25rem 3rem;
+      padding: var(--pad-sm) 1.25rem;
       width: 100%;
     }
+    @media (min-width: 600px) { .signup-main { padding: var(--pad) 2.5rem; } }
     .signup-inner {
       width: 100%;
-      max-width: 460px;
+      max-width: 472px;
     }
 
     /* Step 1 section label — verbatim match of .section-label from complete-sign-up */
@@ -386,7 +387,6 @@
     .tax-value-placeholder { font-size: 0.82rem; font-weight: 400; color: var(--text-secondary); }
     .tax-value-amount { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 
-    .details-panel-inner { max-width: calc(472px + 5rem); margin: 0 auto; }
 
     /* Express checkout */
     #express-pay-section { margin-bottom: 0; }
@@ -395,6 +395,7 @@
     .or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
     /* Stripe elements */
+    .stripe-field-label { font-size: 0.875rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
     #payment-form { width: 100%; }
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
@@ -704,10 +705,7 @@
             <div class="or-divider">or pay with card</div>
           </div>
 
-          <div class="address-element-wrap">
-            <div id="address-element-skeleton"></div>
-            <div id="address-element"></div>
-          </div>
+          <p class="stripe-field-label">Card information and Billing address</p>
 
           <form id="payment-form">
             <div class="payment-element-wrap">
@@ -716,6 +714,12 @@
             </div>
             <div id="stripe-message" role="alert" style="display:none;"></div>
           </form>
+
+          <p class="stripe-field-label" style="margin-top:0.85rem;">Card holder name</p>
+          <div class="address-element-wrap">
+            <div id="address-element-skeleton"></div>
+            <div id="address-element"></div>
+          </div>
 
           <div class="form-cta-area">
             <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
@@ -1105,6 +1109,8 @@ async function initStripe() {
         '.Tab': { border: dark ? '1px solid #3a3a3a' : '1px solid #e0e0e0' },
         '.Tab:hover': { border: dark ? '1px solid #555' : '1px solid #b9d4ff' },
         '.Tab--selected': { borderColor: '#0066ff', boxShadow: '0 0 0 1px #0066ff' },
+        '.BlockDivider': { display: 'none' },
+        '.Label': { display: 'none' },
       },
     };
   }
