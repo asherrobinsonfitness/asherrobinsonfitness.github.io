@@ -1195,7 +1195,7 @@
         const params = new URLSearchParams(window.location.search || '');
         const required = ['goal', 'age', 'gym', 'commitment'];
         if (!required.every(p => params.has(p))) {
-            window.location.replace('/apply-for-coaching');
+            window.location.replace('/join-now');
         }
     })();
 
