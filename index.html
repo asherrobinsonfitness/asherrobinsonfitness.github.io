@@ -1191,8 +1191,44 @@ footer a{color:#4d94ff;text-decoration:none}
 </footer>
 
 <script>
+/* Desktop: match widget height to video container */
+(function(){
+  var mq = window.matchMedia('(min-width:1280px)');
+  var videoWrap = document.querySelector('.col-left .video-wrap');
+  var widget = document.getElementById('ctaWidget');
+  if(!videoWrap || !widget) return;
 
+  function setHeight(vh){
+    if(!mq.matches){
+      widget.style.height = '';
+      widget.style.minHeight = '';
+      return;
+    }
+    widget.style.height = vh + 'px';
+    widget.style.minHeight = vh + 'px';
+  }
 
+  function apply(){
+    if(!mq.matches){ setHeight(0); return; }
+    requestAnimationFrame(function(){
+      setHeight(videoWrap.getBoundingClientRect().height);
+    });
+  }
+
+  if(mq.addEventListener){ mq.addEventListener('change', apply); }
+  else { mq.addListener(apply); }
+  window.addEventListener('resize', apply);
+  window.addEventListener('load', apply);
+
+  if(typeof ResizeObserver !== 'undefined'){
+    new ResizeObserver(function(entries){
+      setHeight(entries[0].contentRect.height);
+    }).observe(videoWrap);
+  }
+
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(apply); }
+  apply();
+})();
 </script>
 
 <script>
