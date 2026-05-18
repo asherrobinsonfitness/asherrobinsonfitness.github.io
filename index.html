@@ -1,1498 +1,894 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Online Fat Loss Coaching</title>
-<meta name="description" content="A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.">
-<meta name="robots" content="index,follow">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<link rel="canonical" href="https://asherrobinsonfitness.com">
-<meta property="og:title" content="Online Fat Loss Coaching">
-<meta property="og:description" content="A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://asherrobinsonfitness.com">
-<meta property="og:site_name" content="Asher Robinson Fitness">
-<meta property="og:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Online Fat Loss Coaching">
-<meta name="twitter:description" content="A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.">
-<meta name="twitter:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+  <title>Sign Up – Online Fat Loss Coaching</title>
+  <meta name="description" content="Apply for online fat loss coaching with Asher Robinson.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/QNSK2T81/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/fW5SG9z9/favicon-16x16.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/7Y6JwZhJ/favicon.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/xjgNwzfq/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
+  <meta name="theme-color" content="#000000">
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    }
+    :root {
+      --primary: #06f;
+      --primary-hover: #0052cc;
+      --text: #F8FAFC;
+      --text-secondary: #9ca3af;
+      --bg: #1c1c1c;
+      --card-bg: #242424;
+      --border: #2e2e2e;
+      --border-strong: #3a3a3a;
+      --input-bg: #2a2a2a;
+      --input-border: #3a3a3a;
+      --bottom-bg: #161616;
+      --icon-stroke: #e5e7eb;
+      --pad: 2.5rem;
+      --pad-sm: 2rem;
+      --section-split-pad: var(--pad);
+      --payment-nav-h: 3rem;
+    }
+    body {
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
 
-    <!-- Standard Favicons -->
-<link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/QNSK2T81/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/fW5SG9z9/favicon-16x16.png">
+    /* ── NAV ── */
+    .payment-nav {
+      flex-shrink: 0;
+      width: 100%;
+      min-height: var(--payment-nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.625rem 1.25rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-strong);
+      position: sticky;
+      top: 0;
+      z-index: 250;
+    }
+    @media (min-width: 761px) { .payment-nav { padding: 0.625rem 2rem; } }
 
-<!-- JPG fallback favicon -->
-<link rel="shortcut icon" href="https://i.postimg.cc/7Y6JwZhJ/favicon.jpg">
+    /* Back button — matches payment page back button */
+    .payment-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      margin: -0.3rem -0.5rem;
+      line-height: 1;
+      border-radius: 6px;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      text-decoration: none;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .payment-back:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
+    }
+    .payment-back-icon { flex-shrink: 0; color: inherit; }
 
-<!-- Apple / iOS -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png">
+    /* ── PROGRESS INDICATOR — same style as site-nav__link ── */
+    .signup-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .prog-step-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      border-radius: 6px;
+      line-height: 1;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .prog-step-btn:hover { background-color: rgba(235,235,235,0.1); color: #fff; }
+    }
+    .prog-step-btn--active {
+      color: var(--text);
+      cursor: default;
+      pointer-events: none;
+    }
+    .prog-step-btn--future {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+    }
+    .prog-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.25);
+      flex-shrink: 0;
+      transition: background 0.25s ease;
+    }
+    .prog-dot--active { background: var(--primary); }
 
-<!-- Android / PWA -->
-<link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/xjgNwzfq/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
+    .nav-right {
+      flex-shrink: 0;
+      min-width: 60px;
+      display: flex;
+      justify-content: flex-end;
+    }
 
-<!-- Theme Color -->
-<meta name="theme-color" content="#000000">
+    /* ── STEP 1: CONTACT FORM ── */
+    .signup-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.25rem 3rem;
+      width: 100%;
+    }
+    .signup-inner {
+      width: 100%;
+      max-width: 460px;
+    }
 
-<!-- Preload the video poster so it paints immediately on first load -->
-<link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
+    /* Step 1 section label — verbatim match of .section-label from complete-sign-up */
+    .signup-section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.02rem;
+      color: var(--text);
+      text-transform: none;
+      background: var(--bottom-bg);
+      border-radius: 999px;
+      border: 1px solid #3d3d3d;
+      padding: 0.375rem 1rem;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .signup-subheadline {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
-<style>
-/* Header group visibility */
-.header-group--desktop{display:none}
-@media(min-width:1280px){
-  .header-group--mobile{display:none}
-}
+    /* Fields */
+    .form-field { margin-bottom: 0.65rem; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
 
-/* Variables */
-:root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#f8fafc;--muted:#a0a0a0;--border:#282828;--card-border:#3d3d3d}
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+    }
 
-/* Reset */
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+    .signup-input,
+    .signup-select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .signup-input::placeholder { color: var(--text-secondary); }
+    .signup-input:focus,
+    .signup-select:focus {
+      border-color: #4d94ff;
+      box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    }
+    .signup-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%239ca3af' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.25rem;
+      color: var(--text-secondary);
+    }
+    .signup-select.has-value { color: var(--text); }
+    .signup-select option { background: #2a2a2a; color: var(--text); }
 
-/* Layout */
-.container{display:flex;flex-direction:column;background:#1c1c1c}
-.hero-grid{display:flex;flex-direction:column;border-bottom:1px solid var(--border)}
-.col-left{padding:var(--pad) 1.5rem;display:flex;flex-direction:column;text-align:center}
-.col-left .header-group{margin-bottom:var(--pad-sm)}
-.col-right{padding:var(--pad-sm) 1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
+    /* Continue button — identical to index.html .btn, arrow always visible */
+    .signup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.9rem 1.25rem;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      margin-top: 0.75rem;
+    }
+    @media (hover: hover) and (pointer: fine) { .signup-btn:hover { background: var(--primary-hover); } }
+    .signup-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .signup-btn:disabled:hover { background: var(--primary); }
+    .signup-btn-label { flex: 1; text-align: left; }
+    .signup-btn-divider {
+      display: block;
+      width: 1px;
+      height: 1.5rem;
+      background: rgba(255,255,255,0.35);
+      flex-shrink: 0;
+    }
+    .signup-btn-arrow {
+      display: inline;
+      transition: transform 0.22s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .signup-btn:not(:disabled):hover .signup-btn-arrow { transform: translateX(4px); }
+    }
 
-/* Results: 1 col mobile; desktop = 3-column equal-width row */
-.blocks-grid{display:flex;flex-direction:column;gap:1rem;width:100%}
-@media(min-width:1280px){
-  .blocks-grid{
-    flex-direction:row;
-    align-items:stretch;
-    gap:1rem;
-  }
-  .blocks-grid>.block{
-    flex:1 1 0;
-    min-width:0;
-  }
-  .block.block--wyget{overflow:visible}
-  .block--wyget .block-inner{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    min-height:0;
-  }
-  .block--story .block-body{flex:1}
-  .block--results-ba-mobile{display:none !important}
-}
+    .signup-legal-note {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.55;
+      margin-top: 0.75rem;
+    }
+    .legal-link {
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-size: inherit; color: #4d94ff; text-decoration: none;
+      font-family: inherit;
+    }
 
-/* Simple content blocks — match .card / .cta-widget + hero type scale */
-.block{
-  border-radius:12px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  background:#222;
-  border:1px solid var(--card-border);
-}
-@media(min-width:1280px){
-  .block.block--wyget{overflow:visible}
-}
-.block--feature .block__media{
-  width:100%;
-  aspect-ratio:1920 / 1080;
-  flex-shrink:0;
-  overflow:hidden;
-  background:linear-gradient(180deg,#2e343c 0%,#23272e 100%);
-}
-.block--feature .block__media img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:top;
-  display:block;
-}
-.block--feature .block-inner{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  border-top:1px solid var(--card-border);
-}
-.block--wyget{background:#222 !important;border:1px solid var(--card-border) !important;border-radius:12px !important;overflow:hidden !important}
-.block--wyget .block-heading{margin-bottom:1rem;font-size:1.4rem}
-.wyget-list{display:flex;flex-direction:column;gap:1.05rem}
-.wyget-row{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  gap:.85rem;
-}
-.wyget-row__media{
-  flex-shrink:0;
-  width:5rem;
-  aspect-ratio:520 / 352;
-  border-radius:8px;
-  overflow:hidden;
-  background:#2a2a2a;
-  line-height:0;
-}
-.wyget-row__media img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-.wyget-row__body{
-  flex:1 1 0;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:.35rem;
-  text-align:left;
-}
-.wyget-row__title{
-  font-weight:600;
-  font-size:.8125rem;
-  line-height:1.25;
-  letter-spacing:-.01em;
-  color:var(--text);
-}
-.wyget-row__desc{
-  font-size:.78rem;
-  line-height:1.4;
-  color:var(--muted);
-}
-.block-inner{padding:1.2rem 1.15rem 1.05rem}
-.block-heading{
-  margin:0 0 .85rem;
-  font-size:1.125rem;
-  font-weight:600;
-  line-height:1.25;
-  letter-spacing:-.025em;
-  color:var(--text);
-}
-.block-body{flex:1}
-.block-body p{
-  font-size:1rem;
-  font-weight:400;
-  line-height:1.65;
-  letter-spacing:-.005em;
-  color:var(--text);
-  margin:0;
-}
-.block-body p+p{margin-top:.7rem}
-.block--feature .block-body > p:first-of-type,
-.blocks-grid > .block--feature:nth-child(2) .block-body > p:nth-of-type(2),
-.blocks-grid > .block--feature:nth-child(3) .block-body > p:nth-of-type(2){
-  font-size:.78rem;
-  line-height:1.45;
-  letter-spacing:-.005em;
-  color:var(--muted);
-}
-/* Number circle (all blocks) */
-.block-num{
-  width:2.25rem;
-  height:2.25rem;
-  border-radius:50%;
-  background:#161616;
-  border:1px solid var(--card-border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:.9375rem;
-  font-weight:600;
-  color:var(--text);
-  flex-shrink:0;
-}
-/* Number + heading inline row (block 1) */
-.block-header-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem}
-.block-header-row .block-heading{margin-bottom:0}
-/* Story blocks (2 & 3) */
-.block--story .block-inner{display:flex;flex-direction:column;padding-bottom:0}
-.block--story .block-story__header{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;order:1}
-.block--story .block-story__header .block-heading{margin-bottom:0}
-.block--story .block-body{order:2}
-.block-story__thumb{
-  position:relative;
-  width:calc(100% + 2.3rem);
-  margin-left:-1.15rem;
-  margin-right:-1.15rem;
-  height:13rem;
-  border-radius:0;
-  overflow:hidden;
-  margin-top:.75rem;
-  order:3;
-}
-.block-story__thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.block--story .block-heading{font-size:1.4rem;margin-bottom:.6rem}
-.block--story .block-body p{font-size:.9rem;color:var(--muted)}
-.block--has-media .block-inner{padding-bottom:.85rem}
-/* Border only when media sits below a heading block (not when slider is first) */
-.block--has-media .block-inner + .ba-block-wrap{border-top:1px solid var(--card-border)}
+    /* Reveal animation for dropdowns */
+    .reveal-block { overflow: hidden; }
+    .reveal-enter { animation: revealIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    @keyframes revealIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-/* Mobile before/after side-by-side */
-.ba-mobile-dual{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;padding:.6rem;background:transparent !important}
-.ba-mobile-dual img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;border-radius:8px;display:block}
-/* Before/After block */
-.ba-block-wrap{position:relative;width:100%;cursor:ew-resize;touch-action:pan-y;user-select:none}
-.ba-block-img{width:100%;height:auto;display:block;pointer-events:none;-webkit-user-drag:none}
-.ba-block-after{position:absolute;inset:0;clip-path:inset(0 50% 0 0)}
-.ba-block-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);background:rgba(255,255,255,.7);z-index:2;pointer-events:none}
-.ba-block-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(15,23,42,.8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;gap:4px;z-index:3}
-.ba-block-labels{position:absolute;inset:.75rem 1rem auto;display:flex;justify-content:space-between;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;z-index:4;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-.ba-block-caption{
-  padding:.75rem 1.1rem 1rem;
-  border-top:1px solid var(--card-border);
-}
-.ba-block-caption p{
-  font-size:1rem;
-  line-height:1.6;
-  letter-spacing:-.005em;
-  color:var(--text);
-  margin:0;
-  text-align:left;
-}
-.ba-caption-arrow,.ba-handle-arrow{
-  display:inline-block;
-  vertical-align:-.15em;
-  flex-shrink:0;
-}
-.ba-caption-arrow{width:1.1em;height:1.1em;color:inherit}
-.ba-handle-arrow{width:12px;height:12px;color:inherit}
+    /* ── STEP 2: PAYMENT ── */
+    #step2-content { display: none; flex: 1; flex-direction: column; }
+    #step2-content.active { display: flex; }
 
-/* Hero text */
-.callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#161616;border-radius:999px;border:1px solid #3d3d3d;padding:.375rem 1rem;letter-spacing:.02rem}
-.headline{font-size:1.75rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin-top:.5rem;margin-bottom:1rem}
-.section-title{
-  font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;
-  margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem;
-}
-.subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
+    .payment-layout {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+    .payment-form-col {
+      padding: var(--pad) 2.5rem;
+      background: var(--bottom-bg);
+      --form-col-pad-x: 2.5rem;
+    }
+    .order-summary-col {
+      padding: var(--pad) 2.5rem;
+      --order-col-pad-x: 2.5rem;
+    }
+    .payment-form-content,
+    .order-summary-top-content,
+    .order-summary-bottom-content { width: 100%; }
+    .payment-form-content,
+    .form-pricing { display: flex; flex-direction: column; align-items: stretch; }
+    .payment-form-content > .section-label,
+    .form-pricing > .sub-section-label { align-self: center; }
 
-/* Video */
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px}
+    .section-label,
+    .sub-section-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.02rem;
+      color: var(--text);
+      text-transform: none;
+      background: var(--bottom-bg);
+      border-radius: 999px;
+      border: 1px solid #3d3d3d;
+      padding: 0.375rem 1rem;
+      text-align: center;
+    }
+    .section-label { margin-bottom: 1.5rem; }
+    .sub-section-label { margin-bottom: 0.5rem; }
 
-/* Chat bubble overlay
- * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
- * img_center = 50% - 121px centres the composition (img_left = bubble_right_margin).
- * bubble_left = img_center + 38px (75% mark of img) = 50% - 83px.
- * bubble_width = 280px → aspect ratio ≈ 3:1 at all single-column widths.
- */
-.block--bubble .block-story__thumb img{height:100%}
-.block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:max(calc(50% - 121px), calc(76px + 1.15rem)) !important}
-.chat-bubble{
-  position:absolute;
-  top:28%;
-  left:max(calc(50% - 83px), calc(114px + 1.15rem));
-  right:1.5rem;
-  max-width:280px;
-  pointer-events:none;
-  z-index:10;
-}
-@media(min-width:1280px){
-  .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
-  .chat-bubble{left:calc(24% + 38px);width:auto;right:5%}
-}
-/* Phone frame wrapper + video screen overlay (block 3) */
-.block--bubble .block-story__thumb .phone-wrap{
-  position:absolute;top:0;
-  left:max(calc(50% - 121px), calc(76px + 1.15rem));
-  transform:translateX(-50%);
-  height:100%;aspect-ratio:819/1121;
-}
-.block--bubble .block-story__thumb .phone-wrap>img{
-  position:static!important;width:100%!important;height:100%!important;
-  left:auto!important;top:auto!important;transform:none!important;
-}
-.block--bubble .block-story__thumb .phone-screen-video{
-  position:absolute;top:25%;left:50%;transform:translateX(-50%);
-  width:83%;bottom:0;border-radius:8px 8px 0 0;overflow:hidden;z-index:2;
-}
-.block--bubble .block-story__thumb .phone-screen-video video{
-  position:static!important;width:100%!important;height:100%!important;
-  left:auto!important;top:auto!important;transform:none!important;
-  object-fit:cover;object-position:50% 65%;display:block;
-}
-@media(min-width:1280px){
-  .block--bubble .block-story__thumb .phone-wrap{left:24%;}
-}
-/* Phone fan stack — scales with card width.
- * available = 100% - 2.3rem (thumb content area matching block-inner padding).
- * main_w    = available / 2.35  (composition = main + 2×0.675×main = 2.35×main)
- * side_w    = 0.9 × main_w      (90% size)
- * overlap   = 0.225 × main_w    (25% of side_w)
- * left-behind: left=1.15rem      → composition left = content left ✓
- * right-behind: left=50%+main_w×0.275 → composition right = content right ✓
- * main centered at 50% → composition midpoint = 50% ✓
- */
-.block-story__thumb .phone-main{width:auto;height:100%;top:0;bottom:auto}
-.block-story__thumb .phone-behind{width:auto;height:80%;top:auto;bottom:0;transform:none}
-.block-story__thumb .phone-behind--left{left:1.15rem}
-.block-story__thumb .phone-behind--right{left:auto;right:1.15rem}
-/* Body: pure CSS shape. border-radius + border + clip-path are all
-   resolution-independent — corners are mathematically perfect at every size. */
-.chat-bubble__body{
-  position:relative;
-  border-radius:16px 16px 16px 0;
-  border:1px solid #3d3d3d;
-  overflow:hidden;
-}
-.chat-bubble__blur{
-  position:absolute;
-  inset:0;
-  border-radius:16px 16px 16px 0;
-  clip-path:inset(0 round 16px 16px 16px 0);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  background:rgba(36,36,36,0.62);
-}
-/* Tail: separate fixed-size SVG (5×9 CSS px). width/height are explicit
-   pixel values so the SVG never stretches — its bezier never distorts.
-   Right + bottom strokes overlap the body's left + bottom borders to
-   form one seamless continuous outline. */
-.chat-bubble__tail{
-  position:absolute;
-  bottom:0;
-  left:-5px;
-  width:5px;
-  height:9px;
-  overflow:visible;
-  pointer-events:none;
-}
-.chat-bubble__text{
-  position:relative;
-  z-index:1;
-  display:block;
-  padding:.55rem .85rem .6rem 1rem;
-  color:var(--text);
-  font-size:.85rem;
-  line-height:1.5;
-  letter-spacing:-.01em;
-  font-weight:400;
-  margin:0;
-}
+    /* Coach card */
+    .coach-card-wrap { max-width: 400px; margin: 0 auto 1.5rem; }
+    .coach-summary-card {
+      width: 100%; border-radius: 14px; overflow: hidden; position: relative;
+      aspect-ratio: 85.6 / 54; background: #000; cursor: default;
+      transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+    .coach-summary-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      object-position: center center; pointer-events: none; user-select: none; transform: scale(1.002);
+    }
+    .coach-summary-card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.05) 55%, transparent 100%);
+      pointer-events: none;
+    }
+    .card-top-left { position: absolute; top: 0.75rem; left: 1rem; z-index: 2; }
+    .card-title { font-size: 1.2rem; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.01em; line-height: 1.2; }
+    .card-title-sub { font-size: 1.2rem; font-weight: 600; color: #fff; letter-spacing: 0.01em; line-height: 1.2; }
+    .card-bottom-left { position: absolute; bottom: 0.8rem; left: 1rem; z-index: 2; }
+    .card-price { font-size: 2.15rem; font-weight: 600; color: #fff; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+    .card-price-period { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.72); }
+    .card-bottom-right { position: absolute; bottom: 0.8rem; right: 1rem; z-index: 2; text-align: right; }
+    .card-note { font-size: 0.62rem; color: rgba(255,255,255,0.6); line-height: 1.35; }
 
-/* CTA button */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;padding:.9rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
-.btn:hover{background:#0052cc}
-.btn-label{flex:1;text-align:center}
-.btn-divider{display:none;width:1px;height:1.5rem;background:rgba(255,255,255,.35);flex-shrink:0}
-.btn-arrow{display:none;transition:transform .22s ease}
-@media(hover:hover) and (pointer:fine){
-  .btn:hover .btn-arrow{transform:translateX(4px)}
-}
-.pricing{font-size:.9rem;text-align:center}
-.pricing-amount{font-weight:600}
+    /* Order summary */
+    .product-info { margin-bottom: 1.1rem; text-align: center; }
+    .product-title { font-size: 0.975rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .product-desc { font-size: 0.855rem; color: var(--text-secondary); line-height: 1.55; }
+    .order-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .order-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .order-row:last-child { margin-bottom: 0; }
+    .order-row-label { font-size: 0.9rem; color: var(--text); }
+    .order-row-value { font-size: 0.9rem; font-weight: 600; color: var(--text); flex-shrink: 0; margin-left: 1rem; }
+    .order-discount-value { color: #16a34a !important; }
+    .order-total-row { display: flex; justify-content: space-between; align-items: center; }
+    .order-total-label { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .order-total-value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .form-pricing { padding-top: 1.25rem; }
+    .form-pricing .sub-section-label { margin-bottom: 0.5rem; }
+    .form-pricing-divider { height: 1px; background: var(--border); margin: 0.85rem 0; }
+    .form-pricing-footnote { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem; }
 
-/* Card */
-.card{background:#222;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
+    /* Tax */
+    .tax-label-wrap { display: flex; align-items: center; gap: 0.3rem; }
+    .tax-info-btn { display: inline-flex; align-items: center; background: none; border: none; padding: 0; cursor: pointer; color: var(--text-secondary); position: relative; }
+    .tax-tooltip { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); background: var(--bottom-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.78rem; color: var(--text); line-height: 1.45; white-space: normal; width: 190px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 20; text-align: left; }
+    .tax-info-btn:hover .tax-tooltip, .tax-info-btn:focus-visible .tax-tooltip { opacity: 1; }
+    .tax-value-placeholder { font-size: 0.82rem; font-weight: 400; color: var(--text-secondary); }
+    .tax-value-amount { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 
-/* CTA Widget (desktop): same copy + button + .pricing as mobile; narrow column via hero grid */
-.cta-widget{display:none}
-.mobile-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%}
-@media(min-width:1280px){
-  .mobile-cta{display:none}
-  .col-right{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;width:100%}
+    /* Full-bleed dividers */
+    .order-divider-full, .form-divider-full { display: block; height: 0; border: none; border-top: 1px solid var(--border-strong); box-sizing: border-box; }
+    .order-divider-full { margin: var(--section-split-pad) calc(-1 * var(--order-col-pad-x)); width: calc(100% + 2 * var(--order-col-pad-x)); }
+    .form-divider-full { margin: var(--section-split-pad) calc(-1 * var(--form-col-pad-x)); width: calc(100% + 2 * var(--form-col-pad-x)); }
+    @media (max-width: 760px) { .order-divider-full, .form-divider-full { display: none; } }
 
-  .cta-widget{
-    display:flex;flex-direction:column;align-items:stretch;
-    justify-content:flex-start;
-    width:100%;
-    box-sizing:border-box;
-    padding:0;
-    border-radius:12px;
-    border:1px solid var(--card-border);
-    border-color:#3d3d3d;
-    background:#222;
-    overflow:hidden;
-    min-height:0;
-    -webkit-overflow-scrolling:touch;
-  }
+    /* Express checkout */
+    #express-pay-section { margin-bottom: 0; }
+    #express-checkout-element { width: 100%; }
+    .or-divider { display: flex; align-items: center; gap: 0.65rem; margin: 1rem 0; font-size: 0.78rem; color: var(--text-secondary); letter-spacing: 0.03em; }
+    .or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
-  /* Fills space under fixed widget height (matched to video in JS) */
-  .cta-widget__hero{
-    flex:1 1 0;
-    min-height:0;
-    width:100%;
-    overflow:hidden;
-    border-radius:12px 12px 0 0;
-    border-bottom:1px solid var(--card-border);
-    background:#161616;
-    display:flex;
-    align-items:stretch;
-    justify-content:center;
-    padding:1.25rem 1.25rem 1rem;
-    box-sizing:border-box;
-  }
+    /* Stripe elements */
+    #payment-form { width: 100%; }
+    .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
+    #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    .payment-element-wrap { position: relative; margin-bottom: 1rem; }
+    #payment-element-skeleton { position: absolute; inset: 0; min-height: 180px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-  /* Before/after: solid panel; images scale down to available height (contain) */
-  .ba-dual{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    width:100%;
-    height:100%;
-    min-height:0;
-    background:transparent;
-  }
-  .ba-dual__row{
-    position:relative;
-    z-index:1;
-    display:flex;
-    flex-direction:row;
-    align-items:stretch;
-    justify-content:center;
-    flex:1;
-    min-height:0;
-    width:100%;
-    gap:.45rem;
-    padding:0;
-    box-sizing:border-box;
-  }
-  .ba-dual__spacer{
-    flex:0 0 1rem;
-    min-width:1rem;
-    align-self:stretch;
-    background:transparent;
-    pointer-events:none;
-  }
-  .ba-dual__photo{
-    flex:1 1 0;
-    min-width:0;
-    min-height:0;
-    align-self:stretch;
-    display:flex;
-    align-items:stretch;
-    justify-content:stretch;
-    background:transparent;
-  }
-  /* Photos always fill the allocated space — cropped via object-fit so no tiny floating portraits */
-  /* border-radius = line corner radius (14) − outline gap (5) = 9px — keeps inner/outer curves congruent */
-  .ba-dual__img-wrap{
-    position:relative;
-    flex:1 1 0;
-    width:100%;
-    height:100%;
-    border-radius:9px;
-    overflow:hidden;
-    background:transparent;
-  }
-  .ba-dual__img-wrap img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center top;
-    vertical-align:top;
-  }
-  .cta-widget .ba-dual__img-wrap{
-    transition:transform 0.12s ease;
-    will-change:transform;
-    transform:translateZ(0);
-    -webkit-mask-image:-webkit-radial-gradient(white,black);
-  }
-  .ba-dual__tag{
-    position:absolute;
-    top:.5rem;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:2;
-    font-size:.625rem;
-    font-weight:700;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:#fff;
-    text-shadow:0 1px 4px rgba(0,0,0,.55);
-    pointer-events:none;
-  }
-  .ba-dual{
-    border-radius:9px;
-  }
-  .ba-dual__row{
-    gap:1.25rem;
-  }
-  .ba-dual__spacer{
-    display:none;
-  }
+    /* CTA area */
+    .form-cta-area { margin-top: 1.1rem; }
+    .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
+    #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-bottom: 0.75rem; }
+    #submit-stripe:hover { background: var(--primary-hover); }
+    #submit-stripe:disabled { opacity: 0.6; cursor: not-allowed; }
+    .security-badge { display: flex; align-items: center; justify-content: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); margin-top: 1rem; }
+    .security-badge svg { flex-shrink: 0; }
+    .payment-legal { font-size: 0.74rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.5rem; }
+    .payment-legal a { color: var(--primary); text-decoration: none; }
+    .payment-legal a:hover { text-decoration: underline; }
+    #stripe-message { font-size: 0.8rem; color: #e53e3e; margin-bottom: 0.75rem; margin-top: 0.25rem; text-align: center; }
 
-  .cta-widget__section{display:flex;flex-direction:column;align-items:center;text-align:center;flex-shrink:0}
+    .redirect-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem 1.5rem; text-align: center; }
+    .redirect-spinner { width: 36px; height: 36px; border-radius: 999px; border: 3px solid var(--border); border-top-color: var(--primary); animation: spin 0.75s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .redirect-text { font-size: 1rem; color: var(--text); font-weight: 500; }
+    .redirect-sub { font-size: 0.85rem; color: var(--text-secondary); }
 
-  .cta-widget__section--copy{
-    gap:.6rem;
-    padding:1rem 1.25rem .75rem;
-  }
-  /* Callout uses same pill as mobile hero (.callout base styles) */
-  .cta-widget__section--copy .callout{
-    background:none;
-    border:none;
-    border-radius:0;
-    padding:0;
-    margin:0;
-    font-size:.875rem;
-    font-weight:600;
-    color:var(--text);
-    text-align:left;
-    justify-content:flex-start;
-    align-self:flex-start;
-    width:100%;
-  }
+    /* After-pay section */
+    .after-section { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border); margin-left: calc(-1 * var(--form-col-pad-x)); margin-right: calc(-1 * var(--form-col-pad-x)); padding-left: var(--form-col-pad-x); padding-right: var(--form-col-pad-x); }
+    .after-heading { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; text-align: center; }
+    .after-steps { display: flex; flex-direction: column; gap: 0.75rem; }
+    .after-card { display: flex; flex-direction: row; align-items: center; gap: 0.85rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; }
+    .after-card-num { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--text); flex-shrink: 0; }
+    .after-label-row { display: flex; align-items: center; gap: 0.4rem; }
+    .after-card__media { flex-shrink: 0; width: 5rem; aspect-ratio: 520 / 352; border-radius: 8px; overflow: hidden; background: var(--input-bg); line-height: 0; }
+    .after-card__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .after-card__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; text-align: left; }
+    .after-label { font-weight: 600; font-size: 0.78rem; color: var(--text); line-height: 1.25; }
+    .after-desc { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.4; }
 
-  .cta-widget__title{
-    font-size:1.5rem;font-weight:600;line-height:1.2;
-    letter-spacing:-.025em;color:var(--text);width:100%;text-align:left;
-  }
-  .cta-widget__section--copy .subheadline{
-    margin:0;text-align:left;max-width:100%;
-    font-size:.95rem;line-height:1.55;letter-spacing:-.005em;color:var(--muted);
-  }
+    /* Desktop split panel */
+    @media (min-width: 761px) {
+      html, body { height: 100%; overflow: hidden; }
+      .page-wrapper { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+      #step2-content { min-height: 0; }
+      .payment-layout { flex: 1; min-height: 0; overflow: hidden; grid-template-columns: repeat(2, minmax(0, calc(472px + 5.5rem))); gap: 0; align-items: stretch; width: 100%; max-width: calc(944px + 11rem); margin: 0 auto; border-left: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); background: linear-gradient(to right, var(--bg) 50%, var(--bottom-bg) 50%); }
+      .order-summary-col { height: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border-right: 1px solid var(--border-strong); padding: var(--pad) 2.75rem; --order-col-pad-x: 2.75rem; }
+      .payment-form-col { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: var(--pad) 2.75rem; --form-col-pad-x: 2.75rem; }
+      .payment-form-content, .order-summary-top-content, .order-summary-bottom-content { max-width: 472px; margin: 0 auto; }
+      .payment-form-col, .order-summary-col { scrollbar-width: none; -ms-overflow-style: none; }
+      .payment-form-col::-webkit-scrollbar, .order-summary-col::-webkit-scrollbar { display: none; }
+      .order-summary-top-content .product-info { margin-bottom: 0; }
+      .order-summary-col .form-pricing { padding-top: 0; }
+      .after-section { border-top: none; margin-top: 0; padding-top: 0; }
+    }
 
-  .cta-widget__footer{
-    flex-shrink:0;
-    padding:0 1.1rem 1rem;
-    display:flex;flex-direction:column;align-items:stretch;gap:.75rem;
-  }
-  .cta-widget__footer .pricing{
-    width:100%;
-  }
-  .cta-widget__footer .btn{
-    width:100%;
-    padding:.9rem 1.25rem;
-    font-size:1rem;
-    justify-content:space-between;
-  }
-  .cta-widget__footer .btn .btn-label{text-align:left;flex:1}
-  .cta-widget__footer .btn .btn-divider{display:block !important}
-  .cta-widget__footer .btn .btn-arrow{display:inline !important}
-  /* Pricing bullets */
-  .cta-widget__footer .pricing-bullets{list-style:none;display:flex;flex-direction:column;gap:.4rem;text-align:left;width:100%}
-  .cta-widget__footer .pricing-bullets li{display:flex;align-items:flex-start;gap:.45rem;font-size:.875rem;line-height:1.45;color:var(--text)}
-  .cta-widget__footer .pricing-bullets li:first-child{font-weight:600}
-  .cta-widget__footer .pricing-bullets svg{flex-shrink:0;margin-top:.13rem;color:inherit}
-}
+    /* Details toggle */
+    .details-panel-inner { padding: 0; }
+    .order-summary-header { display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 0; }
+    .details-toggle { display: none; }
+    .details-panel { display: block; }
 
-/* Common Questions (FAQ) — same band as results; constrained divider provides separation */
-.common-questions{background:#161616;padding:var(--pad) 1.5rem var(--pad)}
-.section-divider{
-  display:none;
-}
-.common-questions__inner{max-width:472px;margin:0 auto}
-.faq-list{display:flex;flex-direction:column;gap:.75rem}
-.faq-item{
-  border-radius:12px;
-  background:#2a2a2a;
-  overflow:hidden;
-}
-.faq-item__summary{
-  list-style:none;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  padding:1rem 1.1rem;
-  font-size:1rem;
-  font-weight:600;
-  line-height:1.35;
-  letter-spacing:-.02em;
-  color:var(--text);
-  user-select:none;
-  transition:background-color 0.12s ease;
-}
-@media(hover:hover) and (pointer:fine){
-  .faq-item__summary:hover{background-color:#252525}
-}
-.faq-item__summary::-webkit-details-marker{display:none}
-.faq-chevron{
-  flex-shrink:0;
-  color:var(--muted);
-  transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
-}
-.faq-item--open .faq-chevron{transform:rotate(180deg)}
-.faq-item__body-inner{
-  padding:.85rem 1.1rem 1.1rem;
-}
-.faq-item__body-inner p{
-  font-size:1rem;
-  line-height:1.6;
-  letter-spacing:-.005em;
-  color:var(--text);
-  margin:0;
-}
-.faq-item__body-inner p+p{margin-top:.75rem}
+    /* Mobile: coach card in details panel only */
+    .desktop-only-summary { display: block; }
+    .mobile-only-summary { display: none; }
 
-/* story blocks: video/img fills thumb */
-.block-story__thumb video,.block-story__thumb img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:125%;width:auto;display:block}
-@media(min-width:1280px) and (hover:hover) and (pointer:fine){
-  .wyget-row{
-    position:relative;
-    isolation:isolate;
-    cursor:default;
-    user-select:none;
-  }
-  .wyget-row::before{
-    content:'';
-    position:absolute;
-    inset:-.35rem -.5rem;
-    border-radius:14px;
-    background:transparent;
-    border:1px solid transparent;
-    z-index:-1;
-    transition:background-color .15s ease, border-color .15s ease;
-    pointer-events:none;
-  }
-  .wyget-row:hover::before{
-    background:rgba(255,255,255,.05);
-    border-color:var(--card-border);
-  }
-}
-@media(min-width:1280px){
-  .block--story .block-inner{flex:1;padding-bottom:0}
-  .block--story .block-body{flex:0 0 auto}
-  .block--story .block-story__thumb{
-    position:relative;
-    flex:1;
-    min-height:0;
-    height:auto;
-    aspect-ratio:unset;
-    width:calc(100% + 2.3rem);
-    margin-left:-1.15rem;margin-right:-1.15rem;margin-bottom:0;
-    border-radius:0;
-    overflow:hidden;
-  }
-  .block--story .block-story__thumb video{
-    position:absolute;
-    top:0;left:50%;
-    transform:translateX(-50%);
-    height:125%; /* container shows exactly top 80% of video; bottom 20% clips */
-    width:auto;
-  }
-}
+    /* Mobile overrides */
+    @media (max-width: 760px) {
+      .payment-layout { grid-template-columns: 1fr; gap: 0; }
+      .order-summary-col { padding: var(--pad-sm) 1.25rem; --order-col-pad-x: 1.25rem; border-right: none; border-bottom: 1px solid var(--border-strong); display: none; }
+      .payment-form-col { padding: var(--pad-sm) 1.25rem; --form-col-pad-x: 1.25rem; background: var(--bg); }
+      .after-section { background: var(--bottom-bg); padding-bottom: var(--pad-sm); margin-bottom: calc(-1 * var(--pad-sm)); }
+      .after-section { margin-top: 1.5rem; padding-top: 1.25rem; }
+      .coach-card-wrap { max-width: 100%; }
+      .order-divider { display: none; }
+      .form-pricing { padding-top: 0; }
+      .product-info { margin-bottom: 0.5rem; }
+      .sub-section-label { margin-top: 1rem; }
+      .details-panel .form-pricing > .sub-section-label { display: none; }
 
-footer{background:#161616;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:13px;color:var(--muted)}
-.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
-.footer-disclaimer{font-size:12px;line-height:1.6;opacity:.85}
-.footer-disclaimer p+p{margin-top:.75rem}
-.footer-divider{border:none;border-bottom:1px solid var(--border)}
-.copyright{color:var(--text)}
-.footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
-footer a{color:#4d94ff;text-decoration:none}
+      .desktop-only-summary { display: none; }
+      .mobile-only-summary { display: block; margin-bottom: 1rem; }
 
-/* Responsive */
-@media(max-width:767px){
-  .col-left{padding:var(--pad-sm) 1.25rem}
-  .btn{width:100%;justify-content:space-between}
-  .btn-label{text-align:left}
-  .btn-divider{display:block}
-  .btn-arrow{display:inline}
-  .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
-  .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
-  .section-divider{margin-bottom:2.25rem}
-  .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
-}
-@media(max-width:1279px){
-  .col-right{padding:0 1.25rem var(--pad-sm)}
-  .block--results-ba-mobile{order:-1}
-}
-@media(min-width:1024px){
-  .headline{font-size:2rem}
-  .section-title{font-size:1.75rem}
-  .video-wrap{max-width:800px;margin:0 auto}
-  footer{padding-left:2rem;padding-right:2rem}
-}
-@media(min-width:1280px){
-  /* Desktop sidebar: 28rem base — ~65/35 split at 1280px; scales up at wider viewports */
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 28rem;align-items:start;border-top:0}
-  .col-left{padding:var(--pad) 1rem var(--pad) 2rem;min-width:0}
-  .col-right{padding:var(--pad) 2rem var(--pad) 1rem;display:flex;align-items:stretch;min-width:0;width:100%;max-width:28rem;box-sizing:border-box}
-  .headline{font-size:2.25rem}
-  .section-title{font-size:2rem}
-  .video-wrap{max-width:100%}
-  .results-section{padding:var(--pad) 2rem var(--pad)}
-  .common-questions{padding:var(--pad) 2rem var(--pad)}
-  .section-divider{margin-bottom:2.75rem}
-  .card{max-width:100%}
-  /* Story blocks: image flows in flex column between heading and body */
-  .block--story .block-inner{position:static}
-  .block--story .block-story__header{padding-right:0;order:1}
-  .block--story .block-body{order:2}
-  .block-story__thumb{
-    position:static;
-    width:100%;
-    top:auto;
-    right:auto;
-    aspect-ratio:520/352;
-    border-radius:8px;
-    margin-top:.75rem;
-    margin-bottom:0;
-    order:3;
-  }
-}
-@media(min-width:1440px){
-  .hero-grid{grid-template-columns:minmax(0,1fr) 30rem}
-  .col-right{max-width:30rem}
-}
-@media(min-width:1920px){
-  .hero-grid{grid-template-columns:minmax(0,1fr) 32rem}
-  .col-right{max-width:32rem}
-}
+      .details-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: none;
+        border: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-decoration: underline dotted;
+        text-underline-offset: 2px;
+        cursor: pointer;
+        line-height: 1;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 201;
+        border-radius: 6px;
+        padding: 0.3rem 0.5rem;
+        margin: -0.3rem -0.5rem;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .details-toggle:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
+      }
+      .details-chevron { color: inherit; transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
+      .details-toggle[aria-expanded="true"] .details-chevron { transform: rotate(180deg); }
 
-/* ── Persistent top nav ── */
-.site-nav{
-  position:sticky;
-  top:0;
-  z-index:900;
-  width:100%;
-  min-height:3rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  padding:.625rem 1.25rem;
-  background:#1c1c1c;
-  border-bottom:1px solid #3a3a3a;
-  box-sizing:border-box;
-}
-.site-nav__wordmark{
-  font-size:.8125rem;
-  font-weight:600;
-  color:var(--text);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  min-width:0;
-  flex-shrink:1;
-}
-.site-nav__links{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  align-items:center;
-  gap:0.5rem;
-}
-.site-nav__link{
-  font-size:.8125rem;
-  font-weight:500;
-  color:rgba(255,255,255,.65);
-  text-decoration:none;
-  white-space:nowrap;
-  transition:background-color .15s ease, color .15s ease;
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:.3rem .5rem;
-  border-radius:6px;
-  line-height:1;
-}
-@media(hover:hover) and (pointer:fine){
-  .site-nav__link:hover{background-color:rgba(235,235,235,.1);color:#fff}
-}
-.site-nav__cta{
-  flex-shrink:0;
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  padding:.45rem .85rem;
-  background:var(--blue);
-  color:#fff;
-  font-size:.8rem;
-  font-weight:600;
-  border-radius:8px;
-  text-decoration:none;
-  white-space:nowrap;
-  border:none;
-  cursor:pointer;
-  transition:background .15s;
-}
-.site-nav__arrow{transition:transform .22s ease}
-@media(hover:hover) and (pointer:fine){
-  .site-nav__cta:hover{background:#0052cc}
-  .site-nav__cta:hover .site-nav__arrow{transform:translateX(3px)}
-}
-@media(min-width:761px){
-  .site-nav{padding:.625rem 2rem}
-}
-@media(max-width:760px){
-  .site-nav__links{display:none}
-  .site-nav{
-    position:fixed;
-    transform:translateY(-100%);
-    transition:transform .35s cubic-bezier(.4,0,.2,1);
-  }
-  .site-nav.is-visible{
-    transform:translateY(0);
-  }
-}
-.legal-link {
-  background: none; border: none; padding: 0; cursor: pointer;
-  font-size: .8125rem; color: #4d94ff; text-decoration: none;
-  font-family: inherit; transition: color .15s;
-}
-.legal-link:hover { color: #4d94ff; }
-.legal-overlay {
-  display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55);
-  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-  z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem;
-  opacity: 0; visibility: hidden; pointer-events: none;
-}
-.legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
-.legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-@keyframes legalFadeIn { from { opacity: 0 } to { opacity: 1 } }
-@keyframes legalFadeOut { from { opacity: 1 } to { opacity: 0 } }
-.legal-modal {
-  background: #222; border: 1px solid var(--card-border, #3d3d3d); border-radius: 12px;
-  width: 100%; max-width: 700px; max-height: 88vh; display: flex;
-  flex-direction: column;
-}
-.legal-modal-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: .625rem 1.5rem; border-bottom: 1px solid var(--card-border, #3d3d3d); flex-shrink: 0;
-}
-.legal-modal-title {
-  font-size: .8125rem; font-weight: 600; color: #F8FAFC;
-}
-.legal-modal-close {
-  background: none; border: none; color: rgba(255,255,255,.65);
-  border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500;
-  padding: .3rem .5rem; line-height: 1; white-space: nowrap;
-  transition: background-color .15s ease, color .15s ease; flex-shrink: 0;
-}
-@media(hover:hover) and (pointer:fine){
-  .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; }
-}
-.legal-modal-body {
-  overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1;
-  scrollbar-width: none;
-}
-.legal-modal-body::-webkit-scrollbar { display: none; }
-.legal-modal-body h2 {
-  font-size: 1.375rem; font-weight: 700; color: var(--text);
-  margin-bottom: .375rem; line-height: 1.3;
-}
-.legal-modal-body .legal-effective {
-  font-size: .75rem; color: #9ca3af; margin-bottom: 1.75rem;
-}
-.legal-modal-body h3 {
-  font-size: .875rem; font-weight: 700; color: var(--text); margin: 1.75rem 0 .625rem;
-  padding-top: 1.375rem; border-top: 1px solid var(--card-border, #3d3d3d);
-}
-.legal-modal-body p {
-  font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .75rem;
-}
-.legal-modal-body ul { margin: 0 0 .875rem 1.125rem; }
-.legal-modal-body ul li {
-  font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .25rem;
-}
-.legal-modal-body a { color: #4d94ff; text-decoration: none; }
-.legal-modal-body a:hover { color: #4d94ff; }
-.legal-modal-body strong { color: var(--text); font-weight: 600; }
-</style>
+      .details-panel {
+        position: fixed;
+        top: var(--payment-nav-h);
+        left: 0; right: 0;
+        z-index: 200;
+        background: var(--bg);
+        transform: translate3d(0, calc(-100% - 8px), 0);
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.38s;
+        overflow-y: auto;
+        max-height: calc(85vh - var(--payment-nav-h));
+        border-bottom: 1px solid var(--border);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+      .details-panel.is-open { transform: translate3d(0, 0, 0); visibility: visible; pointer-events: auto; transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s; }
+      .details-panel-inner { padding: 1.75rem 1.25rem; }
+    }
+
+    /* Backdrop */
+    #details-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
+    #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
+    @media (max-width: 760px) { #details-backdrop { display: block; } }
+
+    .timeline-icon svg path, .timeline-icon svg circle, .timeline-icon svg rect { fill: var(--icon-stroke) !important; }
+
+    /* NAF modal */
+    .naf-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; }
+    .naf-overlay.active { display: flex; animation: legalFade .18s ease; }
+    .naf-modal-box { max-width: 460px; max-height: none; }
+    .naf-modal-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.75rem 1.5rem 2.25rem; }
+    .naf-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); line-height: 1.3; margin: 0 0 1rem; }
+    .naf-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin: .25rem auto 0; }
+    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; text-decoration: none; transition: background 0.15s ease; }
+    @media (hover: hover) and (pointer: fine) { .naf-modal-btn:hover { background: #0052cc; } }
+
+    /* Legal overlays */
+    .legal-overlay { display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; visibility: hidden; pointer-events: none; }
+    .legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
+    .legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    @keyframes legalFade { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes legalFadeIn { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes legalFadeOut { from { opacity: 1 } to { opacity: 0 } }
+    .legal-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 700px; max-height: 88vh; display: flex; flex-direction: column; }
+    .legal-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
+    .legal-modal-title { font-size: .8125rem; font-weight: 600; color: #F8FAFC; }
+    .legal-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color .15s ease, color .15s ease; flex-shrink: 0; }
+    @media(hover:hover) and (pointer:fine) { .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; } }
+    .legal-modal-body { overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1; scrollbar-width: none; }
+    .legal-modal-body::-webkit-scrollbar { display: none; }
+    .legal-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); margin-bottom: .375rem; line-height: 1.3; }
+    .legal-modal-body .legal-effective { font-size: .75rem; color: #9ca3af; margin-bottom: 1.75rem; }
+    .legal-modal-body h3 { font-size: .875rem; font-weight: 700; color: var(--text); margin: 1.75rem 0 .625rem; padding-top: 1.375rem; border-top: 1px solid #3d3d3d; }
+    .legal-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .75rem; }
+    .legal-modal-body ul { margin: 0 0 .875rem 1.125rem; }
+    .legal-modal-body ul li { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .25rem; }
+    .legal-modal-body a { color: #4d94ff; text-decoration: none; }
+    .legal-modal-body a:hover { color: #4d94ff; }
+    .legal-modal-body strong { color: var(--text); font-weight: 600; }
+  </style>
 </head>
+
 <body>
+<div class="page-wrapper">
 
-<!-- Persistent top nav -->
-<nav class="site-nav" aria-label="Site navigation">
-  <span class="site-nav__wordmark">Online Fat Loss Coaching</span>
-  <div class="site-nav__links">
-    <button class="site-nav__link" onclick="scrollToSection('how-it-works')">Overview</button>
-    <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
-  </div>
-  <button class="site-nav__cta" onclick="window.location.href='/join-now'+window.location.search">Join<span class="site-nav__arrow">→</span></button>
-</nav>
+  <nav class="payment-nav" aria-label="Sign up">
+    <button type="button" class="payment-back" id="nav-back" aria-label="Go back">
+      <svg class="payment-back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="payment-back-label">Back</span>
+    </button>
 
-<main>
-<div class="container">
-  <div class="hero-grid">
-
-    <div class="col-left">
-      <div class="header-group header-group--mobile">
-        <div class="callout">Online Fat Loss Coaching for Men</div>
-        <h1 class="headline">Lose The Weight You've Been Carrying For Years</h1>
-        <p class="subheadline">A workout program, daily calorie targets, and a coach who answers when you need one.</p>
-      </div>
-      <div class="video-wrap" id="videoContainer">
-        <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
-             a small amount; preload="none" can cause play() to fail on mobile before any data loads.
-             webkit-playsinline is required for older iOS Safari inline playback. -->
-        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
-          <source src="video.mp4" type="video/mp4">
-        </video>
-        <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
-        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:999px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
-            <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-            Watch Video
-          </button>
-        </div>
-      </div>
+    <div class="signup-progress" aria-label="Progress">
+      <button type="button" class="prog-step-btn prog-step-btn--active" id="prog-btn1">
+        <div class="prog-dot prog-dot--active" id="prog-dot1"></div>
+        Contact Info
+      </button>
+      <button type="button" class="prog-step-btn prog-step-btn--future" id="prog-btn2">
+        <div class="prog-dot" id="prog-dot2"></div>
+        Payment
+      </button>
     </div>
 
-    <div class="col-right" id="colRight">
-      <!-- Mobile: just button + pricing (no widget) -->
-      <div class="mobile-cta">
-        <button class="btn" onclick="window.location.href='/join-now'+window.location.search">
-          <span class="btn-label">Join Now</span>
-          <span class="btn-divider" aria-hidden="true"></span>
-          <span class="btn-arrow">→</span>
-        </button>
-        <div class="pricing">
-          <div class="pricing-amount">$50 first month, then $199/month.</div>
-          <div>Full refund if you don't see results in 30 days.</div>
-        </div>
-      </div>
-      <!-- Desktop: height matched to video (JS); hero = static dual portraits + bridge + faint dot (no slider) -->
-      <div class="cta-widget" id="ctaWidget">
+    <div class="nav-right">
+      <button class="details-toggle" id="details-toggle" type="button" aria-expanded="false" aria-controls="details-panel" style="display:none;">
+        <span class="details-toggle-text">Details</span>
+        <svg class="details-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
 
-        <div class="cta-widget__hero" aria-label="Before and after comparison">
-          <div class="ba-dual" id="baDual">
-<div class="ba-dual__row">
-              <div class="ba-dual__photo" data-ba-side="left">
-                <div class="ba-dual__img-wrap">
-                  <img class="ba-dual__img" src="https://i.postimg.cc/RZXM7HmG/beseven.webp" alt="Before coaching">
-                </div>
-              </div>
-              <div class="ba-dual__spacer" aria-hidden="true"></div>
-              <div class="ba-dual__photo" data-ba-side="right">
-                <div class="ba-dual__img-wrap">
-                  <img class="ba-dual__img" src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After coaching">
-                </div>
-              </div>
+  <!-- ═══ STEP 1: CONTACT + QUALIFICATION ═══ -->
+  <div id="step1-content" style="flex:1;display:flex;flex-direction:column;">
+    <div class="signup-main">
+      <div class="signup-inner">
+
+        <h1 class="signup-section-heading">Contact Info</h1>
+        <p class="signup-subheadline">Use your real name and email. This is what I'll use to set up your account in the coaching app.</p>
+
+        <form id="contact-form" novalidate>
+          <!-- Email -->
+          <div class="form-field">
+            <input class="signup-input" type="email" id="inp-email" placeholder="Email address *" autocomplete="email" inputmode="email" />
+          </div>
+
+          <!-- Name — always visible -->
+          <div class="form-row" id="fg-name">
+            <input class="signup-input" type="text" id="inp-first" placeholder="First name *" autocomplete="given-name" />
+            <input class="signup-input" type="text" id="inp-last" placeholder="Last name *" autocomplete="family-name" />
+          </div>
+
+          <!-- Qualification dropdowns — revealed after last name has input -->
+          <div class="reveal-block" id="fg-questions" style="display:none;">
+            <div class="form-field">
+              <label class="form-label" for="q-goal">What is your top fitness goal?</label>
+              <select class="signup-select" id="q-goal">
+                <option value="">Select…</option>
+                <option value="lose_fat">Lose body fat</option>
+                <option value="build_muscle">Build muscle</option>
+                <option value="improve_fitness">Improve general fitness</option>
+                <option value="not_sure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="q-age">What's your age?</label>
+              <select class="signup-select" id="q-age">
+                <option value="">Select…</option>
+                <option value="17_or_younger">17 or younger</option>
+                <option value="18_29">18–29</option>
+                <option value="30_39">30–39</option>
+                <option value="40_49">40–49</option>
+                <option value="50_59">50–59</option>
+                <option value="60_or_older">60 or older</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="q-gym">Do you have access to a gym?</label>
+              <select class="signup-select" id="q-gym">
+                <option value="">Select…</option>
+                <option value="yes">Yes, I have access</option>
+                <option value="join">I plan to join a gym</option>
+                <option value="no">No</option>
+                <option value="home">Home equipment only</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
+              <select class="signup-select" id="q-commitment">
+                <option value="">Select…</option>
+                <option value="yes">Yes</option>
+                <option value="maybe">Maybe</option>
+                <option value="no">No</option>
+              </select>
             </div>
           </div>
-        </div>
 
-        <div class="cta-widget__section cta-widget__section--copy">
-          <div class="callout">Online Fat Loss Coaching for Men</div>
-          <div class="cta-widget__title">Lose The Weight You've Been Carrying For Years</div>
-          <p class="subheadline">A workout program, daily calorie targets, and a coach who answers when you need one.</p>
-        </div>
-
-        <div class="cta-widget__footer">
-          <button class="btn" type="button" onclick="window.location.href='/join-now'+window.location.search">
-            <span class="btn-label">Join Now</span>
-            <span class="btn-divider" aria-hidden="true"></span>
-            <span class="btn-arrow">→</span>
+          <!-- Button + disclaimer — always visible -->
+          <button type="submit" class="signup-btn" id="continue-btn" disabled>
+            <span class="signup-btn-label">Continue</span>
+            <span class="signup-btn-divider" aria-hidden="true"></span>
+            <span class="signup-btn-arrow" aria-hidden="true">→</span>
           </button>
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="pricing-verified-sprite" style="position:absolute;width:0;height:0;overflow:hidden">
-            <defs>
-              <symbol id="pricing-verified-badge" viewBox="0 0 24 24">
-                <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z"/>
-              </symbol>
-            </defs>
-          </svg>
-          <ul class="pricing-bullets">
-            <li>
-              <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
-              <span>$50 first month, then $199/month.</span>
-            </li>
-            <li>
-              <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
-              <span>Full refund if you don't see results in 30 days.</span>
-            </li>
-          </ul>
-        </div>
+          <p class="signup-legal-note">By continuing, you consent to your data being saved per our <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+        </form>
 
       </div>
     </div>
-
   </div>
 
-  <div class="results-section" id="how-it-works">
-    <div class="blocks-grid">
+  <!-- ═══ STEP 2: PAYMENT ═══ -->
+  <div id="step2-content">
+    <div class="payment-layout">
 
-      <!-- Block 1: What you get (single card, rows like payment “after pay”) -->
-      <div class="block block--wyget">
-        <div class="block-inner">
-          <div class="block-header-row">
-            <div class="block-num">1</div>
-            <h2 class="block-heading">What you get</h2>
+      <!-- ════ LEFT: Order Summary ════ -->
+      <div class="order-summary-col">
+        <div class="order-summary-top-content desktop-only-summary">
+          <div class="order-summary-header">
+            <div class="section-label">Coaching Summary</div>
           </div>
-          <div class="wyget-list" role="list">
-            <div class="wyget-row" role="listitem">
-              <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+          <div class="coach-card-wrap">
+            <div class="coach-summary-card" id="coachCard">
+              <img src="https://i.postimg.cc/8CRy1535/card.webp" alt="Coach Asher" loading="eager" />
+              <div class="card-top-left">
+                <div class="card-title-sub">Online Coaching</div>
+                <div class="card-title">with Asher</div>
               </div>
-              <div class="wyget-row__body">
-                <div class="wyget-row__title">Custom training program</div>
-                <div class="wyget-row__desc">Built for your schedule, equipment, and experience level.</div>
-              </div>
+              <div class="card-bottom-left"><div class="card-price">$50<span class="card-price-period">/first month</span></div></div>
+              <div class="card-bottom-right"><div class="card-note">No Contract. No Hidden Fees.</div></div>
             </div>
-            <div class="wyget-row" role="listitem">
-              <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+          </div>
+          <div class="product-info">
+            <div class="product-title">Online Coaching with Asher</div>
+            <div class="product-desc">Custom workouts, personalized nutrition, weekly check-ins, and same-day messaging from me. Built to help you lose body fat.</div>
+          </div>
+        </div>
+
+        <hr class="order-divider-full" aria-hidden="true">
+
+        <div class="details-panel" id="details-panel">
+          <div class="details-panel-inner">
+            <!-- Mobile only: card + info above pricing -->
+            <div class="mobile-only-summary">
+              <div class="order-summary-header" style="margin-bottom:1rem;">
+                <div class="section-label">Coaching Summary</div>
               </div>
-              <div class="wyget-row__body">
-                <div class="wyget-row__title">Daily calorie targets</div>
-                <div class="wyget-row__desc">Clear daily targets so you always know if you’re on track.</div>
+              <div class="coach-card-wrap">
+                <div class="coach-summary-card">
+                  <img src="https://i.postimg.cc/8CRy1535/card.webp" alt="Coach Asher" loading="lazy" />
+                  <div class="card-top-left">
+                    <div class="card-title-sub">Online Coaching</div>
+                    <div class="card-title">with Asher</div>
+                  </div>
+                  <div class="card-bottom-left"><div class="card-price">$50<span class="card-price-period">/first month</span></div></div>
+                  <div class="card-bottom-right"><div class="card-note">No Contract. No Hidden Fees.</div></div>
+                </div>
               </div>
+              <div class="product-info">
+                <div class="product-title">Online Coaching with Asher</div>
+                <div class="product-desc">Custom workouts, personalized nutrition, weekly check-ins, and same-day messaging from me. Built to help you lose body fat.</div>
+              </div>
+              <div class="form-pricing-divider"></div>
             </div>
-            <div class="wyget-row" role="listitem">
-              <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-              </div>
-              <div class="wyget-row__body">
-                <div class="wyget-row__title">Weekly check-ins</div>
-                <div class="wyget-row__desc">A weekly review of what worked, what didn't, and what to change going forward.</div>
-              </div>
-            </div>
-            <div class="wyget-row" role="listitem">
-              <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-              </div>
-              <div class="wyget-row__body">
-                <div class="wyget-row__title">Same-day messaging</div>
-                <div class="wyget-row__desc">Direct messaging for questions and changes, answered the same day.</div>
-              </div>
-            </div>
-            <div class="wyget-row" role="listitem">
-              <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-              </div>
-              <div class="wyget-row__body">
-                <div class="wyget-row__title">Progress tracking</div>
-                <div class="wyget-row__desc">Simple weekly logging so we both see what’s working and what isn’t.</div>
+
+            <div class="order-summary-bottom-content">
+              <div class="form-pricing">
+                <div class="order-row">
+                  <div><div class="order-row-label">Online Coaching w/ Asher</div></div>
+                  <div class="order-row-value">$199/mo</div>
+                </div>
+                <div class="order-row">
+                  <span class="order-row-label">First month discount</span>
+                  <span class="order-row-value order-discount-value">−$149</span>
+                </div>
+                <div class="order-row" id="tax-row">
+                  <div class="tax-label-wrap">
+                    <span class="order-row-label">Tax</span>
+                    <button class="tax-info-btn" type="button" aria-label="Tax information">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.75"/>
+                        <path d="M12 11v5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                        <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
+                      </svg>
+                      <div class="tax-tooltip" role="tooltip">Tax is determined by billing information.</div>
+                    </button>
+                  </div>
+                  <span id="tax-value" class="tax-value-placeholder">Enter address to calculate</span>
+                </div>
+                <div class="form-pricing-divider"></div>
+                <div class="order-total-row">
+                  <span class="order-total-label">Due today</span>
+                  <span class="order-total-value" id="due-today-value">$50.00</span>
+                </div>
+                <p class="form-pricing-footnote">After today's $50 payment, you'll be billed $199.00/month automatically on the same date each month until you cancel.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Block 2 -->
-      <div class="block block--story">
-        <div class="block-inner">
-          <div class="block-story__header">
-            <div class="block-num">2</div>
-            <h2 class="block-heading">How it works</h2>
-          </div>
-          <div class="block-story__thumb">
-            <img class="phone-behind phone-behind--left" src="https://i.postimg.cc/cHdNg1g7/weight.webp" alt="">
-            <img class="phone-behind phone-behind--right" src="https://i.postimg.cc/XJn0GNGD/food.webp" alt="">
-            <img class="phone-main" src="https://i.postimg.cc/Y9twG2GX/tracking.webp" alt="">
-          </div>
-          <div class="block-body">
-            <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
-            <p>You do the workouts, track two numbers, and I adjust everything else around your schedule.</p>
-          </div>
-        </div>
-      </div>
+      <!-- ════ RIGHT: Payment Form ════ -->
+      <div class="payment-form-col">
+        <div class="payment-form-content">
+          <div class="section-label">Complete Sign-up</div>
 
-      <!-- Block 3 -->
-      <div class="block block--story block--bubble">
-        <div class="block-inner">
-          <div class="block-story__header">
-            <div class="block-num">3</div>
-            <h2 class="block-heading">Why it works</h2>
+          <div id="express-pay-section" style="display:none;">
+            <div id="express-checkout-element"></div>
+            <div class="or-divider">or pay with card</div>
           </div>
-          <div class="block-story__thumb">
-            <div class="phone-wrap">
-              <img src="https://i.postimg.cc/63BN262j/coach-check-in-phone-still.webp" alt="">
-              <div class="phone-screen-video">
-                <video id="phoneVideo" data-src="andrew-pro-homepage-video.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
-              </div>
+
+          <div class="address-element-wrap">
+            <div id="address-element-skeleton"></div>
+            <div id="address-element"></div>
+          </div>
+
+          <form id="payment-form">
+            <div class="payment-element-wrap">
+              <div id="payment-element-skeleton"></div>
+              <div id="payment-element"></div>
             </div>
-            <div class="chat-bubble" aria-hidden="true">
-              <div class="chat-bubble__body">
-                <div class="chat-bubble__blur"></div>
-                <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay the course. 💪</p>
-              </div>
-              <svg class="chat-bubble__tail" viewBox="0 0 5 9" width="5" height="9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M0 9 C0.1 8.95, 5 5.9, 5 0 L5 9 Z" fill="#242424" fill-opacity="0.62" stroke="#3d3d3d" stroke-width="1" vector-effect="non-scaling-stroke"/>
+            <div id="stripe-message" role="alert" style="display:none;"></div>
+          </form>
+
+          <div class="form-cta-area">
+            <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
+            <button type="submit" id="submit-stripe" form="payment-form">
+              <span id="submit-stripe-text">Begin Coaching</span>
+            </button>
+            <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
+            <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
+            <p class="security-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z"/>
               </svg>
+              Your information is encrypted and secure.
+            </p>
+          </div>
+
+          <hr class="form-divider-full" aria-hidden="true">
+
+          <div class="after-section">
+            <div class="after-heading">What happens after I pay?</div>
+            <div class="after-steps" role="list">
+              <div class="after-card" role="listitem">
+                <div class="after-card__media">
+                  <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+                </div>
+                <div class="after-card__body">
+                  <div class="after-label-row">
+                    <div class="after-card-num" aria-hidden="true">1</div>
+                    <div class="after-label">Download the App</div>
+                  </div>
+                  <div class="after-desc">You'll be redirected right after payment.</div>
+                </div>
+              </div>
+              <div class="after-card" role="listitem">
+                <div class="after-card__media">
+                  <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+                </div>
+                <div class="after-card__body">
+                  <div class="after-label-row">
+                    <div class="after-card-num" aria-hidden="true">2</div>
+                    <div class="after-label">Complete Onboarding</div>
+                  </div>
+                  <div class="after-desc">We meet on a video call through the app, talk through your goals, and build your plan together.</div>
+                </div>
+              </div>
+              <div class="after-card" role="listitem">
+                <div class="after-card__media">
+                  <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+                </div>
+                <div class="after-card__body">
+                  <div class="after-label-row">
+                    <div class="after-card-num" aria-hidden="true">3</div>
+                    <div class="after-label">Start Week One</div>
+                  </div>
+                  <div class="after-desc">Your full plan goes live in the app shortly after the onboarding call.</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="block-body">
-            <p>Most people don’t fail because they’re lazy. They fail because no one’s watching the numbers with them.</p>
-            <p>Coaching closes that gap. You get someone in the loop every week, catching problems before they become reasons to quit.</p>
-          </div>
+
         </div>
       </div>
 
-      <!-- Before/After: visible below 1280px only (desktop uses widget hero) -->
-      <div class="block block--results-ba-mobile ba-mobile-dual">
-        <img src="https://i.postimg.cc/RZXM7HmG/beseven.webp" alt="Before transformation" loading="lazy">
-        <img src="https://i.postimg.cc/SRRn92cf/befive.webp" alt="After transformation" loading="lazy">
-      </div>
-
     </div>
   </div>
 
-  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
-    <hr class="section-divider" aria-hidden="true">
-    <div class="common-questions__inner">
-      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>You have no client results. How do I know this works?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>You’re right, I don’t. What I have is my own transformation: 175 lbs at ~17% body fat down to 158 lbs at ~9% in 8 weeks, using the exact system I’ll build for you. At $50 for the first month with a full refund, you’re not betting on my track record. You’re betting on the system.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>Every plan you’ve quit was built for a perfect week. Mine is built for a real one. You do the workouts, track two numbers, and I adjust everything else around your life. If your last attempt had worked with your schedule, you’d still be doing it.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>Why is it only $50?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>$50 is the first month, then $199/month after. The price is low because I want zero financial risk on your end while you find out if this works for you.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>Do you handle the diet side too?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>Yes. You get a daily calorie target and a daily protein target. No strict meal plan and no foods you have to eat or avoid, though I'll suggest specific options when it makes sense.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>How much time does this take each week?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>3–4 gym sessions per week, 45 to 60 minutes each. A couple of minutes a day to log your food. That’s it.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>What happens after I pay?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>Everything runs through an app on your phone. After you pay, you'll be redirected to download it. Your workouts, check-ins, and messaging with me are all in one place.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>How does the refund actually work?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>You can cancel the coaching anytime from the app, or message me to do it for you. If you’re inside 30 days, I refund you in full. No form, no waiting period, no questions.</p>
-          </div></div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span>Can I cancel anytime?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-          <div class="faq-item__body"><div class="faq-item__body-inner">
-            <p>Yes. No contract, no cancellation fee.</p>
-          </div></div>
-        </details>
-      </div>
-    </div>
-  </section>
 </div>
-</main>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-disclaimer">
-      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
-      <p>Results may vary. This site does not offer medical advice. Always consult with a qualified healthcare professional before starting any diet or exercise program.</p>
-    </div>
-    <hr class="footer-divider">
-    <div class="footer-row">
-      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-        <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>
-        <button class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>
-      </div>
+<div id="details-backdrop" aria-hidden="true"></div>
+
+<!-- NOT A FIT MODAL -->
+<div class="naf-overlay" id="naf-modal" role="alertdialog" aria-modal="true" aria-labelledby="naf-modal-title">
+  <div class="legal-modal naf-modal-box">
+    <div class="naf-modal-body">
+      <h2 id="naf-modal-title"></h2>
+      <p id="naf-modal-explanation"></p>
+      <button type="button" class="naf-modal-btn" id="naf-modal-btn">Got It</button>
     </div>
   </div>
-</footer>
+</div>
 
-<script>
-/* ── Mobile-safe autoplay with poster-first skeleton ── */
-(function(){
-  var vid     = document.getElementById('mainVideo');
-  var overlay = document.getElementById('ctpOverlay');
-  var ctpBtn  = document.getElementById('ctpBtn');
-  if(!vid || !overlay || !ctpBtn) return;
-
-  function showOverlay(){
-    overlay.style.display = 'flex';
-    vid.loop = true;
-  }
-
-  function hideOverlay(){
-    overlay.style.display = 'none';
-  }
-
-  // CTP button hover
-  ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
-  ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
-
-  // Clicking anywhere on the overlay plays the video with sound
-  overlay.addEventListener('click', function(){
-    vid.loop    = false;
-    vid.muted   = false;
-    vid.controls = true;
-    vid.currentTime = 0;
-    var p = vid.play();
-    if(p !== undefined){
-      p.then(function(){ hideOverlay(); }).catch(function(){
-        hideOverlay();
-      });
-    } else {
-      hideOverlay(); // older Safari returns undefined
-    }
-  });
-
-  function attemptAutoplay(){
-    // Attempt 1: unmuted autoplay
-    vid.muted = false;
-    var p1 = vid.play();
-    if(p1 === undefined){
-      // Old Safari — treat as success (it played)
-      vid.controls = true;
-      hideOverlay();
-      return;
-    }
-    p1.then(function(){
-      vid.controls = true;
-      hideOverlay();
-    }).catch(function(){
-      // Attempt 2: muted autoplay (animated thumbnail loop)
-      vid.muted = true;
-      vid.loop  = true;
-      var p2 = vid.play();
-      if(p2 === undefined){
-        showOverlay();
-        return;
-      }
-      p2.then(function(){
-        showOverlay(); // playing muted — show "Watch the Video" on top
-      }).catch(function(){
-        // Attempt 3: fully blocked — static poster + overlay
-        showOverlay();
-      });
-    });
-  }
-
-  // Wait for metadata so mobile browsers have enough data to attempt play()
-  if(vid.readyState >= 1){ // HAVE_METADATA
-    attemptAutoplay();
-  } else {
-    vid.addEventListener('loadedmetadata', function onMeta(){
-      vid.removeEventListener('loadedmetadata', onMeta);
-      attemptAutoplay();
-    });
-    // Safety timeout: if metadata never fires (network blocked in some WebViews),
-    // fall back to showing the static poster + overlay after 3s
-    setTimeout(function(){
-      if(vid.readyState < 1 && overlay.style.display === 'none'){
-        showOverlay();
-      }
-    }, 3000);
-  }
-
-  // Pause on last frame (don't loop if playing unmuted with sound)
-  vid.addEventListener('ended', function(){
-    if(!vid.loop) vid.pause();
-  });
-})();
-
-/* Desktop: match widget height to video; column width comes from CSS (capped) so the video column keeps most of the row */
-(function(){
-  var mq = window.matchMedia('(min-width:1280px)');
-  var videoWrap = document.querySelector('.col-left .video-wrap');
-  var widget = document.getElementById('ctaWidget');
-  if(!videoWrap || !widget) return;
-
-  function setHeight(vh){
-    if(!mq.matches){
-      widget.style.height = '';
-      widget.style.minHeight = '';
-      return;
-    }
-    widget.style.height = vh + 'px';
-    widget.style.minHeight = vh + 'px';
-  }
-
-  function apply(){
-    if(!mq.matches){ setHeight(0); return; }
-    requestAnimationFrame(function(){
-      setHeight(videoWrap.getBoundingClientRect().height);
-    });
-  }
-
-  if(mq.addEventListener){
-    mq.addEventListener('change', apply);
-  } else {
-    mq.addListener(apply);
-  }
-  window.addEventListener('resize', apply);
-  window.addEventListener('load', apply);
-
-  if(typeof ResizeObserver !== 'undefined'){
-    new ResizeObserver(function(entries){
-      setHeight(entries[0].contentRect.height);
-    }).observe(videoWrap);
-  }
-
-  if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(apply);
-  }
-  apply();
-})();
-
-
-</script>
-
-<script>
-(function(){
-  function initBaSlider(wrap){
-    var after = wrap.querySelector('.ba-block-after');
-    var line = wrap.querySelector('.ba-block-line');
-    if(!after || !line) return;
-
-    function set(p){
-      p = Math.max(5, Math.min(95, p));
-      after.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
-      line.style.left = p + '%';
-    }
-    set(50);
-
-    var isDown = false;
-
-    wrap.addEventListener('pointerdown', function(e){
-      isDown = true;
-      wrap.setPointerCapture(e.pointerId);
-      var r = wrap.getBoundingClientRect();
-      set((e.clientX - r.left) / r.width * 100);
-    });
-
-    wrap.addEventListener('pointermove', function(e){
-      if(!isDown) return;
-      var r = wrap.getBoundingClientRect();
-      set((e.clientX - r.left) / r.width * 100);
-    });
-
-    function end(){
-      isDown = false;
-    }
-    wrap.addEventListener('pointerup', end);
-    wrap.addEventListener('pointercancel', end);
-  }
-
-  document.querySelectorAll('.ba-block-wrap').forEach(initBaSlider);
-})();
-</script>
-
-<script>
-(function () {
-  var DUR  = 380;
-  var EASE = 'cubic-bezier(0.4,0,0.2,1)';
-
-  document.querySelectorAll('.faq-item').forEach(function (el) {
-    var summary = el.querySelector('.faq-item__summary');
-    var body    = el.querySelector('.faq-item__body');
-    if (!summary || !body) return;
-
-    body.style.display   = 'block';
-    body.style.overflow  = 'hidden';
-    body.style.maxHeight = el.open ? 'none' : '0';
-    if (el.open) el.classList.add('faq-item--open');
-
-    summary.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      if (el.open) {
-        /* CLOSE: read height before mutating to avoid forced reflow */
-        var fromH = body.scrollHeight;
-        el.classList.remove('faq-item--open');
-        var anim = body.animate(
-          [{ maxHeight: fromH + 'px' }, { maxHeight: '0px' }],
-          { duration: DUR, easing: EASE, fill: 'forwards' }
-        );
-        anim.onfinish = function () {
-          el.removeAttribute('open');
-          anim.cancel();
-          body.style.maxHeight = '0';
-        };
-      } else {
-        /* OPEN: set [open] so body is rendered, add class, animate open */
-        el.setAttribute('open', '');
-        el.classList.add('faq-item--open');
-        body.style.maxHeight = '0';
-        /* rAF defers the scrollHeight read until after paint to avoid forced reflow */
-        requestAnimationFrame(function(){
-          var toH = body.scrollHeight;
-          var anim = body.animate(
-            [{ maxHeight: '0px' }, { maxHeight: toH + 'px' }],
-            { duration: DUR, easing: EASE }
-          );
-          anim.onfinish = function () { body.style.maxHeight = 'none'; };
-        });
-      }
-    });
-  });
-})();
-</script>
-
-<script>
-function scrollToSection(id) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var nav = document.querySelector('.site-nav');
-  var offset = nav ? nav.getBoundingClientRect().height : 0;
-  var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-  window.scrollTo({ top: top, behavior: 'smooth' });
-}
-
-// Mobile: slide nav in once the CTA button scrolls out of view
-(function(){
-  function isMobile(){ return window.innerWidth <= 760; }
-  var nav = document.querySelector('.site-nav');
-  var target = document.querySelector('.mobile-cta');
-  if(!nav || !target) return;
-  var io = new IntersectionObserver(function(entries){
-    if(!isMobile()) return;
-    nav.classList.toggle('is-visible', !entries[0].isIntersecting);
-  }, { threshold: 0 });
-  io.observe(target);
-  // On desktop resize, always show nav (no transform)
-  window.addEventListener('resize', function(){
-    if(!isMobile()) nav.classList.remove('is-visible');
-  });
-})();
-</script>
-
-<script>
-if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-  document.querySelectorAll('.cta-widget .ba-dual__img-wrap').forEach(function(card){
-    var animFrame = null;
-    var MAX_TILT = 10;
-    card.addEventListener('mousemove', function(e){
-      if(animFrame) cancelAnimationFrame(animFrame);
-      animFrame = requestAnimationFrame(function(){
-        var rect = card.getBoundingClientRect();
-        var x = (e.clientX - rect.left) / rect.width  - 0.5;
-        var y = (e.clientY - rect.top)  / rect.height - 0.5;
-        var ry =  x * MAX_TILT;
-        var rx = -y * MAX_TILT;
-        card.style.transform = 'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
-        card.style.boxShadow = (-ry*1.5)+'px '+(rx*1.5+8)+'px 40px rgba(0,0,0,0.3)';
-      });
-    });
-    card.addEventListener('mouseleave', function(){
-      if(animFrame) cancelAnimationFrame(animFrame);
-      card.style.transition = 'transform 0.45s ease';
-      card.style.transform  = 'perspective(700px) rotateX(0deg) rotateY(0deg)';
-      card.style.boxShadow  = '';
-      setTimeout(function(){ card.style.transition = ''; }, 450);
-    });
-  });
-}
-</script>
-
-<script>
-(function(){
-  var v = document.getElementById('phoneVideo');
-  if(!v) return;
-  var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){
-      v.src = v.dataset.src;
-      v.load();
-      io.disconnect();
-    }
-  }, {rootMargin:'200px'});
-  io.observe(v);
-})();
-</script>
 <!-- TERMS OF SERVICE MODAL -->
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
@@ -1503,17 +899,13 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
     <div class="legal-modal-body">
       <h2>Terms of Service</h2>
       <p class="legal-effective">Effective Date: June 1, 2026</p>
-
       <h3>1. Agreement</h3>
       <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
-
       <h3>2. The Service</h3>
       <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
       <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
-
       <h3>3. Eligibility</h3>
       <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
-
       <h3>4. Pricing and Billing</h3>
       <p>Coaching is billed as follows:</p>
       <ul>
@@ -1521,10 +913,8 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
         <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
       </ul>
       <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
-
       <h3>5. Cancellation</h3>
       <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
-
       <h3>6. 30-Day Results Guarantee</h3>
       <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
       <ul>
@@ -1533,27 +923,20 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
         <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
       </ul>
       <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
-
       <h3>7. No Medical Advice</h3>
       <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
-
       <h3>8. Intellectual Property</h3>
       <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
-
       <h3>9. Limitation of Liability</h3>
       <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
-
       <h3>10. Disclaimer of Warranties</h3>
       <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
-
       <h3>11. Governing Law</h3>
       <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
-
       <h3>12. Changes to These Terms</h3>
       <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
-
       <h3>13. Contact</h3>
-      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:#4d94ff;text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
     </div>
   </div>
 </div>
@@ -1568,15 +951,12 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
     <div class="legal-modal-body">
       <h2>Privacy Policy</h2>
       <p class="legal-effective">Effective Date: June 1, 2026</p>
-
       <h3>1. Overview</h3>
       <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
-
       <h3>2. Information I Collect</h3>
       <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
       <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
       <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
-
       <h3>3. How I Use Your Information</h3>
       <ul>
         <li>To process your purchase and deliver coaching services</li>
@@ -1586,7 +966,6 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
         <li>To comply with legal obligations</li>
       </ul>
       <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
-
       <h3>4. Sharing of Information</h3>
       <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
       <ul>
@@ -1595,66 +974,440 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
         <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
       </ul>
       <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
-
       <h3>5. Cookies</h3>
       <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
-
       <h3>6. Data Retention</h3>
       <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
-
       <h3>7. Your Rights</h3>
       <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
-
       <h3>8. Children's Privacy</h3>
       <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
-
       <h3>9. Third-Party Links</h3>
       <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
-
       <h3>10. Changes to This Policy</h3>
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
-
       <h3>11. Contact</h3>
-      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:#4d94ff;text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
     </div>
   </div>
 </div>
 
 <script>
-function openLegal(which) {
-  var overlay = document.getElementById('modal-' + which);
-  if (!overlay) return;
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  var body = overlay.querySelector('.legal-modal-body');
-  if (body) body.scrollTop = 0;
-}
-function closeLegal(which) {
-  var overlay = document.getElementById('modal-' + which);
-  if (!overlay) return;
-  overlay.classList.add('closing');
-  setTimeout(function() {
-    overlay.classList.remove('active', 'closing');
+// ── Stored contact info ──
+var _contactEmail = '';
+var _contactFirst = '';
+var _contactLast  = '';
+
+// ── NAF config ──
+var NAF_RULES = {
+  goal:       { bad: ['build_muscle','improve_fitness','not_sure'], title: 'Wrong Fit',          msg: "This is a fat loss coaching program. If fat loss isn't your main goal right now, I'm not the right coach for you." },
+  age:        { bad: ['17_or_younger','60_or_older'],               title: 'Age Requirement',     msg: 'I work with men and women 18–59. If that changes, come back and apply.' },
+  gym:        { bad: ['no','home'],                                  title: 'Gym Access Required', msg: "The training side of this program requires a commercial gym. Without it, I can't get you the results I'd be proud to stand behind. If you get gym access, come back and reapply." },
+  commitment: { bad: ['no','maybe'],                                 title: 'Tracking Required',   msg: "Tracking is mandatory for my coaching. If you're not ready for that, the results won't be there. Come back when you are." }
+};
+
+// ── Step 1 logic ──
+(function() {
+  var emailInp    = document.getElementById('inp-email');
+  var firstInp    = document.getElementById('inp-first');
+  var lastInp     = document.getElementById('inp-last');
+  var fgQuestions = document.getElementById('fg-questions');
+  var continueBtn = document.getElementById('continue-btn');
+  var contactForm = document.getElementById('contact-form');
+  var nafTarget   = null;
+
+  var questionsRevealed = false;
+
+  function revealEl(el) {
+    el.style.display = '';
+    el.classList.add('reveal-enter');
+    el.addEventListener('animationend', function() { el.classList.remove('reveal-enter'); }, { once: true });
+  }
+
+  function checkQuestionsReveal() {
+    if (!questionsRevealed && lastInp.value.trim().length > 0) {
+      questionsRevealed = true;
+      revealEl(fgQuestions);
+    }
+  }
+
+  function checkContinueBtn() {
+    var email = emailInp.value.trim();
+    var first = firstInp.value.trim();
+    var last  = lastInp.value.trim();
+    var goal  = document.getElementById('q-goal').value;
+    var age   = document.getElementById('q-age').value;
+    var gym   = document.getElementById('q-gym').value;
+    var comm  = document.getElementById('q-commitment').value;
+
+    if (!questionsRevealed) {
+      continueBtn.disabled = true;
+      return;
+    }
+    var allFilled = email && first && last && goal && age && gym && comm;
+    var anyNaf = (goal && NAF_RULES.goal.bad.includes(goal)) ||
+                 (age  && NAF_RULES.age.bad.includes(age))   ||
+                 (gym  && NAF_RULES.gym.bad.includes(gym))   ||
+                 (comm && NAF_RULES.commitment.bad.includes(comm));
+    continueBtn.disabled = !(allFilled && !anyNaf);
+  }
+
+  lastInp.addEventListener('input', function() {
+    checkQuestionsReveal();
+    checkContinueBtn();
+  });
+  lastInp.addEventListener('blur', function() {
+    checkQuestionsReveal();
+    checkContinueBtn();
+  });
+
+  emailInp.addEventListener('input', checkContinueBtn);
+  firstInp.addEventListener('input', checkContinueBtn);
+
+  ['q-goal','q-age','q-gym','q-commitment'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    sel.addEventListener('change', function() {
+      sel.classList.toggle('has-value', !!sel.value);
+      var key = id.replace('q-','');
+      if (sel.value && NAF_RULES[key] && NAF_RULES[key].bad.includes(sel.value)) {
+        nafTarget = sel;
+        document.getElementById('naf-modal-title').textContent       = NAF_RULES[key].title;
+        document.getElementById('naf-modal-explanation').textContent  = NAF_RULES[key].msg;
+        document.getElementById('naf-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      checkContinueBtn();
+    });
+  });
+
+  document.getElementById('naf-modal-btn').addEventListener('click', function() {
+    document.getElementById('naf-modal').classList.remove('active');
     document.body.style.overflow = '';
-  }, 340);
-}
-document.querySelectorAll('.legal-overlay').forEach(function(overlay) {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) {
-      var id = overlay.id.replace('modal-', '');
-      closeLegal(id);
+    if (nafTarget) { nafTarget.value = ''; nafTarget.classList.remove('has-value'); nafTarget = null; }
+    checkContinueBtn();
+  });
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (continueBtn.disabled) return;
+    _contactEmail = emailInp.value.trim();
+    _contactFirst = firstInp.value.trim();
+    _contactLast  = lastInp.value.trim();
+    goToStep2();
+  });
+
+  // Progress nav: "Contact Info" does nothing (already on step 1)
+  document.getElementById('prog-btn1').addEventListener('click', function() {});
+
+  // "Payment" is future — pointer-events:none so no handler needed
+
+  // Back button
+  document.getElementById('nav-back').addEventListener('click', function() {
+    if (this.dataset.step === '2') {
+      goToStep1();
+    } else {
+      window.location.href = '/';
     }
   });
+})();
+
+function goToStep2() {
+  document.getElementById('step1-content').style.display = 'none';
+  var s2 = document.getElementById('step2-content');
+  s2.style.display = 'flex';
+  s2.style.flexDirection = 'column';
+  s2.style.flex = '1';
+
+  // Update progress
+  var btn1 = document.getElementById('prog-btn1');
+  var btn2 = document.getElementById('prog-btn2');
+  var dot1 = document.getElementById('prog-dot1');
+  var dot2 = document.getElementById('prog-dot2');
+
+  btn1.classList.remove('prog-step-btn--active');
+  btn1.classList.remove('prog-step-btn--future');
+  dot1.classList.remove('prog-dot--active');
+
+  btn2.classList.remove('prog-step-btn--future');
+  btn2.classList.add('prog-step-btn--active');
+  dot2.classList.add('prog-dot--active');
+
+  // "Contact Info" btn now goes back to step 1
+  btn1.style.pointerEvents = '';
+  btn1.onclick = function() { goToStep1(); };
+
+  // Show details toggle on mobile
+  var dt = document.getElementById('details-toggle');
+  if (dt) dt.style.display = '';
+
+  document.getElementById('nav-back').dataset.step = '2';
+  window.scrollTo(0, 0);
+  initStripe();
+}
+
+function goToStep1() {
+  document.getElementById('step2-content').style.display = 'none';
+  document.getElementById('step1-content').style.display = '';
+
+  var btn1 = document.getElementById('prog-btn1');
+  var btn2 = document.getElementById('prog-btn2');
+  var dot1 = document.getElementById('prog-dot1');
+  var dot2 = document.getElementById('prog-dot2');
+
+  btn1.classList.add('prog-step-btn--active');
+  btn1.classList.remove('prog-step-btn--future');
+  dot1.classList.add('prog-dot--active');
+  btn1.onclick = null;
+
+  btn2.classList.remove('prog-step-btn--active');
+  btn2.classList.add('prog-step-btn--future');
+  dot2.classList.remove('prog-dot--active');
+
+  var dt = document.getElementById('details-toggle');
+  if (dt) dt.style.display = 'none';
+
+  document.getElementById('nav-back').dataset.step = '1';
+}
+
+// ── Stripe ──
+var _stripeInitialized = false;
+
+async function initStripe() {
+  if (_stripeInitialized) return;
+  _stripeInitialized = true;
+
+  const STRIPE_PK = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
+
+  function getAppearance(dark) {
+    return {
+      theme: dark ? 'night' : 'stripe',
+      variables: {
+        colorBackground: dark ? '#2a2a2a' : '#f9fafb',
+        colorText: dark ? '#F8FAFC' : '#222222',
+        colorTextSecondary: dark ? '#9ca3af' : '#717171',
+        colorTextPlaceholder: dark ? '#6b7280' : '#9ca3af',
+        colorPrimary: '#0066ff', colorDanger: '#e53e3e',
+        fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
+        fontSizeBase: '15px', fontWeightNormal: '400', fontWeightMedium: '600',
+        borderRadius: '8px', spacingUnit: '4px', spacingGridRow: '0.85rem',
+      },
+      rules: {
+        '.Input': { border: dark ? '1px solid #3a3a3a' : '1px solid #e0e0e0', boxShadow: 'none' },
+        '.Input:focus': { borderColor: '#b9d4ff', boxShadow: '0 0 0 2px rgba(0,102,255,0.08)', outline: 'none' },
+        '.Tab': { border: dark ? '1px solid #3a3a3a' : '1px solid #e0e0e0' },
+        '.Tab:hover': { border: dark ? '1px solid #555' : '1px solid #b9d4ff' },
+        '.Tab--selected': { borderColor: '#0066ff', boxShadow: '0 0 0 1px #0066ff' },
+      },
+    };
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('stripe-message');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function resetSubmit() {
+    const btn = document.getElementById('submit-stripe');
+    const txt = document.getElementById('submit-stripe-text');
+    if (btn) btn.disabled = false;
+    if (txt) txt.textContent = 'Begin Coaching';
+  }
+
+  async function handleRedirectReturn() {
+    const params = new URLSearchParams(window.location.search);
+    const pics = params.get('payment_intent_client_secret');
+    if (!pics) return false;
+    const form = document.getElementById('payment-form');
+    if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-spinner"></div><div class="redirect-text">Completing your payment…</div><div class="redirect-sub">Please don\'t close this page.</div></div>';
+    const stripe = Stripe(STRIPE_PK);
+    const { paymentIntent, error } = await stripe.retrievePaymentIntent(pics);
+    if (error || !paymentIntent) {
+      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">' + ((error && error.message) || 'Something went wrong.') + '</div><div><a href="/sign-up" style="color:#06f;font-size:.9rem">Try again</a></div></div>';
+      return true;
+    }
+    if (paymentIntent.status === 'succeeded') {
+      window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    } else {
+      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text">Payment status: ' + paymentIntent.status + '. <a href="/sign-up" style="color:#06f">Try again</a></div></div>';
+    }
+    return true;
+  }
+
+  function setTaxDisplay(taxCents) {
+    const taxEl   = document.getElementById('tax-value');
+    const totalEl = document.getElementById('due-today-value');
+    if (!taxEl) return;
+    if (taxCents === null) {
+      taxEl.textContent = 'Enter address to calculate'; taxEl.className = 'tax-value-placeholder';
+      if (totalEl) totalEl.textContent = '$50.00';
+    } else {
+      taxEl.textContent = taxCents === 0 ? '$0.00' : '$' + (taxCents / 100).toFixed(2);
+      taxEl.className   = 'tax-value-amount';
+      if (totalEl) totalEl.textContent = '$' + ((5000 + taxCents) / 100).toFixed(2);
+    }
+  }
+
+  const wasRedirect = await handleRedirectReturn();
+  if (wasRedirect) return;
+
+  let clientSecret;
+  try {
+    const res  = await fetch('/api/create-payment-intent');
+    const data = await res.json();
+    clientSecret = data.clientSecret;
+    if (!clientSecret) throw new Error(data.error || 'No client secret.');
+  } catch (err) {
+    showError('Failed to initialize payment. Please refresh the page.');
+    return;
+  }
+
+  const stripe   = Stripe(STRIPE_PK);
+  const dark     = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const returnUrl = window.location.origin + window.location.pathname;
+
+  const elements = stripe.elements({ clientSecret, appearance: getAppearance(dark), customerEmail: _contactEmail || undefined });
+
+  const expressEl = elements.create('expressCheckout', {
+    buttonHeight: 48, buttonTheme: { applePay: 'black', googlePay: 'black' },
+    buttonType: { applePay: 'plain', googlePay: 'plain', link: 'pay' },
+    layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
+    paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
+  });
+  expressEl.mount('#express-checkout-element');
+  expressEl.on('ready', ({ availablePaymentMethods }) => {
+    const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
+    const s = document.getElementById('express-pay-section');
+    if (s) s.style.display = hasAny ? '' : 'none';
+  });
+  expressEl.on('confirm', async () => {
+    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required' });
+    if (error) { showError(error.message || 'Something went wrong.'); return; }
+    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
+  });
+
+  const addrDiv = document.getElementById('address-element');
+  if (addrDiv) addrDiv.style.visibility = 'hidden';
+  const addrEl = elements.create('address', {
+    mode: 'billing',
+    defaultValues: { name: (_contactFirst + ' ' + _contactLast).trim() || undefined, address: { country: 'US' } },
+  });
+  addrEl.on('ready', () => {
+    const sk = document.getElementById('address-element-skeleton');
+    if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
+    if (addrDiv) addrDiv.style.visibility = '';
+  });
+  let taxDebounce = null;
+  addrEl.on('change', async (event) => {
+    if (!event.complete) return;
+    const addr = event.value && event.value.address;
+    if (!addr || !addr.country) return;
+    clearTimeout(taxDebounce);
+    taxDebounce = setTimeout(async () => {
+      const taxEl = document.getElementById('tax-value');
+      if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
+      try {
+        const r    = await fetch('/api/calculate-tax', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address: addr }) });
+        const data = await r.json();
+        setTaxDisplay(typeof data.tax === 'number' ? data.tax : null);
+      } catch (_) { setTaxDisplay(null); }
+    }, 400);
+  });
+  addrEl.mount('#address-element');
+
+  const payDiv = document.getElementById('payment-element');
+  if (payDiv) payDiv.style.visibility = 'hidden';
+  const payEl = elements.create('payment', {
+    layout: { type: 'tabs', defaultCollapsed: false },
+    wallets: { applePay: 'never', googlePay: 'never' },
+    terms: { card: 'never' },
+    fields: { billingDetails: { address: 'never' } },
+  });
+  payEl.on('ready', () => {
+    const sk = document.getElementById('payment-element-skeleton');
+    if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
+    if (payDiv) payDiv.style.visibility = '';
+  });
+  payEl.mount('#payment-element');
+
+  const form    = document.getElementById('payment-form');
+  const btn     = document.getElementById('submit-stripe');
+  const btnText = document.getElementById('submit-stripe-text');
+  const msgDiv  = document.getElementById('stripe-message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (btn.disabled) return;
+    btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
+    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required' });
+    if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
+    if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
+      window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    } else { showError('Unexpected payment status. Please try again.'); resetSubmit(); }
+  });
+}
+
+// ── Card 3D tilt ──
+function initCardTilt() {
+  const card = document.getElementById('coachCard');
+  if (!card) return;
+  const MAX = 10; let af = null;
+  card.addEventListener('mousemove', (e) => {
+    if (af) cancelAnimationFrame(af);
+    af = requestAnimationFrame(() => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `perspective(700px) rotateX(${-y*MAX}deg) rotateY(${x*MAX}deg)`;
+      card.style.boxShadow = `${-x*MAX*1.5}px ${-y*MAX*1.5+8}px 40px rgba(0,0,0,0.3)`;
+    });
+  });
+  card.addEventListener('mouseleave', () => {
+    if (af) cancelAnimationFrame(af);
+    card.style.transition = 'transform 0.45s ease';
+    card.style.transform  = 'perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)';
+    card.style.boxShadow  = '';
+    setTimeout(() => card.style.transition = '', 450);
+  });
+}
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) initCardTilt();
+
+// ── Details toggle ──
+(function() {
+  const toggle   = document.getElementById('details-toggle');
+  const panel    = document.getElementById('details-panel');
+  const backdrop = document.getElementById('details-backdrop');
+  const label    = toggle && toggle.querySelector('.details-toggle-text');
+  if (!toggle || !panel || !label) return;
+  function openPanel()  { panel.classList.add('is-open'); if (backdrop) backdrop.classList.add('is-visible'); toggle.setAttribute('aria-expanded','true'); label.textContent = 'Close'; document.body.style.overflow = 'hidden'; }
+  function closePanel() { panel.classList.remove('is-open'); if (backdrop) backdrop.classList.remove('is-visible'); toggle.setAttribute('aria-expanded','false'); label.textContent = 'Details'; document.body.style.overflow = ''; }
+  toggle.addEventListener('click', () => panel.classList.contains('is-open') ? closePanel() : openPanel());
+  if (backdrop) backdrop.addEventListener('click', closePanel);
+})();
+
+// ── Legal modals ──
+function openLegal(which) {
+  var o = document.getElementById('modal-' + which);
+  if (!o) return;
+  o.classList.add('active'); document.body.style.overflow = 'hidden';
+  var b = o.querySelector('.legal-modal-body'); if (b) b.scrollTop = 0;
+}
+function closeLegal(which) {
+  var o = document.getElementById('modal-' + which);
+  if (!o) return;
+  o.classList.add('closing');
+  setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
+}
+document.querySelectorAll('.legal-overlay').forEach(function(o) {
+  o.addEventListener('click', function(e) { if (e.target === o) closeLegal(o.id.replace('modal-','')); });
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.legal-overlay.active').forEach(function(o) {
-      var id = o.id.replace('modal-', '');
-      closeLegal(id);
-    });
+    document.querySelectorAll('.legal-overlay.active').forEach(function(o) { closeLegal(o.id.replace('modal-','')); });
+    var naf = document.getElementById('naf-modal');
+    if (naf && naf.classList.contains('active')) document.getElementById('naf-modal-btn').click();
   }
 });
 </script>
-
 </body>
 </html>
