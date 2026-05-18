@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-  <title>Sign Up – Online Fat Loss Coaching</title>
+  <title>Sign-up</title>
   <meta name="description" content="Apply for online fat loss coaching with Asher Robinson.">
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/QNSK2T81/favicon-32x32.png">
@@ -13,7 +13,6 @@
   <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/xjgNwzfq/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
   <meta name="theme-color" content="#000000">
-  <script src="https://js.stripe.com/v3/"></script>
   <style>
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -25,523 +24,141 @@
       --text: #F8FAFC;
       --text-secondary: #9ca3af;
       --bg: #1c1c1c;
-      --card-bg: #242424;
       --border: #2e2e2e;
       --border-strong: #3a3a3a;
       --input-bg: #2a2a2a;
       --input-border: #3a3a3a;
       --bottom-bg: #161616;
-      --icon-stroke: #e5e7eb;
       --pad: 2.5rem;
       --pad-sm: 2rem;
-      --section-split-pad: var(--pad);
       --payment-nav-h: 3rem;
+      --space-4: 2rem;
     }
-    body {
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { color: var(--text); background: var(--bg); line-height: 1.5; font-size: 16px; -webkit-font-smoothing: antialiased; }
     .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
 
     /* ── NAV ── */
     .payment-nav {
-      flex-shrink: 0;
-      width: 100%;
-      min-height: var(--payment-nav-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      flex-shrink: 0; width: 100%; min-height: var(--payment-nav-h);
+      display: flex; align-items: center;
       padding: 0.625rem 1.25rem;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border-strong);
-      position: sticky;
-      top: 0;
-      z-index: 250;
+      background: var(--bg); border-bottom: 1px solid var(--border-strong);
+      position: sticky; top: 0; z-index: 250;
     }
     @media (min-width: 761px) { .payment-nav { padding: 0.625rem 2rem; } }
-
-    /* Back button — matches payment page back button */
     .payment-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: none;
-      border: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      padding: 0.3rem 0.5rem;
-      margin: -0.3rem -0.5rem;
-      line-height: 1;
-      border-radius: 6px;
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: none; border: none; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); cursor: pointer;
+      padding: 0.3rem 0.5rem; margin: -0.3rem -0.5rem;
+      line-height: 1; border-radius: 6px;
+      -webkit-tap-highlight-color: transparent; outline: none;
       text-decoration: none;
-      transition: background-color 0.15s ease, color 0.15s ease;
-      flex-shrink: 0;
+      transition: background-color 0.15s ease, color 0.15s ease; flex-shrink: 0;
     }
     @media (hover: hover) and (pointer: fine) {
       .payment-back:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
     }
     .payment-back-icon { flex-shrink: 0; color: inherit; }
 
-    /* ── PROGRESS INDICATOR — pill shaped like .callout on index.html ── */
-    .signup-progress {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      max-width: 100%;
-      margin: 0 auto 0.75rem;
-      background: var(--bottom-bg);
-      border-radius: 999px;
-      border: 1px solid #3d3d3d;
-      padding: 0.375rem 0.625rem;
-      gap: 0;
-    }
-    .prog-step-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: 0.02rem;
-      color: rgba(255,255,255,0.4);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0 0.375rem;
-      line-height: 1.2;
-      white-space: nowrap;
-      transition: color 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .prog-step-btn:hover { background-color: rgba(235,235,235,0.1); color: #fff; }
-    }
-    .prog-step-btn--active {
-      color: var(--text);
-      cursor: default;
-      pointer-events: none;
-    }
-    .prog-step-btn--future {
-      opacity: 0.4;
-      cursor: default;
-      pointer-events: none;
-    }
-    .prog-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.25);
-      flex-shrink: 0;
-      transition: background 0.25s ease;
-    }
-    .prog-dot--active { background: var(--primary); }
-
-    .nav-right {
-      flex-shrink: 0;
-      min-width: 60px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    /* ── STEP 1: CONTACT FORM ── */
+    /* ── MAIN AREA ── */
     .signup-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: var(--pad-sm) 1.25rem;
-      width: 100%;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: var(--pad-sm) 1.25rem; width: 100%;
     }
     @media (min-width: 600px) { .signup-main { padding: var(--pad) 2.5rem; } }
-    .signup-inner {
-      width: 100%;
-      max-width: 472px;
-    }
+    .signup-inner { width: 100%; max-width: 472px; }
+    .pill-row { text-align: center; }
 
-    /* Step 1 section label — verbatim match of .section-label from complete-sign-up */
-    .signup-section-heading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      max-width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 0.9rem;
-      font-weight: 500;
-      line-height: 1.2;
-      letter-spacing: 0.02rem;
-      color: var(--text);
-      text-transform: none;
-      background: var(--bottom-bg);
-      border-radius: 999px;
-      border: 1px solid #3d3d3d;
-      padding: 0.375rem 1rem;
-      text-align: center;
-      margin-bottom: 0.75rem;
+    /* ── PROGRESS PILL (verbatim from join-now) ── */
+    .survey-steps-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: .375rem 1rem;
+        border-radius: 999px;
+        background-color: #161616;
+        border: 1px solid #3d3d3d;
+        font-size: 0.9rem;
+        margin: 0 auto var(--space-4);
+        white-space: nowrap;
+        position: relative;
     }
-    .signup-headline {
-      font-size: 1.75rem;
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      text-align: center;
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    @media (min-width: 600px) { .signup-headline { font-size: 2rem; } }
-    .signup-subheadline {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: 1.55;
-      margin-top: 0.25rem;
-      margin-bottom: 1.5rem;
-    }
+    .survey-step { color: var(--text-secondary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .survey-step--active { color: #f9fafb; }
+    .survey-step--completed { color: var(--text-secondary); }
+    .signup-dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+    .signup-dot--active { background: #0066ff; }
 
-    /* Fields */
+    /* ── QUESTION ── */
+    .survey-question {
+      font-size: 1.35rem; line-height: 1.3; font-weight: 600;
+      text-align: center; margin-bottom: 1.5rem;
+    }
+    @media (max-width: 480px) { .survey-question { font-size: 1.25rem; } }
+    @media (min-width: 1024px) { .survey-question { font-size: 1.5rem; } }
+
+    /* ── FIELDS ── */
     .form-field { margin-bottom: 0.65rem; }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
-      margin-bottom: 0.65rem;
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem; }
     @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
-
-    .form-label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    .signup-input,
-    .signup-select {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 0.95rem;
-      line-height: 1.4;
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      -webkit-appearance: none;
-      appearance: none;
+    .form-label { display: block; font-size: 0.875rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
+    .signup-input, .signup-select {
+      width: 100%; padding: 0.8rem 1rem;
+      background: var(--input-bg); border: 1px solid var(--input-border);
+      border-radius: 8px; color: var(--text); font-size: 0.95rem; line-height: 1.4;
+      outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none; appearance: none;
     }
     .signup-input::placeholder { color: var(--text-secondary); }
-    .signup-input:focus,
-    .signup-select:focus {
-      border-color: #4d94ff;
-      box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    .signup-input:focus, .signup-select:focus {
+      border-color: #4d94ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
     }
     .signup-select {
       cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%239ca3af' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.9rem center;
-      padding-right: 2.25rem;
-      color: var(--text-secondary);
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+      padding-right: 2.25rem; color: var(--text-secondary);
     }
     .signup-select.has-value { color: var(--text); }
     .signup-select option { background: #2a2a2a; color: var(--text); }
 
-    /* Continue button — identical to index.html .btn, arrow always visible */
+    /* ── BUTTON ── */
     .signup-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      width: 100%;
-      padding: 0.9rem 1.25rem;
-      border-radius: 8px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 600;
-      font-size: 1rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s ease;
-      margin-top: 0.75rem;
+      display: inline-flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px;
+      background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.15s ease; margin-top: 0.75rem;
     }
     @media (hover: hover) and (pointer: fine) { .signup-btn:hover { background: var(--primary-hover); } }
     .signup-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .signup-btn:disabled:hover { background: var(--primary); }
     .signup-btn-label { flex: 1; text-align: left; }
-    .signup-btn-divider {
-      display: block;
-      width: 1px;
-      height: 1.5rem;
-      background: rgba(255,255,255,0.35);
-      flex-shrink: 0;
-    }
-    .signup-btn-arrow {
-      display: inline;
-      transition: transform 0.22s ease;
-    }
+    .signup-btn-divider { display: block; width: 1px; height: 1.5rem; background: rgba(255,255,255,0.35); flex-shrink: 0; }
+    .signup-btn-arrow { display: inline; transition: transform 0.22s ease; }
     @media (hover: hover) and (pointer: fine) {
       .signup-btn:not(:disabled):hover .signup-btn-arrow { transform: translateX(4px); }
     }
 
-    .signup-legal-note {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      text-align: center;
-      line-height: 1.55;
-      margin-top: 0.75rem;
-    }
-    .legal-link {
-      background: none; border: none; padding: 0; cursor: pointer;
-      font-size: inherit; color: #4d94ff; text-decoration: none;
-      font-family: inherit;
-    }
+    .signup-legal-note { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.75rem; }
+    .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
 
-    /* Reveal animation for dropdowns */
     .reveal-block { overflow: hidden; }
     .reveal-enter { animation: revealIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
-    @keyframes revealIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes revealIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── STEP 2: PAYMENT ── */
-    #step2-content { display: none; flex: 1; flex-direction: column; }
-    #step2-content.active { display: flex; }
-
-    .payment-layout { width: 100%; }
-
-    .order-summary-col { height: 0; padding: 0; border: none; overflow: visible; }
-
-    .payment-form-col {
-      padding: var(--pad-sm) 1.25rem;
-      --form-col-pad-x: 1.25rem;
-      background: var(--bg);
-    }
-    .payment-form-content { max-width: 472px; margin: 0 auto; width: 100%; }
-    .payment-form-content,
-    .form-pricing { display: flex; flex-direction: column; align-items: stretch; }
-    .payment-form-content > .section-label,
-    .form-pricing > .sub-section-label { align-self: center; }
-
-    @media (min-width: 600px) {
-      .payment-form-col { padding: var(--pad) 2.5rem; --form-col-pad-x: 2.5rem; }
-    }
-
-    .section-label,
-    .sub-section-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      max-width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 0.9rem;
-      font-weight: 500;
-      line-height: 1.2;
-      letter-spacing: 0.02rem;
-      color: var(--text);
-      text-transform: none;
-      background: var(--bottom-bg);
-      border-radius: 999px;
-      border: 1px solid #3d3d3d;
-      padding: 0.375rem 1rem;
-      text-align: center;
-    }
-    .section-label { margin-bottom: 1.5rem; }
-    .sub-section-label { margin-bottom: 0.5rem; }
-
-    /* Order summary */
-    .order-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
-    .order-row:last-child { margin-bottom: 0; }
-    .order-row-label { font-size: 0.9rem; color: var(--text); }
-    .order-row-value { font-size: 0.9rem; font-weight: 600; color: var(--text); flex-shrink: 0; margin-left: 1rem; }
-    .order-discount-value { color: #16a34a !important; }
-    .order-total-row { display: flex; justify-content: space-between; align-items: center; }
-    .order-total-label { font-size: 1rem; font-weight: 700; color: var(--text); }
-    .order-total-value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .form-pricing { padding-top: 0; }
-    .form-pricing .sub-section-label { margin-bottom: 0.5rem; }
-    .form-pricing-divider { height: 1px; background: var(--border); margin: 0.85rem 0; }
-    .form-pricing-footnote { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem; }
-
-    /* Tax */
-    .tax-label-wrap { display: flex; align-items: center; gap: 0.3rem; }
-    .tax-info-btn { display: inline-flex; align-items: center; background: none; border: none; padding: 0; cursor: pointer; color: var(--text-secondary); position: relative; }
-    .tax-tooltip { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); background: var(--bottom-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.78rem; color: var(--text); line-height: 1.45; white-space: normal; width: 190px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 20; text-align: left; }
-    .tax-info-btn:hover .tax-tooltip, .tax-info-btn:focus-visible .tax-tooltip { opacity: 1; }
-    .tax-value-placeholder { font-size: 0.82rem; font-weight: 400; color: var(--text-secondary); }
-    .tax-value-amount { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-
-
-    /* Express checkout */
-    #express-pay-section { margin-bottom: 0; }
-    #express-checkout-element { width: 100%; }
-    .or-divider { display: flex; align-items: center; gap: 0.65rem; margin: 1rem 0; font-size: 0.78rem; color: var(--text-secondary); letter-spacing: 0.03em; }
-    .or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-
-    /* Stripe elements */
-    .stripe-field-label { font-size: 0.875rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
-    #payment-form { width: 100%; }
-
-    /* Combined block — one outer border wrapping all three input sections */
-    .stripe-combined-block {
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    .stripe-section { padding: 0.85rem 1rem; }
-    .stripe-section + .stripe-section { border-top: 1px solid var(--input-border); }
-    .stripe-section-label {
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 0.6rem;
-    }
-    .stripe-name-input {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 15px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
-      line-height: 1.5;
-      outline: none;
-      padding: 0.65rem 0.875rem;
-      -webkit-appearance: none;
-      appearance: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .stripe-name-input::placeholder { color: var(--text-secondary); }
-    .stripe-name-input:focus {
-      border-color: #b9d4ff;
-      box-shadow: 0 0 0 2px rgba(0,102,255,0.08);
-    }
-
-    .address-element-wrap { position: relative; margin-bottom: 0; }
-    #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
-    .payment-element-wrap { position: relative; margin-bottom: 0; }
-    #payment-element-skeleton { position: absolute; inset: 0; min-height: 180px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
-    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-    /* CTA area */
-    .form-cta-area { margin-top: 1.1rem; }
-    .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
-    #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-bottom: 0.75rem; }
-    #submit-stripe:hover { background: var(--primary-hover); }
-    #submit-stripe:disabled { opacity: 0.6; cursor: not-allowed; }
-    .security-badge { display: flex; align-items: center; justify-content: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); margin-top: 1rem; }
-    .security-badge svg { flex-shrink: 0; }
-    .payment-legal { font-size: 0.78rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.5rem; }
-    .payment-legal a { color: var(--primary); text-decoration: none; }
-    .payment-legal a:hover { text-decoration: underline; }
-    #stripe-message { font-size: 0.8rem; color: #e53e3e; margin-bottom: 0.75rem; margin-top: 0.25rem; text-align: center; }
-
-    .redirect-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem 1.5rem; text-align: center; }
-    .redirect-spinner { width: 36px; height: 36px; border-radius: 999px; border: 3px solid var(--border); border-top-color: var(--primary); animation: spin 0.75s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .redirect-text { font-size: 1rem; color: var(--text); font-weight: 500; }
-    .redirect-sub { font-size: 0.85rem; color: var(--text-secondary); }
-
-    /* After-pay section — full-width section like index.html sections */
-    .after-section { width: 100%; background: var(--bottom-bg); border-top: 1px solid var(--border-strong); padding: var(--pad) 1.5rem; }
-    .after-section-inner { max-width: 472px; margin: 0 auto; }
-    .after-heading { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; text-align: center; }
-    .after-steps { display: flex; flex-direction: column; gap: 0.75rem; }
-    @media (max-width: 767px) { .after-section { padding: var(--pad-sm) 1.25rem; } }
-    .after-card { display: flex; flex-direction: row; align-items: center; gap: 0.85rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; }
-    .after-card-num { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--text); flex-shrink: 0; }
-    .after-label-row { display: flex; align-items: center; gap: 0.4rem; }
-    .after-card__media { flex-shrink: 0; width: 5rem; aspect-ratio: 520 / 352; border-radius: 8px; overflow: hidden; background: var(--input-bg); line-height: 0; }
-    .after-card__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .after-card__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; text-align: left; }
-    .after-label { font-weight: 600; font-size: 0.78rem; color: var(--text); line-height: 1.25; }
-    .after-desc { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.4; }
-
-    /* Details toggle — JS sets display:inline-flex on step 2, none on step 1 */
-    .details-toggle {
-      display: none;
-      align-items: center;
-      gap: 0.3rem;
-      background: none;
-      border: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: underline dotted;
-      text-underline-offset: 2px;
-      cursor: pointer;
-      line-height: 1;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 201;
-      border-radius: 6px;
-      padding: 0.3rem 0.5rem;
-      margin: -0.3rem -0.5rem;
-      transition: background-color 0.15s ease, color 0.15s ease;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .details-toggle:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
-    }
-    .details-chevron { color: inherit; transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
-    .details-toggle[aria-expanded="true"] .details-chevron { transform: rotate(180deg); }
-
-    /* Details panel — fixed slide-down on all screen sizes */
-    .details-panel {
-      position: fixed;
-      top: var(--payment-nav-h);
-      left: 0; right: 0;
-      z-index: 200;
-      background: var(--bg);
-      transform: translate3d(0, calc(-100% - 8px), 0);
-      visibility: hidden;
-      pointer-events: none;
-      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.38s;
-      overflow-y: auto;
-      max-height: calc(85vh - var(--payment-nav-h));
-      border-bottom: 1px solid var(--border);
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
-    }
-    .details-panel.is-open { transform: translate3d(0, 0, 0); visibility: visible; pointer-events: auto; transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s; }
-    .details-panel-inner { padding: 1.75rem 1.25rem; max-width: calc(480px + 2.5rem); margin: 0 auto; }
-    @media (min-width: 600px) { .details-panel-inner { padding: 1.75rem 2.5rem; } }
-
-    /* Backdrop */
-    #details-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
-    #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
-
-    .timeline-icon svg path, .timeline-icon svg circle, .timeline-icon svg rect { fill: var(--icon-stroke) !important; }
-
-    /* NAF modal */
+    /* ── NAF MODAL ── */
     .naf-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; }
     .naf-overlay.active { display: flex; animation: legalFade .18s ease; }
     .naf-modal-box { max-width: 460px; max-height: none; }
     .naf-modal-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.75rem 1.5rem 2.25rem; }
     .naf-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); line-height: 1.3; margin: 0 0 1rem; }
     .naf-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin: .25rem auto 0; }
-    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; text-decoration: none; transition: background 0.15s ease; }
+    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; }
     @media (hover: hover) and (pointer: fine) { .naf-modal-btn:hover { background: #0052cc; } }
 
-    /* Legal overlays */
+    /* ── LEGAL OVERLAYS ── */
     .legal-overlay { display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; visibility: hidden; pointer-events: none; }
     .legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
     .legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -571,269 +188,96 @@
 <div class="page-wrapper">
 
   <nav class="payment-nav" aria-label="Sign up">
-    <button type="button" class="payment-back" id="nav-back" aria-label="Go back">
+    <a href="/" class="payment-back" aria-label="Back to home">
       <svg class="payment-back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="payment-back-label">Back</span>
-    </button>
-
-    <div class="nav-right">
-      <button class="details-toggle" id="details-toggle" type="button" aria-expanded="false" aria-controls="details-panel" style="display:none;">
-        <span class="details-toggle-text">Details</span>
-        <svg class="details-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
+    </a>
   </nav>
 
-  <!-- ═══ STEP 1: CONTACT + QUALIFICATION ═══ -->
-  <div id="step1-content" style="flex:1;display:flex;flex-direction:column;">
-    <div class="signup-main">
-      <div class="signup-inner">
+  <div class="signup-main">
+    <div class="signup-inner">
 
-        <div class="signup-progress" aria-label="Progress">
-          <button type="button" class="prog-step-btn prog-step-btn--active" id="prog-btn1">
-            <div class="prog-dot prog-dot--active" id="prog-dot1"></div>
-            Fill Out Form
-          </button>
+      <div class="pill-row">
+        <div class="survey-steps-pill" aria-label="Progress">
+          <span class="survey-step survey-step--active">
+            <span class="signup-dot signup-dot--active" aria-hidden="true"></span>Fill Out Form
+          </span>
+          <span class="survey-step">
+            <span class="signup-dot" aria-hidden="true"></span>Payment
+          </span>
+        </div>
+      </div>
 
-          <button type="button" class="prog-step-btn prog-step-btn--future" id="prog-btn2">
-            <div class="prog-dot" id="prog-dot2"></div>
-            Payment
-          </button>
+      <h1 class="survey-question">Online Fat Loss Coaching</h1>
+
+      <form id="contact-form" novalidate>
+        <div class="form-field">
+          <input class="signup-input" type="email" id="inp-email" placeholder="Email address *" autocomplete="email" inputmode="email" />
         </div>
 
-        <h1 class="signup-headline">Online Fat Loss Coaching</h1>
-        <p class="signup-subheadline">Use your real name and email. This is what I'll use to set up your account in the coaching app.</p>
+        <div class="form-row" id="fg-name">
+          <input class="signup-input" type="text" id="inp-first" placeholder="First name *" autocomplete="given-name" />
+          <input class="signup-input" type="text" id="inp-last" placeholder="Last name *" autocomplete="family-name" />
+        </div>
 
-        <form id="contact-form" novalidate>
-          <!-- Email -->
+        <div class="reveal-block" id="fg-questions" style="display:none;">
           <div class="form-field">
-            <input class="signup-input" type="email" id="inp-email" placeholder="Email address *" autocomplete="email" inputmode="email" />
+            <label class="form-label" for="q-goal">What is your top fitness goal?</label>
+            <select class="signup-select" id="q-goal">
+              <option value="">Select…</option>
+              <option value="lose_fat">Lose body fat</option>
+              <option value="build_muscle">Build muscle</option>
+              <option value="improve_fitness">Improve general fitness</option>
+              <option value="not_sure">Not sure yet</option>
+            </select>
           </div>
-
-          <!-- Name — always visible -->
-          <div class="form-row" id="fg-name">
-            <input class="signup-input" type="text" id="inp-first" placeholder="First name *" autocomplete="given-name" />
-            <input class="signup-input" type="text" id="inp-last" placeholder="Last name *" autocomplete="family-name" />
+          <div class="form-field">
+            <label class="form-label" for="q-age">What's your age?</label>
+            <select class="signup-select" id="q-age">
+              <option value="">Select…</option>
+              <option value="17_or_younger">17 or younger</option>
+              <option value="18_29">18–29</option>
+              <option value="30_39">30–39</option>
+              <option value="40_49">40–49</option>
+              <option value="50_59">50–59</option>
+              <option value="60_or_older">60 or older</option>
+            </select>
           </div>
-
-          <!-- Qualification dropdowns — revealed after last name has input -->
-          <div class="reveal-block" id="fg-questions" style="display:none;">
-            <div class="form-field">
-              <label class="form-label" for="q-goal">What is your top fitness goal?</label>
-              <select class="signup-select" id="q-goal">
-                <option value="">Select…</option>
-                <option value="lose_fat">Lose body fat</option>
-                <option value="build_muscle">Build muscle</option>
-                <option value="improve_fitness">Improve general fitness</option>
-                <option value="not_sure">Not sure yet</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="q-age">What's your age?</label>
-              <select class="signup-select" id="q-age">
-                <option value="">Select…</option>
-                <option value="17_or_younger">17 or younger</option>
-                <option value="18_29">18–29</option>
-                <option value="30_39">30–39</option>
-                <option value="40_49">40–49</option>
-                <option value="50_59">50–59</option>
-                <option value="60_or_older">60 or older</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="q-gym">Do you have access to a gym?</label>
-              <select class="signup-select" id="q-gym">
-                <option value="">Select…</option>
-                <option value="yes">Yes, I have access</option>
-                <option value="join">I plan to join a gym</option>
-                <option value="no">No</option>
-                <option value="home">Home equipment only</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
-              <select class="signup-select" id="q-commitment">
-                <option value="">Select…</option>
-                <option value="yes">Yes</option>
-                <option value="maybe">Maybe</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+          <div class="form-field">
+            <label class="form-label" for="q-gym">Do you have access to a gym?</label>
+            <select class="signup-select" id="q-gym">
+              <option value="">Select…</option>
+              <option value="yes">Yes, I have access</option>
+              <option value="join">I plan to join a gym</option>
+              <option value="no">No</option>
+              <option value="home">Home equipment only</option>
+            </select>
           </div>
+          <div class="form-field">
+            <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
+            <select class="signup-select" id="q-commitment">
+              <option value="">Select…</option>
+              <option value="yes">Yes</option>
+              <option value="maybe">Maybe</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
 
-          <!-- Button + disclaimer — always visible -->
-          <button type="submit" class="signup-btn" id="continue-btn" disabled>
-            <span class="signup-btn-label">Continue</span>
-            <span class="signup-btn-divider" aria-hidden="true"></span>
-            <span class="signup-btn-arrow" aria-hidden="true">→</span>
-          </button>
-          <p class="signup-legal-note">By continuing, you consent to your data being saved per our <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
-        </form>
+        <button type="submit" class="signup-btn" id="continue-btn" disabled>
+          <span class="signup-btn-label">Continue</span>
+          <span class="signup-btn-divider" aria-hidden="true"></span>
+          <span class="signup-btn-arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="signup-legal-note">By continuing, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+      </form>
 
-      </div>
     </div>
   </div>
 
-  <!-- ═══ STEP 2: PAYMENT ═══ -->
-  <div id="step2-content">
-    <div class="payment-layout">
-
-      <!-- ════ Order Summary (zero-height, holds fixed details panel) ════ -->
-      <div class="order-summary-col">
-        <div class="details-panel" id="details-panel">
-          <div class="details-panel-inner">
-            <div class="order-summary-bottom-content">
-              <div class="form-pricing">
-                <div class="order-row">
-                  <div><div class="order-row-label">Online Coaching w/ Asher</div></div>
-                  <div class="order-row-value">$199/mo</div>
-                </div>
-                <div class="order-row">
-                  <span class="order-row-label">First month discount</span>
-                  <span class="order-row-value order-discount-value">−$149</span>
-                </div>
-                <div class="order-row" id="tax-row">
-                  <div class="tax-label-wrap">
-                    <span class="order-row-label">Tax</span>
-                    <button class="tax-info-btn" type="button" aria-label="Tax information">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.75"/>
-                        <path d="M12 11v5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                        <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
-                      </svg>
-                      <div class="tax-tooltip" role="tooltip">Tax is determined by billing information.</div>
-                    </button>
-                  </div>
-                  <span id="tax-value" class="tax-value-placeholder">Enter address to calculate</span>
-                </div>
-                <div class="form-pricing-divider"></div>
-                <div class="order-total-row">
-                  <span class="order-total-label">Due today</span>
-                  <span class="order-total-value" id="due-today-value">$50.00</span>
-                </div>
-                <p class="form-pricing-footnote">After today's $50 payment, you'll be billed $199.00/month automatically on the same date each month until you cancel.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ════ RIGHT: Payment Form ════ -->
-      <div class="payment-form-col">
-        <div class="payment-form-content">
-          <div class="signup-progress" aria-label="Progress" style="margin-bottom:1.5rem;">
-            <button type="button" class="prog-step-btn" onclick="goToStep1()" style="opacity:0.4;cursor:pointer;pointer-events:auto;">
-              <div class="prog-dot"></div>
-              Fill Out Form
-            </button>
-  
-            <button type="button" class="prog-step-btn prog-step-btn--active">
-              <div class="prog-dot prog-dot--active"></div>
-              Payment
-            </button>
-          </div>
-
-          <div id="express-pay-section" style="display:none;">
-            <div id="express-checkout-element"></div>
-            <div class="or-divider">or pay with card</div>
-          </div>
-
-          <div class="stripe-combined-block">
-            <div class="stripe-section">
-              <div class="stripe-section-label">Card information</div>
-              <form id="payment-form">
-                <div class="payment-element-wrap">
-                  <div id="payment-element-skeleton"></div>
-                  <div id="payment-element"></div>
-                </div>
-                <div id="stripe-message" role="alert" style="display:none;"></div>
-              </form>
-            </div>
-            <div class="stripe-section">
-              <div class="stripe-section-label">Cardholder name</div>
-              <input type="text" id="cardholder-name" class="stripe-name-input" placeholder="Name on card" autocomplete="cc-name">
-            </div>
-            <div class="stripe-section">
-              <div class="stripe-section-label">Billing address</div>
-              <div class="address-element-wrap">
-                <div id="address-element-skeleton"></div>
-                <div id="address-element"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-cta-area">
-            <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
-            <button type="submit" id="submit-stripe" form="payment-form">
-              <span id="submit-stripe-text">Begin Coaching</span>
-            </button>
-            <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
-            <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
-            <p class="security-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z"/>
-              </svg>
-              Your information is encrypted and secure.
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-  <div class="after-section">
-    <div class="after-section-inner">
-      <div class="after-heading">What happens after I pay?</div>
-      <div class="after-steps" role="list">
-        <div class="after-card" role="listitem">
-          <div class="after-card__media">
-            <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-          </div>
-          <div class="after-card__body">
-            <div class="after-label-row">
-              <div class="after-card-num" aria-hidden="true">1</div>
-              <div class="after-label">Download the App</div>
-            </div>
-            <div class="after-desc">You'll be redirected right after payment.</div>
-          </div>
-        </div>
-        <div class="after-card" role="listitem">
-          <div class="after-card__media">
-            <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-          </div>
-          <div class="after-card__body">
-            <div class="after-label-row">
-              <div class="after-card-num" aria-hidden="true">2</div>
-              <div class="after-label">Complete Onboarding</div>
-            </div>
-            <div class="after-desc">We meet on a video call through the app, talk through your goals, and build your plan together.</div>
-          </div>
-        </div>
-        <div class="after-card" role="listitem">
-          <div class="after-card__media">
-            <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-          </div>
-          <div class="after-card__body">
-            <div class="after-label-row">
-              <div class="after-card-num" aria-hidden="true">3</div>
-              <div class="after-label">Start Week One</div>
-            </div>
-            <div class="after-desc">Your full plan goes live in the app shortly after the onboarding call.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-
-</div>
-
-<div id="details-backdrop" aria-hidden="true"></div>
 
 <!-- NOT A FIT MODAL -->
 <div class="naf-overlay" id="naf-modal" role="alertdialog" aria-modal="true" aria-labelledby="naf-modal-title">
@@ -950,12 +394,6 @@
 </div>
 
 <script>
-// ── Stored contact info ──
-var _contactEmail = '';
-var _contactFirst = '';
-var _contactLast  = '';
-
-// ── NAF config ──
 var NAF_RULES = {
   goal:       { bad: ['build_muscle','improve_fitness','not_sure'], title: 'Wrong Fit',          msg: "This is a fat loss coaching program. If fat loss isn't your main goal right now, I'm not the right coach for you." },
   age:        { bad: ['17_or_younger','60_or_older'],               title: 'Age Requirement',     msg: 'I work with men and women 18–59. If that changes, come back and apply.' },
@@ -963,7 +401,6 @@ var NAF_RULES = {
   commitment: { bad: ['no','maybe'],                                 title: 'Tracking Required',   msg: "Tracking is mandatory for my coaching. If you're not ready for that, the results won't be there. Come back when you are." }
 };
 
-// ── Step 1 logic ──
 (function() {
   var emailInp    = document.getElementById('inp-email');
   var firstInp    = document.getElementById('inp-first');
@@ -972,7 +409,6 @@ var NAF_RULES = {
   var continueBtn = document.getElementById('continue-btn');
   var contactForm = document.getElementById('contact-form');
   var nafTarget   = null;
-
   var questionsRevealed = false;
 
   function revealEl(el) {
@@ -996,11 +432,7 @@ var NAF_RULES = {
     var age   = document.getElementById('q-age').value;
     var gym   = document.getElementById('q-gym').value;
     var comm  = document.getElementById('q-commitment').value;
-
-    if (!questionsRevealed) {
-      continueBtn.disabled = true;
-      return;
-    }
+    if (!questionsRevealed) { continueBtn.disabled = true; return; }
     var allFilled = email && first && last && goal && age && gym && comm;
     var anyNaf = (goal && NAF_RULES.goal.bad.includes(goal)) ||
                  (age  && NAF_RULES.age.bad.includes(age))   ||
@@ -1009,15 +441,8 @@ var NAF_RULES = {
     continueBtn.disabled = !(allFilled && !anyNaf);
   }
 
-  lastInp.addEventListener('input', function() {
-    checkQuestionsReveal();
-    checkContinueBtn();
-  });
-  lastInp.addEventListener('blur', function() {
-    checkQuestionsReveal();
-    checkContinueBtn();
-  });
-
+  lastInp.addEventListener('input', function() { checkQuestionsReveal(); checkContinueBtn(); });
+  lastInp.addEventListener('blur',  function() { checkQuestionsReveal(); checkContinueBtn(); });
   emailInp.addEventListener('input', checkContinueBtn);
   firstInp.addEventListener('input', checkContinueBtn);
 
@@ -1028,8 +453,8 @@ var NAF_RULES = {
       var key = id.replace('q-','');
       if (sel.value && NAF_RULES[key] && NAF_RULES[key].bad.includes(sel.value)) {
         nafTarget = sel;
-        document.getElementById('naf-modal-title').textContent       = NAF_RULES[key].title;
-        document.getElementById('naf-modal-explanation').textContent  = NAF_RULES[key].msg;
+        document.getElementById('naf-modal-title').textContent      = NAF_RULES[key].title;
+        document.getElementById('naf-modal-explanation').textContent = NAF_RULES[key].msg;
         document.getElementById('naf-modal').classList.add('active');
         document.body.style.overflow = 'hidden';
       }
@@ -1047,311 +472,13 @@ var NAF_RULES = {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     if (continueBtn.disabled) return;
-    _contactEmail = emailInp.value.trim();
-    _contactFirst = firstInp.value.trim();
-    _contactLast  = lastInp.value.trim();
-    goToStep2();
-  });
-
-  // Progress nav: "Contact Info" does nothing (already on step 1)
-  document.getElementById('prog-btn1').addEventListener('click', function() {});
-
-  // "Payment" is future — pointer-events:none so no handler needed
-
-  // Back button
-  document.getElementById('nav-back').addEventListener('click', function() {
-    if (this.dataset.step === '2') {
-      goToStep1();
-    } else {
-      window.location.href = '/';
-    }
+    sessionStorage.setItem('_contactEmail', emailInp.value.trim());
+    sessionStorage.setItem('_contactFirst', firstInp.value.trim());
+    sessionStorage.setItem('_contactLast',  lastInp.value.trim());
+    window.location.href = '/sign-up/payment/';
   });
 })();
 
-function goToStep2() {
-  document.getElementById('step1-content').style.display = 'none';
-  var s2 = document.getElementById('step2-content');
-  s2.style.display = 'flex';
-  s2.style.flexDirection = 'column';
-  s2.style.flex = '1';
-
-  // Update progress
-  var btn1 = document.getElementById('prog-btn1');
-  var btn2 = document.getElementById('prog-btn2');
-  var dot1 = document.getElementById('prog-dot1');
-  var dot2 = document.getElementById('prog-dot2');
-
-  btn1.classList.remove('prog-step-btn--active');
-  btn1.classList.remove('prog-step-btn--future');
-  dot1.classList.remove('prog-dot--active');
-
-  btn2.classList.remove('prog-step-btn--future');
-  btn2.classList.add('prog-step-btn--active');
-  dot2.classList.add('prog-dot--active');
-
-  // "Contact Info" btn now goes back to step 1
-  btn1.style.pointerEvents = '';
-  btn1.onclick = function() { goToStep1(); };
-
-  // Show details toggle
-  var dt = document.getElementById('details-toggle');
-  if (dt) dt.style.display = 'inline-flex';
-
-  document.getElementById('nav-back').dataset.step = '2';
-  window.scrollTo(0, 0);
-  initStripe();
-}
-
-function goToStep1() {
-  document.getElementById('step2-content').style.display = 'none';
-  document.getElementById('step1-content').style.display = '';
-
-  var btn1 = document.getElementById('prog-btn1');
-  var btn2 = document.getElementById('prog-btn2');
-  var dot1 = document.getElementById('prog-dot1');
-  var dot2 = document.getElementById('prog-dot2');
-
-  btn1.classList.add('prog-step-btn--active');
-  btn1.classList.remove('prog-step-btn--future');
-  dot1.classList.add('prog-dot--active');
-  btn1.onclick = null;
-
-  btn2.classList.remove('prog-step-btn--active');
-  btn2.classList.add('prog-step-btn--future');
-  dot2.classList.remove('prog-dot--active');
-
-  var dt = document.getElementById('details-toggle');
-  if (dt) dt.style.display = 'none';
-
-  document.getElementById('nav-back').dataset.step = '1';
-}
-
-// ── Stripe ──
-var _stripeInitialized = false;
-
-async function initStripe() {
-  if (_stripeInitialized) return;
-  _stripeInitialized = true;
-
-  const STRIPE_PK = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
-
-  function getAppearance(dark) {
-    return {
-      theme: dark ? 'night' : 'stripe',
-      variables: {
-        colorBackground: dark ? '#2a2a2a' : '#f9fafb',
-        colorText: dark ? '#F8FAFC' : '#222222',
-        colorTextSecondary: dark ? '#9ca3af' : '#717171',
-        colorTextPlaceholder: dark ? '#6b7280' : '#9ca3af',
-        colorPrimary: '#0066ff', colorDanger: '#e53e3e',
-        fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
-        fontSizeBase: '15px', fontWeightNormal: '400', fontWeightMedium: '600',
-        borderRadius: '8px', spacingUnit: '4px', spacingGridRow: '0.85rem',
-      },
-      rules: {
-        '.Input': { border: dark ? '1px solid #3a3a3a' : '1px solid #e0e0e0', boxShadow: 'none' },
-        '.Input:focus': { borderColor: '#b9d4ff', boxShadow: '0 0 0 2px rgba(0,102,255,0.08)', outline: 'none' },
-        '.Tab': { border: dark ? '1px solid #3a3a3a' : '1px solid #e0e0e0' },
-        '.Tab:hover': { border: dark ? '1px solid #555' : '1px solid #b9d4ff' },
-        '.Tab--selected': { borderColor: '#0066ff', boxShadow: '0 0 0 1px #0066ff' },
-        '.BlockDivider': { display: 'none' },
-        '.Label': { display: 'none' },
-      },
-    };
-  }
-
-  function showError(msg) {
-    const el = document.getElementById('stripe-message');
-    if (!el) return;
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-  function resetSubmit() {
-    const btn = document.getElementById('submit-stripe');
-    const txt = document.getElementById('submit-stripe-text');
-    if (btn) btn.disabled = false;
-    if (txt) txt.textContent = 'Begin Coaching';
-  }
-
-  async function handleRedirectReturn() {
-    const params = new URLSearchParams(window.location.search);
-    const pics = params.get('payment_intent_client_secret');
-    if (!pics) return false;
-    const form = document.getElementById('payment-form');
-    if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-spinner"></div><div class="redirect-text">Completing your payment…</div><div class="redirect-sub">Please don\'t close this page.</div></div>';
-    const stripe = Stripe(STRIPE_PK);
-    const { paymentIntent, error } = await stripe.retrievePaymentIntent(pics);
-    if (error || !paymentIntent) {
-      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">' + ((error && error.message) || 'Something went wrong.') + '</div><div><a href="/sign-up" style="color:#06f;font-size:.9rem">Try again</a></div></div>';
-      return true;
-    }
-    if (paymentIntent.status === 'succeeded') {
-      window.location.href = 'https://asherrobinsonfitness.com/welcome';
-    } else {
-      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text">Payment status: ' + paymentIntent.status + '. <a href="/sign-up" style="color:#06f">Try again</a></div></div>';
-    }
-    return true;
-  }
-
-  function setTaxDisplay(taxCents) {
-    const taxEl   = document.getElementById('tax-value');
-    const totalEl = document.getElementById('due-today-value');
-    if (!taxEl) return;
-    if (taxCents === null) {
-      taxEl.textContent = 'Enter address to calculate'; taxEl.className = 'tax-value-placeholder';
-      if (totalEl) totalEl.textContent = '$50.00';
-    } else {
-      taxEl.textContent = taxCents === 0 ? '$0.00' : '$' + (taxCents / 100).toFixed(2);
-      taxEl.className   = 'tax-value-amount';
-      if (totalEl) totalEl.textContent = '$' + ((5000 + taxCents) / 100).toFixed(2);
-    }
-  }
-
-  const wasRedirect = await handleRedirectReturn();
-  if (wasRedirect) return;
-
-  let clientSecret;
-  try {
-    const res  = await fetch('/api/create-payment-intent');
-    const data = await res.json();
-    clientSecret = data.clientSecret;
-    if (!clientSecret) throw new Error(data.error || 'No client secret.');
-  } catch (err) {
-    showError('Failed to initialize payment. Please refresh the page.');
-    return;
-  }
-
-  const stripe   = Stripe(STRIPE_PK);
-  const dark     = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const returnUrl = window.location.origin + window.location.pathname;
-
-  const elements = stripe.elements({ clientSecret, appearance: getAppearance(dark), customerEmail: _contactEmail || undefined });
-
-  const expressEl = elements.create('expressCheckout', {
-    buttonHeight: 48, buttonTheme: { applePay: 'black', googlePay: 'black' },
-    buttonType: { applePay: 'plain', googlePay: 'plain', link: 'pay' },
-    layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
-    paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
-  });
-  expressEl.mount('#express-checkout-element');
-  expressEl.on('ready', ({ availablePaymentMethods }) => {
-    const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
-    const s = document.getElementById('express-pay-section');
-    if (s) s.style.display = hasAny ? '' : 'none';
-  });
-  expressEl.on('confirm', async () => {
-    const cardName = (document.getElementById('cardholder-name') || {}).value || '';
-    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl, ...(cardName.trim() ? { payment_method_data: { billing_details: { name: cardName.trim() } } } : {}) }, redirect: 'if_required' });
-    if (error) { showError(error.message || 'Something went wrong.'); return; }
-    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
-  });
-
-  const nameInput = document.getElementById('cardholder-name');
-  if (nameInput && !nameInput.value) {
-    nameInput.value = (_contactFirst + ' ' + _contactLast).trim();
-  }
-
-  const addrDiv = document.getElementById('address-element');
-  if (addrDiv) addrDiv.style.visibility = 'hidden';
-  const addrEl = elements.create('address', {
-    mode: 'billing',
-    defaultValues: { name: (_contactFirst + ' ' + _contactLast).trim() || undefined, address: { country: 'US' } },
-  });
-  addrEl.on('ready', () => {
-    const sk = document.getElementById('address-element-skeleton');
-    if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
-    if (addrDiv) addrDiv.style.visibility = '';
-  });
-  let taxDebounce = null;
-  addrEl.on('change', async (event) => {
-    if (!event.complete) return;
-    const addr = event.value && event.value.address;
-    if (!addr || !addr.country) return;
-    clearTimeout(taxDebounce);
-    taxDebounce = setTimeout(async () => {
-      const taxEl = document.getElementById('tax-value');
-      if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
-      try {
-        const r    = await fetch('/api/calculate-tax', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address: addr }) });
-        const data = await r.json();
-        setTaxDisplay(typeof data.tax === 'number' ? data.tax : null);
-      } catch (_) { setTaxDisplay(null); }
-    }, 400);
-  });
-  addrEl.mount('#address-element');
-
-  const payDiv = document.getElementById('payment-element');
-  if (payDiv) payDiv.style.visibility = 'hidden';
-  const payEl = elements.create('payment', {
-    layout: { type: 'tabs', defaultCollapsed: false },
-    wallets: { applePay: 'never', googlePay: 'never' },
-    terms: { card: 'never' },
-    fields: { billingDetails: { address: 'never' } },
-  });
-  payEl.on('ready', () => {
-    const sk = document.getElementById('payment-element-skeleton');
-    if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
-    if (payDiv) payDiv.style.visibility = '';
-  });
-  payEl.mount('#payment-element');
-
-  const form    = document.getElementById('payment-form');
-  const btn     = document.getElementById('submit-stripe');
-  const btnText = document.getElementById('submit-stripe-text');
-  const msgDiv  = document.getElementById('stripe-message');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (btn.disabled) return;
-    btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
-    const cardName = (document.getElementById('cardholder-name') || {}).value || '';
-    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl, ...(cardName.trim() ? { payment_method_data: { billing_details: { name: cardName.trim() } } } : {}) }, redirect: 'if_required' });
-    if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
-    if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
-      window.location.href = 'https://asherrobinsonfitness.com/welcome';
-    } else { showError('Unexpected payment status. Please try again.'); resetSubmit(); }
-  });
-}
-
-// ── Card 3D tilt ──
-function initCardTilt() {
-  const card = document.getElementById('coachCard');
-  if (!card) return;
-  const MAX = 10; let af = null;
-  card.addEventListener('mousemove', (e) => {
-    if (af) cancelAnimationFrame(af);
-    af = requestAnimationFrame(() => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width  - 0.5;
-      const y = (e.clientY - r.top)  / r.height - 0.5;
-      card.style.transform = `perspective(700px) rotateX(${-y*MAX}deg) rotateY(${x*MAX}deg)`;
-      card.style.boxShadow = `${-x*MAX*1.5}px ${-y*MAX*1.5+8}px 40px rgba(0,0,0,0.3)`;
-    });
-  });
-  card.addEventListener('mouseleave', () => {
-    if (af) cancelAnimationFrame(af);
-    card.style.transition = 'transform 0.45s ease';
-    card.style.transform  = 'perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)';
-    card.style.boxShadow  = '';
-    setTimeout(() => card.style.transition = '', 450);
-  });
-}
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) initCardTilt();
-
-// ── Details toggle ──
-(function() {
-  const toggle   = document.getElementById('details-toggle');
-  const panel    = document.getElementById('details-panel');
-  const backdrop = document.getElementById('details-backdrop');
-  const label    = toggle && toggle.querySelector('.details-toggle-text');
-  if (!toggle || !panel || !label) return;
-  function openPanel()  { panel.classList.add('is-open'); if (backdrop) backdrop.classList.add('is-visible'); toggle.setAttribute('aria-expanded','true'); label.textContent = 'Close'; document.body.style.overflow = 'hidden'; }
-  function closePanel() { panel.classList.remove('is-open'); if (backdrop) backdrop.classList.remove('is-visible'); toggle.setAttribute('aria-expanded','false'); label.textContent = 'Details'; document.body.style.overflow = ''; }
-  toggle.addEventListener('click', () => panel.classList.contains('is-open') ? closePanel() : openPanel());
-  if (backdrop) backdrop.addEventListener('click', closePanel);
-})();
-
-// ── Legal modals ──
 function openLegal(which) {
   var o = document.getElementById('modal-' + which);
   if (!o) return;
