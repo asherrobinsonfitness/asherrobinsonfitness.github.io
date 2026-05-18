@@ -1204,39 +1204,7 @@
             }
         }
 
-        /* Contact capture step */
-        #contact-card { display: none; }
-        #contact-form .contact-field { margin-bottom: .875rem; }
-        #contact-form .contact-row { display: flex; gap: .75rem; margin-bottom: .875rem; }
-        #contact-form .contact-row .contact-field { flex: 1; margin-bottom: 0; }
-        #contact-form input {
-            width: 100%; padding: .875rem 1rem;
-            background: #161616; border: 1px solid #3d3d3d; border-radius: 10px;
-            color: #f8fafc; font-size: 1rem; font-family: inherit;
-            outline: none; -webkit-appearance: none; appearance: none; box-sizing: border-box;
-        }
-        #contact-form input::placeholder { color: #9ca3af; }
-        #contact-form input:focus { border-color: var(--primary); }
-        #contact-form input.field-error { border-color: #e53e3e; }
-        .contact-submit {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 100%; padding: .9rem 1.25rem; border-radius: 8px;
-            background: var(--primary); color: #fff; font-weight: 600;
-            font-size: 1rem; border: none; cursor: pointer;
-            transition: background .15s; margin-top: .25rem;
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .contact-submit:hover { background: #0052cc; }
-        }
-        .contact-submit-label { flex: 1; text-align: left; }
-        .contact-submit-divider { display: block; width: 1px; height: 1.5rem; background: rgba(255,255,255,.35); flex-shrink: 0; }
-        .contact-submit-arrow { display: inline; }
-        .contact-legal {
-            margin-top: 1rem; font-size: .75rem; color: #9ca3af; line-height: 1.5; text-align: center;
-        }
-        .contact-legal a { color: #4d94ff; text-decoration: none; }
-
-        @media (min-width: 1024px) {
+@media (min-width: 1024px) {
             .survey-inner {
                 max-width: 520px;
             }
@@ -1385,28 +1353,7 @@
                         <button type="button" class="survey-prev-step" id="survey-prev-step">Previous step</button>
                     </div>
                 </div>
-                <div id="contact-card" class="survey-content">
-                    <h1 class="survey-question">Almost there — who are we coaching?</h1>
-                    <form id="contact-form" novalidate style="margin-top:1.5rem;">
-                        <div class="contact-field">
-                            <input type="email" id="cf-email" placeholder="Email" autocomplete="email">
-                        </div>
-                        <div class="contact-row">
-                            <div class="contact-field">
-                                <input type="text" id="cf-first" placeholder="First Name" autocomplete="given-name">
-                            </div>
-                            <div class="contact-field">
-                                <input type="text" id="cf-last" placeholder="Last Name" autocomplete="family-name">
-                            </div>
-                        </div>
-                        <button type="submit" class="contact-submit">
-                            <span class="contact-submit-label">Continue</span>
-                            <span class="contact-submit-divider" aria-hidden="true"></span>
-                            <span class="contact-submit-arrow">→</span>
-                        </button>
-                        <p class="contact-legal">By continuing you agree to the <a href="#" onclick="openLegal('terms');return false;">Terms of Service</a> and <a href="#" onclick="openLegal('privacy');return false;">Privacy Policy</a>.</p>
-                    </form>
-                </div>
+
             </div>
         </div>
     </main>
@@ -1615,31 +1562,10 @@
                                 renderStep('forward');
                             }, 400);
                         } else {
-                            // All questions passed — slide to contact capture
-                            setTimeout(() => {
-                                const surveyContent = document.getElementById('survey-content');
-                                const contactCard = document.getElementById('contact-card');
-                                const pill = document.getElementById('survey-steps-pill');
-                                const prevBtn = document.getElementById('survey-prev-step');
-                                surveyContent.classList.add('slide-exit-forward');
-                                if (pill) pill.style.opacity = '0';
-                                if (prevBtn) prevBtn.style.visibility = 'hidden';
-                                setTimeout(() => {
-                                    surveyContent.classList.remove('slide-exit-forward');
-                                    surveyContent.style.display = 'none';
-                                    contactCard.style.display = 'block';
-                                    contactCard.classList.add('slide-enter-forward');
-                                    let settled = false;
-                                    const finish = () => {
-                                        if (settled) return;
-                                        settled = true;
-                                        contactCard.classList.remove('slide-enter-forward');
-                                        isTransitioning = false;
-                                    };
-                                    contactCard.addEventListener('animationend', finish, { once: true });
-                                    setTimeout(finish, 280);
-                                }, 180);
-                            }, 400);
+                            const redirectParams = new URLSearchParams(window.location.search || '');
+                            redirectParams.delete('step');
+                            Object.entries(answers).forEach(function(entry) { redirectParams.set(entry[0], entry[1]); });
+                            window.location.href = '/complete-sign-up?' + redirectParams.toString();
                         }
                     });
 
@@ -1723,31 +1649,6 @@
                 }
             });
 
-            document.getElementById('contact-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const emailEl = document.getElementById('cf-email');
-                const firstEl = document.getElementById('cf-first');
-                const lastEl  = document.getElementById('cf-last');
-                const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                let valid = true;
-                [emailEl, firstEl, lastEl].forEach(el => el.classList.remove('field-error'));
-                if (!emailRe.test(emailEl.value.trim())) { emailEl.classList.add('field-error'); valid = false; }
-                if (!firstEl.value.trim()) { firstEl.classList.add('field-error'); valid = false; }
-                if (!lastEl.value.trim())  { lastEl.classList.add('field-error');  valid = false; }
-                if (!valid) return;
-                const redirectParams = new URLSearchParams(window.location.search || '');
-                redirectParams.delete('step');
-                Object.entries(answers).forEach(([k, v]) => redirectParams.set(k, v));
-                redirectParams.set('email', emailEl.value.trim());
-                redirectParams.set('first_name', firstEl.value.trim());
-                redirectParams.set('last_name', lastEl.value.trim());
-                window.location.href = '/complete-sign-up?' + redirectParams.toString();
-            });
-            ['cf-email', 'cf-first', 'cf-last'].forEach(id => {
-                document.getElementById(id).addEventListener('input', function() {
-                    this.classList.remove('field-error');
-                });
-            });
         });
     </script>
 <!-- NOT A FIT MODAL -->
