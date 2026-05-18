@@ -90,27 +90,35 @@
     }
     .payment-back-icon { flex-shrink: 0; color: inherit; }
 
-    /* ── PROGRESS INDICATOR — same style as site-nav__link ── */
+    /* ── PROGRESS INDICATOR — pill shaped like .callout on index.html ── */
     .signup-progress {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 0.75rem;
+      background: var(--bottom-bg);
+      border-radius: 999px;
+      border: 1px solid #3d3d3d;
+      padding: 0.375rem 0.625rem;
+      gap: 0;
     }
     .prog-step-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.5);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02rem;
+      color: rgba(255,255,255,0.4);
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0.3rem 0.5rem;
-      border-radius: 6px;
-      line-height: 1;
+      padding: 0 0.375rem;
+      line-height: 1.2;
       white-space: nowrap;
-      transition: background-color 0.15s ease, color 0.15s ease;
+      transition: color 0.15s ease;
       -webkit-tap-highlight-color: transparent;
       outline: none;
     }
@@ -180,11 +188,23 @@
       text-align: center;
       margin-bottom: 0.75rem;
     }
+    .signup-headline {
+      font-size: 1.75rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-align: center;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    @media (min-width: 600px) { .signup-headline { font-size: 2rem; } }
     .signup-subheadline {
       font-size: 0.82rem;
       color: var(--text-secondary);
       text-align: center;
       line-height: 1.55;
+      margin-top: 0.25rem;
       margin-bottom: 1.5rem;
     }
 
@@ -301,28 +321,24 @@
     #step2-content { display: none; flex: 1; flex-direction: column; }
     #step2-content.active { display: flex; }
 
-    .payment-layout {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
-    }
+    .payment-layout { width: 100%; }
+
+    .order-summary-col { height: 0; padding: 0; border: none; overflow: visible; }
+
     .payment-form-col {
-      padding: var(--pad) 2.5rem;
-      background: var(--bottom-bg);
-      --form-col-pad-x: 2.5rem;
+      padding: var(--pad-sm) 1.25rem;
+      --form-col-pad-x: 1.25rem;
+      background: var(--bg);
     }
-    .order-summary-col {
-      padding: var(--pad) 2.5rem;
-      --order-col-pad-x: 2.5rem;
-    }
-    .payment-form-content,
-    .order-summary-top-content,
-    .order-summary-bottom-content { width: 100%; }
+    .payment-form-content { max-width: 472px; margin: 0 auto; width: 100%; }
     .payment-form-content,
     .form-pricing { display: flex; flex-direction: column; align-items: stretch; }
     .payment-form-content > .section-label,
     .form-pricing > .sub-section-label { align-self: center; }
+
+    @media (min-width: 600px) {
+      .payment-form-col { padding: var(--pad) 2.5rem; --form-col-pad-x: 2.5rem; }
+    }
 
     .section-label,
     .sub-section-label {
@@ -348,36 +364,7 @@
     .section-label { margin-bottom: 1.5rem; }
     .sub-section-label { margin-bottom: 0.5rem; }
 
-    /* Coach card */
-    .coach-card-wrap { max-width: 400px; margin: 0 auto 1.5rem; }
-    .coach-summary-card {
-      width: 100%; border-radius: 14px; overflow: hidden; position: relative;
-      aspect-ratio: 85.6 / 54; background: #000; cursor: default;
-      transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black);
-    }
-    .coach-summary-card img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      object-position: center center; pointer-events: none; user-select: none; transform: scale(1.002);
-    }
-    .coach-summary-card::after {
-      content: ""; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.05) 55%, transparent 100%);
-      pointer-events: none;
-    }
-    .card-top-left { position: absolute; top: 0.75rem; left: 1rem; z-index: 2; }
-    .card-title { font-size: 1.2rem; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.01em; line-height: 1.2; }
-    .card-title-sub { font-size: 1.2rem; font-weight: 600; color: #fff; letter-spacing: 0.01em; line-height: 1.2; }
-    .card-bottom-left { position: absolute; bottom: 0.8rem; left: 1rem; z-index: 2; }
-    .card-price { font-size: 2.15rem; font-weight: 600; color: #fff; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.35); }
-    .card-price-period { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.72); }
-    .card-bottom-right { position: absolute; bottom: 0.8rem; right: 1rem; z-index: 2; text-align: right; }
-    .card-note { font-size: 0.62rem; color: rgba(255,255,255,0.6); line-height: 1.35; }
-
     /* Order summary */
-    .product-info { margin-bottom: 1.1rem; text-align: center; }
-    .product-title { font-size: 0.975rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
-    .product-desc { font-size: 0.855rem; color: var(--text-secondary); line-height: 1.55; }
-    .order-divider { height: 1px; background: var(--border); margin: 1rem 0; }
     .order-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
     .order-row:last-child { margin-bottom: 0; }
     .order-row-label { font-size: 0.9rem; color: var(--text); }
@@ -386,7 +373,7 @@
     .order-total-row { display: flex; justify-content: space-between; align-items: center; }
     .order-total-label { font-size: 1rem; font-weight: 700; color: var(--text); }
     .order-total-value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .form-pricing { padding-top: 1.25rem; }
+    .form-pricing { padding-top: 0; }
     .form-pricing .sub-section-label { margin-bottom: 0.5rem; }
     .form-pricing-divider { height: 1px; background: var(--border); margin: 0.85rem 0; }
     .form-pricing-footnote { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem; }
@@ -399,11 +386,7 @@
     .tax-value-placeholder { font-size: 0.82rem; font-weight: 400; color: var(--text-secondary); }
     .tax-value-amount { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 
-    /* Full-bleed dividers */
-    .order-divider-full, .form-divider-full { display: block; height: 0; border: none; border-top: 1px solid var(--border-strong); box-sizing: border-box; }
-    .order-divider-full { margin: var(--section-split-pad) calc(-1 * var(--order-col-pad-x)); width: calc(100% + 2 * var(--order-col-pad-x)); }
-    .form-divider-full { margin: var(--section-split-pad) calc(-1 * var(--form-col-pad-x)); width: calc(100% + 2 * var(--form-col-pad-x)); }
-    @media (max-width: 760px) { .order-divider-full, .form-divider-full { display: none; } }
+    .details-panel-inner { max-width: calc(472px + 5rem); margin: 0 auto; }
 
     /* Express checkout */
     #express-pay-section { margin-bottom: 0; }
@@ -438,10 +421,12 @@
     .redirect-text { font-size: 1rem; color: var(--text); font-weight: 500; }
     .redirect-sub { font-size: 0.85rem; color: var(--text-secondary); }
 
-    /* After-pay section */
-    .after-section { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border); margin-left: calc(-1 * var(--form-col-pad-x)); margin-right: calc(-1 * var(--form-col-pad-x)); padding-left: var(--form-col-pad-x); padding-right: var(--form-col-pad-x); }
+    /* After-pay section — full-width section like index.html sections */
+    .after-section { width: 100%; background: var(--bottom-bg); border-top: 1px solid var(--border-strong); padding: var(--pad) 1.5rem; }
+    .after-section-inner { max-width: 472px; margin: 0 auto; }
     .after-heading { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; text-align: center; }
     .after-steps { display: flex; flex-direction: column; gap: 0.75rem; }
+    @media (max-width: 767px) { .after-section { padding: var(--pad-sm) 1.25rem; } }
     .after-card { display: flex; flex-direction: row; align-items: center; gap: 0.85rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; }
     .after-card-num { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--text); flex-shrink: 0; }
     .after-label-row { display: flex; align-items: center; gap: 0.4rem; }
@@ -451,102 +436,60 @@
     .after-label { font-weight: 600; font-size: 0.78rem; color: var(--text); line-height: 1.25; }
     .after-desc { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.4; }
 
-    /* Desktop split panel */
-    @media (min-width: 761px) {
-      html, body { height: 100%; overflow: hidden; }
-      .page-wrapper { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-      #step2-content { min-height: 0; }
-      .payment-layout { flex: 1; min-height: 0; overflow: hidden; grid-template-columns: repeat(2, minmax(0, calc(472px + 5.5rem))); gap: 0; align-items: stretch; width: 100%; max-width: calc(944px + 11rem); margin: 0 auto; border-left: 1px solid var(--border-strong); border-right: 1px solid var(--border-strong); background: linear-gradient(to right, var(--bg) 50%, var(--bottom-bg) 50%); }
-      .order-summary-col { height: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border-right: 1px solid var(--border-strong); padding: var(--pad) 2.75rem; --order-col-pad-x: 2.75rem; }
-      .payment-form-col { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: var(--pad) 2.75rem; --form-col-pad-x: 2.75rem; }
-      .payment-form-content, .order-summary-top-content, .order-summary-bottom-content { max-width: 472px; margin: 0 auto; }
-      .payment-form-col, .order-summary-col { scrollbar-width: none; -ms-overflow-style: none; }
-      .payment-form-col::-webkit-scrollbar, .order-summary-col::-webkit-scrollbar { display: none; }
-      .order-summary-top-content .product-info { margin-bottom: 0; }
-      .order-summary-col .form-pricing { padding-top: 0; }
-      .after-section { border-top: none; margin-top: 0; padding-top: 0; }
+    /* Details toggle — JS sets display:inline-flex on step 2, none on step 1 */
+    .details-toggle {
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: underline dotted;
+      text-underline-offset: 2px;
+      cursor: pointer;
+      line-height: 1;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 201;
+      border-radius: 6px;
+      padding: 0.3rem 0.5rem;
+      margin: -0.3rem -0.5rem;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    /* Details toggle */
-    .details-panel-inner { padding: 0; }
-    .order-summary-header { display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 0; }
-    .details-toggle { display: none; }
-    .details-panel { display: block; }
-
-    /* Mobile: coach card in details panel only */
-    .desktop-only-summary { display: block; }
-    .mobile-only-summary { display: none; }
-
-    /* Mobile overrides */
-    @media (max-width: 760px) {
-      .payment-layout { grid-template-columns: 1fr; gap: 0; }
-      .order-summary-col { height: 0; padding: 0; border: none; overflow: visible; }
-      .payment-form-col { padding: var(--pad-sm) 1.25rem; --form-col-pad-x: 1.25rem; background: var(--bg); }
-      .after-section { background: var(--bottom-bg); padding-bottom: var(--pad-sm); margin-bottom: calc(-1 * var(--pad-sm)); }
-      .after-section { margin-top: 1.5rem; padding-top: 1.25rem; }
-      .coach-card-wrap { max-width: 100%; }
-      .order-divider { display: none; }
-      .form-pricing { padding-top: 0; }
-      .product-info { margin-bottom: 0.5rem; }
-      .sub-section-label { margin-top: 1rem; }
-      .details-panel .form-pricing > .sub-section-label { display: none; }
-
-      .desktop-only-summary { display: none; }
-      .mobile-only-summary { display: block; margin-bottom: 1rem; }
-
-      .details-toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        background: none;
-        border: none;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-        text-decoration: underline dotted;
-        text-underline-offset: 2px;
-        cursor: pointer;
-        line-height: 1;
-        flex-shrink: 0;
-        position: relative;
-        z-index: 201;
-        border-radius: 6px;
-        padding: 0.3rem 0.5rem;
-        margin: -0.3rem -0.5rem;
-        transition: background-color 0.15s ease, color 0.15s ease;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-      }
-      @media (hover: hover) and (pointer: fine) {
-        .details-toggle:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
-      }
-      .details-chevron { color: inherit; transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
-      .details-toggle[aria-expanded="true"] .details-chevron { transform: rotate(180deg); }
-
-      .details-panel {
-        position: fixed;
-        top: var(--payment-nav-h);
-        left: 0; right: 0;
-        z-index: 200;
-        background: var(--bg);
-        transform: translate3d(0, calc(-100% - 8px), 0);
-        visibility: hidden;
-        pointer-events: none;
-        transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.38s;
-        overflow-y: auto;
-        max-height: calc(85vh - var(--payment-nav-h));
-        border-bottom: 1px solid var(--border);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-      }
-      .details-panel.is-open { transform: translate3d(0, 0, 0); visibility: visible; pointer-events: auto; transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s; }
-      .details-panel-inner { padding: 1.75rem 1.25rem; }
+    @media (hover: hover) and (pointer: fine) {
+      .details-toggle:hover { background-color: rgba(235,235,235,0.1); color: var(--text); }
     }
+    .details-chevron { color: inherit; transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
+    .details-toggle[aria-expanded="true"] .details-chevron { transform: rotate(180deg); }
+
+    /* Details panel — fixed slide-down on all screen sizes */
+    .details-panel {
+      position: fixed;
+      top: var(--payment-nav-h);
+      left: 0; right: 0;
+      z-index: 200;
+      background: var(--bg);
+      transform: translate3d(0, calc(-100% - 8px), 0);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.38s;
+      overflow-y: auto;
+      max-height: calc(85vh - var(--payment-nav-h));
+      border-bottom: 1px solid var(--border);
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    .details-panel.is-open { transform: translate3d(0, 0, 0); visibility: visible; pointer-events: auto; transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s; }
+    .details-panel-inner { padding: 1.75rem 1.25rem; max-width: calc(480px + 2.5rem); margin: 0 auto; }
+    @media (min-width: 600px) { .details-panel-inner { padding: 1.75rem 2.5rem; } }
 
     /* Backdrop */
-    #details-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
+    #details-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
     #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
-    @media (max-width: 760px) { #details-backdrop { display: block; } }
 
     .timeline-icon svg path, .timeline-icon svg circle, .timeline-icon svg rect { fill: var(--icon-stroke) !important; }
 
@@ -597,17 +540,6 @@
       <span class="payment-back-label">Back</span>
     </button>
 
-    <div class="signup-progress" aria-label="Progress">
-      <button type="button" class="prog-step-btn prog-step-btn--active" id="prog-btn1">
-        <div class="prog-dot prog-dot--active" id="prog-dot1"></div>
-        Fill Out Form
-      </button>
-      <button type="button" class="prog-step-btn prog-step-btn--future" id="prog-btn2">
-        <div class="prog-dot" id="prog-dot2"></div>
-        Payment
-      </button>
-    </div>
-
     <div class="nav-right">
       <button class="details-toggle" id="details-toggle" type="button" aria-expanded="false" aria-controls="details-panel" style="display:none;">
         <span class="details-toggle-text">Details</span>
@@ -623,7 +555,19 @@
     <div class="signup-main">
       <div class="signup-inner">
 
-        <h1 class="signup-section-heading">Contact Info</h1>
+        <div class="signup-progress" aria-label="Progress">
+          <button type="button" class="prog-step-btn prog-step-btn--active" id="prog-btn1">
+            <div class="prog-dot prog-dot--active" id="prog-dot1"></div>
+            Fill Out Form
+          </button>
+
+          <button type="button" class="prog-step-btn prog-step-btn--future" id="prog-btn2">
+            <div class="prog-dot" id="prog-dot2"></div>
+            Payment
+          </button>
+        </div>
+
+        <h1 class="signup-headline">Online Fat Loss Coaching</h1>
         <p class="signup-subheadline">Use your real name and email. This is what I'll use to set up your account in the coaching app.</p>
 
         <form id="contact-form" novalidate>
@@ -700,56 +644,10 @@
   <div id="step2-content">
     <div class="payment-layout">
 
-      <!-- ════ LEFT: Order Summary ════ -->
+      <!-- ════ Order Summary (zero-height, holds fixed details panel) ════ -->
       <div class="order-summary-col">
-        <div class="order-summary-top-content desktop-only-summary">
-          <div class="order-summary-header">
-            <div class="section-label">Coaching Summary</div>
-          </div>
-          <div class="coach-card-wrap">
-            <div class="coach-summary-card" id="coachCard">
-              <img src="https://i.postimg.cc/8CRy1535/card.webp" alt="Coach Asher" loading="eager" />
-              <div class="card-top-left">
-                <div class="card-title-sub">Online Coaching</div>
-                <div class="card-title">with Asher</div>
-              </div>
-              <div class="card-bottom-left"><div class="card-price">$50<span class="card-price-period">/first month</span></div></div>
-              <div class="card-bottom-right"><div class="card-note">No Contract. No Hidden Fees.</div></div>
-            </div>
-          </div>
-          <div class="product-info">
-            <div class="product-title">Online Coaching with Asher</div>
-            <div class="product-desc">Custom workouts, personalized nutrition, weekly check-ins, and same-day messaging from me. Built to help you lose body fat.</div>
-          </div>
-        </div>
-
-        <hr class="order-divider-full" aria-hidden="true">
-
         <div class="details-panel" id="details-panel">
           <div class="details-panel-inner">
-            <!-- Mobile only: card + info above pricing -->
-            <div class="mobile-only-summary">
-              <div class="order-summary-header" style="margin-bottom:1rem;">
-                <div class="section-label">Coaching Summary</div>
-              </div>
-              <div class="coach-card-wrap">
-                <div class="coach-summary-card">
-                  <img src="https://i.postimg.cc/8CRy1535/card.webp" alt="Coach Asher" loading="lazy" />
-                  <div class="card-top-left">
-                    <div class="card-title-sub">Online Coaching</div>
-                    <div class="card-title">with Asher</div>
-                  </div>
-                  <div class="card-bottom-left"><div class="card-price">$50<span class="card-price-period">/first month</span></div></div>
-                  <div class="card-bottom-right"><div class="card-note">No Contract. No Hidden Fees.</div></div>
-                </div>
-              </div>
-              <div class="product-info">
-                <div class="product-title">Online Coaching with Asher</div>
-                <div class="product-desc">Custom workouts, personalized nutrition, weekly check-ins, and same-day messaging from me. Built to help you lose body fat.</div>
-              </div>
-              <div class="form-pricing-divider"></div>
-            </div>
-
             <div class="order-summary-bottom-content">
               <div class="form-pricing">
                 <div class="order-row">
@@ -789,7 +687,17 @@
       <!-- ════ RIGHT: Payment Form ════ -->
       <div class="payment-form-col">
         <div class="payment-form-content">
-          <div class="section-label">Complete Sign-up</div>
+          <div class="signup-progress" aria-label="Progress" style="margin-bottom:1.5rem;">
+            <button type="button" class="prog-step-btn" onclick="goToStep1()" style="opacity:0.4;cursor:pointer;pointer-events:auto;">
+              <div class="prog-dot"></div>
+              Fill Out Form
+            </button>
+  
+            <button type="button" class="prog-step-btn prog-step-btn--active">
+              <div class="prog-dot prog-dot--active"></div>
+              Payment
+            </button>
+          </div>
 
           <div id="express-pay-section" style="display:none;">
             <div id="express-checkout-element"></div>
@@ -824,55 +732,55 @@
             </p>
           </div>
 
-          <hr class="form-divider-full" aria-hidden="true">
-
-          <div class="after-section">
-            <div class="after-heading">What happens after I pay?</div>
-            <div class="after-steps" role="list">
-              <div class="after-card" role="listitem">
-                <div class="after-card__media">
-                  <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-                </div>
-                <div class="after-card__body">
-                  <div class="after-label-row">
-                    <div class="after-card-num" aria-hidden="true">1</div>
-                    <div class="after-label">Download the App</div>
-                  </div>
-                  <div class="after-desc">You'll be redirected right after payment.</div>
-                </div>
-              </div>
-              <div class="after-card" role="listitem">
-                <div class="after-card__media">
-                  <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-                </div>
-                <div class="after-card__body">
-                  <div class="after-label-row">
-                    <div class="after-card-num" aria-hidden="true">2</div>
-                    <div class="after-label">Complete Onboarding</div>
-                  </div>
-                  <div class="after-desc">We meet on a video call through the app, talk through your goals, and build your plan together.</div>
-                </div>
-              </div>
-              <div class="after-card" role="listitem">
-                <div class="after-card__media">
-                  <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
-                </div>
-                <div class="after-card__body">
-                  <div class="after-label-row">
-                    <div class="after-card-num" aria-hidden="true">3</div>
-                    <div class="after-label">Start Week One</div>
-                  </div>
-                  <div class="after-desc">Your full plan goes live in the app shortly after the onboarding call.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
     </div>
+
+  <div class="after-section">
+    <div class="after-section-inner">
+      <div class="after-heading">What happens after I pay?</div>
+      <div class="after-steps" role="list">
+        <div class="after-card" role="listitem">
+          <div class="after-card__media">
+            <img src="https://i.postimg.cc/SRqTJtj2/personalized-1.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+          </div>
+          <div class="after-card__body">
+            <div class="after-label-row">
+              <div class="after-card-num" aria-hidden="true">1</div>
+              <div class="after-label">Download the App</div>
+            </div>
+            <div class="after-desc">You'll be redirected right after payment.</div>
+          </div>
+        </div>
+        <div class="after-card" role="listitem">
+          <div class="after-card__media">
+            <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+          </div>
+          <div class="after-card__body">
+            <div class="after-label-row">
+              <div class="after-card-num" aria-hidden="true">2</div>
+              <div class="after-label">Complete Onboarding</div>
+            </div>
+            <div class="after-desc">We meet on a video call through the app, talk through your goals, and build your plan together.</div>
+          </div>
+        </div>
+        <div class="after-card" role="listitem">
+          <div class="after-card__media">
+            <img src="https://i.postimg.cc/SRqTJtj9/personalized-3.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+          </div>
+          <div class="after-card__body">
+            <div class="after-label-row">
+              <div class="after-card-num" aria-hidden="true">3</div>
+              <div class="after-label">Start Week One</div>
+            </div>
+            <div class="after-desc">Your full plan goes live in the app shortly after the onboarding call.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 </div>
 
@@ -1136,9 +1044,9 @@ function goToStep2() {
   btn1.style.pointerEvents = '';
   btn1.onclick = function() { goToStep1(); };
 
-  // Show details toggle on mobile
+  // Show details toggle
   var dt = document.getElementById('details-toggle');
-  if (dt) dt.style.display = '';
+  if (dt) dt.style.display = 'inline-flex';
 
   document.getElementById('nav-back').dataset.step = '2';
   window.scrollTo(0, 0);
