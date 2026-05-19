@@ -615,17 +615,7 @@ async function initStripe() {
   expressEl.on('confirm', async (event) => {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements: expressElements,
-      confirmParams: {
-        return_url: returnUrl,
-        payment_method_data: {
-          billing_details: {
-            name: (event.billingDetails && event.billingDetails.name) || (_contactFirst + ' ' + _contactLast).trim() || undefined,
-            email: (event.billingDetails && event.billingDetails.email) || _contactEmail || undefined,
-            phone: (event.billingDetails && event.billingDetails.phone) || undefined,
-            address: (event.billingDetails && event.billingDetails.address) || undefined,
-          }
-        }
-      },
+      confirmParams: { return_url: returnUrl },
       redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
