@@ -200,6 +200,21 @@
     #details-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
     #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
 
+    /* ── CONTACT IDENTITY ── */
+    .contact-identity {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; padding: 0.75rem 1rem;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 10px; margin-bottom: 0.75rem;
+    }
+    .contact-identity__left { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+    .contact-identity__name { font-size: 0.875rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .contact-identity__email { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .contact-identity__right { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; font-size: 0.8rem; }
+    .contact-identity__not { color: var(--text-secondary); }
+    .contact-identity__back { color: var(--text); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(248,250,252,0.35); background: none; border: none; cursor: pointer; font-size: inherit; font-family: inherit; padding: 0; transition: color 0.15s ease; }
+    @media (hover: hover) and (pointer: fine) { .contact-identity__back:hover { color: #fff; } }
+
     /* ── LEGAL OVERLAYS ── */
     .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
     .legal-overlay { display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; visibility: hidden; pointer-events: none; }
@@ -290,6 +305,17 @@
           <div id="express-pay-section">
             <div id="express-checkout-element"><div id="express-checkout-skeleton"></div></div>
             <div class="or-divider">or pay with card</div>
+          </div>
+
+          <div class="contact-identity" id="contact-identity" style="display:none">
+            <div class="contact-identity__left">
+              <span class="contact-identity__name" id="ci-name"></span>
+              <span class="contact-identity__email" id="ci-email"></span>
+            </div>
+            <div class="contact-identity__right">
+              <span class="contact-identity__not">Not?</span>
+              <a href="/fill-out-form/" class="contact-identity__back">Go back</a>
+            </div>
           </div>
 
           <form id="payment-form">
@@ -425,6 +451,22 @@
 var _contactEmail = sessionStorage.getItem('_contactEmail') || '';
 var _contactFirst = sessionStorage.getItem('_contactFirst') || '';
 var _contactLast  = sessionStorage.getItem('_contactLast')  || '';
+
+// Populate contact identity bar
+(function() {
+  var first = sessionStorage.getItem('_contactFirst') || '';
+  var last  = sessionStorage.getItem('_contactLast')  || '';
+  var email = sessionStorage.getItem('_contactEmail') || '';
+  var fullName = (first + ' ' + last).trim();
+  var bar = document.getElementById('contact-identity');
+  if (bar && (fullName || email)) {
+    var nameEl  = document.getElementById('ci-name');
+    var emailEl = document.getElementById('ci-email');
+    if (nameEl)  nameEl.textContent  = fullName;
+    if (emailEl) emailEl.textContent = email;
+    bar.style.display = '';
+  }
+})();
 
 var _stripeInitialized = false;
 
