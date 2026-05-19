@@ -138,6 +138,28 @@
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
+    /* ── BILLING FIELDS (country + ZIP) ── */
+    .billing-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.85rem; }
+    .billing-field { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+    .billing-field label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); letter-spacing: 0.01em; }
+    .billing-field input, .billing-field select {
+      width: 100%; padding: 0.72rem 0.85rem;
+      background: var(--input-bg); border: 1px solid var(--input-border);
+      border-radius: 8px; color: var(--text); font-size: 15px;
+      font-family: inherit; line-height: 1.3;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .billing-field select {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%239ca3af' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.75rem center;
+      padding-right: 2.1rem; cursor: pointer;
+    }
+    .billing-field input::placeholder { color: #6b7280; }
+    .billing-field input:focus, .billing-field select:focus {
+      outline: none; border-color: #b9d4ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.08);
+    }
+
     /* ── CTA ── */
     .form-cta-area { margin-top: 1.1rem; }
     .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
@@ -315,6 +337,21 @@
           </div>
 
           <form id="payment-form">
+            <div class="billing-fields">
+              <div class="billing-field">
+                <label for="billing-country">Country</label>
+                <select id="billing-country" autocomplete="country">
+                  <option value="US" selected>United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                </select>
+              </div>
+              <div class="billing-field">
+                <label for="billing-zip">ZIP / Postal code</label>
+                <input id="billing-zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP code">
+              </div>
+            </div>
             <div class="payment-element-wrap">
               <div id="payment-element-skeleton"></div>
               <div id="payment-element"></div>
@@ -603,7 +640,10 @@ async function initStripe() {
             name: (event.billingDetails && event.billingDetails.name) || (_contactFirst + ' ' + _contactLast).trim() || undefined,
             email: (event.billingDetails && event.billingDetails.email) || _contactEmail || undefined,
             phone: (event.billingDetails && event.billingDetails.phone) || undefined,
-            address: (event.billingDetails && event.billingDetails.address) || undefined,
+            address: (event.billingDetails && event.billingDetails.address) || {
+              country: (typeof countryEl !== 'undefined' && countryEl && countryEl.value) || 'US',
+              postal_code: (typeof zipEl !== 'undefined' && zipEl && zipEl.value.trim()) || undefined,
+            },
           }
         }
       },
@@ -625,14 +665,7 @@ async function initStripe() {
       billingDetails: {
         name: 'never',
         email: 'never',
-        address: {
-          country: 'auto',
-          postalCode: 'auto',
-          line1: 'never',
-          line2: 'never',
-          city: 'never',
-          state: 'never',
-        }
+        address: 'never',
       }
     }
   });
@@ -641,10 +674,15 @@ async function initStripe() {
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
   });
+  payEl.mount('#payment-element');
+
+  const countryEl = document.getElementById('billing-country');
+  const zipEl = document.getElementById('billing-zip');
   let taxDebounce = null;
-  payEl.on('change', (event) => {
-    const addr = event.value && event.value.billingDetails && event.value.billingDetails.address;
-    if (!addr || !addr.country || !addr.postal_code) return;
+  function fetchTax() {
+    const country = countryEl ? countryEl.value : '';
+    const postal_code = zipEl ? zipEl.value.trim() : '';
+    if (!country || !postal_code) { setTaxDisplay(null); return; }
     clearTimeout(taxDebounce);
     taxDebounce = setTimeout(async () => {
       const taxEl = document.getElementById('tax-value');
@@ -653,7 +691,7 @@ async function initStripe() {
         const r = await fetch('/api/calculate-tax', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ address: { country: addr.country, postal_code: addr.postal_code } })
+          body: JSON.stringify({ address: { country, postal_code } })
         });
         const data = await r.json();
         setTaxDisplay(typeof data.tax === 'number' ? data.tax : null);
@@ -661,8 +699,9 @@ async function initStripe() {
         setTaxDisplay(null);
       }
     }, 400);
-  });
-  payEl.mount('#payment-element');
+  }
+  if (countryEl) countryEl.addEventListener('change', fetchTax);
+  if (zipEl) zipEl.addEventListener('input', fetchTax);
 
   const form    = document.getElementById('payment-form');
   const btn     = document.getElementById('submit-stripe');
@@ -681,6 +720,10 @@ async function initStripe() {
           billing_details: {
             name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
             email: _contactEmail || undefined,
+            address: {
+              country: (countryEl && countryEl.value) || 'US',
+              postal_code: (zipEl && zipEl.value.trim()) || undefined,
+            },
           }
         }
       },
