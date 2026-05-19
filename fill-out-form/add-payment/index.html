@@ -335,7 +335,7 @@
           </form>
 
           <div class="form-cta-area">
-<button type="submit" id="submit-stripe" form="payment-form">
+<button type="submit" id="submit-stripe" form="payment-form" disabled>
               <span id="submit-stripe-text">Start First Month · $50</span>
             </button>
             <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
@@ -614,7 +614,8 @@ async function initStripe() {
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const cardEl = elements.create('card', {
+  const cardElements = stripe.elements();
+  const cardEl = cardElements.create('card', {
     hidePostalCode: true,
     style: {
       base: {
@@ -631,6 +632,10 @@ async function initStripe() {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
+  });
+  cardEl.on('change', (event) => {
+    const btn = document.getElementById('submit-stripe');
+    if (btn) btn.disabled = !event.complete;
   });
   cardEl.mount('#payment-element');
 
