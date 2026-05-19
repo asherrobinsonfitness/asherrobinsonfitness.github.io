@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             customer: customer.id,
             items: [{ price: PRICE_ID }],
             payment_behavior: 'default_incomplete',
-            payment_settings: { save_default_payment_method: 'on_subscription' },
+            payment_settings: { save_default_payment_method: 'on_subscription', payment_method_types: null },
             discounts: [{ promotion_code: PROMO_ID }],
             expand: ['latest_invoice.payment_intent'],
         });
