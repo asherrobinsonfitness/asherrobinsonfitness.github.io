@@ -38,6 +38,8 @@
 <!-- Theme Color -->
 <meta name="theme-color" content="#000000">
 
+<!-- Preload the video poster so it paints immediately on first load -->
+<link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
@@ -909,19 +911,20 @@ footer a{color:#4d94ff;text-decoration:none}
         <h1 class="headline">Lose The Weight You've Been Carrying For Years</h1>
         <p class="subheadline">A workout program, daily calorie targets, and a coach who answers when you need one.</p>
       </div>
-      <div class="video-wrap">
-        <div id="vidalytics_embed_JK96M1JZg1x3Vu9l" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
-        <script type="text/javascript">
-        (function (v, i, d, a, l, y, t, c, s) {
-            y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
-            if (!vsl){vsl=function(u,cb){
-                if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
-                if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
-                i.getElementsByTagName("head")[0].appendChild(s);
-            };}
-            vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
-        })(window, document, 'Vidalytics', 'vidalytics_embed_JK96M1JZg1x3Vu9l', 'https://fast.vidalytics.com/embeds/swbCvzMu/JK96M1JZg1x3Vu9l/');
-        </script>
+      <div class="video-wrap" id="videoContainer">
+        <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
+             a small amount; preload="none" can cause play() to fail on mobile before any data loads.
+             webkit-playsinline is required for older iOS Safari inline playback. -->
+        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;">
+          <source src="video.mp4" type="video/mp4">
+        </video>
+        <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
+        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
+          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:999px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
+            <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            Watch Video
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1191,6 +1194,96 @@ footer a{color:#4d94ff;text-decoration:none}
 </footer>
 
 <script>
+/* ── Mobile-safe autoplay with poster-first skeleton ── */
+(function(){
+  var vid     = document.getElementById('mainVideo');
+  var overlay = document.getElementById('ctpOverlay');
+  var ctpBtn  = document.getElementById('ctpBtn');
+  if(!vid || !overlay || !ctpBtn) return;
+
+  function showOverlay(){
+    overlay.style.display = 'flex';
+    vid.loop = true;
+  }
+
+  function hideOverlay(){
+    overlay.style.display = 'none';
+  }
+
+  // CTP button hover
+  ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
+  ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
+
+  // Clicking anywhere on the overlay plays the video with sound
+  overlay.addEventListener('click', function(){
+    vid.loop    = false;
+    vid.muted   = false;
+    vid.controls = true;
+    vid.currentTime = 0;
+    var p = vid.play();
+    if(p !== undefined){
+      p.then(function(){ hideOverlay(); }).catch(function(){
+        hideOverlay();
+      });
+    } else {
+      hideOverlay(); // older Safari returns undefined
+    }
+  });
+
+  function attemptAutoplay(){
+    // Attempt 1: unmuted autoplay
+    vid.muted = false;
+    var p1 = vid.play();
+    if(p1 === undefined){
+      // Old Safari — treat as success (it played)
+      vid.controls = true;
+      hideOverlay();
+      return;
+    }
+    p1.then(function(){
+      vid.controls = true;
+      hideOverlay();
+    }).catch(function(){
+      // Attempt 2: muted autoplay (animated thumbnail loop)
+      vid.muted = true;
+      vid.loop  = true;
+      var p2 = vid.play();
+      if(p2 === undefined){
+        showOverlay();
+        return;
+      }
+      p2.then(function(){
+        showOverlay(); // playing muted — show "Watch the Video" on top
+      }).catch(function(){
+        // Attempt 3: fully blocked — static poster + overlay
+        showOverlay();
+      });
+    });
+  }
+
+  // Wait for metadata so mobile browsers have enough data to attempt play()
+  if(vid.readyState >= 1){ // HAVE_METADATA
+    attemptAutoplay();
+  } else {
+    vid.addEventListener('loadedmetadata', function onMeta(){
+      vid.removeEventListener('loadedmetadata', onMeta);
+      attemptAutoplay();
+    });
+    // Safety timeout: if metadata never fires (network blocked in some WebViews),
+    // fall back to showing the static poster + overlay after 3s
+    setTimeout(function(){
+      if(vid.readyState < 1 && overlay.style.display === 'none'){
+        showOverlay();
+      }
+    }, 3000);
+  }
+
+  // Pause on last frame (don't loop if playing unmuted with sound)
+  vid.addEventListener('ended', function(){
+    if(!vid.loop) vid.pause();
+  });
+})();
+
 /* Desktop: match widget height to video container */
 (function(){
   var mq = window.matchMedia('(min-width:1280px)');
