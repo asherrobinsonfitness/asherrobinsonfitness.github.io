@@ -201,13 +201,13 @@
     #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
 
     /* ── CONTACT IDENTITY ── */
-    .contact-identity { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 0.75rem; }
-    .ci-name-row { display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; }
+    .contact-identity { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .ci-left { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
     .ci-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
-    .ci-not { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; }
-    .ci-fix-btn { background: none; border: none; padding: 0; cursor: pointer; font-size: 0.78rem; font-family: inherit; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; transition: color 0.15s ease; }
-    @media (hover: hover) and (pointer: fine) { .ci-fix-btn:hover { color: var(--text); } }
     .ci-email { font-size: 0.78rem; color: var(--text-secondary); }
+    .ci-not { font-size: 0.8rem; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+    .ci-fix-btn { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; font-family: inherit; color: var(--text); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(248,250,252,0.35); transition: opacity 0.15s ease; }
+    @media (hover: hover) and (pointer: fine) { .ci-fix-btn:hover { opacity: 0.75; } }
     /* Fix modal inputs */
     .fix-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 400px; display: flex; flex-direction: column; }
     .fix-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
@@ -310,11 +310,11 @@
           </div>
 
           <div class="contact-identity" id="contact-identity" style="display:none">
-            <div class="ci-name-row">
+            <div class="ci-left">
               <span class="ci-name" id="ci-name"></span>
-              <span class="ci-not">Not you? <button class="ci-fix-btn" type="button" onclick="openFixModal()">Fix</button></span>
+              <span class="ci-email" id="ci-email"></span>
             </div>
-            <span class="ci-email" id="ci-email"></span>
+            <span class="ci-not">Not you? <button class="ci-fix-btn" type="button" onclick="openFixModal()">Fix</button></span>
           </div>
 
           <div id="express-pay-section">
