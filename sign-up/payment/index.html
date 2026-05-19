@@ -136,6 +136,7 @@
     .payment-element-wrap { position: relative; margin-bottom: 1rem; }
     #payment-element-skeleton { position: absolute; inset: 0; min-height: 180px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
     /* ── CTA ── */
     .form-cta-area { margin-top: 1.1rem; }
@@ -308,14 +309,9 @@
             </div>
           </div>
 
-          <div id="express-pay-section" style="display:none;">
-            <div id="express-checkout-element"></div>
+          <div id="express-pay-section">
+            <div id="express-checkout-element"><div id="express-checkout-skeleton"></div></div>
             <div class="or-divider">or pay with card</div>
-          </div>
-
-          <div class="address-element-wrap">
-            <div id="address-element-skeleton"></div>
-            <div id="address-element"></div>
           </div>
 
           <form id="payment-form">
@@ -329,7 +325,7 @@
           <div class="form-cta-area">
             <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
             <button type="submit" id="submit-stripe" form="payment-form">
-              <span id="submit-stripe-text">Begin Coaching</span>
+              <span id="submit-stripe-text">Begin Coaching · $50</span>
             </button>
             <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
             <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
@@ -527,6 +523,15 @@ async function initStripe() {
       taxEl.className   = 'tax-value-amount';
       if (totalEl) totalEl.textContent = '$' + ((5000 + taxCents) / 100).toFixed(2);
     }
+    const btnText = document.getElementById('submit-stripe-text');
+    if (btnText) {
+      if (taxCents === null || taxCents === 0) {
+        btnText.textContent = 'Begin Coaching · $50';
+      } else {
+        const total = ((5000 + taxCents) / 100).toFixed(2);
+        btnText.textContent = 'Begin Coaching · $' + total;
+      }
+    }
   }
 
   const wasRedirect = await handleRedirectReturn();
@@ -555,46 +560,60 @@ async function initStripe() {
     layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
     paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
   });
+  expressEl.on('click', (event) => {
+    const start = new Date();
+    start.setDate(start.getDate() + 30);
+    event.resolve({
+      emailRequired: true,
+      phoneNumberRequired: false,
+      billingAddressRequired: true,
+      shippingAddressRequired: false,
+      applePay: {
+        recurringPaymentRequest: {
+          paymentDescription: 'Asher Robinson Fitness Coaching',
+          managementURL: 'https://asherrobinsonfitness.com',
+          regularBilling: {
+            amount: 19900,
+            label: 'Monthly Coaching',
+            recurringPaymentStartDate: start,
+          },
+          trialBilling: {
+            amount: 5000,
+            label: 'First Month',
+          },
+        },
+      },
+    });
+  });
   expressEl.mount('#express-checkout-element');
   expressEl.on('ready', ({ availablePaymentMethods }) => {
+    const sk = document.getElementById('express-checkout-skeleton');
+    if (sk) sk.remove();
     const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
     const s = document.getElementById('express-pay-section');
-    if (s) s.style.display = hasAny ? '' : 'none';
+    if (s && !hasAny) s.style.display = 'none';
   });
-  expressEl.on('confirm', async () => {
-    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required' });
+  expressEl.on('confirm', async (event) => {
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: returnUrl,
+        payment_method_data: {
+          billing_details: {
+            name: (event.billingDetails && event.billingDetails.name) || (_contactFirst + ' ' + _contactLast).trim() || undefined,
+            email: (event.billingDetails && event.billingDetails.email) || _contactEmail || undefined,
+            phone: (event.billingDetails && event.billingDetails.phone) || undefined,
+            address: (event.billingDetails && event.billingDetails.address) || undefined,
+          }
+        }
+      },
+      redirect: 'if_required',
+    });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
-    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    if (paymentIntent && paymentIntent.status === 'succeeded') {
+      window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    }
   });
-
-  const addrDiv = document.getElementById('address-element');
-  if (addrDiv) addrDiv.style.visibility = 'hidden';
-  const addrEl = elements.create('address', {
-    mode: 'billing',
-    defaultValues: { name: (_contactFirst + ' ' + _contactLast).trim() || undefined, address: { country: 'US' } },
-  });
-  addrEl.on('ready', () => {
-    const sk = document.getElementById('address-element-skeleton');
-    if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
-    if (addrDiv) addrDiv.style.visibility = '';
-  });
-  let taxDebounce = null;
-  addrEl.on('change', async (event) => {
-    if (!event.complete) return;
-    const addr = event.value && event.value.address;
-    if (!addr || !addr.country) return;
-    clearTimeout(taxDebounce);
-    taxDebounce = setTimeout(async () => {
-      const taxEl = document.getElementById('tax-value');
-      if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
-      try {
-        const r    = await fetch('/api/calculate-tax', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address: addr }) });
-        const data = await r.json();
-        setTaxDisplay(typeof data.tax === 'number' ? data.tax : null);
-      } catch (_) { setTaxDisplay(null); }
-    }, 400);
-  });
-  addrEl.mount('#address-element');
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
@@ -602,12 +621,46 @@ async function initStripe() {
     layout: { type: 'tabs', defaultCollapsed: false },
     wallets: { applePay: 'never', googlePay: 'never' },
     terms: { card: 'never' },
-    fields: { billingDetails: { address: 'never' } },
+    fields: {
+      billingDetails: {
+        name: 'never',
+        email: 'never',
+        address: {
+          country: 'auto',
+          postalCode: 'auto',
+          line1: 'never',
+          line2: 'never',
+          city: 'never',
+          state: 'never',
+        }
+      }
+    }
   });
   payEl.on('ready', () => {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
+  });
+  let taxDebounce = null;
+  payEl.on('change', (event) => {
+    const addr = event.value && event.value.billingDetails && event.value.billingDetails.address;
+    if (!addr || !addr.country || !addr.postal_code) return;
+    clearTimeout(taxDebounce);
+    taxDebounce = setTimeout(async () => {
+      const taxEl = document.getElementById('tax-value');
+      if (taxEl) { taxEl.textContent = 'Calculating…'; taxEl.className = 'tax-value-placeholder'; }
+      try {
+        const r = await fetch('/api/calculate-tax', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ address: { country: addr.country, postal_code: addr.postal_code } })
+        });
+        const data = await r.json();
+        setTaxDisplay(typeof data.tax === 'number' ? data.tax : null);
+      } catch (_) {
+        setTaxDisplay(null);
+      }
+    }, 400);
   });
   payEl.mount('#payment-element');
 
@@ -620,7 +673,19 @@ async function initStripe() {
     e.preventDefault();
     if (btn.disabled) return;
     btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
-    const { error, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required' });
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: returnUrl,
+        payment_method_data: {
+          billing_details: {
+            name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
+            email: _contactEmail || undefined,
+          }
+        }
+      },
+      redirect: 'if_required'
+    });
     if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
     if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
       window.location.href = 'https://asherrobinsonfitness.com/welcome';
