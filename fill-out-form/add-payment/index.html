@@ -126,7 +126,7 @@
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
-    #payment-element-skeleton { position: absolute; inset: 0; min-height: 180px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    #payment-element-skeleton { position: absolute; inset: 0; min-height: 50px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
@@ -579,13 +579,16 @@ async function initStripe() {
     return;
   }
 
-  const stripe   = Stripe(STRIPE_PK);
-  const dark     = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const stripe    = Stripe(STRIPE_PK);
+  const dark      = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const returnUrl = window.location.origin + window.location.pathname;
+  const appearance = getAppearance(dark);
 
-  const elements = stripe.elements({ clientSecret, appearance: getAppearance(dark), customerEmail: _contactEmail || undefined });
+  // Express checkout needs clientSecret; card element uses classic instance
+  const expressElements = stripe.elements({ clientSecret, appearance, customerEmail: _contactEmail || undefined });
+  const cardElements    = stripe.elements({ appearance });
 
-  const expressEl = elements.create('expressCheckout', {
+  const expressEl = expressElements.create('expressCheckout', {
     buttonHeight: 48, buttonTheme: { applePay: 'black', googlePay: 'black' },
     buttonType: { applePay: 'plain', googlePay: 'plain', link: 'pay' },
     layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
@@ -626,7 +629,7 @@ async function initStripe() {
   });
   expressEl.on('confirm', async (event) => {
     const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
+      elements: expressElements,
       confirmParams: {
         return_url: returnUrl,
         payment_method_data: {
@@ -648,23 +651,13 @@ async function initStripe() {
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const payEl = elements.create('payment', {
-    layout: { type: 'tabs', defaultCollapsed: false },
-    wallets: { applePay: 'never', googlePay: 'never' },
-    terms: { card: 'never' },
-    fields: {
-      billingDetails: {
-        name: 'never',
-        email: 'never',
-      }
-    }
-  });
-  payEl.on('ready', () => {
+  const cardEl = cardElements.create('card', { hidePostalCode: true });
+  cardEl.on('ready', () => {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
   });
-  payEl.mount('#payment-element');
+  cardEl.mount('#payment-element');
 
   const form    = document.getElementById('payment-form');
   const btn     = document.getElementById('submit-stripe');
@@ -675,18 +668,14 @@ async function initStripe() {
     e.preventDefault();
     if (btn.disabled) return;
     btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: returnUrl,
-        payment_method_data: {
-          billing_details: {
-            name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
-            email: _contactEmail || undefined,
-          }
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardEl,
+        billing_details: {
+          name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
+          email: _contactEmail || undefined,
         }
-      },
-      redirect: 'if_required'
+      }
     });
     if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
     if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
