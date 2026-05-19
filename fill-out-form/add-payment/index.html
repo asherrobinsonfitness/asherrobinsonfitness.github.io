@@ -595,6 +595,17 @@ async function initStripe() {
     layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
     paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
   });
+  expressEl.on('ready', ({ availablePaymentMethods }) => {
+    console.log('[ECE] ready — availablePaymentMethods:', availablePaymentMethods);
+    const sk = document.getElementById('express-checkout-skeleton');
+    if (sk) sk.remove();
+    const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
+    const s = document.getElementById('express-pay-section');
+    if (s && !hasAny) s.style.display = 'none';
+  });
+  expressEl.on('loaderror', (event) => {
+    console.error('[ECE] loaderror:', event.error);
+  });
   expressEl.on('click', (event) => {
     event.resolve({
       emailRequired: true,
@@ -602,14 +613,6 @@ async function initStripe() {
       billingAddressRequired: false,
       shippingAddressRequired: false,
     });
-  });
-  expressEl.mount('#express-checkout-element');
-  expressEl.on('ready', ({ availablePaymentMethods }) => {
-    const sk = document.getElementById('express-checkout-skeleton');
-    if (sk) sk.remove();
-    const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
-    const s = document.getElementById('express-pay-section');
-    if (s && !hasAny) s.style.display = 'none';
   });
   expressEl.on('confirm', async (event) => {
     const { error, paymentIntent } = await stripe.confirmPayment({
