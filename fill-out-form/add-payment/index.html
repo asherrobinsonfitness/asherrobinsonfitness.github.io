@@ -583,10 +583,11 @@ async function initStripe() {
   const dark      = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const returnUrl = window.location.origin + window.location.pathname;
 
-  // ECE uses mode/amount/currency so Apple Pay and Google Pay can negotiate
-  // capabilities correctly. clientSecret is passed at confirmation time instead.
+  // ECE uses mode: 'subscription' (per Stripe docs) so Apple Pay/Google Pay
+  // negotiate capabilities correctly for recurring payments. clientSecret is
+  // passed at confirmation time instead.
   const eceElements = stripe.elements({
-    mode: 'payment', amount: 5000, currency: 'usd',
+    mode: 'subscription', amount: 5000, currency: 'usd',
     appearance: getAppearance(dark),
   });
 
@@ -609,6 +610,8 @@ async function initStripe() {
     event.resolve({ emailRequired: true, phoneNumberRequired: false, billingAddressRequired: false, shippingAddressRequired: false });
   });
   expressEl.on('confirm', async (event) => {
+    const { error: submitError } = await eceElements.submit();
+    if (submitError) { showError(submitError.message || 'Something went wrong.'); return; }
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements: eceElements, clientSecret,
       confirmParams: { return_url: returnUrl }, redirect: 'if_required',
