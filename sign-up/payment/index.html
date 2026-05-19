@@ -303,7 +303,7 @@
           <div class="form-cta-area">
             <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
             <button type="submit" id="submit-stripe" form="payment-form">
-              <span id="submit-stripe-text">Start My First Month · $50</span>
+              <span id="submit-stripe-text">Start First Month · $50</span>
             </button>
             <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
             <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
@@ -466,7 +466,7 @@ async function initStripe() {
     const btn = document.getElementById('submit-stripe');
     const txt = document.getElementById('submit-stripe-text');
     if (btn) btn.disabled = false;
-    if (txt) txt.textContent = 'Start My First Month · $50';
+    if (txt) txt.textContent = 'Start First Month · $50';
   }
 
   async function handleRedirectReturn() {
