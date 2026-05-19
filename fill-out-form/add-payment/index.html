@@ -126,7 +126,8 @@
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
-    #payment-element-skeleton { position: absolute; inset: 0; min-height: 140px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    #payment-element-skeleton { position: absolute; inset: 0; min-height: 52px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    #payment-element { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 0.75rem 0.875rem; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
@@ -613,19 +614,25 @@ async function initStripe() {
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const payEl = elements.create('payment', {
-    paymentMethodOrder: ['card'],
-    layout: { type: 'tabs', defaultCollapsed: false },
-    wallets: { applePay: 'never', googlePay: 'never' },
-    terms: { card: 'never' },
-    fields: { billingDetails: { name: 'never', email: 'never' } },
+  const cardEl = elements.create('card', {
+    hidePostalCode: true,
+    style: {
+      base: {
+        color: '#F8FAFC',
+        fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
+        fontSize: '15px',
+        fontWeight: '400',
+        '::placeholder': { color: '#6b7280' },
+      },
+      invalid: { color: '#e53e3e' },
+    },
   });
-  payEl.on('ready', () => {
+  cardEl.on('ready', () => {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
   });
-  payEl.mount('#payment-element');
+  cardEl.mount('#payment-element');
 
   const form    = document.getElementById('payment-form');
   const btn     = document.getElementById('submit-stripe');
@@ -636,16 +643,15 @@ async function initStripe() {
     e.preventDefault();
     if (btn.disabled) return;
     btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: returnUrl,
-        payment_method_data: { billing_details: {
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardEl,
+        billing_details: {
           name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
           email: _contactEmail || undefined,
-        }},
+        },
       },
-      redirect: 'if_required',
+      return_url: returnUrl,
     });
     if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
     if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
