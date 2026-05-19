@@ -15,9 +15,16 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'address.country is required.' });
         }
 
-        // Use the Stripe Tax Calculations API to preview tax without mutating any
-        // subscription or invoice. This is the correct approach for showing live
-        // tax estimates to the customer before they confirm payment.
+        // Build the customer address from only the fields the client actually
+        // provided. Stripe Tax rejects empty strings for optional fields, so we
+        // omit them entirely when not present. For US, country + postal_code is
+        // sufficient for an accurate tax estimate.
+        const customerAddress = { country: address.country };
+        if (address.line1)       customerAddress.line1       = address.line1;
+        if (address.city)        customerAddress.city        = address.city;
+        if (address.state)       customerAddress.state       = address.state;
+        if (address.postal_code) customerAddress.postal_code = address.postal_code;
+
         const taxCalc = await stripe.tax.calculations.create({
             currency: 'usd',
             line_items: [{
@@ -26,13 +33,7 @@ export default async function handler(req, res) {
                 tax_behavior: 'exclusive', // tax added on top of the base price
             }],
             customer_details: {
-                address: {
-                    line1:       address.line1       || '',
-                    city:        address.city        || '',
-                    state:       address.state       || '',
-                    postal_code: address.postal_code || '',
-                    country:     address.country,
-                },
+                address: customerAddress,
                 address_source: 'billing',
             },
         });
