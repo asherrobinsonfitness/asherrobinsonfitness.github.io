@@ -187,11 +187,10 @@
     .legal-modal-body strong { color: var(--text); font-weight: 600; }
 
     @keyframes emailBorderPulse {
-      0%, 100% { box-shadow: none; }
-      50% { box-shadow: 0 0 0 2px var(--primary); }
+      0%, 100% { border-color: transparent; }
+      50% { border-color: var(--primary); }
     }
     #inp-email:not(.email-typed) {
-      border-color: transparent;
       animation: emailBorderPulse 1.8s ease-in-out infinite;
     }
     #inp-email:not(.email-typed):focus {
@@ -437,7 +436,10 @@ var NAF_RULES = {
   }
 
   function checkQuestionsReveal() {
-    if (!questionsRevealed && lastInp.value.trim().length > 0) {
+    if (!questionsRevealed &&
+        emailInp.validity.valid && emailInp.value.trim() &&
+        firstInp.value.trim().length > 0 &&
+        lastInp.value.trim().length > 0) {
       questionsRevealed = true;
       revealEl(fgQuestions);
     }
@@ -464,9 +466,10 @@ var NAF_RULES = {
   lastInp.addEventListener('blur',  function() { checkQuestionsReveal(); checkContinueBtn(); });
   emailInp.addEventListener('input', function() {
     if (emailInp.value.length > 0) emailInp.classList.add('email-typed');
+    checkQuestionsReveal();
     checkContinueBtn();
   });
-  firstInp.addEventListener('input', checkContinueBtn);
+  firstInp.addEventListener('input', function() { checkQuestionsReveal(); checkContinueBtn(); });
 
   ['q-goal','q-age','q-gym','q-commitment'].forEach(function(id) {
     var sel = document.getElementById(id);
