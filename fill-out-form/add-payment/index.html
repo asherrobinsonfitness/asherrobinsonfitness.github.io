@@ -201,19 +201,26 @@
     #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
 
     /* ── CONTACT IDENTITY ── */
-    .contact-identity {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 0.75rem; padding: 0.75rem 1rem;
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 10px; margin-bottom: 0.75rem;
-    }
-    .contact-identity__left { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-    .contact-identity__name { font-size: 0.875rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .contact-identity__email { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .contact-identity__right { display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; font-size: 0.8rem; }
-    .contact-identity__not { color: var(--text-secondary); }
-    .contact-identity__back { color: var(--text); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(248,250,252,0.35); background: none; border: none; cursor: pointer; font-size: inherit; font-family: inherit; padding: 0; transition: color 0.15s ease; }
-    @media (hover: hover) and (pointer: fine) { .contact-identity__back:hover { color: #fff; } }
+    .contact-identity { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 0.75rem; }
+    .ci-name-row { display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; }
+    .ci-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .ci-not { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; }
+    .ci-fix-btn { background: none; border: none; padding: 0; cursor: pointer; font-size: 0.78rem; font-family: inherit; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; transition: color 0.15s ease; }
+    @media (hover: hover) and (pointer: fine) { .ci-fix-btn:hover { color: var(--text); } }
+    .ci-email { font-size: 0.78rem; color: var(--text-secondary); }
+    /* Fix modal inputs */
+    .fix-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 400px; display: flex; flex-direction: column; }
+    .fix-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
+    .fix-modal-title { font-size: .8125rem; font-weight: 600; color: #F8FAFC; }
+    .fix-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color .15s ease, color .15s ease; }
+    @media(hover:hover) and (pointer:fine) { .fix-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; } }
+    .fix-modal-body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .fix-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .fix-label { font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); }
+    .fix-input { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 0.6rem 0.75rem; font-size: 0.9rem; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+    .fix-input:focus { border-color: #b9d4ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.08); }
+    .fix-save-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem 1rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-top: 0.25rem; }
+    .fix-save-btn:hover { background: var(--primary-hover); }
 
     /* ── LEGAL OVERLAYS ── */
     .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
@@ -302,20 +309,17 @@
             </div>
           </div>
 
+          <div class="contact-identity" id="contact-identity" style="display:none">
+            <div class="ci-name-row">
+              <span class="ci-name" id="ci-name"></span>
+              <span class="ci-not">Not you? <button class="ci-fix-btn" type="button" onclick="openFixModal()">Fix</button></span>
+            </div>
+            <span class="ci-email" id="ci-email"></span>
+          </div>
+
           <div id="express-pay-section">
             <div id="express-checkout-element"><div id="express-checkout-skeleton"></div></div>
             <div class="or-divider">or pay with card</div>
-          </div>
-
-          <div class="contact-identity" id="contact-identity" style="display:none">
-            <div class="contact-identity__left">
-              <span class="contact-identity__name" id="ci-name"></span>
-              <span class="contact-identity__email" id="ci-email"></span>
-            </div>
-            <div class="contact-identity__right">
-              <span class="contact-identity__not">Not?</span>
-              <a href="/fill-out-form/" class="contact-identity__back">Go back</a>
-            </div>
           </div>
 
           <form id="payment-form">
@@ -394,6 +398,31 @@
 </div>
 
 <div id="details-backdrop" aria-hidden="true"></div>
+
+<!-- FIX CONTACT MODAL -->
+<div class="legal-overlay" id="modal-fix-contact" role="dialog" aria-modal="true" aria-labelledby="fix-contact-title">
+  <div class="fix-modal">
+    <div class="fix-modal-header">
+      <span class="fix-modal-title" id="fix-contact-title">Update your info</span>
+      <button class="fix-modal-close" onclick="closeFixModal()" aria-label="Close">Close</button>
+    </div>
+    <div class="fix-modal-body">
+      <div class="fix-field">
+        <label class="fix-label" for="fix-first">First name</label>
+        <input class="fix-input" id="fix-first" type="text" autocomplete="given-name" placeholder="First name">
+      </div>
+      <div class="fix-field">
+        <label class="fix-label" for="fix-last">Last name</label>
+        <input class="fix-input" id="fix-last" type="text" autocomplete="family-name" placeholder="Last name">
+      </div>
+      <div class="fix-field">
+        <label class="fix-label" for="fix-email">Email</label>
+        <input class="fix-input" id="fix-email" type="email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <button class="fix-save-btn" type="button" onclick="saveFixModal()">Save</button>
+    </div>
+  </div>
+</div>
 
 <!-- TERMS OF SERVICE MODAL -->
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
@@ -676,6 +705,41 @@ document.addEventListener('DOMContentLoaded', initStripe);
   if (backdrop) backdrop.addEventListener('click', closePanel);
 })();
 
+// ── Fix contact modal ──
+function openFixModal() {
+  var o = document.getElementById('modal-fix-contact');
+  if (!o) return;
+  document.getElementById('fix-first').value = sessionStorage.getItem('_contactFirst') || '';
+  document.getElementById('fix-last').value  = sessionStorage.getItem('_contactLast')  || '';
+  document.getElementById('fix-email').value = sessionStorage.getItem('_contactEmail') || '';
+  o.classList.add('active'); document.body.style.overflow = 'hidden';
+}
+function closeFixModal() {
+  var o = document.getElementById('modal-fix-contact');
+  if (!o) return;
+  o.classList.add('closing');
+  setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
+}
+function saveFixModal() {
+  var first = document.getElementById('fix-first').value.trim();
+  var last  = document.getElementById('fix-last').value.trim();
+  var email = document.getElementById('fix-email').value.trim();
+  sessionStorage.setItem('_contactFirst', first);
+  sessionStorage.setItem('_contactLast',  last);
+  sessionStorage.setItem('_contactEmail', email);
+  var fullName = (first + ' ' + last).trim();
+  var nameEl  = document.getElementById('ci-name');
+  var emailEl = document.getElementById('ci-email');
+  var bar     = document.getElementById('contact-identity');
+  if (nameEl)  nameEl.textContent  = fullName;
+  if (emailEl) emailEl.textContent = email;
+  if (bar) bar.style.display = (fullName || email) ? '' : 'none';
+  closeFixModal();
+}
+document.getElementById('modal-fix-contact').addEventListener('click', function(e) {
+  if (e.target === this) closeFixModal();
+});
+
 // ── Legal modals ──
 function openLegal(which) {
   var o = document.getElementById('modal-' + which);
@@ -694,6 +758,7 @@ document.querySelectorAll('.legal-overlay').forEach(function(o) {
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
+    if (document.getElementById('modal-fix-contact').classList.contains('active')) { closeFixModal(); return; }
     document.querySelectorAll('.legal-overlay.active').forEach(function(o) { closeLegal(o.id.replace('modal-','')); });
   }
 });
