@@ -597,28 +597,11 @@ async function initStripe() {
     paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
   });
   expressEl.on('click', (event) => {
-    const start = new Date();
-    start.setDate(start.getDate() + 30);
     event.resolve({
       emailRequired: true,
       phoneNumberRequired: false,
-      billingAddressRequired: true,
+      billingAddressRequired: false,
       shippingAddressRequired: false,
-      applePay: {
-        recurringPaymentRequest: {
-          paymentDescription: 'Asher Robinson Fitness Coaching',
-          managementURL: 'https://asherrobinsonfitness.com',
-          regularBilling: {
-            amount: 19900,
-            label: 'Monthly Coaching',
-            recurringPaymentStartDate: start,
-          },
-          trialBilling: {
-            amount: 5000,
-            label: 'First Month',
-          },
-        },
-      },
     });
   });
   expressEl.mount('#express-checkout-element');
