@@ -126,9 +126,7 @@
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
-    #payment-element { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 0.8rem 1rem; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
-    #payment-element.StripeElement--focus { border-color: #b9d4ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.08); }
-    #payment-element-skeleton { position: absolute; inset: 0; min-height: 50px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    #payment-element-skeleton { position: absolute; inset: 0; min-height: 140px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
@@ -583,13 +581,10 @@ async function initStripe() {
   const stripe    = Stripe(STRIPE_PK);
   const dark      = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const returnUrl = window.location.origin + window.location.pathname;
-  const appearance = getAppearance(dark);
 
-  // Express checkout needs clientSecret; card element uses classic instance
-  const expressElements = stripe.elements({ clientSecret, appearance, customerEmail: _contactEmail || undefined });
-  const cardElements    = stripe.elements({ appearance });
+  const elements = stripe.elements({ clientSecret, appearance: getAppearance(dark), customerEmail: _contactEmail || undefined });
 
-  const expressEl = expressElements.create('expressCheckout', {
+  const expressEl = elements.create('expressCheckout', {
     buttonHeight: 48, buttonTheme: { applePay: 'black', googlePay: 'black' },
     buttonType: { applePay: 'plain', googlePay: 'plain', link: 'pay' },
     layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
@@ -603,51 +598,34 @@ async function initStripe() {
     const s = document.getElementById('express-pay-section');
     if (s && !hasAny) s.style.display = 'none';
   });
-  expressEl.on('loaderror', (event) => {
-    console.error('[ECE] loaderror:', event.error);
-  });
+  expressEl.on('loaderror', (event) => { console.error('[ECE] loaderror:', event.error); });
   expressEl.on('click', (event) => {
-    event.resolve({
-      emailRequired: true,
-      phoneNumberRequired: false,
-      billingAddressRequired: false,
-      shippingAddressRequired: false,
-    });
+    event.resolve({ emailRequired: true, phoneNumberRequired: false, billingAddressRequired: false, shippingAddressRequired: false });
   });
   expressEl.on('confirm', async (event) => {
     const { error, paymentIntent } = await stripe.confirmPayment({
-      elements: expressElements,
-      confirmParams: { return_url: returnUrl },
-      redirect: 'if_required',
+      elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
-    if (paymentIntent && paymentIntent.status === 'succeeded') {
-      window.location.href = 'https://asherrobinsonfitness.com/welcome';
-    }
+    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
   });
+  expressEl.mount('#express-checkout-element');
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const cardEl = cardElements.create('card', {
-    hidePostalCode: true,
-    style: {
-      base: {
-        color: '#F8FAFC',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif',
-        fontSize: '15px',
-        fontWeight: '400',
-        '::placeholder': { color: '#6b7280' },
-        iconColor: '#9ca3af',
-      },
-      invalid: { color: '#e53e3e', iconColor: '#e53e3e' },
-    }
+  const payEl = elements.create('payment', {
+    paymentMethodOrder: ['card'],
+    layout: { type: 'tabs', defaultCollapsed: false },
+    wallets: { applePay: 'never', googlePay: 'never' },
+    terms: { card: 'never' },
+    fields: { billingDetails: { name: 'never', email: 'never' } },
   });
-  cardEl.on('ready', () => {
+  payEl.on('ready', () => {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
     if (payDiv) payDiv.style.visibility = '';
   });
-  cardEl.mount('#payment-element');
+  payEl.mount('#payment-element');
 
   const form    = document.getElementById('payment-form');
   const btn     = document.getElementById('submit-stripe');
@@ -658,14 +636,16 @@ async function initStripe() {
     e.preventDefault();
     if (btn.disabled) return;
     btn.disabled = true; btnText.textContent = 'Processing…'; msgDiv.style.display = 'none';
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardEl,
-        billing_details: {
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: returnUrl,
+        payment_method_data: { billing_details: {
           name: (_contactFirst + ' ' + _contactLast).trim() || undefined,
           email: _contactEmail || undefined,
-        }
-      }
+        }},
+      },
+      redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
     if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
