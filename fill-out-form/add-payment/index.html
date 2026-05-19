@@ -126,6 +126,8 @@
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
+    #payment-element { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 0.8rem 1rem; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+    #payment-element.StripeElement--focus { border-color: #b9d4ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.08); }
     #payment-element-skeleton { position: absolute; inset: 0; min-height: 50px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
@@ -651,7 +653,20 @@ async function initStripe() {
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const cardEl = cardElements.create('card', { hidePostalCode: true });
+  const cardEl = cardElements.create('card', {
+    hidePostalCode: true,
+    style: {
+      base: {
+        color: '#F8FAFC',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif',
+        fontSize: '15px',
+        fontWeight: '400',
+        '::placeholder': { color: '#6b7280' },
+        iconColor: '#9ca3af',
+      },
+      invalid: { color: '#e53e3e', iconColor: '#e53e3e' },
+    }
+  });
   cardEl.on('ready', () => {
     const sk = document.getElementById('payment-element-skeleton');
     if (sk) { sk.style.opacity = '0'; setTimeout(() => sk.style.display = 'none', 260); }
