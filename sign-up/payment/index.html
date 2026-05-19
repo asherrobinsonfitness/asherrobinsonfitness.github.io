@@ -69,7 +69,7 @@
     .survey-steps-pill {
         display: inline-flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1rem;
         padding: .375rem 1rem;
         border-radius: 999px;
         background-color: #161616;
@@ -79,7 +79,7 @@
         white-space: nowrap;
         position: relative;
     }
-    .survey-step { color: var(--text-secondary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .survey-step { color: var(--text-secondary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
     .survey-step--active { color: #f9fafb; }
     .survey-step--completed { color: var(--text-secondary); }
     .pill-row { text-align: center; }
@@ -125,13 +125,13 @@
     #payment-form { width: 100%; }
     .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
     #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
-    .payment-element-wrap { position: relative; margin-bottom: 1rem; }
+    .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
     #payment-element-skeleton { position: absolute; inset: 0; min-height: 180px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
 
     /* ── CTA ── */
-    .form-cta-area { margin-top: 1.1rem; }
+    .form-cta-area { margin-top: 0.5rem; }
     .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
     #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-bottom: 0.75rem; }
     #submit-stripe:hover { background: var(--primary-hover); }
@@ -257,7 +257,7 @@
                 <div class="order-row-label">Online Coaching w/ Asher</div>
                 <div class="order-row-value">$199/mo</div>
               </div>
-              <div class="order-row">
+              <div class="order-row" style="margin-bottom:0">
                 <span class="order-row-label">First month discount</span>
                 <span class="order-row-value order-discount-value">−$149</span>
               </div>
@@ -303,7 +303,7 @@
           <div class="form-cta-area">
             <p class="cancel-guarantee">Cancel Anytime. 30-Day Results Guarantee.</p>
             <button type="submit" id="submit-stripe" form="payment-form">
-              <span id="submit-stripe-text">Begin Coaching · $50</span>
+              <span id="submit-stripe-text">Start My First Month · $50</span>
             </button>
             <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
             <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
@@ -466,7 +466,7 @@ async function initStripe() {
     const btn = document.getElementById('submit-stripe');
     const txt = document.getElementById('submit-stripe-text');
     if (btn) btn.disabled = false;
-    if (txt) txt.textContent = 'Begin Coaching · $50';
+    if (txt) txt.textContent = 'Start My First Month · $50';
   }
 
   async function handleRedirectReturn() {
