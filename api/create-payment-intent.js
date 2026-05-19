@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             customer: customer.id,
             items: [{ price: PRICE_ID }],
             payment_behavior: 'default_incomplete',
-            payment_settings: { save_default_payment_method: 'on_subscription', payment_method_types: null },
+            payment_settings: { save_default_payment_method: 'on_subscription', payment_method_types: ['card', 'link'] },
             discounts: [{ promotion_code: PROMO_ID }],
             expand: ['latest_invoice.payment_intent'],
         });
@@ -25,12 +25,6 @@ export default async function handler(req, res) {
         if (!paymentIntent?.client_secret) {
             return res.status(500).json({ error: 'Payment intent not available on subscription invoice.' });
         }
-
-        // Explicitly update the PaymentIntent to support Link and wallet methods
-        // (SDK v14 strips null values so payment_method_types:null on the subscription doesn't propagate)
-        await stripe.paymentIntents.update(paymentIntent.id, {
-            payment_method_types: ['card', 'link'],
-        });
 
         res.status(200).json({
             clientSecret:   paymentIntent.client_secret,
