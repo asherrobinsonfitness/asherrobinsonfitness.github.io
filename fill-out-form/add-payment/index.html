@@ -133,6 +133,8 @@
 
     /* ── CTA ── */
     .form-cta-area { margin-top: 0.5rem; }
+    .price-reminder { font-size: 0.82rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.65rem; }
+    .price-reminder strong { color: var(--text); font-weight: 600; }
     .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
     #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-bottom: 0.75rem; }
     #submit-stripe:hover { background: var(--primary-hover); }
@@ -321,6 +323,8 @@
             <span class="ci-not">Not right? <button class="ci-fix-btn" type="button" onclick="openFixModal()">Update info</button></span>
           </div>
 
+          <p class="price-reminder"><strong>$50 due today</strong> · then $199/month</p>
+
           <div id="express-pay-section">
             <div id="express-checkout-element"><div id="express-checkout-skeleton"></div></div>
             <div class="or-divider">or pay with card</div>
@@ -336,9 +340,9 @@
 
           <div class="form-cta-area">
 <button type="submit" id="submit-stripe" form="payment-form" disabled>
-              <span id="submit-stripe-text">Start First Month · $50</span>
+              <span id="submit-stripe-text">Start First Month</span>
             </button>
-            <p class="payment-legal">By clicking the button above, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
+            <p class="payment-legal">By purchasing, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button>.</p>
             <p class="payment-legal">By purchasing, you confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
             <p class="security-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
