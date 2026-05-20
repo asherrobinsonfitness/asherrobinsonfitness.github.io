@@ -584,12 +584,11 @@ async function initStripe() {
   const dark      = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const returnUrl = window.location.origin + window.location.pathname;
 
-  // Pass clientSecret here so Apple Pay/Google Pay can negotiate the real
-  // payment request at mount time. Using mode:'subscription' without a
-  // clientSecret prevents Apple Pay from seeing the amount and causes it
-  // to silently fail or not appear.
+  // ECE uses mode: 'subscription' (per Stripe docs) so Apple Pay/Google Pay
+  // negotiate capabilities correctly for recurring payments. clientSecret is
+  // passed at confirmation time instead.
   const eceElements = stripe.elements({
-    clientSecret,
+    mode: 'subscription', amount: 5000, currency: 'usd',
     appearance: getAppearance(dark),
   });
 
@@ -612,10 +611,11 @@ async function initStripe() {
     event.resolve({ emailRequired: true, phoneNumberRequired: false, billingAddressRequired: false, shippingAddressRequired: false });
   });
   expressEl.on('confirm', async (event) => {
+    const { error: submitError } = await eceElements.submit();
+    if (submitError) { showError(submitError.message || 'Something went wrong.'); return; }
     const { error, paymentIntent } = await stripe.confirmPayment({
-      elements: eceElements,
-      confirmParams: { return_url: returnUrl },
-      redirect: 'if_required',
+      elements: eceElements, clientSecret,
+      confirmParams: { return_url: returnUrl }, redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
     if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
