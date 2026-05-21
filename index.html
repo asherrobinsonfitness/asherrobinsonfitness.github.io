@@ -1230,18 +1230,21 @@ footer a{color:#4d94ff;text-decoration:none}
     }
   });
 
+  // Show controls only on first tap (avoids iOS control bar appearing on autoplay load)
+  vid.addEventListener('click', function(){
+    vid.controls = true;
+  });
+
   function attemptAutoplay(){
     // Attempt 1: unmuted autoplay
     vid.muted = false;
     var p1 = vid.play();
     if(p1 === undefined){
       // Old Safari — treat as success (it played)
-      vid.controls = true;
       hideOverlay();
       return;
     }
     p1.then(function(){
-      vid.controls = true;
       hideOverlay();
     }).catch(function(){
       // Attempt 2: muted autoplay (animated thumbnail loop)
