@@ -272,7 +272,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
 
 /* Video */
-.video-wrap{position:relative;width:100%;border-radius:12px;overflow:hidden}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
@@ -917,7 +917,7 @@ footer a{color:#4d94ff;text-decoration:none}
         <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
              a small amount; preload="none" can cause play() to fail on mobile before any data loads.
              webkit-playsinline is required for older iOS Safari inline playback. -->
-        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;opacity:0;transition:opacity .5s ease;">
+        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;opacity:0;transition:opacity .5s ease;">
           <source src="video.mp4" type="video/mp4">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
