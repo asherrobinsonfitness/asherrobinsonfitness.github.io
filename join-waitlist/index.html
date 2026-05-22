@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+  <title>Join Waitlist</title>
+  <meta name="description" content="Join the waitlist for online fat loss coaching with Asher Robinson.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/QNSK2T81/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/fW5SG9z9/favicon-16x16.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/7Y6JwZhJ/favicon.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/xjgNwzfq/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
+  <meta name="theme-color" content="#000000">
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    }
+    :root {
+      --primary: #06f;
+      --primary-hover: #0052cc;
+      --text: #F8FAFC;
+      --text-secondary: #9ca3af;
+      --bg: #1c1c1c;
+      --border: #2e2e2e;
+      --border-strong: #3a3a3a;
+      --input-bg: #2a2a2a;
+      --input-border: #3a3a3a;
+      --bottom-bg: #161616;
+      --pad: 2.5rem;
+      --pad-sm: 2rem;
+      --space-4: 2rem;
+    }
+    body { color: var(--text); background: var(--bg); line-height: 1.5; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── MAIN AREA ── */
+    .signup-main {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: var(--pad-sm) 1.25rem; width: 100%;
+    }
+    @media (min-width: 600px) { .signup-main { padding: var(--pad) 2.5rem; } }
+    .signup-inner { width: 100%; max-width: 472px; }
+
+    /* ── QUESTION ── */
+    .survey-question {
+      font-size: 1.35rem; line-height: 1.3; font-weight: 600;
+      text-align: center; margin-bottom: 0.5rem;
+    }
+    @media (max-width: 480px) { .survey-question { font-size: 1.25rem; } }
+    @media (min-width: 1024px) { .survey-question { font-size: 1.5rem; } }
+    .signup-subheadline {
+      font-size: 0.9rem; color: var(--text-secondary); text-align: center;
+      line-height: 1.5; margin-bottom: 1.5rem;
+    }
+
+    /* ── FIELDS ── */
+    .form-field { margin-bottom: 0.65rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem; }
+    @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
+    .form-label { display: block; font-size: 0.875rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
+    .signup-input, .signup-select {
+      width: 100%; padding: 0.8rem 1rem;
+      background: var(--input-bg); border: 1px solid var(--input-border);
+      border-radius: 8px; color: var(--text); font-size: 1rem; line-height: 1.4;
+      outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none; appearance: none;
+    }
+    .signup-input::placeholder { color: var(--text-secondary); }
+    .signup-input:focus, .signup-select:focus {
+      border-color: #4d94ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    }
+    .signup-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%239ca3af' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+      padding-right: 2.25rem; color: var(--text-secondary);
+    }
+    .signup-select.has-value { color: var(--text); }
+    .signup-select option { background: #2a2a2a; color: var(--text); }
+
+    /* ── BUTTON ── */
+    .signup-btn {
+      display: inline-flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px;
+      background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.15s ease; margin-top: 0.35rem;
+    }
+    @media (hover: hover) and (pointer: fine) { .signup-btn:hover { background: var(--primary-hover); } }
+    .signup-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .signup-btn:disabled:hover { background: var(--primary); }
+    .signup-btn-label { flex: 1; text-align: left; }
+    .signup-btn-divider { display: block; width: 1px; height: 1.5rem; background: rgba(255,255,255,0.35); flex-shrink: 0; }
+    .signup-btn-arrow { display: inline; transition: transform 0.22s ease; }
+    @media (hover: hover) and (pointer: fine) {
+      .signup-btn:not(:disabled):hover .signup-btn-arrow { transform: translateX(4px); }
+    }
+
+    .signup-legal-note { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.75rem; }
+    .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
+
+    .reveal-block { overflow: hidden; }
+    .reveal-enter { animation: revealIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    @keyframes revealIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── LEGAL OVERLAYS ── */
+    .legal-overlay { display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; visibility: hidden; pointer-events: none; }
+    .legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
+    .legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    @keyframes legalFadeIn { from { opacity: 0 } to { opacity: 1 } }
+    @keyframes legalFadeOut { from { opacity: 1 } to { opacity: 0 } }
+    .legal-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 700px; max-height: 88vh; display: flex; flex-direction: column; }
+    .legal-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
+    .legal-modal-title { font-size: .8125rem; font-weight: 600; color: #F8FAFC; }
+    .legal-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color .15s ease, color .15s ease; flex-shrink: 0; }
+    @media(hover:hover) and (pointer:fine) { .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; } }
+    .legal-modal-body { overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1; scrollbar-width: none; }
+    .legal-modal-body::-webkit-scrollbar { display: none; }
+    .legal-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); margin-bottom: .375rem; line-height: 1.3; }
+    .legal-modal-body .legal-effective { font-size: .75rem; color: #9ca3af; margin-bottom: 1.75rem; }
+    .legal-modal-body h3 { font-size: .875rem; font-weight: 700; color: var(--text); margin: 1.75rem 0 .625rem; padding-top: 1.375rem; border-top: 1px solid #3d3d3d; }
+    .legal-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .75rem; }
+    .legal-modal-body ul { margin: 0 0 .875rem 1.125rem; }
+    .legal-modal-body ul li { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin-bottom: .25rem; }
+    .legal-modal-body a { color: #4d94ff; text-decoration: none; }
+    .legal-modal-body a:hover { color: #4d94ff; }
+    .legal-modal-body strong { color: var(--text); font-weight: 600; }
+
+    @keyframes emailBorderPulse {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: var(--primary); }
+    }
+    #inp-email:not(.email-typed) {
+      animation: emailBorderPulse 1.8s ease-in-out infinite;
+    }
+    #inp-email:not(.email-typed):focus {
+      animation: none;
+      border-color: #4d94ff;
+      box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    }
+  </style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <div class="signup-main">
+    <div class="signup-inner">
+
+      <h1 class="survey-question">I'm currently full.</h1>
+      <p class="signup-subheadline">When a spot opens up, I reach out to this list first. Leave your info below and answer a few quick questions so I know if we're a good fit when I do.</p>
+
+      <form id="waitlist-form" novalidate>
+        <div class="form-field">
+          <input class="signup-input" type="email" id="inp-email" placeholder="Email address *" autocomplete="email" inputmode="email" />
+        </div>
+
+        <div class="form-row">
+          <input class="signup-input" type="text" id="inp-first" placeholder="First name *" autocomplete="given-name" />
+          <input class="signup-input" type="text" id="inp-last" placeholder="Last name *" autocomplete="family-name" />
+        </div>
+
+        <div class="reveal-block" id="fg-questions" style="display:none;">
+          <div class="form-field">
+            <label class="form-label" for="q-goal">What is your top fitness goal?</label>
+            <select class="signup-select" id="q-goal">
+              <option value="">Select…</option>
+              <option value="lose_fat">Lose body fat</option>
+              <option value="build_muscle">Build muscle</option>
+              <option value="improve_fitness">Improve general fitness</option>
+              <option value="not_sure">Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="q-age">What's your age?</label>
+            <select class="signup-select" id="q-age">
+              <option value="">Select…</option>
+              <option value="17_or_younger">17 or younger</option>
+              <option value="18_29">18–29</option>
+              <option value="30_39">30–39</option>
+              <option value="40_49">40–49</option>
+              <option value="50_59">50–59</option>
+              <option value="60_or_older">60 or older</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="q-gym">Do you have access to a gym?</label>
+            <select class="signup-select" id="q-gym">
+              <option value="">Select…</option>
+              <option value="yes">Yes, I have access</option>
+              <option value="join">I plan to join a gym</option>
+              <option value="no">No</option>
+              <option value="home">Home equipment only</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
+            <select class="signup-select" id="q-commitment">
+              <option value="">Select…</option>
+              <option value="yes">Yes</option>
+              <option value="maybe">Maybe</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="signup-btn" id="submit-btn" disabled>
+          <span class="signup-btn-label">Join Waitlist</span>
+          <span class="signup-btn-divider" aria-hidden="true"></span>
+          <span class="signup-btn-arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="signup-legal-note">By entering your info, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="terms-title">Terms of Service</span>
+      <button class="legal-modal-close" onclick="closeLegal('terms')" aria-label="Close">Close</button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Terms of Service</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Agreement</h3>
+      <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
+      <h3>2. The Service</h3>
+      <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
+      <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
+      <h3>3. Eligibility</h3>
+      <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>4. Pricing and Billing</h3>
+      <p>Coaching is billed as follows:</p>
+      <ul>
+        <li><strong>First month:</strong> $50.00 (one-time discounted rate)</li>
+        <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
+      </ul>
+      <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>5. Cancellation</h3>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <h3>6. 30-Day Results Guarantee</h3>
+      <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
+      <ul>
+        <li>You must have completed your onboarding call</li>
+        <li>You must have logged food and workouts as directed for the 30-day period</li>
+        <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
+      </ul>
+      <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
+      <h3>7. No Medical Advice</h3>
+      <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>8. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>9. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>10. Disclaimer of Warranties</h3>
+      <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>11. Governing Law</h3>
+      <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
+      <h3>12. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>13. Contact</h3>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
+      <button class="legal-modal-close" onclick="closeLegal('privacy')" aria-label="Close">Close</button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Privacy Policy</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Overview</h3>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
+      <h3>2. Information I Collect</h3>
+      <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
+      <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
+      <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <h3>3. How I Use Your Information</h3>
+      <ul>
+        <li>To process your purchase and deliver coaching services</li>
+        <li>To communicate with you about your coaching program</li>
+        <li>To measure and improve the performance of my advertising</li>
+        <li>To analyze Site usage and improve user experience</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
+      <h3>4. Sharing of Information</h3>
+      <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
+      <ul>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
+      </ul>
+      <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
+      <h3>5. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>6. Data Retention</h3>
+      <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
+      <h3>7. Your Rights</h3>
+      <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>8. Children's Privacy</h3>
+      <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
+      <h3>9. Third-Party Links</h3>
+      <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
+      <h3>10. Changes to This Policy</h3>
+      <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      <h3>11. Contact</h3>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var emailInp    = document.getElementById('inp-email');
+  var firstInp    = document.getElementById('inp-first');
+  var lastInp     = document.getElementById('inp-last');
+  var fgQuestions = document.getElementById('fg-questions');
+  var submitBtn   = document.getElementById('submit-btn');
+  var waitlistForm = document.getElementById('waitlist-form');
+  var questionsRevealed = false;
+
+  function revealEl(el) {
+    el.style.display = '';
+    el.classList.add('reveal-enter');
+    el.addEventListener('animationend', function() { el.classList.remove('reveal-enter'); }, { once: true });
+  }
+
+  function checkQuestionsReveal() {
+    if (!questionsRevealed &&
+        emailInp.validity.valid && emailInp.value.trim() &&
+        firstInp.value.trim().length > 0 &&
+        lastInp.value.trim().length > 0) {
+      questionsRevealed = true;
+      revealEl(fgQuestions);
+    }
+  }
+
+  function checkSubmitBtn() {
+    if (!questionsRevealed) { submitBtn.disabled = true; return; }
+    var email = emailInp.value.trim();
+    var first = firstInp.value.trim();
+    var last  = lastInp.value.trim();
+    var goal  = document.getElementById('q-goal').value;
+    var age   = document.getElementById('q-age').value;
+    var gym   = document.getElementById('q-gym').value;
+    var comm  = document.getElementById('q-commitment').value;
+    submitBtn.disabled = !(email && first && last && goal && age && gym && comm);
+  }
+
+  lastInp.addEventListener('input', function() { checkQuestionsReveal(); checkSubmitBtn(); });
+  lastInp.addEventListener('blur',  function() { checkQuestionsReveal(); checkSubmitBtn(); });
+  emailInp.addEventListener('input', function() {
+    if (emailInp.value.length > 0) emailInp.classList.add('email-typed');
+    checkQuestionsReveal();
+    checkSubmitBtn();
+  });
+  firstInp.addEventListener('input', function() { checkQuestionsReveal(); checkSubmitBtn(); });
+
+  ['q-goal','q-age','q-gym','q-commitment'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    sel.addEventListener('change', function() {
+      sel.classList.toggle('has-value', !!sel.value);
+      checkSubmitBtn();
+    });
+  });
+
+  waitlistForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (submitBtn.disabled) return;
+    // TODO: wire up to email/CRM API
+  });
+})();
+
+function openLegal(which) {
+  var o = document.getElementById('modal-' + which);
+  if (!o) return;
+  o.classList.add('active'); document.body.style.overflow = 'hidden';
+  var b = o.querySelector('.legal-modal-body'); if (b) b.scrollTop = 0;
+}
+function closeLegal(which) {
+  var o = document.getElementById('modal-' + which);
+  if (!o) return;
+  o.classList.add('closing');
+  setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
+}
+document.querySelectorAll('.legal-overlay').forEach(function(o) {
+  o.addEventListener('click', function(e) { if (e.target === o) closeLegal(o.id.replace('modal-','')); });
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.legal-overlay.active').forEach(function(o) { closeLegal(o.id.replace('modal-','')); });
+  }
+});
+</script>
+</body>
+</html>
