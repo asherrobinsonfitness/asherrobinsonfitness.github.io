@@ -32,9 +32,11 @@ body{
 .header{
   position:sticky;top:0;z-index:100;background:var(--bg);
   border-bottom:1px solid var(--border-strong);
-  padding:0 1.5rem;height:60px;
+  padding:0.625rem 1.25rem;min-height:3rem;
   display:flex;align-items:center;justify-content:space-between;
+  width:100%;box-sizing:border-box;
 }
+@media(min-width:761px){.header{padding:0.625rem 2rem}}
 .header-left .wordmark{font-size:0.8125rem;font-weight:600;color:var(--text);white-space:nowrap}
 .header-right{display:flex;align-items:center;gap:0.75rem}
 .btn{
@@ -323,8 +325,64 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
 .vt-title{font-size:0.78rem;font-weight:500;color:var(--text);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vt-title-wrap{display:flex;align-items:center;gap:0.6rem}
 .cvr-high{color:#16a34a;font-weight:600}
-.cvr-mid{color:#ca8a04;font-weight:600}
-.cvr-low{color:var(--text-secondary)}
+.cvr-mid{color:#d97706;font-weight:600}
+.cvr-low{color:#dc2626;font-weight:600}
+
+/* ── VIDEO FILTER BAR ── */
+.vt-filter-bar{border:1px solid var(--border);border-radius:10px;padding:0.75rem;margin-bottom:0.75rem;background:rgba(0,0,0,0.15)}
+.vt-filter-row{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem}
+.vt-filter-row:last-child{margin-bottom:0}
+.vt-filter-group{display:flex;align-items:center;gap:0.35rem;flex-wrap:wrap}
+.vt-filter-label{font-size:0.68rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
+.vt-date-input,.vt-filter-select,.vt-filter-num{
+  background:var(--input-bg);border:1px solid var(--input-border);border-radius:6px;
+  padding:0.3rem 0.5rem;font-size:0.72rem;color:var(--text);outline:none;
+  transition:border-color 0.15s ease;font-family:inherit;
+}
+.vt-date-input:focus,.vt-filter-select:focus,.vt-filter-num:focus{border-color:var(--primary)}
+.vt-filter-select{cursor:pointer}
+.vt-filter-select option{background:#2a2a2a}
+.vt-filter-num{width:80px}
+.vt-clear-btn{
+  background:none;border:none;cursor:pointer;font-size:0.72rem;color:var(--primary);
+  padding:0.2rem 0.4rem;border-radius:4px;transition:color 0.15s;text-decoration:underline;white-space:nowrap;
+}
+.vt-clear-btn:hover{color:var(--primary-hover)}
+
+/* ── VIDEO SEARCH / SORT ROW ── */
+.vt-search-sort-row{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem}
+.vt-search-wrap{position:relative;display:inline-flex;align-items:center}
+.vt-search-input{
+  background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;
+  padding:0.5rem 2rem 0.5rem 0.75rem;font-size:0.78rem;color:var(--text);
+  outline:none;transition:border-color 0.15s ease;font-family:inherit;width:240px;
+}
+.vt-search-input:focus{border-color:var(--primary)}
+.vt-search-input::placeholder{color:var(--text-secondary)}
+.vt-search-clear{
+  position:absolute;right:0.45rem;background:none;border:none;cursor:pointer;
+  font-size:1.05rem;color:var(--text-secondary);padding:0 0.2rem;line-height:1;
+  transition:color 0.15s;
+}
+.vt-search-clear:hover{color:var(--text)}
+
+/* ── VIDEO ROW EXPAND / OFFER ── */
+.vt-expand-btn{
+  width:20px;height:20px;border-radius:4px;background:var(--input-bg);
+  border:1px solid var(--border-strong);color:var(--text-secondary);cursor:pointer;
+  font-size:0.85rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;
+  transition:all 0.15s ease;flex-shrink:0;
+}
+.vt-expand-btn:hover{color:var(--text);border-color:#555}
+.vt-offer-wrap{padding:0.65rem 0.65rem 0.65rem 2.5rem;background:rgba(0,0,0,0.2);border-top:1px solid var(--border)}
+.vt-offer-table{width:100%;border-collapse:collapse;font-size:0.78rem}
+.vt-offer-table th{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-secondary);padding:0.3rem 0.5rem;text-align:right;border-bottom:1px solid var(--border)}
+.vt-offer-table th:first-child{text-align:left}
+.vt-offer-table td{padding:0.35rem 0.5rem;text-align:right;color:var(--text);font-size:0.78rem}
+.vt-offer-table td:first-child{text-align:left}
+
+/* ── PINNED TOTAL ROW ── */
+.vt-total-row td{font-weight:700;background:rgba(255,255,255,0.04);border-bottom:2px solid var(--border-strong) !important}
 
 /* ── VIEWER JOURNEY ── */
 .journey-timeline{margin-top:0.75rem;padding-left:1.1rem;border-left:2px solid var(--border-strong)}
@@ -491,6 +549,17 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
       </div>
 
       <div class="divider"></div>
+      <div class="section-sub">Offer Details</div>
+      <div class="form-group">
+        <label class="form-label" for="settingsOfferName">Offer Name</label>
+        <input type="text" class="form-input" id="settingsOfferName" placeholder="Online Fat Loss Coaching">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="settingsOfferPrice">Price ($)</label>
+        <input type="number" class="form-input" id="settingsOfferPrice" placeholder="199" min="0" step="0.01">
+      </div>
+
+      <div class="divider"></div>
       <div class="section-sub">YouTube Analytics</div>
       <div class="yt-auth-row">
         <span id="ytAuthStatus" class="yt-disconnected">Not connected</span>
@@ -572,7 +641,7 @@ function loadSettings() {
 }
 
 function defaultSettings() {
-  return { baseUrl: 'https://asherrobinsonfitness.com', creatorName: 'Asher', channelId: '', ytVideosCache: null };
+  return { baseUrl: 'https://asherrobinsonfitness.com', creatorName: 'Asher', channelId: '', ytVideosCache: null, offerName: 'Online Fat Loss Coaching', offerPrice: 199 };
 }
 
 function saveSettings() {
@@ -602,6 +671,11 @@ function formatDate(iso) {
   const d = new Date(iso);
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) +
          ' · ' + d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+
+function formatDateShort(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
 
 function dateRangeCutoff(range) {
@@ -743,12 +817,12 @@ function renderTrendsBar(fClicks, fSales, pClicks, pSales) {
   // Analytics views total (daily sum)
   const analytics = _analyticsCache;
   let viewsVal = '—', viewsDelta = `<span class="t-flat">—</span>`;
-  if (analytics && analytics.byDay) {
+  if (analytics && analytics.byVideoDay) {
     const today = new Date();
     let curViews = 0;
-    for (let i = 0; i < parseInt(activeRange)||30; i++) {
+    for (let i = 0; i < (parseInt(activeRange) || 30); i++) {
       const d = new Date(today); d.setDate(d.getDate() - i);
-      curViews += analytics.byDay[d.toISOString().slice(0,10)] || 0;
+      curViews += sumFilteredViewsForDay(d.toISOString().slice(0, 10));
     }
     viewsVal = curViews.toLocaleString();
   }
@@ -795,7 +869,7 @@ function drawChart() {
     labels.push(day);
     clicksArr.push(DB.clicks.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
     salesArr.push( DB.conversions.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
-    viewsArr.push(_analyticsCache?.byDay?.[dayKey] || 0);
+    viewsArr.push(sumFilteredViewsForDay(dayKey));
   }
 
   const hasViews = viewsArr.some(v => v > 0);
@@ -1114,6 +1188,15 @@ function updateOAuthUI() {
 // ── YOUTUBE ANALYTICS API ──────────────────────────────────
 let _analyticsCache = null;
 
+// Sum views for a single date key, only counting video IDs that survived the
+// Shorts duration filter (i.e. present in ytVideosCache.items).
+function sumFilteredViewsForDay(dateKey) {
+  const bvd = _analyticsCache?.byVideoDay;
+  if (!bvd) return 0;
+  const filteredIds = (DB.settings.ytVideosCache?.items || []).map(v => v.videoId);
+  return filteredIds.reduce((sum, id) => sum + (bvd[id]?.[dateKey] || 0), 0);
+}
+
 async function fetchYTAnalytics(videoIds, forceRefresh) {
   const token = getYTToken();
   if (!token || !videoIds.length) return null;
@@ -1128,18 +1211,20 @@ async function fetchYTAnalytics(videoIds, forceRefresh) {
   const start30Str = start30.toISOString().slice(0, 10);
 
   try {
-    // Per-video lifetime views
-    const videoFilter = videoIds.map(id => `video==${id}`).join(',');
+    // videoIds is sourced from DB.settings.ytVideosCache.items (Shorts already excluded by duration filter)
+    const videoFilterParam = encodeURIComponent('video==' + videoIds.join(','));
+
+    // Per-video lifetime views (filtered to non-Shorts IDs)
     const videoRes = await fetch(
-      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=video&filters=${encodeURIComponent('video==' + videoIds.join(','))}&startDate=2020-01-01&endDate=${today}`,
+      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=video&filters=${videoFilterParam}&startDate=2020-01-01&endDate=${today}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     if (videoRes.status === 401) { handleYTTokenExpiry(); return null; }
     const videoData = await videoRes.json();
 
-    // Daily channel views (30 days, for chart)
+    // Daily views per video (30 days) — filtered to non-Shorts IDs so Shorts are excluded
     const dailyRes = await fetch(
-      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=day&startDate=${start30Str}&endDate=${today}`,
+      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=video,day&filters=${videoFilterParam}&startDate=${start30Str}&endDate=${today}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     if (dailyRes.status === 401) { handleYTTokenExpiry(); return null; }
@@ -1147,10 +1232,15 @@ async function fetchYTAnalytics(videoIds, forceRefresh) {
 
     const byVideo = {};
     (videoData.rows || []).forEach(row => { byVideo[row[0]] = row[1]; });
-    const byDay = {};
-    (dailyData.rows || []).forEach(row => { byDay[row[0]] = row[1]; });
 
-    _analyticsCache = { byVideo, byDay, timestamp: Date.now() };
+    // Store per-video-per-day so the chart can filter by ytVideosCache IDs at render time
+    const byVideoDay = {};
+    (dailyData.rows || []).forEach(([vid, date, views]) => {
+      if (!byVideoDay[vid]) byVideoDay[vid] = {};
+      byVideoDay[vid][date] = views;
+    });
+
+    _analyticsCache = { byVideo, byVideoDay, timestamp: Date.now() };
     return _analyticsCache;
   } catch(e) {
     console.error('YT Analytics error:', e);
@@ -1188,7 +1278,7 @@ async function fetchYTVideos(channelId, forceRefresh) {
 
     const filtered = items
       .filter(i => (durs[i.id.videoId]??0) >= 60)
-      .map(i => ({ videoId:i.id.videoId, title:i.snippet.title, thumbnail:i.snippet.thumbnails?.default?.url||'' }));
+      .map(i => ({ videoId:i.id.videoId, title:i.snippet.title, thumbnail:i.snippet.thumbnails?.default?.url||'', publishedAt:i.snippet.publishedAt||'' }));
 
     DB.settings.ytVideosCache = { channelId, timestamp:Date.now(), items:filtered };
     saveSettings();
@@ -1206,83 +1296,235 @@ async function loadYTVideoSection(container, baseUrl, channelId, forceRefresh) {
   if (!result.ok) { container.innerHTML = `<div class="yt-error">Failed to load: ${escHtml(result.error)}</div>`; return; }
   if (!result.items.length) { container.innerHTML = `<div class="yt-no-channel">No videos found for this channel.</div>`; return; }
 
-  // Try to fetch analytics (non-blocking)
-  const analytics = await fetchYTAnalytics(result.items.map(i => i.videoId), forceRefresh);
+  let analytics = await fetchYTAnalytics(result.items.map(i => i.videoId), forceRefresh);
 
-  function renderVideoTable(sortKey, sortDir) {
-    const items = result.items.map(item => {
-      const vidClks  = DB.clicks.filter(c => c.video_id === item.videoId).length;
-      const vidSales = DB.conversions.filter(c => c.video_id === item.videoId).length;
-      const vidRev   = DB.conversions.filter(c => c.video_id === item.videoId).reduce((s,c)=>s+(parseFloat(c.revenue)||0),0);
-      const vidViews = analytics?.byVideo?.[item.videoId] || 0;
-      const vidCVR   = vidClks > 0 ? vidSales / vidClks : 0;
-      return { ...item, vidClks, vidSales, vidRev, vidViews, vidCVR };
+  // ── Local filter/search state ──
+  let vtSearch = '', vtDataStart = '', vtDataEnd = '', vtPubStart = '', vtPubEnd = '';
+  let vtColFilter = { col: '', op: 'above', val: '' };
+  const expandedVids = new Set();
+
+  // ── CVR helpers ──
+  function cvrRate(sales, denom) { return denom > 0 ? sales / denom : null; }
+  function cvrStr(rate) {
+    if (rate === null || rate === undefined) return '—';
+    return (rate * 100).toFixed(2) + '%';
+  }
+  function cvrCls(rate) {
+    if (rate === null || rate === undefined) return '';
+    if (rate > 0.02)   return 'cvr-high';
+    if (rate > 0.005)  return 'cvr-mid';
+    return 'cvr-low';
+  }
+
+  // ── Build per-item data ──
+  function buildItemData() {
+    return result.items.map(item => {
+      const allClicks = DB.clicks.filter(c => c.video_id === item.videoId);
+      const allSales  = DB.conversions.filter(c => c.video_id === item.videoId);
+      const vidClks   = allClicks.length;
+      const vidSales  = allSales.length;
+      const vidRev    = allSales.reduce((s,c) => s + (parseFloat(c.revenue)||0), 0);
+      const vidViews  = analytics?.byVideo?.[item.videoId] || 0;
+
+      // First event timestamp
+      const allEvents = [...allClicks, ...allSales];
+      let firstEventTs = null;
+      if (allEvents.length) {
+        firstEventTs = allEvents.reduce((min, e) => {
+          const t = new Date(getTs(e));
+          return (!min || t < new Date(getTs(min))) ? e : min;
+        }, null);
+      }
+
+      return {
+        ...item,
+        vidClks, vidSales, vidRev, vidViews, firstEventTs,
+        vidCVRClicks: cvrRate(vidSales, vidClks),
+        vidCVRViews:  cvrRate(vidSales, vidViews),
+      };
     });
+  }
 
-    const sorted = [...items].sort((a, b) => {
-      let av = a['vid' + sortKey.charAt(0).toUpperCase() + sortKey.slice(1)];
-      let bv = b['vid' + sortKey.charAt(0).toUpperCase() + sortKey.slice(1)];
-      if (av === undefined) { av = a[sortKey] || 0; bv = b[sortKey] || 0; }
-      return sortDir === 'desc' ? bv - av : av - bv;
+  // ── Filter + sort ──
+  function applyFilters(items) {
+    const q = vtSearch.trim().toLowerCase();
+    return items.filter(item => {
+      if (q && !item.title.toLowerCase().includes(q)) return false;
+      if (vtDataStart || vtDataEnd) {
+        if (!item.firstEventTs) return false;
+        const fe = new Date(getTs(item.firstEventTs));
+        if (vtDataStart && fe < new Date(vtDataStart)) return false;
+        if (vtDataEnd   && fe > new Date(vtDataEnd + 'T23:59:59')) return false;
+      }
+      if (vtPubStart || vtPubEnd) {
+        if (!item.publishedAt) return false;
+        const pd = new Date(item.publishedAt);
+        if (vtPubStart && pd < new Date(vtPubStart)) return false;
+        if (vtPubEnd   && pd > new Date(vtPubEnd + 'T23:59:59')) return false;
+      }
+      if (vtColFilter.col && vtColFilter.val !== '') {
+        const thr = parseFloat(vtColFilter.val);
+        let v;
+        switch(vtColFilter.col) {
+          case 'views':     v = item.vidViews; break;
+          case 'clicks':    v = item.vidClks; break;
+          case 'sales':     v = item.vidSales; break;
+          case 'revenue':   v = item.vidRev; break;
+          case 'cvrClicks': v = item.vidCVRClicks != null ? item.vidCVRClicks * 100 : undefined; break;
+          case 'cvrViews':  v = item.vidCVRViews  != null ? item.vidCVRViews  * 100 : undefined; break;
+        }
+        if (v === undefined) return false;
+        if (vtColFilter.op === 'above'  && v <= thr) return false;
+        if (vtColFilter.op === 'below'  && v >= thr) return false;
+        if (vtColFilter.op === 'equals' && Math.abs(v - thr) > 0.01) return false;
+      }
+      return true;
     });
+  }
 
-    const cols = [
-      { key: 'views', label: 'Views' },
-      { key: 'clicks', label: 'Clicks' },
-      { key: 'sales', label: 'Sales' },
-      { key: 'CVR', label: 'CVR' },
-      { key: 'rev', label: 'Revenue' },
+  function sortItems(items) {
+    return [...items].sort((a, b) => {
+      let av, bv;
+      const d = videoSortDir === 'desc' ? -1 : 1;
+      switch(videoSortKey) {
+        case 'clicks':     av = a.vidClks;  bv = b.vidClks; break;
+        case 'views':      av = a.vidViews; bv = b.vidViews; break;
+        case 'revenue':    av = a.vidRev;   bv = b.vidRev; break;
+        case 'cvrClicks':  av = a.vidCVRClicks ?? -1; bv = b.vidCVRClicks ?? -1; break;
+        case 'cvrViews':   av = a.vidCVRViews  ?? -1; bv = b.vidCVRViews  ?? -1; break;
+        case 'newest':     av = new Date(a.publishedAt||0).getTime(); bv = new Date(b.publishedAt||0).getTime(); break;
+        case 'oldest':     av = new Date(a.publishedAt||0).getTime(); bv = new Date(b.publishedAt||0).getTime();
+                           return av - bv; // always ascending
+        case 'firstEvent': av = a.firstEventTs ? new Date(getTs(a.firstEventTs)).getTime() : -Infinity;
+                           bv = b.firstEventTs ? new Date(getTs(b.firstEventTs)).getTime() : -Infinity; break;
+        default:           av = a.vidSales; bv = b.vidSales; break;
+      }
+      return (bv - av) * (videoSortDir === 'desc' ? 1 : -1);
+    });
+  }
+
+  // ── Render the table (called on every filter/sort change) ──
+  function renderTable(allItems) {
+    const visible = sortItems(applyFilters(allItems));
+
+    // Totals
+    const tV  = visible.reduce((s,i) => s + i.vidViews, 0);
+    const tC  = visible.reduce((s,i) => s + i.vidClks,  0);
+    const tS  = visible.reduce((s,i) => s + i.vidSales, 0);
+    const tR  = visible.reduce((s,i) => s + i.vidRev,   0);
+    const tCV = cvrRate(tS, tV), tCC = cvrRate(tS, tC);
+
+    const colDefs = [
+      { key:'newest',     label:'Published' },
+      { key:'firstEvent', label:'First Event' },
+      { key:'views',      label:'Views' },
+      { key:'clicks',     label:'Clicks' },
+      { key:'sales',      label:'Sales' },
+      { key:'cvrViews',   label:'CVR (Views)' },
+      { key:'cvrClicks',  label:'CVR (Clicks)' },
+      { key:'revenue',    label:'Revenue' },
     ];
 
-    const theadCols = cols.map(c => {
-      const active = sortKey === c.key;
-      const arrow  = active ? (sortDir === 'desc' ? '↓' : '↑') : '↕';
-      return `<th class="${active ? 'sort-active' : ''}" data-sortkey="${c.key}">${c.label} <i class="sort-arrow">${arrow}</i></th>`;
-    }).join('');
+    const thead = `<tr>
+      <th style="width:28px;cursor:default;text-align:center;padding:0.55rem 0.35rem"></th>
+      <th style="text-align:left;cursor:default;min-width:180px">Video</th>
+      ${colDefs.map(c => {
+        const act = videoSortKey === c.key;
+        const arr = act ? (videoSortDir === 'desc' ? '↓' : '↑') : '↕';
+        return `<th class="${act ? 'sort-active' : ''}" data-sortkey="${c.key}">${c.label} <i class="sort-arrow">${arr}</i></th>`;
+      }).join('')}
+      <th style="cursor:default;min-width:80px"></th>
+    </tr>`;
 
-    const rows = sorted.map(item => {
-      const url     = buildRefLink(baseUrl, 'yt-' + item.videoId);
-      const cvrPct  = (item.vidCVR * 100).toFixed(1) + '%';
-      const cvrCls  = item.vidCVR >= 0.05 ? 'cvr-high' : item.vidCVR > 0 ? 'cvr-mid' : 'cvr-low';
-      const viewStr = analytics ? (item.vidViews > 0 ? item.vidViews.toLocaleString() : '0') : '—';
-      return `<tr>
-        <td>
-          <div class="vt-title-wrap">
-            <img class="vt-thumb" src="${escHtml(item.thumbnail)}" alt="" loading="lazy" width="72" height="40">
-            <span class="vt-title" title="${escHtml(item.title)}">${escHtml(item.title)}</span>
-          </div>
-        </td>
-        <td>${viewStr}</td>
-        <td>${item.vidClks}</td>
-        <td>${item.vidSales}</td>
-        <td><span class="${cvrCls}">${item.vidClks > 0 ? cvrPct : '—'}</span></td>
-        <td>${item.vidRev > 0 ? '$'+item.vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</td>
-        <td><button class="copy-btn" data-url="${escHtml(url)}" style="white-space:nowrap">Copy link</button></td>
-      </tr>`;
-    }).join('');
+    const totalRow = `<tr class="vt-total-row">
+      <td></td>
+      <td style="text-align:left">Total (${visible.length})</td>
+      <td>—</td><td>—</td>
+      <td>${tV > 0 ? tV.toLocaleString() : '—'}</td>
+      <td>${tC}</td>
+      <td>${tS}</td>
+      <td><span class="${cvrCls(tCV)}">${cvrStr(tCV)}</span></td>
+      <td><span class="${cvrCls(tCC)}">${cvrStr(tCC)}</span></td>
+      <td>${tR > 0 ? '$' + tR.toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</td>
+      <td></td>
+    </tr>`;
+
+    const offerName  = DB.settings.offerName  || 'Online Fat Loss Coaching';
+
+    const dataRows = visible.length === 0
+      ? `<tr><td colspan="11" style="text-align:center;padding:1.5rem;color:var(--text-secondary);font-size:0.82rem">No videos match your search or filters.</td></tr>`
+      : visible.map(item => {
+          const url      = buildRefLink(baseUrl, 'yt-' + item.videoId);
+          const viewStr  = analytics ? (item.vidViews > 0 ? item.vidViews.toLocaleString() : '0') : '—';
+          const pubStr   = item.publishedAt ? formatDateShort(item.publishedAt) : '—';
+          const feStr    = item.firstEventTs ? formatDateShort(getTs(item.firstEventTs)) : '—';
+          const revStr   = item.vidRev > 0 ? '$' + item.vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—';
+          const ofRevStr = item.vidRev > 0 ? '$' + item.vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—';
+          const isExp    = expandedVids.has(item.videoId);
+          return `<tr class="vt-data-row" data-vid="${escHtml(item.videoId)}">
+            <td style="text-align:center;padding:0.35rem 0.35rem">
+              <button class="vt-expand-btn" data-vid="${escHtml(item.videoId)}" aria-label="Expand row">${isExp ? '−' : '+'}</button>
+            </td>
+            <td>
+              <div class="vt-title-wrap">
+                <img class="vt-thumb" src="${escHtml(item.thumbnail)}" alt="" loading="lazy" width="72" height="40">
+                <span class="vt-title" title="${escHtml(item.title)}">${escHtml(item.title)}</span>
+              </div>
+            </td>
+            <td>${pubStr}</td>
+            <td>${feStr}</td>
+            <td>${viewStr}</td>
+            <td>${item.vidClks}</td>
+            <td>${item.vidSales}</td>
+            <td><span class="${cvrCls(item.vidCVRViews)}">${cvrStr(item.vidCVRViews)}</span></td>
+            <td><span class="${cvrCls(item.vidCVRClicks)}">${cvrStr(item.vidCVRClicks)}</span></td>
+            <td>${revStr}</td>
+            <td><button class="copy-btn" data-url="${escHtml(url)}" style="white-space:nowrap">Copy link</button></td>
+          </tr>
+          <tr class="vt-offer-row" data-offer-for="${escHtml(item.videoId)}" style="display:${isExp ? '' : 'none'}">
+            <td></td>
+            <td colspan="10" style="padding:0">
+              <div class="vt-offer-wrap">
+                <table class="vt-offer-table">
+                  <thead><tr>
+                    <th>Offer</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>CVR (Clicks)</th>
+                  </tr></thead>
+                  <tbody><tr>
+                    <td>${escHtml(offerName)}</td>
+                    <td>${item.vidClks}</td>
+                    <td>${item.vidSales}</td>
+                    <td>${ofRevStr}</td>
+                    <td><span class="${cvrCls(item.vidCVRClicks)}">${cvrStr(item.vidCVRClicks)}</span></td>
+                  </tr></tbody>
+                </table>
+              </div>
+            </td>
+          </tr>`;
+        }).join('');
 
     return `<div style="overflow-x:auto">
       <table class="video-table">
-        <thead><tr>
-          <th style="text-align:left;cursor:default">Video</th>
-          ${theadCols}
-          <th style="cursor:default"></th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
+        <thead>${thead}</thead>
+        <tbody>${totalRow}${dataRows}</tbody>
       </table>
     </div>`;
   }
 
-  function redraw(key, dir) {
-    const tableWrap = container.querySelector('.vt-table-wrap');
-    if (tableWrap) tableWrap.innerHTML = renderVideoTable(key, dir);
+  // ── Re-render table area + sync pills + re-attach handlers ──
+  function renderAll(allItems) {
+    const tw = container.querySelector('.vt-table-wrap');
+    if (tw) tw.innerHTML = renderTable(allItems);
     container.querySelectorAll('.sort-pill').forEach(p => {
-      p.classList.toggle('active', p.dataset.sort === key);
+      const active = p.dataset.sort === videoSortKey &&
+        (p.dataset.sortDir || 'desc') === videoSortDir;
+      p.classList.toggle('active', active);
     });
-    attachTableHandlers();
+    const sc = container.querySelector('.vt-search-clear');
+    if (sc) sc.style.display = vtSearch ? '' : 'none';
+    attachHandlers(allItems);
   }
 
-  function attachTableHandlers() {
+  function attachHandlers(allItems) {
     container.querySelectorAll('.copy-btn[data-url]').forEach(btn => {
       btn.addEventListener('click', e => { e.stopPropagation(); copyText(btn.dataset.url, btn); });
     });
@@ -1290,30 +1532,157 @@ async function loadYTVideoSection(container, baseUrl, channelId, forceRefresh) {
       th.addEventListener('click', e => { e.stopPropagation();
         const key = th.dataset.sortkey;
         if (videoSortKey === key) videoSortDir = videoSortDir === 'desc' ? 'asc' : 'desc';
-        else { videoSortKey = key; videoSortDir = 'desc'; }
-        redraw(videoSortKey, videoSortDir);
+        else { videoSortKey = key; videoSortDir = key === 'oldest' ? 'asc' : 'desc'; }
+        renderAll(allItems);
+      });
+    });
+    container.querySelectorAll('.vt-expand-btn').forEach(btn => {
+      const vid = btn.dataset.vid;
+      btn.addEventListener('click', e => { e.stopPropagation();
+        const row = container.querySelector(`tr[data-offer-for="${vid}"]`);
+        if (!row) return;
+        const open = row.style.display !== 'none';
+        row.style.display = open ? 'none' : '';
+        btn.textContent = open ? '+' : '−';
+        if (open) expandedVids.delete(vid); else expandedVids.add(vid);
       });
     });
   }
 
-  const pillsHtml = [
-    { key:'sales',  label:'Most Sales' },
-    { key:'clicks', label:'Most Clicks' },
-    { key:'views',  label:'Most Views' },
-    { key:'CVR',    label:'Best CVR' },
-  ].map(p => `<button class="sort-pill${videoSortKey === p.key ? ' active' : ''}" data-sort="${p.key}">${p.label}</button>`).join('');
+  // ── Pill definitions ──
+  const pillDefs = [
+    { key:'sales',     dir:'desc', label:'Most Sales' },
+    { key:'clicks',    dir:'desc', label:'Most Clicks' },
+    { key:'views',     dir:'desc', label:'Most Views' },
+    { key:'cvrClicks', dir:'desc', label:'Best CVR (Clicks)' },
+    { key:'cvrViews',  dir:'desc', label:'Best CVR (Views)' },
+    { key:'revenue',   dir:'desc', label:'Most Revenue' },
+    { key:'newest',    dir:'desc', label:'Newest' },
+    { key:'oldest',    dir:'asc',  label:'Oldest' },
+  ];
 
-  container.innerHTML = `<div class="sort-pills">${pillsHtml}</div><div class="vt-table-wrap">${renderVideoTable(videoSortKey, videoSortDir)}</div>`;
+  const pillsHtml = pillDefs.map(p => {
+    const active = videoSortKey === p.key && (videoSortDir === (p.dir||'desc'));
+    return `<button class="sort-pill${active ? ' active' : ''}" data-sort="${p.key}" data-sort-dir="${p.dir||'desc'}">${p.label}</button>`;
+  }).join('');
 
-  container.querySelectorAll('.sort-pill').forEach(pill => {
+  const allItems = buildItemData();
+
+  // ── Initial HTML ──
+  container.innerHTML = `
+    <div class="vt-filter-bar">
+      <div class="vt-filter-row">
+        <div class="vt-filter-group">
+          <span class="vt-filter-label">Source</span>
+          <span class="sort-pill active" style="cursor:default;pointer-events:none">YouTube Videos</span>
+        </div>
+        <div class="vt-filter-group" style="margin-left:0.5rem">
+          <span class="vt-filter-label">Data between</span>
+          <input type="date" class="vt-date-input" id="vtDataStart">
+          <span style="color:var(--text-secondary);font-size:0.72rem">–</span>
+          <input type="date" class="vt-date-input" id="vtDataEnd">
+        </div>
+        <div class="vt-filter-group">
+          <span class="vt-filter-label">Published</span>
+          <input type="date" class="vt-date-input" id="vtPubStart">
+          <span style="color:var(--text-secondary);font-size:0.72rem">–</span>
+          <input type="date" class="vt-date-input" id="vtPubEnd">
+        </div>
+        <button class="btn btn-ghost btn-sm vt-refresh-views-btn" style="margin-left:auto;display:flex;align-items:center;gap:0.35rem;flex-shrink:0">
+          <span class="vt-rv-icon">↻</span><span class="vt-rv-label">Refresh Views</span>
+        </button>
+      </div>
+      <div class="vt-filter-row">
+        <span class="vt-filter-label">Column filter</span>
+        <select class="vt-filter-select" id="vtColFilterCol">
+          <option value="">Select column…</option>
+          <option value="views">Views</option>
+          <option value="clicks">Clicks</option>
+          <option value="sales">Sales</option>
+          <option value="revenue">Revenue</option>
+          <option value="cvrClicks">CVR (Clicks)</option>
+          <option value="cvrViews">CVR (Views)</option>
+        </select>
+        <select class="vt-filter-select" id="vtColFilterOp">
+          <option value="above">is above</option>
+          <option value="below">is below</option>
+          <option value="equals">equals</option>
+        </select>
+        <input type="number" class="vt-filter-num" id="vtColFilterVal" placeholder="Value…">
+        <button class="vt-clear-btn" id="vtClearFilters">Clear filters</button>
+      </div>
+    </div>
+    <div class="vt-search-sort-row">
+      <div class="vt-search-wrap">
+        <input type="text" class="vt-search-input" placeholder="Search by title…">
+        <button class="vt-search-clear" style="display:none" aria-label="Clear search">×</button>
+      </div>
+      <div class="sort-pills" style="flex-wrap:wrap">${pillsHtml}</div>
+    </div>
+    <div class="vt-table-wrap">${renderTable(allItems)}</div>`;
+
+  // ── Bind controls ──
+
+  // Sort pills
+  container.querySelectorAll('.sort-pill[data-sort]').forEach(pill => {
     pill.addEventListener('click', e => { e.stopPropagation();
       videoSortKey = pill.dataset.sort;
-      videoSortDir = 'desc';
-      redraw(videoSortKey, videoSortDir);
+      videoSortDir = pill.dataset.sortDir || 'desc';
+      renderAll(allItems);
     });
   });
 
-  attachTableHandlers();
+  // Search
+  const si = container.querySelector('.vt-search-input');
+  const sc = container.querySelector('.vt-search-clear');
+  si?.addEventListener('input', () => { vtSearch = si.value; sc.style.display = vtSearch ? '' : 'none'; renderAll(allItems); });
+  sc?.addEventListener('click', e => { e.stopPropagation(); vtSearch = ''; si.value = ''; sc.style.display = 'none'; renderAll(allItems); });
+
+  // Date filters
+  container.querySelector('#vtDataStart')?.addEventListener('change', e => { vtDataStart = e.target.value; renderAll(allItems); });
+  container.querySelector('#vtDataEnd')?.addEventListener('change',   e => { vtDataEnd   = e.target.value; renderAll(allItems); });
+  container.querySelector('#vtPubStart')?.addEventListener('change',  e => { vtPubStart  = e.target.value; renderAll(allItems); });
+  container.querySelector('#vtPubEnd')?.addEventListener('change',    e => { vtPubEnd    = e.target.value; renderAll(allItems); });
+
+  // Column filter
+  const cfC = container.querySelector('#vtColFilterCol');
+  const cfO = container.querySelector('#vtColFilterOp');
+  const cfV = container.querySelector('#vtColFilterVal');
+  cfC?.addEventListener('change', () => { vtColFilter.col = cfC.value; renderAll(allItems); });
+  cfO?.addEventListener('change', () => { vtColFilter.op  = cfO.value; renderAll(allItems); });
+  cfV?.addEventListener('input',  () => { vtColFilter.val = cfV.value; renderAll(allItems); });
+
+  // Clear filters
+  container.querySelector('#vtClearFilters')?.addEventListener('click', e => { e.stopPropagation();
+    vtSearch = ''; vtDataStart = ''; vtDataEnd = ''; vtPubStart = ''; vtPubEnd = '';
+    vtColFilter = { col:'', op:'above', val:'' };
+    if (si) { si.value = ''; sc.style.display = 'none'; }
+    if (cfC) cfC.value = ''; if (cfO) cfO.value = 'above'; if (cfV) cfV.value = '';
+    container.querySelectorAll('.vt-date-input').forEach(i => { i.value = ''; });
+    renderAll(allItems);
+  });
+
+  // Refresh Views
+  container.querySelector('.vt-refresh-views-btn')?.addEventListener('click', async e => {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const icon = btn.querySelector('.vt-rv-icon');
+    btn.disabled = true;
+    icon.innerHTML = '<span class="yt-spinner" style="width:11px;height:11px;display:inline-block;vertical-align:middle"></span>';
+    _analyticsCache = null;
+    analytics = await fetchYTAnalytics(result.items.map(i => i.videoId), true);
+    // Patch vidViews and vidCVRViews in allItems from fresh data
+    allItems.forEach(item => {
+      item.vidViews    = analytics?.byVideo?.[item.videoId] || 0;
+      item.vidCVRViews = cvrRate(item.vidSales, item.vidViews);
+    });
+    btn.disabled = false;
+    icon.textContent = '↻';
+    renderAll(allItems);
+    showToast('Views refreshed.');
+  });
+
+  attachHandlers(allItems);
 }
 
 // ── SALES LOG ──────────────────────────────────────────────
@@ -1506,6 +1875,8 @@ document.getElementById('settingsBtn').addEventListener('click', () => {
   document.getElementById('settingsBaseUrl').value    = DB.settings.baseUrl || 'https://asherrobinsonfitness.com';
   document.getElementById('settingsName').value       = DB.settings.creatorName || 'Asher';
   document.getElementById('settingsChannelId').value  = DB.settings.channelId || '';
+  document.getElementById('settingsOfferName').value  = DB.settings.offerName || 'Online Fat Loss Coaching';
+  document.getElementById('settingsOfferPrice').value = DB.settings.offerPrice ?? 199;
   document.getElementById('landingSnippet').value     = LANDING_SNIPPET;
   document.getElementById('thankyouSnippet').value    = THANKYOU_SNIPPET;
   updateOAuthUI();
@@ -1516,6 +1887,8 @@ document.getElementById('saveSettingsBtn').addEventListener('click', () => {
   DB.settings.baseUrl     = document.getElementById('settingsBaseUrl').value.trim() || 'https://asherrobinsonfitness.com';
   DB.settings.creatorName = document.getElementById('settingsName').value.trim() || 'Asher';
   DB.settings.channelId   = document.getElementById('settingsChannelId').value.trim();
+  DB.settings.offerName   = document.getElementById('settingsOfferName').value.trim() || 'Online Fat Loss Coaching';
+  DB.settings.offerPrice  = parseFloat(document.getElementById('settingsOfferPrice').value) || 199;
   saveSettings();
   closeModal('settingsModal');
   render();
