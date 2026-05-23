@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARF Tracker — Attribution Dashboard</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -507,10 +506,13 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
 
 <script>
 // ── SUPABASE ───────────────────────────────────────────────
-const sb = window.supabase.createClient(
-  'https://oesygndfpoqhvxgedpqc.supabase.co',
-  'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r'
-);
+const SUPA_URL = 'https://oesygndfpoqhvxgedpqc.supabase.co';
+const SUPA_KEY = 'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r';
+const SUPA_HEADERS = {
+  'apikey': SUPA_KEY,
+  'Authorization': `Bearer ${SUPA_KEY}`,
+  'Content-Type': 'application/json'
+};
 
 // ── ICONS ──────────────────────────────────────────────────
 const ICONS = {
@@ -607,16 +609,25 @@ function getVideoTitle(videoId) {
 // ── SUPABASE DATA LOAD ─────────────────────────────────────
 async function loadFromSupabase() {
   showPageLoading(true);
-  const [clicksRes, salesRes] = await Promise.all([
-    sb.from('clicks').select('*').order('created_at', { ascending: false }),
-    sb.from('sales').select('*').order('created_at', { ascending: false }),
-  ]);
-  if (clicksRes.error) console.warn('Clicks fetch error:', clicksRes.error.message);
-  if (salesRes.error) console.warn('Sales fetch error:', salesRes.error.message);
-  DB.clicks = clicksRes.data || [];
-  DB.conversions = salesRes.data || [];
+  const SUPA_URL = 'https://oesygndfpoqhvxgedpqc.supabase.co';
+  const SUPA_KEY = 'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r';
+  const headers = {
+    'apikey': SUPA_KEY,
+    'Authorization': `Bearer ${SUPA_KEY}`,
+    'Content-Type': 'application/json'
+  };
+  try {
+    const [clicksRes, salesRes] = await Promise.all([
+      fetch(`${SUPA_URL}/rest/v1/clicks?select=*&order=timestamp.desc`, { headers }),
+      fetch(`${SUPA_URL}/rest/v1/sales?select=*&order=timestamp.desc`, { headers })
+    ]);
+    DB.clicks = await clicksRes.json();
+    DB.conversions = await salesRes.json();
+    render();
+  } catch(e) {
+    console.error('Supabase fetch error:', e);
+  }
   showPageLoading(false);
-  render();
 }
 
 function showPageLoading(on) {
@@ -1047,8 +1058,8 @@ function renderSalesLog(sales) {
     btn.addEventListener('click', async e => {
       e.stopPropagation();
       if (!confirm('Delete this sale?')) return;
-      const { error } = await sb.from('sales').delete().eq('id', btn.dataset.delete);
-      if (error) { showToast('Delete failed: ' + error.message); return; }
+      const delRes = await fetch(`${SUPA_URL}/rest/v1/sales?id=eq.${btn.dataset.delete}`, { method: 'DELETE', headers: SUPA_HEADERS });
+      if (!delRes.ok) { const e = await delRes.json(); showToast('Delete failed: ' + (e.message || delRes.status)); return; }
       await loadFromSupabase();
     });
   });
@@ -1218,8 +1229,8 @@ document.getElementById('saveLogBtn').addEventListener('click', async () => {
   if (source === 'yt-video' && videoId) ref = 'yt-' + videoId;
 
   const payload = { ref, video_id: videoId || null, note: note || null, revenue };
-  const { error } = await sb.from('sales').insert(payload);
-  if (error) { showToast('Error: ' + error.message); return; }
+  const insRes = await fetch(`${SUPA_URL}/rest/v1/sales`, { method: 'POST', headers: { ...SUPA_HEADERS, 'Prefer': 'return=minimal' }, body: JSON.stringify(payload) });
+  if (!insRes.ok) { const e = await insRes.json(); showToast('Error: ' + (e.message || insRes.status)); return; }
   closeModal('logModal');
   await loadFromSupabase();
   showToast('Sale logged');
