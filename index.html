@@ -1662,5 +1662,23 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 
+<script>
+const ref = new URLSearchParams(location.search).get('ref');
+if (ref) {
+  sessionStorage.setItem('arf_ref', ref);
+  const videoId = ref.startsWith('yt-') && ref !== 'yt-bio'
+    ? ref.replace('yt-', '') : null;
+  fetch('https://oesygndfpoqhvxgedpqc.supabase.co/rest/v1/clicks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': 'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ ref, video_id: videoId })
+  });
+}
+</script>
+
 </body>
 </html>
