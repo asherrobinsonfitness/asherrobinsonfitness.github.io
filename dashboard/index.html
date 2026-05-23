@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARF Tracker — Attribution Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#06f;
+  --primary-hover:#0052cc;
+  --text:#F8FAFC;
+  --text-secondary:#9ca3af;
+  --bg:#1c1c1c;
+  --card-bg:#242424;
+  --border:#2e2e2e;
+  --border-strong:#3a3a3a;
+  --input-bg:#2a2a2a;
+  --input-border:#3a3a3a;
+  --bottom-bg:#161616;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+
+/* ── HEADER ── */
+.header{
+  position:sticky;top:0;z-index:100;background:var(--bg);
+  border-bottom:1px solid var(--border-strong);
+  padding:0 1.5rem;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left .wordmark{font-size:1.05rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+.header-left .subtitle{font-size:0.72rem;color:var(--text-secondary);margin-top:1px}
+.header-right{display:flex;align-items:center;gap:0.75rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;
+  padding:0.45rem 0.9rem;border-radius:8px;font-size:0.82rem;font-weight:600;
+  cursor:pointer;border:none;transition:background 0.15s ease,color 0.15s ease,border-color 0.15s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border-strong)}
+.btn-ghost:hover{color:var(--text);border-color:#555}
+.btn-icon{
+  background:transparent;border:none;color:var(--text-secondary);cursor:pointer;
+  padding:0.4rem;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  transition:color 0.15s ease,background 0.15s ease;
+}
+.btn-icon:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.btn-sm{padding:0.3rem 0.65rem;font-size:0.75rem}
+.btn-danger{background:#dc2626;color:#fff}
+.btn-danger:hover{background:#b91c1c}
+
+/* ── LOADING STATE ── */
+.page-loading{
+  position:fixed;inset:0;background:var(--bg);z-index:300;
+  display:flex;align-items:center;justify-content:center;gap:0.75rem;
+  font-size:0.84rem;color:var(--text-secondary);
+  transition:opacity 0.3s ease;
+}
+.page-loading.hidden{opacity:0;pointer-events:none}
+.load-spinner{
+  width:18px;height:18px;border:2px solid var(--border-strong);
+  border-top-color:var(--primary);border-radius:50%;
+  animation:spin 0.7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MAIN ── */
+.main{max-width:1180px;margin:0 auto;padding:1.75rem 1.5rem 4rem}
+
+/* ── DATE FILTER ── */
+.date-filter{display:flex;align-items:center;gap:0.4rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.date-filter-label{font-size:0.78rem;color:var(--text-secondary);margin-right:0.25rem}
+.pill{
+  padding:0.35rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--border-strong);background:transparent;
+  color:var(--text-secondary);transition:background 0.15s ease,color 0.15s ease,border-color 0.15s ease;
+}
+.pill:hover{color:var(--text);border-color:#555}
+.pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:12px;
+  padding:1.25rem;display:flex;flex-direction:column;gap:0.35rem;
+}
+.stat-card .label{font-size:0.75rem;color:var(--text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.stat-card .value{font-size:1.65rem;font-weight:700;letter-spacing:-0.03em;color:var(--text)}
+.stat-card .sub{font-size:0.75rem;color:var(--text-secondary)}
+
+/* ── CHART ── */
+.chart-wrap{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:12px;
+  padding:1.25rem;margin-bottom:1.75rem;position:relative;
+}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.chart-title{font-size:0.9rem;font-weight:600}
+.chart-legend{display:flex;align-items:center;gap:1rem}
+.chart-legend-item{display:flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:var(--text-secondary)}
+.chart-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+#timelineChart{display:block;width:100%;cursor:crosshair}
+.chart-tooltip{
+  position:absolute;background:#1a1a1a;border:1px solid var(--border-strong);
+  border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;color:var(--text);
+  pointer-events:none;white-space:nowrap;z-index:10;display:none;line-height:1.6;
+}
+
+/* ── SECTION HEADER ── */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
+.section-title{font-size:0.9rem;font-weight:600;color:var(--text)}
+
+/* ── SOURCE TABLE ── */
+.table-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
+table{width:100%;border-collapse:collapse}
+thead th{
+  font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--text-secondary);padding:0.75rem 1rem;text-align:left;
+  border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);
+}
+tbody tr{transition:background 0.1s ease;cursor:pointer}
+tbody tr:nth-child(odd){background:rgba(255,255,255,0.02)}
+tbody tr:hover{background:rgba(255,255,255,0.05)}
+tbody td{padding:0.75rem 1rem;font-size:0.84rem;vertical-align:middle;border-bottom:1px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+.source-cell{display:flex;align-items:center;gap:0.6rem}
+.source-icon{width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.rev-green{color:#16a34a;font-weight:600}
+.sparkline-cell{text-align:right}
+.expanded-row td{padding:0;background:rgba(0,102,255,0.04) !important;cursor:default}
+.expanded-content{padding:0.85rem 1rem;border-top:1px solid var(--border)}
+.expanded-content h4{font-size:0.75rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.65rem}
+
+/* ── PER-VIDEO SECTION ── */
+.video-links-list{display:flex;flex-direction:column;gap:0.5rem}
+.video-link-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.video-slug-input{
+  background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;
+  padding:0.45rem 0.65rem;font-size:0.78rem;color:var(--text);
+  outline:none;transition:border-color 0.15s ease;font-family:inherit;
+  flex:1;min-width:120px;
+}
+.video-slug-input:focus{border-color:var(--primary)}
+.video-slug-input::placeholder{color:var(--text-secondary)}
+.add-video-btn{
+  background:transparent;border:1px dashed var(--border-strong);color:var(--text-secondary);
+  border-radius:8px;padding:0.4rem 0.75rem;font-size:0.76rem;cursor:pointer;
+  transition:all 0.15s ease;display:inline-flex;align-items:center;gap:0.3rem;
+}
+.add-video-btn:hover{color:var(--text);border-color:#555}
+
+/* ── YT VIDEO API LIST ── */
+.yt-video-section{margin-bottom:0.85rem}
+.yt-video-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.65rem}
+.yt-video-list{display:flex;flex-direction:column;gap:0.25rem}
+.yt-video-item{display:flex;align-items:center;gap:0.75rem;padding:0.5rem;border-radius:8px;transition:background 0.1s ease}
+.yt-video-item:hover{background:rgba(255,255,255,0.04)}
+.yt-video-thumb{width:90px;height:50px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--border-strong)}
+.yt-video-info{flex:1;min-width:0}
+.yt-video-title{font-size:0.8rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:0.2rem}
+.yt-video-url{font-size:0.69rem;color:var(--text-secondary);font-family:"SF Mono",ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yt-video-stats{display:flex;gap:1rem;flex-shrink:0;align-items:center}
+.yt-stat{text-align:right}
+.yt-stat-val{font-size:0.8rem;font-weight:600;color:var(--text)}
+.yt-stat-lbl{font-size:0.67rem;color:var(--text-secondary)}
+.yt-loading{padding:0.85rem 0;display:flex;align-items:center;gap:0.65rem;color:var(--text-secondary);font-size:0.78rem}
+.yt-spinner{width:15px;height:15px;border:2px solid var(--border-strong);border-top-color:var(--primary);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+.yt-error{padding:0.6rem 0.75rem;font-size:0.78rem;color:#dc2626;background:rgba(220,38,38,0.08);border-radius:8px;border:1px solid rgba(220,38,38,0.2)}
+.yt-no-channel{padding:0.6rem 0.75rem;font-size:0.78rem;color:var(--text-secondary);background:rgba(255,255,255,0.02);border-radius:8px;border:1px dashed var(--border-strong)}
+.yt-custom-divider{display:flex;align-items:center;gap:0.65rem;margin:0.9rem 0 0.65rem;font-size:0.7rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em}
+.yt-custom-divider::before,.yt-custom-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── SALES LOG ── */
+.conv-log{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:1.75rem;overflow:hidden}
+.conv-log-empty{padding:3rem 1.5rem;text-align:center;color:var(--text-secondary)}
+.conv-log-empty svg{display:block;margin:0 auto 0.85rem;opacity:0.3}
+.conv-log-empty p{font-size:0.84rem}
+.conv-log-empty .hint{font-size:0.75rem;margin-top:0.3rem;opacity:0.6}
+.conv-entry{display:flex;align-items:center;gap:0.85rem;padding:0.85rem 1rem;border-bottom:1px solid var(--border);transition:background 0.1s ease}
+.conv-entry:last-child{border-bottom:none}
+.conv-entry:hover{background:rgba(255,255,255,0.03)}
+.conv-badge{flex-shrink:0;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:0.22rem 0.55rem;border-radius:999px}
+.badge-yt{background:#dc2626;color:#fff}
+.badge-ig{background:#7c3aed;color:#fff}
+.badge-meta{background:#1d4ed8;color:#fff}
+.badge-default{background:#374151;color:var(--text-secondary)}
+.conv-info{flex:1;min-width:0}
+.conv-time{font-size:0.75rem;color:var(--text-secondary)}
+.conv-note{font-size:0.82rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-revenue{font-size:0.82rem;font-weight:600;color:#16a34a;flex-shrink:0}
+.conv-delete{
+  background:transparent;border:none;color:var(--text-secondary);cursor:pointer;
+  padding:0.25rem;border-radius:4px;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 0.15s ease,color 0.15s ease;flex-shrink:0;
+}
+.conv-entry:hover .conv-delete{opacity:1}
+.conv-delete:hover{color:#dc2626}
+
+/* ── LINK GENERATOR ── */
+.links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.75rem}
+@media(max-width:700px){.links-grid{grid-template-columns:1fr}}
+.link-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1rem}
+.link-card-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.7rem}
+.link-card-title{font-size:0.84rem;font-weight:600}
+.link-url-box{
+  background:var(--input-bg);border:1px solid var(--input-border);border-radius:8px;
+  padding:0.5rem 0.65rem;font-size:0.72rem;color:var(--text-secondary);
+  font-family:"SF Mono",ui-monospace,monospace;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:0.65rem;
+}
+.copy-btn{
+  background:transparent;border:1px solid var(--border-strong);color:var(--text-secondary);
+  border-radius:8px;padding:0.35rem 0.75rem;font-size:0.75rem;font-weight:600;cursor:pointer;
+  transition:all 0.15s ease;
+}
+.copy-btn:hover{color:var(--text);border-color:#555}
+.copy-btn.copied{color:#16a34a;border-color:#16a34a}
+
+/* ── MODAL ── */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;
+  padding:1rem;opacity:0;pointer-events:none;
+  transition:opacity 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+.modal{
+  background:#222;border:1px solid #3d3d3d;border-radius:12px;
+  width:100%;max-width:500px;max-height:90vh;overflow-y:auto;
+  transform:translateY(12px) scale(0.98);
+  transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.modal-backdrop.open .modal{transform:translateY(0) scale(1)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.25rem;border-bottom:1px solid #3d3d3d}
+.modal-title{font-size:0.95rem;font-weight:700}
+.modal-body{padding:1.25rem}
+.modal-footer{padding:1rem 1.25rem;border-top:1px solid #3d3d3d;display:flex;justify-content:flex-end;gap:0.65rem}
+
+.form-group{margin-bottom:1.1rem}
+.form-label{display:block;font-size:0.78rem;font-weight:600;color:var(--text-secondary);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.04em}
+.form-input{
+  width:100%;background:var(--input-bg);border:1px solid var(--input-border);
+  border-radius:8px;padding:0.6rem 0.75rem;font-size:0.84rem;color:var(--text);
+  outline:none;transition:border-color 0.15s ease;font-family:inherit;
+}
+.form-input:focus{border-color:var(--primary)}
+.form-input::placeholder{color:var(--text-secondary)}
+select.form-input{cursor:pointer}
+select.form-input option{background:#2a2a2a;color:var(--text)}
+
+.danger-zone{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border-strong)}
+.danger-zone-title{font-size:0.75rem;font-weight:600;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.85rem}
+.danger-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.danger-desc{font-size:0.78rem;color:var(--text-secondary)}
+.divider{height:1px;background:var(--border);margin:1rem 0}
+.section-sub{font-size:0.78rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.75rem}
+
+/* ── SNIPPET ── */
+.snippet-wrap{margin-bottom:1rem}
+.snippet-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem}
+.snippet-label{font-size:0.75rem;font-weight:600;color:var(--text-secondary)}
+.snippet-textarea{
+  width:100%;background:var(--input-bg);border:1px solid var(--input-border);
+  border-radius:8px;padding:0.6rem 0.75rem;font-size:0.68rem;color:var(--text-secondary);
+  font-family:"SF Mono",ui-monospace,monospace;resize:none;outline:none;
+  line-height:1.6;height:130px;
+}
+
+/* ── TOAST ── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
+  background:#1e1e1e;border:1px solid var(--border-strong);border-radius:8px;
+  padding:0.65rem 1rem;font-size:0.82rem;color:var(--text);
+  animation:fadeInUp 0.2s ease;pointer-events:none;display:none;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .main{padding:1.25rem 1rem 3rem}
+  .header{padding:0 1rem}
+  thead th:nth-child(4),tbody td:nth-child(4){display:none}
+  .links-grid{grid-template-columns:1fr}
+  .yt-video-stats{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page-loading" id="pageLoading">
+  <span class="load-spinner"></span>
+  Loading data…
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <div class="wordmark">ARF Tracker</div>
+    <div class="subtitle">Attribution Dashboard</div>
+  </div>
+  <div class="header-right">
+    <button class="btn-icon" id="refreshBtn" aria-label="Refresh data" title="Refresh data">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    </button>
+    <button class="btn-icon" id="settingsBtn" aria-label="Open settings" title="Settings">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+    <button class="btn btn-primary btn-sm" id="logSaleBtn">+ Log Sale</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- DATE FILTER -->
+  <div class="date-filter">
+    <span class="date-filter-label">Range:</span>
+    <button class="pill" data-range="7">7D</button>
+    <button class="pill active" data-range="30">30D</button>
+    <button class="pill" data-range="90">90D</button>
+    <button class="pill" data-range="all">All Time</button>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="label">Total Clicks</div>
+      <div class="value" id="statClicks">—</div>
+      <div class="sub">across all sources</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Total Sales</div>
+      <div class="value" id="statSales">—</div>
+      <div class="sub" id="statSalesSub">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Total Revenue</div>
+      <div class="value" id="statRevenue" style="font-size:1.4rem">—</div>
+      <div class="sub" id="statRevSub">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Best Video</div>
+      <div class="value" id="statBestVideo" style="font-size:0.9rem;padding-top:0.2rem;line-height:1.3">No data yet</div>
+      <div class="sub" id="statBestSub">by sales</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE CHART -->
+  <div class="chart-wrap">
+    <div class="chart-header">
+      <span class="chart-title">Last 30 Days</span>
+      <div class="chart-legend">
+        <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#06f"></span>Clicks</div>
+        <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#16a34a"></span>Sales</div>
+      </div>
+    </div>
+    <canvas id="timelineChart"></canvas>
+    <div class="chart-tooltip" id="chartTooltip"></div>
+  </div>
+
+  <!-- SOURCE TABLE -->
+  <div class="section-header">
+    <div class="section-title">Source Breakdown</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Clicks</th>
+          <th>Sales</th>
+          <th>Revenue</th>
+          <th style="text-align:right">Trend (7d)</th>
+        </tr>
+      </thead>
+      <tbody id="sourceTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- SALES LOG -->
+  <div class="section-header">
+    <div class="section-title">Sales Log</div>
+    <span id="convCount" style="font-size:0.75rem;color:var(--text-secondary)"></span>
+  </div>
+  <div class="conv-log" id="convLog"></div>
+
+  <!-- TRACKING LINKS -->
+  <div class="section-header" style="margin-top:0.25rem">
+    <div class="section-title">Your Tracking Links</div>
+  </div>
+  <div class="links-grid" id="linksGrid"></div>
+
+</main>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="settingsTitle">Settings</span>
+      <button class="btn-icon" data-close="settingsModal" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="settingsBaseUrl">Landing Page URL</label>
+        <input type="url" class="form-input" id="settingsBaseUrl" placeholder="https://asherrobinsonfitness.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="settingsName">Creator Name</label>
+        <input type="text" class="form-input" id="settingsName" placeholder="Asher">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="settingsChannelId">YouTube Channel ID</label>
+        <input type="text" class="form-input" id="settingsChannelId" placeholder="UCxxxxxxxxxxxxxxxxxxxx">
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-sub">Tracking Snippet</div>
+      <p style="font-size:0.76rem;color:var(--text-secondary);margin-bottom:0.85rem">Paste these into your site. The landing page snippet logs clicks; the thank-you page snippet logs sales.</p>
+
+      <div class="snippet-wrap">
+        <div class="snippet-header">
+          <span class="snippet-label">Landing Page</span>
+          <button class="copy-btn btn-sm" id="copyLandingSnippet">Copy</button>
+        </div>
+        <textarea class="snippet-textarea" id="landingSnippet" readonly></textarea>
+      </div>
+      <div class="snippet-wrap">
+        <div class="snippet-header">
+          <span class="snippet-label">Thank-You Page</span>
+          <button class="copy-btn btn-sm" id="copyThankyouSnippet">Copy</button>
+        </div>
+        <textarea class="snippet-textarea" id="thankyouSnippet" readonly></textarea>
+      </div>
+
+      <div class="divider"></div>
+      <div class="danger-zone">
+        <div class="danger-zone-title">Danger Zone</div>
+        <div class="danger-row">
+          <div class="danger-desc">Clear all local settings and YouTube cache.</div>
+          <button class="btn btn-danger btn-sm" id="clearDataBtn">Clear Settings</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" data-close="settingsModal">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="saveSettingsBtn">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOG SALE MODAL -->
+<div class="modal-backdrop" id="logModal" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="logTitle">Log Sale</span>
+      <button class="btn-icon" data-close="logModal" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="logSource">Source</label>
+        <select class="form-input" id="logSource">
+          <option value="yt-bio">YouTube Bio</option>
+          <option value="yt-video">YouTube Video</option>
+          <option value="ig-bio">Instagram Bio</option>
+          <option value="meta">Meta Ads</option>
+        </select>
+      </div>
+      <div class="form-group" id="logVideoGroup" style="display:none">
+        <label class="form-label" for="logVideo">Video</label>
+        <select class="form-input" id="logVideo">
+          <option value="">Select a video…</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="logNote">Note <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-secondary)">(optional)</span></label>
+        <input type="text" class="form-input" id="logNote" placeholder="e.g. John D.">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="logRevenue">Revenue ($)</label>
+        <input type="number" class="form-input" id="logRevenue" placeholder="199" min="0" step="0.01" value="199">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" data-close="logModal">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="saveLogBtn">Log Sale</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── SUPABASE ───────────────────────────────────────────────
+const sb = window.supabase.createClient(
+  'https://oesygndfpoqhvxgedpqc.supabase.co',
+  'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r'
+);
+
+// ── ICONS ──────────────────────────────────────────────────
+const ICONS = {
+  'yt-bio':   `<svg width="18" height="18" viewBox="0 0 24 24" fill="#dc2626"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>`,
+  'yt-video': `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+  'ig-bio':   `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c026d3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  'meta':     `<svg width="18" height="18" viewBox="0 0 24 24" fill="#1d4ed8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>`,
+};
+
+// Source definitions (ref = the ?ref= value used in tracking links)
+const SOURCES = [
+  { id:'yt-bio',   label:'YouTube Bio',    ref:'yt-bio'  },
+  { id:'yt-video', label:'YouTube Videos', ref:'yt-video' },
+  { id:'ig-bio',   label:'Instagram Bio',  ref:'ig-bio'  },
+  { id:'meta',     label:'Meta Ads',       ref:'meta'    },
+];
+
+// ── STORAGE (settings only) ────────────────────────────────
+const LS_KEY = 'arf_tracker_v2';
+
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem(LS_KEY));
+    return s && s.settings ? s.settings : defaultSettings();
+  } catch { return defaultSettings(); }
+}
+
+function defaultSettings() {
+  return { baseUrl: 'https://asherrobinsonfitness.com', creatorName: 'Asher', channelId: '', ytVideosCache: null };
+}
+
+function saveSettings() {
+  localStorage.setItem(LS_KEY, JSON.stringify({ settings: DB.settings }));
+}
+
+// ── STATE ──────────────────────────────────────────────────
+const DB = {
+  settings: loadSettings(),
+  clicks: [],
+  conversions: [],
+};
+let activeRange = '30';
+
+// ── HELPERS ────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getTs(row) {
+  return row.created_at || row.timestamp || '';
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) +
+         ' · ' + d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+
+function dateRangeCutoff(range) {
+  if (range === 'all') return null;
+  const d = new Date(); d.setDate(d.getDate() - parseInt(range)); return d;
+}
+
+function inRange(row, cutoff) {
+  if (!cutoff) return true;
+  return new Date(getTs(row)) >= cutoff;
+}
+
+function matchesSource(item, srcId) {
+  const ref = item.ref || '';
+  if (srcId === 'yt-bio')   return ref === 'yt-bio';
+  if (srcId === 'yt-video') return ref.startsWith('yt-') && ref !== 'yt-bio';
+  if (srcId === 'ig-bio')   return ref === 'ig-bio';
+  if (srcId === 'meta')     return ref === 'meta';
+  return false;
+}
+
+function fmtRev(n) {
+  if (!n) return '—';
+  return '$' + parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+}
+
+function buildRefLink(baseUrl, ref) {
+  return (baseUrl || 'https://asherrobinsonfitness.com').replace(/\/$/, '') + '?ref=' + ref;
+}
+
+function getVideoTitle(videoId) {
+  const cache = DB.settings.ytVideosCache;
+  if (!cache || !cache.items) return videoId;
+  const v = cache.items.find(i => i.videoId === videoId);
+  return v ? v.title : videoId;
+}
+
+// ── SUPABASE DATA LOAD ─────────────────────────────────────
+async function loadFromSupabase() {
+  showPageLoading(true);
+  const [clicksRes, salesRes] = await Promise.all([
+    sb.from('clicks').select('*').order('created_at', { ascending: false }),
+    sb.from('sales').select('*').order('created_at', { ascending: false }),
+  ]);
+  if (clicksRes.error) console.warn('Clicks fetch error:', clicksRes.error.message);
+  if (salesRes.error) console.warn('Sales fetch error:', salesRes.error.message);
+  DB.clicks = clicksRes.data || [];
+  DB.conversions = salesRes.data || [];
+  showPageLoading(false);
+  render();
+}
+
+function showPageLoading(on) {
+  document.getElementById('pageLoading').classList.toggle('hidden', !on);
+}
+
+// ── RENDER ─────────────────────────────────────────────────
+function render() {
+  const cutoff = dateRangeCutoff(activeRange);
+  const fClicks = DB.clicks.filter(c => inRange(c, cutoff));
+  const fSales  = DB.conversions.filter(c => inRange(c, cutoff));
+
+  renderStatCards(fClicks, fSales);
+  drawChart();
+  renderSourceTable(fClicks, fSales);
+  renderSalesLog(fSales);
+  renderLinks();
+}
+
+// ── STAT CARDS ─────────────────────────────────────────────
+function renderStatCards(clicks, sales) {
+  document.getElementById('statClicks').textContent = clicks.length || '—';
+  document.getElementById('statSales').textContent  = sales.length  || '—';
+
+  const totalRev = sales.reduce((s, c) => s + (parseFloat(c.revenue) || 0), 0);
+  document.getElementById('statRevenue').textContent = totalRev > 0 ? '$' + totalRev.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}) : '—';
+  document.getElementById('statRevSub').textContent = sales.length ? sales.length + ' sale' + (sales.length !== 1 ? 's' : '') : 'no sales yet';
+  document.getElementById('statSalesSub').textContent = clicks.length ? (sales.length / Math.max(clicks.length,1)*100).toFixed(1) + '% CVR' : '—';
+
+  // Best video: most sales with a video_id
+  const videoSales = {};
+  sales.filter(s => s.video_id).forEach(s => { videoSales[s.video_id] = (videoSales[s.video_id] || 0) + 1; });
+  const topVideoId = Object.entries(videoSales).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const bvEl = document.getElementById('statBestVideo');
+  if (topVideoId) {
+    bvEl.textContent = getVideoTitle(topVideoId);
+    bvEl.style.fontSize = '0.82rem';
+    document.getElementById('statBestSub').textContent = videoSales[topVideoId] + ' sale' + (videoSales[topVideoId] !== 1 ? 's' : '');
+  } else {
+    bvEl.textContent = 'No data yet';
+    bvEl.style.fontSize = '0.9rem';
+    document.getElementById('statBestSub').textContent = 'by sales';
+  }
+}
+
+// ── CHART ──────────────────────────────────────────────────
+function drawChart() {
+  const canvas = document.getElementById('timelineChart');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40; // subtract padding
+  const H = 200;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const DAYS = 30;
+  const padL = 38, padR = 16, padT = 12, padB = 32;
+  const today = new Date(); today.setHours(23,59,59,999);
+
+  const labels = [], clicksArr = [], salesArr = [];
+  for (let i = DAYS - 1; i >= 0; i--) {
+    const day  = new Date(today); day.setDate(day.getDate() - i); day.setHours(0,0,0,0);
+    const next = new Date(day);   next.setDate(next.getDate() + 1);
+    labels.push(day);
+    clicksArr.push(DB.clicks.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
+    salesArr.push( DB.conversions.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
+  }
+
+  const maxVal = Math.max(...clicksArr, ...salesArr, 1);
+  const xOf = i => padL + (i / (DAYS - 1)) * (W - padL - padR);
+  const yOf = v => padT + (1 - v / maxVal) * (H - padT - padB);
+
+  // Grid lines + Y labels
+  ctx.textAlign = 'right';
+  ctx.font = `${10 * Math.min(1, W/400)}px system-ui`;
+  ctx.fillStyle = '#6b7280';
+  for (let g = 0; g <= 4; g++) {
+    const y = padT + (g / 4) * (H - padT - padB);
+    ctx.strokeStyle = '#2e2e2e';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillText(Math.round(maxVal * (1 - g/4)), padL - 5, y + 3.5);
+  }
+
+  // X labels every ~5 days
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#6b7280';
+  [0, 5, 10, 15, 20, 25, 29].forEach(i => {
+    const d = labels[i];
+    ctx.fillText((d.getMonth()+1)+'/'+d.getDate(), xOf(i), H - padB + 14);
+  });
+
+  // Draw a line + dots
+  function drawLine(data, color) {
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    data.forEach((v, i) => i === 0 ? ctx.moveTo(xOf(i), yOf(v)) : ctx.lineTo(xOf(i), yOf(v)));
+    ctx.stroke();
+    data.forEach((v, i) => {
+      ctx.beginPath(); ctx.arc(xOf(i), yOf(v), 2.5, 0, Math.PI*2);
+      ctx.fillStyle = color; ctx.fill();
+    });
+  }
+  drawLine(clicksArr, '#0066ff');
+  drawLine(salesArr,  '#16a34a');
+
+  // Store for tooltip
+  canvas._cd = { labels, clicksArr, salesArr, padL, padR, W, DAYS };
+}
+
+function initChartTooltip() {
+  const canvas  = document.getElementById('timelineChart');
+  const tooltip = document.getElementById('chartTooltip');
+  if (!canvas || !tooltip) return;
+  canvas.addEventListener('mousemove', e => {
+    const cd = canvas._cd; if (!cd) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const { padL, padR, W, DAYS, labels, clicksArr, salesArr } = cd;
+    const idx = Math.round((mx - padL) / (W - padL - padR) * (DAYS - 1));
+    if (idx < 0 || idx >= DAYS) { tooltip.style.display = 'none'; return; }
+    const d = labels[idx];
+    const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    tooltip.innerHTML = `<strong>${dateStr}</strong><br><span style="color:#6699ff">● ${clicksArr[idx]} click${clicksArr[idx]!==1?'s':''}</span><br><span style="color:#4ade80">● ${salesArr[idx]} sale${salesArr[idx]!==1?'s':''}</span>`;
+    tooltip.style.display = 'block';
+    const tipW = tooltip.offsetWidth;
+    const left = Math.min(mx + 14, W - tipW - 4);
+    tooltip.style.left = left + 'px';
+    tooltip.style.top  = '36px';
+  });
+  canvas.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+}
+
+// ── SOURCE TABLE ───────────────────────────────────────────
+function renderSourceTable(fClicks, fSales) {
+  const tbody = document.getElementById('sourceTableBody');
+  // Preserve expanded state across re-renders
+  const wasExpanded = [...tbody.querySelectorAll('.expanded-row')]
+    .filter(r => r.style.display !== 'none').map(r => r.dataset.expandFor);
+
+  tbody.innerHTML = '';
+  SOURCES.forEach(src => {
+    const clicks  = fClicks.filter(c => matchesSource(c, src.id)).length;
+    const sales   = fSales.filter(c => matchesSource(c, src.id)).length;
+    const revenue = fSales.filter(c => matchesSource(c, src.id)).reduce((s,c) => s+(parseFloat(c.revenue)||0), 0);
+    const spark   = buildSparkline(getSparklineData(src.id));
+
+    const tr = document.createElement('tr');
+    tr.dataset.source = src.id;
+    tr.innerHTML = `
+      <td><div class="source-cell"><span class="source-icon">${ICONS[src.id]}</span><span>${src.label}</span></div></td>
+      <td>${clicks}</td>
+      <td>${sales}</td>
+      <td><span class="${revenue > 0 ? 'rev-green' : ''}">${fmtRev(revenue)}</span></td>
+      <td class="sparkline-cell">${spark}</td>`;
+    tbody.appendChild(tr);
+
+    const expTr = document.createElement('tr');
+    expTr.className = 'expanded-row';
+    expTr.dataset.expandFor = src.id;
+    expTr.style.display = wasExpanded.includes(src.id) ? '' : 'none';
+    const expTd = document.createElement('td');
+    expTd.colSpan = 5;
+    expTd.innerHTML = buildExpandedContent(src);
+    expTr.appendChild(expTd);
+    tbody.appendChild(expTr);
+
+    if (wasExpanded.includes(src.id)) {
+      tr.style.background = 'rgba(0,102,255,0.06)';
+      if (src.id === 'yt-video') initYTExpand(expTr);
+      else initVideoLinkHandlers(expTr);
+    }
+  });
+}
+
+// Single delegated click handler on the table body container
+document.getElementById('sourceTableBody').addEventListener('click', function(e) {
+  const tr = e.target.closest('tr[data-source]');
+  if (!tr) return;
+  const srcId = tr.dataset.source;
+  const tbody = this;
+  const expRow = tbody.querySelector(`tr[data-expand-for="${srcId}"]`);
+  const wasOpen = expRow.style.display !== 'none';
+
+  tbody.querySelectorAll('.expanded-row').forEach(r => r.style.display = 'none');
+  tbody.querySelectorAll('tr[data-source]').forEach(r => r.style.background = '');
+
+  if (!wasOpen) {
+    expRow.style.display = '';
+    tr.style.background = 'rgba(0,102,255,0.06)';
+    if (srcId === 'yt-video') initYTExpand(expRow);
+    else initVideoLinkHandlers(expRow);
+  }
+});
+
+function buildExpandedContent(src) {
+  if (src.id === 'yt-video') {
+    return `<div class="expanded-content">
+      <div class="yt-video-section">
+        <div class="yt-video-section-header">
+          <h4 style="margin-bottom:0">Per-Video Stats &amp; Links</h4>
+          <button class="btn btn-ghost btn-sm yt-refresh-btn" style="display:flex;align-items:center;gap:0.35rem">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div class="yt-video-api-content" style="margin-top:0.65rem"></div>
+      </div>
+      <div class="yt-custom-divider">Or generate a custom link</div>
+      <div class="video-links-list">${buildVideoLinkRowHTML(DB.settings.baseUrl)}</div>
+      <button class="add-video-btn" style="margin-top:0.65rem">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add video
+      </button>
+    </div>`;
+  }
+  return `<div class="expanded-content"><p style="font-size:0.78rem;color:var(--text-secondary)">No sub-breakdown available for this source.</p></div>`;
+}
+
+function initYTExpand(expRow) {
+  const apiContent = expRow.querySelector('.yt-video-api-content');
+  if (apiContent) loadYTVideoSection(apiContent, DB.settings.baseUrl, DB.settings.channelId || '', false);
+  const refreshBtn = expRow.querySelector('.yt-refresh-btn');
+  if (refreshBtn) refreshBtn.onclick = e => { e.stopPropagation(); loadYTVideoSection(apiContent, DB.settings.baseUrl, DB.settings.channelId || '', true); };
+  initVideoLinkHandlers(expRow);
+}
+
+function initVideoLinkHandlers(expRow) {
+  const addBtn = expRow.querySelector('.add-video-btn');
+  if (addBtn) {
+    addBtn.onclick = e => { e.stopPropagation();
+      const list = expRow.querySelector('.video-links-list');
+      const row = buildVideoLinkRow(DB.settings.baseUrl);
+      list.appendChild(row);
+      initVideoLinkRow(row, DB.settings.baseUrl);
+    };
+  }
+  expRow.querySelectorAll('.video-link-row').forEach(row => initVideoLinkRow(row, DB.settings.baseUrl));
+}
+
+// ── SPARKLINES ─────────────────────────────────────────────
+function buildSparkline(data) {
+  const W = 56, H = 20, pad = 1;
+  const max = Math.max(...data, 1);
+  const points = data.map((v,i) => {
+    const x = pad + (i/6)*(W-pad*2);
+    const y = H - pad - ((v/max)*(H-pad*2));
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">
+    <polyline fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="${points}" opacity="0.7"/>
+    ${data.map((v,i) => {
+      const x = pad+(i/6)*(W-pad*2), y = H-pad-((v/max)*(H-pad*2));
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.5" fill="var(--primary)" opacity="${i===6?'1':'0.5'}"/>`;
+    }).join('')}
+  </svg>`;
+}
+
+function getSparklineData(srcId) {
+  const result = Array(7).fill(0);
+  const today = new Date(); today.setHours(23,59,59,999);
+  for (let i = 0; i < 7; i++) {
+    const day  = new Date(today); day.setDate(day.getDate()-(6-i)); day.setHours(0,0,0,0);
+    const next = new Date(day);   next.setDate(next.getDate()+1);
+    result[i] = DB.clicks.filter(c => matchesSource(c, srcId) && new Date(getTs(c)) >= day && new Date(getTs(c)) < next).length;
+  }
+  return result;
+}
+
+// ── VIDEO LINK ROWS (custom slug) ──────────────────────────
+function buildVideoLinkRowHTML(baseUrl) {
+  const url = buildRefLink(baseUrl, 'yt-');
+  return `<div class="video-link-row">
+    <input type="text" class="video-slug-input" placeholder="video-id (e.g. dQw4w9WgXcQ)">
+    <div class="link-url-box" style="flex:2;min-width:180px;margin-bottom:0;font-size:0.7rem">${escHtml(url)}</div>
+    <button class="copy-btn" style="flex-shrink:0">Copy</button>
+  </div>`;
+}
+
+function buildVideoLinkRow(baseUrl) {
+  const d = document.createElement('div');
+  d.innerHTML = buildVideoLinkRowHTML(baseUrl);
+  return d.firstElementChild;
+}
+
+function initVideoLinkRow(row, baseUrl) {
+  const input  = row.querySelector('.video-slug-input');
+  const urlBox = row.querySelector('.link-url-box');
+  const btn    = row.querySelector('.copy-btn');
+  if (!input || !urlBox || !btn) return;
+  function update() { urlBox.textContent = buildRefLink(baseUrl, 'yt-' + input.value.trim()); }
+  input.addEventListener('input', update);
+  btn.addEventListener('click', () => copyText(urlBox.textContent, btn));
+}
+
+// ── YOUTUBE API ────────────────────────────────────────────
+const YT_API_KEY  = 'AIzaSyC9uoJd71rSEnUw2HfzKjULIhnooPLbICo';
+const YT_CACHE_TTL = 60 * 60 * 1000;
+
+function parseISO8601Duration(dur) {
+  const m = dur.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return 0;
+  return (parseInt(m[1]||0)*3600) + (parseInt(m[2]||0)*60) + parseInt(m[3]||0);
+}
+
+async function fetchYTVideos(channelId, forceRefresh) {
+  const cache = DB.settings.ytVideosCache;
+  if (!forceRefresh && cache && cache.channelId === channelId && cache.timestamp && (Date.now()-cache.timestamp) < YT_CACHE_TTL)
+    return { ok:true, items:cache.items };
+  try {
+    const sr = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YT_API_KEY}&channelId=${encodeURIComponent(channelId)}&part=snippet&type=video&order=date&maxResults=25`);
+    const sd = await sr.json();
+    if (!sr.ok) return { ok:false, error: sd?.error?.message || `API error ${sr.status}` };
+
+    const items = sd.items || [];
+    const ids   = items.map(i => i.id.videoId).join(',');
+    const dr    = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YT_API_KEY}&id=${encodeURIComponent(ids)}&part=contentDetails`);
+    const dd    = await dr.json();
+    if (!dr.ok) return { ok:false, error: dd?.error?.message || `API error ${dr.status}` };
+
+    const durs = {};
+    (dd.items||[]).forEach(v => { durs[v.id] = parseISO8601Duration(v.contentDetails.duration); });
+
+    const filtered = items
+      .filter(i => (durs[i.id.videoId]??0) >= 60)
+      .map(i => ({ videoId:i.id.videoId, title:i.snippet.title, thumbnail:i.snippet.thumbnails?.default?.url||'' }));
+
+    DB.settings.ytVideosCache = { channelId, timestamp:Date.now(), items:filtered };
+    saveSettings();
+    return { ok:true, items:filtered };
+  } catch(e) { return { ok:false, error:e.message||'Network error' }; }
+}
+
+async function loadYTVideoSection(container, baseUrl, channelId, forceRefresh) {
+  if (!channelId) {
+    container.innerHTML = `<div class="yt-no-channel">Add your YouTube Channel ID in Settings to auto-load videos.</div>`;
+    return;
+  }
+  container.innerHTML = `<div class="yt-loading"><span class="yt-spinner"></span>Loading videos…</div>`;
+  const result = await fetchYTVideos(channelId, forceRefresh);
+  if (!result.ok) { container.innerHTML = `<div class="yt-error">Failed to load: ${escHtml(result.error)}</div>`; return; }
+  if (!result.items.length) { container.innerHTML = `<div class="yt-no-channel">No videos found for this channel.</div>`; return; }
+
+  // Sort by sales desc, then clicks desc
+  const sorted = [...result.items].sort((a, b) => {
+    const salesA = DB.conversions.filter(c => c.video_id === a.videoId).length;
+    const salesB = DB.conversions.filter(c => c.video_id === b.videoId).length;
+    if (salesB !== salesA) return salesB - salesA;
+    const clksA = DB.clicks.filter(c => c.video_id === a.videoId).length;
+    const clksB = DB.clicks.filter(c => c.video_id === b.videoId).length;
+    return clksB - clksA;
+  });
+
+  container.innerHTML = `<div class="yt-video-list">${sorted.map(item => {
+    const url     = buildRefLink(baseUrl, 'yt-' + item.videoId);
+    const vidClks = DB.clicks.filter(c => c.video_id === item.videoId).length;
+    const vidSales= DB.conversions.filter(c => c.video_id === item.videoId).length;
+    const vidRev  = DB.conversions.filter(c => c.video_id === item.videoId).reduce((s,c)=>s+(parseFloat(c.revenue)||0),0);
+    return `<div class="yt-video-item">
+      <img class="yt-video-thumb" src="${escHtml(item.thumbnail)}" alt="" loading="lazy" width="90" height="50">
+      <div class="yt-video-info">
+        <div class="yt-video-title" title="${escHtml(item.title)}">${escHtml(item.title)}</div>
+        <div class="yt-video-url">${escHtml(url)}</div>
+      </div>
+      <div class="yt-video-stats">
+        <div class="yt-stat"><div class="yt-stat-val">${vidClks}</div><div class="yt-stat-lbl">clicks</div></div>
+        <div class="yt-stat"><div class="yt-stat-val">${vidSales}</div><div class="yt-stat-lbl">sales</div></div>
+        <div class="yt-stat"><div class="yt-stat-val">${vidRev > 0 ? '$'+vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</div><div class="yt-stat-lbl">rev</div></div>
+        <button class="copy-btn" data-url="${escHtml(url)}" style="flex-shrink:0">Copy</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+
+  container.querySelectorAll('.copy-btn[data-url]').forEach(btn => {
+    btn.addEventListener('click', () => copyText(btn.dataset.url, btn));
+  });
+}
+
+// ── SALES LOG ──────────────────────────────────────────────
+function renderSalesLog(sales) {
+  const el = document.getElementById('convLog');
+  const countEl = document.getElementById('convCount');
+  countEl.textContent = sales.length ? sales.length + ' entr' + (sales.length===1?'y':'ies') : '';
+
+  if (!sales.length) {
+    el.innerHTML = `<div class="conv-log-empty">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <p>No sales logged yet.</p>
+      <p class="hint">Sales are logged automatically via the tracking snippet, or click '+ Log Sale'.</p>
+    </div>`;
+    return;
+  }
+
+  const sorted = [...sales].sort((a,b) => new Date(getTs(b)) - new Date(getTs(a)));
+  el.innerHTML = sorted.map(c => {
+    const ref = c.ref || '';
+    let badgeClass = 'badge-default', badgeLabel = ref || 'unknown';
+    if (ref === 'yt-bio') { badgeClass = 'badge-yt'; badgeLabel = 'YT Bio'; }
+    else if (ref.startsWith('yt-')) {
+      badgeClass = 'badge-yt';
+      badgeLabel = c.video_id ? getVideoTitle(c.video_id).slice(0, 28) + (getVideoTitle(c.video_id).length > 28 ? '…' : '') : 'YT Video';
+    }
+    else if (ref === 'ig-bio') { badgeClass = 'badge-ig'; badgeLabel = 'IG Bio'; }
+    else if (ref === 'meta')   { badgeClass = 'badge-meta'; badgeLabel = 'Meta'; }
+    const revStr  = c.revenue ? `<span class="conv-revenue">${fmtRev(c.revenue)}</span>` : '';
+    const noteStr = c.note    ? `<div class="conv-note">${escHtml(c.note)}</div>` : '';
+    return `<div class="conv-entry" data-id="${c.id}">
+      <span class="conv-badge ${badgeClass}" title="${escHtml(ref)}">${escHtml(badgeLabel)}</span>
+      <div class="conv-info">
+        <div class="conv-time">${formatDate(getTs(c))}</div>
+        ${noteStr}
+      </div>
+      ${revStr}
+      <button class="conv-delete" data-delete="${c.id}" aria-label="Delete">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('[data-delete]').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      if (!confirm('Delete this sale?')) return;
+      const { error } = await sb.from('sales').delete().eq('id', btn.dataset.delete);
+      if (error) { showToast('Delete failed: ' + error.message); return; }
+      await loadFromSupabase();
+    });
+  });
+}
+
+// ── TRACKING LINKS ─────────────────────────────────────────
+function renderLinks() {
+  const grid = document.getElementById('linksGrid');
+  const base = DB.settings.baseUrl || 'https://asherrobinsonfitness.com';
+  grid.innerHTML = SOURCES.map(src => {
+    const url = buildRefLink(base, src.ref);
+    return `<div class="link-card">
+      <div class="link-card-header"><span class="source-icon">${ICONS[src.id]}</span><span class="link-card-title">${src.label}</span></div>
+      <div class="link-url-box" title="${escHtml(url)}">${escHtml(url)}</div>
+      <button class="copy-btn" data-url="${escHtml(url)}">Copy</button>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('.copy-btn[data-url]').forEach(btn => {
+    btn.addEventListener('click', () => copyText(btn.dataset.url, btn));
+  });
+}
+
+// ── COPY HELPER ────────────────────────────────────────────
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+// ── MODAL SYSTEM ───────────────────────────────────────────
+function openModal(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  el.removeAttribute('aria-hidden');
+  setTimeout(() => { const f = el.querySelector('input,select,textarea,button'); if (f) f.focus(); }, 50);
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('open');
+  el.setAttribute('aria-hidden', 'true');
+}
+function trapFocus(modal, e) {
+  const f = modal.querySelectorAll('button,input,select,textarea,[tabindex]:not([tabindex="-1"])');
+  if (e.key === 'Tab') {
+    if (e.shiftKey ? document.activeElement === f[0] : document.activeElement === f[f.length-1]) {
+      e.preventDefault(); (e.shiftKey ? f[f.length-1] : f[0]).focus();
+    }
+  }
+}
+document.querySelectorAll('.modal-backdrop').forEach(bd => {
+  bd.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(bd.id); trapFocus(bd, e); });
+  bd.addEventListener('click',   e => { if (e.target===bd) closeModal(bd.id); });
+});
+document.querySelectorAll('[data-close]').forEach(btn => {
+  btn.addEventListener('click', () => closeModal(btn.dataset.close));
+});
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') document.querySelectorAll('.modal-backdrop.open').forEach(m => closeModal(m.id));
+});
+
+// ── SNIPPETS ───────────────────────────────────────────────
+const LANDING_SNIPPET = `<script>
+const ref = new URLSearchParams(location.search).get('ref');
+if (ref) {
+  sessionStorage.setItem('arf_ref', ref);
+  const videoId = ref.startsWith('yt-') && ref !== 'yt-bio'
+    ? ref.replace('yt-', '') : null;
+  fetch('https://oesygndfpoqhvxgedpqc.supabase.co/rest/v1/clicks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': 'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ ref, video_id: videoId })
+  });
+}
+<\/script>`;
+
+const THANKYOU_SNIPPET = `<script>
+const ref = sessionStorage.getItem('arf_ref') || 'unknown';
+const videoId = ref.startsWith('yt-') && ref !== 'yt-bio'
+  ? ref.replace('yt-', '') : null;
+fetch('https://oesygndfpoqhvxgedpqc.supabase.co/rest/v1/sales', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'apikey': 'sb_publishable_QMTAkyRddvRdkpcPXR4DfQ_uvSnXN1r',
+    'Prefer': 'return=minimal'
+  },
+  body: JSON.stringify({ ref, video_id: videoId, revenue: 199 })
+});
+<\/script>`;
+
+// ── SETTINGS ───────────────────────────────────────────────
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  document.getElementById('settingsBaseUrl').value = DB.settings.baseUrl || 'https://asherrobinsonfitness.com';
+  document.getElementById('settingsName').value    = DB.settings.creatorName || 'Asher';
+  document.getElementById('settingsChannelId').value = DB.settings.channelId || '';
+  document.getElementById('landingSnippet').value  = LANDING_SNIPPET;
+  document.getElementById('thankyouSnippet').value = THANKYOU_SNIPPET;
+  openModal('settingsModal');
+});
+
+document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+  DB.settings.baseUrl     = document.getElementById('settingsBaseUrl').value.trim() || 'https://asherrobinsonfitness.com';
+  DB.settings.creatorName = document.getElementById('settingsName').value.trim() || 'Asher';
+  DB.settings.channelId   = document.getElementById('settingsChannelId').value.trim();
+  saveSettings();
+  closeModal('settingsModal');
+  render();
+  showToast('Settings saved');
+});
+
+document.getElementById('copyLandingSnippet').addEventListener('click', function() { copyText(LANDING_SNIPPET, this); });
+document.getElementById('copyThankyouSnippet').addEventListener('click', function() { copyText(THANKYOU_SNIPPET, this); });
+
+document.getElementById('clearDataBtn').addEventListener('click', () => {
+  if (!confirm('Clear all local settings?')) return;
+  DB.settings = defaultSettings();
+  saveSettings();
+  closeModal('settingsModal');
+  render();
+  showToast('Settings cleared');
+});
+
+// ── REFRESH ────────────────────────────────────────────────
+document.getElementById('refreshBtn').addEventListener('click', () => loadFromSupabase());
+
+// ── LOG SALE ───────────────────────────────────────────────
+document.getElementById('logSaleBtn').addEventListener('click', () => {
+  document.getElementById('logNote').value    = '';
+  document.getElementById('logRevenue').value = '199';
+  document.getElementById('logSource').value  = 'yt-bio';
+  document.getElementById('logVideoGroup').style.display = 'none';
+  openModal('logModal');
+});
+
+document.getElementById('logSource').addEventListener('change', function() {
+  const group = document.getElementById('logVideoGroup');
+  if (this.value === 'yt-video') {
+    group.style.display = '';
+    const sel = document.getElementById('logVideo');
+    sel.innerHTML = '<option value="">Select a video…</option>';
+    const items = DB.settings.ytVideosCache?.items || [];
+    items.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.videoId;
+      opt.textContent = v.title.length > 60 ? v.title.slice(0,60)+'…' : v.title;
+      sel.appendChild(opt);
+    });
+  } else {
+    group.style.display = 'none';
+  }
+});
+
+document.getElementById('saveLogBtn').addEventListener('click', async () => {
+  const source  = document.getElementById('logSource').value;
+  const videoId = source === 'yt-video' ? document.getElementById('logVideo').value : null;
+  const note    = document.getElementById('logNote').value.trim();
+  const revenue = parseFloat(document.getElementById('logRevenue').value) || null;
+
+  let ref = source;
+  if (source === 'yt-video' && videoId) ref = 'yt-' + videoId;
+
+  const payload = { ref, video_id: videoId || null, note: note || null, revenue };
+  const { error } = await sb.from('sales').insert(payload);
+  if (error) { showToast('Error: ' + error.message); return; }
+  closeModal('logModal');
+  await loadFromSupabase();
+  showToast('Sale logged');
+});
+
+// ── DATE FILTER ────────────────────────────────────────────
+document.querySelectorAll('.pill[data-range]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill[data-range]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeRange = btn.dataset.range;
+    render();
+  });
+});
+
+// ── TOAST ──────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2400);
+}
+
+// ── RESIZE: redraw chart ───────────────────────────────────
+let resizeTimer;
+window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawChart, 150); });
+
+// ── INIT ───────────────────────────────────────────────────
+initChartTooltip();
+loadFromSupabase();
+</script>
+</body>
+</html>
