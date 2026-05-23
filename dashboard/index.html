@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARF Tracker — Attribution Dashboard</title>
+<title>Attribution Dashboard</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -35,8 +35,7 @@ body{
   padding:0 1.5rem;height:60px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.header-left .wordmark{font-size:1.05rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
-.header-left .subtitle{font-size:0.72rem;color:var(--text-secondary);margin-top:1px}
+.header-left .wordmark{font-size:0.8125rem;font-weight:600;color:var(--text);white-space:nowrap}
 .header-right{display:flex;align-items:center;gap:0.75rem}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;
@@ -284,6 +283,67 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
   animation:fadeInUp 0.2s ease;pointer-events:none;display:none;
 }
 
+/* ── TRENDS BAR ── */
+.trends-bar{display:flex;gap:0.75rem;margin-bottom:1.75rem;overflow-x:auto;padding-bottom:4px}
+.trends-bar::-webkit-scrollbar{height:3px}
+.trend-tile{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:0.75rem 1rem;flex-shrink:0;min-width:110px}
+.trend-tile-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.3rem}
+.trend-tile-val{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:0.2rem}
+.trend-tile-val.trend-tile-val--sm{font-size:0.78rem;padding-top:0.1rem;line-height:1.3}
+.trend-delta{font-size:0.72rem;font-weight:600}
+.t-up{color:#16a34a}.t-down{color:#dc2626}.t-flat{color:var(--text-secondary)}
+
+/* ── SORT PILLS ── */
+.sort-pills{display:flex;gap:0.4rem;margin-bottom:0.75rem;flex-wrap:wrap}
+.sort-pill{
+  padding:0.28rem 0.65rem;border-radius:999px;font-size:0.72rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--border-strong);background:transparent;
+  color:var(--text-secondary);transition:background 0.15s ease,color 0.15s ease,border-color 0.15s ease;
+}
+.sort-pill:hover{color:var(--text);border-color:#555}
+.sort-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ── VIDEO TABLE ── */
+.video-table{width:100%;border-collapse:collapse;font-size:0.8rem}
+.video-table th{
+  font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--text-secondary);padding:0.55rem 0.65rem;text-align:right;
+  border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;
+  transition:color 0.15s ease;
+}
+.video-table th:first-child{text-align:left}
+.video-table th.sort-active{color:var(--text)}
+.video-table th .sort-arrow{margin-left:3px;opacity:0.5;font-style:normal}
+.video-table th.sort-active .sort-arrow{opacity:1}
+.video-table td{padding:0.55rem 0.65rem;vertical-align:middle;border-bottom:1px solid var(--border);text-align:right}
+.video-table td:first-child{text-align:left}
+.video-table tr:last-child td{border-bottom:none}
+.video-table tr:hover td{background:rgba(255,255,255,0.03)}
+.vt-thumb{width:72px;height:40px;border-radius:5px;object-fit:cover;vertical-align:middle;background:var(--border-strong)}
+.vt-title{font-size:0.78rem;font-weight:500;color:var(--text);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vt-title-wrap{display:flex;align-items:center;gap:0.6rem}
+.cvr-high{color:#16a34a;font-weight:600}
+.cvr-mid{color:#ca8a04;font-weight:600}
+.cvr-low{color:var(--text-secondary)}
+
+/* ── VIEWER JOURNEY ── */
+.journey-timeline{margin-top:0.75rem;padding-left:1.1rem;border-left:2px solid var(--border-strong)}
+.journey-event{position:relative;padding:0.3rem 0 0.3rem 0.5rem;font-size:0.75rem}
+.journey-event::before{content:'';position:absolute;left:-1.18rem;top:8px;width:8px;height:8px;border-radius:50%;background:var(--primary);border:2px solid var(--bg)}
+.journey-event.journey-sale::before{background:#16a34a}
+.journey-event-label{color:var(--text-secondary)}
+.journey-event-time{font-size:0.68rem;color:var(--text-secondary);margin-top:1px}
+.conv-entry.has-journey{cursor:pointer}
+.conv-entry.has-journey:after{content:'▸';margin-left:auto;padding-left:0.5rem;font-size:0.72rem;color:var(--text-secondary);flex-shrink:0;transition:transform 0.15s ease}
+.conv-entry.has-journey.journey-open:after{transform:rotate(90deg)}
+.journey-row{padding:0 1rem 0.85rem 1rem;border-bottom:1px solid var(--border)}
+.journey-row:last-of-type{border-bottom:none}
+
+/* ── OAUTH STATUS ── */
+.yt-auth-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.5rem}
+.yt-connected{color:#16a34a;font-size:0.78rem;font-weight:600}
+.yt-disconnected{color:var(--text-secondary);font-size:0.78rem}
+
 /* ── RESPONSIVE ── */
 @media(max-width:600px){
   .main{padding:1.25rem 1rem 3rem}
@@ -304,8 +364,7 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
-    <div class="wordmark">ARF Tracker</div>
-    <div class="subtitle">Attribution Dashboard</div>
+    <div class="wordmark">Attribution Dashboard</div>
   </div>
   <div class="header-right">
     <button class="btn-icon" id="refreshBtn" aria-label="Refresh data" title="Refresh data">
@@ -316,7 +375,6 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
         <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
       </svg>
     </button>
-    <button class="btn btn-primary btn-sm" id="logSaleBtn">+ Log Sale</button>
   </div>
 </header>
 
@@ -350,17 +408,21 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
       <div class="sub" id="statRevSub">—</div>
     </div>
     <div class="stat-card">
-      <div class="label">Best Video</div>
+      <div class="label">Top CVR Video</div>
       <div class="value" id="statBestVideo" style="font-size:0.9rem;padding-top:0.2rem;line-height:1.3">No data yet</div>
-      <div class="sub" id="statBestSub">by sales</div>
+      <div class="sub" id="statBestSub">min 5 clicks</div>
     </div>
   </div>
+
+  <!-- TRENDS BAR -->
+  <div class="trends-bar" id="trendsBar"></div>
 
   <!-- TIMELINE CHART -->
   <div class="chart-wrap">
     <div class="chart-header">
       <span class="chart-title">Last 30 Days</span>
       <div class="chart-legend">
+        <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#7c3aed"></span>Views</div>
         <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#06f"></span>Clicks</div>
         <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#16a34a"></span>Sales</div>
       </div>
@@ -378,8 +440,10 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
       <thead>
         <tr>
           <th>Source</th>
+          <th>Views</th>
           <th>Clicks</th>
           <th>Sales</th>
+          <th>CVR</th>
           <th>Revenue</th>
           <th style="text-align:right">Trend (7d)</th>
         </tr>
@@ -427,6 +491,14 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
       </div>
 
       <div class="divider"></div>
+      <div class="section-sub">YouTube Analytics</div>
+      <div class="yt-auth-row">
+        <span id="ytAuthStatus" class="yt-disconnected">Not connected</span>
+        <button class="btn btn-ghost btn-sm" id="ytConnectBtn">Connect YouTube</button>
+      </div>
+      <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:0.25rem">Connect to pull real view counts per video into the dashboard.</p>
+
+      <div class="divider"></div>
       <div class="section-sub">Tracking Snippet</div>
       <p style="font-size:0.76rem;color:var(--text-secondary);margin-bottom:0.85rem">Paste these into your site. The landing page snippet logs clicks; the thank-you page snippet logs sales.</p>
 
@@ -457,47 +529,6 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
     <div class="modal-footer">
       <button class="btn btn-ghost btn-sm" data-close="settingsModal">Cancel</button>
       <button class="btn btn-primary btn-sm" id="saveSettingsBtn">Save Settings</button>
-    </div>
-  </div>
-</div>
-
-<!-- LOG SALE MODAL -->
-<div class="modal-backdrop" id="logModal" role="dialog" aria-modal="true" aria-labelledby="logTitle">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="logTitle">Log Sale</span>
-      <button class="btn-icon" data-close="logModal" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label" for="logSource">Source</label>
-        <select class="form-input" id="logSource">
-          <option value="yt-bio">YouTube Bio</option>
-          <option value="yt-video">YouTube Video</option>
-          <option value="ig-bio">Instagram Bio</option>
-          <option value="meta">Meta Ads</option>
-        </select>
-      </div>
-      <div class="form-group" id="logVideoGroup" style="display:none">
-        <label class="form-label" for="logVideo">Video</label>
-        <select class="form-input" id="logVideo">
-          <option value="">Select a video…</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="logNote">Note <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-secondary)">(optional)</span></label>
-        <input type="text" class="form-input" id="logNote" placeholder="e.g. John D.">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="logRevenue">Revenue ($)</label>
-        <input type="number" class="form-input" id="logRevenue" placeholder="199" min="0" step="0.01" value="199">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" data-close="logModal">Cancel</button>
-      <button class="btn btn-primary btn-sm" id="saveLogBtn">Log Sale</button>
     </div>
   </div>
 </div>
@@ -555,6 +586,8 @@ const DB = {
   conversions: [],
 };
 let activeRange = '30';
+let videoSortKey = 'sales';
+let videoSortDir = 'desc';
 
 // ── HELPERS ────────────────────────────────────────────────
 function escHtml(s) {
@@ -636,11 +669,15 @@ function showPageLoading(on) {
 
 // ── RENDER ─────────────────────────────────────────────────
 function render() {
-  const cutoff = dateRangeCutoff(activeRange);
+  const cutoff  = dateRangeCutoff(activeRange);
+  const prevCutoff = dateRangeCutoff(activeRange === 'all' ? 'all' : String(parseInt(activeRange) * 2));
   const fClicks = DB.clicks.filter(c => inRange(c, cutoff));
   const fSales  = DB.conversions.filter(c => inRange(c, cutoff));
+  const pClicks = activeRange === 'all' ? [] : DB.clicks.filter(c => inRange(c, prevCutoff) && !inRange(c, cutoff));
+  const pSales  = activeRange === 'all' ? [] : DB.conversions.filter(c => inRange(c, prevCutoff) && !inRange(c, cutoff));
 
   renderStatCards(fClicks, fSales);
+  renderTrendsBar(fClicks, fSales, pClicks, pSales);
   drawChart();
   renderSourceTable(fClicks, fSales);
   renderSalesLog(fSales);
@@ -657,20 +694,79 @@ function renderStatCards(clicks, sales) {
   document.getElementById('statRevSub').textContent = sales.length ? sales.length + ' sale' + (sales.length !== 1 ? 's' : '') : 'no sales yet';
   document.getElementById('statSalesSub').textContent = clicks.length ? (sales.length / Math.max(clicks.length,1)*100).toFixed(1) + '% CVR' : '—';
 
-  // Best video: most sales with a video_id
-  const videoSales = {};
-  sales.filter(s => s.video_id).forEach(s => { videoSales[s.video_id] = (videoSales[s.video_id] || 0) + 1; });
-  const topVideoId = Object.entries(videoSales).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  // Top CVR Video: highest click→sale CVR with at least 5 clicks
+  const videoClicks = {}, videoSalesMap = {};
+  clicks.filter(c => c.video_id).forEach(c => { videoClicks[c.video_id] = (videoClicks[c.video_id] || 0) + 1; });
+  sales.filter(s => s.video_id).forEach(s => { videoSalesMap[s.video_id] = (videoSalesMap[s.video_id] || 0) + 1; });
+  const qualified = Object.entries(videoClicks).filter(([,clk]) => clk >= 5).map(([vid, clk]) => {
+    const sal = videoSalesMap[vid] || 0;
+    return { vid, cvr: sal / clk, clk, sal };
+  }).sort((a,b) => b.cvr - a.cvr);
+  const top = qualified[0];
   const bvEl = document.getElementById('statBestVideo');
-  if (topVideoId) {
-    bvEl.textContent = getVideoTitle(topVideoId);
+  if (top) {
+    bvEl.textContent = getVideoTitle(top.vid);
     bvEl.style.fontSize = '0.82rem';
-    document.getElementById('statBestSub').textContent = videoSales[topVideoId] + ' sale' + (videoSales[topVideoId] !== 1 ? 's' : '');
+    document.getElementById('statBestSub').textContent = (top.cvr * 100).toFixed(1) + '% CVR · ' + top.sal + ' sale' + (top.sal !== 1 ? 's' : '');
   } else {
     bvEl.textContent = 'No data yet';
     bvEl.style.fontSize = '0.9rem';
-    document.getElementById('statBestSub').textContent = 'by sales';
+    document.getElementById('statBestSub').textContent = 'min 5 clicks';
   }
+}
+
+// ── TRENDS BAR ─────────────────────────────────────────────
+function renderTrendsBar(fClicks, fSales, pClicks, pSales) {
+  const bar = document.getElementById('trendsBar');
+  if (!bar) return;
+
+  const curRev  = fSales.reduce((s,c) => s + (parseFloat(c.revenue)||0), 0);
+  const prevRev = pSales.reduce((s,c) => s + (parseFloat(c.revenue)||0), 0);
+  const curCVR  = fClicks.length ? fSales.length / fClicks.length : 0;
+  const prevCVR = pClicks.length ? pSales.length / pClicks.length : 0;
+
+  // Best video this period by CVR (≥5 clicks)
+  const vClks = {}, vSals = {};
+  fClicks.filter(c => c.video_id).forEach(c => { vClks[c.video_id] = (vClks[c.video_id]||0)+1; });
+  fSales.filter(s => s.video_id).forEach(s => { vSals[s.video_id] = (vSals[s.video_id]||0)+1; });
+  const bestVidEntry = Object.entries(vClks).filter(([,n]) => n >= 5)
+    .map(([id, n]) => ({ id, cvr: (vSals[id]||0)/n })).sort((a,b) => b.cvr - a.cvr)[0];
+
+  function delta(cur, prev, isPercent) {
+    if (activeRange === 'all' || prev === 0) return `<span class="t-flat">—</span>`;
+    const pct = ((cur - prev) / prev) * 100;
+    const sign = pct > 0 ? '+' : '';
+    const cls  = pct > 0.5 ? 't-up' : pct < -0.5 ? 't-down' : 't-flat';
+    return `<span class="${cls}">${sign}${pct.toFixed(1)}%</span>`;
+  }
+
+  // Analytics views total (daily sum)
+  const analytics = _analyticsCache;
+  let viewsVal = '—', viewsDelta = `<span class="t-flat">—</span>`;
+  if (analytics && analytics.byDay) {
+    const today = new Date();
+    let curViews = 0;
+    for (let i = 0; i < parseInt(activeRange)||30; i++) {
+      const d = new Date(today); d.setDate(d.getDate() - i);
+      curViews += analytics.byDay[d.toISOString().slice(0,10)] || 0;
+    }
+    viewsVal = curViews.toLocaleString();
+  }
+
+  const tiles = [
+    { label:'Views',    val: viewsVal,                        extra: viewsDelta },
+    { label:'Clicks',   val: fClicks.length,                  extra: delta(fClicks.length, pClicks.length) },
+    { label:'Sales',    val: fSales.length,                   extra: delta(fSales.length, pSales.length) },
+    { label:'Revenue',  val: curRev > 0 ? fmtRev(curRev) : '—', extra: delta(curRev, prevRev) },
+    { label:'CVR',      val: fClicks.length ? (curCVR*100).toFixed(1)+'%' : '—', extra: delta(curCVR, prevCVR) },
+    { label:'Best Video', val: bestVidEntry ? getVideoTitle(bestVidEntry.id) : 'No data', extra: '', sm: !!bestVidEntry },
+  ];
+
+  bar.innerHTML = tiles.map(t => `<div class="trend-tile">
+    <div class="trend-tile-label">${t.label}</div>
+    <div class="trend-tile-val${t.sm ? ' trend-tile-val--sm' : ''}">${t.val}</div>
+    ${t.extra ? `<div class="trend-delta">${t.extra}</div>` : ''}
+  </div>`).join('');
 }
 
 // ── CHART ──────────────────────────────────────────────────
@@ -691,16 +787,21 @@ function drawChart() {
   const padL = 38, padR = 16, padT = 12, padB = 32;
   const today = new Date(); today.setHours(23,59,59,999);
 
-  const labels = [], clicksArr = [], salesArr = [];
+  const labels = [], clicksArr = [], salesArr = [], viewsArr = [];
   for (let i = DAYS - 1; i >= 0; i--) {
     const day  = new Date(today); day.setDate(day.getDate() - i); day.setHours(0,0,0,0);
     const next = new Date(day);   next.setDate(next.getDate() + 1);
+    const dayKey = day.toISOString().slice(0, 10);
     labels.push(day);
     clicksArr.push(DB.clicks.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
     salesArr.push( DB.conversions.filter(c => { const t = new Date(getTs(c)); return t >= day && t < next; }).length);
+    viewsArr.push(_analyticsCache?.byDay?.[dayKey] || 0);
   }
 
-  const maxVal = Math.max(...clicksArr, ...salesArr, 1);
+  const hasViews = viewsArr.some(v => v > 0);
+  const maxVal   = Math.max(...clicksArr, ...salesArr, hasViews ? 0 : 0, 1);
+  // Views are typically much larger — normalise to a secondary scale so lines remain visible
+  const maxViews = Math.max(...viewsArr, 1);
   const xOf = i => padL + (i / (DAYS - 1)) * (W - padL - padR);
   const yOf = v => padT + (1 - v / maxVal) * (H - padT - padB);
 
@@ -736,11 +837,23 @@ function drawChart() {
       ctx.fillStyle = color; ctx.fill();
     });
   }
+  if (hasViews) {
+    // Views drawn on its own scale so it doesn't dwarf clicks/sales
+    function drawLineScaled(data, color, scale) {
+      const yOfScaled = v => padT + (1 - v / scale) * (H - padT - padB);
+      ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      data.forEach((v, i) => i === 0 ? ctx.moveTo(xOf(i), yOfScaled(v)) : ctx.lineTo(xOf(i), yOfScaled(v)));
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    drawLineScaled(viewsArr, '#7c3aed', maxViews);
+  }
   drawLine(clicksArr, '#0066ff');
   drawLine(salesArr,  '#16a34a');
 
   // Store for tooltip
-  canvas._cd = { labels, clicksArr, salesArr, padL, padR, W, DAYS };
+  canvas._cd = { labels, clicksArr, salesArr, viewsArr, hasViews, maxViews, padL, padR, W, DAYS };
 }
 
 function initChartTooltip() {
@@ -751,12 +864,13 @@ function initChartTooltip() {
     const cd = canvas._cd; if (!cd) return;
     const rect = canvas.getBoundingClientRect();
     const mx = e.clientX - rect.left;
-    const { padL, padR, W, DAYS, labels, clicksArr, salesArr } = cd;
+    const { padL, padR, W, DAYS, labels, clicksArr, salesArr, viewsArr, hasViews } = cd;
     const idx = Math.round((mx - padL) / (W - padL - padR) * (DAYS - 1));
     if (idx < 0 || idx >= DAYS) { tooltip.style.display = 'none'; return; }
     const d = labels[idx];
     const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    tooltip.innerHTML = `<strong>${dateStr}</strong><br><span style="color:#6699ff">● ${clicksArr[idx]} click${clicksArr[idx]!==1?'s':''}</span><br><span style="color:#4ade80">● ${salesArr[idx]} sale${salesArr[idx]!==1?'s':''}</span>`;
+    const viewLine = hasViews ? `<br><span style="color:#a78bfa">● ${(viewsArr[idx]||0).toLocaleString()} view${viewsArr[idx]!==1?'s':''}</span>` : '';
+    tooltip.innerHTML = `<strong>${dateStr}</strong>${viewLine}<br><span style="color:#6699ff">● ${clicksArr[idx]} click${clicksArr[idx]!==1?'s':''}</span><br><span style="color:#4ade80">● ${salesArr[idx]} sale${salesArr[idx]!==1?'s':''}</span>`;
     tooltip.style.display = 'block';
     const tipW = tooltip.offsetWidth;
     const left = Math.min(mx + 14, W - tipW - 4);
@@ -780,12 +894,23 @@ function renderSourceTable(fClicks, fSales) {
     const revenue = fSales.filter(c => matchesSource(c, src.id)).reduce((s,c) => s+(parseFloat(c.revenue)||0), 0);
     const spark   = buildSparkline(getSparklineData(src.id));
 
+    const cvr    = clicks > 0 ? (sales / clicks * 100).toFixed(1) + '%' : '—';
+    const analyticsData = _analyticsCache;
+    let views = '—';
+    if (src.id === 'yt-video' && analyticsData && analyticsData.byVideo) {
+      let total = 0;
+      Object.values(analyticsData.byVideo).forEach(v => { total += v; });
+      views = total.toLocaleString();
+    }
+
     const tr = document.createElement('tr');
     tr.dataset.source = src.id;
     tr.innerHTML = `
       <td><div class="source-cell"><span class="source-icon">${ICONS[src.id]}</span><span>${src.label}</span></div></td>
+      <td>${views}</td>
       <td>${clicks}</td>
       <td>${sales}</td>
+      <td>${cvr}</td>
       <td><span class="${revenue > 0 ? 'rev-green' : ''}">${fmtRev(revenue)}</span></td>
       <td class="sparkline-cell">${spark}</td>`;
     tbody.appendChild(tr);
@@ -795,7 +920,7 @@ function renderSourceTable(fClicks, fSales) {
     expTr.dataset.expandFor = src.id;
     expTr.style.display = wasExpanded.includes(src.id) ? '' : 'none';
     const expTd = document.createElement('td');
-    expTd.colSpan = 5;
+    expTd.colSpan = 7;
     expTd.innerHTML = buildExpandedContent(src);
     expTr.appendChild(expTd);
     tbody.appendChild(expTr);
@@ -928,6 +1053,111 @@ function initVideoLinkRow(row, baseUrl) {
   btn.addEventListener('click', () => copyText(urlBox.textContent, btn));
 }
 
+// ── YOUTUBE OAUTH ──────────────────────────────────────────
+const OAUTH_CLIENT_ID   = '468395099532-k4t9uo8fmgdl6g9sc0roupbktr26n8ah.apps.googleusercontent.com';
+const OAUTH_REDIRECT_URI = 'https://asherrobinsonfitness.com/dashboard';
+
+function getYTToken() {
+  const token  = localStorage.getItem('yt_access_token');
+  const expiry = parseInt(localStorage.getItem('yt_token_expiry') || '0');
+  if (!token || Date.now() > expiry) return null;
+  return token;
+}
+function clearYTToken() {
+  localStorage.removeItem('yt_access_token');
+  localStorage.removeItem('yt_token_expiry');
+}
+function handleYTTokenExpiry() {
+  clearYTToken();
+  showToast('YouTube session expired — reconnect in Settings');
+  updateOAuthUI();
+  render();
+}
+function connectYouTubeAnalytics() {
+  const scope = 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly';
+  const url   = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${OAUTH_CLIENT_ID}&redirect_uri=${encodeURIComponent(OAUTH_REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(scope)}`;
+  window.location.href = url;
+}
+function handleOAuthCallback() {
+  const hash = window.location.hash;
+  if (!hash.includes('access_token=')) return;
+  const params   = new URLSearchParams(hash.slice(1));
+  const token    = params.get('access_token');
+  const expiresIn = parseInt(params.get('expires_in') || '3600');
+  if (token) {
+    localStorage.setItem('yt_access_token', token);
+    localStorage.setItem('yt_token_expiry', String(Date.now() + expiresIn * 1000));
+    history.replaceState(null, '', window.location.pathname);
+    showToast('YouTube Analytics connected ✓');
+    updateOAuthUI();
+    render();
+  }
+}
+function updateOAuthUI() {
+  const statusEl  = document.getElementById('ytAuthStatus');
+  const connectEl = document.getElementById('ytConnectBtn');
+  if (!statusEl || !connectEl) return;
+  const token = getYTToken();
+  if (token) {
+    statusEl.textContent = 'Connected';
+    statusEl.className   = 'yt-connected';
+    connectEl.textContent = 'Disconnect';
+    connectEl.onclick = () => { clearYTToken(); updateOAuthUI(); render(); showToast('YouTube disconnected'); };
+  } else {
+    statusEl.textContent = 'Not connected';
+    statusEl.className   = 'yt-disconnected';
+    connectEl.textContent = 'Connect YouTube';
+    connectEl.onclick = connectYouTubeAnalytics;
+  }
+}
+
+// ── YOUTUBE ANALYTICS API ──────────────────────────────────
+let _analyticsCache = null;
+
+async function fetchYTAnalytics(videoIds, forceRefresh) {
+  const token = getYTToken();
+  if (!token || !videoIds.length) return null;
+
+  if (!forceRefresh && _analyticsCache && _analyticsCache.timestamp &&
+      (Date.now() - _analyticsCache.timestamp) < YT_CACHE_TTL) {
+    return _analyticsCache;
+  }
+
+  const today   = new Date().toISOString().slice(0, 10);
+  const start30 = new Date(); start30.setDate(start30.getDate() - 29);
+  const start30Str = start30.toISOString().slice(0, 10);
+
+  try {
+    // Per-video lifetime views
+    const videoFilter = videoIds.map(id => `video==${id}`).join(',');
+    const videoRes = await fetch(
+      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=video&filters=${encodeURIComponent('video==' + videoIds.join(','))}&startDate=2020-01-01&endDate=${today}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (videoRes.status === 401) { handleYTTokenExpiry(); return null; }
+    const videoData = await videoRes.json();
+
+    // Daily channel views (30 days, for chart)
+    const dailyRes = await fetch(
+      `https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&metrics=views&dimensions=day&startDate=${start30Str}&endDate=${today}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (dailyRes.status === 401) { handleYTTokenExpiry(); return null; }
+    const dailyData = await dailyRes.json();
+
+    const byVideo = {};
+    (videoData.rows || []).forEach(row => { byVideo[row[0]] = row[1]; });
+    const byDay = {};
+    (dailyData.rows || []).forEach(row => { byDay[row[0]] = row[1]; });
+
+    _analyticsCache = { byVideo, byDay, timestamp: Date.now() };
+    return _analyticsCache;
+  } catch(e) {
+    console.error('YT Analytics error:', e);
+    return null;
+  }
+}
+
 // ── YOUTUBE API ────────────────────────────────────────────
 const YT_API_KEY  = 'AIzaSyC9uoJd71rSEnUw2HfzKjULIhnooPLbICo';
 const YT_CACHE_TTL = 60 * 60 * 1000;
@@ -976,39 +1206,114 @@ async function loadYTVideoSection(container, baseUrl, channelId, forceRefresh) {
   if (!result.ok) { container.innerHTML = `<div class="yt-error">Failed to load: ${escHtml(result.error)}</div>`; return; }
   if (!result.items.length) { container.innerHTML = `<div class="yt-no-channel">No videos found for this channel.</div>`; return; }
 
-  // Sort by sales desc, then clicks desc
-  const sorted = [...result.items].sort((a, b) => {
-    const salesA = DB.conversions.filter(c => c.video_id === a.videoId).length;
-    const salesB = DB.conversions.filter(c => c.video_id === b.videoId).length;
-    if (salesB !== salesA) return salesB - salesA;
-    const clksA = DB.clicks.filter(c => c.video_id === a.videoId).length;
-    const clksB = DB.clicks.filter(c => c.video_id === b.videoId).length;
-    return clksB - clksA;
-  });
+  // Try to fetch analytics (non-blocking)
+  const analytics = await fetchYTAnalytics(result.items.map(i => i.videoId), forceRefresh);
 
-  container.innerHTML = `<div class="yt-video-list">${sorted.map(item => {
-    const url     = buildRefLink(baseUrl, 'yt-' + item.videoId);
-    const vidClks = DB.clicks.filter(c => c.video_id === item.videoId).length;
-    const vidSales= DB.conversions.filter(c => c.video_id === item.videoId).length;
-    const vidRev  = DB.conversions.filter(c => c.video_id === item.videoId).reduce((s,c)=>s+(parseFloat(c.revenue)||0),0);
-    return `<div class="yt-video-item">
-      <img class="yt-video-thumb" src="${escHtml(item.thumbnail)}" alt="" loading="lazy" width="90" height="50">
-      <div class="yt-video-info">
-        <div class="yt-video-title" title="${escHtml(item.title)}">${escHtml(item.title)}</div>
-        <div class="yt-video-url">${escHtml(url)}</div>
-      </div>
-      <div class="yt-video-stats">
-        <div class="yt-stat"><div class="yt-stat-val">${vidClks}</div><div class="yt-stat-lbl">clicks</div></div>
-        <div class="yt-stat"><div class="yt-stat-val">${vidSales}</div><div class="yt-stat-lbl">sales</div></div>
-        <div class="yt-stat"><div class="yt-stat-val">${vidRev > 0 ? '$'+vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</div><div class="yt-stat-lbl">rev</div></div>
-        <button class="copy-btn" data-url="${escHtml(url)}" style="flex-shrink:0">Copy</button>
-      </div>
+  function renderVideoTable(sortKey, sortDir) {
+    const items = result.items.map(item => {
+      const vidClks  = DB.clicks.filter(c => c.video_id === item.videoId).length;
+      const vidSales = DB.conversions.filter(c => c.video_id === item.videoId).length;
+      const vidRev   = DB.conversions.filter(c => c.video_id === item.videoId).reduce((s,c)=>s+(parseFloat(c.revenue)||0),0);
+      const vidViews = analytics?.byVideo?.[item.videoId] || 0;
+      const vidCVR   = vidClks > 0 ? vidSales / vidClks : 0;
+      return { ...item, vidClks, vidSales, vidRev, vidViews, vidCVR };
+    });
+
+    const sorted = [...items].sort((a, b) => {
+      let av = a['vid' + sortKey.charAt(0).toUpperCase() + sortKey.slice(1)];
+      let bv = b['vid' + sortKey.charAt(0).toUpperCase() + sortKey.slice(1)];
+      if (av === undefined) { av = a[sortKey] || 0; bv = b[sortKey] || 0; }
+      return sortDir === 'desc' ? bv - av : av - bv;
+    });
+
+    const cols = [
+      { key: 'views', label: 'Views' },
+      { key: 'clicks', label: 'Clicks' },
+      { key: 'sales', label: 'Sales' },
+      { key: 'CVR', label: 'CVR' },
+      { key: 'rev', label: 'Revenue' },
+    ];
+
+    const theadCols = cols.map(c => {
+      const active = sortKey === c.key;
+      const arrow  = active ? (sortDir === 'desc' ? '↓' : '↑') : '↕';
+      return `<th class="${active ? 'sort-active' : ''}" data-sortkey="${c.key}">${c.label} <i class="sort-arrow">${arrow}</i></th>`;
+    }).join('');
+
+    const rows = sorted.map(item => {
+      const url     = buildRefLink(baseUrl, 'yt-' + item.videoId);
+      const cvrPct  = (item.vidCVR * 100).toFixed(1) + '%';
+      const cvrCls  = item.vidCVR >= 0.05 ? 'cvr-high' : item.vidCVR > 0 ? 'cvr-mid' : 'cvr-low';
+      const viewStr = analytics ? (item.vidViews > 0 ? item.vidViews.toLocaleString() : '0') : '—';
+      return `<tr>
+        <td>
+          <div class="vt-title-wrap">
+            <img class="vt-thumb" src="${escHtml(item.thumbnail)}" alt="" loading="lazy" width="72" height="40">
+            <span class="vt-title" title="${escHtml(item.title)}">${escHtml(item.title)}</span>
+          </div>
+        </td>
+        <td>${viewStr}</td>
+        <td>${item.vidClks}</td>
+        <td>${item.vidSales}</td>
+        <td><span class="${cvrCls}">${item.vidClks > 0 ? cvrPct : '—'}</span></td>
+        <td>${item.vidRev > 0 ? '$'+item.vidRev.toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</td>
+        <td><button class="copy-btn" data-url="${escHtml(url)}" style="white-space:nowrap">Copy link</button></td>
+      </tr>`;
+    }).join('');
+
+    return `<div style="overflow-x:auto">
+      <table class="video-table">
+        <thead><tr>
+          <th style="text-align:left;cursor:default">Video</th>
+          ${theadCols}
+          <th style="cursor:default"></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
     </div>`;
-  }).join('')}</div>`;
+  }
 
-  container.querySelectorAll('.copy-btn[data-url]').forEach(btn => {
-    btn.addEventListener('click', () => copyText(btn.dataset.url, btn));
+  function redraw(key, dir) {
+    const tableWrap = container.querySelector('.vt-table-wrap');
+    if (tableWrap) tableWrap.innerHTML = renderVideoTable(key, dir);
+    container.querySelectorAll('.sort-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.sort === key);
+    });
+    attachTableHandlers();
+  }
+
+  function attachTableHandlers() {
+    container.querySelectorAll('.copy-btn[data-url]').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); copyText(btn.dataset.url, btn); });
+    });
+    container.querySelectorAll('.video-table th[data-sortkey]').forEach(th => {
+      th.addEventListener('click', e => { e.stopPropagation();
+        const key = th.dataset.sortkey;
+        if (videoSortKey === key) videoSortDir = videoSortDir === 'desc' ? 'asc' : 'desc';
+        else { videoSortKey = key; videoSortDir = 'desc'; }
+        redraw(videoSortKey, videoSortDir);
+      });
+    });
+  }
+
+  const pillsHtml = [
+    { key:'sales',  label:'Most Sales' },
+    { key:'clicks', label:'Most Clicks' },
+    { key:'views',  label:'Most Views' },
+    { key:'CVR',    label:'Best CVR' },
+  ].map(p => `<button class="sort-pill${videoSortKey === p.key ? ' active' : ''}" data-sort="${p.key}">${p.label}</button>`).join('');
+
+  container.innerHTML = `<div class="sort-pills">${pillsHtml}</div><div class="vt-table-wrap">${renderVideoTable(videoSortKey, videoSortDir)}</div>`;
+
+  container.querySelectorAll('.sort-pill').forEach(pill => {
+    pill.addEventListener('click', e => { e.stopPropagation();
+      videoSortKey = pill.dataset.sort;
+      videoSortDir = 'desc';
+      redraw(videoSortKey, videoSortDir);
+    });
   });
+
+  attachTableHandlers();
 }
 
 // ── SALES LOG ──────────────────────────────────────────────
@@ -1022,13 +1327,27 @@ function renderSalesLog(sales) {
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
       </svg>
-      <p>No sales logged yet.</p>
-      <p class="hint">Sales are logged automatically via the tracking snippet, or click '+ Log Sale'.</p>
+      <p>No sales yet.</p>
+      <p class="hint">Sales are logged automatically via the tracking snippet on your thank-you page.</p>
     </div>`;
     return;
   }
 
   const sorted = [...sales].sort((a,b) => new Date(getTs(b)) - new Date(getTs(a)));
+
+  // Build journey: find clicks with matching ref that happened before this sale
+  function buildJourney(sale) {
+    const saleTime = new Date(getTs(sale));
+    const ref = sale.ref || '';
+    // Match clicks with same ref (or same video_id for yt-video)
+    const related = DB.clicks.filter(c => {
+      if (!c.ref) return false;
+      const match = sale.video_id ? c.video_id === sale.video_id : c.ref === ref;
+      return match && new Date(getTs(c)) < saleTime;
+    }).sort((a,b) => new Date(getTs(a)) - new Date(getTs(b)));
+    return related;
+  }
+
   el.innerHTML = sorted.map(c => {
     const ref = c.ref || '';
     let badgeClass = 'badge-default', badgeLabel = ref || 'unknown';
@@ -1041,7 +1360,9 @@ function renderSalesLog(sales) {
     else if (ref === 'meta')   { badgeClass = 'badge-meta'; badgeLabel = 'Meta'; }
     const revStr  = c.revenue ? `<span class="conv-revenue">${fmtRev(c.revenue)}</span>` : '';
     const noteStr = c.note    ? `<div class="conv-note">${escHtml(c.note)}</div>` : '';
-    return `<div class="conv-entry" data-id="${c.id}">
+    const journey = buildJourney(c);
+    const hasJ    = journey.length > 0;
+    return `<div class="conv-entry${hasJ ? ' has-journey' : ''}" data-id="${c.id}">
       <span class="conv-badge ${badgeClass}" title="${escHtml(ref)}">${escHtml(badgeLabel)}</span>
       <div class="conv-info">
         <div class="conv-time">${formatDate(getTs(c))}</div>
@@ -1051,7 +1372,18 @@ function renderSalesLog(sales) {
       <button class="conv-delete" data-delete="${c.id}" aria-label="Delete">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-    </div>`;
+    </div>${hasJ ? `<div class="journey-row" style="display:none" data-journey-for="${c.id}">
+      <div class="journey-timeline">
+        ${journey.map(clk => `<div class="journey-event">
+          <span class="journey-event-label">Click — <code style="font-size:0.69rem">${escHtml(clk.ref||'?')}</code></span>
+          <div class="journey-event-time">${formatDate(getTs(clk))}</div>
+        </div>`).join('')}
+        <div class="journey-event journey-sale">
+          <span class="journey-event-label" style="color:#16a34a;font-weight:600">Sale — ${fmtRev(c.revenue)}</span>
+          <div class="journey-event-time">${formatDate(getTs(c))}</div>
+        </div>
+      </div>
+    </div>` : ''}`;
   }).join('');
 
   el.querySelectorAll('[data-delete]').forEach(btn => {
@@ -1061,6 +1393,18 @@ function renderSalesLog(sales) {
       const delRes = await fetch(`${SUPA_URL}/rest/v1/sales?id=eq.${btn.dataset.delete}`, { method: 'DELETE', headers: SUPA_HEADERS });
       if (!delRes.ok) { const e = await delRes.json(); showToast('Delete failed: ' + (e.message || delRes.status)); return; }
       await loadFromSupabase();
+    });
+  });
+
+  // Journey expand/collapse
+  el.querySelectorAll('.conv-entry.has-journey').forEach(entry => {
+    entry.addEventListener('click', e => {
+      if (e.target.closest('[data-delete]')) return;
+      const journeyRow = el.querySelector(`[data-journey-for="${entry.dataset.id}"]`);
+      if (!journeyRow) return;
+      const open = journeyRow.style.display !== 'none';
+      journeyRow.style.display = open ? 'none' : '';
+      entry.classList.toggle('journey-open', !open);
     });
   });
 }
@@ -1159,11 +1503,12 @@ fetch('https://oesygndfpoqhvxgedpqc.supabase.co/rest/v1/sales', {
 
 // ── SETTINGS ───────────────────────────────────────────────
 document.getElementById('settingsBtn').addEventListener('click', () => {
-  document.getElementById('settingsBaseUrl').value = DB.settings.baseUrl || 'https://asherrobinsonfitness.com';
-  document.getElementById('settingsName').value    = DB.settings.creatorName || 'Asher';
-  document.getElementById('settingsChannelId').value = DB.settings.channelId || '';
-  document.getElementById('landingSnippet').value  = LANDING_SNIPPET;
-  document.getElementById('thankyouSnippet').value = THANKYOU_SNIPPET;
+  document.getElementById('settingsBaseUrl').value    = DB.settings.baseUrl || 'https://asherrobinsonfitness.com';
+  document.getElementById('settingsName').value       = DB.settings.creatorName || 'Asher';
+  document.getElementById('settingsChannelId').value  = DB.settings.channelId || '';
+  document.getElementById('landingSnippet').value     = LANDING_SNIPPET;
+  document.getElementById('thankyouSnippet').value    = THANKYOU_SNIPPET;
+  updateOAuthUI();
   openModal('settingsModal');
 });
 
@@ -1192,50 +1537,6 @@ document.getElementById('clearDataBtn').addEventListener('click', () => {
 // ── REFRESH ────────────────────────────────────────────────
 document.getElementById('refreshBtn').addEventListener('click', () => loadFromSupabase());
 
-// ── LOG SALE ───────────────────────────────────────────────
-document.getElementById('logSaleBtn').addEventListener('click', () => {
-  document.getElementById('logNote').value    = '';
-  document.getElementById('logRevenue').value = '199';
-  document.getElementById('logSource').value  = 'yt-bio';
-  document.getElementById('logVideoGroup').style.display = 'none';
-  openModal('logModal');
-});
-
-document.getElementById('logSource').addEventListener('change', function() {
-  const group = document.getElementById('logVideoGroup');
-  if (this.value === 'yt-video') {
-    group.style.display = '';
-    const sel = document.getElementById('logVideo');
-    sel.innerHTML = '<option value="">Select a video…</option>';
-    const items = DB.settings.ytVideosCache?.items || [];
-    items.forEach(v => {
-      const opt = document.createElement('option');
-      opt.value = v.videoId;
-      opt.textContent = v.title.length > 60 ? v.title.slice(0,60)+'…' : v.title;
-      sel.appendChild(opt);
-    });
-  } else {
-    group.style.display = 'none';
-  }
-});
-
-document.getElementById('saveLogBtn').addEventListener('click', async () => {
-  const source  = document.getElementById('logSource').value;
-  const videoId = source === 'yt-video' ? document.getElementById('logVideo').value : null;
-  const note    = document.getElementById('logNote').value.trim();
-  const revenue = parseFloat(document.getElementById('logRevenue').value) || null;
-
-  let ref = source;
-  if (source === 'yt-video' && videoId) ref = 'yt-' + videoId;
-
-  const payload = { ref, video_id: videoId || null, note: note || null, revenue };
-  const insRes = await fetch(`${SUPA_URL}/rest/v1/sales`, { method: 'POST', headers: { ...SUPA_HEADERS, 'Prefer': 'return=minimal' }, body: JSON.stringify(payload) });
-  if (!insRes.ok) { const e = await insRes.json(); showToast('Error: ' + (e.message || insRes.status)); return; }
-  closeModal('logModal');
-  await loadFromSupabase();
-  showToast('Sale logged');
-});
-
 // ── DATE FILTER ────────────────────────────────────────────
 document.querySelectorAll('.pill[data-range]').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1260,6 +1561,7 @@ let resizeTimer;
 window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawChart, 150); });
 
 // ── INIT ───────────────────────────────────────────────────
+handleOAuthCallback();   // parse token from URL hash if redirected back from Google
 initChartTooltip();
 loadFromSupabase();
 </script>
