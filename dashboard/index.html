@@ -130,13 +130,13 @@ thead th{
   color:var(--text-secondary);padding:0.75rem 1rem;text-align:left;
   border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);
 }
-tbody tr{transition:background 0.1s ease;cursor:pointer}
+tbody tr{transition:background 0.1s ease;cursor:default}
 tbody tr:nth-child(odd){background:rgba(255,255,255,0.02)}
 tbody tr:hover{background:rgba(255,255,255,0.05)}
 tbody td{padding:0.75rem 1rem;font-size:0.84rem;vertical-align:middle;border-bottom:1px solid var(--border)}
 tbody tr:last-child td{border-bottom:none}
 .source-cell{display:flex;align-items:center;gap:0.6rem}
-.source-icon{width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.source-icon{min-width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:2px}
 .rev-green{color:#16a34a;font-weight:600}
 .sparkline-cell{text-align:right}
 .expanded-row td{padding:0;background:rgba(0,102,255,0.04) !important;cursor:default}
@@ -508,12 +508,10 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
 
 <!-- SETTINGS MODAL -->
 <div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-  <div class="modal">
+  <div class="modal" style="max-width:600px">
     <div class="modal-header">
       <span class="modal-title" id="settingsTitle">Settings</span>
-      <button class="btn-icon" data-close="settingsModal" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button class="btn btn-ghost btn-sm" data-close="settingsModal">Close</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -575,10 +573,31 @@ select.form-input option{background:#2a2a2a;color:var(--text)}
           <button class="btn btn-danger btn-sm" id="clearDataBtn">Clear Settings</button>
         </div>
       </div>
+
+      <div class="divider"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem">
+        <div class="section-sub" style="margin-bottom:0">Sales Log</div>
+        <span id="convCount" style="font-size:0.75rem;color:var(--text-secondary)"></span>
+      </div>
+      <div class="conv-log" id="convLog"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" data-close="settingsModal">Cancel</button>
+      <button class="btn btn-ghost btn-sm" data-close="settingsModal">Close</button>
       <button class="btn btn-primary btn-sm" id="saveSettingsBtn">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- LINKS MODAL -->
+<div class="modal-backdrop" id="linksModal" role="dialog" aria-modal="true" aria-labelledby="linksTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="linksTitle">Tracking Links</span>
+      <button class="btn btn-ghost btn-sm" data-close="linksModal">Close</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.76rem;color:var(--text-secondary);margin-bottom:1rem">Copy a link and use it as your CTA destination. Each link tags the click source so sales get attributed correctly.</p>
+      <div class="links-grid" id="linksGrid"></div>
     </div>
   </div>
 </div>
@@ -712,6 +731,14 @@ async function loadFromSupabase() {
     DB.clicks = await clicksRes.json();
     DB.conversions = await salesRes.json();
     render();
+    // Load video performance section only on first load (container is empty).
+    // On subsequent refreshes we skip re-building the whole section to preserve
+    // the user's current filter/sort state; render() already updated stat strip.
+    const vpContent = document.getElementById('videoPerformanceContent');
+    if (vpContent && !vpContent.hasChildNodes()) {
+      await loadYTVideoSection(vpContent, DB.settings.baseUrl, DB.settings.channelId || '', false);
+      render(); // re-render after analytics arrives so Views tile shows a number
+    }
   } catch(e) {
     console.error('Supabase fetch error:', e);
   }
@@ -724,70 +751,50 @@ function showPageLoading(on) {
 
 // ── RENDER ─────────────────────────────────────────────────
 function render() {
-  const cutoff  = dateRangeCutoff(activeRange);
+  const cutoff     = dateRangeCutoff(activeRange);
   const prevCutoff = dateRangeCutoff(activeRange === 'all' ? 'all' : String(parseInt(activeRange) * 2));
   const fClicks = DB.clicks.filter(c => inRange(c, cutoff));
   const fSales  = DB.conversions.filter(c => inRange(c, cutoff));
   const pClicks = activeRange === 'all' ? [] : DB.clicks.filter(c => inRange(c, prevCutoff) && !inRange(c, cutoff));
   const pSales  = activeRange === 'all' ? [] : DB.conversions.filter(c => inRange(c, prevCutoff) && !inRange(c, cutoff));
 
-  renderStatCards(fClicks, fSales);
-  renderTrendsBar(fClicks, fSales, pClicks, pSales);
+  renderStatStrip(fClicks, fSales, pClicks, pSales);
   drawChart();
   renderSourceTable(fClicks, fSales);
   renderSalesLog(fSales);
-  renderLinks();
 }
 
-// ── STAT CARDS ─────────────────────────────────────────────
-function renderStatCards(clicks, sales) {
-  document.getElementById('statClicks').textContent = clicks.length || '—';
-  document.getElementById('statSales').textContent  = sales.length  || '—';
-
-  const totalRev = sales.reduce((s, c) => s + (parseFloat(c.revenue) || 0), 0);
-  document.getElementById('statRevenue').textContent = totalRev > 0 ? '$' + totalRev.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}) : '—';
-  document.getElementById('statRevSub').textContent = sales.length ? sales.length + ' sale' + (sales.length !== 1 ? 's' : '') : 'no sales yet';
-  document.getElementById('statSalesSub').textContent = clicks.length ? (sales.length / Math.max(clicks.length,1)*100).toFixed(1) + '% CVR' : '—';
-
-  // Top CVR Video: highest click→sale CVR with at least 5 clicks
-  const videoClicks = {}, videoSalesMap = {};
-  clicks.filter(c => c.video_id).forEach(c => { videoClicks[c.video_id] = (videoClicks[c.video_id] || 0) + 1; });
-  sales.filter(s => s.video_id).forEach(s => { videoSalesMap[s.video_id] = (videoSalesMap[s.video_id] || 0) + 1; });
-  const qualified = Object.entries(videoClicks).filter(([,clk]) => clk >= 5).map(([vid, clk]) => {
-    const sal = videoSalesMap[vid] || 0;
-    return { vid, cvr: sal / clk, clk, sal };
-  }).sort((a,b) => b.cvr - a.cvr);
-  const top = qualified[0];
-  const bvEl = document.getElementById('statBestVideo');
-  if (top) {
-    bvEl.textContent = getVideoTitle(top.vid);
-    bvEl.style.fontSize = '0.82rem';
-    document.getElementById('statBestSub').textContent = (top.cvr * 100).toFixed(1) + '% CVR · ' + top.sal + ' sale' + (top.sal !== 1 ? 's' : '');
-  } else {
-    bvEl.textContent = 'No data yet';
-    bvEl.style.fontSize = '0.9rem';
-    document.getElementById('statBestSub').textContent = 'min 5 clicks';
-  }
-}
-
-// ── TRENDS BAR ─────────────────────────────────────────────
-function renderTrendsBar(fClicks, fSales, pClicks, pSales) {
-  const bar = document.getElementById('trendsBar');
-  if (!bar) return;
+// ── STAT STRIP ─────────────────────────────────────────────
+function renderStatStrip(fClicks, fSales, pClicks, pSales) {
+  const strip = document.getElementById('statStrip');
+  if (!strip) return;
 
   const curRev  = fSales.reduce((s,c) => s + (parseFloat(c.revenue)||0), 0);
   const prevRev = pSales.reduce((s,c) => s + (parseFloat(c.revenue)||0), 0);
   const curCVR  = fClicks.length ? fSales.length / fClicks.length : 0;
   const prevCVR = pClicks.length ? pSales.length / pClicks.length : 0;
 
+  // Analytics views for current period
+  let viewsVal = '—';
+  if (_analyticsCache && _analyticsCache.byVideoDay) {
+    const today = new Date();
+    let curViews = 0;
+    const days = activeRange === 'all' ? 365 : (parseInt(activeRange) || 30);
+    for (let i = 0; i < days; i++) {
+      const d = new Date(today); d.setDate(d.getDate() - i);
+      curViews += sumFilteredViewsForDay(d.toISOString().slice(0, 10));
+    }
+    viewsVal = curViews.toLocaleString();
+  }
+
   // Best video this period by CVR (≥5 clicks)
   const vClks = {}, vSals = {};
   fClicks.filter(c => c.video_id).forEach(c => { vClks[c.video_id] = (vClks[c.video_id]||0)+1; });
   fSales.filter(s => s.video_id).forEach(s => { vSals[s.video_id] = (vSals[s.video_id]||0)+1; });
-  const bestVidEntry = Object.entries(vClks).filter(([,n]) => n >= 5)
+  const bestVid = Object.entries(vClks).filter(([,n]) => n >= 5)
     .map(([id, n]) => ({ id, cvr: (vSals[id]||0)/n })).sort((a,b) => b.cvr - a.cvr)[0];
 
-  function delta(cur, prev, isPercent) {
+  function delta(cur, prev) {
     if (activeRange === 'all' || prev === 0) return `<span class="t-flat">—</span>`;
     const pct = ((cur - prev) / prev) * 100;
     const sign = pct > 0 ? '+' : '';
@@ -795,32 +802,19 @@ function renderTrendsBar(fClicks, fSales, pClicks, pSales) {
     return `<span class="${cls}">${sign}${pct.toFixed(1)}%</span>`;
   }
 
-  // Analytics views total (daily sum)
-  const analytics = _analyticsCache;
-  let viewsVal = '—', viewsDelta = `<span class="t-flat">—</span>`;
-  if (analytics && analytics.byVideoDay) {
-    const today = new Date();
-    let curViews = 0;
-    for (let i = 0; i < (parseInt(activeRange) || 30); i++) {
-      const d = new Date(today); d.setDate(d.getDate() - i);
-      curViews += sumFilteredViewsForDay(d.toISOString().slice(0, 10));
-    }
-    viewsVal = curViews.toLocaleString();
-  }
-
   const tiles = [
-    { label:'Views',    val: viewsVal,                        extra: viewsDelta },
-    { label:'Clicks',   val: fClicks.length,                  extra: delta(fClicks.length, pClicks.length) },
-    { label:'Sales',    val: fSales.length,                   extra: delta(fSales.length, pSales.length) },
-    { label:'Revenue',  val: curRev > 0 ? fmtRev(curRev) : '—', extra: delta(curRev, prevRev) },
-    { label:'CVR',      val: fClicks.length ? (curCVR*100).toFixed(1)+'%' : '—', extra: delta(curCVR, prevCVR) },
-    { label:'Best Video', val: bestVidEntry ? getVideoTitle(bestVidEntry.id) : 'No data', extra: '', sm: !!bestVidEntry },
+    { label: 'Views',       val: viewsVal,                                    d: `<span class="t-flat">—</span>` },
+    { label: 'Clicks',      val: fClicks.length || '—',                       d: delta(fClicks.length, pClicks.length) },
+    { label: 'Sales',       val: fSales.length  || '—',                       d: delta(fSales.length,  pSales.length) },
+    { label: 'Revenue',     val: curRev > 0 ? fmtRev(curRev) : '—',          d: delta(curRev, prevRev) },
+    { label: 'CVR (Clicks)',val: fClicks.length ? (curCVR*100).toFixed(1)+'%' : '—', d: delta(curCVR, prevCVR) },
+    { label: 'Best Video',  val: bestVid ? getVideoTitle(bestVid.id) : 'No data', d: '', sm: !!bestVid },
   ];
 
-  bar.innerHTML = tiles.map(t => `<div class="trend-tile">
-    <div class="trend-tile-label">${t.label}</div>
-    <div class="trend-tile-val${t.sm ? ' trend-tile-val--sm' : ''}">${t.val}</div>
-    ${t.extra ? `<div class="trend-delta">${t.extra}</div>` : ''}
+  strip.innerHTML = tiles.map(t => `<div class="stat-tile">
+    <div class="stat-tile-label">${t.label}</div>
+    <div class="stat-tile-val${t.sm ? ' stat-tile-val--sm' : ''}">${t.val}</div>
+    <div class="stat-tile-delta">${t.d}</div>
   </div>`).join('');
 }
 
@@ -936,32 +930,61 @@ function initChartTooltip() {
 }
 
 // ── SOURCE TABLE ───────────────────────────────────────────
+// Display rows: Bio Links (yt-bio + ig-bio), Meta Ads, YouTube Videos — no expand/collapse
+const SOURCE_ROWS = [
+  {
+    id: 'bio-links',
+    label: 'Bio Links',
+    icon: `<div class="bio-icons">${ICONS['yt-bio']}${ICONS['ig-bio']}</div>`,
+    match: c => matchesSource(c, 'yt-bio') || matchesSource(c, 'ig-bio'),
+    sparkIds: ['yt-bio', 'ig-bio'],
+    hasViews: false,
+  },
+  {
+    id: 'meta',
+    label: 'Meta Ads',
+    icon: ICONS['meta'],
+    match: c => matchesSource(c, 'meta'),
+    sparkIds: ['meta'],
+    hasViews: false,
+  },
+  {
+    id: 'yt-video',
+    label: 'YouTube Videos',
+    icon: ICONS['yt-video'],
+    match: c => matchesSource(c, 'yt-video'),
+    sparkIds: ['yt-video'],
+    hasViews: true,
+  },
+];
+
 function renderSourceTable(fClicks, fSales) {
   const tbody = document.getElementById('sourceTableBody');
-  // Preserve expanded state across re-renders
-  const wasExpanded = [...tbody.querySelectorAll('.expanded-row')]
-    .filter(r => r.style.display !== 'none').map(r => r.dataset.expandFor);
-
   tbody.innerHTML = '';
-  SOURCES.forEach(src => {
-    const clicks  = fClicks.filter(c => matchesSource(c, src.id)).length;
-    const sales   = fSales.filter(c => matchesSource(c, src.id)).length;
-    const revenue = fSales.filter(c => matchesSource(c, src.id)).reduce((s,c) => s+(parseFloat(c.revenue)||0), 0);
-    const spark   = buildSparkline(getSparklineData(src.id));
 
-    const cvr    = clicks > 0 ? (sales / clicks * 100).toFixed(1) + '%' : '—';
-    const analyticsData = _analyticsCache;
+  SOURCE_ROWS.forEach(row => {
+    const clicks  = fClicks.filter(row.match).length;
+    const sales   = fSales.filter(row.match).length;
+    const revenue = fSales.filter(row.match).reduce((s,c) => s+(parseFloat(c.revenue)||0), 0);
+    const cvr     = clicks > 0 ? (sales / clicks * 100).toFixed(1) + '%' : '—';
+
+    // Combine sparklines for rows that span multiple source IDs
+    const sparkData = row.sparkIds.reduce((acc, id) => {
+      const d = getSparklineData(id);
+      return acc.map((v, i) => v + d[i]);
+    }, Array(7).fill(0));
+    const spark = buildSparkline(sparkData);
+
     let views = '—';
-    if (src.id === 'yt-video' && analyticsData && analyticsData.byVideo) {
-      let total = 0;
-      Object.values(analyticsData.byVideo).forEach(v => { total += v; });
+    if (row.hasViews && _analyticsCache && _analyticsCache.byVideo) {
+      const total = Object.values(_analyticsCache.byVideo).reduce((s, v) => s + v, 0);
       views = total.toLocaleString();
     }
 
     const tr = document.createElement('tr');
-    tr.dataset.source = src.id;
+    tr.style.cursor = 'default';
     tr.innerHTML = `
-      <td><div class="source-cell"><span class="source-icon">${ICONS[src.id]}</span><span>${src.label}</span></div></td>
+      <td><div class="source-cell"><span class="source-icon">${row.icon}</span><span>${row.label}</span></div></td>
       <td>${views}</td>
       <td>${clicks}</td>
       <td>${sales}</td>
@@ -969,44 +992,8 @@ function renderSourceTable(fClicks, fSales) {
       <td><span class="${revenue > 0 ? 'rev-green' : ''}">${fmtRev(revenue)}</span></td>
       <td class="sparkline-cell">${spark}</td>`;
     tbody.appendChild(tr);
-
-    const expTr = document.createElement('tr');
-    expTr.className = 'expanded-row';
-    expTr.dataset.expandFor = src.id;
-    expTr.style.display = wasExpanded.includes(src.id) ? '' : 'none';
-    const expTd = document.createElement('td');
-    expTd.colSpan = 7;
-    expTd.innerHTML = buildExpandedContent(src);
-    expTr.appendChild(expTd);
-    tbody.appendChild(expTr);
-
-    if (wasExpanded.includes(src.id)) {
-      tr.style.background = 'rgba(0,102,255,0.06)';
-      if (src.id === 'yt-video') initYTExpand(expTr);
-      else initVideoLinkHandlers(expTr);
-    }
   });
 }
-
-// Single delegated click handler on the table body container
-document.getElementById('sourceTableBody').addEventListener('click', function(e) {
-  const tr = e.target.closest('tr[data-source]');
-  if (!tr) return;
-  const srcId = tr.dataset.source;
-  const tbody = this;
-  const expRow = tbody.querySelector(`tr[data-expand-for="${srcId}"]`);
-  const wasOpen = expRow.style.display !== 'none';
-
-  tbody.querySelectorAll('.expanded-row').forEach(r => r.style.display = 'none');
-  tbody.querySelectorAll('tr[data-source]').forEach(r => r.style.background = '');
-
-  if (!wasOpen) {
-    expRow.style.display = '';
-    tr.style.background = 'rgba(0,102,255,0.06)';
-    if (srcId === 'yt-video') initYTExpand(expRow);
-    else initVideoLinkHandlers(expRow);
-  }
-});
 
 function buildExpandedContent(src) {
   if (src.id === 'yt-video') {
@@ -1888,8 +1875,19 @@ document.getElementById('clearDataBtn').addEventListener('click', () => {
   showToast('Settings cleared');
 });
 
+// ── LINKS BUTTON ───────────────────────────────────────────
+document.getElementById('linksBtn').addEventListener('click', () => {
+  renderLinks();
+  openModal('linksModal');
+});
+
 // ── REFRESH ────────────────────────────────────────────────
-document.getElementById('refreshBtn').addEventListener('click', () => loadFromSupabase());
+document.getElementById('refreshBtn').addEventListener('click', async () => {
+  // Clear the video section so loadFromSupabase rebuilds it with fresh data
+  const vpContent = document.getElementById('videoPerformanceContent');
+  if (vpContent) vpContent.innerHTML = '';
+  await loadFromSupabase();
+});
 
 // ── DATE FILTER ────────────────────────────────────────────
 document.querySelectorAll('.pill[data-range]').forEach(btn => {
