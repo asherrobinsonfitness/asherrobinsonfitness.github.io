@@ -756,10 +756,11 @@ footer a{color:#4d94ff;text-decoration:none}
 
 /* ── Persistent top nav ── */
 .site-nav{
-  position:sticky;
+  position:fixed;
   top:0;
+  left:0;
+  right:0;
   z-index:900;
-  width:100%;
   min-height:3rem;
   display:flex;
   align-items:center;
@@ -767,7 +768,11 @@ footer a{color:#4d94ff;text-decoration:none}
   gap:1rem;
   padding:.625rem 1.25rem;
   background:#1c1c1c;
-  border-bottom:1px solid #3a3a3a;
+  backdrop-filter:blur(0px);
+  -webkit-backdrop-filter:blur(0px);
+  border:1px solid rgba(255,255,255,0);
+  border-bottom-color:#3a3a3a;
+  border-radius:0;
   box-sizing:border-box;
 }
 .site-nav__wordmark{
@@ -828,13 +833,41 @@ footer a{color:#4d94ff;text-decoration:none}
   .site-nav__cta:hover .site-nav__arrow{transform:translateX(3px)}
 }
 @media(min-width:761px){
-  .site-nav{padding:.625rem 2rem}
+  .site-nav{
+    padding:.625rem 2rem;
+    transition:top .4s cubic-bezier(.4,0,.2,1),
+               left .4s cubic-bezier(.4,0,.2,1),
+               right .4s cubic-bezier(.4,0,.2,1),
+               border-radius .4s cubic-bezier(.4,0,.2,1),
+               background-color .4s cubic-bezier(.4,0,.2,1),
+               border-color .4s cubic-bezier(.4,0,.2,1),
+               backdrop-filter .4s cubic-bezier(.4,0,.2,1);
+  }
+  .site-nav.is-scrolled{
+    top:12px;
+    left:12px;
+    right:12px;
+    border-radius:12px;
+    background:rgba(28,28,28,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-color:rgba(255,255,255,0.10);
+  }
+  main{padding-top:60px}
 }
 @media(max-width:760px){
   .site-nav__links{display:none}
   .site-nav{
-    position:fixed;
-    transform:translateY(-100%);
+    padding:.625rem;
+    left:10px;
+    right:10px;
+    top:10px;
+    border-radius:12px;
+    background:rgba(28,28,28,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-color:rgba(255,255,255,0.10);
+    transform:translateY(calc(-100% - 10px));
     transition:transform .35s cubic-bezier(.4,0,.2,1);
   }
   .site-nav.is-visible{
@@ -1057,7 +1090,7 @@ footer a{color:#4d94ff;text-decoration:none}
             </div>
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/J0m6Gdtk/personalized-2.webp" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <img src="https://i.postimg.cc/JnpTVKXy/Chat-GPT-Image-Jun-15-2026-02-50-04-AM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Same-day messaging</div>
@@ -1451,10 +1484,23 @@ function scrollToSection(id) {
   var el = document.getElementById(id);
   if (!el) return;
   var nav = document.querySelector('.site-nav');
-  var offset = nav ? nav.getBoundingClientRect().height : 0;
+  var offset = nav ? nav.getBoundingClientRect().bottom + 8 : 0;
   var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
   window.scrollTo({ top: top, behavior: 'smooth' });
 }
+
+// Desktop: float nav widget on scroll
+(function(){
+  var nav = document.querySelector('.site-nav');
+  if(!nav) return;
+  function update(){
+    if(window.innerWidth <= 760) return;
+    nav.classList.toggle('is-scrolled', window.scrollY > 10);
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
 
 // Mobile: slide nav in once the CTA button scrolls out of view
 (function(){
