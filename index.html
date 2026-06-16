@@ -293,10 +293,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 
 /* ── Custom video controls ── */
 #vcPanel{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:12px;overflow:hidden}
-.vc-gradient{position:absolute;inset:auto 0 0;height:48%;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.3) 50%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .22s ease}
-.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:0 12px 10px;opacity:0;pointer-events:none;transition:opacity .22s ease}
-#vcPanel.vc-show .vc-gradient,#vcPanel.vc-show .vc-controls{opacity:1;pointer-events:auto}
-.vc-scrubber{position:relative;height:22px;display:flex;align-items:center;cursor:pointer;margin-bottom:3px;touch-action:none;user-select:none;-webkit-user-select:none}
+.vc-gradient{display:none}
+.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:8px 12px 10px;opacity:0;pointer-events:none;transition:opacity .22s ease;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#vcPanel.vc-show .vc-controls,#vcPanel.vc-paused .vc-controls{opacity:1;pointer-events:auto}
+.vc-scrubber{position:relative;height:34px;display:flex;align-items:center;cursor:pointer;flex:1;margin:0 4px;touch-action:none;user-select:none;-webkit-user-select:none}
 .vc-track{position:relative;width:100%;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:height .12s ease}
 .vc-buf{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.35);border-radius:99px;width:0;pointer-events:none}
 .vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
@@ -305,12 +305,22 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .vc-scrubber:hover .vc-dot,.vc-scrubber.vc-drag .vc-dot{transform:translate(-50%,-50%) scale(1.3)}
 .vc-bar{display:flex;align-items:center;justify-content:space-between;height:34px}
 .vc-bar__left,.vc-bar__right{display:flex;align-items:center;gap:2px}
-.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;border-radius:4px;opacity:.9;transition:opacity .12s;flex-shrink:0}
+.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s;flex-shrink:0}
 .vc-btn:hover{opacity:1}
 .vc-time{color:#fff;font-size:12px;font-weight:500;letter-spacing:.03em;white-space:nowrap;padding-left:4px;opacity:.88}
 .vc-preview{position:absolute;display:none;flex-direction:column;align-items:center;gap:3px;transform:translateX(-50%);pointer-events:none;z-index:4}
 .vc-preview canvas{width:160px;height:90px;border-radius:6px;border:1.5px solid rgba(255,255,255,.28);display:block;background:#000}
 .vc-preview span{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+/* Centered big play/pause */
+#vcCenterPlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0;transition:opacity .22s ease}
+#vcPanel.vc-show #vcCenterPlay,#vcPanel.vc-paused #vcCenterPlay{opacity:1}
+#vcBigPlayBtn{background:none;border:none;color:#fff;cursor:pointer;padding:0;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55));transition:transform .12s,filter .12s;line-height:0}
+#vcBigPlayBtn:hover{transform:scale(1.1);filter:drop-shadow(0 2px 20px rgba(0,0,0,.65))}
+#vcBigPlayBtn svg{width:72px;height:72px;display:block}
+@media(max-width:640px){#vcBigPlayBtn svg{width:60px;height:60px}}
+/* CC active state */
+.vc-btn--cc{opacity:.55}
+.vc-btn--cc.vc-cc-on{opacity:1}
 
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
@@ -990,6 +1000,7 @@ footer a{color:#4d94ff;text-decoration:none}
              webkit-playsinline is required for older iOS Safari inline playback. -->
         <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;opacity:0;transition:opacity .5s ease;">
           <source src="video.mp4" type="video/mp4">
+          <track id="vcCaptionTrack" kind="captions" src="captions.vtt" srclang="en" label="English">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
@@ -1001,33 +1012,33 @@ footer a{color:#4d94ff;text-decoration:none}
         <!-- Custom video controls panel -->
         <div id="vcPanel" aria-hidden="true">
           <div class="vc-gradient"></div>
+          <!-- Centered play/pause -->
+          <div id="vcCenterPlay">
+            <button id="vcBigPlayBtn" aria-label="Play">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vcBigPlayIcon"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            </button>
+          </div>
           <div id="vcPreview" class="vc-preview">
             <canvas id="vcCanvas" width="160" height="90"></canvas>
-            <span id="vcPreviewTs"></span>
           </div>
           <div class="vc-controls">
-            <div id="vcScrubberRow" class="vc-scrubber">
-              <div class="vc-track">
-                <div class="vc-buf" id="vcBuf"></div>
-                <div class="vc-fill" id="vcFill"></div>
-                <div class="vc-dot" id="vcDot"></div>
-              </div>
-            </div>
             <div class="vc-bar">
-              <div class="vc-bar__left">
-                <button class="vc-btn" id="vcPlayBtn" aria-label="Pause">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcPlayIcon"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
-                </button>
-                <span class="vc-time" id="vcTime">0:00 / 0:00</span>
+              <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+              <button class="vc-btn vc-btn--cc" id="vcCcBtn" aria-label="Turn on captions">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M9.5 9.5c-.5-.6-1.2-.9-2-.9C5.6 8.6 4 10.1 4 12s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/><path d="M17.5 9.5c-.5-.6-1.2-.9-2-.9-1.9 0-3.5 1.5-3.5 3.4s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/></svg>
+              </button>
+              <div id="vcScrubberRow" class="vc-scrubber">
+                <div class="vc-track">
+                  <div class="vc-buf" id="vcBuf"></div>
+                  <div class="vc-fill" id="vcFill"></div>
+                  <div class="vc-dot" id="vcDot"></div>
+                </div>
               </div>
-              <div class="vc-bar__right">
-                <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcVolIcon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                </button>
-                <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcFsIcon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-                </button>
-              </div>
+              <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcFsIcon"><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -1403,36 +1414,36 @@ footer a{color:#4d94ff;text-decoration:none}
 
 /* ── Custom video controls ── */
 (function(){
-  var vid       = document.getElementById('mainVideo');
-  var overlay   = document.getElementById('ctpOverlay');
-  var vcPanel   = document.getElementById('vcPanel');
-  var vcScrubber= document.getElementById('vcScrubberRow');
-  var vcBuf     = document.getElementById('vcBuf');
-  var vcFill    = document.getElementById('vcFill');
-  var vcDot     = document.getElementById('vcDot');
-  var vcPlayBtn = document.getElementById('vcPlayBtn');
-  var vcPlayIcon= document.getElementById('vcPlayIcon');
-  var vcMuteBtn = document.getElementById('vcMuteBtn');
-  var vcVolIcon = document.getElementById('vcVolIcon');
-  var vcFsBtn   = document.getElementById('vcFsBtn');
-  var vcFsIcon  = document.getElementById('vcFsIcon');
-  var vcTime    = document.getElementById('vcTime');
-  var vcPreview = document.getElementById('vcPreview');
-  var vcCanvas  = document.getElementById('vcCanvas');
-  var vcPreviewTs = document.getElementById('vcPreviewTs');
-  var vcThumbVid= document.getElementById('vcThumbVid');
-  var container = document.getElementById('videoContainer');
+  var vid          = document.getElementById('mainVideo');
+  var overlay      = document.getElementById('ctpOverlay');
+  var vcPanel      = document.getElementById('vcPanel');
+  var vcScrubber   = document.getElementById('vcScrubberRow');
+  var vcBuf        = document.getElementById('vcBuf');
+  var vcFill       = document.getElementById('vcFill');
+  var vcDot        = document.getElementById('vcDot');
+  var vcBigPlayBtn = document.getElementById('vcBigPlayBtn');
+  var vcBigPlayIcon= document.getElementById('vcBigPlayIcon');
+  var vcMuteBtn    = document.getElementById('vcMuteBtn');
+  var vcVolIcon    = document.getElementById('vcVolIcon');
+  var vcCcBtn      = document.getElementById('vcCcBtn');
+  var vcFsBtn      = document.getElementById('vcFsBtn');
+  var vcFsIcon     = document.getElementById('vcFsIcon');
+  var vcPreview    = document.getElementById('vcPreview');
+  var vcCanvas     = document.getElementById('vcCanvas');
+  var vcThumbVid   = document.getElementById('vcThumbVid');
+  var container    = document.getElementById('videoContainer');
   if(!vid || !vcPanel) return;
 
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.matchMedia('(pointer:coarse)').matches;
 
   /* ── SVG icon strings ── */
-  var ICON_PLAY  = '<path d="M8 5v14l11-7z"/>';
-  var ICON_PAUSE = '<path d="M6 19h4V5H6zm8-14v14h4V5z"/>';
-  var ICON_VOL   = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
-  var ICON_MUTE  = '<path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.39-.3 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
-  var ICON_FS    = '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>';
-  var ICON_EXIT  = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
+  /* Rounded stroke-based icons (Feather-style) */
+  var ICON_PLAY  = '<polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  var ICON_PAUSE = '<rect x="6" y="4" width="4" height="16" rx="2" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="2" fill="currentColor"/>';
+  var ICON_VOL   = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  var ICON_MUTE  = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+  var ICON_FS    = '<polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  var ICON_EXIT  = '<polyline points="4 14 10 14 10 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="20 10 14 10 14 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="10" y1="14" x2="3" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
 
   function setIcon(svg, pathStr){ svg.innerHTML = pathStr; }
 
@@ -1446,44 +1457,48 @@ footer a{color:#4d94ff;text-decoration:none}
   /* ── Show / hide controls ── */
   var hideTimer;
   function showControls(){
+    /* Don't show when the "Watch Video" overlay is active or during muted loop fallback */
+    if(overlay && overlay.style.display !== 'none') return;
+    if(vid.muted && vid.loop) return;
     vcPanel.classList.add('vc-show');
     clearTimeout(hideTimer);
     if(!vid.paused){
       hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
     }
   }
-  function keepShowing(){ /* keep controls visible while paused */ showControls(); }
 
   /* ── Activity listeners ── */
   container.addEventListener('mousemove', showControls);
   container.addEventListener('touchstart', showControls, {passive:true});
 
-  /* ── Play / pause state ── */
-  function syncPlayBtn(){
+  /* ── Centered play/pause button ── */
+  function syncBigPlayBtn(){
     if(vid.paused){
-      setIcon(vcPlayIcon, ICON_PLAY);
-      vcPlayBtn.setAttribute('aria-label','Play');
-      showControls(); // always show when paused
+      setIcon(vcBigPlayIcon, ICON_PLAY);
+      vcBigPlayBtn.setAttribute('aria-label','Play');
+      vcPanel.classList.add('vc-paused');
+      showControls();
     } else {
-      setIcon(vcPlayIcon, ICON_PAUSE);
-      vcPlayBtn.setAttribute('aria-label','Pause');
+      setIcon(vcBigPlayIcon, ICON_PAUSE);
+      vcBigPlayBtn.setAttribute('aria-label','Pause');
+      vcPanel.classList.remove('vc-paused');
       clearTimeout(hideTimer);
       hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
     }
   }
-  vid.addEventListener('play',  syncPlayBtn);
-  vid.addEventListener('pause', syncPlayBtn);
+  vid.addEventListener('play',  syncBigPlayBtn);
+  vid.addEventListener('pause', syncBigPlayBtn);
 
-  /* Click video area to toggle play/pause */
-  container.addEventListener('click', function(e){
-    if(overlay && overlay.style.display !== 'none') return;
-    if(e.target.closest && e.target.closest('.vc-controls')) return;
-    if(isMobile && !vcPanel.classList.contains('vc-show')){ showControls(); return; }
+  vcBigPlayBtn.addEventListener('click', function(e){
+    e.stopPropagation();
     if(vid.paused) vid.play(); else vid.pause();
   });
 
-  vcPlayBtn.addEventListener('click', function(e){
-    e.stopPropagation();
+  /* Click on video area (outside controls) to toggle play/pause */
+  container.addEventListener('click', function(e){
+    if(overlay && overlay.style.display !== 'none') return;
+    if(e.target.closest && (e.target.closest('.vc-controls') || e.target.closest('#vcCenterPlay'))) return;
+    if(isMobile && !vcPanel.classList.contains('vc-show')){ showControls(); return; }
     if(vid.paused) vid.play(); else vid.pause();
   });
 
@@ -1496,11 +1511,11 @@ footer a{color:#4d94ff;text-decoration:none}
   vid.addEventListener('timeupdate', function(){
     if(!vid.duration) return;
     setPct(vid.currentTime / vid.duration * 100);
-    vcTime.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
   });
 
   vid.addEventListener('loadedmetadata', function(){
-    vcTime.textContent = '0:00 / ' + fmt(vid.duration);
+    /* Ensure captions start hidden */
+    if(vid.textTracks && vid.textTracks.length > 0) vid.textTracks[0].mode = 'hidden';
   });
 
   vid.addEventListener('progress', function(){
@@ -1519,7 +1534,6 @@ footer a{color:#4d94ff;text-decoration:none}
   function seekTo(frac){
     setPct(frac * 100);
     if(vid.duration) vid.currentTime = frac * vid.duration;
-    vcTime.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
   }
 
   vcScrubber.addEventListener('mousedown', function(e){
@@ -1582,10 +1596,9 @@ footer a{color:#4d94ff;text-decoration:none}
       var frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
       var leftPx = e.clientX - r.left;
       vcPreview.style.left = Math.max(80, Math.min(r.width - 80, leftPx)) + 'px';
-      vcPreview.style.bottom = '52px';
+      vcPreview.style.bottom = '46px';
       vcPreview.style.display = 'flex';
       if(vid.duration){ vcThumbVid.currentTime = frac * vid.duration; }
-      vcPreviewTs.textContent = fmt(frac * (vid.duration || 0));
     });
     vcScrubber.addEventListener('mouseleave', function(){
       if(!dragging) vcPreview.style.display = 'none';
@@ -1601,6 +1614,20 @@ footer a{color:#4d94ff;text-decoration:none}
     e.stopPropagation();
     vid.muted = !vid.muted;
     syncMuteBtn();
+    showControls();
+  });
+
+  /* ── Captions toggle ── */
+  var ccOn = false;
+  function syncCcBtn(){
+    vcCcBtn.classList.toggle('vc-cc-on', ccOn);
+    vcCcBtn.setAttribute('aria-label', ccOn ? 'Turn off captions' : 'Turn on captions');
+  }
+  vcCcBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    ccOn = !ccOn;
+    if(vid.textTracks && vid.textTracks.length > 0) vid.textTracks[0].mode = ccOn ? 'showing' : 'hidden';
+    syncCcBtn();
     showControls();
   });
 
@@ -1626,11 +1653,10 @@ footer a{color:#4d94ff;text-decoration:none}
   document.addEventListener('webkitfullscreenchange', syncFsBtn);
 
   /* ── Initial state ── */
-  syncPlayBtn();
+  syncBigPlayBtn();
   syncMuteBtn();
-  vid.addEventListener('loadedmetadata', function(){
-    vcTime.textContent = '0:00 / ' + fmt(vid.duration);
-  });
+  syncCcBtn();
+  if(vid.textTracks && vid.textTracks.length > 0) vid.textTracks[0].mode = 'hidden';
 })();
 
 /* Desktop: match widget height to video container */
