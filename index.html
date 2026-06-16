@@ -294,15 +294,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* ── Custom video controls ── */
 #vcPanel{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:12px;overflow:hidden}
 .vc-gradient{display:none}
-.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:8px 12px 10px;opacity:0;pointer-events:none;transition:opacity .22s ease;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:4px 10px 5px;opacity:0;pointer-events:none;transition:opacity .22s ease;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #vcPanel.vc-show .vc-controls,#vcPanel.vc-paused .vc-controls{opacity:1;pointer-events:auto}
 .vc-scrubber{position:relative;height:34px;display:flex;align-items:center;cursor:pointer;flex:1;margin:0 4px;touch-action:none;user-select:none;-webkit-user-select:none}
 .vc-track{position:relative;width:100%;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:height .12s ease}
 .vc-buf{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.35);border-radius:99px;width:0;pointer-events:none}
 .vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
-.vc-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#fff;left:0;pointer-events:none;transition:transform .1s ease}
+.vc-dot{display:none}
 .vc-scrubber:hover .vc-track,.vc-scrubber.vc-drag .vc-track{height:5px}
-.vc-scrubber:hover .vc-dot,.vc-scrubber.vc-drag .vc-dot{transform:translate(-50%,-50%) scale(1.3)}
 .vc-bar{display:flex;align-items:center;justify-content:space-between;height:34px}
 .vc-bar__left,.vc-bar__right{display:flex;align-items:center;gap:2px}
 .vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s;flex-shrink:0}
@@ -1037,7 +1036,7 @@ footer a{color:#4d94ff;text-decoration:none}
                 </div>
               </div>
               <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcFsIcon"><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcFsIcon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               </button>
             </div>
           </div>
@@ -1442,8 +1441,8 @@ footer a{color:#4d94ff;text-decoration:none}
   var ICON_PAUSE = '<rect x="6" y="4" width="4" height="16" rx="2" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="2" fill="currentColor"/>';
   var ICON_VOL   = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
   var ICON_MUTE  = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
-  var ICON_FS    = '<polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
-  var ICON_EXIT  = '<polyline points="4 14 10 14 10 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="20 10 14 10 14 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="10" y1="14" x2="3" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  var ICON_FS    = '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>';
+  var ICON_EXIT  = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
 
   function setIcon(svg, pathStr){ svg.innerHTML = pathStr; }
 
