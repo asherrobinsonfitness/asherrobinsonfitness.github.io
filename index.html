@@ -312,7 +312,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .vc-preview span{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7)}
 /* Centered big play/pause */
 #vcCenterPlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0;transition:opacity .22s ease}
-#vcPanel.vc-show #vcCenterPlay,#vcPanel.vc-paused #vcCenterPlay{opacity:1}
+#vcPanel.vc-paused #vcCenterPlay{opacity:1}
 #vcBigPlayBtn{background:none;border:none;color:#fff;cursor:pointer;padding:0;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55));transition:transform .12s,filter .12s;line-height:0}
 #vcBigPlayBtn:hover{transform:scale(1.1);filter:drop-shadow(0 2px 20px rgba(0,0,0,.65))}
 #vcBigPlayBtn svg{width:72px;height:72px;display:block}
@@ -1022,6 +1022,9 @@ footer a{color:#4d94ff;text-decoration:none}
           </div>
           <div class="vc-controls">
             <div class="vc-bar">
+              <button class="vc-btn" id="vcBarPlayBtn" aria-label="Play">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="vcBarPlayIcon"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              </button>
               <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
               </button>
@@ -1420,8 +1423,10 @@ footer a{color:#4d94ff;text-decoration:none}
   var vcBuf        = document.getElementById('vcBuf');
   var vcFill       = document.getElementById('vcFill');
   var vcDot        = document.getElementById('vcDot');
-  var vcBigPlayBtn = document.getElementById('vcBigPlayBtn');
-  var vcBigPlayIcon= document.getElementById('vcBigPlayIcon');
+  var vcBigPlayBtn  = document.getElementById('vcBigPlayBtn');
+  var vcBigPlayIcon = document.getElementById('vcBigPlayIcon');
+  var vcBarPlayBtn  = document.getElementById('vcBarPlayBtn');
+  var vcBarPlayIcon = document.getElementById('vcBarPlayIcon');
   var vcMuteBtn    = document.getElementById('vcMuteBtn');
   var vcVolIcon    = document.getElementById('vcVolIcon');
   var vcCcBtn      = document.getElementById('vcCcBtn');
@@ -1471,24 +1476,35 @@ footer a{color:#4d94ff;text-decoration:none}
   container.addEventListener('touchstart', showControls, {passive:true});
 
   /* ── Centered play/pause button ── */
-  function syncBigPlayBtn(){
+  function syncPlayState(){
     if(vid.paused){
+      /* Centered button: play icon, visible */
       setIcon(vcBigPlayIcon, ICON_PLAY);
       vcBigPlayBtn.setAttribute('aria-label','Play');
       if(!overlay || overlay.style.display === 'none') vcPanel.classList.add('vc-paused');
+      /* Bar button: play icon */
+      setIcon(vcBarPlayIcon, ICON_PLAY);
+      vcBarPlayBtn.setAttribute('aria-label','Play');
       showControls();
     } else {
-      setIcon(vcBigPlayIcon, ICON_PAUSE);
-      vcBigPlayBtn.setAttribute('aria-label','Pause');
+      /* Centered button: always hidden when playing */
       vcPanel.classList.remove('vc-paused');
+      /* Bar button: pause icon */
+      setIcon(vcBarPlayIcon, ICON_PAUSE);
+      vcBarPlayBtn.setAttribute('aria-label','Pause');
       clearTimeout(hideTimer);
       hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
     }
   }
-  vid.addEventListener('play',  syncBigPlayBtn);
-  vid.addEventListener('pause', syncBigPlayBtn);
+  vid.addEventListener('play',  syncPlayState);
+  vid.addEventListener('pause', syncPlayState);
 
   vcBigPlayBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(vid.paused) vid.play(); else vid.pause();
+  });
+
+  vcBarPlayBtn.addEventListener('click', function(e){
     e.stopPropagation();
     if(vid.paused) vid.play(); else vid.pause();
   });
