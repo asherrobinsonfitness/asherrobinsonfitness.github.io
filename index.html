@@ -291,6 +291,27 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Video */
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 
+/* ── Custom video controls ── */
+#vcPanel{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:12px;overflow:hidden}
+.vc-gradient{position:absolute;inset:auto 0 0;height:48%;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.3) 50%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .22s ease}
+.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:0 12px 10px;opacity:0;pointer-events:none;transition:opacity .22s ease}
+#vcPanel.vc-show .vc-gradient,#vcPanel.vc-show .vc-controls{opacity:1;pointer-events:auto}
+.vc-scrubber{position:relative;height:22px;display:flex;align-items:center;cursor:pointer;margin-bottom:3px;touch-action:none;user-select:none;-webkit-user-select:none}
+.vc-track{position:relative;width:100%;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:height .12s ease}
+.vc-buf{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.35);border-radius:99px;width:0;pointer-events:none}
+.vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
+.vc-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#fff;left:0;pointer-events:none;transition:transform .1s ease}
+.vc-scrubber:hover .vc-track,.vc-scrubber.vc-drag .vc-track{height:5px}
+.vc-scrubber:hover .vc-dot,.vc-scrubber.vc-drag .vc-dot{transform:translate(-50%,-50%) scale(1.3)}
+.vc-bar{display:flex;align-items:center;justify-content:space-between;height:34px}
+.vc-bar__left,.vc-bar__right{display:flex;align-items:center;gap:2px}
+.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;border-radius:4px;opacity:.9;transition:opacity .12s;flex-shrink:0}
+.vc-btn:hover{opacity:1}
+.vc-time{color:#fff;font-size:12px;font-weight:500;letter-spacing:.03em;white-space:nowrap;padding-left:4px;opacity:.88}
+.vc-preview{position:absolute;display:none;flex-direction:column;align-items:center;gap:3px;transform:translateX(-50%);pointer-events:none;z-index:4}
+.vc-preview canvas{width:160px;height:90px;border-radius:6px;border:1.5px solid rgba(255,255,255,.28);display:block;background:#000}
+.vc-preview span{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
  * img_center = 50% - 121px centres the composition (img_left = bubble_right_margin).
@@ -977,6 +998,43 @@ footer a{color:#4d94ff;text-decoration:none}
             Watch Video
           </button>
         </div>
+        <!-- Custom video controls panel -->
+        <div id="vcPanel" aria-hidden="true">
+          <div class="vc-gradient"></div>
+          <div id="vcPreview" class="vc-preview">
+            <canvas id="vcCanvas" width="160" height="90"></canvas>
+            <span id="vcPreviewTs"></span>
+          </div>
+          <div class="vc-controls">
+            <div id="vcScrubberRow" class="vc-scrubber">
+              <div class="vc-track">
+                <div class="vc-buf" id="vcBuf"></div>
+                <div class="vc-fill" id="vcFill"></div>
+                <div class="vc-dot" id="vcDot"></div>
+              </div>
+            </div>
+            <div class="vc-bar">
+              <div class="vc-bar__left">
+                <button class="vc-btn" id="vcPlayBtn" aria-label="Pause">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcPlayIcon"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
+                </button>
+                <span class="vc-time" id="vcTime">0:00 / 0:00</span>
+              </div>
+              <div class="vc-bar__right">
+                <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcVolIcon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </button>
+                <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcFsIcon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Hidden video used for desktop scrubber thumbnail previews -->
+        <video id="vcThumbVid" muted preload="metadata" playsinline aria-hidden="true" style="display:none;position:absolute;pointer-events:none;">
+          <source src="video.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
 
@@ -1279,7 +1337,6 @@ footer a{color:#4d94ff;text-decoration:none}
   overlay.addEventListener('click', function(){
     vid.loop    = false;
     vid.muted   = false;
-    vid.controls = true;
     vid.currentTime = 0;
     var p = vid.play();
     if(p !== undefined){
@@ -1291,10 +1348,6 @@ footer a{color:#4d94ff;text-decoration:none}
     }
   });
 
-  // Show controls only on first tap (avoids iOS control bar appearing on autoplay load)
-  vid.addEventListener('click', function(){
-    vid.controls = true;
-  });
 
   function attemptAutoplay(){
     // Attempt 1: unmuted autoplay
@@ -1345,6 +1398,238 @@ footer a{color:#4d94ff;text-decoration:none}
   // Pause on last frame (don't loop if playing unmuted with sound)
   vid.addEventListener('ended', function(){
     if(!vid.loop) vid.pause();
+  });
+})();
+
+/* ── Custom video controls ── */
+(function(){
+  var vid       = document.getElementById('mainVideo');
+  var overlay   = document.getElementById('ctpOverlay');
+  var vcPanel   = document.getElementById('vcPanel');
+  var vcScrubber= document.getElementById('vcScrubberRow');
+  var vcBuf     = document.getElementById('vcBuf');
+  var vcFill    = document.getElementById('vcFill');
+  var vcDot     = document.getElementById('vcDot');
+  var vcPlayBtn = document.getElementById('vcPlayBtn');
+  var vcPlayIcon= document.getElementById('vcPlayIcon');
+  var vcMuteBtn = document.getElementById('vcMuteBtn');
+  var vcVolIcon = document.getElementById('vcVolIcon');
+  var vcFsBtn   = document.getElementById('vcFsBtn');
+  var vcFsIcon  = document.getElementById('vcFsIcon');
+  var vcTime    = document.getElementById('vcTime');
+  var vcPreview = document.getElementById('vcPreview');
+  var vcCanvas  = document.getElementById('vcCanvas');
+  var vcPreviewTs = document.getElementById('vcPreviewTs');
+  var vcThumbVid= document.getElementById('vcThumbVid');
+  var container = document.getElementById('videoContainer');
+  if(!vid || !vcPanel) return;
+
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.matchMedia('(pointer:coarse)').matches;
+
+  /* ── SVG icon strings ── */
+  var ICON_PLAY  = '<path d="M8 5v14l11-7z"/>';
+  var ICON_PAUSE = '<path d="M6 19h4V5H6zm8-14v14h4V5z"/>';
+  var ICON_VOL   = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+  var ICON_MUTE  = '<path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.39-.3 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+  var ICON_FS    = '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>';
+  var ICON_EXIT  = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
+
+  function setIcon(svg, pathStr){ svg.innerHTML = pathStr; }
+
+  /* ── Time formatter ── */
+  function fmt(s){
+    s = Math.floor(s || 0);
+    var m = Math.floor(s / 60), sec = s % 60;
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  /* ── Show / hide controls ── */
+  var hideTimer;
+  function showControls(){
+    vcPanel.classList.add('vc-show');
+    clearTimeout(hideTimer);
+    if(!vid.paused){
+      hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
+    }
+  }
+  function keepShowing(){ /* keep controls visible while paused */ showControls(); }
+
+  /* ── Activity listeners ── */
+  container.addEventListener('mousemove', showControls);
+  container.addEventListener('touchstart', showControls, {passive:true});
+
+  /* ── Play / pause state ── */
+  function syncPlayBtn(){
+    if(vid.paused){
+      setIcon(vcPlayIcon, ICON_PLAY);
+      vcPlayBtn.setAttribute('aria-label','Play');
+      showControls(); // always show when paused
+    } else {
+      setIcon(vcPlayIcon, ICON_PAUSE);
+      vcPlayBtn.setAttribute('aria-label','Pause');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
+    }
+  }
+  vid.addEventListener('play',  syncPlayBtn);
+  vid.addEventListener('pause', syncPlayBtn);
+
+  /* Click video area to toggle play/pause */
+  container.addEventListener('click', function(e){
+    if(overlay && overlay.style.display !== 'none') return;
+    if(e.target.closest && e.target.closest('.vc-controls')) return;
+    if(isMobile && !vcPanel.classList.contains('vc-show')){ showControls(); return; }
+    if(vid.paused) vid.play(); else vid.pause();
+  });
+
+  vcPlayBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(vid.paused) vid.play(); else vid.pause();
+  });
+
+  /* ── Progress bar ── */
+  function setPct(pct){
+    vcFill.style.width = pct + '%';
+    vcDot.style.left   = pct + '%';
+  }
+
+  vid.addEventListener('timeupdate', function(){
+    if(!vid.duration) return;
+    setPct(vid.currentTime / vid.duration * 100);
+    vcTime.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
+  });
+
+  vid.addEventListener('loadedmetadata', function(){
+    vcTime.textContent = '0:00 / ' + fmt(vid.duration);
+  });
+
+  vid.addEventListener('progress', function(){
+    if(vid.duration && vid.buffered.length){
+      vcBuf.style.width = (vid.buffered.end(vid.buffered.length - 1) / vid.duration * 100) + '%';
+    }
+  });
+
+  /* ── Scrubber drag (mouse) ── */
+  var dragging = false, wasPlaying = false;
+
+  function fractionFromMouse(e){
+    var r = vcScrubber.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+  }
+  function seekTo(frac){
+    setPct(frac * 100);
+    if(vid.duration) vid.currentTime = frac * vid.duration;
+    vcTime.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
+  }
+
+  vcScrubber.addEventListener('mousedown', function(e){
+    if(e.button !== 0) return;
+    dragging = true; wasPlaying = !vid.paused;
+    if(wasPlaying) vid.pause();
+    vcScrubber.classList.add('vc-drag');
+    seekTo(fractionFromMouse(e));
+    showControls();
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e){
+    if(!dragging) return;
+    seekTo(fractionFromMouse(e));
+    showControls();
+  });
+  document.addEventListener('mouseup', function(e){
+    if(!dragging) return;
+    dragging = false;
+    vcScrubber.classList.remove('vc-drag');
+    seekTo(fractionFromMouse(e));
+    if(wasPlaying) vid.play();
+  });
+
+  /* ── Scrubber drag (touch / mobile) ── */
+  function fractionFromTouch(e){
+    var r = vcScrubber.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
+  }
+  vcScrubber.addEventListener('touchstart', function(e){
+    dragging = true; wasPlaying = !vid.paused;
+    if(wasPlaying) vid.pause();
+    vcScrubber.classList.add('vc-drag');
+    seekTo(fractionFromTouch(e));
+    showControls();
+    e.preventDefault();
+  }, {passive:false});
+  vcScrubber.addEventListener('touchmove', function(e){
+    if(!dragging) return;
+    seekTo(fractionFromTouch(e));
+    showControls();
+    e.preventDefault();
+  }, {passive:false});
+  vcScrubber.addEventListener('touchend', function(){
+    if(!dragging) return;
+    dragging = false;
+    vcScrubber.classList.remove('vc-drag');
+    if(wasPlaying) vid.play();
+  });
+
+  /* ── Desktop scrubber hover thumbnail ── */
+  if(!isMobile && vcThumbVid && vcCanvas){
+    var ctx = vcCanvas.getContext('2d');
+    vcThumbVid.addEventListener('seeked', function(){
+      ctx.drawImage(vcThumbVid, 0, 0, 160, 90);
+    });
+    vcScrubber.addEventListener('mousemove', function(e){
+      if(dragging) return;
+      var r = vcScrubber.getBoundingClientRect();
+      var frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      var leftPx = e.clientX - r.left;
+      vcPreview.style.left = Math.max(80, Math.min(r.width - 80, leftPx)) + 'px';
+      vcPreview.style.bottom = '52px';
+      vcPreview.style.display = 'flex';
+      if(vid.duration){ vcThumbVid.currentTime = frac * vid.duration; }
+      vcPreviewTs.textContent = fmt(frac * (vid.duration || 0));
+    });
+    vcScrubber.addEventListener('mouseleave', function(){
+      if(!dragging) vcPreview.style.display = 'none';
+    });
+  }
+
+  /* ── Mute toggle ── */
+  function syncMuteBtn(){
+    setIcon(vcVolIcon, vid.muted ? ICON_MUTE : ICON_VOL);
+    vcMuteBtn.setAttribute('aria-label', vid.muted ? 'Unmute' : 'Mute');
+  }
+  vcMuteBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    vid.muted = !vid.muted;
+    syncMuteBtn();
+    showControls();
+  });
+
+  /* ── Fullscreen ── */
+  function isFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function syncFsBtn(){
+    setIcon(vcFsIcon, isFs() ? ICON_EXIT : ICON_FS);
+    vcFsBtn.setAttribute('aria-label', isFs() ? 'Exit fullscreen' : 'Fullscreen');
+  }
+  vcFsBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(!isFs()){
+      var el = container;
+      if(el.requestFullscreen) el.requestFullscreen();
+      else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    } else {
+      if(document.exitFullscreen) document.exitFullscreen();
+      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
+    showControls();
+  });
+  document.addEventListener('fullscreenchange', syncFsBtn);
+  document.addEventListener('webkitfullscreenchange', syncFsBtn);
+
+  /* ── Initial state ── */
+  syncPlayBtn();
+  syncMuteBtn();
+  vid.addEventListener('loadedmetadata', function(){
+    vcTime.textContent = '0:00 / ' + fmt(vid.duration);
   });
 })();
 
