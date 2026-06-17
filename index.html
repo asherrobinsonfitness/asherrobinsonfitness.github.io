@@ -291,6 +291,21 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Video */
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 
+/* ── Click-to-unmute overlay ── */
+#ctpOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:none;align-items:center;justify-content:center;z-index:10;cursor:pointer;box-sizing:border-box;container-type:inline-size}
+.ctp-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.5rem,2cqw,1.25rem);pointer-events:auto;background:rgba(0,0,0,.58);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;padding:clamp(1rem,3cqw,2rem);height:70%;width:auto;aspect-ratio:4/3;border:1px solid #fff;animation:ctpBorderPulse 1.6s ease-out infinite;transition:transform .22s linear,background .15s ease}
+.ctp-text{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
+.ctp-inner:hover{background:rgba(0,0,0,.78)}
+#ctpOverlay.ctp-shift .ctp-inner,#ctpOverlay:hover .ctp-inner{transform:translateY(-21.5px)}
+#ctpOverlay:hover ~ #vcPanel .vc-controls{opacity:1;pointer-events:auto}
+@keyframes ctpBorderPulse{0%{box-shadow:0 0 0 0 rgba(0,0,0,.95)}55%{box-shadow:0 0 0 20px rgba(0,0,0,.3)}100%{box-shadow:0 0 0 32px rgba(0,0,0,0)}}
+#ctpVolWrap{position:relative;width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px);display:flex;align-items:center;justify-content:center}
+#ctpVolWrap svg{width:100%;height:100%}
+@keyframes ctpWave{0%,100%{opacity:.3}50%{opacity:1}}
+.ctp-wave1{animation:ctpWave 1.4s ease-in-out infinite}
+.ctp-wave2{animation:ctpWave 1.4s ease-in-out .4s infinite}
+.ctp-title{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
+.ctp-sub{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
 /* ── Custom video controls ── */
 #vcPanel{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:12px;overflow:hidden}
 .vc-gradient{display:none}
@@ -311,12 +326,13 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .vc-preview canvas{width:160px;height:90px;border-radius:6px;border:1.5px solid rgba(255,255,255,.28);display:block;background:#000}
 .vc-preview span{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7)}
 /* Centered big play/pause */
-#vcCenterPlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0;transition:opacity .22s ease}
-#vcPanel.vc-paused #vcCenterPlay{opacity:1}
-#vcBigPlayBtn{background:none;border:none;color:#fff;cursor:pointer;padding:0;pointer-events:auto;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55));transition:transform .12s,filter .12s;line-height:0}
-#vcBigPlayBtn:hover{transform:scale(1.1);filter:drop-shadow(0 2px 20px rgba(0,0,0,.65))}
-#vcBigPlayBtn svg{width:72px;height:72px;display:block}
-@media(max-width:640px){#vcBigPlayBtn svg{width:60px;height:60px}}
+#vcCenterPlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0}
+@keyframes vcFlash{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0}}
+#vcCenterPlay.vc-flash{animation:vcFlash .65s cubic-bezier(.4,0,.2,1) forwards}
+#vcBigPlayBtn{background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;width:88px;height:88px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;padding:0;pointer-events:auto;transition:transform .12s,background .12s;line-height:0}
+#vcBigPlayBtn:hover{transform:scale(1.08);background:rgba(40,40,40,.85)}
+#vcBigPlayBtn svg{width:36px;height:36px;display:block}
+@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:28px;height:28px}}
 /* CC active state */
 .vc-btn--cc{opacity:.55}
 .vc-btn--cc.vc-cc-on{opacity:1}
@@ -1002,11 +1018,20 @@ footer a{color:#4d94ff;text-decoration:none}
           <track id="vcCaptionTrack" kind="captions" src="captions.vtt" srclang="en" label="English">
         </video>
         <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
-        <div id="ctpOverlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:10;cursor:pointer;">
-          <button id="ctpBtn" aria-label="Watch the video" style="display:inline-flex;align-items:center;gap:.75rem;padding:.9rem 1.25rem;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:999px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:background .15s;">
-            <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;transform:translateX(1px)"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-            Watch Video
-          </button>
+        <div id="ctpOverlay" style="display:none;">
+          <div class="ctp-inner">
+            <div id="ctpVolWrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1;color:#fff">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#fff" stroke="none"/>
+                <path class="ctp-wave1" d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="#fff" stroke-width="2" fill="none"/>
+                <path class="ctp-wave2" d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#fff" stroke-width="2" fill="none"/>
+              </svg>
+            </div>
+            <div class="ctp-text">
+              <div class="ctp-title">Your Video is Playing</div>
+              <div class="ctp-sub">Click to Unmute</div>
+            </div>
+          </div>
         </div>
         <!-- Custom video controls panel -->
         <div id="vcPanel" aria-hidden="true">
@@ -1321,9 +1346,8 @@ footer a{color:#4d94ff;text-decoration:none}
 (function(){
   var vid     = document.getElementById('mainVideo');
   var overlay = document.getElementById('ctpOverlay');
-  var ctpBtn  = document.getElementById('ctpBtn');
   var poster  = document.getElementById('videoPoster');
-  if(!vid || !overlay || !ctpBtn) return;
+  if(!vid || !overlay) return;
 
   // Fade video in over poster on first frame render
   vid.addEventListener('playing', function onPlaying(){
@@ -1333,18 +1357,24 @@ footer a{color:#4d94ff;text-decoration:none}
     if(poster) setTimeout(function(){ poster.style.display = 'none'; }, 600);
   });
 
+  var ctpHideTimer;
   function showOverlay(){
     overlay.style.display = 'flex';
+    overlay.classList.add('ctp-shift');
     vid.loop = true;
+    clearTimeout(ctpHideTimer);
+    ctpHideTimer = setTimeout(function(){
+      overlay.classList.remove('ctp-shift');
+      var panel = document.getElementById('vcPanel');
+      if(panel) panel.classList.remove('vc-has-overlay');
+    }, 3000);
   }
 
   function hideOverlay(){
+    clearTimeout(ctpHideTimer);
+    overlay.classList.remove('ctp-shift');
     overlay.style.display = 'none';
   }
-
-  // CTP button hover
-  ctpBtn.addEventListener('mouseenter', function(){ ctpBtn.style.background = 'rgba(30,30,30,.88)'; });
-  ctpBtn.addEventListener('mouseleave', function(){ ctpBtn.style.background = 'rgba(30,30,30,.72)'; });
 
   // Clicking anywhere on the overlay plays the video with sound
   overlay.addEventListener('click', function(){
@@ -1439,6 +1469,14 @@ footer a{color:#4d94ff;text-decoration:none}
   if(!vid || !vcPanel) return;
 
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.matchMedia('(pointer:coarse)').matches;
+  var vcCenterPlay = document.getElementById('vcCenterPlay');
+  var userClick = false;
+  function flashCenter(){
+    if(!vcCenterPlay) return;
+    vcCenterPlay.classList.remove('vc-flash');
+    void vcCenterPlay.offsetWidth;
+    vcCenterPlay.classList.add('vc-flash');
+  }
 
   /* ── SVG icon strings ── */
   /* Rounded stroke-based icons (Feather-style) */
@@ -1478,29 +1516,29 @@ footer a{color:#4d94ff;text-decoration:none}
   /* ── Centered play/pause button ── */
   function syncPlayState(){
     if(vid.paused){
-      /* Centered button: play icon, visible */
-      setIcon(vcBigPlayIcon, ICON_PLAY);
+      setIcon(vcBigPlayIcon, ICON_PAUSE);
       vcBigPlayBtn.setAttribute('aria-label','Play');
       if(!overlay || overlay.style.display === 'none') vcPanel.classList.add('vc-paused');
-      /* Bar button: play icon */
       setIcon(vcBarPlayIcon, ICON_PLAY);
       vcBarPlayBtn.setAttribute('aria-label','Play');
       showControls();
     } else {
-      /* Centered button: always hidden when playing */
       vcPanel.classList.remove('vc-paused');
-      /* Bar button: pause icon */
+      setIcon(vcBigPlayIcon, ICON_PLAY);
+      vcBigPlayBtn.setAttribute('aria-label','Pause');
       setIcon(vcBarPlayIcon, ICON_PAUSE);
       vcBarPlayBtn.setAttribute('aria-label','Pause');
       clearTimeout(hideTimer);
       hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
     }
+    if(userClick){ userClick = false; flashCenter(); }
   }
   vid.addEventListener('play',  syncPlayState);
   vid.addEventListener('pause', syncPlayState);
 
   vcBigPlayBtn.addEventListener('click', function(e){
     e.stopPropagation();
+    userClick = true;
     if(vid.paused) vid.play(); else vid.pause();
   });
 
@@ -1514,6 +1552,7 @@ footer a{color:#4d94ff;text-decoration:none}
     if(overlay && overlay.style.display !== 'none') return;
     if(e.target.closest && (e.target.closest('.vc-controls') || e.target.closest('#vcCenterPlay'))) return;
     if(isMobile && !vcPanel.classList.contains('vc-show')){ showControls(); return; }
+    userClick = true;
     if(vid.paused) vid.play(); else vid.pause();
   });
 
