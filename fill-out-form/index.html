@@ -122,14 +122,40 @@
     .signup-input:focus, .signup-select:focus {
       border-color: #4d94ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
     }
-    .signup-select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%239ca3af' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 0.9rem center;
-      padding-right: 2.25rem; color: var(--text-secondary);
+    /* ── CUSTOM SELECT ── */
+    .csel-wrapper { position: relative; width: 100%; user-select: none; }
+    .csel-trigger {
+      width: 100%; padding: 0.8rem 1rem;
+      background: var(--input-bg); border: 1px solid var(--input-border);
+      border-radius: 8px; color: var(--text-secondary); font-size: 1rem;
+      font-family: inherit; line-height: 1.4; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      outline: none; text-align: left;
     }
-    .signup-select.has-value { color: var(--text); }
-    .signup-select option { background: #2a2a2a; color: var(--text); }
+    .csel-trigger.has-value { color: var(--text); }
+    .csel-trigger:focus,
+    .csel-wrapper.open .csel-trigger {
+      border-color: #4d94ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    }
+    .csel-chevron { flex-shrink: 0; transition: transform 0.2s ease; margin-left: 0.5rem; }
+    .csel-wrapper.open .csel-chevron { transform: rotate(180deg); }
+    .csel-dropdown {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #252525; border: 1px solid var(--border-strong);
+      border-radius: 8px; z-index: 200; overflow: hidden; display: none;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5); padding: 4px 0; list-style: none;
+    }
+    .csel-wrapper.open .csel-dropdown {
+      display: block; animation: cselIn 0.15s ease;
+    }
+    @keyframes cselIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .csel-opt {
+      padding: 0.7rem 1rem; font-size: 0.9375rem; color: var(--text);
+      cursor: pointer; transition: background 0.1s;
+    }
+    .csel-opt:hover { background: rgba(255,255,255,0.06); }
+    .csel-opt.selected { background: rgba(0,102,255,0.14); }
 
     /* ── BUTTON ── */
     .signup-btn {
@@ -152,7 +178,7 @@
     .signup-legal-note { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.75rem; }
     .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
 
-    .reveal-block { overflow: hidden; }
+    .reveal-block { }
     .reveal-enter { animation: revealIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
     @keyframes revealIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -237,18 +263,30 @@
 
         <div class="reveal-block" id="fg-questions" style="display:none;">
           <div class="form-field">
-            <label class="form-label" for="q-goal">What is your top fitness goal?</label>
-            <select class="signup-select" id="q-goal">
+            <label class="form-label" id="lbl-goal">What is your top fitness goal?</label>
+            <select id="q-goal" style="display:none;" tabindex="-1" aria-hidden="true">
               <option value="">Select…</option>
               <option value="lose_fat">Lose body fat</option>
               <option value="build_muscle">Build muscle</option>
               <option value="improve_fitness">Improve general fitness</option>
               <option value="not_sure">Not sure yet</option>
             </select>
+            <div class="csel-wrapper" data-csel="q-goal">
+              <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-goal">
+                <span class="csel-text">Select…</span>
+                <svg class="csel-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="csel-dropdown" role="listbox">
+                <li class="csel-opt" data-value="lose_fat" role="option">Lose body fat</li>
+                <li class="csel-opt" data-value="build_muscle" role="option">Build muscle</li>
+                <li class="csel-opt" data-value="improve_fitness" role="option">Improve general fitness</li>
+                <li class="csel-opt" data-value="not_sure" role="option">Not sure yet</li>
+              </ul>
+            </div>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-age">What's your age?</label>
-            <select class="signup-select" id="q-age">
+            <label class="form-label" id="lbl-age">What's your age?</label>
+            <select id="q-age" style="display:none;" tabindex="-1" aria-hidden="true">
               <option value="">Select…</option>
               <option value="17_or_younger">17 or younger</option>
               <option value="18_29">18–29</option>
@@ -257,25 +295,62 @@
               <option value="50_59">50–59</option>
               <option value="60_or_older">60 or older</option>
             </select>
+            <div class="csel-wrapper" data-csel="q-age">
+              <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-age">
+                <span class="csel-text">Select…</span>
+                <svg class="csel-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="csel-dropdown" role="listbox">
+                <li class="csel-opt" data-value="17_or_younger" role="option">17 or younger</li>
+                <li class="csel-opt" data-value="18_29" role="option">18–29</li>
+                <li class="csel-opt" data-value="30_39" role="option">30–39</li>
+                <li class="csel-opt" data-value="40_49" role="option">40–49</li>
+                <li class="csel-opt" data-value="50_59" role="option">50–59</li>
+                <li class="csel-opt" data-value="60_or_older" role="option">60 or older</li>
+              </ul>
+            </div>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-gym">Do you have access to a gym?</label>
-            <select class="signup-select" id="q-gym">
+            <label class="form-label" id="lbl-gym">Do you have access to a gym?</label>
+            <select id="q-gym" style="display:none;" tabindex="-1" aria-hidden="true">
               <option value="">Select…</option>
               <option value="yes">Yes, I have access</option>
               <option value="join">I plan to join a gym</option>
               <option value="no">No</option>
               <option value="home">Home equipment only</option>
             </select>
+            <div class="csel-wrapper" data-csel="q-gym">
+              <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-gym">
+                <span class="csel-text">Select…</span>
+                <svg class="csel-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="csel-dropdown" role="listbox">
+                <li class="csel-opt" data-value="yes" role="option">Yes, I have access</li>
+                <li class="csel-opt" data-value="join" role="option">I plan to join a gym</li>
+                <li class="csel-opt" data-value="no" role="option">No</li>
+                <li class="csel-opt" data-value="home" role="option">Home equipment only</li>
+              </ul>
+            </div>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
-            <select class="signup-select" id="q-commitment">
+            <label class="form-label" id="lbl-commitment">Are you willing to track your food, body weight, and workouts?</label>
+            <select id="q-commitment" style="display:none;" tabindex="-1" aria-hidden="true">
               <option value="">Select…</option>
               <option value="yes">Yes</option>
               <option value="maybe">Maybe</option>
               <option value="no">No</option>
             </select>
+            <div class="csel-wrapper" data-csel="q-commitment">
+              <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-commitment">
+                <span class="csel-text">Select…</span>
+                <svg class="csel-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="csel-dropdown" role="listbox">
+                <li class="csel-opt" data-value="yes" role="option">Yes</li>
+                <li class="csel-opt" data-value="maybe" role="option">Maybe</li>
+                <li class="csel-opt" data-value="no" role="option">No</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -405,6 +480,58 @@
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  function initCustomSelects() {
+    document.querySelectorAll('.csel-wrapper').forEach(function(wrapper) {
+      var trigger   = wrapper.querySelector('.csel-trigger');
+      var dropdown  = wrapper.querySelector('.csel-dropdown');
+      var textEl    = wrapper.querySelector('.csel-text');
+      var selectId  = wrapper.dataset.csel;
+      var hiddenSel = document.getElementById(selectId);
+
+      trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var isOpen = wrapper.classList.contains('open');
+        closeAll();
+        if (!isOpen) {
+          wrapper.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      dropdown.querySelectorAll('.csel-opt').forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          var val = opt.dataset.value;
+          hiddenSel.value = val;
+          textEl.textContent = opt.textContent;
+          trigger.classList.add('has-value');
+          dropdown.querySelectorAll('.csel-opt').forEach(function(o) { o.classList.remove('selected'); });
+          opt.classList.add('selected');
+          wrapper.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+          hiddenSel.dispatchEvent(new Event('change'));
+        });
+      });
+    });
+
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeAll();
+    });
+  }
+
+  function closeAll() {
+    document.querySelectorAll('.csel-wrapper.open').forEach(function(w) {
+      w.classList.remove('open');
+      w.querySelector('.csel-trigger').setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCustomSelects);
+})();
+</script>
 
 <script>
 var NAF_RULES = {
