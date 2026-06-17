@@ -112,9 +112,9 @@
     @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
     .form-label { display: block; font-size: 0.875rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
     .signup-input, .signup-select {
-      width: 100%; padding: 0.8rem 1rem;
+      width: 100%; padding: 0.625rem 0.875rem;
       background: var(--input-bg); border: 1px solid var(--input-border);
-      border-radius: 8px; color: var(--text); font-size: 1rem; line-height: 1.4;
+      border-radius: 8px; color: var(--text); font-size: 0.875rem; line-height: 1.35;
       outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
       -webkit-appearance: none; appearance: none;
     }
@@ -143,7 +143,7 @@
     .signup-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .signup-btn:disabled:hover { background: var(--primary); }
     .signup-btn-label { flex: 1; text-align: left; }
-    .signup-btn-divider { display: block; width: 1px; height: 1.5rem; background: rgba(255,255,255,0.35); flex-shrink: 0; }
+    .signup-btn-divider { display: block; width: 1px; height: 1.2rem; background: rgba(255,255,255,0.35); flex-shrink: 0; }
     .signup-btn-arrow { display: inline; transition: transform 0.22s ease; }
     @media (hover: hover) and (pointer: fine) {
       .signup-btn:not(:disabled):hover .signup-btn-arrow { transform: translateX(4px); }
@@ -163,7 +163,7 @@
     .naf-modal-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.75rem 1.5rem 2.25rem; }
     .naf-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); line-height: 1.3; margin: 0 0 1rem; }
     .naf-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin: .25rem auto 0; }
-    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.75rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; }
+    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.9rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; }
     @media (hover: hover) and (pointer: fine) { .naf-modal-btn:hover { background: #0052cc; } }
 
     /* ── LEGAL OVERLAYS ── */
@@ -237,7 +237,7 @@
 
         <div class="reveal-block" id="fg-questions" style="display:none;">
           <div class="form-field">
-            <label class="form-label" for="q-goal">What is your top fitness goal?</label>
+            <label class="form-label" for="q-goal"><strong>What is your top fitness goal?</strong> <span style="color:#e84b3a;">*</span></label>
             <select class="signup-select" id="q-goal">
               <option value="">Select…</option>
               <option value="lose_fat">Lose body fat</option>
@@ -247,7 +247,7 @@
             </select>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-age">What's your age?</label>
+            <label class="form-label" for="q-age"><strong>What's your age?</strong> <span style="color:#e84b3a;">*</span></label>
             <select class="signup-select" id="q-age">
               <option value="">Select…</option>
               <option value="17_or_younger">17 or younger</option>
@@ -259,7 +259,7 @@
             </select>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-gym">Do you have access to a gym?</label>
+            <label class="form-label" for="q-gym"><strong>Do you have access to a gym?</strong> <span style="color:#e84b3a;">*</span></label>
             <select class="signup-select" id="q-gym">
               <option value="">Select…</option>
               <option value="yes">Yes, I have access</option>
@@ -269,7 +269,7 @@
             </select>
           </div>
           <div class="form-field">
-            <label class="form-label" for="q-commitment">Are you willing to track your food, body weight, and workouts?</label>
+            <label class="form-label" for="q-commitment"><strong>Are you willing to track your food, body weight, and workouts?</strong> <span style="color:#e84b3a;">*</span></label>
             <select class="signup-select" id="q-commitment">
               <option value="">Select…</option>
               <option value="yes">Yes</option>
@@ -512,6 +512,14 @@ function closeLegal(which) {
   o.classList.add('closing');
   setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
 }
+// Prevent iOS zoom on input/select focus without locking user zoom
+(function() {
+  document.querySelectorAll('.signup-input, .signup-select').forEach(function(el) {
+    el.addEventListener('touchstart', function() { el.style.fontSize = '16px'; }, { passive: true });
+    el.addEventListener('blur', function() { el.style.fontSize = ''; });
+  });
+})();
+
 document.querySelectorAll('.legal-overlay').forEach(function(o) {
   o.addEventListener('click', function(e) { if (e.target === o) closeLegal(o.id.replace('modal-','')); });
 });
