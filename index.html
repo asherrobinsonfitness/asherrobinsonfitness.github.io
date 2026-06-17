@@ -1551,7 +1551,6 @@ footer a{color:#4d94ff;text-decoration:none}
   container.addEventListener('click', function(e){
     if(overlay && overlay.style.display !== 'none') return;
     if(e.target.closest && (e.target.closest('.vc-controls') || e.target.closest('#vcCenterPlay'))) return;
-    if(isMobile && !vcPanel.classList.contains('vc-show')){ showControls(); return; }
     userClick = true;
     if(vid.paused) vid.play(); else vid.pause();
   });
