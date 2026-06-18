@@ -344,6 +344,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   #vcMuteBtn{order:3}
   #vcFsBtn{order:4}
   .vc-bar{flex-wrap:wrap}
+  #vcPanel.vc-show #vcCenterPlay,#vcPanel.vc-paused #vcCenterPlay{opacity:1}
 }
 /* CC active state */
 .vc-btn--cc{opacity:.55}
@@ -1489,6 +1490,9 @@ footer a{color:#4d94ff;text-decoration:none}
     void vcCenterPlay.offsetWidth;
     vcCenterPlay.classList.add('vc-flash');
   }
+  vcCenterPlay && vcCenterPlay.addEventListener('animationend', function(){
+    vcCenterPlay.classList.remove('vc-flash');
+  });
 
   /* ── SVG icon strings ── */
   /* Rounded stroke-based icons (Feather-style) */
