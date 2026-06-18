@@ -318,14 +318,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .vc-gradient{display:none}
 .vc-controls{position:absolute;bottom:0;left:0;right:0;padding:0;opacity:0;pointer-events:none;transition:opacity .22s ease;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #vcPanel.vc-show .vc-controls,#vcPanel.vc-paused .vc-controls,#vcPanel.vc-has-overlay .vc-controls{opacity:1;pointer-events:auto}
-.vc-scrubber{position:relative;height:44px;display:flex;align-items:center;cursor:pointer;flex:1;padding:0 12px;touch-action:none;user-select:none;-webkit-user-select:none}
+.vc-scrubber{position:relative;display:flex;align-items:center;cursor:pointer;flex:1;padding:12px;touch-action:none;user-select:none;-webkit-user-select:none}
 .vc-track{position:relative;width:100%;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:height .12s ease}
 .vc-buf{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.35);border-radius:99px;width:0;pointer-events:none}
 .vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
 .vc-dot{display:none}
 .vc-scrubber:hover .vc-track,.vc-scrubber.vc-drag .vc-track{height:5px}
-.vc-bar{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:stretch;height:44px}
-.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:0 12px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s,background .12s;flex-shrink:0}
+.vc-bar{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:stretch}
+.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:12px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s,background .12s;flex-shrink:0}
 .vc-btn svg{width:22px;height:22px;display:block;flex-shrink:0}
 .vc-btn:hover{opacity:1}
 .vc-time{color:#fff;font-size:12px;font-weight:500;letter-spacing:.03em;white-space:nowrap;padding-left:4px;opacity:.88}
@@ -337,7 +337,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 #vcPanel.vc-paused #vcCenterPlay{opacity:1}
 #vcBigPlayBtn{background:rgba(0,0,0,.58);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;width:88px;height:88px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;padding:0;pointer-events:auto;transition:background .15s ease;line-height:0;outline:none}
 #vcBigPlayBtn svg{width:88px;height:88px;display:block}
-@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:72px;height:72px}.vc-btn svg{width:18px;height:18px}}
+@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:72px;height:72px}.vc-btn svg{width:18px;height:18px}.vc-btn{padding:10px}.vc-scrubber{padding:10px}}
 /* CC active state — icon shape (outline/filled) conveys state; opacity matches other buttons */
 .vc-btn--cc{opacity:.88}
 .vc-btn--cc.vc-cc-on{opacity:1}
@@ -349,7 +349,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Volume wrap + vertical slider */
 .vc-vol-wrap{position:relative;display:flex;align-items:stretch}
 .vc-vol-wrap::after{content:'';position:absolute;bottom:100%;left:0;right:0;height:8px}
-.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:36px;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
+.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:0;width:100%;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
 .vc-vol-wrap:hover .vc-vol-slider{opacity:1;pointer-events:auto}
 .vc-vol-track{position:relative;width:3px;height:80px;background:rgba(255,255,255,.22);border-radius:99px;cursor:pointer;flex-shrink:0;transition:width .15s ease}
 .vc-vol-wrap:hover .vc-vol-track{width:5px}
