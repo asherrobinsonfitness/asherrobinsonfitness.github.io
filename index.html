@@ -337,6 +337,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 #vcBigPlayBtn:hover{transform:scale(1.08);background:rgba(40,40,40,.85)}
 #vcBigPlayBtn svg{width:36px;height:36px;display:block}
 @media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:28px;height:28px}}
+@media(max-width:640px){
+  #vcBarPlayBtn{display:none}
+  #vcScrubberRow{order:1}
+  .vc-btn--cc{order:2}
+  #vcMuteBtn{order:3}
+  #vcFsBtn{order:4}
+  .vc-bar{flex-wrap:wrap}
+}
 /* CC active state */
 .vc-btn--cc{opacity:.55}
 .vc-btn--cc.vc-cc-on{opacity:1}
@@ -1706,14 +1714,18 @@ footer a{color:#4d94ff;text-decoration:none}
       var el = container;
       if(el.requestFullscreen) el.requestFullscreen();
       else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if(vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();
     } else {
       if(document.exitFullscreen) document.exitFullscreen();
       else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if(vid.webkitExitFullscreen) vid.webkitExitFullscreen();
     }
     showControls();
   });
   document.addEventListener('fullscreenchange', syncFsBtn);
   document.addEventListener('webkitfullscreenchange', syncFsBtn);
+  vid.addEventListener('webkitbeginfullscreen', syncFsBtn);
+  vid.addEventListener('webkitendfullscreen', syncFsBtn);
 
   /* ── Watch overlay: show bottom bar only, hide centered button ── */
   if(window.MutationObserver && overlay){
