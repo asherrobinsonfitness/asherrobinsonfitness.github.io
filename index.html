@@ -340,16 +340,30 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 @media(max-width:640px){#vcBigPlayBtn:hover{background:none}}
 @media(max-width:640px){
   #vcBarPlayBtn{display:none}
-  #vcScrubberRow{order:1}
-  .vc-btn--cc{order:2}
-  #vcMuteBtn{order:3}
+  #vcMuteBtn{order:1}
+  #vcScrubberRow{order:2}
+  .vc-btn--cc{order:3}
   #vcFsBtn{order:4}
-  .vc-bar{flex-wrap:wrap}
   #vcPanel.vc-show #vcCenterPlay,#vcPanel.vc-paused #vcCenterPlay{opacity:1}
 }
 /* CC active state */
 .vc-btn--cc{opacity:.55}
 .vc-btn--cc.vc-cc-on{opacity:1}
+/* Square hover bg (desktop pointer only) */
+@media(hover:hover) and (pointer:fine){
+  .vc-btn:hover{background:rgba(255,255,255,.14);border-radius:6px}
+  .vc-btn--cc:hover{background:rgba(255,255,255,.14);border-radius:6px}
+}
+/* Volume wrap + vertical slider */
+.vc-vol-wrap{position:relative;display:flex;align-items:center}
+.vc-vol-wrap::after{content:'';position:absolute;bottom:100%;left:0;right:0;height:8px}
+.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:36px;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
+.vc-vol-wrap:hover .vc-vol-slider{opacity:1;pointer-events:auto}
+.vc-vol-track{position:relative;width:3px;flex:1;height:100%;background:rgba(255,255,255,.22);border-radius:99px;cursor:pointer;transition:width .12s ease}
+.vc-vol-wrap:hover .vc-vol-track{width:4px}
+.vc-vol-fill{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:99px;height:100%}
+.vc-vol-thumb{position:absolute;left:50%;transform:translate(-50%,50%);width:11px;height:11px;background:#fff;border-radius:50%;bottom:100%;pointer-events:none}
+@media(max-width:640px){.vc-vol-slider{display:none}}
 
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
@@ -1064,12 +1078,17 @@ footer a{color:#4d94ff;text-decoration:none}
               <button class="vc-btn" id="vcBarPlayBtn" aria-label="Play">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="vcBarPlayIcon"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </button>
-              <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              </button>
-              <button class="vc-btn vc-btn--cc" id="vcCcBtn" aria-label="Turn on captions">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M9.5 9.5c-.5-.6-1.2-.9-2-.9C5.6 8.6 4 10.1 4 12s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/><path d="M17.5 9.5c-.5-.6-1.2-.9-2-.9-1.9 0-3.5 1.5-3.5 3.4s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/></svg>
-              </button>
+              <div class="vc-vol-wrap" id="vcVolWrap">
+                <div class="vc-vol-slider" id="vcVolSlider">
+                  <div class="vc-vol-track" id="vcVolTrack">
+                    <div class="vc-vol-fill" id="vcVolFill"></div>
+                    <div class="vc-vol-thumb" id="vcVolThumb"></div>
+                  </div>
+                </div>
+                <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+              </div>
               <div id="vcScrubberRow" class="vc-scrubber">
                 <div class="vc-track">
                   <div class="vc-buf" id="vcBuf"></div>
@@ -1077,6 +1096,9 @@ footer a{color:#4d94ff;text-decoration:none}
                   <div class="vc-dot" id="vcDot"></div>
                 </div>
               </div>
+              <button class="vc-btn vc-btn--cc" id="vcCcBtn" aria-label="Turn on captions">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M9.5 9.5c-.5-.6-1.2-.9-2-.9C5.6 8.6 4 10.1 4 12s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/><path d="M17.5 9.5c-.5-.6-1.2-.9-2-.9-1.9 0-3.5 1.5-3.5 3.4s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/></svg>
+              </button>
               <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcFsIcon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
               </button>
@@ -1679,6 +1701,41 @@ footer a{color:#4d94ff;text-decoration:none}
     });
   }
 
+  /* ── Volume slider ── */
+  var vcVolTrack = document.getElementById('vcVolTrack');
+  var vcVolFill  = document.getElementById('vcVolFill');
+  var vcVolThumb = document.getElementById('vcVolThumb');
+  var lastVol = 1;
+
+  function syncVolSlider(){
+    var v = vid.muted ? 0 : vid.volume;
+    vcVolFill.style.height  = (v * 100) + '%';
+    vcVolThumb.style.bottom = (v * 100) + '%';
+  }
+
+  function setVolFromY(clientY){
+    var rect = vcVolTrack.getBoundingClientRect();
+    var pct  = 1 - (clientY - rect.top) / rect.height;
+    pct = Math.max(0, Math.min(1, pct));
+    vid.volume = pct;
+    if(pct > 0) lastVol = pct;
+    vid.muted = (pct === 0);
+    syncMuteBtn();
+    syncVolSlider();
+  }
+
+  if(vcVolTrack){
+    vcVolTrack.addEventListener('mousedown', function(e){
+      e.stopPropagation();
+      setVolFromY(e.clientY);
+      function onMove(e){ setVolFromY(e.clientY); }
+      function onUp(){ document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+  vid.addEventListener('volumechange', syncVolSlider);
+
   /* ── Mute toggle ── */
   function syncMuteBtn(){
     setIcon(vcVolIcon, vid.muted ? ICON_MUTE : ICON_VOL);
@@ -1686,8 +1743,15 @@ footer a{color:#4d94ff;text-decoration:none}
   }
   vcMuteBtn.addEventListener('click', function(e){
     e.stopPropagation();
-    vid.muted = !vid.muted;
+    if(vid.muted){
+      vid.muted = false;
+      if(vid.volume === 0) vid.volume = lastVol || 1;
+    } else {
+      lastVol = vid.volume || lastVol;
+      vid.muted = true;
+    }
     syncMuteBtn();
+    syncVolSlider();
     showControls();
   });
 
@@ -1750,6 +1814,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
   /* ── Initial state ── */
   syncMuteBtn();
+  syncVolSlider();
   syncCcBtn();
   if(vid.textTracks && vid.textTracks.length > 0) vid.textTracks[0].mode = 'hidden';
 })();
