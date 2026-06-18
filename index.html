@@ -303,11 +303,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   #ctpOverlay:hover .ctp-inner{transform:translateY(-21.5px)}
   #ctpOverlay:hover ~ #vcPanel .vc-controls{opacity:1;pointer-events:auto}
 }
-#ctpVolWrap{position:relative;width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px);display:flex;align-items:center;justify-content:center}
-#ctpVolWrap svg{width:100%;height:100%}
-@keyframes ctpWave{0%,100%{opacity:.3}50%{opacity:1}}
-.ctp-wave1{animation:ctpWave 1.4s ease-in-out infinite}
-.ctp-wave2{animation:ctpWave 1.4s ease-in-out .4s infinite}
+#ctpVolWrap{position:relative;width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px)}
+#ctpVolWrap svg{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}
+@keyframes ctpV1{0%{opacity:1}23%{opacity:1}30%{opacity:0}100%{opacity:0}}
+@keyframes ctpV2{0%{opacity:0}23%{opacity:0}30%{opacity:1}56%{opacity:1}63%{opacity:0}100%{opacity:0}}
+@keyframes ctpV3{0%{opacity:0}56%{opacity:0}63%{opacity:1}86%{opacity:1}93%{opacity:0}100%{opacity:0}}
+.ctp-vol-1{animation:ctpV1 3s ease-in-out infinite}
+.ctp-vol-2{animation:ctpV2 3s ease-in-out infinite}
+.ctp-vol-3{animation:ctpV3 3s ease-in-out infinite}
 .ctp-title{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
 .ctp-sub{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
 /* ── Custom video controls ── */
@@ -321,9 +324,8 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
 .vc-dot{display:none}
 .vc-scrubber:hover .vc-track,.vc-scrubber.vc-drag .vc-track{height:5px}
-.vc-bar{display:flex;align-items:center;justify-content:space-between;height:34px}
-.vc-bar__left,.vc-bar__right{display:flex;align-items:center;gap:2px}
-.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s;flex-shrink:0}
+.vc-bar{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:stretch;height:34px}
+.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:0 8px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s,background .12s;flex-shrink:0}
 .vc-btn:hover{opacity:1}
 .vc-time{color:#fff;font-size:12px;font-weight:500;letter-spacing:.03em;white-space:nowrap;padding-left:4px;opacity:.88}
 .vc-preview{position:absolute;display:none;flex-direction:column;align-items:center;gap:3px;transform:translateX(-50%);pointer-events:none;z-index:4}
@@ -336,33 +338,22 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 #vcBigPlayBtn{background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;width:88px;height:88px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;padding:0;pointer-events:auto;transition:transform .12s,background .12s;line-height:0}
 #vcBigPlayBtn:hover{transform:scale(1.08);background:rgba(40,40,40,.85)}
 #vcBigPlayBtn svg{width:36px;height:36px;display:block}
-@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}#vcBigPlayBtn svg{width:28px;height:28px}}
-@media(max-width:640px){#vcBigPlayBtn:hover{background:none}}
-@media(max-width:640px){
-  #vcBarPlayBtn{display:none}
-  #vcMuteBtn{order:1}
-  #vcScrubberRow{order:2}
-  .vc-btn--cc{order:3}
-  #vcFsBtn{order:4}
-  #vcPanel.vc-show #vcCenterPlay,#vcPanel.vc-paused #vcCenterPlay{opacity:1}
-}
-/* CC active state */
-.vc-btn--cc{opacity:.55}
+@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:28px;height:28px}}
+/* CC active state — icon shape (outline/filled) conveys state; opacity matches other buttons */
+.vc-btn--cc{opacity:.88}
 .vc-btn--cc.vc-cc-on{opacity:1}
-/* Square hover bg (desktop pointer only) */
+/* Square hover bg — full height, no radius (desktop pointer only) */
 @media(hover:hover) and (pointer:fine){
-  .vc-btn:hover{background:rgba(255,255,255,.14);border-radius:6px}
-  .vc-btn--cc:hover{background:rgba(255,255,255,.14);border-radius:6px}
+  .vc-btn:hover{background:rgba(255,255,255,.14);border-radius:0}
 }
 /* Volume wrap + vertical slider */
-.vc-vol-wrap{position:relative;display:flex;align-items:center}
+.vc-vol-wrap{position:relative;display:flex;align-items:stretch}
 .vc-vol-wrap::after{content:'';position:absolute;bottom:100%;left:0;right:0;height:8px}
-.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:36px;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
+.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:36px;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
 .vc-vol-wrap:hover .vc-vol-slider{opacity:1;pointer-events:auto}
-.vc-vol-track{position:relative;width:3px;flex:1;height:100%;background:rgba(255,255,255,.22);border-radius:99px;cursor:pointer;transition:width .12s ease}
-.vc-vol-wrap:hover .vc-vol-track{width:4px}
-.vc-vol-fill{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:99px;height:100%}
-.vc-vol-thumb{position:absolute;left:50%;transform:translate(-50%,50%);width:11px;height:11px;background:#fff;border-radius:50%;bottom:100%;pointer-events:none}
+.vc-vol-track{position:relative;width:3px;height:80px;background:rgba(255,255,255,.22);border-radius:99px;cursor:pointer;flex-shrink:0}
+.vc-vol-fill{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:99px}
+.vc-vol-thumb{position:absolute;left:50%;transform:translate(-50%,50%);width:11px;height:11px;background:#fff;border-radius:50%;pointer-events:none}
 @media(max-width:640px){.vc-vol-slider{display:none}}
 
 /* Chat bubble overlay
@@ -1049,11 +1040,9 @@ footer a{color:#4d94ff;text-decoration:none}
         <div id="ctpOverlay" style="display:none;">
           <div class="ctp-inner">
             <div id="ctpVolWrap">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1;color:#fff">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#fff" stroke="none"/>
-                <path class="ctp-wave1" d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="#fff" stroke-width="2" fill="none"/>
-                <path class="ctp-wave2" d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#fff" stroke-width="2" fill="none"/>
-              </svg>
+              <svg class="ctp-vol-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff"><path d="M440-360H320q-17 0-28.5-11.5T280-400v-160q0-17 11.5-28.5T320-600h120l132-132q19-19 43.5-8.5T640-703v446q0 27-24.5 37.5T572-228L440-360Z"/></svg>
+              <svg class="ctp-vol-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff"><path d="M360-360H240q-17 0-28.5-11.5T200-400v-160q0-17 11.5-28.5T240-600h120l132-132q19-19 43.5-8.5T560-703v446q0 27-24.5 37.5T492-228L360-360Zm380-120q0 42-19 79.5T671-339q-10 6-20.5.5T640-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
+              <svg class="ctp-vol-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff"><path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
             </div>
             <div class="ctp-text">
               <div class="ctp-title">Your Video is Playing</div>
@@ -1067,7 +1056,7 @@ footer a{color:#4d94ff;text-decoration:none}
           <!-- Centered play/pause -->
           <div id="vcCenterPlay">
             <button id="vcBigPlayBtn" aria-label="Play">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vcBigPlayIcon"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" id="vcBigPlayIcon"><path d="M320-200v-560l440 280-440 280Z"/></svg>
             </button>
           </div>
           <div id="vcPreview" class="vc-preview">
@@ -1076,7 +1065,7 @@ footer a{color:#4d94ff;text-decoration:none}
           <div class="vc-controls">
             <div class="vc-bar">
               <button class="vc-btn" id="vcBarPlayBtn" aria-label="Play">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" id="vcBarPlayIcon"><polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" id="vcBarPlayIcon"><path d="M320-200v-560l440 280-440 280Z"/></svg>
               </button>
               <div class="vc-vol-wrap" id="vcVolWrap">
                 <div class="vc-vol-slider" id="vcVolSlider">
@@ -1086,7 +1075,7 @@ footer a{color:#4d94ff;text-decoration:none}
                   </div>
                 </div>
                 <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" id="vcVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" id="vcVolIcon"><path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
                 </button>
               </div>
               <div id="vcScrubberRow" class="vc-scrubber">
@@ -1097,10 +1086,10 @@ footer a{color:#4d94ff;text-decoration:none}
                 </div>
               </div>
               <button class="vc-btn vc-btn--cc" id="vcCcBtn" aria-label="Turn on captions">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M9.5 9.5c-.5-.6-1.2-.9-2-.9C5.6 8.6 4 10.1 4 12s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/><path d="M17.5 9.5c-.5-.6-1.2-.9-2-.9-1.9 0-3.5 1.5-3.5 3.4s1.6 3.4 3.5 3.4c.8 0 1.5-.3 2-.9"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" id="vcCcIcon"><path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600ZM200-240v-480 480Z"/></svg>
               </button>
               <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="vcFsIcon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" id="vcFsIcon"><path d="M200-200h80q17 0 28.5 11.5T320-160q0 17-11.5 28.5T280-120H160q-17 0-28.5-11.5T120-160v-120q0-17 11.5-28.5T160-320q17 0 28.5 11.5T200-280v80Zm560 0v-80q0-17 11.5-28.5T800-320q17 0 28.5 11.5T840-280v120q0 17-11.5 28.5T800-120H680q-17 0-28.5-11.5T640-160q0-17 11.5-28.5T680-200h80ZM200-760v80q0 17-11.5 28.5T160-640q-17 0-28.5-11.5T120-680v-120q0-17 11.5-28.5T160-840h120q17 0 28.5 11.5T320-800q0 17-11.5 28.5T280-760h-80Zm560 0h-80q-17 0-28.5-11.5T640-800q0-17 11.5-28.5T680-840h120q17 0 28.5 11.5T840-800v120q0 17-11.5 28.5T800-640q-17 0-28.5-11.5T760-680v-80Z"/></svg>
               </button>
             </div>
           </div>
@@ -1498,6 +1487,7 @@ footer a{color:#4d94ff;text-decoration:none}
   var vcCcBtn      = document.getElementById('vcCcBtn');
   var vcFsBtn      = document.getElementById('vcFsBtn');
   var vcFsIcon     = document.getElementById('vcFsIcon');
+  var vcCcIcon     = document.getElementById('vcCcIcon');
   var vcPreview    = document.getElementById('vcPreview');
   var vcCanvas     = document.getElementById('vcCanvas');
   var vcThumbVid   = document.getElementById('vcThumbVid');
@@ -1519,14 +1509,24 @@ footer a{color:#4d94ff;text-decoration:none}
 
   /* ── SVG icon strings ── */
   /* Rounded stroke-based icons (Feather-style) */
-  var ICON_PLAY  = '<polygon points="6 3 20 12 6 21 6 3" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
-  var ICON_PAUSE = '<rect x="6" y="4" width="4" height="16" rx="2" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="2" fill="currentColor"/>';
-  var ICON_VOL   = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
-  var ICON_MUTE  = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
-  var ICON_FS    = '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>';
-  var ICON_EXIT  = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
+  var VB = '0 -960 960 960';
+  var ICON_PLAY     = '<path d="M320-200v-560l440 280-440 280Z"/>';
+  var ICON_PAUSE    = '<path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/>';
+  var ICON_VOL      = '<path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>';
+  var ICON_VOL_DOWN = '<path d="M360-360H240q-17 0-28.5-11.5T200-400v-160q0-17 11.5-28.5T240-600h120l132-132q19-19 43.5-8.5T560-703v446q0 27-24.5 37.5T492-228L360-360Zm380-120q0 42-19 79.5T671-339q-10 6-20.5.5T640-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>';
+  var ICON_VOL_MUTE = '<path d="M440-360H320q-17 0-28.5-11.5T280-400v-160q0-17 11.5-28.5T320-600h120l132-132q19-19 43.5-8.5T640-703v446q0 27-24.5 37.5T572-228L440-360Z"/>';
+  var ICON_MUTE     = '<path d="m720-424-76 76q-11 11-28 11t-28-11q-11-11-11-28t11-28l76-76-76-76q-11-11-11-28t11-28q11-11 28-11t28 11l76 76 76-76q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76 76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11l-76-76Zm-440 64H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm120-246-86 86H200v80h114l86 86v-252ZM300-480Z"/>';
+  var ICON_FS       = '<path d="M200-200h80q17 0 28.5 11.5T320-160q0 17-11.5 28.5T280-120H160q-17 0-28.5-11.5T120-160v-120q0-17 11.5-28.5T160-320q17 0 28.5 11.5T200-280v80Zm560 0v-80q0-17 11.5-28.5T800-320q17 0 28.5 11.5T840-280v120q0 17-11.5 28.5T800-120H680q-17 0-28.5-11.5T640-160q0-17 11.5-28.5T680-200h80ZM200-760v80q0 17-11.5 28.5T160-640q-17 0-28.5-11.5T120-680v-120q0-17 11.5-28.5T160-840h120q17 0 28.5 11.5T320-800q0 17-11.5 28.5T280-760h-80Zm560 0h-80q-17 0-28.5-11.5T640-800q0-17 11.5-28.5T680-840h120q17 0 28.5 11.5T840-800v120q0 17-11.5 28.5T800-640q-17 0-28.5-11.5T760-680v-80Z"/>';
+  var ICON_EXIT     = '<path d="M240-240h-80q-17 0-28.5-11.5T120-280q0-17 11.5-28.5T160-320h120q17 0 28.5 11.5T320-280v120q0 17-11.5 28.5T280-120q-17 0-28.5-11.5T240-160v-80Zm480 0v80q0 17-11.5 28.5T680-120q-17 0-28.5-11.5T640-160v-120q0-17 11.5-28.5T680-320h120q17 0 28.5 11.5T840-280q0 17-11.5 28.5T800-240h-80ZM240-720v-80q0-17 11.5-28.5T280-840q17 0 28.5 11.5T320-800v120q0 17-11.5 28.5T280-640H160q-17 0-28.5-11.5T120-680q0-17 11.5-28.5T160-720h80Zm480 0h80q17 0 28.5 11.5T840-680q0 17-11.5 28.5T800-640H680q-17 0-28.5-11.5T640-680v-120q0-17 11.5-28.5T680-840q17 0 28.5 11.5T720-800v80Z"/>';
+  var ICON_CC_OFF   = '<path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600ZM200-240v-480 480Z"/>';
+  var ICON_CC_ON    = '<path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm80-200h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600Z"/>';
 
-  function setIcon(svg, pathStr){ svg.innerHTML = pathStr; }
+  function setIcon(svg, pathStr){
+    svg.setAttribute('viewBox', VB);
+    svg.setAttribute('fill', 'currentColor');
+    svg.removeAttribute('stroke');
+    svg.innerHTML = pathStr;
+  }
 
   /* ── Time formatter ── */
   function fmt(s){
@@ -1552,13 +1552,10 @@ footer a{color:#4d94ff;text-decoration:none}
   container.addEventListener('mousemove', showControls);
   container.addEventListener('touchstart', showControls, {passive:true});
 
-  var mqMobile = window.matchMedia('(max-width:640px)');
-
   /* ── Centered play/pause button ── */
   function syncPlayState(){
-    var mob = mqMobile.matches;
     if(vid.paused){
-      setIcon(vcBigPlayIcon, mob ? ICON_PLAY : ICON_PAUSE);
+      setIcon(vcBigPlayIcon, ICON_PLAY);
       vcBigPlayBtn.setAttribute('aria-label','Play');
       if(!overlay || overlay.style.display === 'none') vcPanel.classList.add('vc-paused');
       setIcon(vcBarPlayIcon, ICON_PLAY);
@@ -1566,7 +1563,7 @@ footer a{color:#4d94ff;text-decoration:none}
       showControls();
     } else {
       vcPanel.classList.remove('vc-paused');
-      setIcon(vcBigPlayIcon, mob ? ICON_PAUSE : ICON_PLAY);
+      setIcon(vcBigPlayIcon, ICON_PAUSE);
       vcBigPlayBtn.setAttribute('aria-label','Pause');
       setIcon(vcBarPlayIcon, ICON_PAUSE);
       vcBarPlayBtn.setAttribute('aria-label','Pause');
@@ -1738,7 +1735,12 @@ footer a{color:#4d94ff;text-decoration:none}
 
   /* ── Mute toggle ── */
   function syncMuteBtn(){
-    setIcon(vcVolIcon, vid.muted ? ICON_MUTE : ICON_VOL);
+    var icon;
+    if(vid.muted || vid.volume === 0) icon = ICON_MUTE;
+    else if(vid.volume < 0.4) icon = ICON_VOL_MUTE;
+    else if(vid.volume < 0.7) icon = ICON_VOL_DOWN;
+    else icon = ICON_VOL;
+    setIcon(vcVolIcon, icon);
     vcMuteBtn.setAttribute('aria-label', vid.muted ? 'Unmute' : 'Mute');
   }
   vcMuteBtn.addEventListener('click', function(e){
@@ -1758,6 +1760,7 @@ footer a{color:#4d94ff;text-decoration:none}
   /* ── Captions toggle ── */
   var ccOn = false;
   function syncCcBtn(){
+    if(vcCcIcon) setIcon(vcCcIcon, ccOn ? ICON_CC_ON : ICON_CC_OFF);
     vcCcBtn.classList.toggle('vc-cc-on', ccOn);
     vcCcBtn.setAttribute('aria-label', ccOn ? 'Turn off captions' : 'Turn on captions');
   }
