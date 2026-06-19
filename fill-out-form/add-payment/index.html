@@ -89,8 +89,8 @@
     .pill-row { text-align: center; }
 
     /* ── PER-STEP INDICATORS (sign-up only) ── */
-    .signup-dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
-    .signup-dot--active { background: #0066ff; }
+    .signup-dot { width: 6px; height: 6px; color: rgba(255,255,255,0.2); flex-shrink: 0; }
+    .signup-dot--active { color: #0066ff; }
     .signup-check { display: block; width: 6px; height: 6px; overflow: visible; color: rgba(255,255,255,0.4); flex-shrink: 0; }
 
     /* ── PAYMENT LAYOUT ── */
@@ -265,10 +265,10 @@
   <nav class="payment-nav" aria-label="Payment">
     <div class="nav-progress" aria-label="Progress">
       <span class="survey-step survey-step--completed">
-        <svg class="signup-check" width="10" height="10" viewBox="3 4 18 16" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Fill Out Form
+        <svg class="signup-check" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>Fill Out Form
       </span>
       <span class="survey-step survey-step--active">
-        <span class="signup-dot signup-dot--active" aria-hidden="true"></span>Add Payment
+        <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Add Payment
       </span>
     </div>
   </nav>
@@ -335,8 +335,8 @@
             </button>
             <p class="payment-legal">By purchasing, you authorize Asher Robinson LLC to charge you per my <button class="legal-link" onclick="openLegal('terms')">Terms of Service</button> and confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
             <p class="security-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.37752 5.08241C3 5.62028 3 7.21907 3 10.4167V11.9914C3 17.6294 7.23896 20.3655 9.89856 21.5273C10.62 21.8424 10.9807 22 12 22C13.0193 22 13.38 21.8424 14.1014 21.5273C16.761 20.3655 21 17.6294 21 11.9914V10.4167C21 7.21907 21 5.62028 20.6225 5.08241C20.245 4.54454 18.7417 4.02996 15.7351 3.00079L15.1623 2.80472C13.595 2.26824 12.8114 2 12 2C11.1886 2 10.405 2.26824 8.83772 2.80472L8.26491 3.00079C5.25832 4.02996 3.75503 4.54454 3.37752 5.08241ZM15.0595 10.4995C15.3353 10.1905 15.3085 9.71642 14.9995 9.44055C14.6905 9.16467 14.2164 9.19151 13.9405 9.50049L10.9286 12.8739L10.0595 11.9005C9.78358 11.5915 9.30947 11.5647 9.00049 11.8405C8.69151 12.1164 8.66467 12.5905 8.94055 12.8995L10.3691 14.4995C10.5114 14.6589 10.7149 14.75 10.9286 14.75C11.1422 14.75 11.3457 14.6589 11.488 14.4995L15.0595 10.4995Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true">
+                <path d="M444-360h72q9 0 15.5-7.5T536-384l-19-105q20-10 31.5-29t11.5-42q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 23 11.5 42t31.5 29l-19 105q-2 9 4.5 16.5T444-360Zm23 275q-6-1-12-3-135-45-215-166.5T160-516v-189q0-25 14.5-45t37.5-29l240-90q14-5 28-5t28 5l240 90q23 9 37.5 29t14.5 45v189q0 140-80 261.5T505-88q-6 2-12 3t-13 1q-7 0-13-1Z"/>
               </svg>
               Your information is encrypted and secure.
             </p>
