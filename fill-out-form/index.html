@@ -137,7 +137,7 @@
       gap: 0.75rem; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px;
       background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem;
       line-height: 1.2; border: none; cursor: pointer; text-decoration: none;
-      transition: background 0.15s ease; margin-top: 0;
+      transition: background 0.15s ease; margin-top: 0.35rem;
     }
     @media (hover: hover) and (pointer: fine) { .signup-btn:hover { background: var(--primary-hover); } }
     .signup-btn:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -149,7 +149,7 @@
       .signup-btn:not(:disabled):hover .signup-btn-arrow { transform: translateX(4px); }
     }
 
-    .signup-legal-note { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0; margin-bottom: 0.65rem; }
+    .signup-legal-note { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.55; margin-top: 0.75rem; }
     .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
 
     .reveal-block { overflow: hidden; }
@@ -279,12 +279,12 @@
           </div>
         </div>
 
-        <p class="signup-legal-note">By entering your info, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
         <button type="submit" class="signup-btn" id="continue-btn" disabled>
           <span class="signup-btn-label">Continue</span>
           <span class="signup-btn-divider" aria-hidden="true"></span>
           <span class="signup-btn-arrow" aria-hidden="true">→</span>
         </button>
+        <p class="signup-legal-note">By entering your info, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
       </form>
 
     </div>
