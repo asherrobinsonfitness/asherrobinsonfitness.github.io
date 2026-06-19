@@ -345,6 +345,11 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 #vcCaptionDisplay{position:absolute;bottom:20px;left:0;right:0;text-align:center;padding:0 8%;pointer-events:none;z-index:3;transition:bottom .18s ease}
 #vcPanel.vc-show #vcCaptionDisplay,#vcPanel.vc-paused #vcCaptionDisplay,#vcPanel.vc-has-overlay #vcCaptionDisplay{bottom:58px}
 #vcCaptionDisplay p{display:inline;background:rgba(0,0,0,.76);color:#fff;font-size:clamp(12px,1.6vw,16px);line-height:1.75;padding:.1em .4em;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-weight:500}
+@media(max-width:600px){
+  #vcCaptionDisplay{bottom:8px}
+  #vcPanel.vc-show #vcCaptionDisplay,#vcPanel.vc-paused #vcCaptionDisplay,#vcPanel.vc-has-overlay #vcCaptionDisplay{bottom:48px}
+  #vcCaptionDisplay p{line-height:1.4;font-size:clamp(11px,3.5vw,14px)}
+}
 /* Square hover bg — full height, no radius (desktop pointer only) */
 @media(hover:hover) and (pointer:fine){
   .vc-btn:hover{background:rgba(0,0,0,.2);border-radius:0}
@@ -981,6 +986,14 @@ footer a{color:#4d94ff;text-decoration:none}
 @media(hover:hover) and (pointer:fine){
   .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; }
 }
+/* Image lightbox */
+.img-lightbox{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:99999;align-items:center;justify-content:center;padding:1.25rem;opacity:0;visibility:hidden;pointer-events:none}
+.img-lightbox.active{opacity:1;visibility:visible;pointer-events:auto;animation:legalFadeIn .34s cubic-bezier(0.4,0,0.2,1)}
+.img-lightbox.closing{animation:legalFadeOut .34s cubic-bezier(0.4,0,0.2,1) forwards}
+.img-lightbox__img{max-width:90vw;max-height:90vh;border-radius:10px;object-fit:contain;display:block}
+.img-lightbox__close{position:fixed;top:1rem;right:1rem;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:500;padding:.4rem .7rem;line-height:1;white-space:nowrap;transition:background .15s}
+.img-lightbox__close:hover{background:rgba(255,255,255,.15)}
+.ba-dual__img,.ba-mobile-dual img{cursor:pointer}
 .legal-modal-body {
   overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1;
   scrollbar-width: none;
@@ -2059,6 +2072,10 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
 })();
 </script>
 <!-- TERMS OF SERVICE MODAL -->
+<div class="img-lightbox" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <img class="img-lightbox__img" id="imgLightboxImg" src="" alt="">
+</div>
+
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
@@ -2186,6 +2203,35 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
 </div>
 
 <script>
+/* ── Image lightbox ── */
+(function(){
+  var lb = document.getElementById('imgLightbox');
+  var lbImg = document.getElementById('imgLightboxImg');
+  function openImg(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeImg() {
+    lb.classList.add('closing');
+    setTimeout(function() {
+      lb.classList.remove('active', 'closing');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }, 340);
+  }
+
+  lb.addEventListener('click', closeImg);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && lb.classList.contains('active')) closeImg();
+  });
+
+  document.querySelectorAll('.ba-dual__img, .ba-mobile-dual img').forEach(function(img) {
+    img.addEventListener('click', function() { openImg(img.src, img.alt); });
+  });
+})();
+
 function openLegal(which) {
   var overlay = document.getElementById('modal-' + which);
   if (!overlay) return;
