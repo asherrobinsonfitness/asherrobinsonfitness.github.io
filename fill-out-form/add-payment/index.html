@@ -611,7 +611,7 @@ async function initStripe() {
       confirmParams: { return_url: returnUrl }, redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
-    if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
   });
   expressEl.mount('#express-checkout-element');
 
