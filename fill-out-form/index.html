@@ -91,8 +91,8 @@
     .survey-step { color: var(--text-secondary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
     .survey-step--active { color: #f9fafb; }
     .survey-step--completed { color: var(--text-secondary); }
-    .signup-dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
-    .signup-dot--active { background: #0066ff; }
+    .signup-dot { width: 6px; height: 6px; color: rgba(255,255,255,0.2); flex-shrink: 0; }
+    .signup-dot--active { color: #0066ff; }
 
     /* ── QUESTION ── */
     .survey-question {
@@ -211,10 +211,10 @@
   <nav class="payment-nav" aria-label="Sign up">
     <div class="nav-progress" aria-label="Progress">
       <span class="survey-step survey-step--active">
-        <span class="signup-dot signup-dot--active" aria-hidden="true"></span>Fill Out Form
+        <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Fill Out Form
       </span>
       <span class="survey-step">
-        <span class="signup-dot" aria-hidden="true"></span>Add Payment
+        <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Add Payment
       </span>
     </div>
   </nav>
