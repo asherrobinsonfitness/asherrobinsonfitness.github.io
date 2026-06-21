@@ -1297,6 +1297,9 @@ footer a{color:#4d94ff;text-decoration:none}
 
   function hideOverlay(){
     overlay.style.display = 'none';
+  }
+
+  function enableControls(){
     vid.setAttribute('controls', '');
   }
 
@@ -1305,6 +1308,7 @@ footer a{color:#4d94ff;text-decoration:none}
     vid.loop    = false;
     vid.muted   = false;
     vid.currentTime = 0;
+    enableControls();
     var p = vid.play();
     if(p !== undefined){
       p.then(function(){ hideOverlay(); }).catch(function(){ hideOverlay(); });
@@ -1312,6 +1316,9 @@ footer a{color:#4d94ff;text-decoration:none}
       hideOverlay();
     }
   });
+
+  // If unmuted autoplay succeeded (no overlay shown), reveal controls on first click
+  vid.addEventListener('click', enableControls, {once: true});
 
   function attemptAutoplay(){
     // Attempt 1: unmuted autoplay
