@@ -296,75 +296,17 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 @keyframes ctpBorderPulse{0%{box-shadow:0 0 0 0 rgba(0,0,0,.8)}100%{box-shadow:0 0 0 28px rgba(0,0,0,0)}}
 .ctp-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.5rem,2cqw,1.25rem);pointer-events:auto;background:rgba(0,0,0,.58);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;padding:clamp(1rem,3cqw,2rem);height:70%;aspect-ratio:4/3;border:1px solid #fff;box-sizing:border-box;position:relative;transition:transform .22s linear,background .15s ease;animation:ctpBorderPulse 1.6s ease-out infinite}
 .ctp-inner::before{display:none}
-.ctp-text{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
+.ctp-text{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center}
 .ctp-inner:hover{background:rgba(0,0,0,.78)}
-#ctpOverlay.ctp-shift .ctp-inner{transform:translateY(-21.5px)}
-@media(hover:hover) and (pointer:fine){
-  #ctpOverlay:hover .ctp-inner{transform:translateY(-21.5px)}
-  #ctpOverlay:hover ~ #vcPanel .vc-controls{opacity:1;pointer-events:auto}
-}
-#ctpVolWrap{position:relative;width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px)}
-#ctpVolWrap svg{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}
-@keyframes ctpV1{0%{opacity:1}20%{opacity:1}27%{opacity:0}87%{opacity:0}94%{opacity:1}100%{opacity:1}}
-@keyframes ctpV2{0%{opacity:0}20%{opacity:0}27%{opacity:1}53%{opacity:1}60%{opacity:0}100%{opacity:0}}
-@keyframes ctpV3{0%{opacity:0}53%{opacity:0}60%{opacity:1}80%{opacity:1}87%{opacity:0}100%{opacity:0}}
-.ctp-vol-1{animation:ctpV1 2s ease-in-out infinite}
-.ctp-vol-2{animation:ctpV2 2s ease-in-out infinite}
-.ctp-vol-3{animation:ctpV3 2s ease-in-out infinite}
+#ctpVolWrap{width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px)}
+#ctpVolWrap svg{width:100%;height:100%;display:block}
+.ctp-wave1,.ctp-wave2{opacity:0}
+@keyframes ctpW1{0%,15%{opacity:0}20%,60%{opacity:1}65%,100%{opacity:0}}
+@keyframes ctpW2{0%,35%{opacity:0}40%,80%{opacity:1}85%,100%{opacity:0}}
+.ctp-wave1{animation:ctpW1 2s ease-in-out infinite}
+.ctp-wave2{animation:ctpW2 2s ease-in-out infinite}
 .ctp-title{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
 .ctp-sub{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
-/* ── Custom video controls ── */
-#vcPanel{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:12px;overflow:hidden}
-.vc-gradient{display:none}
-.vc-controls{position:absolute;bottom:0;left:0;right:0;padding:0;opacity:0;pointer-events:none;transition:opacity .22s ease;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-#vcPanel.vc-show .vc-controls,#vcPanel.vc-paused .vc-controls,#vcPanel.vc-has-overlay .vc-controls{opacity:1;pointer-events:auto}
-.vc-scrubber{position:relative;display:flex;align-items:center;cursor:pointer;flex:1;padding:12px;touch-action:none;user-select:none;-webkit-user-select:none}
-.vc-track{position:relative;width:100%;height:3px;border-radius:99px;background:rgba(255,255,255,.22);transition:height .12s ease}
-.vc-buf{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.35);border-radius:99px;width:0;pointer-events:none}
-.vc-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;border-radius:99px;width:0;pointer-events:none}
-.vc-dot{display:none}
-.vc-scrubber:hover .vc-track,.vc-scrubber.vc-drag .vc-track{height:5px}
-.vc-bar{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:stretch}
-.vc-btn{background:none;border:none;color:#fff;cursor:pointer;padding:12px;display:flex;align-items:center;justify-content:center;opacity:.88;transition:opacity .12s,background .12s;flex-shrink:0}
-.vc-btn svg{width:22px;height:22px;display:block;flex-shrink:0}
-.vc-btn:hover{opacity:1}
-.vc-time{color:#fff;font-size:12px;font-weight:500;letter-spacing:.03em;white-space:nowrap;padding-left:4px;opacity:.88}
-.vc-preview{position:absolute;display:none;flex-direction:column;align-items:center;gap:3px;transform:translateX(-50%);pointer-events:none;z-index:4}
-.vc-preview canvas{width:160px;height:90px;border-radius:6px;border:1.5px solid #fff;display:block;background:#000}
-.vc-preview span{color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7)}
-/* Centered big play/pause */
-#vcCenterPlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0}
-#vcPanel.vc-paused #vcCenterPlay{opacity:1}
-#vcBigPlayBtn{background:rgba(0,0,0,.58);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;width:88px;height:88px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;padding:0;pointer-events:auto;transition:background .15s ease;line-height:0;outline:none}
-#vcBigPlayBtn svg{width:88px;height:88px;display:block}
-@media(max-width:640px){#vcBigPlayBtn{width:72px;height:72px}#vcBigPlayBtn svg{width:72px;height:72px}.vc-btn svg{width:18px;height:18px}.vc-btn{padding:10px}.vc-scrubber{padding:10px}}
-/* CC active state — icon shape (outline/filled) conveys state; opacity matches other buttons */
-.vc-btn--cc{opacity:.88}
-.vc-btn--cc.vc-cc-on{opacity:1}
-/* Caption overlay */
-#vcCaptionDisplay{position:absolute;bottom:20px;left:0;right:0;text-align:center;padding:0 8%;pointer-events:none;z-index:3;transition:bottom .18s ease}
-#vcPanel.vc-show #vcCaptionDisplay,#vcPanel.vc-paused #vcCaptionDisplay,#vcPanel.vc-has-overlay #vcCaptionDisplay{bottom:58px}
-#vcCaptionDisplay p{display:inline;background:rgba(0,0,0,.76);color:#fff;font-size:clamp(12px,1.6vw,16px);line-height:1.75;padding:.1em .4em;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-weight:500}
-@media(max-width:600px){
-  #vcCaptionDisplay{bottom:8px}
-  #vcPanel.vc-show #vcCaptionDisplay,#vcPanel.vc-paused #vcCaptionDisplay,#vcPanel.vc-has-overlay #vcCaptionDisplay{bottom:48px}
-  #vcCaptionDisplay p{line-height:1.4;font-size:clamp(11px,3.5vw,14px)}
-}
-/* Square hover bg — full height, no radius (desktop pointer only) */
-@media(hover:hover) and (pointer:fine){
-  .vc-btn:hover{background:rgba(0,0,0,.2);border-radius:0}
-  #vcBigPlayBtn:hover{background:rgba(0,0,0,.78)}
-}
-/* Volume wrap + vertical slider */
-.vc-vol-wrap{position:relative;display:flex;align-items:stretch}
-.vc-vol-wrap::after{content:'';position:absolute;bottom:100%;left:0;right:0;height:8px}
-.vc-vol-slider{position:absolute;bottom:calc(100% + 8px);left:0;width:100%;height:104px;background:rgba(30,30,30,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;box-sizing:border-box;opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:20}
-.vc-vol-wrap:hover .vc-vol-slider{opacity:1;pointer-events:auto}
-.vc-vol-track{position:relative;width:3px;height:80px;background:rgba(255,255,255,.22);border-radius:99px;cursor:pointer;flex-shrink:0;transition:width .15s ease}
-.vc-vol-wrap:hover .vc-vol-track{width:5px}
-.vc-vol-fill{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:99px}
-.vc-vol-thumb{display:none}
-@media(max-width:640px){.vc-vol-slider{display:none}}
 
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
@@ -1050,17 +992,19 @@ footer a{color:#4d94ff;text-decoration:none}
         <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
              a small amount; preload="none" can cause play() to fail on mobile before any data loads.
              webkit-playsinline is required for older iOS Safari inline playback. -->
-        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;opacity:0;transition:opacity .5s ease;">
+        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;">
           <source src="video.mp4" type="video/mp4">
           <track id="vcCaptionTrack" kind="captions" src="captions.vtt" srclang="en" label="English">
         </video>
-        <!-- Click-to-play overlay (shown when autoplay with sound fails) -->
+        <!-- Click-to-unmute overlay (shown when autoplay with sound fails) -->
         <div id="ctpOverlay" style="display:none;">
           <div class="ctp-inner">
             <div id="ctpVolWrap">
-              <svg class="ctp-vol-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff"><path d="M440-360H320q-17 0-28.5-11.5T280-400v-160q0-17 11.5-28.5T320-600h120l132-132q19-19 43.5-8.5T640-703v446q0 27-24.5 37.5T572-228L440-360Z"/></svg>
-              <svg class="ctp-vol-2" xmlns="http://www.w3.org/2000/svg" viewBox="-80 -960 960 960" fill="#fff"><path d="M360-360H240q-17 0-28.5-11.5T200-400v-160q0-17 11.5-28.5T240-600h120l132-132q19-19 43.5-8.5T560-703v446q0 27-24.5 37.5T492-228L360-360Zm380-120q0 42-19 79.5T671-339q-10 6-20.5.5T640-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
-              <svg class="ctp-vol-3" xmlns="http://www.w3.org/2000/svg" viewBox="-160 -960 960 960" fill="#fff"><path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff">
+                <path d="M280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Z"/>
+                <path class="ctp-wave1" d="M660-480q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>
+                <path class="ctp-wave2" d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481Z"/>
+              </svg>
             </div>
             <div class="ctp-text">
               <div class="ctp-title">Your Video is Playing</div>
@@ -1068,55 +1012,6 @@ footer a{color:#4d94ff;text-decoration:none}
             </div>
           </div>
         </div>
-        <!-- Custom video controls panel -->
-        <div id="vcPanel" aria-hidden="true">
-          <div class="vc-gradient"></div>
-          <!-- Centered play/pause -->
-          <div id="vcCenterPlay">
-            <button id="vcBigPlayBtn" aria-label="Play">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" id="vcBigPlayIcon"><path d="m426-330 195-125q14-9 14-25t-14-25L426-630q-15-10-30.5-1.5T380-605v250q0 18 15.5 26.5T426-330Z"/></svg>
-            </button>
-          </div>
-          <div id="vcPreview" class="vc-preview">
-            <canvas id="vcCanvas" width="160" height="90"></canvas>
-          </div>
-          <div id="vcCaptionDisplay"></div>
-          <div class="vc-controls">
-            <div class="vc-bar">
-              <button class="vc-btn" id="vcBarPlayBtn" aria-label="Play">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="229 -761 568 568" fill="currentColor" id="vcBarPlayIcon"><path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/></svg>
-              </button>
-              <div class="vc-vol-wrap" id="vcVolWrap">
-                <div class="vc-vol-slider" id="vcVolSlider">
-                  <div class="vc-vol-track" id="vcVolTrack">
-                    <div class="vc-vol-fill" id="vcVolFill"></div>
-                    <div class="vc-vol-thumb" id="vcVolThumb"></div>
-                  </div>
-                </div>
-                <button class="vc-btn" id="vcMuteBtn" aria-label="Mute">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="80 -844 800 800" fill="currentColor" id="vcVolIcon"><path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/></svg>
-                </button>
-              </div>
-              <div id="vcScrubberRow" class="vc-scrubber">
-                <div class="vc-track">
-                  <div class="vc-buf" id="vcBuf"></div>
-                  <div class="vc-fill" id="vcFill"></div>
-                  <div class="vc-dot" id="vcDot"></div>
-                </div>
-              </div>
-              <button class="vc-btn vc-btn--cc" id="vcCcBtn" aria-label="Turn on captions">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="80 -880 800 800" fill="currentColor" id="vcCcIcon"><path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600ZM200-240v-480 480Z"/></svg>
-              </button>
-              <button class="vc-btn" id="vcFsBtn" aria-label="Fullscreen">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="80 -880 800 800" fill="currentColor" id="vcFsIcon"><path d="M160-120q-17 0-28.5-11.5T120-160v-240q0-17 11.5-28.5T160-440q17 0 28.5 11.5T200-400v144l504-504H560q-17 0-28.5-11.5T520-800q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v240q0 17-11.5 28.5T800-520q-17 0-28.5-11.5T760-560v-144L256-200h144q17 0 28.5 11.5T440-160q0 17-11.5 28.5T400-120H160Z"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Hidden video used for desktop scrubber thumbnail previews -->
-        <video id="vcThumbVid" muted preload="metadata" playsinline aria-hidden="true" style="display:none;position:absolute;pointer-events:none;">
-          <source src="video.mp4" type="video/mp4">
-        </video>
       </div>
     </div>
 
@@ -1393,468 +1288,63 @@ footer a{color:#4d94ff;text-decoration:none}
   var poster  = document.getElementById('videoPoster');
   if(!vid || !overlay) return;
 
-  // Fade video in over poster on first frame render
-  vid.addEventListener('playing', function onPlaying(){
-    vid.removeEventListener('playing', onPlaying);
-    vid.style.opacity = '1';
-    // Hide poster after fade completes so it doesn't sit in the layer stack
-    if(poster) setTimeout(function(){ poster.style.display = 'none'; }, 600);
-  });
-
   var ctpHideTimer;
   function showOverlay(){
     overlay.style.display = 'flex';
-    overlay.classList.add('ctp-shift');
     vid.loop = true;
-    clearTimeout(ctpHideTimer);
-    ctpHideTimer = setTimeout(function(){
-      overlay.classList.remove('ctp-shift');
-      var panel = document.getElementById('vcPanel');
-      if(panel) panel.classList.remove('vc-has-overlay');
-    }, 3000);
+    vid.removeAttribute('controls');
   }
 
   function hideOverlay(){
-    clearTimeout(ctpHideTimer);
-    overlay.classList.remove('ctp-shift');
     overlay.style.display = 'none';
+    vid.setAttribute('controls', '');
   }
 
-  // Clicking anywhere on the overlay plays the video with sound
+  // Clicking anywhere on the overlay unmutes and restarts
   overlay.addEventListener('click', function(){
     vid.loop    = false;
     vid.muted   = false;
     vid.currentTime = 0;
     var p = vid.play();
     if(p !== undefined){
-      p.then(function(){ hideOverlay(); }).catch(function(){
-        hideOverlay();
-      });
+      p.then(function(){ hideOverlay(); }).catch(function(){ hideOverlay(); });
     } else {
-      hideOverlay(); // older Safari returns undefined
+      hideOverlay();
     }
   });
-
 
   function attemptAutoplay(){
     // Attempt 1: unmuted autoplay
     vid.muted = false;
     var p1 = vid.play();
-    if(p1 === undefined){
-      // Old Safari — treat as success (it played)
-      hideOverlay();
-      return;
-    }
+    if(p1 === undefined){ hideOverlay(); return; }
     p1.then(function(){
       hideOverlay();
     }).catch(function(){
-      // Attempt 2: muted autoplay (animated thumbnail loop)
+      // Attempt 2: muted autoplay (loop silently)
       vid.muted = true;
       vid.loop  = true;
       var p2 = vid.play();
-      if(p2 === undefined){
-        showOverlay();
-        return;
-      }
-      p2.then(function(){
-        showOverlay(); // playing muted — show "Watch the Video" on top
-      }).catch(function(){
-        // Attempt 3: fully blocked — static poster + overlay
-        showOverlay();
-      });
+      if(p2 === undefined){ showOverlay(); return; }
+      p2.then(function(){ showOverlay(); }).catch(function(){ showOverlay(); });
     });
   }
 
-  // Wait for metadata so mobile browsers have enough data to attempt play()
-  if(vid.readyState >= 1){ // HAVE_METADATA
+  if(vid.readyState >= 1){
     attemptAutoplay();
   } else {
     vid.addEventListener('loadedmetadata', function onMeta(){
       vid.removeEventListener('loadedmetadata', onMeta);
       attemptAutoplay();
     });
-    // Safety timeout: if metadata never fires (network blocked in some WebViews),
-    // fall back to showing the static poster + overlay after 3s
     setTimeout(function(){
-      if(vid.readyState < 1 && overlay.style.display === 'none'){
-        showOverlay();
-      }
+      if(vid.readyState < 1 && overlay.style.display === 'none') showOverlay();
     }, 3000);
   }
 
-  // Pause on last frame (don't loop if playing unmuted with sound)
   vid.addEventListener('ended', function(){
     if(!vid.loop) vid.pause();
   });
-})();
-
-/* ── Custom video controls ── */
-(function(){
-  var vid          = document.getElementById('mainVideo');
-  var overlay      = document.getElementById('ctpOverlay');
-  var vcPanel      = document.getElementById('vcPanel');
-  var vcScrubber   = document.getElementById('vcScrubberRow');
-  var vcBuf        = document.getElementById('vcBuf');
-  var vcFill       = document.getElementById('vcFill');
-  var vcDot        = document.getElementById('vcDot');
-  var vcBigPlayBtn  = document.getElementById('vcBigPlayBtn');
-  var vcBigPlayIcon = document.getElementById('vcBigPlayIcon');
-  var vcBarPlayBtn  = document.getElementById('vcBarPlayBtn');
-  var vcBarPlayIcon = document.getElementById('vcBarPlayIcon');
-  var vcMuteBtn    = document.getElementById('vcMuteBtn');
-  var vcVolIcon    = document.getElementById('vcVolIcon');
-  var vcCcBtn      = document.getElementById('vcCcBtn');
-  var vcFsBtn      = document.getElementById('vcFsBtn');
-  var vcFsIcon     = document.getElementById('vcFsIcon');
-  var vcCcIcon     = document.getElementById('vcCcIcon');
-  var vcPreview    = document.getElementById('vcPreview');
-  var vcCanvas     = document.getElementById('vcCanvas');
-  var vcThumbVid   = document.getElementById('vcThumbVid');
-  var container    = document.getElementById('videoContainer');
-  if(!vid || !vcPanel) return;
-
-  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.matchMedia('(pointer:coarse)').matches;
-  var vcCenterPlay = document.getElementById('vcCenterPlay');
-
-  /* ── SVG icon strings ── */
-  /* Rounded stroke-based icons (Feather-style) */
-  var VB = '0 -960 960 960';
-  /* Tight square viewBoxes cropped to each icon's actual content bounds */
-  var VB_PLAY  = '229 -761 568 568';
-  var VB_PAUSE = '160 -800 640 640';
-  var VB_VOL   = '80 -844 800 800';
-  var VB_VOLD  = '160 -760 590 590';
-  var VB_VOLM  = '183 -742 555 555';
-  var VB_MUTE  = '80 -843 756 756';
-  var VB_CC    = '80 -880 800 800';
-  var VB_FS    = '80 -880 800 800';
-  var ICON_PLAY     = '<path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/>';
-  var ICON_PAUSE    = '<path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/>';
-  var ICON_VOL      = '<path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>';
-  var ICON_VOL_DOWN = '<path d="M360-360H240q-17 0-28.5-11.5T200-400v-160q0-17 11.5-28.5T240-600h120l132-132q19-19 43.5-8.5T560-703v446q0 27-24.5 37.5T492-228L360-360Zm380-120q0 42-19 79.5T671-339q-10 6-20.5.5T640-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>';
-  var ICON_VOL_MUTE = '<path d="M440-360H320q-17 0-28.5-11.5T280-400v-160q0-17 11.5-28.5T320-600h120l132-132q19-19 43.5-8.5T640-703v446q0 27-24.5 37.5T572-228L440-360Z"/>';
-  var ICON_MUTE     = '<path d="m720-424-76 76q-11 11-28 11t-28-11q-11-11-11-28t11-28l76-76-76-76q-11-11-11-28t11-28q11-11 28-11t28 11l76 76 76-76q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76 76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11l-76-76Zm-440 64H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm120-246-86 86H200v80h114l86 86v-252ZM300-480Z"/>';
-  var ICON_FS       = '<path d="M160-120q-17 0-28.5-11.5T120-160v-240q0-17 11.5-28.5T160-440q17 0 28.5 11.5T200-400v144l504-504H560q-17 0-28.5-11.5T520-800q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v240q0 17-11.5 28.5T800-520q-17 0-28.5-11.5T760-560v-144L256-200h144q17 0 28.5 11.5T440-160q0 17-11.5 28.5T400-120H160Z"/>';
-  var ICON_EXIT     = '<path d="M400-344 164-108q-11 11-28 11t-28-11q-11-11-11-28t11-28l236-236H200q-17 0-28.5-11.5T160-440q0-17 11.5-28.5T200-480h240q17 0 28.5 11.5T480-440v240q0 17-11.5 28.5T440-160q-17 0-28.5-11.5T400-200v-144Zm216-216h144q17 0 28.5 11.5T800-520q0 17-11.5 28.5T760-480H520q-17 0-28.5-11.5T480-520v-240q0-17 11.5-28.5T520-800q17 0 28.5 11.5T560-760v144l236-236q11-11 28-11t28 11q11 11 11 28t-11 28L616-560Z"/>';
-  var ICON_CC_OFF   = '<path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600ZM200-240v-480 480Z"/>';
-  var ICON_CC_ON    = '<path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm80-200h120q17 0 28.5-11.5T440-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm400-240H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360h120q17 0 28.5-11.5T720-400v-20q0-9-6-15t-15-6h-18q-9 0-15 6t-6 15h-80v-120h80q0 9 6 15t15 6h18q9 0 15-6t6-15v-20q0-17-11.5-28.5T680-600Z"/>';
-
-  function setIcon(svg, pathStr, vb){
-    svg.setAttribute('viewBox', vb || VB);
-    svg.setAttribute('fill', 'currentColor');
-    svg.removeAttribute('stroke');
-    svg.innerHTML = pathStr;
-  }
-
-  /* ── Time formatter ── */
-  function fmt(s){
-    s = Math.floor(s || 0);
-    var m = Math.floor(s / 60), sec = s % 60;
-    return m + ':' + (sec < 10 ? '0' : '') + sec;
-  }
-
-  /* ── Show / hide controls ── */
-  var hideTimer;
-  function showControls(){
-    /* Don't show when the "Watch Video" overlay is active or during muted loop fallback */
-    if(overlay && overlay.style.display !== 'none') return;
-    if(vid.muted && vid.loop) return;
-    vcPanel.classList.add('vc-show');
-    clearTimeout(hideTimer);
-    if(!vid.paused){
-      hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
-    }
-  }
-
-  /* ── Activity listeners ── */
-  container.addEventListener('mousemove', showControls);
-  container.addEventListener('touchstart', showControls, {passive:true});
-
-  /* ── Centered play/pause button ── */
-  function syncPlayState(){
-    if(vid.paused){
-      vcBigPlayBtn.setAttribute('aria-label','Play');
-      if(!overlay || overlay.style.display === 'none') vcPanel.classList.add('vc-paused');
-      setIcon(vcBarPlayIcon, ICON_PLAY, VB_PLAY);
-      vcBarPlayBtn.setAttribute('aria-label','Play');
-      showControls();
-    } else {
-      vcPanel.classList.remove('vc-paused');
-      vcBigPlayBtn.setAttribute('aria-label','Pause');
-      setIcon(vcBarPlayIcon, ICON_PAUSE, VB_PAUSE);
-      vcBarPlayBtn.setAttribute('aria-label','Pause');
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(function(){ if(!vid.paused) vcPanel.classList.remove('vc-show'); }, 3000);
-    }
-  }
-  vid.addEventListener('play',  syncPlayState);
-  vid.addEventListener('pause', syncPlayState);
-
-  vcBigPlayBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    if(vid.paused) vid.play(); else vid.pause();
-  });
-
-  vcBarPlayBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    if(vid.paused) vid.play(); else vid.pause();
-  });
-
-  /* Click on video area (outside controls) to toggle play/pause */
-  container.addEventListener('click', function(e){
-    if(overlay && overlay.style.display !== 'none') return;
-    if(e.target.closest && (e.target.closest('.vc-controls') || e.target.closest('#vcCenterPlay'))) return;
-    if(vid.paused) vid.play(); else vid.pause();
-  });
-
-  /* ── Progress bar ── */
-  function setPct(pct){
-    vcFill.style.width = pct + '%';
-    vcDot.style.left   = pct + '%';
-  }
-
-  vid.addEventListener('timeupdate', function(){
-    if(!vid.duration) return;
-    setPct(vid.currentTime / vid.duration * 100);
-    updateCaptionDisplay();
-  });
-
-  vid.addEventListener('loadedmetadata', function(){
-    if(vid.textTracks && vid.textTracks.length > 0){
-      var track = vid.textTracks[0];
-      track.mode = 'hidden';
-    }
-  });
-
-  vid.addEventListener('progress', function(){
-    if(vid.duration && vid.buffered.length){
-      vcBuf.style.width = (vid.buffered.end(vid.buffered.length - 1) / vid.duration * 100) + '%';
-    }
-  });
-
-  /* ── Scrubber drag (mouse) ── */
-  var dragging = false, wasPlaying = false;
-
-  function fractionFromMouse(e){
-    var r = vcScrubber.getBoundingClientRect();
-    return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-  }
-  function seekTo(frac){
-    setPct(frac * 100);
-    if(vid.duration) vid.currentTime = frac * vid.duration;
-  }
-
-  vcScrubber.addEventListener('mousedown', function(e){
-    if(e.button !== 0) return;
-    dragging = true; wasPlaying = !vid.paused;
-    if(wasPlaying) vid.pause();
-    vcScrubber.classList.add('vc-drag');
-    seekTo(fractionFromMouse(e));
-    showControls();
-    e.preventDefault();
-  });
-  document.addEventListener('mousemove', function(e){
-    if(!dragging) return;
-    seekTo(fractionFromMouse(e));
-    showControls();
-  });
-  document.addEventListener('mouseup', function(e){
-    if(!dragging) return;
-    dragging = false;
-    vcScrubber.classList.remove('vc-drag');
-    seekTo(fractionFromMouse(e));
-    if(wasPlaying) vid.play();
-  });
-
-  /* ── Scrubber drag (touch / mobile) ── */
-  function fractionFromTouch(e){
-    var r = vcScrubber.getBoundingClientRect();
-    return Math.max(0, Math.min(1, (e.touches[0].clientX - r.left) / r.width));
-  }
-  vcScrubber.addEventListener('touchstart', function(e){
-    dragging = true; wasPlaying = !vid.paused;
-    if(wasPlaying) vid.pause();
-    vcScrubber.classList.add('vc-drag');
-    seekTo(fractionFromTouch(e));
-    showControls();
-    e.preventDefault();
-  }, {passive:false});
-  vcScrubber.addEventListener('touchmove', function(e){
-    if(!dragging) return;
-    seekTo(fractionFromTouch(e));
-    showControls();
-    e.preventDefault();
-  }, {passive:false});
-  vcScrubber.addEventListener('touchend', function(){
-    if(!dragging) return;
-    dragging = false;
-    vcScrubber.classList.remove('vc-drag');
-    if(wasPlaying) vid.play();
-  });
-
-  /* ── Desktop scrubber hover thumbnail ── */
-  if(!isMobile && vcThumbVid && vcCanvas){
-    var ctx = vcCanvas.getContext('2d');
-    vcThumbVid.addEventListener('seeked', function(){
-      ctx.drawImage(vcThumbVid, 0, 0, 160, 90);
-    });
-    vcScrubber.addEventListener('mousemove', function(e){
-      if(dragging) return;
-      var r = vcScrubber.getBoundingClientRect();
-      var cr = container.getBoundingClientRect();
-      var frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-      var leftPx = e.clientX - cr.left;
-      vcPreview.style.left = Math.max(80, Math.min(cr.width - 80, leftPx)) + 'px';
-      vcPreview.style.bottom = '46px';
-      vcPreview.style.display = 'flex';
-      if(vid.duration){ vcThumbVid.currentTime = frac * vid.duration; }
-    });
-    vcScrubber.addEventListener('mouseleave', function(){
-      if(!dragging) vcPreview.style.display = 'none';
-    });
-  }
-
-  /* ── Volume slider ── */
-  var vcVolSlider = document.getElementById('vcVolSlider');
-  var vcVolTrack = document.getElementById('vcVolTrack');
-  var vcVolFill  = document.getElementById('vcVolFill');
-  var vcVolThumb = document.getElementById('vcVolThumb');
-  var lastVol = 1;
-
-  function syncVolSlider(){
-    var v = vid.muted ? 0 : vid.volume;
-    vcVolFill.style.height  = (v * 100) + '%';
-    vcVolThumb.style.bottom = (v * 100) + '%';
-  }
-
-  function setVolFromY(clientY){
-    var rect = vcVolTrack.getBoundingClientRect();
-    var pct  = 1 - (clientY - rect.top) / rect.height;
-    pct = Math.max(0, Math.min(1, pct));
-    vid.volume = pct;
-    if(pct > 0) lastVol = pct;
-    vid.muted = (pct === 0);
-    syncMuteBtn();
-    syncVolSlider();
-  }
-
-  if(vcVolSlider){
-    vcVolSlider.addEventListener('mousedown', function(e){
-      e.stopPropagation();
-      setVolFromY(e.clientY);
-      function onMove(e){ setVolFromY(e.clientY); }
-      function onUp(){ document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-    });
-  }
-  vid.addEventListener('volumechange', syncVolSlider);
-
-  /* ── Mute toggle ── */
-  function syncMuteBtn(){
-    var icon, vb;
-    if(vid.muted || vid.volume === 0){ icon = ICON_MUTE;     vb = VB_MUTE; }
-    else if(vid.volume < 0.4)        { icon = ICON_VOL_MUTE; vb = VB_VOLM; }
-    else if(vid.volume < 0.7)        { icon = ICON_VOL_DOWN; vb = VB_VOLD; }
-    else                             { icon = ICON_VOL;      vb = VB_VOL;  }
-    setIcon(vcVolIcon, icon, vb);
-    vcMuteBtn.setAttribute('aria-label', vid.muted ? 'Unmute' : 'Mute');
-  }
-  vcMuteBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    if(vid.muted){
-      vid.muted = false;
-      if(vid.volume === 0) vid.volume = lastVol || 1;
-    } else {
-      lastVol = vid.volume || lastVol;
-      vid.muted = true;
-    }
-    syncMuteBtn();
-    syncVolSlider();
-    showControls();
-  });
-
-  /* ── Captions toggle ── */
-  var ccOn = true;
-  var vcCaptionDisplay = document.getElementById('vcCaptionDisplay');
-
-  function updateCaptionDisplay(){
-    if(!vcCaptionDisplay) return;
-    var track = vid.textTracks && vid.textTracks[0];
-    if(!ccOn || !track || !track.activeCues || track.activeCues.length === 0){
-      vcCaptionDisplay.innerHTML = '';
-      return;
-    }
-    var lines = [];
-    for(var i = 0; i < track.activeCues.length; i++) lines.push(track.activeCues[i].text);
-    vcCaptionDisplay.innerHTML = '<p>' + lines.join('<br>') + '</p>';
-  }
-
-  function syncCcBtn(){
-    if(vcCcIcon) setIcon(vcCcIcon, ccOn ? ICON_CC_ON : ICON_CC_OFF, VB_CC);
-    vcCcBtn.classList.toggle('vc-cc-on', ccOn);
-    vcCcBtn.setAttribute('aria-label', ccOn ? 'Turn off captions' : 'Turn on captions');
-    updateCaptionDisplay();
-  }
-  vcCcBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    ccOn = !ccOn;
-    syncCcBtn();
-    showControls();
-  });
-
-  /* ── Fullscreen ── */
-  function isFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
-  function syncFsBtn(){
-    var fs = isFs();
-    setIcon(vcFsIcon, fs ? ICON_EXIT : ICON_FS, VB_FS);
-    vcFsBtn.setAttribute('aria-label', fs ? 'Exit fullscreen' : 'Fullscreen');
-    vid.style.objectFit = fs ? 'contain' : 'cover';
-    vid.style.borderRadius = fs ? '0' : '12px';
-    container.style.borderRadius = fs ? '0' : '';
-    container.style.background = fs ? '#000' : '';
-  }
-  vcFsBtn.addEventListener('click', function(e){
-    e.stopPropagation();
-    if(!isFs()){
-      var el = container;
-      if(el.requestFullscreen) el.requestFullscreen();
-      else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-      else if(vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();
-    } else {
-      if(document.exitFullscreen) document.exitFullscreen();
-      else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
-      else if(vid.webkitExitFullscreen) vid.webkitExitFullscreen();
-    }
-    showControls();
-  });
-  document.addEventListener('fullscreenchange', syncFsBtn);
-  document.addEventListener('webkitfullscreenchange', syncFsBtn);
-  vid.addEventListener('webkitbeginfullscreen', syncFsBtn);
-  vid.addEventListener('webkitendfullscreen', syncFsBtn);
-
-  /* ── Watch overlay: show bottom bar only, hide centered button ── */
-  if(window.MutationObserver && overlay){
-    new MutationObserver(function(){
-      if(overlay.style.display !== 'none'){
-        vcPanel.classList.remove('vc-paused');
-        vcPanel.classList.remove('vc-show');
-        vcPanel.classList.add('vc-has-overlay');
-      } else {
-        vcPanel.classList.remove('vc-has-overlay');
-      }
-    }).observe(overlay, {attributes:true, attributeFilter:['style']});
-  }
-
-  /* ── Initial state ── */
-  syncMuteBtn();
-  syncVolSlider();
-  syncCcBtn();
-  /* Set track mode now if already loaded (cached video), otherwise loadedmetadata handles it */
-  if(vid.textTracks && vid.textTracks.length > 0){
-    var t = vid.textTracks[0];
-    if(t.mode !== 'hidden') t.mode = 'hidden';
-  }
 })();
 
 /* Desktop: match widget height to video container */
