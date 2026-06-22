@@ -504,25 +504,6 @@ async function initStripe() {
 
   const STRIPE_PK = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
 
-  // ── On-page debug (add ?debug=1 to the URL to enable) ──
-  // Lets us see Apple Pay / ECE state on devices with no dev console (e.g. iOS).
-  const DEBUG = new URLSearchParams(location.search).has('debug');
-  function dbg(msg) {
-    if (!DEBUG) return;
-    let el = document.getElementById('ece-debug');
-    if (!el) {
-      el = document.createElement('pre');
-      el.id = 'ece-debug';
-      el.style.cssText = 'white-space:pre-wrap;font-size:11px;line-height:1.4;color:#3ddc84;background:#000;border:1px solid #333;border-radius:8px;padding:10px;margin:0 0 12px;max-height:45vh;overflow:auto;';
-      const s = document.getElementById('express-pay-section');
-      s.parentNode.insertBefore(el, s);
-    }
-    el.textContent += msg + '\n';
-  }
-  dbg('env: ' + location.protocol + '//' + location.host);
-  dbg('secureContext: ' + window.isSecureContext + '  applePaySession: ' + (typeof window.ApplePaySession !== 'undefined') + (window.ApplePaySession ? '  canMakePayments: ' + window.ApplePaySession.canMakePayments() : ''));
-  dbg('ua: ' + navigator.userAgent);
-
   function getAppearance(dark) {
     return {
       theme: dark ? 'night' : 'stripe',
@@ -584,13 +565,10 @@ async function initStripe() {
   let clientSecret;
   try {
     const res  = await fetch('/api/create-payment-intent');
-    dbg('create-payment-intent: HTTP ' + res.status);
     const data = await res.json();
     clientSecret = data.clientSecret;
     if (!clientSecret) throw new Error(data.error || 'No client secret.');
-    dbg('clientSecret: OK');
   } catch (err) {
-    dbg('create-payment-intent FAILED: ' + err.message);
     showError('Failed to initialize payment. Please refresh the page.');
     return;
   }
@@ -615,17 +593,13 @@ async function initStripe() {
   });
   expressEl.on('ready', ({ availablePaymentMethods }) => {
     console.log('[ECE] ready — availablePaymentMethods:', availablePaymentMethods);
-    dbg('ECE ready — availablePaymentMethods: ' + JSON.stringify(availablePaymentMethods || null));
     const sk = document.getElementById('express-checkout-skeleton');
     if (sk) sk.remove();
     const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
     const s = document.getElementById('express-pay-section');
-    if (s && !hasAny) { dbg('No express methods available → hiding section'); if (!DEBUG) s.style.display = 'none'; }
+    if (s && !hasAny) s.style.display = 'none';
   });
-  expressEl.on('loaderror', (event) => {
-    console.error('[ECE] loaderror:', event.error);
-    dbg('ECE loaderror: ' + JSON.stringify(event.error || null));
-  });
+  expressEl.on('loaderror', (event) => { console.error('[ECE] loaderror:', event.error); });
   expressEl.on('click', (event) => {
     event.resolve({ emailRequired: true, phoneNumberRequired: false, billingAddressRequired: false, shippingAddressRequired: false });
   });
