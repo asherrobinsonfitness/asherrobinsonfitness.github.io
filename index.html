@@ -660,11 +660,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   display:none;
 }
 .common-questions__inner{max-width:472px;margin:0 auto}
-.faq-list{display:flex;flex-direction:column;gap:.75rem}
+/* Flat, divider-separated list (no individual boxes) */
+.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
 .faq-item{
-  border-radius:12px;
-  background:#2a2a2a;
-  overflow:hidden;
+  border-bottom:1px solid var(--border);
 }
 .faq-item__summary{
   list-style:none;
@@ -673,27 +672,36 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   align-items:center;
   justify-content:space-between;
   gap:1rem;
-  padding:.875rem 1rem;
-  font-size:.9rem;
-  font-weight:600;
+  padding:1.15rem .25rem;
+  font-size:.95rem;
+  font-weight:500;
   line-height:1.35;
-  letter-spacing:-.02em;
+  letter-spacing:-.01em;
   color:var(--text);
   user-select:none;
-  transition:background-color 0.12s ease;
-}
-@media(hover:hover) and (pointer:fine){
-  .faq-item__summary:hover{background-color:#252525}
 }
 .faq-item__summary::-webkit-details-marker{display:none}
-.faq-chevron{
+/* Plus toggle: two bars; the vertical bar rotates flat on open to read as a minus */
+.faq-toggle{
+  position:relative;
   flex-shrink:0;
+  width:15px;
+  height:15px;
   color:var(--muted);
+}
+.faq-toggle::before,
+.faq-toggle::after{
+  content:"";
+  position:absolute;
+  background:currentColor;
+  border-radius:1px;
   transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
 }
-.faq-item--open .faq-chevron{transform:rotate(180deg)}
+.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
+.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
+.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
 .faq-item__body-inner{
-  padding:.85rem 1.1rem 1.1rem;
+  padding:0 .25rem 1.25rem;
 }
 .faq-item__body-inner p{
   font-size:.9rem;
@@ -1263,49 +1271,49 @@ footer a{color:#4d94ff;text-decoration:none}
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>You have no client results. How do I know this works?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>You have no client results. How do I know this works?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>You’re right, I don’t. What I have is my own transformation: 175 lbs at ~17% body fat down to 158 lbs at ~9% in 8 weeks, using the exact system I’ll build for you. At $50 for the first month with a full refund, you’re not betting on my track record. You’re betting on the system.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Every plan you’ve quit was built for a perfect week. Mine is built for a real one. You do the workouts, track two numbers, and I adjust everything else around your life. If your last attempt had worked with your schedule, you’d still be doing it.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>Why is it only $50?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>Why is it only $50?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>$50 is the first month, then $199/month after. The price is low because I want zero financial risk on your end while you find out if this works for you.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>Do you handle the diet side too?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>Do you handle the diet side too?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Yes. You get a daily calorie target and a daily protein target. No strict meal plan and no foods you have to eat or avoid, though I'll suggest specific options when it makes sense.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>How much time does this take each week?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>How much time does this take each week?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>3–4 gym sessions per week, 45 to 60 minutes each. A couple of minutes a day to log your food. That’s it.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>What happens after I pay?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>What happens after I pay?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Everything runs through an app on your phone. After you pay, you'll be redirected to download it. Your workouts, check-ins, and messaging with me are all in one place.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>How does the refund actually work?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>How does the refund actually work?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>You can cancel the coaching anytime from the app, or message me to do it for you. If you’re inside 30 days, I refund you in full. No form, no waiting period, no questions.</p>
           </div></div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>Can I cancel anytime?</span><svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary class="faq-item__summary"><span>Can I cancel anytime?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body"><div class="faq-item__body-inner">
             <p>Yes. No contract, no cancellation fee.</p>
           </div></div>
