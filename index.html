@@ -58,6 +58,9 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <!-- Preload the video poster so it paints immediately on first load -->
 <link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
 
+<!-- Self-hosted Inter (SIL Open Font License) — consistent across OSes, no third-party font CDN -->
+<link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
+
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Header group visibility */
@@ -69,8 +72,17 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 /* Variables */
 :root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#f8fafc;--muted:#a0a0a0;--border:#282828;--card-border:#3d3d3d}
 
+/* Inter variable — self-hosted, OFL licensed */
+@font-face{
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url('fonts/inter-latin-variable.woff2') format('woff2');
+}
+
 /* Reset */
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 
 /* Layout */
@@ -429,6 +441,22 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* CTA Widget (desktop): same copy + button + .pricing as mobile; narrow column via hero grid */
 .cta-widget{display:none}
 .mobile-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%}
+/* Mid-page CTA — mobile only, between How It Works and FAQ. Band matches sibling sections. */
+.mobile-mid-cta{display:none}
+@media(max-width:760px){
+  .mobile-mid-cta{
+    display:block;
+    padding:var(--pad-sm) 1.25rem var(--pad-sm);
+    border-bottom:1px solid var(--border);
+  }
+  .mobile-mid-cta__inner{
+    display:flex;flex-direction:column;align-items:center;gap:1rem;
+    text-align:center;
+    max-width:472px;margin:0 auto;
+  }
+  /* Inherit .section-title; let the wrapper's gap control spacing */
+  .mobile-mid-cta__title{margin:0}
+}
 @media(min-width:1280px){
   .mobile-cta{display:none}
   .col-right{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;width:100%}
@@ -878,23 +906,8 @@ footer a{color:#4d94ff;text-decoration:none}
   main{padding-top:60px}
 }
 @media(max-width:760px){
-  .site-nav__links{display:none}
-  .site-nav{
-    padding:.625rem;
-    left:10px;
-    right:10px;
-    top:10px;
-    border-radius:12px;
-    background:rgba(28,28,28,0.72);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border-color:rgba(255,255,255,0.10);
-    transform:translateY(calc(-100% - 10px));
-    transition:transform .35s cubic-bezier(.4,0,.2,1);
-  }
-  .site-nav.is-visible{
-    transform:translateY(0);
-  }
+  /* No floating nav on mobile — a mid-page CTA section is used instead */
+  .site-nav{display:none}
 }
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -1215,6 +1228,22 @@ footer a{color:#4d94ff;text-decoration:none}
     </div>
   </div>
 
+  <section class="mobile-mid-cta" aria-label="Join call to action">
+    <div class="mobile-mid-cta__inner">
+      <h2 class="section-title mobile-mid-cta__title">Why Guess?</h2>
+      <p class="subheadline">Stop figuring it out alone. Get real answers the moment you're stuck.</p>
+      <div class="mobile-cta">
+        <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
+          <span class="btn-label">Join Now $50</span>
+        </button>
+        <div class="pricing">
+          <div class="pricing-amount">$50 first month, then $199/month.</div>
+          <div>Full refund if you don't see results in 30 days.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
     <hr class="section-divider" aria-hidden="true">
     <div class="common-questions__inner">
@@ -1519,22 +1548,6 @@ function scrollToSection(id) {
   update();
 })();
 
-// Mobile: slide nav in once the CTA button scrolls out of view
-(function(){
-  function isMobile(){ return window.innerWidth <= 760; }
-  var nav = document.querySelector('.site-nav');
-  var target = document.querySelector('.mobile-cta');
-  if(!nav || !target) return;
-  var io = new IntersectionObserver(function(entries){
-    if(!isMobile()) return;
-    nav.classList.toggle('is-visible', !entries[0].isIntersecting);
-  }, { threshold: 0 });
-  io.observe(target);
-  // On desktop resize, always show nav (no transform)
-  window.addEventListener('resize', function(){
-    if(!isMobile()) nav.classList.remove('is-visible');
-  });
-})();
 </script>
 
 <script>
