@@ -58,9 +58,6 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <!-- Preload the video poster so it paints immediately on first load -->
 <link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
 
-<!-- Self-hosted Inter (SIL Open Font License) — consistent across OSes, no third-party font CDN -->
-<link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
-
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Header group visibility */
@@ -72,7 +69,8 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 /* Variables */
 :root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#f8fafc;--muted:#a0a0a0;--border:#282828;--card-border:#3d3d3d}
 
-/* Inter variable — self-hosted, OFL licensed */
+/* Apple devices render their built-in San Francisco via -apple-system; non-Apple devices fall through to
+   self-hosted Inter (SIL Open Font License) instead of Roboto/Segoe. SF is never served by us. */
 @font-face{
   font-family:'Inter';
   font-style:normal;
@@ -82,7 +80,7 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 }
 
 /* Reset */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 
 /* Layout */
