@@ -58,6 +58,9 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <!-- Preload the video poster so it paints immediately on first load -->
 <link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
 
+<!-- Self-hosted Inter — used on every device, so preload it -->
+<link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
+
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
 /* Header group visibility */
@@ -69,8 +72,7 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 /* Variables */
 :root{--pad:2.5rem;--pad-sm:2rem;--desk-pad:4rem;--blue:#06f;--text:#f8fafc;--muted:#a0a0a0;--border:#282828;--card-border:#3d3d3d}
 
-/* Apple devices render their built-in San Francisco via -apple-system; non-Apple devices fall through to
-   self-hosted Inter (SIL Open Font License) instead of Roboto/Segoe. SF is never served by us. */
+/* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
 @font-face{
   font-family:'Inter';
   font-style:normal;
@@ -80,7 +82,7 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 }
 
 /* Reset */
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Inter',system-ui,"Segoe UI",Roboto,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 
 /* Layout */
@@ -220,19 +222,29 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 /* Number circle (all blocks) */
 .block-num{
-  width:2.25rem;
-  height:2.25rem;
-  border-radius:50%;
-  background:#161616;
-  border:1px solid var(--card-border);
-  display:flex;
+  position:relative;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:.9375rem;
+  padding:.2rem .3rem;
+  font-size:.9rem;
   font-weight:600;
+  line-height:1;
   color:var(--text);
   flex-shrink:0;
+  font-variant-numeric:tabular-nums;
 }
+/* Diagonal corner brackets: top-left + bottom-right, hugging the digit */
+.block-num::before,
+.block-num::after{
+  content:"";
+  position:absolute;
+  width:.34rem;
+  height:.34rem;
+  border:1.5px solid var(--card-border);
+}
+.block-num::before{top:0;left:0;border-right:none;border-bottom:none}
+.block-num::after{bottom:0;right:0;border-left:none;border-top:none}
 /* Number + heading inline row (block 1) */
 .block-header-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem}
 .block-header-row .block-heading{margin-bottom:0}
@@ -300,6 +312,9 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .hero-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem;width:fit-content;max-width:450px;margin:.5rem auto 0;text-align:left}
 .hero-bullets li{display:flex;align-items:flex-start;gap:.5rem;font-size:1rem;line-height:1.5;color:var(--text);letter-spacing:-.005em}
 .hero-bullets svg{flex-shrink:0;color:#22c55e;margin-top:.18rem}
+.hero-bullets .hb-marker{flex-shrink:0;color:var(--muted);font-weight:600;font-size:.8rem;line-height:1.5;margin-top:.1rem;font-variant-numeric:tabular-nums}
+.hero-bullets .hb-marker::before{content:"["}
+.hero-bullets .hb-marker::after{content:"]"}
 
 /* Video */
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
@@ -1001,9 +1016,9 @@ footer a{color:#4d94ff;text-decoration:none}
         <div class="callout">Online Fat Loss Coaching for Men</div>
         <h1 class="headline">Lose The Body Fat You've Been Carrying For Years</h1>
         <ul class="hero-bullets">
-          <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Custom training program for your schedule</span></li>
-          <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Daily calorie &amp; macro targets for your goal</span></li>
-          <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>1-on-1 coach texting you back the same day</span></li>
+          <li><span class="hb-marker" aria-hidden="true">1</span><span>Custom training program for your schedule</span></li>
+          <li><span class="hb-marker" aria-hidden="true">2</span><span>Daily calorie &amp; macro targets for your goal</span></li>
+          <li><span class="hb-marker" aria-hidden="true">3</span><span>1-on-1 coach texting you back the same day</span></li>
         </ul>
       </div>
       <div class="video-wrap" id="videoContainer">
@@ -1070,9 +1085,9 @@ footer a{color:#4d94ff;text-decoration:none}
         <div class="cta-widget__section cta-widget__section--copy">
           <div class="cta-widget__title">Lose The Body Fat You've Been Carrying For Years</div>
           <ul class="hero-bullets">
-            <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Custom training program for your schedule</span></li>
-            <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Daily calorie &amp; macro targets for your goal</span></li>
-            <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>1-on-1 coach texting you back the same day</span></li>
+            <li><span class="hb-marker" aria-hidden="true">1</span><span>Custom training program for your schedule</span></li>
+            <li><span class="hb-marker" aria-hidden="true">2</span><span>Daily calorie &amp; macro targets for your goal</span></li>
+            <li><span class="hb-marker" aria-hidden="true">3</span><span>1-on-1 coach texting you back the same day</span></li>
           </ul>
         </div>
 
