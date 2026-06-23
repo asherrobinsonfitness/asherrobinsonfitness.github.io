@@ -423,8 +423,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 .pricing{font-size:.9rem;text-align:center}
 .pricing-amount{font-weight:600}
-.cta-caption{font-size:.9rem;color:var(--text);text-align:center;line-height:1.4}
-.cta-caption__price{font-weight:600}
 
 /* Card */
 .card{background:#222;border-radius:12px;border:1px solid var(--card-border);overflow:hidden;width:100%;max-width:460px;display:flex;flex-direction:column}
@@ -609,8 +607,11 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     justify-content:center;
   }
   .cta-widget__footer .btn .btn-label{text-align:center;flex:0 1 auto}
-  /* Price + guarantee caption */
-  .cta-widget__footer .cta-caption{width:100%;text-align:center;font-size:.9rem;color:var(--text)}
+  /* Pricing bullets */
+  .cta-widget__footer .pricing-bullets{list-style:none;display:flex;flex-direction:column;gap:.4rem;text-align:left;width:100%}
+  .cta-widget__footer .pricing-bullets li{display:flex;align-items:flex-start;gap:.45rem;font-size:.875rem;line-height:1.45;color:var(--text)}
+  .cta-widget__footer .pricing-bullets li:first-child{font-weight:600}
+  .cta-widget__footer .pricing-bullets svg{flex-shrink:0;margin-top:.13rem;color:inherit}
 }
 
 /* Common Questions (FAQ) — same band as results; constrained divider provides separation */
@@ -988,7 +989,7 @@ footer a{color:#4d94ff;text-decoration:none}
     <div class="col-left">
       <div class="header-group header-group--mobile">
         <div class="callout">Online Fat Loss Coaching for Men</div>
-        <h1 class="headline">Lose The Weight You've Been Carrying For Years</h1>
+        <h1 class="headline">Lose The Body Fat You've Been Carrying For Years</h1>
         <ul class="hero-bullets">
           <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Custom training program for your schedule</span></li>
           <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Daily calorie &amp; macro targets for your goal</span></li>
@@ -1030,7 +1031,10 @@ footer a{color:#4d94ff;text-decoration:none}
         <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
           <span class="btn-label">Join Now <span class="btn-label__note">$50 First Month</span></span>
         </button>
-        <div class="cta-caption"><span class="cta-caption__price">Then $199/mo</span> · 30-day money-back guarantee</div>
+        <div class="pricing">
+          <div class="pricing-amount">$50 first month, then $199/month.</div>
+          <div>Full refund if you don't see results in 30 days.</div>
+        </div>
       </div>
       <!-- Desktop: height matched to video (JS); hero = static dual portraits + bridge + faint dot (no slider) -->
       <div class="cta-widget" id="ctaWidget">
@@ -1054,7 +1058,7 @@ footer a{color:#4d94ff;text-decoration:none}
         </div>
 
         <div class="cta-widget__section cta-widget__section--copy">
-          <div class="cta-widget__title">Lose The Weight You've Been Carrying For Years</div>
+          <div class="cta-widget__title">Lose The Body Fat You've Been Carrying For Years</div>
           <ul class="hero-bullets">
             <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Custom training program for your schedule</span></li>
             <li><svg width="16" height="16" aria-hidden="true"><use href="#check-circle"/></svg><span>Daily calorie &amp; macro targets for your goal</span></li>
@@ -1076,7 +1080,16 @@ footer a{color:#4d94ff;text-decoration:none}
               </symbol>
             </defs>
           </svg>
-          <div class="cta-caption"><span class="cta-caption__price">Then $199/mo</span> · 30-day money-back guarantee</div>
+          <ul class="pricing-bullets">
+            <li>
+              <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
+              <span>$50 first month, then $199/month.</span>
+            </li>
+            <li>
+              <svg width="15" height="15" aria-hidden="true"><use href="#pricing-verified-badge"/></svg>
+              <span>Full refund if you don't see results in 30 days.</span>
+            </li>
+          </ul>
         </div>
 
       </div>
