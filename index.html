@@ -226,25 +226,19 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:.2rem .3rem;
-  font-size:.9rem;
-  font-weight:600;
-  line-height:1;
+  width:1.85rem;
+  height:1.85rem;
   color:var(--text);
   flex-shrink:0;
+}
+.block-num .marker-frame{position:absolute;inset:0;width:100%;height:100%;color:var(--card-border)}
+.block-num .marker-num{
+  font-family:ui-monospace,"SF Mono","Menlo","Cascadia Mono","Roboto Mono",monospace;
+  font-size:1.05rem;
+  font-weight:500;
+  line-height:1;
   font-variant-numeric:tabular-nums;
 }
-/* Diagonal corner brackets: top-left + bottom-right, hugging the digit */
-.block-num::before,
-.block-num::after{
-  content:"";
-  position:absolute;
-  width:.34rem;
-  height:.34rem;
-  border:1.5px solid var(--card-border);
-}
-.block-num::before{top:0;left:0;border-right:none;border-bottom:none}
-.block-num::after{bottom:0;right:0;border-left:none;border-top:none}
 /* Number + heading inline row (block 1) */
 .block-header-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem}
 .block-header-row .block-heading{margin-bottom:0}
@@ -310,11 +304,26 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 .subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
 .hero-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem;width:fit-content;max-width:450px;margin:.5rem auto 0;text-align:left}
-.hero-bullets li{display:flex;align-items:flex-start;gap:.5rem;font-size:1rem;line-height:1.5;color:var(--text);letter-spacing:-.005em}
-.hero-bullets svg{flex-shrink:0;color:#22c55e;margin-top:.18rem}
-.hero-bullets .hb-marker{flex-shrink:0;color:var(--muted);font-weight:600;font-size:.8rem;line-height:1.5;margin-top:.1rem;font-variant-numeric:tabular-nums}
-.hero-bullets .hb-marker::before{content:"["}
-.hero-bullets .hb-marker::after{content:"]"}
+.hero-bullets li{display:flex;align-items:flex-start;gap:.5rem;font-size:1rem;line-height:1.5;color:var(--muted);letter-spacing:-.005em}
+.hero-bullets .hb-marker{
+  position:relative;
+  flex-shrink:0;
+  width:1.45rem;
+  height:1.45rem;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  margin-top:.12rem;
+}
+.hero-bullets .hb-marker .marker-frame{position:absolute;inset:0;width:100%;height:100%}
+.hero-bullets .hb-marker .marker-num{
+  font-family:ui-monospace,"SF Mono","Menlo","Cascadia Mono","Roboto Mono",monospace;
+  font-weight:500;
+  font-size:.8rem;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
 
 /* Video */
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
@@ -454,22 +463,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* CTA Widget (desktop): same copy + button + .pricing as mobile; narrow column via hero grid */
 .cta-widget{display:none}
 .mobile-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%}
-/* Mid-page CTA — mobile only, between How It Works and FAQ. Band matches sibling sections. */
-.mobile-mid-cta{display:none}
-@media(max-width:760px){
-  .mobile-mid-cta{
-    display:block;
-    padding:var(--pad-sm) 1.25rem var(--pad-sm);
-    border-bottom:1px solid var(--border);
-  }
-  .mobile-mid-cta__inner{
-    display:flex;flex-direction:column;align-items:center;gap:1rem;
-    text-align:center;
-    max-width:472px;margin:0 auto;
-  }
-  /* Inherit .section-title; let the wrapper's gap control spacing */
-  .mobile-mid-cta__title{margin:0}
-}
 @media(min-width:1280px){
   .mobile-cta{display:none}
   .col-right{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;width:100%}
@@ -891,7 +884,7 @@ footer a{color:#4d94ff;text-decoration:none}
   color:#fff;
   font-size:.8rem;
   font-weight:600;
-  border-radius:8px;
+  border-radius:999px;
   text-decoration:none;
   white-space:nowrap;
   border:none;
@@ -927,8 +920,23 @@ footer a{color:#4d94ff;text-decoration:none}
   main{padding-top:60px}
 }
 @media(max-width:760px){
-  /* No floating nav on mobile — a mid-page CTA section is used instead */
-  .site-nav{display:none}
+  .site-nav__links{display:none}
+  .site-nav{
+    padding:.625rem;
+    left:10px;
+    right:10px;
+    top:10px;
+    border-radius:999px;
+    background:rgba(28,28,28,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-color:rgba(255,255,255,0.10);
+    transform:translateY(calc(-100% - 10px));
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .site-nav.is-visible{
+    transform:translateY(0);
+  }
 }
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -1012,7 +1020,7 @@ footer a{color:#4d94ff;text-decoration:none}
     <button class="site-nav__link" onclick="scrollToSection('how-it-works')">Overview</button>
     <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
   </div>
-  <button class="site-nav__cta" onclick="window.location.href='/fill-out-form'+window.location.search">Join<span class="site-nav__arrow">→</span></button>
+  <button class="site-nav__cta" onclick="window.location.href='/fill-out-form'+window.location.search">Join</button>
 </nav>
 
 <main>
@@ -1021,12 +1029,12 @@ footer a{color:#4d94ff;text-decoration:none}
 
     <div class="col-left">
       <div class="header-group header-group--mobile">
-        <div class="callout">Online Fat Loss Coaching for Men</div>
+        <div class="callout">Men's Online Fat Loss Coaching</div>
         <h1 class="headline">Lose The Body Fat You've Been Carrying For Years</h1>
         <ul class="hero-bullets">
-          <li><span class="hb-marker" aria-hidden="true">1</span><span>Custom training program for your schedule</span></li>
-          <li><span class="hb-marker" aria-hidden="true">2</span><span>Daily calorie &amp; macro targets for your goal</span></li>
-          <li><span class="hb-marker" aria-hidden="true">3</span><span>1-on-1 coach texting you back the same day</span></li>
+          <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">1</span></span><span>Custom training program for your schedule</span></li>
+          <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">2</span></span><span>Daily calorie &amp; macro targets for your goal</span></li>
+          <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">3</span></span><span>1-on-1 coach texting you back the same day</span></li>
         </ul>
       </div>
       <div class="video-wrap" id="videoContainer">
@@ -1093,9 +1101,9 @@ footer a{color:#4d94ff;text-decoration:none}
         <div class="cta-widget__section cta-widget__section--copy">
           <div class="cta-widget__title">Lose The Body Fat You've Been Carrying For Years</div>
           <ul class="hero-bullets">
-            <li><span class="hb-marker" aria-hidden="true">1</span><span>Custom training program for your schedule</span></li>
-            <li><span class="hb-marker" aria-hidden="true">2</span><span>Daily calorie &amp; macro targets for your goal</span></li>
-            <li><span class="hb-marker" aria-hidden="true">3</span><span>1-on-1 coach texting you back the same day</span></li>
+            <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">1</span></span><span>Custom training program for your schedule</span></li>
+            <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">2</span></span><span>Daily calorie &amp; macro targets for your goal</span></li>
+            <li><span class="hb-marker" aria-hidden="true"><svg class="marker-frame" viewBox="0 0 24 24" fill="none"><path d="M8 4H4V20H8M16 4H20V20H16" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">3</span></span><span>1-on-1 coach texting you back the same day</span></li>
           </ul>
         </div>
 
@@ -1137,7 +1145,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--wyget">
         <div class="block-inner">
           <div class="block-header-row">
-            <div class="block-num">1</div>
+            <div class="block-num"><svg class="marker-frame" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V4H10M20 14V20H14" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">1</span></div>
             <h2 class="block-heading">What you get</h2>
           </div>
           <div class="wyget-list" role="list">
@@ -1194,7 +1202,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--story">
         <div class="block-inner">
           <div class="block-story__header">
-            <div class="block-num">2</div>
+            <div class="block-num"><svg class="marker-frame" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V4H10M20 14V20H14" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">2</span></div>
             <h2 class="block-heading">How it works</h2>
           </div>
           <div class="block-story__thumb">
@@ -1213,7 +1221,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--story block--bubble">
         <div class="block-inner">
           <div class="block-story__header">
-            <div class="block-num">3</div>
+            <div class="block-num"><svg class="marker-frame" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V4H10M20 14V20H14" stroke="currentColor" stroke-width="1.5"/></svg><span class="marker-num">3</span></div>
             <h2 class="block-heading">Why it works</h2>
           </div>
           <div class="block-story__thumb">
@@ -1248,22 +1256,6 @@ footer a{color:#4d94ff;text-decoration:none}
 
     </div>
   </div>
-
-  <section class="mobile-mid-cta" aria-label="Join call to action">
-    <div class="mobile-mid-cta__inner">
-      <h2 class="section-title mobile-mid-cta__title">Why Do It Alone?</h2>
-      <p class="subheadline">A workout program, daily calorie targets, and a coach who answers when you need one.</p>
-      <div class="mobile-cta">
-        <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
-          <span class="btn-label">Join Now $50</span>
-        </button>
-        <div class="pricing">
-          <div class="pricing-amount">$50 first month, then $199/month.</div>
-          <div>Full refund if you don't see results in 30 days.</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
     <hr class="section-divider" aria-hidden="true">
@@ -1567,6 +1559,23 @@ function scrollToSection(id) {
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', update);
   update();
+})();
+
+// Mobile: slide nav in once the CTA button scrolls out of view
+(function(){
+  function isMobile(){ return window.innerWidth <= 760; }
+  var nav = document.querySelector('.site-nav');
+  var target = document.querySelector('.mobile-cta');
+  if(!nav || !target) return;
+  var io = new IntersectionObserver(function(entries){
+    if(!isMobile()) return;
+    nav.classList.toggle('is-visible', !entries[0].isIntersecting);
+  }, { threshold: 0 });
+  io.observe(target);
+  // On desktop resize, always show nav (no transform)
+  window.addEventListener('resize', function(){
+    if(!isMobile()) nav.classList.remove('is-visible');
+  });
 })();
 
 </script>
