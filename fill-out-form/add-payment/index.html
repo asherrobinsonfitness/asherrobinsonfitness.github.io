@@ -32,10 +32,19 @@
   <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
   <meta name="theme-color" content="#000000">
   <script src="https://js.stripe.com/v3/"></script>
+  <link rel="preload" as="font" type="font/woff2" href="../../fonts/inter-latin-variable.woff2" crossorigin>
   <style>
+    /* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
+    @font-face{
+      font-family:'Inter';
+      font-style:normal;
+      font-weight:100 900;
+      font-display:swap;
+      src:url('../../fonts/inter-latin-variable.woff2') format('woff2');
+    }
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
     }
     :root {
       --primary: #06f;
@@ -504,6 +513,13 @@ async function initStripe() {
 
   const STRIPE_PK = 'pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN';
 
+  // Inter for Stripe's iframes — must be an absolute URL (the iframe is cross-origin and can't see the page's @font-face)
+  const FONT_URL = 'https://asherrobinsonfitness.com/fonts/inter-latin-variable.woff2';
+  const STRIPE_FONTS = [
+    { family: 'Inter', src: "url(" + FONT_URL + ") format('woff2')", weight: '400' },
+    { family: 'Inter', src: "url(" + FONT_URL + ") format('woff2')", weight: '600' },
+  ];
+
   function getAppearance(dark) {
     return {
       theme: dark ? 'night' : 'stripe',
@@ -513,7 +529,7 @@ async function initStripe() {
         colorTextSecondary: dark ? '#9ca3af' : '#717171',
         colorTextPlaceholder: dark ? '#6b7280' : '#9ca3af',
         colorPrimary: '#0066ff', colorDanger: '#e53e3e',
-        fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
+        fontFamily: 'Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
         fontSizeBase: '16px', fontWeightNormal: '400', fontWeightMedium: '600',
         borderRadius: '8px', spacingUnit: '4px', spacingGridRow: '0.85rem',
       },
@@ -583,6 +599,7 @@ async function initStripe() {
   const eceElements = stripe.elements({
     mode: 'subscription', amount: 5000, currency: 'usd',
     appearance: getAppearance(dark),
+    fonts: STRIPE_FONTS,
   });
 
   const expressEl = eceElements.create('expressCheckout', {
@@ -617,13 +634,13 @@ async function initStripe() {
 
   const payDiv = document.getElementById('payment-element');
   if (payDiv) payDiv.style.visibility = 'hidden';
-  const cardElements = stripe.elements();
+  const cardElements = stripe.elements({ fonts: STRIPE_FONTS });
   const cardEl = cardElements.create('card', {
     hidePostalCode: true,
     style: {
       base: {
         color: '#F8FAFC',
-        fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
+        fontFamily: 'Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',
         fontSize: '14px',
         fontWeight: '400',
         '::placeholder': { color: '#6b7280' },
