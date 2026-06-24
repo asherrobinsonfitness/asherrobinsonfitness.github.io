@@ -840,6 +840,8 @@ footer a{color:#4d94ff;text-decoration:none}
   box-sizing:border-box;
 }
 .site-nav__wordmark{
+  display:flex;
+  align-items:center;
   font-size:.8125rem;
   font-weight:600;
   color:var(--text);
@@ -849,6 +851,8 @@ footer a{color:#4d94ff;text-decoration:none}
   min-width:0;
   flex-shrink:1;
 }
+/* Logo mark: shown only in the mobile pop-up nav, text wordmark on desktop */
+.site-nav__logo{display:none;height:1.85rem;width:auto;border-radius:7px;flex-shrink:0}
 .site-nav__links{
   position:absolute;
   left:50%;
@@ -921,6 +925,8 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 @media(max-width:760px){
   .site-nav__links{display:none}
+  .site-nav__wordmark-text{display:none}
+  .site-nav__logo{display:block}
   .site-nav{
     padding:.625rem;
     left:10px;
@@ -1015,12 +1021,12 @@ footer a{color:#4d94ff;text-decoration:none}
 
 <!-- Persistent top nav -->
 <nav class="site-nav" aria-label="Site navigation">
-  <span class="site-nav__wordmark">Online Fat Loss Coaching for Men</span>
+  <span class="site-nav__wordmark"><img class="site-nav__logo" src="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png" alt="Asher Robinson Fitness" width="30" height="30"><span class="site-nav__wordmark-text">Men's Online Fat Loss Coaching</span></span>
   <div class="site-nav__links">
     <button class="site-nav__link" onclick="scrollToSection('how-it-works')">Overview</button>
     <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
   </div>
-  <button class="site-nav__cta" onclick="window.location.href='/fill-out-form'+window.location.search">Join</button>
+  <button class="site-nav__cta" onclick="window.location.href='/fill-out-form'+window.location.search">Join Now</button>
 </nav>
 
 <main>
