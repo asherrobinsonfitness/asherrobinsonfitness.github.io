@@ -433,11 +433,8 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 /* CTA button */
-.btn{display:inline-flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.375rem .375rem .375rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
 .btn:hover{background:#0052cc}
-.btn-label{flex:1;text-align:left}
-.btn-arrow-box{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:2.25rem;height:2.25rem;border-radius:6px;background:rgba(255,255,255,.18);transition:background .15s}
-.btn-arrow-box svg{transition:transform .22s ease}
 @media(hover:hover) and (pointer:fine){
   .btn:hover .btn-arrow-box{background:rgba(255,255,255,.26)}
   .btn:hover .btn-arrow-box svg{transform:translateX(3px)}
@@ -1059,8 +1056,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <!-- Mobile: just button + pricing (no widget) -->
       <div class="mobile-cta">
         <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
-          <span class="btn-label">Join Now $50</span>
-          <span class="btn-arrow-box" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.1em" height="1.1em" fill="currentColor"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg></span>
+          Join Now $50 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
         </button>
         <div class="pricing">
           <div class="pricing-amount">$50 first month, then $199/month.</div>
