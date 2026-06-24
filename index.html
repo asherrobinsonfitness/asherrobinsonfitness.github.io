@@ -298,8 +298,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;
   margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem;
 }
-.subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}
-.hero-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem;width:fit-content;max-width:450px;margin:.5rem auto 0;text-align:left}
+.subheadline{font-size:1rem;color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:450px;margin:.25rem auto 0}.hero-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem;width:fit-content;max-width:450px;margin:.5rem auto 0;text-align:left}
 .hero-bullets li{display:flex;align-items:flex-start;gap:.5rem;font-size:1rem;line-height:1.5;color:var(--muted);letter-spacing:-.005em}
 .hero-bullets .hb-marker{
   flex-shrink:0;
@@ -433,8 +432,9 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 /* CTA button */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
 .btn:hover{background:#0052cc}
+.btn svg{height:.75em;width:.45em;flex-shrink:0;display:block;stroke-width:2}
 @media(hover:hover) and (pointer:fine){
   .btn:hover .btn-arrow-box{background:rgba(255,255,255,.26)}
   .btn:hover .btn-arrow-box svg{transform:translateX(3px)}
@@ -870,6 +870,7 @@ footer a{color:#4d94ff;text-decoration:none}
   color:#fff;
   font-size:.8rem;
   font-weight:600;
+  line-height:1;
   border-radius:999px;
   text-decoration:none;
   white-space:nowrap;
@@ -877,10 +878,9 @@ footer a{color:#4d94ff;text-decoration:none}
   cursor:pointer;
   transition:background .15s;
 }
-.site-nav__arrow{transition:transform .22s ease}
+.site-nav__cta svg{height:.75em;width:.45em;flex-shrink:0;display:block;stroke-width:2}
 @media(hover:hover) and (pointer:fine){
   .site-nav__cta:hover{background:#0052cc}
-  .site-nav__cta:hover .site-nav__arrow{transform:translateX(3px)}
 }
 @media(min-width:761px){
   .site-nav{
@@ -1056,7 +1056,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <!-- Mobile: just button + pricing (no widget) -->
       <div class="mobile-cta">
         <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
-          Join Now $50 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          Join Now $50 <svg xmlns="http://www.w3.org/2000/svg" viewBox="7.5 4.5 9 15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
         </button>
         <div class="pricing">
           <div class="pricing-amount">$50 first month, then $199/month.</div>
@@ -1095,8 +1095,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
         <div class="cta-widget__footer">
           <button class="btn" type="button" onclick="window.location.href='/fill-out-form'+window.location.search">
-            <span class="btn-label">Join Now $50</span>
-            <span class="btn-arrow-box" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.1em" height="1.1em" fill="currentColor"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg></span>
+            Join Now $50 <svg xmlns="http://www.w3.org/2000/svg" viewBox="7.5 4.5 9 15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </button>
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="pricing-verified-sprite" style="position:absolute;width:0;height:0;overflow:hidden">
             <defs>
