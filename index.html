@@ -446,13 +446,14 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 
 /* CTA button */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;padding:.9rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn{display:inline-flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.375rem .375rem .375rem 1.25rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
 .btn:hover{background:#0052cc}
-.btn-label{flex:1;text-align:center}
-.btn-divider{display:none;width:1px;height:1.2rem;background:rgba(255,255,255,.35);flex-shrink:0}
-.btn-arrow{display:none;transition:transform .22s ease}
+.btn-label{flex:1;text-align:left}
+.btn-arrow-box{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:2.25rem;height:2.25rem;border-radius:6px;background:rgba(255,255,255,.18);transition:background .15s}
+.btn-arrow-box svg{transition:transform .22s ease}
 @media(hover:hover) and (pointer:fine){
-  .btn:hover .btn-arrow{transform:translateX(4px)}
+  .btn:hover .btn-arrow-box{background:rgba(255,255,255,.26)}
+  .btn:hover .btn-arrow-box svg{transform:translateX(3px)}
 }
 .pricing{font-size:.9rem;text-align:center}
 .pricing-amount{font-weight:600}
@@ -635,11 +636,9 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   }
   .cta-widget__footer .btn{
     width:100%;
-    padding:.9rem 1.25rem;
     font-size:1rem;
-    justify-content:center;
   }
-  .cta-widget__footer .btn .btn-label{text-align:center;flex:0 1 auto}
+  .cta-widget__footer .btn .btn-label{flex:0 1 auto}
   /* Pricing bullets */
   .cta-widget__footer .pricing-bullets{list-style:none;display:flex;flex-direction:column;gap:.4rem;text-align:left;width:100%}
   .cta-widget__footer .pricing-bullets li{display:flex;align-items:flex-start;gap:.45rem;font-size:.875rem;line-height:1.45;color:var(--text)}
@@ -765,8 +764,7 @@ footer a{color:#4d94ff;text-decoration:none}
 /* Responsive */
 @media(max-width:767px){
   .col-left{padding:var(--pad-sm) 1.25rem}
-  .btn{width:100%;justify-content:center}
-  .btn-label{text-align:center}
+  .btn{width:100%}
   .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
   .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
   .section-divider{margin-bottom:2.25rem}
@@ -1075,6 +1073,7 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="mobile-cta">
         <button class="btn" onclick="window.location.href='/fill-out-form'+window.location.search">
           <span class="btn-label">Join Now $50</span>
+          <span class="btn-arrow-box" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.1em" height="1.1em" fill="currentColor"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg></span>
         </button>
         <div class="pricing">
           <div class="pricing-amount">$50 first month, then $199/month.</div>
@@ -1114,6 +1113,7 @@ footer a{color:#4d94ff;text-decoration:none}
         <div class="cta-widget__footer">
           <button class="btn" type="button" onclick="window.location.href='/fill-out-form'+window.location.search">
             <span class="btn-label">Join Now $50</span>
+            <span class="btn-arrow-box" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="1.1em" height="1.1em" fill="currentColor"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg></span>
           </button>
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="pricing-verified-sprite" style="position:absolute;width:0;height:0;overflow:hidden">
             <defs>
