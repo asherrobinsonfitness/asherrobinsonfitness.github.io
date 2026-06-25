@@ -55,8 +55,6 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <!-- Theme Color -->
 <meta name="theme-color" content="#000000">
 
-<!-- Preload the video poster so it paints immediately on first load -->
-<link rel="preload" as="image" href="https://i.postimg.cc/26CfbjbT/video-thumb.webp" fetchpriority="high">
 
 <!-- Self-hosted Inter — used on every device, so preload it -->
 <link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
@@ -311,25 +309,8 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   margin-top:.2rem;
 }
 
-/* Video */
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 
-/* ── Click-to-unmute overlay ── */
-#ctpOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:none;align-items:center;justify-content:center;z-index:10;cursor:pointer;box-sizing:border-box;container-type:inline-size}
-@keyframes ctpBorderPulse{0%{box-shadow:0 0 0 0 rgba(0,0,0,.8)}100%{box-shadow:0 0 0 28px rgba(0,0,0,0)}}
-.ctp-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(.5rem,2cqw,1.25rem);pointer-events:auto;background:rgba(0,0,0,.58);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;padding:clamp(1rem,3cqw,2rem);height:70%;aspect-ratio:4/3;border:1px solid #fff;box-sizing:border-box;position:relative;transition:transform .22s linear,background .15s ease;animation:ctpBorderPulse 1.6s ease-out infinite}
-.ctp-inner::before{display:none}
-.ctp-text{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center}
-.ctp-inner:hover{background:rgba(0,0,0,.78)}
-#ctpVolWrap{width:clamp(36px,7cqw,64px);height:clamp(36px,7cqw,64px)}
-#ctpVolWrap svg{width:100%;height:100%;display:block}
-.ctp-wave1,.ctp-wave2{opacity:0}
-@keyframes ctpW1{0%,10%{opacity:0}25%,60%{opacity:1}75%,100%{opacity:0}}
-@keyframes ctpW2{0%,25%{opacity:0}37%,75%{opacity:1}88%,100%{opacity:0}}
-.ctp-wave1{animation:ctpW1 2s ease-in-out infinite}
-.ctp-wave2{animation:ctpW2 2s ease-in-out infinite}
-.ctp-title{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
-.ctp-sub{color:#fff;font-size:clamp(.85rem,3cqw,1.5rem);font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.2}
+#vidalytics_embed_JK96M1JZg1x3Vu9l{border-radius:12px;overflow:hidden}
 
 /* Chat bubble overlay
  * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
@@ -1022,33 +1003,18 @@ footer a{color:#4d94ff;text-decoration:none}
           <li><span class="hb-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>1-on-1 coach texting you back the same day</span></li>
         </ul>
       </div>
-      <div class="video-wrap" id="videoContainer">
-        <!-- Poster shown while video loads; video fades in over it on first play -->
-        <img id="videoPoster" src="https://i.postimg.cc/26CfbjbT/video-thumb.webp" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1;">
-        <!-- preload="metadata" lets mobile browsers load enough to display the poster and buffer
-             a small amount; preload="none" can cause play() to fail on mobile before any data loads.
-             webkit-playsinline is required for older iOS Safari inline playback. -->
-        <video id="mainVideo" playsinline webkit-playsinline preload="metadata" poster="https://i.postimg.cc/26CfbjbT/video-thumb.webp" style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;position:relative;z-index:2;">
-          <source src="video.mp4" type="video/mp4">
-          <track id="vcCaptionTrack" kind="captions" src="captions.vtt" srclang="en" label="English">
-        </video>
-        <!-- Click-to-unmute overlay (shown when autoplay with sound fails) -->
-        <div id="ctpOverlay" style="display:none;">
-          <div class="ctp-inner">
-            <div id="ctpVolWrap">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fff">
-                <path d="M280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Z"/>
-                <path class="ctp-wave1" d="M660-480q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80Z"/>
-                <path class="ctp-wave2" d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481Z"/>
-              </svg>
-            </div>
-            <div class="ctp-text">
-              <div class="ctp-title">Your Video is Playing</div>
-              <div class="ctp-sub">Click to Unmute</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="vidalytics_embed_JK96M1JZg1x3Vu9l" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+<script type="text/javascript">
+(function (v, i, d, a, l, y, t, c, s) {
+    y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
+    if (!vsl){vsl=function(u,cb){
+        if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
+        if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
+        i.getElementsByTagName("head")[0].appendChild(s);
+    };}
+    vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
+})(window, document, 'Vidalytics', 'vidalytics_embed_JK96M1JZg1x3Vu9l', 'https://fast.vidalytics.com/embeds/swbCvzMu/JK96M1JZg1x3Vu9l/');
+</script>
     </div>
 
     <div class="col-right" id="colRight">
@@ -1319,83 +1285,10 @@ footer a{color:#4d94ff;text-decoration:none}
 </footer>
 
 <script>
-/* ── Mobile-safe autoplay with poster-first skeleton ── */
-(function(){
-  var vid     = document.getElementById('mainVideo');
-  var overlay = document.getElementById('ctpOverlay');
-  var poster  = document.getElementById('videoPoster');
-  if(!vid || !overlay) return;
-
-  var ctpHideTimer;
-  function showOverlay(){
-    overlay.style.display = 'flex';
-    vid.loop = true;
-    vid.removeAttribute('controls');
-  }
-
-  function hideOverlay(){
-    overlay.style.display = 'none';
-  }
-
-  function enableControls(){
-    vid.setAttribute('controls', '');
-  }
-
-  // Clicking anywhere on the overlay unmutes and restarts
-  overlay.addEventListener('click', function(){
-    vid.loop    = false;
-    vid.muted   = false;
-    vid.currentTime = 0;
-    enableControls();
-    var p = vid.play();
-    if(p !== undefined){
-      p.then(function(){ hideOverlay(); }).catch(function(){ hideOverlay(); });
-    } else {
-      hideOverlay();
-    }
-  });
-
-  // If unmuted autoplay succeeded (no overlay shown), reveal controls on first click
-  vid.addEventListener('click', enableControls, {once: true});
-
-  function attemptAutoplay(){
-    // Attempt 1: unmuted autoplay
-    vid.muted = false;
-    var p1 = vid.play();
-    if(p1 === undefined){ hideOverlay(); return; }
-    p1.then(function(){
-      hideOverlay();
-    }).catch(function(){
-      // Attempt 2: muted autoplay (loop silently)
-      vid.muted = true;
-      vid.loop  = true;
-      var p2 = vid.play();
-      if(p2 === undefined){ showOverlay(); return; }
-      p2.then(function(){ showOverlay(); }).catch(function(){ showOverlay(); });
-    });
-  }
-
-  if(vid.readyState >= 1){
-    attemptAutoplay();
-  } else {
-    vid.addEventListener('loadedmetadata', function onMeta(){
-      vid.removeEventListener('loadedmetadata', onMeta);
-      attemptAutoplay();
-    });
-    setTimeout(function(){
-      if(vid.readyState < 1 && overlay.style.display === 'none') showOverlay();
-    }, 3000);
-  }
-
-  vid.addEventListener('ended', function(){
-    if(!vid.loop) vid.pause();
-  });
-})();
-
 /* Desktop: match widget height to video container */
 (function(){
   var mq = window.matchMedia('(min-width:1280px)');
-  var videoWrap = document.querySelector('.col-left .video-wrap');
+  var videoWrap = document.getElementById('vidalytics_embed_JK96M1JZg1x3Vu9l');
   var widget = document.getElementById('ctaWidget');
   if(!videoWrap || !widget) return;
 
