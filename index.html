@@ -892,7 +892,7 @@ footer a{color:#4d94ff;text-decoration:none}
 @media(max-width:760px){
   .site-nav__links{display:none}
   .site-nav{
-    padding:.625rem .625rem .625rem 1rem;
+    padding:.625rem 1.25rem;
     transition:top .4s cubic-bezier(.4,0,.2,1),
                left .4s cubic-bezier(.4,0,.2,1),
                right .4s cubic-bezier(.4,0,.2,1),
@@ -900,6 +900,16 @@ footer a{color:#4d94ff;text-decoration:none}
                background-color .4s cubic-bezier(.4,0,.2,1),
                border-color .4s cubic-bezier(.4,0,.2,1),
                backdrop-filter .4s cubic-bezier(.4,0,.2,1);
+  }
+  .site-nav.is-scrolled{
+    top:12px;
+    left:12px;
+    right:12px;
+    border-radius:999px;
+    background:rgba(18,18,18,0.92);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border-color:rgba(255,255,255,0.12);
   }
   main{padding-top:60px}
 }
