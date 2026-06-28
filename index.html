@@ -291,6 +291,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 
 /* Hero text */
 .callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#161616;border-radius:999px;border:1px solid #3d3d3d;padding:.375rem 1rem;letter-spacing:.02rem}
+@media(max-width:760px){.hero-grid .callout{display:none}}
 .headline{font-size:1.75rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin-top:.5rem;margin-bottom:1rem}
 .section-title{
   font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;
@@ -728,7 +729,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
 /* Responsive */
 @media(max-width:767px){
-  .col-left{padding:var(--pad-sm) 1.25rem}
+  .col-left{padding:1rem 1.25rem var(--pad-sm)}
   .btn{width:100%}
   .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
   .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
@@ -862,6 +863,9 @@ footer a{color:#4d94ff;text-decoration:none}
 @media(hover:hover) and (pointer:fine){
   .site-nav__cta:hover{background:#0052cc}
 }
+@media(min-width:761px) and (max-width:900px){
+  .site-nav__links{display:none}
+}
 @media(min-width:761px){
   .site-nav{
     padding:.625rem 2rem;
@@ -889,20 +893,15 @@ footer a{color:#4d94ff;text-decoration:none}
   .site-nav__links{display:none}
   .site-nav{
     padding:.625rem .625rem .625rem 1rem;
-    left:10px;
-    right:10px;
-    top:10px;
-    border-radius:999px;
-    background:rgba(18,18,18,0.92);
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-    border-color:rgba(255,255,255,0.12);
-    transform:translateY(calc(-100% - 10px));
-    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    transition:top .4s cubic-bezier(.4,0,.2,1),
+               left .4s cubic-bezier(.4,0,.2,1),
+               right .4s cubic-bezier(.4,0,.2,1),
+               border-radius .4s cubic-bezier(.4,0,.2,1),
+               background-color .4s cubic-bezier(.4,0,.2,1),
+               border-color .4s cubic-bezier(.4,0,.2,1),
+               backdrop-filter .4s cubic-bezier(.4,0,.2,1);
   }
-  .site-nav.is-visible{
-    transform:translateY(0);
-  }
+  main{padding-top:60px}
 }
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -1426,12 +1425,11 @@ function scrollToSection(id) {
   window.scrollTo({ top: top, behavior: 'smooth' });
 }
 
-// Desktop: float nav widget on scroll
+// Float nav widget on scroll (all screen sizes)
 (function(){
   var nav = document.querySelector('.site-nav');
   if(!nav) return;
   function update(){
-    if(window.innerWidth <= 760) return;
     nav.classList.toggle('is-scrolled', window.scrollY > 10);
   }
   window.addEventListener('scroll', update, {passive:true});
@@ -1439,20 +1437,11 @@ function scrollToSection(id) {
   update();
 })();
 
-// Mobile: slide nav in once the CTA button scrolls out of view
 (function(){
-  function isMobile(){ return window.innerWidth <= 760; }
   var nav = document.querySelector('.site-nav');
-  var target = document.querySelector('.mobile-cta');
-  if(!nav || !target) return;
-  var io = new IntersectionObserver(function(entries){
-    if(!isMobile()) return;
-    nav.classList.toggle('is-visible', !entries[0].isIntersecting);
-  }, { threshold: 0 });
-  io.observe(target);
-  // On desktop resize, always show nav (no transform)
+  if(!nav) return;
   window.addEventListener('resize', function(){
-    if(!isMobile()) nav.classList.remove('is-visible');
+    nav.classList.remove('is-visible');
   });
 })();
 
