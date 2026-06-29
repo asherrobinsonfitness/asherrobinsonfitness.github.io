@@ -53,7 +53,8 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
 
 <!-- Theme Color -->
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
 
 
 <!-- Self-hosted Inter — used on every device, so preload it -->
@@ -1002,6 +1003,68 @@ footer a{color:#4d94ff;text-decoration:none}
 .legal-modal-body a { color: #4d94ff; text-decoration: none; }
 .legal-modal-body a:hover { color: #4d94ff; }
 .legal-modal-body strong { color: var(--text); font-weight: 600; }
+
+/* ── Light mode ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: #111111;
+    --muted: #595959;
+    --border: #e0e0e0;
+    --card-border: #d5d5d5;
+  }
+
+  body { background: #f7f7f7; }
+  .container { background: #f7f7f7; }
+  .results-section { background: #eeeeee; }
+  .common-questions { background: #eeeeee; }
+  footer { background: #eeeeee; border-top-color: var(--border); }
+
+  /* Cards */
+  .block { background: #ffffff; }
+  .block--wyget { background: #ffffff !important; }
+  .block--feature .block__media { background: linear-gradient(180deg,#e8ecf0 0%,#dde0e5 100%); }
+  .block-num { background: #ebebeb; }
+  .wyget-row__media { background: #e4e4e4; }
+  .wyget-row:hover::before { background: rgba(0,0,0,.05); border-color: var(--card-border); }
+
+  /* Hero callout pill */
+  .callout { background: #eeeeee; border-color: var(--card-border); color: var(--text); }
+
+  /* Desktop CTA widget */
+  .cta-widget { background: #ffffff; border-color: var(--card-border); }
+  .cta-widget__hero { background: #eeeeee; border-bottom-color: var(--card-border); }
+
+  /* Nav */
+  .site-nav { background: #ffffff; border-bottom-color: #e0e0e0; }
+  .site-nav__wordmark { color: var(--text); }
+  .site-nav__link { color: rgba(0,0,0,.6); }
+  .site-nav__link:hover { background-color: rgba(0,0,0,.06); color: #000; }
+  .site-nav__cta { color: rgba(0,0,0,.65); border-color: rgba(0,0,0,.2); }
+  .site-nav__cta:hover { background: rgba(0,0,0,.06); color: #000; border-color: rgba(0,0,0,.3); }
+  .site-nav.is-scrolled { background: rgba(247,247,247,0.92); border-color: rgba(0,0,0,.12); }
+  .site-nav.is-scrolled .site-nav__link { color: rgba(0,0,0,.6); }
+  .site-nav.is-scrolled .site-nav__link:hover { color: #000; }
+  .site-nav.is-scrolled .site-nav__cta { background: var(--blue); color: #fff; border-color: transparent; }
+  .site-nav.is-scrolled .site-nav__cta:hover { background: #0052cc; }
+
+  /* Chat bubble (block 3) */
+  .chat-bubble__body { border-color: var(--card-border); }
+  .chat-bubble__blur { background: rgba(245,245,245,0.9); }
+  .chat-bubble__tail path { fill: rgba(245,245,245,0.9); stroke: #d5d5d5; }
+
+  /* Before/after handle */
+  .ba-block-handle { background: rgba(255,255,255,.85); color: #111; border-color: rgba(0,0,0,.25); }
+
+  /* Modals */
+  .legal-modal { background: #ffffff; border-color: var(--card-border); }
+  .legal-modal-header { border-bottom-color: var(--card-border); }
+  .legal-modal-title { color: var(--text); }
+  .legal-modal-close { color: rgba(0,0,0,.5); }
+  .legal-modal-close:hover { background-color: rgba(0,0,0,.06); color: #000; }
+  .legal-modal-body h2 { color: var(--text); }
+  .legal-modal-body h3 { color: var(--text); border-top-color: var(--card-border); }
+  .legal-modal-body p, .legal-modal-body ul li { color: #555; }
+}
 </style>
 </head>
 <body>
