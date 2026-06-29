@@ -163,11 +163,11 @@
     /* ── NAF MODAL ── */
     .naf-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; }
     .naf-overlay.active { display: flex; animation: legalFade .18s ease; }
-    .naf-modal-box { max-width: 460px; max-height: none; }
-    .naf-modal-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.75rem 1.5rem 2.25rem; }
+    .naf-modal-box { max-width: 472px !important; max-height: none; }
+    .naf-modal-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem; }
     .naf-modal-body h2 { font-size: 1.375rem; font-weight: 700; color: var(--text); line-height: 1.3; margin: 0 0 1rem; }
     .naf-modal-body p { font-size: .875rem; line-height: 1.8; color: #9ca3af; margin: .25rem auto 0; }
-    .naf-modal-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 2rem; padding: 0.9rem 2.5rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; }
+    .naf-modal-btn { display: flex; width: 100%; align-items: center; justify-content: center; margin-top: 1.5rem; padding: 0.8rem 2rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; }
     @media (hover: hover) and (pointer: fine) { .naf-modal-btn:hover { background: #0052cc; } }
 
     /* ── LEGAL OVERLAYS ── */
@@ -440,7 +440,7 @@
 <script>
 var NAF_RULES = {
   goal:       { bad: ['build_muscle','improve_fitness','not_sure'], title: 'Wrong Fit',          msg: "This is a fat loss coaching program. If fat loss isn't your main goal right now, I'm not the right coach for you." },
-  age:        { bad: ['17_or_younger','60_or_older'],               title: 'Age Requirement',     msg: 'I work with men and women 18–59. If that changes, come back and apply.' },
+  age:        { bad: ['17_or_younger','60_or_older'],               title: 'Age Requirement',     msg: 'I work with men 18–59. If that changes, come back and apply.' },
   gym:        { bad: ['no','home'],                                  title: 'Gym Access Required', msg: "The training side of this program requires a commercial gym. Without it, I can't get you the results I'd be proud to stand behind. If you get gym access, come back and reapply." },
   commitment: { bad: ['no','maybe'],                                 title: 'Tracking Required',   msg: "Tracking is mandatory for my coaching. If you're not ready for that, the results won't be there. Come back when you are." }
 };
