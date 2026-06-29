@@ -729,7 +729,7 @@ footer a{color:#4d94ff;text-decoration:none}
 
 /* Responsive */
 @media(max-width:767px){
-  .col-left{padding:1rem 1.25rem var(--pad-sm)}
+  .col-left{padding:var(--pad-sm) 1.25rem}
   .btn{width:100%}
   .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
   .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
@@ -783,12 +783,19 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 
 /* ── Persistent top nav ── */
+.site-nav-wrap{
+  position:sticky;
+  top:0;
+  z-index:900;
+  height:3rem;
+  pointer-events:none;
+}
 .site-nav{
-  position:fixed;
+  position:absolute;
   top:0;
   left:0;
   right:0;
-  z-index:900;
+  pointer-events:auto;
   min-height:3rem;
   display:flex;
   align-items:center;
@@ -887,15 +894,14 @@ footer a{color:#4d94ff;text-decoration:none}
   }
   .site-nav.is-scrolled{
     top:12px;
-    left:12px;
-    right:12px;
+    left:2rem;
+    right:2rem;
     border-radius:999px;
     background:rgba(18,18,18,0.92);
     backdrop-filter:blur(24px);
     -webkit-backdrop-filter:blur(24px);
     border-color:rgba(255,255,255,0.12);
   }
-  main{padding-top:60px}
 }
 @media(max-width:760px){
   .site-nav__links{display:none}
@@ -919,7 +925,6 @@ footer a{color:#4d94ff;text-decoration:none}
     -webkit-backdrop-filter:blur(24px);
     border-color:rgba(255,255,255,0.12);
   }
-  main{padding-top:60px}
 }
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -997,14 +1002,14 @@ footer a{color:#4d94ff;text-decoration:none}
 <body>
 
 <!-- Persistent top nav -->
-<nav class="site-nav" aria-label="Site navigation">
+<div class="site-nav-wrap"><nav class="site-nav" aria-label="Site navigation">
   <span class="site-nav__wordmark"><img class="site-nav__logo" src="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png" alt="Asher Robinson Fitness" width="30" height="30"><span class="site-nav__wordmark-text">Men's Online Fat Loss Coaching</span></span>
   <div class="site-nav__links">
     <button class="site-nav__link" onclick="scrollToSection('how-it-works')">Overview</button>
     <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
   </div>
   <button class="site-nav__cta" onclick="window.location.href='/fill-out-form'+window.location.search">Join Now</button>
-</nav>
+</nav></div>
 
 <main>
 <div class="container">
