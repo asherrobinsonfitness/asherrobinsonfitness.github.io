@@ -29,7 +29,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/xjgNwzfq/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/BQ6P4nbK/android-chrome-512x512.png">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
   <link rel="preload" as="font" type="font/woff2" href="../fonts/inter-latin-variable.woff2" crossorigin>
   <style>
     /* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
@@ -204,6 +205,34 @@
       animation: none;
       border-color: #4d94ff;
       box-shadow: 0 0 0 2px rgba(0,102,255,0.1);
+    }
+
+    /* ── Light mode ── */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --text: #111111;
+        --text-secondary: #595959;
+        --bg: #f7f7f7;
+        --border: #e0e0e0;
+        --border-strong: #d0d0d0;
+        --input-bg: #ffffff;
+        --input-border: #d0d0d0;
+        --bottom-bg: #eeeeee;
+      }
+      .payment-nav { border-bottom-color: #e0e0e0; }
+      .survey-steps-pill { background-color: #eeeeee; border-color: #d5d5d5; }
+      .signup-dot { color: rgba(0,0,0,0.2); }
+      .signup-dot--active { color: #0066ff; }
+      .signup-select option { background: #ffffff; color: #111; }
+      .legal-modal { background: #ffffff; border-color: #d5d5d5; }
+      .legal-modal-header { border-bottom-color: #d5d5d5; }
+      .legal-modal-title { color: #111111; }
+      .legal-modal-close { color: rgba(0,0,0,.5); }
+      .legal-modal-close:hover { background-color: rgba(0,0,0,.06); color: #000; }
+      .legal-modal-body h3 { border-top-color: #e0e0e0; color: #111; }
+      .legal-modal-body p, .legal-modal-body ul li { color: #555; }
+      .naf-modal-body p { color: #555; }
+      .naf-modal-body h2 { color: #111; }
     }
   </style>
 </head>
