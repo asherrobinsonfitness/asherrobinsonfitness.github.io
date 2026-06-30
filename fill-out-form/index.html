@@ -495,6 +495,11 @@ var NAF_RULES = {
     checkQuestionsReveal();
     checkContinueBtn();
   });
+  emailInp.addEventListener('change', function() {
+    if (emailInp.value.trim() && firstInp.value.trim() && lastInp.value.trim()) {
+      emailInp.blur();
+    }
+  });
   firstInp.addEventListener('input', function() { checkQuestionsReveal(); checkContinueBtn(); });
 
   ['q-goal','q-age','q-gym','q-commitment'].forEach(function(id) {
