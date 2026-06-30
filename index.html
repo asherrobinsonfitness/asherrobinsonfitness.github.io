@@ -293,7 +293,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 /* Hero text */
 .callout{color:var(--text);font-weight:600;font-size:.875rem;line-height:1.2;width:fit-content;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;background:#161616;border-radius:999px;border:1px solid #3d3d3d;padding:.375rem 1rem;letter-spacing:.02rem}
 @media(max-width:760px){.hero-grid .callout{display:none}}
-.headline{font-size:1.75rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem}
+.headline{font-size:1.75rem;font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:1rem}
 .section-title{
   font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;
   margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem;
@@ -556,7 +556,7 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     display:none;
   }
 
-  .cta-widget__section{display:flex;flex-direction:column;align-items:center;text-align:center;flex-shrink:0}
+  .cta-widget__section{display:flex;flex-direction:column;align-items:flex-start;text-align:left;flex-shrink:0}
 
   .cta-widget__section--copy{
     gap:.75rem;
@@ -572,22 +572,22 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
     font-size:.875rem;
     font-weight:600;
     color:var(--text);
-    text-align:center;
-    justify-content:center;
-    align-self:center;
+    text-align:left;
+    justify-content:flex-start;
+    align-self:flex-start;
     width:100%;
   }
 
   .cta-widget__title{
-    font-size:1.5rem;font-weight:600;line-height:1.2;
-    letter-spacing:-.025em;color:var(--text);width:100%;text-align:center;
+    font-size:1.5rem;font-weight:600;line-height:1.28;
+    letter-spacing:-.025em;color:var(--text);width:100%;text-align:left;
   }
   .cta-widget__section--copy .subheadline{
-    margin:0;text-align:center;max-width:100%;
+    margin:0;text-align:left;max-width:100%;
     font-size:.95rem;line-height:1.55;letter-spacing:-.005em;color:var(--muted);
   }
   .cta-widget__section--copy .hero-bullets{
-    margin:0 auto;width:fit-content;max-width:100%;gap:.4rem;
+    margin:0;width:fit-content;max-width:100%;gap:.4rem;
   }
   .cta-widget__section--copy .hero-bullets li{
     font-size:.9rem;line-height:1.5;
@@ -1156,10 +1156,10 @@ footer a{color:#4d94ff;text-decoration:none}
           <button class="btn" type="button" onclick="window.location.href='/fill-out-form'+window.location.search">
             Join Now $50 <svg xmlns="http://www.w3.org/2000/svg" viewBox="7.5 4.5 9 15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </button>
-          <div class="pricing">
-            <div class="pricing-amount">$50 first month, then $199/month.</div>
-            <div>Full refund if you don't see results in 30 days.</div>
-          </div>
+          <ul class="pricing-bullets">
+            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M438-452l-58-57q-11-11-27.5-11T324-508q-11 11-11 28t11 28l86 86q12 12 28 12t28-12l170-170q12-12 11.5-28T636-592q-12-12-28.5-12.5T579-593L438-452ZM326-90l-58-98-110-24q-15-3-24-15.5t-7-27.5l11-113-75-86q-10-11-10-26t10-26l75-86-11-113q-2-15 7-27.5t24-15.5l110-24 58-98q8-13 22-17.5t28 1.5l104 44 104-44q14-6 28-1.5t22 17.5l58 98 110 24q15 3 24 15.5t7 27.5l-11 113 75 86q10 11 10 26t-10 26l-75 86 11 113q2 15-7 27.5T802-212l-110 24-58 98q-8 13-22 17.5T584-74l-104-44-104 44q-14 6-28 1.5T326-90Z"/></svg><span>$50 first month, then $199/month.</span></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M438-452l-58-57q-11-11-27.5-11T324-508q-11 11-11 28t11 28l86 86q12 12 28 12t28-12l170-170q12-12 11.5-28T636-592q-12-12-28.5-12.5T579-593L438-452ZM326-90l-58-98-110-24q-15-3-24-15.5t-7-27.5l11-113-75-86q-10-11-10-26t10-26l75-86-11-113q-2-15 7-27.5t24-15.5l110-24 58-98q8-13 22-17.5t28 1.5l104 44 104-44q14-6 28-1.5t22 17.5l58 98 110 24q15 3 24 15.5t7 27.5l-11 113 75 86q10 11 10 26t-10 26l-75 86 11 113q2 15-7 27.5T802-212l-110 24-58 98q-8 13-22 17.5T584-74l-104-44-104 44q-14 6-28 1.5T326-90Z"/></svg><span>Full refund if you don't see results in 30 days.</span></li>
+          </ul>
         </div>
 
       </div>
