@@ -130,9 +130,7 @@
     .form-pricing-footnote { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem; }
 
     /* ── EXPRESS CHECKOUT ── */
-    /* Hidden until Stripe confirms at least one wallet is available (see 'ready' handler) */
-    #express-pay-section { display: none; }
-    #express-pay-section.is-ready { display: block; }
+    #express-pay-section { display: none !important; }
     #express-checkout-element { width: 100%; }
     .or-divider { display: flex; align-items: center; gap: 0.65rem; margin: 1rem 0; font-size: 0.78rem; color: var(--text-secondary); letter-spacing: 0.03em; }
     .or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
@@ -645,10 +643,9 @@ async function initStripe() {
 
   const expressEl = eceElements.create('expressCheckout', {
     buttonHeight: 48, buttonTheme: { applePay: 'black', googlePay: 'black' },
-    buttonType: { applePay: 'plain', googlePay: 'plain' },
+    buttonType: { applePay: 'plain', googlePay: 'plain', link: 'pay' },
     layout: { maxColumns: 1, maxRows: 4, overflow: 'auto' },
-    // No paymentMethods restriction: every wallet Stripe deems eligible
-    // (Apple Pay, Google Pay, Link, Amazon Pay, PayPal, …) defaults to 'auto'.
+    paymentMethods: { link: 'auto', applePay: 'auto', googlePay: 'auto' },
   });
   expressEl.on('ready', ({ availablePaymentMethods }) => {
     console.log('[ECE] ready — availablePaymentMethods:', availablePaymentMethods);
@@ -656,7 +653,7 @@ async function initStripe() {
     if (sk) sk.remove();
     const hasAny = availablePaymentMethods && Object.values(availablePaymentMethods).some(Boolean);
     const s = document.getElementById('express-pay-section');
-    if (s && hasAny) s.classList.add('is-ready');
+    if (s && !hasAny) s.style.display = 'none';
   });
   expressEl.on('loaderror', (event) => { console.error('[ECE] loaderror:', event.error); });
   expressEl.on('click', (event) => {
