@@ -14,12 +14,20 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1575468926630270');
   fbq('track', 'PageView');
-  fbq('track', 'Purchase', {value: 48.25, currency: 'USD'});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "sfyqsuskz2");
+  </script>
+  <!-- End Microsoft Clarity -->
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
   <title>Add Payment</title>
   <meta name="description" content="Complete your payment for online fat loss coaching with Asher Robinson.">
@@ -544,6 +552,13 @@ var _contactLast  = sessionStorage.getItem('_contactLast')  || '';
   }
 })();
 
+function goToWelcome() {
+  // Flags this as a real, confirmed payment so /welcome only fires the Meta
+  // Purchase pixel for actual buyers, not anyone who lands on the URL directly.
+  sessionStorage.setItem('_paymentSucceeded', '1');
+  window.location.href = 'https://asherrobinsonfitness.com/welcome';
+}
+
 var _stripeInitialized = false;
 
 async function initStripe() {
@@ -607,7 +622,7 @@ async function initStripe() {
       return true;
     }
     if (paymentIntent.status === 'succeeded') {
-      window.location.href = 'https://asherrobinsonfitness.com/welcome';
+      goToWelcome();
     } else {
       if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text">Payment status: ' + paymentIntent.status + '. <a href="/fill-out-form/add-payment/" style="color:#06f">Try again</a></div></div>';
     }
@@ -674,7 +689,7 @@ async function initStripe() {
       confirmParams: { return_url: returnUrl }, redirect: 'if_required',
     });
     if (error) { showError(error.message || 'Something went wrong.'); return; }
-    if (paymentIntent && paymentIntent.status === 'succeeded') window.location.href = 'https://asherrobinsonfitness.com/welcome';
+    if (paymentIntent && paymentIntent.status === 'succeeded') goToWelcome();
   });
   expressEl.mount('#express-checkout-element');
 
@@ -726,7 +741,7 @@ async function initStripe() {
     });
     if (error) { showError(error.message || 'Something went wrong. Please try again.'); resetSubmit(); return; }
     if (paymentIntent && (paymentIntent.status === 'succeeded' || paymentIntent.status === 'processing')) {
-      window.location.href = 'https://asherrobinsonfitness.com/welcome';
+      goToWelcome();
     } else { showError('Unexpected payment status. Please try again.'); resetSubmit(); }
   });
 }
