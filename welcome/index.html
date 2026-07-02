@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1575468926630270');
+  fbq('track', 'PageView');
+  // Only fire Purchase for people who actually completed a payment (flagged by
+  // add-payment/index.html right before redirecting here) — not anyone who
+  // lands on /welcome directly.
+  if (sessionStorage.getItem('_paymentSucceeded')) {
+    fbq('track', 'Purchase', {value: 48.25, currency: 'USD'});
+    sessionStorage.removeItem('_paymentSucceeded');
+  }
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+  <title>You're in — Download the App</title>
+  <meta name="description" content="Your coaching is confirmed. Download the HubFit app to get started with Asher Robinson.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/QNSK2T81/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/fW5SG9z9/favicon-16x16.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/7Y6JwZhJ/favicon.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/jqvnp7xz/apple-touch-icon.png">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+  <link rel="preload" as="font" type="font/woff2" href="../fonts/inter-latin-variable.woff2" crossorigin>
+  <style>
+    /* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
+    @font-face{
+      font-family:'Inter';
+      font-style:normal;
+      font-weight:100 900;
+      font-display:swap;
+      src:url('../fonts/inter-latin-variable.woff2') format('woff2');
+    }
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    }
+    :root {
+      --primary: #06f;
+      --primary-hover: #0052cc;
+      --text: #F8FAFC;
+      --text-secondary: #9ca3af;
+      --bg: #1c1c1c;
+      --card-bg: #242424;
+      --border: #2e2e2e;
+      --border-strong: #3a3a3a;
+    }
+    body {
+      color: var(--text); background: var(--bg); line-height: 1.5; font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      width: 100%; max-width: 440px; background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.5rem 2rem; text-align: center;
+    }
+    .check {
+      width: 64px; height: 64px; border-radius: 999px; margin: 0 auto 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(34,197,94,0.12);
+    }
+    .check svg { width: 34px; height: 34px; }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .sub { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; }
+    .step {
+      text-align: left; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .step b { color: var(--text); }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.95rem 1rem; border-radius: 12px; border: none; cursor: pointer;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      background: var(--primary); color: #fff; transition: background 0.15s ease;
+    }
+    .btn:hover { background: var(--primary-hover); }
+    .btn svg { width: 20px; height: 20px; }
+    .btn.secondary { background: transparent; border: 1px solid var(--border-strong); color: var(--text); margin-top: 0.75rem; }
+    .btn.secondary:hover { background: var(--bg); }
+    .desktop-note {
+      margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .desktop-note b { color: var(--text); }
+    .hidden { display: none !important; }
+
+    /* ── Light mode ── */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --text: #111111;
+        --text-secondary: #595959;
+        --bg: #f7f7f7;
+        --card-bg: #ffffff;
+        --border: #e0e0e0;
+        --border-strong: #d0d0d0;
+      }
+      .btn.secondary { border-color: #d0d0d0; }
+      .btn.secondary:hover { background: #ebebeb; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="check">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h1>You're in.</h1>
+    <p class="sub">Payment confirmed. Your last step is to download the app.</p>
+
+    <div class="step" id="access-step">
+      <b>Get started:</b> Download HubFit, then sign in using the same email you just paid with.
+    </div>
+
+    <!-- Mobile / single-platform CTA -->
+    <a id="primary-cta" class="btn" href="#">
+      <span id="primary-cta-text">Download HubFit</span>
+    </a>
+
+    <!-- Desktop: show both + reminder to use their phone -->
+    <div id="desktop-block" class="hidden">
+      <a class="btn" href="https://apps.apple.com/us/app/hubfit/id6448201245" target="_blank" rel="noopener">
+        Download on the App Store
+      </a>
+      <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.hubfitapp" target="_blank" rel="noopener">
+        Get it on Google Play
+      </a>
+      <p class="desktop-note">
+        <b>On your computer?</b> The app lives on your phone — open this page on your phone, or search <b>"HubFit"</b> in the App Store / Google Play.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    var APP_STORE = 'https://apps.apple.com/us/app/hubfit/id6448201245';
+    var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.hubfitapp';
+
+    var ua = navigator.userAgent || navigator.vendor || '';
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isAndroid = /android/i.test(ua);
+
+    var primary = document.getElementById('primary-cta');
+    var primaryText = document.getElementById('primary-cta-text');
+    var desktopBlock = document.getElementById('desktop-block');
+
+    if (isIOS) {
+      primary.href = APP_STORE;
+      primaryText.textContent = 'Download on the App Store';
+    } else if (isAndroid) {
+      primary.href = PLAY_STORE;
+      primaryText.textContent = 'Get it on Google Play';
+    } else {
+      // Desktop — show both store buttons + phone reminder
+      primary.classList.add('hidden');
+      desktopBlock.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
