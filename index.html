@@ -496,10 +496,11 @@ footer a{color:#4d94ff;text-decoration:none}
 
 /* Responsive */
 @media(max-width:767px){
-  .hero-grid{padding:var(--pad-sm) 1.25rem}
+  .hero-grid{padding:var(--pad-sm) 1rem}
   .btn{width:100%}
-  .results-section{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
-  .common-questions{padding:var(--pad-sm) 1.25rem var(--pad-sm)}
+  .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
+  .common-questions{padding:var(--pad-sm) 1rem var(--pad-sm)}
+  footer{padding-left:1rem;padding-right:1rem}
   .section-divider{margin-bottom:2.25rem}
   .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
 }
@@ -553,7 +554,7 @@ footer a{color:#4d94ff;text-decoration:none}
   align-items:center;
   justify-content:space-between;
   gap:1rem;
-  padding:.625rem 1.25rem;
+  padding:.625rem 1rem;
   background:#1c1c1c;
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
@@ -632,7 +633,7 @@ footer a{color:#4d94ff;text-decoration:none}
 }
 @media(max-width:760px){
   .site-nav__links{display:none}
-  .site-nav{padding:.625rem 1.25rem}
+  .site-nav{padding:.625rem 1rem}
 }
 .legal-link {
   background: none; border: none; padding: 0; cursor: pointer;
@@ -699,14 +700,14 @@ footer a{color:#4d94ff;text-decoration:none}
 .signup-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:center;justify-content:center;padding:1.25rem;opacity:0;visibility:hidden;pointer-events:none}
 .signup-overlay.active{opacity:1;visibility:visible;pointer-events:auto}
 .signup-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-radius:12px;width:100%;max-width:420px;max-height:92vh;overflow-y:auto;position:relative;display:flex;flex-direction:column}
-.signup-progress{display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
+.signup-progress{position:relative;display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
 .nav-progress{display:inline-flex;align-items:center;gap:1rem;font-size:.9rem}
 .survey-step{color:#9ca3af;font-weight:500;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
 .survey-step--active{color:var(--text)}
 .signup-dot{width:6px;height:6px;color:rgba(255,255,255,.2);flex-shrink:0}
 .signup-dot--active{color:#0066ff}
 .signup-modal-body{padding:1.75rem;display:flex;flex-direction:column}
-.signup-close{display:none;position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:6px;padding:.4rem;transition:background-color 0s ease,color 0s ease}
+.signup-close{display:none;position:absolute;top:50%;right:.75rem;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:6px;padding:.4rem;transition:background-color 0s ease,color 0s ease}
 @media(hover:hover) and (pointer:fine){.signup-close:hover{background-color:rgba(235,235,235,.1);color:#fff}}
 .signup-title{font-size:1.375rem;font-weight:700;color:var(--text);text-align:center;margin-bottom:.375rem;line-height:1.3}
 .signup-subtitle{font-size:.875rem;color:#9ca3af;text-align:center;margin-bottom:1.5rem;line-height:1.5}
@@ -727,7 +728,8 @@ footer a{color:#4d94ff;text-decoration:none}
   .signup-overlay{padding:0}
   .signup-modal{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:none;display:flex;flex-direction:column}
   .signup-close{display:flex}
-  .signup-modal-body{flex:1;justify-content:flex-start;padding:2rem 1.5rem}
+  .signup-progress{padding-left:1rem;padding-right:1rem}
+  .signup-modal-body{flex:1;justify-content:flex-start;padding:2rem 1rem}
 }
 
 /* ── Light mode ── */
@@ -1110,22 +1112,22 @@ function scrollToSection(id) {
 <!-- SIGNUP MODAL -->
 <div class="signup-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title">
   <div class="signup-modal">
-    <button class="signup-close" onclick="closeSignup()" aria-label="Close">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
     <div class="signup-progress">
+      <button class="signup-close" onclick="closeSignup()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
       <div class="nav-progress" aria-label="Progress">
         <span class="survey-step survey-step--active">
           <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Sign Up
         </span>
         <span class="survey-step">
-          <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Add Payment
+          <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Checkout
         </span>
       </div>
     </div>
     <div class="signup-modal-body">
-      <h2 class="signup-title" id="signup-modal-title">Create Your Account</h2>
-      <p class="signup-subtitle">to join the coaching app</p>
+      <h2 class="signup-title" id="signup-modal-title">Create your HubFit account</h2>
+      <p class="signup-subtitle">to access the coaching app</p>
       <form id="signup-form" novalidate>
         <div class="signup-field">
           <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
@@ -1143,7 +1145,7 @@ function scrollToSection(id) {
           Sign Up
         </button>
       </form>
-      <p class="signup-legal-note">By signing up, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+      <p class="signup-legal-note">By signing up, you accept my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
     </div>
   </div>
 </div>
