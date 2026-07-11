@@ -41,7 +41,7 @@
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
   <script src="https://js.stripe.com/v3/"></script>
-  <link rel="preload" as="font" type="font/woff2" href="../../fonts/inter-latin-variable.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="../fonts/inter-latin-variable.woff2" crossorigin>
   <style>
     /* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
     @font-face{
@@ -49,7 +49,7 @@
       font-style:normal;
       font-weight:100 900;
       font-display:swap;
-      src:url('../../fonts/inter-latin-variable.woff2') format('woff2');
+      src:url('../fonts/inter-latin-variable.woff2') format('woff2');
     }
     *, *::before, *::after {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -87,24 +87,10 @@
     @media (min-width: 761px) { .payment-nav { padding: 0.625rem 2rem; } }
     .nav-progress { display: inline-flex; align-items: center; gap: 1rem; font-size: 0.9rem; }
 
-    /* ── PROGRESS PILL (verbatim from join-now) ── */
-    .survey-steps-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        padding: .375rem 1rem;
-        border-radius: 999px;
-        background-color: #161616;
-        border: 1px solid #3d3d3d;
-        font-size: 0.9rem;
-        margin: 0 auto var(--space-4);
-        white-space: nowrap;
-        position: relative;
-    }
+    /* ── PROGRESS STEPS ── */
     .survey-step { color: var(--text-secondary); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
     .survey-step--active { color: #f9fafb; }
     .survey-step--completed { color: var(--text-secondary); }
-    .pill-row { text-align: center; }
 
     /* ── PER-STEP INDICATORS (sign-up only) ── */
     .signup-dot { width: 6px; height: 6px; color: rgba(255,255,255,0.2); flex-shrink: 0; }
@@ -145,10 +131,8 @@
 
     /* ── STRIPE ELEMENTS ── */
     #payment-form { width: 100%; }
-    .address-element-wrap { position: relative; margin-bottom: 0.75rem; }
-    #address-element-skeleton { position: absolute; inset: 0; min-height: 260px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
     .payment-element-wrap { position: relative; margin-bottom: 0.5rem; }
-    #payment-element-skeleton { position: absolute; inset: 0; min-height: 52px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0.25s ease; z-index: 1; }
+    #payment-element-skeleton { position: absolute; inset: 0; min-height: 52px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; transition: opacity 0s ease; z-index: 1; }
     #payment-element { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 14.44px 1rem; }
     @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     #express-checkout-skeleton { min-height: 48px; border-radius: 8px; background: linear-gradient(90deg, var(--border) 0%, var(--input-bg) 50%, var(--border) 100%); background-size: 200% 100%; animation: skeleton-shimmer 1.5s ease-in-out infinite; }
@@ -160,8 +144,7 @@
     @media (max-width: 480px) { .price-reminder-amount { font-size: 1.25rem; } }
     @media (min-width: 1024px) { .price-reminder-amount { font-size: 1.5rem; } }
     .price-reminder-sub { display: block; font-size: 0.9rem; color: var(--text-secondary); text-align: center; line-height: 1.5; margin-bottom: 0.4rem; }
-    .cancel-guarantee { font-size: 0.82rem; font-weight: 600; color: var(--text); text-align: center; margin-bottom: 0.75rem; letter-spacing: 0.01em; }
-    #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; line-height: 1.2; border: none; cursor: pointer; transition: background 0.15s ease; margin-bottom: 0.75rem; }
+    #submit-stripe { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; line-height: 1.2; border: none; cursor: pointer; transition: background 0s ease; margin-bottom: 0.75rem; }
     @media (hover: hover) and (pointer: fine) { #submit-stripe:hover { background: var(--primary-hover); } }
     #submit-stripe:disabled { opacity: 0.6; cursor: not-allowed; }
     #submit-stripe:disabled:hover { background: var(--primary); }
@@ -201,12 +184,12 @@
       border-radius: 6px; padding: 0.45rem 0.85rem;
       font-size: 0.82rem; font-weight: 500; color: #fff;
       cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent;
-      transition: background-color 0.15s ease;
+      transition: background-color 0s ease;
     }
     @media (hover: hover) and (pointer: fine) {
       .details-trigger:hover { background-color: rgba(255,255,255,0.12); color: #fff; }
     }
-    .details-chevron { color: inherit; transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
+    .details-chevron { color: inherit; transition: transform 0s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
     .details-trigger[aria-expanded="true"] .details-chevron { transform: rotate(180deg); }
 
     /* ── DETAILS PANEL ── */
@@ -215,54 +198,25 @@
       z-index: 200; background: var(--bg);
       transform: translate3d(0, calc(-100% - 8px), 0);
       visibility: hidden; pointer-events: none;
-      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.38s;
       overflow-y: auto; max-height: calc(85vh - var(--payment-nav-h));
       border-bottom: 1px solid var(--border);
       overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
     }
-    .details-panel.is-open { transform: translate3d(0,0,0); visibility: visible; pointer-events: auto; transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s; }
+    .details-panel.is-open { transform: translate3d(0,0,0); visibility: visible; pointer-events: auto; }
     .details-panel-inner { padding: 1.75rem 1.25rem; max-width: calc(480px + 2.5rem); margin: 0 auto; }
     @media (min-width: 600px) { .details-panel-inner { padding: 1.75rem 2.5rem; } }
 
-    #details-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; transition: opacity 0.32s ease; pointer-events: none; }
+    #details-backdrop { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 199; opacity: 0; pointer-events: none; }
     #details-backdrop.is-visible { opacity: 1; pointer-events: auto; }
-
-    /* ── CONTACT IDENTITY ── */
-    .contact-identity { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; }
-    .ci-left { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-    .ci-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
-    .ci-email { font-size: 0.78rem; color: var(--text-secondary); }
-    .ci-not { font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
-    .ci-fix-btn { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; font-family: inherit; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(156,163,175,0.5); transition: color 0.15s ease; }
-    @media (hover: hover) and (pointer: fine) { .ci-fix-btn:hover { color: var(--text); } }
-    /* Fix modal inputs */
-    .fix-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 400px; display: flex; flex-direction: column; }
-    .fix-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
-    .fix-modal-title { font-size: .8125rem; font-weight: 600; color: #F8FAFC; }
-    .fix-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color .15s ease, color .15s ease; }
-    @media(hover:hover) and (pointer:fine) { .fix-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; } }
-    .fix-modal-body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-    .fix-field { display: flex; flex-direction: column; }
-    .fix-label { font-size: 0.78rem; font-weight: 400; color: var(--text); margin-bottom: 0.35rem; }
-    .fix-input { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 8px; padding: 0.625rem 0.875rem; font-size: 0.875rem; line-height: 1.35; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
-    .fix-input::placeholder { color: var(--text-secondary); }
-    .fix-input:focus { border-color: #b9d4ff; box-shadow: 0 0 0 2px rgba(0,102,255,0.08); }
-    .fix-name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
-    @media (max-width: 400px) { .fix-name-row { grid-template-columns: 1fr; } }
-    .fix-save-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.9rem 1.25rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: background 0.15s ease; margin-top: 0.25rem; font-family: inherit; }
-    @media (hover: hover) and (pointer: fine) { .fix-save-btn:hover { background: var(--primary-hover); } }
 
     /* ── LEGAL OVERLAYS ── */
     .legal-link { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; color: #4d94ff; text-decoration: none; font-family: inherit; }
     .legal-overlay { display: flex; position: fixed; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; align-items: center; justify-content: center; padding: 1.25rem; opacity: 0; visibility: hidden; pointer-events: none; }
-    .legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; animation: legalFadeIn .34s cubic-bezier(0.4, 0, 0.2, 1); }
-    .legal-overlay.closing { animation: legalFadeOut .34s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-    @keyframes legalFadeIn { from { opacity: 0 } to { opacity: 1 } }
-    @keyframes legalFadeOut { from { opacity: 1 } to { opacity: 0 } }
+    .legal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
     .legal-modal { background: #222; border: 1px solid #3d3d3d; border-radius: 12px; width: 100%; max-width: 700px; max-height: 88vh; display: flex; flex-direction: column; }
     .legal-modal-header { display: flex; align-items: center; justify-content: space-between; padding: .625rem 1.5rem; border-bottom: 1px solid #3d3d3d; flex-shrink: 0; }
     .legal-modal-title { font-size: .8125rem; font-weight: 600; color: #F8FAFC; }
-    .legal-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color .15s ease, color .15s ease; flex-shrink: 0; }
+    .legal-modal-close { background: none; border: none; color: rgba(255,255,255,.65); border-radius: 6px; cursor: pointer; font-size: .8125rem; font-weight: 500; padding: .3rem .5rem; line-height: 1; white-space: nowrap; transition: background-color 0s ease, color 0s ease; flex-shrink: 0; }
     @media(hover:hover) and (pointer:fine) { .legal-modal-close:hover { background-color: rgba(235,235,235,.1); color: #fff; } }
     .legal-modal-body { overflow-y: auto; padding: 1.75rem 1.5rem 2.25rem; flex: 1; scrollbar-width: none; }
     .legal-modal-body::-webkit-scrollbar { display: none; }
@@ -290,7 +244,6 @@
         --icon-stroke: #374151;
       }
       .payment-nav { border-bottom-color: #e0e0e0; }
-      .survey-steps-pill { background-color: #eeeeee; border-color: #d5d5d5; }
       .signup-dot { color: rgba(0,0,0,0.2); }
       .signup-dot--active { color: #0066ff; }
       .survey-step--active { color: #111111; }
@@ -299,11 +252,6 @@
       .details-trigger { background: rgba(0,0,0,0.06); color: #111; }
       .details-trigger:hover { background: rgba(0,0,0,0.1); }
       .after-card-num { background: #ebebeb; border-color: #d0d0d0; }
-      .fix-modal { background: #ffffff; border-color: #d5d5d5; }
-      .fix-modal-header { border-bottom-color: #d5d5d5; }
-      .fix-modal-title { color: #111111; }
-      .fix-modal-close { color: rgba(0,0,0,.5); }
-      .fix-modal-close:hover { background-color: rgba(0,0,0,.06); color: #000; }
       .legal-modal { background: #ffffff; border-color: #d5d5d5; }
       .legal-modal-header { border-bottom-color: #d5d5d5; }
       .legal-modal-title { color: #111111; }
@@ -321,7 +269,7 @@
   <nav class="payment-nav" aria-label="Payment">
     <div class="nav-progress" aria-label="Progress">
       <span class="survey-step survey-step--completed">
-        <svg class="signup-check" width="10" height="10" viewBox="3 4 18 16" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Fill Out Form
+        <svg class="signup-check" width="10" height="10" viewBox="3 4 18 16" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Sign Up
       </span>
       <span class="survey-step survey-step--active">
         <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Add Payment
@@ -452,33 +400,6 @@
 
 <div id="details-backdrop" aria-hidden="true"></div>
 
-<!-- FIX CONTACT MODAL -->
-<div class="legal-overlay" id="modal-fix-contact" role="dialog" aria-modal="true" aria-labelledby="fix-contact-title">
-  <div class="fix-modal">
-    <div class="fix-modal-header">
-      <span class="fix-modal-title" id="fix-contact-title">Update Your Info</span>
-      <button class="fix-modal-close" onclick="closeFixModal()" aria-label="Close">Close</button>
-    </div>
-    <div class="fix-modal-body">
-      <div class="fix-field">
-        <label class="fix-label" for="fix-email">Email</label>
-        <input class="fix-input" id="fix-email" type="email" autocomplete="email" placeholder="you@example.com">
-      </div>
-      <div class="fix-name-row">
-        <div class="fix-field">
-          <label class="fix-label" for="fix-first">First name</label>
-          <input class="fix-input" id="fix-first" type="text" autocomplete="given-name" placeholder="First name">
-        </div>
-        <div class="fix-field">
-          <label class="fix-label" for="fix-last">Last name</label>
-          <input class="fix-input" id="fix-last" type="text" autocomplete="family-name" placeholder="Last name">
-        </div>
-      </div>
-      <button class="fix-save-btn" type="button" onclick="saveFixModal()">Save</button>
-    </div>
-  </div>
-</div>
-
 <!-- TERMS OF SERVICE MODAL -->
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
@@ -535,22 +456,6 @@
 var _contactEmail = sessionStorage.getItem('_contactEmail') || '';
 var _contactFirst = sessionStorage.getItem('_contactFirst') || '';
 var _contactLast  = sessionStorage.getItem('_contactLast')  || '';
-
-// Populate contact identity bar
-(function() {
-  var first = sessionStorage.getItem('_contactFirst') || '';
-  var last  = sessionStorage.getItem('_contactLast')  || '';
-  var email = sessionStorage.getItem('_contactEmail') || '';
-  var fullName = (first + ' ' + last).trim();
-  var bar = document.getElementById('contact-identity');
-  if (bar && (fullName || email)) {
-    var nameEl  = document.getElementById('ci-name');
-    var emailEl = document.getElementById('ci-email');
-    if (nameEl)  nameEl.textContent  = fullName;
-    if (emailEl) emailEl.textContent = email;
-    bar.style.display = '';
-  }
-})();
 
 function goToWelcome() {
   // Flags this as a real, confirmed payment so /welcome only fires the Meta
@@ -618,13 +523,13 @@ async function initStripe() {
     const stripe = Stripe(STRIPE_PK);
     const { paymentIntent, error } = await stripe.retrievePaymentIntent(pics);
     if (error || !paymentIntent) {
-      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">' + ((error && error.message) || 'Something went wrong.') + '</div><div><a href="/fill-out-form/add-payment/" style="color:#06f;font-size:.9rem">Try again</a></div></div>';
+      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text" style="color:#e53e3e">' + ((error && error.message) || 'Something went wrong.') + '</div><div><a href="/add-payment/" style="color:#06f;font-size:.9rem">Try again</a></div></div>';
       return true;
     }
     if (paymentIntent.status === 'succeeded') {
       goToWelcome();
     } else {
-      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text">Payment status: ' + paymentIntent.status + '. <a href="/fill-out-form/add-payment/" style="color:#06f">Try again</a></div></div>';
+      if (form) form.innerHTML = '<div class="redirect-loading"><div class="redirect-text">Payment status: ' + paymentIntent.status + '. <a href="/add-payment/" style="color:#06f">Try again</a></div></div>';
     }
     return true;
   }
@@ -761,49 +666,6 @@ document.addEventListener('DOMContentLoaded', initStripe);
   if (backdrop) backdrop.addEventListener('click', closePanel);
 })();
 
-// ── Fix contact modal ──
-function openFixModal() {
-  var o = document.getElementById('modal-fix-contact');
-  if (!o) return;
-  document.getElementById('fix-first').value = sessionStorage.getItem('_contactFirst') || '';
-  document.getElementById('fix-last').value  = sessionStorage.getItem('_contactLast')  || '';
-  document.getElementById('fix-email').value = sessionStorage.getItem('_contactEmail') || '';
-  o.classList.add('active'); document.body.style.overflow = 'hidden';
-}
-function closeFixModal() {
-  var o = document.getElementById('modal-fix-contact');
-  if (!o) return;
-  o.classList.add('closing');
-  setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
-}
-function saveFixModal() {
-  var first = document.getElementById('fix-first').value.trim();
-  var last  = document.getElementById('fix-last').value.trim();
-  var email = document.getElementById('fix-email').value.trim();
-  sessionStorage.setItem('_contactFirst', first);
-  sessionStorage.setItem('_contactLast',  last);
-  sessionStorage.setItem('_contactEmail', email);
-  var fullName = (first + ' ' + last).trim();
-  var nameEl  = document.getElementById('ci-name');
-  var emailEl = document.getElementById('ci-email');
-  var bar     = document.getElementById('contact-identity');
-  if (nameEl)  nameEl.textContent  = fullName;
-  if (emailEl) emailEl.textContent = email;
-  if (bar) bar.style.display = (fullName || email) ? '' : 'none';
-  closeFixModal();
-}
-document.getElementById('modal-fix-contact').addEventListener('click', function(e) {
-  if (e.target === this) closeFixModal();
-});
-
-// Prevent iOS zoom on input focus without locking user zoom
-(function() {
-  document.querySelectorAll('.fix-input').forEach(function(el) {
-    el.addEventListener('touchstart', function() { el.style.fontSize = '16px'; }, { passive: true });
-    el.addEventListener('blur', function() { el.style.fontSize = ''; });
-  });
-})();
-
 // ── Legal modals ──
 function openLegal(which) {
   var o = document.getElementById('modal-' + which);
@@ -814,15 +676,14 @@ function openLegal(which) {
 function closeLegal(which) {
   var o = document.getElementById('modal-' + which);
   if (!o) return;
-  o.classList.add('closing');
-  setTimeout(function() { o.classList.remove('active','closing'); document.body.style.overflow = ''; }, 340);
+  o.classList.remove('active');
+  document.body.style.overflow = '';
 }
 document.querySelectorAll('.legal-overlay').forEach(function(o) {
   o.addEventListener('click', function(e) { if (e.target === o) closeLegal(o.id.replace('modal-','')); });
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    if (document.getElementById('modal-fix-contact').classList.contains('active')) { closeFixModal(); return; }
     document.querySelectorAll('.legal-overlay.active').forEach(function(o) { closeLegal(o.id.replace('modal-','')); });
   }
 });
