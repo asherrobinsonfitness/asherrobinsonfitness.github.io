@@ -782,6 +782,7 @@ footer a{color:#4d94ff;text-decoration:none}
   .signup-modal { background: #ffffff; border-color: var(--card-border); }
   .signup-progress { border-bottom-color: var(--card-border); }
   .signup-dot { color: rgba(0,0,0,.2); }
+  .signup-dot--active { color: #0066ff; }
   .signup-close { color: rgba(0,0,0,.5); }
   .signup-close:hover { background-color: rgba(0,0,0,.06); color: #000; }
   .signup-input { border-color: #d0d0d0; }
@@ -1123,8 +1124,8 @@ function scrollToSection(id) {
       </div>
     </div>
     <div class="signup-modal-body">
-      <h2 class="signup-title" id="signup-modal-title">Enter Your Information</h2>
-      <p class="signup-subtitle">Use your real name and email. This will be used to create your account in the coaching app.</p>
+      <h2 class="signup-title" id="signup-modal-title">Create Your Account</h2>
+      <p class="signup-subtitle">to join the coaching app</p>
       <form id="signup-form" novalidate>
         <div class="signup-field">
           <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
@@ -1139,10 +1140,10 @@ function scrollToSection(id) {
           <label class="signup-label" for="su-email">Email address</label>
         </div>
         <button type="submit" class="signup-submit" id="signup-submit-btn" disabled>
-          Continue
+          Sign Up
         </button>
       </form>
-      <p class="signup-legal-note">By entering your info, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+      <p class="signup-legal-note">By signing up, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
     </div>
   </div>
 </div>
