@@ -1304,6 +1304,7 @@ function openSignup() {
   document.body.style.overflow = 'hidden';
   var first = document.getElementById('su-first');
   if (first && window.matchMedia('(min-width:601px)').matches) first.focus();
+  if (window.checkSignupValid) window.checkSignupValid();
 }
 function closeSignup() {
   var overlay = document.getElementById('signup-modal');
@@ -1321,7 +1322,12 @@ function closeSignup() {
   function checkValid() {
     submitBtn.disabled = !(firstInp.value.trim() && lastInp.value.trim() && emailInp.validity.valid && emailInp.value.trim());
   }
-  [firstInp, lastInp, emailInp].forEach(function(el) { el.addEventListener('input', checkValid); });
+  window.checkSignupValid = checkValid;
+  [firstInp, lastInp, emailInp].forEach(function(el) {
+    el.addEventListener('input', checkValid);
+    el.addEventListener('change', checkValid);
+  });
+  window.addEventListener('pageshow', checkValid);
 
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closeSignup(); });
   document.addEventListener('keydown', function(e) {
