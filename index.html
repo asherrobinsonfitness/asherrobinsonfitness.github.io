@@ -140,26 +140,24 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 }
 .wyget-row__media{
   flex-shrink:0;
-  width:5rem;
-  aspect-ratio:520 / 352;
+  width:2.75rem;
+  aspect-ratio:1 / 1;
   border-radius:8px;
-  overflow:hidden;
   background:#2a2a2a;
-  line-height:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.wyget-row__media img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
+.wyget-row__media svg{
+  width:50%;
+  height:50%;
+  color:var(--text);
 }
 .wyget-row__body{
   flex:1 1 0;
   min-width:0;
   display:flex;
   flex-direction:column;
-  gap:.35rem;
   text-align:left;
 }
 .wyget-row__title{
@@ -168,11 +166,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   line-height:1.25;
   letter-spacing:-.01em;
   color:var(--text);
-}
-.wyget-row__desc{
-  font-size:.78rem;
-  line-height:1.4;
-  color:var(--muted);
 }
 .block-inner{padding:1.2rem 1.15rem 1.05rem}
 .block-heading{
@@ -193,21 +186,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
   margin:0;
 }
 .block-body p+p{margin-top:.7rem}
-/* Number circle (all blocks) */
-.block-num{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:1.6rem;
-  height:1.6rem;
-  border-radius:50%;
-  background:#1c1c1c;
-  border:1px solid var(--card-border);
-  color:var(--text);
-  font-size:.78rem;
-  font-weight:600;
-  flex-shrink:0;
-}
 /* Number + heading inline row (block 1) */
 .block-header-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem}
 .block-header-row .block-heading{margin-bottom:0}
@@ -243,51 +221,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 
 #vidalytics_embed_Xcic7Hyxo2J8RaM9{border-radius:12px;overflow:hidden}
 
-/* Chat bubble overlay
- * Below 1280px: thumb height 13rem (208px). Image 819×1121 → rendered 152×208px.
- * img_center = 50% - 121px centres the composition (img_left = bubble_right_margin).
- * bubble_left = img_center + 38px (75% mark of img) = 50% - 83px.
- * bubble_width = 280px → aspect ratio ≈ 3:1 at all single-column widths.
- */
-.block--bubble .block-story__thumb img{height:100%}
-.block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:max(calc(50% - 121px), calc(76px + 1.15rem)) !important}
-.chat-bubble{
-  position:absolute;
-  top:28%;
-  left:max(calc(50% - 83px), calc(114px + 1.15rem));
-  right:1.5rem;
-  max-width:280px;
-  pointer-events:none;
-  z-index:10;
-}
-@media(min-width:1280px){
-  .block--bubble .block-story__thumb video,.block--bubble .block-story__thumb img{left:24% !important}
-  .chat-bubble{left:calc(24% + 38px);width:auto;right:5%}
-}
-/* Phone frame wrapper + video screen overlay (block 3) */
-.block--bubble .block-story__thumb .phone-wrap{
-  position:absolute;top:0;
-  left:max(calc(50% - 121px), calc(76px + 1.15rem));
-  transform:translateX(-50%);
-  height:100%;aspect-ratio:819/1121;
-}
-.block--bubble .block-story__thumb .phone-wrap>img{
-  position:static!important;width:100%!important;height:100%!important;
-  left:auto!important;top:auto!important;transform:none!important;
-}
-.block--bubble .block-story__thumb .phone-screen-video{
-  position:absolute;top:14%;left:50%;transform:translateX(-50%);
-  width:83%;bottom:0;border-radius:8px 8px 0 0;overflow:hidden;z-index:2;
-  background:#fff;
-}
-.block--bubble .block-story__thumb .phone-screen-video video{
-  position:static!important;width:100%!important;height:100%!important;
-  left:auto!important;top:auto!important;transform:none!important;
-  object-fit:cover;object-position:50% 0%;display:block;
-}
-@media(min-width:1280px){
-  .block--bubble .block-story__thumb .phone-wrap{left:24%;}
-}
 /* Phone fan stack — scales with card width.
  * available = 100% - 2.3rem (thumb content area matching block-inner padding).
  * main_w    = available / 2.35  (composition = main + 2×0.675×main = 2.35×main)
@@ -301,49 +234,6 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 .block-story__thumb .phone-behind{width:auto;height:80%;top:auto;bottom:0;transform:none}
 .block-story__thumb .phone-behind--left{left:1.15rem}
 .block-story__thumb .phone-behind--right{left:auto;right:1.15rem}
-/* Body: pure CSS shape. border-radius + border + clip-path are all
-   resolution-independent — corners are mathematically perfect at every size. */
-.chat-bubble__body{
-  position:relative;
-  border-radius:16px 16px 16px 0;
-  border:1px solid #3d3d3d;
-  overflow:hidden;
-}
-.chat-bubble__blur{
-  position:absolute;
-  inset:0;
-  border-radius:16px 16px 16px 0;
-  clip-path:inset(0 round 16px 16px 16px 0);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  background:rgba(36,36,36,0.62);
-}
-/* Tail: separate fixed-size SVG (5×9 CSS px). width/height are explicit
-   pixel values so the SVG never stretches — its bezier never distorts.
-   Right + bottom strokes overlap the body's left + bottom borders to
-   form one seamless continuous outline. */
-.chat-bubble__tail{
-  position:absolute;
-  bottom:0;
-  left:-5px;
-  width:5px;
-  height:9px;
-  overflow:visible;
-  pointer-events:none;
-}
-.chat-bubble__text{
-  position:relative;
-  z-index:1;
-  display:block;
-  padding:.55rem .85rem .6rem 1rem;
-  color:var(--text);
-  font-size:.85rem;
-  line-height:1.5;
-  letter-spacing:-.01em;
-  font-weight:400;
-  margin:0;
-}
-
 /* CTA button */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background 0s}
 .btn:hover{background:#0052cc}
@@ -740,7 +630,6 @@ footer a{color:#4d94ff;text-decoration:none}
   /* Cards */
   .block { background: #ffffff; }
   .block--wyget { background: #ffffff !important; }
-  .block-num { background: #ebebeb; }
   .wyget-row__media { background: #e4e4e4; }
   .wyget-row:hover::before { background: rgba(0,0,0,.05); border-color: var(--card-border); }
 
@@ -754,11 +643,6 @@ footer a{color:#4d94ff;text-decoration:none}
   .site-nav__link:hover { background-color: rgba(0,0,0,.06); color: #000; }
   .site-nav__cta { color: rgba(0,0,0,.65); border-color: rgba(0,0,0,.2); }
   .site-nav__cta:hover { background: rgba(0,0,0,.06); color: #000; border-color: rgba(0,0,0,.3); }
-
-  /* Chat bubble (block 3) */
-  .chat-bubble__body { border-color: var(--card-border); }
-  .chat-bubble__blur { background: rgba(245,245,245,0.9); }
-  .chat-bubble__tail path { fill: rgba(245,245,245,0.9); stroke: #d5d5d5; }
 
   /* Modals */
   .legal-modal { background: #ffffff; border-color: var(--card-border); }
@@ -837,53 +721,70 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--wyget">
         <div class="block-inner">
           <div class="block-header-row">
-            <div class="block-num" aria-hidden="true">1</div>
             <h2 class="block-heading">What you get</h2>
           </div>
           <div class="wyget-list" role="list">
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/XqdJg5bh/Chat-GPT-Image-Jul-1-2026-08-15-19-PM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 12h16"/>
+                  <path d="M6 8v8"/>
+                  <path d="M18 8v8"/>
+                  <path d="M2 10v4"/>
+                  <path d="M22 10v4"/>
+                </svg>
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Custom training program</div>
-                <div class="wyget-row__desc">Built for your schedule, equipment, and experience level.</div>
               </div>
             </div>
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/nVjQzs69/Chat-GPT-Image-Jul-1-2026-08-12-19-PM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/>
+                  <circle cx="12" cy="12" r="5"/>
+                  <circle cx="12" cy="12" r="1"/>
+                </svg>
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Daily calorie targets</div>
-                <div class="wyget-row__desc">Clear daily targets so you always know if you’re on track.</div>
               </div>
             </div>
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/V6HLwRYB/Chat-GPT-Image-Jul-1-2026-08-05-28-PM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="17" rx="2"/>
+                  <path d="M3 9h18"/>
+                  <path d="M8 2v4"/>
+                  <path d="M16 2v4"/>
+                  <path d="m9 14 2 2 4-4"/>
+                </svg>
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Weekly check-ins</div>
-                <div class="wyget-row__desc">A weekly review of what worked, what didn't, and what to change going forward.</div>
               </div>
             </div>
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/JnpTVKXy/Chat-GPT-Image-Jun-15-2026-02-50-04-AM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16v12H8l-4 4Z"/>
+                  <path d="M8 9h8"/>
+                  <path d="M8 12.5h5"/>
+                </svg>
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Same-day messaging</div>
-                <div class="wyget-row__desc">Direct messaging for questions and changes, answered the same day.</div>
               </div>
             </div>
             <div class="wyget-row" role="listitem">
               <div class="wyget-row__media">
-                <img src="https://i.postimg.cc/cH54WmsT/Chat-GPT-Image-Jul-1-2026-08-07-23-PM.png" width="520" height="352" alt="" decoding="async" loading="lazy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 3v18h18"/>
+                  <path d="m6 15 4-5 3 3 5-7"/>
+                </svg>
               </div>
               <div class="wyget-row__body">
                 <div class="wyget-row__title">Progress tracking</div>
-                <div class="wyget-row__desc">Simple weekly logging so we both see what’s working and what isn’t.</div>
               </div>
             </div>
           </div>
@@ -894,7 +795,6 @@ footer a{color:#4d94ff;text-decoration:none}
       <div class="block block--story">
         <div class="block-inner">
           <div class="block-story__header">
-            <div class="block-num" aria-hidden="true">2</div>
             <h2 class="block-heading">How it works</h2>
           </div>
           <div class="block-story__thumb">
@@ -905,37 +805,6 @@ footer a{color:#4d94ff;text-decoration:none}
           <div class="block-body">
             <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
             <p>You do the workouts, track two numbers, and I adjust everything else around your schedule.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Block 3 -->
-      <div class="block block--story block--bubble">
-        <div class="block-inner">
-          <div class="block-story__header">
-            <div class="block-num" aria-hidden="true">3</div>
-            <h2 class="block-heading">Why it works</h2>
-          </div>
-          <div class="block-story__thumb">
-            <div class="phone-wrap">
-              <img src="https://i.postimg.cc/63BN262j/coach-check-in-phone-still.webp" alt="">
-              <div class="phone-screen-video">
-                <video id="phoneVideo" data-src="why-it-works.mp4" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true"></video>
-              </div>
-            </div>
-            <div class="chat-bubble" aria-hidden="true">
-              <div class="chat-bubble__body">
-                <div class="chat-bubble__blur"></div>
-                <p class="chat-bubble__text">Scale isn't moving but your lifts are still going up. You're losing fat and holding muscle. Stay the course. 💪</p>
-              </div>
-              <svg class="chat-bubble__tail" viewBox="0 0 5 9" width="5" height="9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M0 9 C0.1 8.95, 5 5.9, 5 0 L5 9 Z" fill="#242424" fill-opacity="0.62" stroke="#3d3d3d" stroke-width="1" vector-effect="non-scaling-stroke"/>
-              </svg>
-            </div>
-          </div>
-          <div class="block-body">
-            <p>Most people don’t fail because they’re lazy. They fail because no one’s watching the numbers with them.</p>
-            <p>Coaching closes that gap. You get someone in the loop every week, catching problems before they become reasons to quit.</p>
           </div>
         </div>
       </div>
@@ -1081,20 +950,6 @@ function scrollToSection(id) {
 }
 </script>
 
-<script>
-(function(){
-  var v = document.getElementById('phoneVideo');
-  if(!v) return;
-  var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){
-      v.src = v.dataset.src;
-      v.load();
-      io.disconnect();
-    }
-  }, {rootMargin:'200px'});
-  io.observe(v);
-})();
-</script>
 <!-- SIGNUP MODAL -->
 <div class="signup-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title">
   <div class="signup-modal">
