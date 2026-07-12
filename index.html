@@ -69,7 +69,13 @@ src="https://www.facebook.com/tr?id=1575468926630270&ev=PageView&noscript=1"
 <!-- Self-hosted Inter — used on every device, so preload it -->
 <link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
 
-<script src="https://js.stripe.com/v3/"></script>
+<!-- Warm up connections to third parties used immediately (logo/hero images, Stripe, hero video) -->
+<link rel="preconnect" href="https://i.postimg.cc">
+<link rel="preconnect" href="https://js.stripe.com">
+<link rel="preconnect" href="https://fast.vidalytics.com">
+
+<!-- Not needed until the user reaches checkout — defer so it doesn't block first paint -->
+<script src="https://js.stripe.com/v3/" defer></script>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Online Fat Loss Coaching","description":"A workout program, daily calorie targets, and a coach who actually responds. $50 first month. Full refund if you don't see results in 30 days.","url":"https://asherrobinsonfitness.com","mainEntity":{"@type":"Service","name":"Online Fat Loss Coaching","description":"Personalized online fat loss coaching for men who want real results without overhauling their life.","provider":{"@type":"Person","name":"Asher Robinson","jobTitle":"Fitness Coach","image":"https://img-pull.b-cdn.net/profilepicdraft.PNG"},"offers":{"@type":"Offer","description":"1-on-1 online coaching program","category":"Fitness Training"}},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://asherrobinsonfitness.com"}]}}</script>
 <style>
@@ -865,9 +871,9 @@ footer a{color:#4d94ff;text-decoration:none}
             <h2 class="block-heading">How it works</h2>
           </div>
           <div class="block-story__thumb">
-            <img class="phone-behind phone-behind--left" src="https://i.postimg.cc/cHdNg1g7/weight.webp" alt="">
-            <img class="phone-behind phone-behind--right" src="https://i.postimg.cc/XJn0GNGD/food.webp" alt="">
-            <img class="phone-main" src="https://i.postimg.cc/Y9twG2GX/tracking.webp" alt="">
+            <img class="phone-behind phone-behind--left" src="https://i.postimg.cc/cHdNg1g7/weight.webp" alt="" width="584" height="799" loading="lazy" decoding="async">
+            <img class="phone-behind phone-behind--right" src="https://i.postimg.cc/XJn0GNGD/food.webp" alt="" width="584" height="799" loading="lazy" decoding="async">
+            <img class="phone-main" src="https://i.postimg.cc/Y9twG2GX/tracking.webp" alt="" width="584" height="799" loading="lazy" decoding="async">
           </div>
           <div class="block-body">
             <p>Most plans fall apart because they’re built for a perfect week, not a real life.</p>
