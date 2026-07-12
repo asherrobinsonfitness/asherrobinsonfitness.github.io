@@ -383,7 +383,7 @@ footer a{color:#4d94ff;text-decoration:none}
   .common-questions{padding:var(--pad-sm) 1rem var(--pad-sm)}
   footer{padding-left:1rem;padding-right:1rem}
   .section-divider{margin-bottom:2.25rem}
-  .footer-row{flex-direction:column;align-items:center;text-align:center;gap:1rem}
+  .footer-row{flex-direction:column;align-items:flex-start;gap:1rem}
 }
 @media(min-width:1024px){
   .headline{font-size:2rem}
@@ -746,7 +746,7 @@ footer a{color:#4d94ff;text-decoration:none}
     <button class="site-nav__link" onclick="scrollToSection('how-it-works')">Overview</button>
     <button class="site-nav__link" onclick="scrollToSection('faq')">Common Questions</button>
   </div>
-  <button class="site-nav__cta" onclick="openSignup()">Join</button>
+  <button class="site-nav__cta" onclick="openSignup()">Join Now</button>
 </nav></div>
 
 <main>
@@ -1051,10 +1051,10 @@ function scrollToSection(id) {
             <label class="signup-label" for="su-email">Email address</label>
           </div>
           <button type="submit" class="signup-submit" id="signup-submit-btn" disabled>
-            Sign Up
+            Proceed to Checkout
           </button>
         </form>
-        <p class="signup-legal-note">By signing up, you accept my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
+        <p class="signup-legal-note">By signing up, you agree to my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> &amp; <button type="button" class="legal-link" onclick="openLegal('privacy')">Privacy Policy</button>.</p>
       </div>
 
       <div id="signup-step-2" style="display:none">
@@ -1085,7 +1085,7 @@ function scrollToSection(id) {
 
         <div class="form-cta-area">
           <button type="submit" id="submit-stripe" form="payment-form" disabled>
-            <span id="submit-stripe-text">Join Now</span>
+            <span id="submit-stripe-text">Start First Month</span>
           </button>
           <p class="payment-legal">By purchasing, you authorize Asher Robinson LLC to charge you per my <button type="button" class="legal-link" onclick="openLegal('terms')">Terms of Service</button> and confirm you are 18 or older. Coaching is not medical advice. Consult a physician before starting any diet or exercise program.</p>
           <p class="security-badge">
@@ -1405,7 +1405,7 @@ window.initStripeCheckout = async function initStripeCheckout() {
     const btn = document.getElementById('submit-stripe');
     const txt = document.getElementById('submit-stripe-text');
     if (btn) btn.disabled = false;
-    if (txt) txt.textContent = 'Join Now';
+    if (txt) txt.textContent = 'Start First Month · $50';
   }
 
   async function handleRedirectReturn() {
