@@ -15,10 +15,10 @@
   fbq('init', '1575468926630270');
   fbq('track', 'PageView');
   // Only fire Purchase for people who actually completed a payment (flagged by
-  // add-payment/index.html right before redirecting here) — not anyone who
-  // lands on /welcome directly.
+  // index.html right before redirecting here) — not anyone who lands on
+  // /welcome directly.
   if (sessionStorage.getItem('_paymentSucceeded')) {
-    fbq('track', 'Purchase', {value: 48.25, currency: 'USD'});
+    fbq('track', 'Purchase', {value: 50.00, currency: 'USD'});
     sessionStorage.removeItem('_paymentSucceeded');
   }
   </script>
@@ -94,16 +94,12 @@
       color: var(--text-secondary);
     }
     .step b { color: var(--text); }
-    .btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-      width: 100%; padding: 0.95rem 1rem; border-radius: 12px; border: none; cursor: pointer;
-      font-size: 1rem; font-weight: 600; text-decoration: none;
-      background: var(--primary); color: #fff; transition: background 0.15s ease;
+    .store-badge {
+      display: block; height: 48px; width: auto; margin: 0 auto;
+      opacity: 1; transition: opacity 0.15s ease;
     }
-    .btn:hover { background: var(--primary-hover); }
-    .btn svg { width: 20px; height: 20px; }
-    .btn.secondary { background: transparent; border: 1px solid var(--border-strong); color: var(--text); margin-top: 0.75rem; }
-    .btn.secondary:hover { background: var(--bg); }
+    .store-badge:hover { opacity: 0.85; }
+    .store-badge.secondary { margin-top: 0.75rem; }
     .desktop-note {
       margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
     }
@@ -120,8 +116,6 @@
         --border: #e0e0e0;
         --border-strong: #d0d0d0;
       }
-      .btn.secondary { border-color: #d0d0d0; }
-      .btn.secondary:hover { background: #ebebeb; }
     }
   </style>
 </head>
@@ -140,17 +134,17 @@
     </div>
 
     <!-- Mobile / single-platform CTA -->
-    <a id="primary-cta" class="btn" href="#">
-      <span id="primary-cta-text">Download HubFit</span>
+    <a id="primary-cta" class="hidden" href="#" target="_blank" rel="noopener">
+      <img id="primary-cta-badge" class="store-badge" src="" alt="">
     </a>
 
     <!-- Desktop: show both + reminder to use their phone -->
     <div id="desktop-block" class="hidden">
-      <a class="btn" href="https://apps.apple.com/us/app/hubfit/id6448201245" target="_blank" rel="noopener">
-        Download on the App Store
+      <a href="https://apps.apple.com/us/app/hubfit/id6448201245" target="_blank" rel="noopener">
+        <img class="store-badge" src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
       </a>
-      <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.hubfitapp" target="_blank" rel="noopener">
-        Get it on Google Play
+      <a href="https://play.google.com/store/apps/details?id=com.hubfitapp" target="_blank" rel="noopener">
+        <img class="store-badge secondary" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
       </a>
       <p class="desktop-note">
         <b>On your computer?</b> The app lives on your phone — open this page on your phone, or search <b>"HubFit"</b> in the App Store / Google Play.
@@ -161,24 +155,29 @@
   <script>
     var APP_STORE = 'https://apps.apple.com/us/app/hubfit/id6448201245';
     var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.hubfitapp';
+    var APP_STORE_BADGE = 'https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83';
+    var PLAY_STORE_BADGE = 'https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png';
 
     var ua = navigator.userAgent || navigator.vendor || '';
     var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     var isAndroid = /android/i.test(ua);
 
     var primary = document.getElementById('primary-cta');
-    var primaryText = document.getElementById('primary-cta-text');
+    var primaryBadge = document.getElementById('primary-cta-badge');
     var desktopBlock = document.getElementById('desktop-block');
 
     if (isIOS) {
       primary.href = APP_STORE;
-      primaryText.textContent = 'Download on the App Store';
+      primaryBadge.src = APP_STORE_BADGE;
+      primaryBadge.alt = 'Download on the App Store';
+      primary.classList.remove('hidden');
     } else if (isAndroid) {
       primary.href = PLAY_STORE;
-      primaryText.textContent = 'Get it on Google Play';
+      primaryBadge.src = PLAY_STORE_BADGE;
+      primaryBadge.alt = 'Get it on Google Play';
+      primary.classList.remove('hidden');
     } else {
-      // Desktop — show both store buttons + phone reminder
-      primary.classList.add('hidden');
+      // Desktop — show both store badges + phone reminder
       desktopBlock.classList.remove('hidden');
     }
   </script>
