@@ -9,8 +9,6 @@
   ],
   "rewrites": [
     { "source": "/edge/fbevents.js", "destination": "https://connect.facebook.net/en_US/fbevents.js" },
-    { "source": "/edge/tr", "destination": "https://www.facebook.com/tr" },
-    { "source": "/edge/tag/:id", "destination": "https://www.clarity.ms/tag/:id" },
-    { "source": "/edge/collect", "destination": "https://n.clarity.ms/collect" }
+    { "source": "/edge/tr", "destination": "https://www.facebook.com/tr" }
   ]
 }
