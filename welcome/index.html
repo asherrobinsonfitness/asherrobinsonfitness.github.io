@@ -80,11 +80,19 @@
       --muted: #a8afba;
       --card-border: #3d3d3d;
     }
+    /* html gets the same bg as body so mobile overscroll/rubber-banding never
+       reveals a mismatched flash behind the short page content. */
+    html { background: #1c1c1c; }
     body {
       color: var(--text); background: #1c1c1c; line-height: 1.5; font-size: 16px;
       -webkit-font-smoothing: antialiased;
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      padding: 1.5rem;
+      /* 100dvh (not 100vh) so mobile browsers' collapsing address bar doesn't
+         push the flex-centered content off true visual center. */
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      /* Horizontal padding matches index.html's actual mobile hero padding
+         (max(1rem, ...) resolves to 1rem below 640px); vertical matches --pad-sm. */
+      padding: 2rem 1rem;
     }
     .content { width: 100%; max-width: 440px; text-align: center; }
     /* Spacing rhythm matches index.html's hero exactly: .75rem (12px) between
@@ -109,20 +117,25 @@
       display: flex; align-items: center; justify-content: center; gap: 0.85rem; flex-wrap: wrap;
     }
     .store-btn {
-      display: inline-flex; align-items: center; gap: 0.65rem;
-      padding: 0.75rem 1.25rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem;
+      width: 180px; padding: 0.75rem 1.25rem;
       border-radius: 8px; border: 1px solid var(--card-border);
       background: #000; text-decoration: none;
     }
     .store-btn__icon { width: 24px; height: 24px; flex-shrink: 0; }
     .store-btn__text { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
     .store-btn__eyebrow {
-      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.03em;
-      text-transform: uppercase; color: #c9c9c9;
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.03em; color: #c9c9c9;
     }
+    /* Only Google's badge caption is all-caps ("GET IT ON") — Apple's real
+       badge only capitalizes the "D" in "Download on the". */
+    #google-btn .store-btn__eyebrow { text-transform: uppercase; }
     .store-btn__title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
+    /* 1.5rem (24px), the same section-break value as the message→buttons gap:
+       this note is a third, separate "troubleshooting" group, not grouped
+       with the buttons above it. */
     .desktop-note {
-      margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+      margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); line-height: 1.6;
     }
     .desktop-note b { color: var(--text); font-weight: 600; }
     .hidden { display: none !important; }
@@ -134,7 +147,7 @@
         --muted: #4a4a4a;
         --card-border: #d5d5d5;
       }
-      body { background: #f7f7f7; }
+      html, body { background: #f7f7f7; }
     }
   </style>
 </head>
