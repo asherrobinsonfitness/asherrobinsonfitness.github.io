@@ -106,14 +106,19 @@
     }
     .instructions b { color: var(--text); font-weight: 600; }
 
-    /* Call time Calendly passes back via its "pass event details" redirect
-       params — hidden by default, only shown once event_start_time parses. */
+    /* 0.9rem matches index.html's .pricing fine-print (the text below its
+       main CTA button) — both boxes share it so they read as the same
+       typographic weight, one confirming, one cautioning. */
     .event-details {
       display: none;
-      text-align: left; font-size: 0.95rem; color: var(--text);
+      text-align: left; font-size: 0.9rem; color: var(--text);
       background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.35);
       border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.55;
+      /* Scrollable (not wrapped) so an unusually long email never breaks to a
+         second line — scrollbar hidden since the common case doesn't need it. */
+      white-space: nowrap; overflow-x: auto; scrollbar-width: none;
     }
+    .event-details::-webkit-scrollbar { display: none; }
 
     /* Amber tint distinguishes this as a "pay attention" callout, not just
        another instruction line — same 1.5rem section-break spacing as the rest. */
@@ -179,11 +184,11 @@
     </p>
 
     <p class="event-details" id="event-details">
-      <b>Your call details were sent to</b> <span id="event-email"></span>.
+      <b>Call details sent to:</b> <span id="event-email"></span>
     </p>
 
     <p class="warning">
-      <b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call are in <span id="email-ref">your email</span>.
+      <b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call were sent to your email.
     </p>
 
     <div class="store-buttons-row">
@@ -248,7 +253,6 @@
     if (email) {
       document.getElementById('event-email').textContent = email;
       document.getElementById('event-details').style.display = 'block';
-      document.getElementById('email-ref').textContent = 'the email above';
     }
   </script>
 </body>
