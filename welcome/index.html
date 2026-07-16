@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta Pixel Code -->
+  <script>
+  // Shared helpers for Meta Pixel + Conversions API deduplication.
+  // Each conversion event gets one event_id shared by both the browser pixel
+  // call and the server-side CAPI call so Meta counts it once, not twice.
+  function __fbEventId() {
+    return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+  }
+  function __fbCookie(name) {
+    var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return m ? m[2] : undefined;
+  }
+  function __fbCapi(eventName, eventId, customData, userData) {
+    try {
+      fetch('/api/meta-capi', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        keepalive: true,
+        body: JSON.stringify({
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: window.location.href,
+          custom_data: customData || {},
+          user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+        })
+      }).catch(function(){});
+    } catch (e) {}
+  }
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  '/edge/fbevents.js');
+  fbq('init', '1575468926630270');
+  var __pvEventId = __fbEventId();
+  fbq('track', 'PageView', {}, {eventID: __pvEventId});
+  __fbCapi('PageView', __pvEventId);
+  // Purchase fires from index.html at the moment Stripe confirms the charge
+  // (pixel) plus a Stripe webhook -> Meta CAPI (server-side, authoritative) —
+  // not from this page. This is just the thank-you/download page now.
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+  <title>Payment Complete</title>
+  <meta name="description" content="Your coaching is confirmed. Book your onboarding call to get started with Asher Robinson.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+  <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+  <link rel="shortcut icon" href="/assets/favicon.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+  <link rel="preload" as="font" type="font/woff2" href="../fonts/inter-latin-variable.woff2" crossorigin>
+  <style>
+    /* Self-hosted Inter (SIL Open Font License) — same font on every device (Apple, Android, Windows) */
+    @font-face{
+      font-family:'Inter';
+      font-style:normal;
+      font-weight:100 900;
+      font-display:swap;
+      src:url('../fonts/inter-latin-variable.woff2') format('woff2');
+    }
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    }
+    /* Tokens match index.html's root palette exactly, for visual congruence */
+    :root {
+      --text: #f8fafc;
+      --muted: #a8afba;
+    }
+    /* html gets the same bg as body so mobile overscroll/rubber-banding never
+       reveals a mismatched flash behind the short page content. */
+    html { background: #1c1c1c; }
+    body {
+      color: var(--text); background: #1c1c1c; line-height: 1.5; font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh; min-height: 100dvh;
+      /* Top-down flow, not centered: the Calendly embed below is 700px tall,
+         so a vertically-centered column would start off-screen. align-items
+         still centers the column horizontally. */
+      display: flex; flex-direction: column; align-items: center;
+      /* Horizontal padding matches index.html's actual mobile hero padding
+         (max(1rem, ...) resolves to 1rem below 640px); top padding matches
+         index.html's --pad token, bottom keeps the prior --pad-sm value. */
+      padding: 2.5rem 1rem 2rem;
+    }
+    .content { width: 100%; max-width: 440px; text-align: center; }
+    /* Spacing rhythm matches index.html's hero exactly: .75rem (12px) between
+       elements in the same group (index.html's headline↔subheadline↔subheadline2,
+       btn↔pricing), 1.5rem (24px) at a section break (subheadline2→hero-media,
+       hero-media→btn). The check icon uses 1rem (16px), the same value index.html
+       used historically for a kicker-graphic sitting directly above a headline —
+       tighter than a section break, looser than the tightest text-to-text pairing. */
+    .check { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
+    .check svg { width: 56px; height: 56px; }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .instructions {
+      font-size: clamp(1rem, .93rem + .4vw, 1.125rem); color: var(--muted);
+      line-height: 1.6; letter-spacing: -0.005em; margin-bottom: 1.5rem;
+    }
+
+    /* ── Light mode — same overrides as index.html ── */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --text: #111111;
+        --muted: #4a4a4a;
+      }
+      html, body { background: #f7f7f7; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="check">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#22c55e" aria-hidden="true">
+        <path d="m424-408-86-86q-11-11-28-11t-28 11q-11 11-11 28t11 28l114 114q12 12 28 12t28-12l226-226q11-11 11-28t-11-28q-11-11-28-11t-28 11L424-408Zm56 328q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+      </svg>
+    </div>
+    <h1>Payment Complete</h1>
+
+    <p class="instructions" id="access-step">
+      Book your onboarding call below and we'll get your HubFit account set up together, live.
+    </p>
+
+    <div id="calendly-embed" class="calendly-inline-widget" style="min-width:320px;height:700px;margin-top:1.5rem;"></div>
+  </div>
+
+  <script>
+    // Prefill the Calendly embed with the customer's name/email from the URL
+    // (appended by the Stripe success redirect) so they don't retype them.
+    // data-url is built and set before widget.js loads, since Calendly reads
+    // it once on load to initialize the embed.
+    var params = new URLSearchParams(window.location.search);
+    var contactName = params.get('name');
+    var contactEmail = params.get('email');
+
+    var calendlyUrl = 'https://calendly.com/asherapple2/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=0066ff';
+    if (contactName) calendlyUrl += '&name=' + encodeURIComponent(contactName);
+    if (contactEmail) calendlyUrl += '&email=' + encodeURIComponent(contactEmail);
+
+    document.getElementById('calendly-embed').setAttribute('data-url', calendlyUrl);
+
+    var calendlyScript = document.createElement('script');
+    calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+    calendlyScript.async = true;
+    document.body.appendChild(calendlyScript);
+  </script>
+</body>
+</html>
