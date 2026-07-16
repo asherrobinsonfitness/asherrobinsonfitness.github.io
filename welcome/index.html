@@ -155,6 +155,21 @@
     calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
     calendlyScript.async = true;
     document.body.appendChild(calendlyScript);
+
+    // Redirect to the booked page ourselves the instant Calendly reports a
+    // completed booking, instead of using Calendly's own "redirect to a URL"
+    // confirmation-page setting — that setting always shows an interstitial
+    // ("You are leaving Calendly, click Continue") on external redirects, for
+    // every account, on every booking. A same-origin redirect we trigger from
+    // our own script never goes through that gate.
+    window.addEventListener('message', function (e) {
+      if (e.origin !== 'https://calendly.com') return;
+      if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
+      var qs = [];
+      if (contactName) qs.push('name=' + encodeURIComponent(contactName));
+      if (contactEmail) qs.push('email=' + encodeURIComponent(contactEmail));
+      window.location.href = '/welcome/booked/' + (qs.length ? '?' + qs.join('&') : '');
+    });
   </script>
 </body>
 </html>
