@@ -179,11 +179,11 @@
     </p>
 
     <p class="event-details" id="event-details">
-      <b>Your call is booked for</b> <span id="event-time"></span>.
+      <b>Your call details were sent to</b> <span id="event-email"></span>.
     </p>
 
     <p class="warning">
-      <b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call are in your email.
+      <b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call are in <span id="email-ref">your email</span>.
     </p>
 
     <div class="store-buttons-row">
@@ -240,21 +240,15 @@
   </script>
 
   <script>
-    // Calendly's "pass event details to your redirected page" option appends
-    // event_start_time (ISO8601, invitee-local) among other params. Show it
-    // if present; stay silent if the redirect wasn't configured with it yet.
+    // /welcome/ forwards the customer's email in the redirect here once
+    // Calendly reports a completed booking. Show it once, in this box, so
+    // the warning below doesn't have to repeat the address.
     var qp = new URLSearchParams(window.location.search);
-    var startTime = qp.get('event_start_time');
-    if (startTime) {
-      var d = new Date(startTime);
-      if (!isNaN(d.getTime())) {
-        var formatted = d.toLocaleString('en-US', {
-          weekday: 'long', month: 'long', day: 'numeric',
-          hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
-        });
-        document.getElementById('event-time').textContent = formatted;
-        document.getElementById('event-details').style.display = 'block';
-      }
+    var email = qp.get('email');
+    if (email) {
+      document.getElementById('event-email').textContent = email;
+      document.getElementById('event-details').style.display = 'block';
+      document.getElementById('email-ref').textContent = 'the email above';
     }
   </script>
 </body>
