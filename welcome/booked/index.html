@@ -106,12 +106,14 @@
     }
     .instructions b { color: var(--text); font-weight: 600; }
 
-    /* 0.9rem matches index.html's .pricing fine-print (the text below its
-       main CTA button) — both boxes share it so they read as the same
-       typographic weight, one confirming, one cautioning. */
+    /* .9375rem matches index.html's Secondary tier (FAQ copy, "what you get"
+       rows) — this is real content to read, not disclaimer fine-print, so it
+       sits a tier above index.html's .pricing/.payment-legal group. Shared
+       with .warning below so both boxes read as the same weight, one
+       confirming, one cautioning. */
     .event-details {
       display: none;
-      text-align: left; font-size: 0.9rem; color: var(--text);
+      text-align: left; font-size: 0.9375rem; color: var(--text);
       background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.35);
       border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.55;
       /* Scrollable (not wrapped) so an unusually long email never breaks to a
@@ -121,9 +123,10 @@
     .event-details::-webkit-scrollbar { display: none; }
 
     /* Amber tint distinguishes this as a "pay attention" callout, not just
-       another instruction line — same 1.5rem section-break spacing as the rest. */
+       another instruction line — same 1.5rem section-break spacing as the rest.
+       Same .9375rem Secondary-tier size as .event-details above. */
     .warning {
-      text-align: left; font-size: 0.9rem; color: var(--text);
+      text-align: left; font-size: 0.9375rem; color: var(--text);
       background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.4);
       border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.55;
     }
@@ -152,9 +155,10 @@
     .store-btn__title { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
     /* 1.5rem (24px), the same section-break value as the message→buttons gap:
        this note is a third, separate "troubleshooting" group, not grouped
-       with the buttons above it. */
+       with the buttons above it. .8125rem matches index.html's fine-print
+       floor — a low-priority aside, not core content. */
     .desktop-note {
-      margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+      margin-top: 1.5rem; font-size: 0.8125rem; color: var(--muted); line-height: 1.6;
     }
     .desktop-note b { color: var(--text); font-weight: 600; }
     .hidden { display: none !important; }
@@ -246,8 +250,8 @@
 
   <script>
     // /welcome/ forwards the customer's email in the redirect here once
-    // Calendly reports a completed booking. Show it once, in this box, so
-    // the warning below doesn't have to repeat the address.
+    // the meeting scheduler reports a completed booking. Show it once, in
+    // this box, so the warning below doesn't have to repeat the address.
     var qp = new URLSearchParams(window.location.search);
     var email = qp.get('email');
     if (email) {
