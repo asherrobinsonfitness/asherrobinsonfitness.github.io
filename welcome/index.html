@@ -133,43 +133,44 @@
       Book your onboarding call below and we'll get your HubFit account set up together, live.
     </p>
 
-    <div id="calendly-embed" class="calendly-inline-widget" style="min-width:320px;height:700px;margin-top:1.5rem;"></div>
+    <div style="width:100%;height:100%;overflow:scroll;margin-top:1.5rem" id="my-cal-inline-30min"></div>
   </div>
 
-  <script>
-    // Prefill the Calendly embed with the customer's name/email from the URL
-    // (appended by the Stripe success redirect) so they don't retype them.
-    // data-url is built and set before widget.js loads, since Calendly reads
-    // it once on load to initialize the embed.
+  <!-- Cal inline embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", {origin:"https://app.cal.com"});
+    // Auto-forwards this page's ?name=&email= (appended by the Stripe
+    // success redirect) straight into the booking form — no custom
+    // prefill script needed.
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+
+    Cal.ns["30min"]("inline", {
+      elementOrSelector:"#my-cal-inline-30min",
+      config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+      calLink: "asherrobinsonfitness/30min",
+    });
+
+    Cal.ns["30min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#0066ff"},"dark":{"cal-brand":"#0066ff"}},"hideEventTypeDetails":true,"layout":"month_view"});
+
+    // Redirect to the booked page ourselves the instant Cal.com reports a
+    // completed booking, same reasoning as the prior Calendly/HubSpot
+    // integrations: a same-origin redirect we trigger from our own script
+    // skips any embed-side confirmation interstitial.
     var params = new URLSearchParams(window.location.search);
     var contactName = params.get('name');
     var contactEmail = params.get('email');
-
-    var calendlyUrl = 'https://calendly.com/asherapple2/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=0066ff';
-    if (contactName) calendlyUrl += '&name=' + encodeURIComponent(contactName);
-    if (contactEmail) calendlyUrl += '&email=' + encodeURIComponent(contactEmail);
-
-    document.getElementById('calendly-embed').setAttribute('data-url', calendlyUrl);
-
-    var calendlyScript = document.createElement('script');
-    calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
-    calendlyScript.async = true;
-    document.body.appendChild(calendlyScript);
-
-    // Redirect to the booked page ourselves the instant Calendly reports a
-    // completed booking, instead of using Calendly's own "redirect to a URL"
-    // confirmation-page setting — that setting always shows an interstitial
-    // ("You are leaving Calendly, click Continue") on external redirects, for
-    // every account, on every booking. A same-origin redirect we trigger from
-    // our own script never goes through that gate.
-    window.addEventListener('message', function (e) {
-      if (e.origin !== 'https://calendly.com') return;
-      if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
-      var qs = [];
-      if (contactName) qs.push('name=' + encodeURIComponent(contactName));
-      if (contactEmail) qs.push('email=' + encodeURIComponent(contactEmail));
-      window.location.href = '/welcome/booked/' + (qs.length ? '?' + qs.join('&') : '');
+    Cal.ns["30min"]("on", {
+      action: "bookingSuccessful",
+      callback: function () {
+        var qs = [];
+        if (contactName) qs.push('name=' + encodeURIComponent(contactName));
+        if (contactEmail) qs.push('email=' + encodeURIComponent(contactEmail));
+        window.location.href = '/welcome/booked/' + (qs.length ? '?' + qs.join('&') : '');
+      }
     });
   </script>
+  <!-- Cal inline embed code ends -->
 </body>
 </html>
