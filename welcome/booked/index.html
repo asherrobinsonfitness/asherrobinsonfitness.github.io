@@ -106,32 +106,26 @@
     }
     .instructions b { color: var(--text); font-weight: 600; }
 
-    /* .9375rem matches index.html's Secondary tier (FAQ copy, "what you get"
-       rows) — this is real content to read, not disclaimer fine-print, so it
-       sits a tier above index.html's .pricing/.payment-legal group. Shared
-       with .warning below so both boxes read as the same weight, one
-       confirming, one cautioning. */
-    .event-details {
-      display: none;
-      text-align: left; font-size: 0.9375rem; color: var(--text);
-      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.35);
-      border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.55;
-      /* Scrollable (not wrapped) so an unusually long email never breaks to a
-         second line — scrollbar hidden since the common case doesn't need it. */
-      white-space: nowrap; overflow-x: auto; scrollbar-width: none;
+    /* Shared alert component — same colors as index.html's checkout error
+       banner, so every "status box" on the site is one system. Tints of the
+       site's actual brand colors (not solid dark-mode swatches), so each
+       reads as its real hue instead of a muddy shade. */
+    .alert {
+      display: flex; align-items: center;
+      padding: 0.75rem 1rem; border-radius: 8px; border-left: 4px solid;
+      font-size: 0.8125rem; line-height: 1.5;
+      text-align: left; margin-bottom: 1.5rem; color: var(--text);
     }
-    .event-details::-webkit-scrollbar { display: none; }
-    .event-details b { font-weight: 600; }
+    .alert b { font-weight: 600; }
+    .alert--info { background: rgba(0,102,255,.1); border-color: #06f; color: #4d94ff; }
+    .alert--warning { background: rgba(245,158,11,.1); border-color: #f59e0b; color: #fbbf24; }
 
-    /* Amber tint distinguishes this as a "pay attention" callout, not just
-       another instruction line — same 1.5rem section-break spacing as the rest.
-       Same .9375rem Secondary-tier size as .event-details above. */
-    .warning {
-      text-align: left; font-size: 0.9375rem; color: var(--text);
-      background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.4);
-      border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1.5rem; line-height: 1.55;
+    /* Long emails scroll instead of wrapping. */
+    #event-details { display: none; }
+    #event-details .alert-text {
+      min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none;
     }
-    .warning b { font-weight: 600; }
+    #event-details .alert-text::-webkit-scrollbar { display: none; }
 
     /* Custom-coded store buttons, sized to content like index.html's own
        .site-nav__cta (padding-based, not a fixed box) — so left/right and
@@ -172,6 +166,8 @@
         --card-border: #d5d5d5;
       }
       html, body { background: #f7f7f7; }
+      .alert--info { color: #0047b3; }
+      .alert--warning { color: #92400e; }
     }
   </style>
 </head>
@@ -188,12 +184,12 @@
       <b>Last step:</b> Download HubFit — we'll sign you in together during your onboarding call.
     </p>
 
-    <p class="event-details" id="event-details">
-      <b>Call details sent to:</b> <span id="event-email"></span>
+    <p class="alert alert--info" id="event-details" role="status">
+      <span class="alert-text"><b>Call details sent to:</b> <span id="event-email"></span></span>
     </p>
 
-    <p class="warning">
-      <b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call were sent to your email.
+    <p class="alert alert--warning" role="alert">
+      <span><b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call were sent to your email.</span>
     </p>
 
     <div class="store-buttons-row">
@@ -257,7 +253,7 @@
     var email = qp.get('email');
     if (email) {
       document.getElementById('event-email').textContent = email;
-      document.getElementById('event-details').style.display = 'block';
+      document.getElementById('event-details').style.display = 'flex';
     }
   </script>
 </body>
