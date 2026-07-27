@@ -115,12 +115,13 @@
       padding: 1.25rem; text-align: left; margin: 0 auto 1.5rem;
     }
     .progress-card__title { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.25rem; }
-    .progress-card__subtitle { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+    .progress-card__subtitle { font-size: 0.9375rem; color: var(--muted); margin-bottom: 1rem; }
     .progress-card__track { height: 4px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin-bottom: 0.625rem; }
     .progress-card__fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4ade80, #22c55e); }
-    .progress-card__steps { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.75rem; color: var(--muted); }
+    .progress-card__steps { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.8125rem; color: var(--muted); }
     .progress-card__step { display: flex; align-items: center; gap: 0.25rem; }
     .progress-card__step.is-done { color: #22c55e; }
+    .progress-card__check { width: 0.75em; height: 0.75em; flex-shrink: 0; }
     .progress-card__step.is-current { color: var(--text); font-weight: 600; }
 
     /* Shared alert component — same colors as index.html's checkout error
@@ -194,13 +195,13 @@
   <div class="content">
     <div class="progress-card">
       <p class="progress-card__title">Call booked</p>
-      <p class="progress-card__subtitle"><strong>Next:</strong> download the app to start your plan</p>
+      <p class="progress-card__subtitle"><strong>Next:</strong> Download the HubFit app</p>
       <div class="progress-card__track">
         <div class="progress-card__fill" style="width: 66%"></div>
       </div>
       <div class="progress-card__steps">
-        <span class="progress-card__step is-done">✓ Sign Up</span>
-        <span class="progress-card__step is-done">✓ Book Call</span>
+        <span class="progress-card__step is-done"><svg class="progress-card__check" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>Sign Up</span>
+        <span class="progress-card__step is-done"><svg class="progress-card__check" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>Book Call</span>
         <span class="progress-card__step is-current">Download App</span>
       </div>
     </div>
