@@ -86,25 +86,31 @@
     body {
       color: var(--text); background: #1c1c1c; line-height: 1.5; font-size: 16px;
       -webkit-font-smoothing: antialiased;
-      /* 100dvh (not 100vh) so mobile browsers' collapsing address bar doesn't
-         push the flex-centered content off true visual center. */
       min-height: 100vh; min-height: 100dvh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 2rem 1rem;
+      /* Top-down flow, not centered — matches /welcome/index.html so the
+         page doesn't jump vertically once the alert boxes below push the
+         content taller than the viewport. */
+      display: flex; flex-direction: column; align-items: center;
+      padding: 2.5rem 1rem 2rem;
     }
     .content { width: 100%; max-width: 440px; text-align: center; }
-    /* Spacing rhythm matches index.html's hero exactly: .75rem (12px) between
-       elements in the same group, 1.5rem (24px) at a section break. The check
-       icon uses 1rem (16px), a kicker-graphic-to-headline value — tighter than
-       a section break, looser than the tightest text-to-text pairing. */
-    .check { margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; }
-    .check svg { width: 56px; height: 56px; }
-    h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-    .instructions {
-      font-size: clamp(1rem, .93rem + .4vw, 1.125rem); color: var(--muted);
-      line-height: 1.6; letter-spacing: -0.005em; margin-bottom: 1.5rem;
+    /* Order-tracker-style progress card, replacing the old check-icon +
+       headline + subheadline block: a bordered panel with a bold status
+       line, a smooth continuous fill bar (not segmented), and a checkmark
+       + step label bottom-right — matching index.html's card conventions
+       (#161616 panel, var(--card-border), 12px radius). */
+    .progress-card {
+      background: #161616; border: 1px solid var(--card-border); border-radius: 12px;
+      padding: 1.25rem; text-align: left; margin: 0 auto 1.5rem;
     }
-    .instructions b { color: var(--text); font-weight: 600; }
+    .progress-card__title { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.25rem; }
+    .progress-card__subtitle { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+    .progress-card__track { height: 4px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin-bottom: 0.625rem; }
+    .progress-card__fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4ade80, #22c55e); }
+    .progress-card__steps { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.75rem; color: var(--muted); }
+    .progress-card__step { display: flex; align-items: center; gap: 0.25rem; }
+    .progress-card__step.is-done { color: #22c55e; }
+    .progress-card__step.is-current { color: var(--text); font-weight: 600; }
 
     /* Shared alert component — same colors as index.html's checkout error
        banner, so every "status box" on the site is one system. Tints of the
@@ -166,6 +172,8 @@
         --card-border: #d5d5d5;
       }
       html, body { background: #f7f7f7; }
+      .progress-card { background: #ffffff; }
+      .progress-card__track { background: rgba(0,0,0,.08); }
       .alert--info { color: #0047b3; }
       .alert--warning { color: #92400e; }
     }
@@ -173,16 +181,18 @@
 </head>
 <body>
   <div class="content">
-    <div class="check">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#22c55e" aria-hidden="true">
-        <path d="m438-342 139-139q12-12 29-12t29 12q12 12 12 29t-12 29L466-254q-12 12-28 12t-28-12l-85-85q-12-12-12-29t12-29q12-12 29-12t29 12l55 55ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/>
-      </svg>
+    <div class="progress-card">
+      <p class="progress-card__title">Call booked</p>
+      <p class="progress-card__subtitle"><strong>Next:</strong> download the app to start your plan</p>
+      <div class="progress-card__track">
+        <div class="progress-card__fill" style="width: 66%"></div>
+      </div>
+      <div class="progress-card__steps">
+        <span class="progress-card__step is-done">✓ Sign Up</span>
+        <span class="progress-card__step is-done">✓ Book Call</span>
+        <span class="progress-card__step is-current">Download App</span>
+      </div>
     </div>
-    <h1>Call Booked</h1>
-
-    <p class="instructions" id="access-step">
-      <b>Last step:</b> Download HubFit — we'll sign you in together during your onboarding call.
-    </p>
 
     <p class="alert alert--info" id="event-details" role="status">
       <span class="alert-text"><b>Call details sent to:</b> <span id="event-email"></span></span>
