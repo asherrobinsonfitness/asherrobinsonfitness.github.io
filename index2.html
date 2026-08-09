@@ -15,30 +15,28 @@
 <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
 <link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
 <style>
-:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
+:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted)}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — standard dot+label nav bar, now living inside section 2 instead of the page header.
-   Bled out to the section's own edges so it keeps the same full-width bar look: same
-   height, padding, and bottom border as before. */
+/* nav — numbered step circles, living inside section 2's own bar (bled to the section's
+   edges so it keeps the same full-width bar look: same height, padding, bottom border
+   as the dot+label version). Circle sized to match that version's text-row height so
+   swapping styles doesn't change the bar's height. */
 .signup-progress{position:relative;display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0;min-height:3rem}
-.nav-progress{display:inline-flex;align-items:center;gap:1rem;font-size:.9375rem}
-.survey-step{color:#a8afba;font-weight:500;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
-.survey-step--active{color:var(--text)}
-.signup-dot{width:6px;height:6px;color:rgba(255,255,255,.2);flex-shrink:0}
-.signup-dot.signup-dot--active{color:#06f}
-.signup-check{display:block;width:10px;height:10px;overflow:visible;color:var(--muted);flex-shrink:0}
+.nav-progress{display:flex;align-items:center;justify-content:center;gap:1.5rem}
+.step-circle{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--step-secondary,var(--muted));color:var(--step-secondary,var(--muted));font-size:.75rem;font-weight:600;flex-shrink:0;transition:border-color 0s,color 0s}
+.survey-step--active .step-circle{border-color:var(--text);color:var(--text)}
 
 /* headline / subheadline */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
-.hero-image{display:block;width:auto;height:auto;max-width:100%;max-height:min(420px,45vh);margin:1.5rem auto 0}
+.hero-image{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;margin:1.5rem auto 0;background:#ff2d78;box-shadow:0 12px 28px rgba(0,0,0,.35)}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
@@ -113,13 +111,12 @@ footer a{color:var(--link);text-decoration:none}
 }
 
 @media (prefers-color-scheme:light){
-  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5}
+  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb}
   body{background:#f7f7f7}
   .container{background:#f7f7f7}
   footer{background:#eee;border-top-color:var(--border)}
   .results-section{background:#eee}
   .signup-progress{border-bottom-color:var(--card-border)}
-  .signup-dot{color:rgba(0,0,0,.2)}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
   .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
@@ -144,21 +141,15 @@ footer a{color:var(--link);text-decoration:none}
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized Ideal Weight Analysis…</h1>
       <div class="subheadline">In under 30 seconds.</div>
-      <img class="hero-image" src="https://i.postimg.cc/zB4KjY9n/screens.webp" alt="App screens placeholder" loading="lazy" decoding="async">
+      <div class="hero-image" role="img" aria-label="Placeholder media block"></div>
     </div>
 
     <section class="results-section">
       <div class="signup-progress">
         <div class="nav-progress" aria-label="Progress">
-          <span class="survey-step survey-step--active" id="progress-step-name">
-            <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Name
-          </span>
-          <span class="survey-step" id="progress-step-email">
-            <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Email
-          </span>
-          <span class="survey-step" id="progress-step-results">
-            <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Starting Point
-          </span>
+          <span class="survey-step survey-step--active" id="progress-step-name"><span class="step-circle">1</span></span>
+          <span class="survey-step" id="progress-step-email"><span class="step-circle">2</span></span>
+          <span class="survey-step" id="progress-step-results"><span class="step-circle">3</span></span>
         </div>
       </div>
 
@@ -222,7 +213,7 @@ footer a{color:var(--link);text-decoration:none}
               <label class="field-label">Weight</label>
               <div class="signup-unit-input">
                 <input class="signup-unit-input__field" type="text" inputmode="decimal" id="su-weight" placeholder="0" required>
-                <span class="signup-unit-input__suffix">lbs</span>
+                <span class="signup-unit-input__suffix">pounds</span>
               </div>
             </div>
             <button type="submit" class="signup-submit" id="btn-results" disabled>
@@ -373,17 +364,11 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
   var stepEls={name:document.getElementById("step-name"),email:document.getElementById("step-email"),results:document.getElementById("step-results")};
   var navEls={name:document.getElementById("progress-step-name"),email:document.getElementById("progress-step-email"),results:document.getElementById("progress-step-results")};
-  var labels={name:"Name",email:"Email",results:"Starting Point"};
 
-  var dotSVG='<svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>';
-  var dotActiveSVG='<svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>';
-  var checkSVG='<svg class="signup-check" width="10" height="10" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>';
-
+  // Active AND completed steps read as "primary" text; upcoming steps stay "secondary".
   function updateNav(){
     steps.forEach(function(key,i){
-      var el=navEls[key];
-      el.classList.toggle("survey-step--active",i===current);
-      el.innerHTML=(i<current?checkSVG:i===current?dotActiveSVG:dotSVG)+labels[key];
+      navEls[key].classList.toggle("survey-step--active",i<=current);
     });
   }
   function goToStep(i){
