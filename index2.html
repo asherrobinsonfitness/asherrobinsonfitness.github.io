@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Online Fat Loss Coaching</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+<link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+<link rel="shortcut icon" href="/assets/favicon.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-variable.woff2" crossorigin>
+<style>
+:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+strong{font-weight:600}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+
+/* nav — standard dot+label nav bar, now living inside section 2 instead of the page header.
+   Bled out to the section's own edges so it keeps the same full-width bar look: same
+   height, padding, and bottom border as before. */
+.signup-progress{position:relative;display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0;min-height:3rem}
+.nav-progress{display:inline-flex;align-items:center;gap:1rem;font-size:.9375rem}
+.survey-step{color:#a8afba;font-weight:500;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
+.survey-step--active{color:var(--text)}
+.signup-dot{width:6px;height:6px;color:rgba(255,255,255,.2);flex-shrink:0}
+.signup-dot.signup-dot--active{color:#06f}
+.signup-check{display:block;width:10px;height:10px;overflow:visible;color:var(--muted);flex-shrink:0}
+
+/* headline / subheadline */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
+.hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
+.hero-image{display:block;width:auto;height:auto;max-width:100%;max-height:min(420px,45vh);margin:1.5rem auto 0}
+
+/* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
+.results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
+.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
+.signup-field{margin-bottom:.75rem;position:relative}
+.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid #3a3a3a;border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-input::placeholder{color:transparent}
+.signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
+.signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
+.signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{top:0;font-size:.8125rem;background:#161616}
+.signup-input:focus+.signup-label{color:var(--link)}
+.signup-checkbox-field{display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 1rem}
+.signup-checkbox-field input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin-top:.15rem;flex-shrink:0;position:relative;border:1.5px solid #3a3a3a;border-radius:4px;background:0 0;cursor:pointer;transition:background-color 0s ease,border-color 0s ease}
+.signup-checkbox-field input[type=checkbox]:checked{background:var(--blue);border-color:var(--blue)}
+.signup-checkbox-field input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.signup-checkbox-field input[type=checkbox]:focus-visible{box-shadow:0 0 0 2px rgba(0,102,255,.25)}
+.signup-checkbox-field label{font-size:.8125rem;color:var(--muted);line-height:1.5;text-align:left;cursor:pointer}
+.field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
+.signup-unit-field{margin-bottom:.75rem}
+.signup-height-row{display:flex;gap:.75rem}
+.signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #3a3a3a;border-radius:8px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-unit-input:focus-within{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
+.signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:var(--text);font-size:1.0625rem;font-weight:600;font-family:inherit}
+.signup-unit-input__field::placeholder{color:var(--muted);font-weight:400}
+.signup-unit-input__suffix{flex-shrink:0;margin-left:.5rem;color:var(--muted);font-size:.9375rem}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
+.signup-submit:disabled:hover{background:var(--card-border)}
+.btn-chevron{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);flex-shrink:0}
+.signup-legal-note{font-size:.8125rem;color:#a8afba;text-align:center;line-height:1.55;margin-top:.9rem}
+.legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
+.legal-link:hover{color:var(--link)}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
+.signup-back-link:hover{color:var(--text)}
+.signup-back-link svg{flex-shrink:0}
+
+/* footer */
+footer{background:#161616;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:.8125rem;color:var(--muted)}
+footer{padding-left:1rem;padding-right:1rem}
+.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
+.footer-disclaimer{font-size:.8125rem;line-height:1.6;opacity:.85}
+.footer-disclaimer p+p{margin-top:.75rem}
+.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+footer a{color:var(--link);text-decoration:none}
+
+/* legal (terms / privacy) popups */
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.legal-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
+.legal-overlay.active .legal-modal{transform:translateY(0)}
+.legal-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
+.legal-modal-title{font-size:.8125rem;font-weight:600;color:#f8fafc}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:6px;cursor:pointer;padding:.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
+.legal-modal-body::-webkit-scrollbar{display:none}
+.legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
+.legal-modal-body .legal-effective{font-size:.8125rem;color:#a8afba;margin-bottom:1.75rem}
+.legal-modal-body h3{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.75rem 0 .625rem;padding-top:1.375rem;border-top:1px solid var(--card-border,#3d3d3d)}
+.legal-modal-body p{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.75rem}
+.legal-modal-body ul{margin:0 0 .875rem 1.125rem}
+.legal-modal-body ul li{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.25rem}
+.legal-modal-body a{color:var(--link);text-decoration:none}
+.legal-modal-body a:hover{color:var(--link)}
+.legal-modal-body strong{color:var(--text);font-weight:600}
+
+@media(hover:hover) and (pointer:fine){
+  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
+  .signup-submit:hover{background:#0052cc}
+}
+
+@media (prefers-color-scheme:light){
+  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5}
+  body{background:#f7f7f7}
+  .container{background:#f7f7f7}
+  footer{background:#eee;border-top-color:var(--border)}
+  .results-section{background:#eee}
+  .signup-progress{border-bottom-color:var(--card-border)}
+  .signup-dot{color:rgba(0,0,0,.2)}
+  .signup-input{border-color:#d0d0d0}
+  .signup-unit-input{border-color:#d0d0d0}
+  .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
+  .signup-label{color:#4a4a4a}
+  .signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{background:#eee}
+  .signup-legal-note{color:#4a4a4a}
+  .legal-modal{background:#fff;border-color:var(--card-border)}
+  .legal-modal-header{border-bottom-color:var(--card-border)}
+  .legal-modal-title{color:var(--text)}
+  .legal-modal-close{color:rgba(0,0,0,.5)}
+  .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+  .legal-modal-body h2{color:var(--text)}
+  .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+  .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="container">
+    <div class="hero-grid">
+      <h1 class="headline">Get Your Free Personalized Ideal Weight Analysis…</h1>
+      <div class="subheadline">In under 30 seconds.</div>
+      <img class="hero-image" src="https://i.postimg.cc/zB4KjY9n/screens.webp" alt="App screens placeholder" loading="lazy" decoding="async">
+    </div>
+
+    <section class="results-section">
+      <div class="signup-progress">
+        <div class="nav-progress" aria-label="Progress">
+          <span class="survey-step survey-step--active" id="progress-step-name">
+            <svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Name
+          </span>
+          <span class="survey-step" id="progress-step-email">
+            <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Email
+          </span>
+          <span class="survey-step" id="progress-step-results">
+            <svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Starting Point
+          </span>
+        </div>
+      </div>
+
+      <div class="blocks-grid">
+
+        <div id="step-name">
+          <h2 class="signup-title">What's your <strong>name</strong>?</h2>
+          <form id="form-name" novalidate>
+            <div class="signup-field">
+              <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <label class="signup-label" for="su-first">First name</label>
+            </div>
+            <div class="signup-field">
+              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+              <label class="signup-label" for="su-last">Last name</label>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-name" disabled>
+              Let's Start
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <p class="signup-legal-note">By proceeding, you agree to my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>.</p>
+        </div>
+
+        <div id="step-email" style="display:none">
+          <h2 class="signup-title">Where should I <strong>email</strong> it to?</h2>
+          <form id="form-email" novalidate>
+            <div class="signup-field">
+              <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required>
+              <label class="signup-label" for="su-email">Email address</label>
+            </div>
+            <div class="signup-checkbox-field">
+              <input type="checkbox" id="su-optin" class="signup-checkbox">
+              <label for="su-optin">I agree to receive newsletters, updates, and occasional offers from Asher Robinson LLC by email.</label>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-email" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <div id="step-results" style="display:none">
+          <h2 class="signup-title">What is your <strong>starting point</strong>?</h2>
+          <form id="form-results" novalidate>
+            <div class="signup-unit-field">
+              <label class="field-label">Height</label>
+              <div class="signup-height-row">
+                <div class="signup-unit-input">
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" placeholder="0" required>
+                  <span class="signup-unit-input__suffix">feet</span>
+                </div>
+                <div class="signup-unit-input">
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" placeholder="0" required>
+                  <span class="signup-unit-input__suffix">inches</span>
+                </div>
+              </div>
+            </div>
+            <div class="signup-unit-field">
+              <label class="field-label">Weight</label>
+              <div class="signup-unit-input">
+                <input class="signup-unit-input__field" type="text" inputmode="decimal" id="su-weight" placeholder="0" required>
+                <span class="signup-unit-input__suffix">lbs</span>
+              </div>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-results" disabled>
+              Get My Results
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-email"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-disclaimer">
+      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
+      <p>Results may vary. This site does not offer medical advice. Always consult with a qualified healthcare professional before starting any diet or exercise program.</p>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-row">
+      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
+        <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="terms-title">Terms of Service</span>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Terms of Service</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Agreement</h3>
+      <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
+      <h3>2. The Service</h3>
+      <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
+      <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
+      <h3>3. Eligibility</h3>
+      <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>4. Pricing and Billing</h3>
+      <p>Coaching is billed as follows:</p>
+      <ul>
+        <li><strong>First month:</strong> $50.00 (one-time discounted rate)</li>
+        <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
+      </ul>
+      <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>5. Cancellation</h3>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <h3>6. 30-Day Results Guarantee</h3>
+      <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
+      <ul>
+        <li>You must have completed your onboarding call</li>
+        <li>You must have logged food and workouts as directed for the 30-day period</li>
+        <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
+      </ul>
+      <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
+      <h3>7. No Medical Advice</h3>
+      <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>8. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>9. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>10. Disclaimer of Warranties</h3>
+      <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>11. Governing Law</h3>
+      <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
+      <h3>12. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>13. Contact</h3>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Privacy Policy</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Overview</h3>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
+      <h3>2. Information I Collect</h3>
+      <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
+      <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
+      <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <h3>3. How I Use Your Information</h3>
+      <ul>
+        <li>To process your purchase and deliver coaching services</li>
+        <li>To communicate with you about your coaching program</li>
+        <li>To measure and improve the performance of my advertising</li>
+        <li>To analyze Site usage and improve user experience</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
+      <h3>4. Sharing of Information</h3>
+      <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
+      <ul>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
+      </ul>
+      <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
+      <h3>5. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>6. Data Retention</h3>
+      <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
+      <h3>7. Your Rights</h3>
+      <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>8. Children's Privacy</h3>
+      <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
+      <h3>9. Third-Party Links</h3>
+      <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
+      <h3>10. Changes to This Policy</h3>
+      <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      <h3>11. Contact</h3>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openLegal(e){var l=document.getElementById("modal-"+e);if(l){l.classList.add("active"),document.body.style.overflow="hidden";var o=l.querySelector(".legal-modal-body");o&&(o.scrollTop=0)}}
+function closeLegal(e){var l=document.getElementById("modal-"+e);l&&(l.classList.remove("active"),document.body.style.overflow="")}
+document.querySelectorAll(".legal-overlay").forEach(function(e){e.addEventListener("click",function(l){l.target===e&&closeLegal(e.id.replace("modal-",""))})});
+document.addEventListener("keydown",function(e){"Escape"===e.key&&document.querySelectorAll(".legal-overlay.active").forEach(function(e){closeLegal(e.id.replace("modal-",""))})});
+</script>
+
+<script>
+// Design-only 3-step wizard: enables each step's button once its fields look valid,
+// steps forward/back between panels, and animates the nav dots. No tracking, no
+// server calls, no navigation — this page doesn't submit anywhere.
+(function(){
+  var steps=["name","email","results"],
+      current=0;
+
+  var stepEls={name:document.getElementById("step-name"),email:document.getElementById("step-email"),results:document.getElementById("step-results")};
+  var navEls={name:document.getElementById("progress-step-name"),email:document.getElementById("progress-step-email"),results:document.getElementById("progress-step-results")};
+  var labels={name:"Name",email:"Email",results:"Starting Point"};
+
+  var dotSVG='<svg class="signup-dot" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>';
+  var dotActiveSVG='<svg class="signup-dot signup-dot--active" xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>';
+  var checkSVG='<svg class="signup-check" width="10" height="10" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>';
+
+  function updateNav(){
+    steps.forEach(function(key,i){
+      var el=navEls[key];
+      el.classList.toggle("survey-step--active",i===current);
+      el.innerHTML=(i<current?checkSVG:i===current?dotActiveSVG:dotSVG)+labels[key];
+    });
+  }
+  function goToStep(i){
+    stepEls[steps[current]].style.display="none";
+    current=i;
+    stepEls[steps[current]].style.display="";
+    updateNav();
+    var firstInput=stepEls[steps[current]].querySelector("input");
+    if(firstInput&&window.matchMedia("(min-width:601px)").matches) firstInput.focus();
+  }
+
+  // Step 1 — name
+  var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
+  function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
+  [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
+  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled) goToStep(1); });
+
+  // Step 2 — email (checkbox opt-in is required too)
+  var email=document.getElementById("su-email"),optin=document.getElementById("su-optin"),btnEmail=document.getElementById("btn-email");
+  function validateEmail(){
+    var v=email.value.trim();
+    btnEmail.disabled=!(email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&optin.checked);
+  }
+  email.addEventListener("input",validateEmail);
+  optin.addEventListener("change",validateEmail);
+  document.getElementById("form-email").addEventListener("submit",function(e){ e.preventDefault(); if(!btnEmail.disabled) goToStep(2); });
+  document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
+
+  // Step 3 — height (feet + inches) / weight
+  var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
+      weight=document.getElementById("su-weight"),btnResults=document.getElementById("btn-results");
+  function validateResults(){ btnResults.disabled=!(heightFt.value.trim()&&heightIn.value.trim()&&weight.value.trim()); }
+  [heightFt,heightIn,weight].forEach(function(el){ el.addEventListener("input",validateResults); });
+  document.getElementById("form-results").addEventListener("submit",function(e){ e.preventDefault(); });
+  document.getElementById("back-to-email").addEventListener("click",function(){ goToStep(1); });
+
+  updateNav();
+})();
+</script>
+
+</body>
+</html>
