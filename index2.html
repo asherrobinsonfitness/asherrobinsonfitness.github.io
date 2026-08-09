@@ -36,7 +36,7 @@ strong{font-weight:600}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
-.hero-image{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;margin:1.5rem auto 0;background:#ff2d78;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.hero-image{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;margin:1.5rem auto 0;background:#ff2d78}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
@@ -116,7 +116,6 @@ footer a{color:var(--link);text-decoration:none}
   .container{background:#f7f7f7}
   footer{background:#eee;border-top-color:var(--border)}
   .results-section{background:#eee}
-  .hero-image{box-shadow:0 12px 28px rgba(0,0,0,.15)}
   .signup-progress{border-bottom-color:var(--card-border)}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
@@ -398,11 +397,26 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-email").addEventListener("submit",function(e){ e.preventDefault(); if(!btnEmail.disabled) goToStep(2); });
   document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
 
-  // Step 3 — height (feet + inches) / weight
+  // Step 3 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
       weight=document.getElementById("su-weight"),btnResults=document.getElementById("btn-results");
-  function validateResults(){ btnResults.disabled=!(heightFt.value.trim()&&heightIn.value.trim()&&weight.value.trim()); }
-  [heightFt,heightIn,weight].forEach(function(el){ el.addEventListener("input",validateResults); });
+  var ranges={ft:[3,8],inches:[0,12],lbs:[80,350]};
+  function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
+  function clampField(el,range){
+    var n=parseFloat(el.value);
+    if(isNaN(n)) return;
+    if(n<range[0]) el.value=range[0];
+    else if(n>range[1]) el.value=range[1];
+  }
+  function validateResults(){
+    btnResults.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
+  }
+  heightFt.addEventListener("input",validateResults);
+  heightFt.addEventListener("blur",function(){ clampField(heightFt,ranges.ft); validateResults(); });
+  heightIn.addEventListener("input",validateResults);
+  heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateResults(); });
+  weight.addEventListener("input",validateResults);
+  weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateResults(); });
   document.getElementById("form-results").addEventListener("submit",function(e){ e.preventDefault(); });
   document.getElementById("back-to-email").addEventListener("click",function(){ goToStep(1); });
 
