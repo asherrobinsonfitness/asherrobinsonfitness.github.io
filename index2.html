@@ -27,7 +27,7 @@ strong{font-weight:600}
    as the dot+label version). Circle sized to match that version's text-row height so
    swapping styles doesn't change the bar's height. */
 .signup-progress{position:relative;display:flex;align-items:center;justify-content:center;padding:.875rem 1.25rem;margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0;min-height:3rem}
-.nav-progress{display:flex;align-items:center;justify-content:center;gap:1.5rem}
+.nav-progress{display:flex;align-items:center;justify-content:center;gap:1.25rem}
 .step-circle{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--step-secondary,var(--muted));color:var(--step-secondary,var(--muted));font-size:.75rem;font-weight:600;flex-shrink:0;transition:border-color 0s,color 0s}
 .survey-step--active .step-circle{border-color:var(--text);color:var(--text)}
 
@@ -70,9 +70,13 @@ strong{font-weight:600}
 .signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:var(--text);font-size:1.0625rem;font-weight:600;font-family:inherit}
 .signup-unit-input__field::placeholder{color:var(--muted);font-weight:400}
 .signup-unit-input__suffix{flex-shrink:0;margin-left:.5rem;color:var(--muted);font-size:.9375rem}
-.bf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
-.bf-option{padding:.75rem .5rem;border:1px solid #3a3a3a;border-radius:8px;background:0 0;color:var(--text);font-size:.9375rem;font-weight:600;font-family:inherit;cursor:pointer;text-align:center;transition:border-color 0s ease,background-color 0s ease,color 0s ease}
-.bf-option[aria-checked=true]{border-color:var(--link);background:rgba(0,102,255,.1);color:var(--link)}
+.bf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem}
+.bf-option{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:0;border:none;background:0 0;color:var(--text);font-family:inherit;cursor:pointer;text-align:center;transition:color 0s ease}
+.bf-option__img{width:100%;aspect-ratio:1/1;border:1px solid #3a3a3a;border-radius:8px;overflow:hidden;background:#111;transition:border-color 0s ease,background-color 0s ease}
+.bf-option__img img{width:100%;height:100%;object-fit:cover;display:block}
+.bf-option__label{font-size:.8125rem;font-weight:600;line-height:1.2}
+.bf-option[aria-checked=true] .bf-option__img{border-color:var(--link);background:rgba(0,102,255,.1)}
+.bf-option[aria-checked=true] .bf-option__label{color:var(--link)}
 .signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
 .signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
 .signup-submit:disabled:hover{background:var(--card-border)}
@@ -128,7 +132,7 @@ footer a{color:var(--link);text-decoration:none}
   .signup-progress{border-bottom-color:var(--card-border)}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
-  .bf-option{border-color:#d0d0d0}
+  .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
   .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
@@ -160,7 +164,8 @@ footer a{color:var(--link);text-decoration:none}
         <div class="nav-progress" aria-label="Progress">
           <span class="survey-step survey-step--active" id="progress-step-name"><span class="step-circle">1</span></span>
           <span class="survey-step" id="progress-step-email"><span class="step-circle">2</span></span>
-          <span class="survey-step" id="progress-step-results"><span class="step-circle">3</span></span>
+          <span class="survey-step" id="progress-step-metrics"><span class="step-circle">3</span></span>
+          <span class="survey-step" id="progress-step-bodyfat"><span class="step-circle">4</span></span>
         </div>
       </div>
 
@@ -205,9 +210,9 @@ footer a{color:var(--link);text-decoration:none}
           <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <div id="step-results" style="display:none">
-          <h2 class="signup-title">What is your <strong>starting point</strong>?</h2>
-          <form id="form-results" novalidate>
+        <div id="step-metrics" style="display:none">
+          <h2 class="signup-title">What's your <strong>height and weight</strong>?</h2>
+          <form id="form-metrics" novalidate>
             <div class="signup-unit-field">
               <label class="field-label">Height</label>
               <div class="signup-height-row">
@@ -228,26 +233,63 @@ footer a{color:var(--link);text-decoration:none}
                 <span class="signup-unit-input__suffix">pounds</span>
               </div>
             </div>
-            <div class="signup-unit-field">
-              <label class="field-label">Body Fat %</label>
-              <div class="bf-grid" id="bf-grid" role="radiogroup" aria-label="Body fat percentage">
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="3-4">3–4%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="5-7">5–7%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="8-12">8–12%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="13-17">13–17%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="18-23">18–23%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="24-29">24–29%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="30-34">30–34%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="35-39">35–39%</button>
-                <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="40+">40%+</button>
-              </div>
-            </div>
-            <button type="submit" class="signup-submit" id="btn-results" disabled>
-              Get My Roadmap
+            <button type="submit" class="signup-submit" id="btn-metrics" disabled>
+              Continue
               <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
           <button type="button" class="signup-back-link" id="back-to-email"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <div id="step-bodyfat" style="display:none">
+          <h2 class="signup-title">Estimate your <strong>body fat</strong></h2>
+          <form id="form-bodyfat" novalidate>
+            <div class="signup-unit-field">
+            <div class="bf-grid" id="bf-grid" role="radiogroup" aria-label="Body fat percentage">
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="3-4">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-3-4.webp" alt="Example physique at 3 to 4 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">3–4%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="5-7">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-5-7.webp" alt="Example physique at 5 to 7 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">5–7%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="8-12">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-8-12.webp" alt="Example physique at 8 to 12 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">8–12%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="13-17">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-13-17.webp" alt="Example physique at 13 to 17 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">13–17%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="18-23">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-18-23.webp" alt="Example physique at 18 to 23 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">18–23%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="24-29">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-24-29.webp" alt="Example physique at 24 to 29 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">24–29%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="30-34">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-30-34.webp" alt="Example physique at 30 to 34 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">30–34%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="35-39">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-35-39.webp" alt="Example physique at 35 to 39 percent body fat" loading="lazy"></span>
+                <span class="bf-option__label">35–39%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="40+">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-40plus.webp" alt="Example physique at 40 percent body fat or higher" loading="lazy"></span>
+                <span class="bf-option__label">40%+</span>
+              </button>
+            </div>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-bodyfat" disabled>
+              Get My Roadmap
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-metrics"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
       </div>
@@ -381,15 +423,15 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// Design-only 3-step wizard: enables each step's button once its fields look valid,
+// Design-only 4-step wizard: enables each step's button once its fields look valid,
 // steps forward/back between panels, and animates the nav dots. No tracking, no
 // server calls, no navigation — this page doesn't submit anywhere.
 (function(){
-  var steps=["name","email","results"],
+  var steps=["name","email","metrics","bodyfat"],
       current=0;
 
-  var stepEls={name:document.getElementById("step-name"),email:document.getElementById("step-email"),results:document.getElementById("step-results")};
-  var navEls={name:document.getElementById("progress-step-name"),email:document.getElementById("progress-step-email"),results:document.getElementById("progress-step-results")};
+  var stepEls={name:document.getElementById("step-name"),email:document.getElementById("step-email"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat")};
+  var navEls={name:document.getElementById("progress-step-name"),email:document.getElementById("progress-step-email"),metrics:document.getElementById("progress-step-metrics"),bodyfat:document.getElementById("progress-step-bodyfat")};
 
   // Active AND completed steps read as "primary" text; upcoming steps stay "secondary".
   function updateNav(){
@@ -444,7 +486,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
   // Step 3 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
-      weight=document.getElementById("su-weight"),btnResults=document.getElementById("btn-results");
+      weight=document.getElementById("su-weight"),btnMetrics=document.getElementById("btn-metrics");
   var ranges={ft:[3,8],inches:[0,12],lbs:[80,350]};
   function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
   function clampField(el,range){
@@ -453,32 +495,37 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     if(n<range[0]) el.value=range[0];
     else if(n>range[1]) el.value=range[1];
   }
-  var bfOptions=document.querySelectorAll(".bf-option"),bfValue=null;
-  function validateResults(){
-    btnResults.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs)&&bfValue);
+  function validateMetrics(){
+    btnMetrics.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
   }
-  heightFt.addEventListener("input",validateResults);
-  heightFt.addEventListener("blur",function(){ clampField(heightFt,ranges.ft); validateResults(); });
-  heightIn.addEventListener("input",validateResults);
-  heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateResults(); });
-  weight.addEventListener("input",validateResults);
-  weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateResults(); });
+  heightFt.addEventListener("input",validateMetrics);
+  heightFt.addEventListener("blur",function(){ clampField(heightFt,ranges.ft); validateMetrics(); });
+  heightIn.addEventListener("input",validateMetrics);
+  heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateMetrics(); });
+  weight.addEventListener("input",validateMetrics);
+  weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateMetrics(); });
+  document.getElementById("form-metrics").addEventListener("submit",function(e){ e.preventDefault(); if(!btnMetrics.disabled) goToStep(3); });
+  document.getElementById("back-to-email").addEventListener("click",function(){ goToStep(1); });
+
+  // Step 4 — body fat (single-select image grid)
+  var bfOptions=document.querySelectorAll(".bf-option"),bfValue=null,btnBodyfat=document.getElementById("btn-bodyfat");
+  function validateBodyfat(){ btnBodyfat.disabled=!bfValue; }
   bfOptions.forEach(function(btn){
     btn.addEventListener("click",function(){
       bfOptions.forEach(function(b){ b.setAttribute("aria-checked","false"); });
       btn.setAttribute("aria-checked","true");
       bfValue=btn.dataset.value;
-      validateResults();
+      validateBodyfat();
     });
   });
-  document.getElementById("form-results").addEventListener("submit",function(e){
+  document.getElementById("form-bodyfat").addEventListener("submit",function(e){
     e.preventDefault();
     var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
     if(name) qs.push("name="+encodeURIComponent(name));
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
     window.location.href="/index3.html"+(qs.length?"?"+qs.join("&"):"");
   });
-  document.getElementById("back-to-email").addEventListener("click",function(){ goToStep(1); });
+  document.getElementById("back-to-metrics").addEventListener("click",function(){ goToStep(2); });
 
   updateNav();
 })();
