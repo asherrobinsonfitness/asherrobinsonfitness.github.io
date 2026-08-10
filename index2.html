@@ -50,6 +50,12 @@ strong{font-weight:600}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
 .signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{top:0;font-size:.8125rem;background:#161616}
 .signup-input:focus+.signup-label{color:var(--link)}
+#su-email{padding-right:2.5rem}
+.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
+.email-status.is-valid{color:#2ecc71}
+.email-status.is-invalid{color:#e53e3e}
+.email-spinner{width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
+@keyframes email-spin{to{transform:rotate(360deg)}}
 .signup-checkbox-field{display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 1rem}
 .signup-checkbox-field input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin-top:.15rem;flex-shrink:0;position:relative;border:1.5px solid #3a3a3a;border-radius:4px;background:0 0;cursor:pointer;transition:background-color 0s ease,border-color 0s ease}
 .signup-checkbox-field input[type=checkbox]:checked{background:var(--blue);border-color:var(--blue)}
@@ -120,6 +126,7 @@ footer a{color:var(--link);text-decoration:none}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
   .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
+  .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
   .signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{background:#eee}
   .signup-legal-note{color:#4a4a4a}
@@ -180,6 +187,7 @@ footer a{color:var(--link);text-decoration:none}
             <div class="signup-field">
               <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required>
               <label class="signup-label" for="su-email">Email address</label>
+              <span class="email-status" id="su-email-status" aria-hidden="true"></span>
             </div>
             <div class="signup-checkbox-field">
               <input type="checkbox" id="su-optin" class="signup-checkbox">
@@ -386,13 +394,32 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
   document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled) goToStep(1); });
 
-  // Step 2 — email (checkbox opt-in is required too)
-  var email=document.getElementById("su-email"),optin=document.getElementById("su-optin"),btnEmail=document.getElementById("btn-email");
+  // Step 2 — email (checkbox opt-in is required too), with the same live
+  // server-side verification (spinner while checking, then check/x) as the
+  // signup modal on index.html.
+  var email=document.getElementById("su-email"),optin=document.getElementById("su-optin"),btnEmail=document.getElementById("btn-email"),
+      es=document.getElementById("su-email-status"),emTimer=null,emReqId=0,emVerified=!1;
   function validateEmail(){
     var v=email.value.trim();
-    btnEmail.disabled=!(email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&optin.checked);
+    btnEmail.disabled=!(email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&optin.checked&&emVerified);
   }
-  email.addEventListener("input",validateEmail);
+  function setEmailStatus(st){
+    emVerified="valid"===st;
+    es.classList.remove("is-valid","is-invalid");
+    if("checking"===st) es.innerHTML='<span class="email-spinner"></span>';
+    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; }
+    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; }
+    else es.innerHTML="";
+    validateEmail();
+  }
+  function checkEmailServer(){
+    var em=email.value.trim();
+    if(!email.validity.valid||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return void setEmailStatus("");
+    var reqId=++emReqId;
+    setEmailStatus("checking");
+    fetch("/api/verify-email?email="+encodeURIComponent(em)).then(function(r){ return r.json(); }).then(function(r){ reqId===emReqId&&setEmailStatus(r.valid?"valid":"invalid"); }).catch(function(){ reqId===emReqId&&setEmailStatus(""); });
+  }
+  email.addEventListener("input",function(){ setEmailStatus(""); clearTimeout(emTimer); emTimer=setTimeout(checkEmailServer,500); });
   optin.addEventListener("change",validateEmail);
   document.getElementById("form-email").addEventListener("submit",function(e){ e.preventDefault(); if(!btnEmail.disabled) goToStep(2); });
   document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
