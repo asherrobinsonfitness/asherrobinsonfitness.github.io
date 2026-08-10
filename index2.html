@@ -139,7 +139,7 @@ footer a{color:var(--link);text-decoration:none}
 <main>
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Get Your Free Personalized Ideal Weight Analysis…</h1>
+      <h1 class="headline">Get Your Free Personalized Fat Loss Roadmap…</h1>
       <div class="subheadline">In under 30 seconds.</div>
       <div class="hero-image" role="img" aria-label="Placeholder media block"></div>
     </div>
@@ -417,7 +417,13 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateResults(); });
   weight.addEventListener("input",validateResults);
   weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateResults(); });
-  document.getElementById("form-results").addEventListener("submit",function(e){ e.preventDefault(); });
+  document.getElementById("form-results").addEventListener("submit",function(e){
+    e.preventDefault();
+    var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
+    if(name) qs.push("name="+encodeURIComponent(name));
+    if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    window.location.href="/index3.html"+(qs.length?"?"+qs.join("&"):"");
+  });
   document.getElementById("back-to-email").addEventListener("click",function(){ goToStep(1); });
 
   updateNav();
