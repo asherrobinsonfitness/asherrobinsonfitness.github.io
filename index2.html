@@ -77,9 +77,10 @@ strong{font-weight:600}
 .signup-legal-note{font-size:.8125rem;color:#a8afba;text-align:center;line-height:1.55;margin-top:.9rem}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
-.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
-.signup-back-link:hover{color:var(--text)}
-.signup-back-link svg{flex-shrink:0}
+.signup-btn-row{display:flex;gap:.75rem;margin-top:.35rem}
+.signup-btn-row .signup-submit{flex:1;width:auto;margin-top:0}
+.signup-back-btn{flex-shrink:0;width:3rem;display:flex;align-items:center;justify-content:center;border:1px solid #3a3a3a;border-radius:8px;background:0 0;color:var(--text);cursor:pointer;padding:0}
+.signup-back-btn:hover{border-color:var(--muted)}
 
 /* footer */
 footer{background:#161616;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:.8125rem;color:var(--muted)}
@@ -125,6 +126,7 @@ footer a{color:var(--link);text-decoration:none}
   .signup-progress{border-bottom-color:var(--card-border)}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
+  .signup-back-btn{border-color:#d0d0d0}
   .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
@@ -193,12 +195,14 @@ footer a{color:var(--link);text-decoration:none}
               <input type="checkbox" id="su-optin" class="signup-checkbox">
               <label for="su-optin">I agree to receive newsletters, updates, and occasional offers from Asher Robinson LLC by email.</label>
             </div>
-            <button type="submit" class="signup-submit" id="btn-email" disabled>
-              Continue
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-            </button>
+            <div class="signup-btn-row">
+              <button type="button" class="signup-back-btn" id="back-to-name" aria-label="Back"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+              <button type="submit" class="signup-submit" id="btn-email" disabled>
+                Continue
+                <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              </button>
+            </div>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
         <div id="step-results" style="display:none">
@@ -224,12 +228,14 @@ footer a{color:var(--link);text-decoration:none}
                 <span class="signup-unit-input__suffix">pounds</span>
               </div>
             </div>
-            <button type="submit" class="signup-submit" id="btn-results" disabled>
-              Get My Results
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-            </button>
+            <div class="signup-btn-row">
+              <button type="button" class="signup-back-btn" id="back-to-email" aria-label="Back"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+              <button type="submit" class="signup-submit" id="btn-results" disabled>
+                Get My Roadmap
+                <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              </button>
+            </div>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-email"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
       </div>
