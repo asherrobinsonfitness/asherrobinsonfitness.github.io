@@ -89,13 +89,15 @@ strong{font-weight:600}
 .signup-back-link:hover{color:var(--text)}
 .signup-back-link svg{flex-shrink:0}
 
-/* disclaimers — sits on the base (non-panel) background, between the quiz and the footer */
-.disclaimers-section{padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
+/* disclaimers — same dark panel background as results-section/footer. No border of its
+   own: results-section's border-bottom divides it from the quiz above, and footer's
+   border-top divides it from the footer below, so each boundary gets exactly one line. */
+.disclaimers-section{background:#161616;padding:var(--pad) 1.5rem}
 .disclaimers-section{padding:var(--pad-sm) 1rem}
 .disclaimers-inner{max-width:472px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem}
-.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
+.disclaimers-title{font-size:.8125rem;font-weight:600;color:var(--text)}
 .disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
-.disclaimer-heading{font-size:.8125rem;font-weight:600;color:var(--text)}
+.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--text)}
 .disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
 .disclaimer-text .legal-link{font-size:.8125rem}
 
@@ -140,6 +142,7 @@ footer a{color:var(--link);text-decoration:none}
   .container{background:#f7f7f7}
   footer{background:#eee;border-top-color:var(--border)}
   .results-section{background:#eee}
+  .disclaimers-section{background:#eee}
   .signup-input{border-color:#d0d0d0}
   .signup-unit-input{border-color:#d0d0d0}
   .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
@@ -198,8 +201,8 @@ footer a{color:var(--link);text-decoration:none}
           </form>
           <ul class="value-bullets">
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Your personalized roadmap in 30 seconds</span></li>
-            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Based on peer-reviewed research</span></li>
-            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight &amp; how to get there</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight &amp; your distance from it</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips by email to get there</span></li>
           </ul>
         </div>
 
