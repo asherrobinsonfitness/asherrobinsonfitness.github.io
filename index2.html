@@ -83,12 +83,21 @@ strong{font-weight:600}
 .value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#1c1c1c}
-.signup-legal-note{font-size:.8125rem;color:#a8afba;text-align:center;line-height:1.55;margin-top:.9rem}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
 .signup-back-link:hover{color:var(--text)}
 .signup-back-link svg{flex-shrink:0}
+
+/* disclaimers — sits on the base (non-panel) background, between the quiz and the footer */
+.disclaimers-section{padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
+.disclaimers-section{padding:var(--pad-sm) 1rem}
+.disclaimers-inner{max-width:472px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem}
+.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
+.disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
+.disclaimer-heading{font-size:.8125rem;font-weight:600;color:var(--text)}
+.disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
+.disclaimer-text .legal-link{font-size:.8125rem}
 
 /* footer */
 footer{background:#161616;border-top:1px solid var(--border);padding:2.5rem 1.5rem;font-size:.8125rem;color:var(--muted)}
@@ -138,7 +147,6 @@ footer a{color:var(--link);text-decoration:none}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
   .signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{background:#eee}
-  .signup-legal-note{color:#4a4a4a}
   .check-icon{color:#f7f7f7}
   .legal-modal{background:#fff;border-color:var(--card-border)}
   .legal-modal-header{border-bottom-color:var(--card-border)}
@@ -193,7 +201,6 @@ footer a{color:var(--link);text-decoration:none}
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Based on peer-reviewed research</span></li>
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight &amp; how to get there</span></li>
           </ul>
-          <p class="signup-legal-note">By proceeding, you agree to my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>.</p>
         </div>
 
         <div id="step-metrics" style="display:none">
@@ -302,6 +309,32 @@ footer a{color:var(--link);text-decoration:none}
     </section>
   </div>
 </main>
+
+<section class="disclaimers-section">
+  <div class="disclaimers-inner">
+    <h2 class="disclaimers-title">Disclaimers</h2>
+
+    <div class="disclaimer-block">
+      <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+      <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+    </div>
+
+    <div class="disclaimer-block">
+      <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+      <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+    </div>
+
+    <div class="disclaimer-block">
+      <h3 class="disclaimer-heading">Eligibility</h3>
+      <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+    </div>
+
+    <div class="disclaimer-block">
+      <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+      <p class="disclaimer-text">In addition to what's shown immediately after you submit, you may receive a redirect page and a follow-up email with your results and information about coaching from Asher Robinson LLC. By proceeding, you agree to my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>.</p>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-inner">
