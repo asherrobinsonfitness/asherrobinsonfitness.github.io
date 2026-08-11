@@ -21,6 +21,7 @@
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
+.container{min-height:100vh;min-height:100svh;box-sizing:border-box}
 
 /* nav — a single progress line bled to the section's top edge. No track background —
    only the fill itself is visible; it grows from 0% (invisible, step 1) to 100% (full
@@ -29,17 +30,17 @@ strong{font-weight:600}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
 
 /* headline / subheadline */
-.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
+.hero-grid{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
 .hero-media-row{display:flex;gap:.75rem;width:100%;margin:1.5rem auto 0}
-.hero-media-row__item{flex:1;min-width:0;aspect-ratio:8.5/11;border-radius:12px;background:#ff2d78}
+.hero-media-row__item{display:block;flex:1;min-width:0;width:100%;aspect-ratio:8.5/11;border-radius:0;background:#ff2d78;object-fit:cover}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
-.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
+.results-section{display:flex;flex-direction:column;flex:1 1 auto;background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
-.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.blocks-grid{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .signup-field{margin-bottom:.75rem;position:relative}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid #3a3a3a;border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
@@ -169,10 +170,10 @@ footer a{color:var(--link);text-decoration:none}
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized Fat Loss Roadmap…</h1>
       <div class="subheadline">In under 30 seconds.</div>
-      <div class="hero-media-row" role="img" aria-label="Placeholder roadmap pages">
-        <div class="hero-media-row__item"></div>
-        <div class="hero-media-row__item"></div>
-        <div class="hero-media-row__item"></div>
+      <div class="hero-media-row">
+        <img class="hero-media-row__item" src="https://i.postimg.cc/RhYYRvtz/connectpdf-dummy-5page-1.png" alt="Roadmap PDF placeholder, page 1">
+        <img class="hero-media-row__item" src="https://i.postimg.cc/v82CMtNV/connectpdf-dummy-5page-2.png" alt="Roadmap PDF placeholder, page 2">
+        <img class="hero-media-row__item" src="https://i.postimg.cc/CMr9YsQ8/connectpdf-dummy-5page-3.png" alt="Roadmap PDF placeholder, page 3">
       </div>
     </div>
 
