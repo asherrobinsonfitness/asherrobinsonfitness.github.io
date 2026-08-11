@@ -478,23 +478,18 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
   // The hero and the form section split the viewport by flex-growing to fill it. That
   // split should reflect step 1's content only — later steps (e.g. the taller body-fat
-  // grid) must never reshuffle it. So measure each section's natural share of the
-  // viewport once, on step 1, then pin both to fixed vh/svh flex-basis values — still
-  // viewport-relative (like .hero-grid on index.html/index-onepage.html), just no
-  // longer re-derived from whichever step happens to be showing. Re-measured on
-  // resize, but only while step 1 is still showing (its own layout is the only one
-  // that's allowed to define the split).
+  // grid) must never reshuffle it. So measure each section's natural height once, on
+  // step 1, then pin both to fixed flex-basis values. Re-measured on resize, but only
+  // while step 1 is still showing (its own layout is the only one that's allowed to
+  // define the split).
   var heroGrid=document.querySelector(".hero-grid"),resultsSection=document.querySelector(".results-section");
   function lockSectionHeights(){
     heroGrid.style.flex="";
     resultsSection.style.flex="";
-    var vh=window.innerHeight,
-        heroVh=(heroGrid.getBoundingClientRect().height/vh*100).toFixed(4),
-        resultsVh=(resultsSection.getBoundingClientRect().height/vh*100).toFixed(4);
-    heroGrid.style.flex="0 0 "+heroVh+"vh";
-    heroGrid.style.flex="0 0 "+heroVh+"svh";
-    resultsSection.style.flex="0 0 "+resultsVh+"vh";
-    resultsSection.style.flex="0 0 "+resultsVh+"svh";
+    var heroH=heroGrid.getBoundingClientRect().height,
+        resultsH=resultsSection.getBoundingClientRect().height;
+    heroGrid.style.flex="0 0 "+heroH+"px";
+    resultsSection.style.flex="0 0 "+resultsH+"px";
   }
   lockSectionHeights();
   window.addEventListener("resize",function(){ if(current===0) lockSectionHeights(); });
