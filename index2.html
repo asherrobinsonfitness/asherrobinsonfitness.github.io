@@ -476,6 +476,24 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   var stepEls={name:document.getElementById("step-name"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat"),email:document.getElementById("step-email")};
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
+  // The hero and the form section split the viewport by flex-growing to fill it. That
+  // split should reflect step 1's content only — later steps (e.g. the taller body-fat
+  // grid) must never reshuffle it. So measure each section's natural height once, on
+  // step 1, then pin both to fixed flex-basis values. Re-measured on resize, but only
+  // while step 1 is still showing (its own layout is the only one that's allowed to
+  // define the split).
+  var heroGrid=document.querySelector(".hero-grid"),resultsSection=document.querySelector(".results-section");
+  function lockSectionHeights(){
+    heroGrid.style.flex="";
+    resultsSection.style.flex="";
+    var heroH=heroGrid.getBoundingClientRect().height,
+        resultsH=resultsSection.getBoundingClientRect().height;
+    heroGrid.style.flex="0 0 "+heroH+"px";
+    resultsSection.style.flex="0 0 "+resultsH+"px";
+  }
+  lockSectionHeights();
+  window.addEventListener("resize",function(){ if(current===0) lockSectionHeights(); });
+
   // 0% on step 1 (invisible) through 100% on the last step (full width).
   function updateNav(){
     var pct=current/(steps.length-1)*100;
