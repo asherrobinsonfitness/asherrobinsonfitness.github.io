@@ -103,6 +103,7 @@ strong{font-weight:600}
 /* disclaimers — now live inside the footer, so they inherit its dark panel
    background rather than needing one of their own. */
 .footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimer-grid{display:flex;flex-direction:column;gap:1.25rem}
 .disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
 .disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
 .disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
@@ -158,6 +159,11 @@ footer a{color:var(--link);text-decoration:none}
      ride along with the now vertically-centered blocks-grid — position:absolute
      takes it out of the centered flex flow entirely. */
   .progress-line{position:absolute;top:0;left:0;right:0;width:auto;margin:0}
+  /* Four disclaimer blocks read as one long full-width column on a wide
+     screen — a 2x2 grid keeps each paragraph's line length readable while
+     the block as a whole still spans the full footer width. Same gap value
+     as the stacked layout, just used for both row-gap and column-gap. */
+  .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
 @media (prefers-color-scheme:light){
@@ -345,24 +351,26 @@ footer a{color:var(--link);text-decoration:none}
   <div class="footer-inner">
     <div class="footer-disclaimers">
       <h2 class="disclaimers-title">Disclaimers</h2>
-      <div class="disclaimer-block">
-        <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
-        <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
-      </div>
+      <div class="disclaimer-grid">
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+        </div>
 
-      <div class="disclaimer-block">
-        <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
-        <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
-      </div>
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+        </div>
 
-      <div class="disclaimer-block">
-        <h3 class="disclaimer-heading">Eligibility</h3>
-        <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
-      </div>
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Eligibility</h3>
+          <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+        </div>
 
-      <div class="disclaimer-block">
-        <h3 class="disclaimer-heading">How Your Information Is Used</h3>
-        <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+          <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        </div>
       </div>
     </div>
     <hr class="footer-divider">
