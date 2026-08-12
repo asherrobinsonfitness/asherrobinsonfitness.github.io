@@ -137,6 +137,19 @@ footer a{color:var(--link);text-decoration:none}
   .signup-submit:hover{background:#0052cc}
 }
 
+/* desktop — swap the stacked hero/form layout for a 50/50 side-by-side split.
+   The divider moves from a horizontal line (bottom of hero-grid, then bottom
+   of results-section) to a single vertical line between the two columns. */
+@media (min-width:900px){
+  .container{flex-direction:row;align-items:stretch;border-bottom:1px solid var(--border);min-height:100vh}
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;border-bottom:none;border-right:1px solid var(--border);justify-content:center}
+  .results-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;border-bottom:none;display:flex;flex-direction:column;justify-content:center;position:relative}
+  /* Pin the progress line to the section's own top edge instead of letting it
+     ride along with the now vertically-centered blocks-grid — position:absolute
+     takes it out of the centered flex flow entirely. */
+  .progress-line{position:absolute;top:0;left:0;right:0;width:auto;margin:0}
+}
+
 @media (prefers-color-scheme:light){
   :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
   body{background:#f7f7f7}
