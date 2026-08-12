@@ -91,15 +91,11 @@ strong{font-weight:600}
 .signup-back-link:hover{color:var(--text)}
 .signup-back-link svg{flex-shrink:0}
 
-/* disclaimers — same dark panel background as results-section/footer. No border of its
-   own: results-section's border-bottom divides it from the quiz above, and footer's
-   border-top divides it from the footer below, so each boundary gets exactly one line. */
-.disclaimers-section{background:#161616;padding:var(--pad) 1.5rem}
-.disclaimers-section{padding:var(--pad-sm) 1rem}
-.disclaimers-inner{max-width:472px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem}
-.disclaimers-title{font-size:.8125rem;font-weight:600;color:var(--text)}
+/* disclaimers — now live inside the footer, so they inherit its dark panel
+   background rather than needing one of their own. */
+.footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
 .disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
-.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--text)}
+.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
 .disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
 .disclaimer-text .legal-link{font-size:.8125rem}
 
@@ -144,7 +140,6 @@ footer a{color:var(--link);text-decoration:none}
   .container{background:#f7f7f7}
   footer{background:#eee;border-top-color:var(--border)}
   .results-section{background:#eee}
-  .disclaimers-section{background:#eee}
   .signup-unit-input{border-color:#d0d0d0}
   .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
   .signup-checkbox-field input[type=checkbox]{border-color:#d0d0d0}
@@ -314,37 +309,32 @@ footer a{color:var(--link);text-decoration:none}
   </div>
 </main>
 
-<section class="disclaimers-section">
-  <div class="disclaimers-inner">
-    <h2 class="disclaimers-title">Disclaimers</h2>
-
-    <div class="disclaimer-block">
-      <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
-      <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
-    </div>
-
-    <div class="disclaimer-block">
-      <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
-      <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
-    </div>
-
-    <div class="disclaimer-block">
-      <h3 class="disclaimer-heading">Eligibility</h3>
-      <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
-    </div>
-
-    <div class="disclaimer-block">
-      <h3 class="disclaimer-heading">How Your Information Is Used</h3>
-      <p class="disclaimer-text">In addition to what's shown immediately after you submit, you may receive a redirect page and a follow-up email with your results and information about coaching from Asher Robinson LLC. By proceeding, you agree to my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>.</p>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="footer-inner">
+    <div class="footer-disclaimers">
+      <div class="disclaimer-block">
+        <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+        <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+      </div>
+
+      <div class="disclaimer-block">
+        <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+        <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+      </div>
+
+      <div class="disclaimer-block">
+        <h3 class="disclaimer-heading">Eligibility</h3>
+        <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+      </div>
+
+      <div class="disclaimer-block">
+        <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+        <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+      </div>
+    </div>
+    <hr class="footer-divider">
     <div class="footer-disclaimer">
       <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
-      <p>Results may vary. This site does not offer medical advice. Always consult with a qualified healthcare professional before starting any diet or exercise program.</p>
     </div>
     <hr class="footer-divider">
     <div class="footer-row">
