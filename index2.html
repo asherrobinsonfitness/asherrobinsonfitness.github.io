@@ -94,6 +94,7 @@ strong{font-weight:600}
 /* disclaimers — now live inside the footer, so they inherit its dark panel
    background rather than needing one of their own. */
 .footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
 .disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
 .disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
 .disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
@@ -312,6 +313,7 @@ footer a{color:var(--link);text-decoration:none}
 <footer>
   <div class="footer-inner">
     <div class="footer-disclaimers">
+      <h2 class="disclaimers-title">Disclaimers</h2>
       <div class="disclaimer-block">
         <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
         <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
