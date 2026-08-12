@@ -21,7 +21,6 @@
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
-.container{min-height:100vh;min-height:100svh;box-sizing:border-box}
 
 /* nav — a single progress line bled to the section's top edge. No track background —
    only the fill itself is visible; it grows from 0% (invisible, step 1) to 100% (full
@@ -30,7 +29,7 @@ strong{font-weight:600}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
 
 /* headline / subheadline */
-.hero-grid{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem;border-bottom:1px solid var(--border)}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
@@ -38,9 +37,9 @@ strong{font-weight:600}
 .hero-media-row__item{display:block;flex:1;min-width:0;width:100%;aspect-ratio:8.5/11;border-radius:0;background:#ff2d78;object-fit:cover}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
-.results-section{display:flex;flex-direction:column;flex:1 1 auto;background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%;border-bottom:1px solid var(--border)}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
-.blocks-grid{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .signup-field{margin-bottom:.75rem;position:relative}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid #3a3a3a;border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
@@ -203,7 +202,7 @@ footer a{color:var(--link);text-decoration:none}
           <ul class="value-bullets">
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Your personalized roadmap in 30 seconds</span></li>
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight &amp; your distance from it</span></li>
-            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips by email to get there</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips to get there by email</span></li>
           </ul>
         </div>
 
@@ -475,24 +474,6 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
   var stepEls={name:document.getElementById("step-name"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat"),email:document.getElementById("step-email")};
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
-
-  // The hero and the form section split the viewport by flex-growing to fill it. That
-  // split should reflect step 1's content only — later steps (e.g. the taller body-fat
-  // grid) must never reshuffle it. So measure each section's natural height once, on
-  // step 1, then pin both to fixed flex-basis values. Re-measured on resize, but only
-  // while step 1 is still showing (its own layout is the only one that's allowed to
-  // define the split).
-  var heroGrid=document.querySelector(".hero-grid"),resultsSection=document.querySelector(".results-section");
-  function lockSectionHeights(){
-    heroGrid.style.flex="";
-    resultsSection.style.flex="";
-    var heroH=heroGrid.getBoundingClientRect().height,
-        resultsH=resultsSection.getBoundingClientRect().height;
-    heroGrid.style.flex="0 0 "+heroH+"px";
-    resultsSection.style.flex="0 0 "+resultsH+"px";
-  }
-  lockSectionHeights();
-  window.addEventListener("resize",function(){ if(current===0) lockSectionHeights(); });
 
   // 0% on step 1 (invisible) through 100% on the last step (full width).
   function updateNav(){
