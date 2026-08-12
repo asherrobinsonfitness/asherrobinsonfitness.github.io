@@ -537,8 +537,18 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
   function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
   [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
+  // The pulse should only ever show on a genuinely empty field. It's baked into
+  // the initial markup as the "empty on load" default, but the field isn't
+  // always actually empty on load — browser autofill or a bfcache/history
+  // restore can populate it before the user ever focuses or blurs it. Check
+  // (and re-check on every input, since autofill fires that event too) rather
+  // than relying solely on focus/blur.
+  function syncFirstPulse(){ first.classList.toggle("pulse-border",!first.value.trim()); }
+  syncFirstPulse();
+  window.addEventListener("pageshow",syncFirstPulse);
+  first.addEventListener("input",syncFirstPulse);
   first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
-  first.addEventListener("blur",function(){ first.classList.toggle("pulse-border",!first.value.trim()); });
+  first.addEventListener("blur",syncFirstPulse);
   document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled) goToStep(1); });
 
   // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
