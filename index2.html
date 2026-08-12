@@ -45,8 +45,9 @@ strong{font-weight:600}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
 .signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
-.signup-input.pulse-border{animation:pulse-border-anim 1.6s ease-in-out infinite}
-@keyframes pulse-border-anim{0%,100%{border-color:var(--input-border)}50%{border-color:var(--blue)}}
+.pulse-ring{position:absolute;inset:0;border-radius:8px;border:1px solid var(--blue);opacity:0;pointer-events:none}
+.signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
+@keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
 .signup-input:focus+.signup-label,.signup-input:not(:placeholder-shown)+.signup-label{top:0;font-size:.8125rem;background:#161616}
 .signup-input:focus+.signup-label{color:var(--link)}
@@ -185,6 +186,7 @@ footer a{color:var(--link);text-decoration:none}
           <form id="form-name" novalidate>
             <div class="signup-field">
               <input class="signup-input pulse-border" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <span class="pulse-ring" aria-hidden="true"></span>
               <label class="signup-label" for="su-first">First name</label>
             </div>
             <div class="signup-field">
