@@ -629,7 +629,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
     if(name) qs.push("name="+encodeURIComponent(name));
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
-    window.location.href="/index3.html"+(qs.length?"?"+qs.join("&"):"");
+    window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
   });
   document.getElementById("back-to-bodyfat").addEventListener("click",function(){ goToStep(2); });
 
