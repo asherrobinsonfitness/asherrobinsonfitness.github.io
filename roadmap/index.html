@@ -40,8 +40,25 @@ strong{font-weight:600}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
-.hero-media-row{display:flex;gap:.75rem;width:100%;margin:1.5rem auto 0}
-.hero-media-row__item{display:block;flex:1;min-width:0;width:100%;aspect-ratio:8.5/11;border-radius:0;background:#ff2d78;object-fit:cover}
+.hero-media-row{display:flex;align-items:center;justify-content:center;width:100%;margin:2rem auto 0;perspective:1400px}
+.hero-media-row__item{display:block;flex:0 0 auto;width:29%;aspect-ratio:8.5/11;background:#ff2d78;object-fit:cover;transition:transform .3s ease}
+/* Fanned "scroll through a stack" arrangement: item 2 sits flat and fully
+   visible in front; item 1 turns away in 3D space one way behind it, items 3
+   and 4 turn away the opposite way, stacked progressively further back.
+   rotateY (not a flat rotate) is what gives each card its receding,
+   foreshortened edge instead of just a tilted rectangle. Turning a card
+   shrinks its rendered footprint (cos of the angle, plus perspective
+   falloff with distance), so widths are oversized here and pulled back
+   together with negative margins — the two roughly cancel out so the row
+   still fills the same 100% width the flat 3-image row used to. */
+.hero-media-row__item:nth-child(1){transform:translateZ(-10px) rotateY(28deg);z-index:1;margin-right:-6%}
+/* Shadows go only on the cards that have another card sitting behind them,
+   and only as a directional (sideways, not all-around) shadow pointed at
+   that neighbor — so it reads as depth cast onto the card behind, not a
+   halo around the card sitting in front of it against the black backdrop. */
+.hero-media-row__item:nth-child(2){width:36%;transform:rotateY(0deg) translateZ(0);z-index:4;box-shadow:-22px 0 32px -10px rgba(0,0,0,.6),22px 0 32px -10px rgba(0,0,0,.6)}
+.hero-media-row__item:nth-child(3){transform:translateZ(-10px) rotateY(-28deg);z-index:3;margin-left:-6%;box-shadow:20px 0 30px -10px rgba(0,0,0,.55)}
+.hero-media-row__item:nth-child(4){width:27%;transform:translateZ(-40px) rotateY(-28deg);z-index:2;margin-left:-9%}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
@@ -201,6 +218,7 @@ footer a{color:var(--link);text-decoration:none}
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-pdf-page-1.webp" alt="Roadmap PDF preview, page 1">
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-pdf-page-2.webp" alt="Roadmap PDF preview, page 2">
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-pdf-page-3.webp" alt="Roadmap PDF preview, page 3">
+        <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-pdf-page-3.webp" alt="Roadmap PDF preview, page 4">
       </div>
     </div>
 
