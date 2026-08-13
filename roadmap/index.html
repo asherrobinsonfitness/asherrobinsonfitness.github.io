@@ -103,6 +103,10 @@ strong{font-weight:600}
 .value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#1c1c1c}
+/* hero request-count note — same treatment as the pricing note under the
+   "Get Started" button on index.html: small, centered, plain caption text
+   directly under the hero media. */
+.hero-request-note{margin:.75rem auto 0;max-width:472px;font-size:.8125rem;text-align:center}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
@@ -208,6 +212,9 @@ footer a{color:var(--link);text-decoration:none}
       <div class="subheadline">In under 30 seconds.</div>
       <div class="hero-media-row">
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
+      </div>
+      <div class="hero-request-note" id="hero-request-note" style="display:none">
+        Requested by <span id="request-count">0</span> <span id="request-count-noun">men</span>
       </div>
     </div>
 
@@ -636,11 +643,54 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
     if(name) qs.push("name="+encodeURIComponent(name));
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    // Record the completed request in Supabase — this is what the "Requested by
+    // X men" bullet counts. keepalive lets the request finish even though we
+    // navigate away immediately after firing it.
+    fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
+      method:"POST",
+      keepalive:!0,
+      headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
+      body:JSON.stringify({
+        first_name:first.value.trim(),
+        last_name:last.value.trim(),
+        email:emailVal,
+        height_ft:parseFloat(heightFt.value)||null,
+        height_in:parseFloat(heightIn.value)||null,
+        weight_lbs:parseFloat(weight.value)||null,
+        bodyfat_range:bfValue
+      })
+    }).catch(function(){});
     window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
   });
   document.getElementById("back-to-bodyfat").addEventListener("click",function(){ goToStep(2); });
 
   updateNav();
+})();
+</script>
+
+<script>
+// Live social-proof count under the hero image — reads the real row count
+// from the roadmap_leads table via a Supabase RPC (so the public anon key
+// can get a count without being able to read the leads themselves). If the
+// request fails, the note stays hidden rather than show a fake number.
+(function(){
+  var note=document.getElementById("hero-request-note"),
+      countEl=document.getElementById("request-count"),
+      nounEl=document.getElementById("request-count-noun");
+  if(!note||!countEl||!nounEl) return;
+
+  fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count",{
+    method:"POST",
+    headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00"},
+    body:"{}"
+  }).then(function(r){ if(!r.ok) throw new Error("bad response"); return r.json(); })
+    .then(function(n){
+      n=Number(n);
+      countEl.textContent=n.toLocaleString();
+      nounEl.textContent=n===1?"man":"men";
+      note.style.display="";
+    })
+    .catch(function(){ note.style.display="none"; });
 })();
 </script>
 
