@@ -2,6 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Meta Pixel Code -->
+<script>
+// Shared helpers for Meta Pixel + Conversions API deduplication.
+// Each conversion event gets one event_id shared by both the browser pixel
+// call and the server-side CAPI call so Meta counts it once, not twice.
+function __fbEventId() {
+  return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+}
+function __fbCookie(name) {
+  var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : undefined;
+}
+function __fbCapi(eventName, eventId, customData, userData) {
+  try {
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData || {},
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+// First-touch acquisition-path marker. Set once, on entry to a funnel, and
+// never overwritten — whichever page the visitor's session actually started
+// on decides "lead_magnet" vs "direct" for this browser, even if they come
+// back through a different page days later. Mirrors __fbCookie's own cookie
+// pattern; read back via __fbCookie('acq_path') wherever a Meta content_name
+// needs to reflect it (Purchase, CompleteRegistration). Also pushed to
+// PostHog as a $set_once person property (2nd arg) so it can't be
+// overwritten there either, no matter how many times this runs.
+function __acqPathInit(value) {
+  if (__fbCookie('acq_path')) return;
+  var oneYear = 60 * 60 * 24 * 365;
+  document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
+  if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
+}
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'/edge/fbevents.js');
+fbq('init', '1575468926630270');
+var __pvEventId = __fbEventId();
+fbq('track', 'PageView', {}, {eventID: __pvEventId});
+__fbCapi('PageView', __pvEventId);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    // No ph_distinct_id cookie bootstrap here (unlike index.html/welcome) —
+    // that cookie is only ever set by middleware.js, which only runs on "/".
+    // Visitors can land straight on /roadmap/ without ever hitting "/", so
+    // posthog-js is left to mint and persist its own distinct_id normally.
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    __acqPathInit('lead_magnet');
+    posthog.capture('roadmap_pageview');
+</script>
+<!-- End PostHog -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Online Fat Loss Coaching</title>
 <meta name="robots" content="noindex,nofollow">
@@ -38,8 +114,7 @@ strong{font-weight:600}
 /* headline / subheadline */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
-.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;margin-bottom:.5rem}
-.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.25rem auto 0}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 /* The fanned "scroll through a stack" arrangement (item 2 flat and focused
    up front, 1 turned one way behind it, 3 and 4 turned the other way and
    progressively further back) got fragile as real CSS 3D transforms — every
@@ -221,8 +296,7 @@ footer a{color:var(--link);text-decoration:none}
 <main>
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Get Your Free Personalized Fat Loss Roadmap…</h1>
-      <div class="subheadline">In under 30 seconds.</div>
+      <h1 class="headline">Get Your Free Personalized Fat Loss Roadmap</h1>
       <div class="hero-media-row">
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
       </div>
@@ -581,7 +655,10 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   first.addEventListener("input",syncFirstPulse);
   first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
   first.addEventListener("blur",syncFirstPulse);
-  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled) goToStep(1); });
+  // Fired once, the first time the visitor clears step 1 — this is the
+  // "started the quiz" funnel event, not "typed in the name field".
+  var formStartedFired=!1;
+  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } goToStep(1); } });
 
   // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
@@ -654,6 +731,13 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
     if(name) qs.push("name="+encodeURIComponent(name));
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    // Final-step lead capture — PostHog funnel event plus the deduped Meta
+    // Lead (pixel + CAPI). No "gap" property here: this page never computes
+    // a goal weight / distance-from-goal, only the raw bodyfat bracket.
+    posthog.capture("roadmap_lead_captured",{bodyfat_range:bfValue});
+    var leadEventId=__fbEventId();
+    fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
+    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
     // Record the completed request in Supabase — this is what the "Requested by
     // X men" bullet counts. keepalive lets the request finish even though we
     // navigate away immediately after firing it.
