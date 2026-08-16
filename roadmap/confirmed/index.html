@@ -1,0 +1,55 @@
+<!doctype html> <html lang="en"> <head> <meta charset="UTF-8">
+<script>
+  // Shared helpers for Meta Pixel + Conversions API deduplication.
+  // Each conversion event gets one event_id shared by both the browser pixel
+  // call and the server-side CAPI call so Meta counts it once, not twice.
+  function __fbEventId() {
+    return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+  }
+  function __fbCookie(name) {
+    var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return m ? m[2] : undefined;
+  }
+  function __fbCapi(eventName, eventId, customData, userData) {
+    try {
+      fetch('/api/meta-capi', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        keepalive: true,
+        body: JSON.stringify({
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: window.location.href,
+          custom_data: customData || {},
+          user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+        })
+      }).catch(function(){});
+    } catch (e) {}
+  }
+</script>
+<script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),o.push=o,o.loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="/edge/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","1575468926630270");var __pvEventId=__fbEventId();fbq("track","PageView",{},{eventID:__pvEventId});__fbCapi('PageView',__pvEventId)</script> <noscript><img height="1" width="1" style="display:none" src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"></noscript>
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    posthog.capture('redirect_page_viewed');
+</script>
+<!-- End PostHog -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5"> <title>Your Fat Loss Roadmap Is On Its Way</title> <meta name="description" content="Check your email — your personalized Fat Loss Roadmap is on its way."> <meta name="robots" content="noindex,follow"> <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <link rel="canonical" href="https://asherrobinsonfitness.com/roadmap/confirmed/"> <meta property="og:title" content="Your Fat Loss Roadmap Is On Its Way"> <meta property="og:description" content="Check your email — your personalized Fat Loss Roadmap is on its way."> <meta property="og:type" content="website"> <meta property="og:url" content="https://asherrobinsonfitness.com/roadmap/confirmed/"> <meta property="og:site_name" content="Asher Robinson Fitness"> <meta property="og:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG"> <meta property="og:image:width" content="1200"> <meta property="og:image:height" content="630"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Your Fat Loss Roadmap Is On Its Way"> <meta name="twitter:description" content="Check your email — your personalized Fat Loss Roadmap is on its way."> <meta name="twitter:image" content="https://img-pull.b-cdn.net/profilepicdraft.PNG"> <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp"> <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp"> <link rel="shortcut icon" href="/assets/favicon.jpg"> <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"> <link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp"> <link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp"> <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)"> <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)"> <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<style>
+:root{--text:#f8fafc;--muted:#a8afba}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+.hero-grid{min-height:100vh;min-height:100svh;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;gap:.75rem}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;max-width:34rem}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;max-width:30rem}
+@media (prefers-color-scheme:light){:root{--text:#111111;--muted:#4a4a4a}body{background:#f7f7f7}.container{background:#f7f7f7}}
+</style>
+</head> <body> <main> <div class="container"> <div class="hero-grid"> <h1 class="headline">Your Roadmap Is On Its Way</h1> <div class="subheadline">It should land in your inbox within the next few minutes. Be sure to check your spam or promotions folder if you don't see it.</div> </div> </div> </main> </body> </html>
