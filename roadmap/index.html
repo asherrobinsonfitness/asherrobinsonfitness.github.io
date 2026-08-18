@@ -744,16 +744,13 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 // Live social-proof count under the hero image — reads the real row count
 // from the roadmap_leads table via a Supabase RPC (so the public anon key
 // can get a count without being able to read the leads themselves). If the
-// request fails, the note stays hidden rather than show a fake number.
-// Below 100 the real number just isn't an impressive enough stat to lead
-// with, so the note stays hidden until the count actually clears 100.
+// request fails, or the count is still zero, the note stays hidden rather
+// than show a fake or empty number.
 (function(){
   var note=document.getElementById("hero-request-note"),
       countEl=document.getElementById("request-count"),
       nounEl=document.getElementById("request-count-noun");
   if(!note||!countEl||!nounEl) return;
-
-  var MIN_TO_SHOW=100;
 
   fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count",{
     method:"POST",
@@ -762,7 +759,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   }).then(function(r){ if(!r.ok) throw new Error("bad response"); return r.json(); })
     .then(function(n){
       n=Number(n);
-      if(n<=MIN_TO_SHOW){ note.style.display="none"; return; }
+      if(n<=0){ note.style.display="none"; return; }
       countEl.textContent=n.toLocaleString();
       nounEl.textContent=n===1?"man":"men";
       note.style.display="";
