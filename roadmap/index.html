@@ -178,9 +178,10 @@ strong{font-weight:600}
    the secondary section's own background (matching .results-section) in
    place of the callout's inverted background, and no color override — it
    keeps inheriting the ambient text color rather than following the
-   callout's contrast-flip. Margin-top is the smaller "within one grouping"
-   spacing (.75rem) now that the image and this note are one grouping, not
-   the "separate groupings" spacing (1.5rem) used elsewhere. */
+   callout's contrast-flip.
+   Renders in place immediately (see JS below) with a spinner standing in
+   for the count until the real number loads — the pill itself is never
+   hidden or faded, so there's no layout shift and no delayed pop-in. */
 .hero-request-note{display:inline-flex;align-self:center;align-items:center;gap:.35rem;padding:.4rem .625rem;border-radius:8px;background:#161616;font-size:.8125rem;font-weight:600;line-height:1.2;letter-spacing:-.005em;margin:1.5rem auto 0;max-width:100%;min-width:0}
 .hero-request-note svg{flex-shrink:0;width:1rem;height:1rem}
 /* Flex items default to min-width:auto, which refuses to shrink below the
@@ -188,6 +189,14 @@ strong{font-weight:600}
    pill (and the page around it) into horizontal overflow instead of
    wrapping. min-width:0 here is what actually lets the text wrap. */
 .hero-request-note__text{min-width:0}
+/* The shared .email-spinner is blue (var(--link)) everywhere else it's
+   used, but that's an accent color, not a neutral one — wrong tone for a
+   plain loading state sitting in running text next to "Requested by".
+   Scoped to this component only, so the email-verification spinner
+   elsewhere keeps its blue. border-top-color:var(--text) makes the moving
+   segment track the same light/dark-mode text color as the word next to
+   it, so the whole pill always reads as one color in either theme. */
+.hero-request-note__text .email-spinner{margin-left:.15em;border-top-color:var(--text)}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
