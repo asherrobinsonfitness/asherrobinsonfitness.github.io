@@ -293,7 +293,7 @@ footer a{color:var(--link);text-decoration:none}
       <div class="hero-media-row">
         <img class="hero-media-row__item" src="/assets/placeholder-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
       </div>
-      <div class="hero-request-note" id="hero-request-note" style="display:none"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span class="hero-request-note__text">Requested by <span id="request-count">0</span> <span id="request-count-noun">men</span></span></div>
+      <div class="hero-request-note" id="hero-request-note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span class="hero-request-note__text">Requested by <span id="request-count-value"><span class="email-spinner" aria-hidden="true"></span></span></span></div>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
@@ -324,7 +324,7 @@ footer a{color:var(--link);text-decoration:none}
           </form>
           <ul class="value-bullets">
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
-            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight &amp; your distance from it</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips to get there via email</span></li>
           </ul>
         </div>
@@ -743,14 +743,15 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 <script>
 // Live social-proof count under the hero image — reads the real row count
 // from the roadmap_leads table via a Supabase RPC (so the public anon key
-// can get a count without being able to read the leads themselves). If the
-// request fails, or the count is still zero, the note stays hidden rather
-// than show a fake or empty number.
+// can get a count without being able to read the leads themselves). The
+// note itself renders immediately with a spinner in place of the count so
+// there's no layout shift once the real number loads in. If the request
+// fails, or the count is still zero, the note hides rather than show a
+// fake or empty number.
 (function(){
   var note=document.getElementById("hero-request-note"),
-      countEl=document.getElementById("request-count"),
-      nounEl=document.getElementById("request-count-noun");
-  if(!note||!countEl||!nounEl) return;
+      valueEl=document.getElementById("request-count-value");
+  if(!note||!valueEl) return;
 
   fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count",{
     method:"POST",
@@ -760,9 +761,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     .then(function(n){
       n=Number(n);
       if(n<=0){ note.style.display="none"; return; }
-      countEl.textContent=n.toLocaleString();
-      nounEl.textContent=n===1?"man":"men";
-      note.style.display="";
+      valueEl.textContent=n.toLocaleString()+" "+(n===1?"man":"men");
     })
     .catch(function(){ note.style.display="none"; });
 })();
