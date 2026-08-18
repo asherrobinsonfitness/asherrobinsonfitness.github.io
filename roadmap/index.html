@@ -146,7 +146,7 @@ strong{font-weight:600}
 .email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
 .email-status.is-valid{color:#2ecc71}
 .email-status.is-invalid{color:#e53e3e}
-.email-spinner{width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
+.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
 @keyframes email-spin{to{transform:rotate(360deg)}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
@@ -745,13 +745,20 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 // from the roadmap_leads table via a Supabase RPC (so the public anon key
 // can get a count without being able to read the leads themselves). The
 // note itself renders immediately with a spinner in place of the count so
-// there's no layout shift once the real number loads in. If the request
-// fails, or the count is still zero, the note hides rather than show a
-// fake or empty number.
+// there's no layout shift once the real number loads in. The spinner is
+// held for a minimum stretch regardless of how fast the response comes
+// back, so a near-instant response doesn't just flash/pop — it reads as a
+// deliberate load instead of a glitch. If the request fails, or the count
+// is still zero, the note hides rather than show a fake or empty number.
 (function(){
   var note=document.getElementById("hero-request-note"),
       valueEl=document.getElementById("request-count-value");
   if(!note||!valueEl) return;
+
+  var MIN_SPINNER_MS=600,startedAt=Date.now();
+  function afterMinSpinnerTime(fn){
+    setTimeout(fn,Math.max(0,MIN_SPINNER_MS-(Date.now()-startedAt)));
+  }
 
   fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count",{
     method:"POST",
@@ -760,10 +767,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   }).then(function(r){ if(!r.ok) throw new Error("bad response"); return r.json(); })
     .then(function(n){
       n=Number(n);
-      if(n<=0){ note.style.display="none"; return; }
-      valueEl.textContent=n.toLocaleString()+" "+(n===1?"man":"men");
+      afterMinSpinnerTime(function(){
+        if(n<=0){ note.style.display="none"; return; }
+        valueEl.textContent=n.toLocaleString()+" "+(n===1?"man":"men");
+      });
     })
-    .catch(function(){ note.style.display="none"; });
+    .catch(function(){ afterMinSpinnerTime(function(){ note.style.display="none"; }); });
 })();
 </script>
 
