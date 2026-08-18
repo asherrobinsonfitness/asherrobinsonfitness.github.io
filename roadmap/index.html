@@ -193,11 +193,14 @@ strong{font-weight:600}
    used, but that's an accent color, not a neutral one — wrong tone for a
    plain loading state sitting in running text next to "Requested by".
    Scoped to this component only, so the email-verification spinner
-   elsewhere keeps its blue. border-top-color:currentColor makes the moving
-   segment track the pill's own (inverted) text color instead of the
-   page-wide --text value, so the whole pill always reads as one color in
-   either theme. */
-.hero-request-note__text .email-spinner{margin-left:.15em;border-top-color:currentColor}
+   elsewhere keeps its blue. The base spinner's dark #3a3a3a track was
+   tuned for a dark pill background — now that the pill background is
+   var(--text) (light in dark mode), that track and a currentColor arc
+   sit too close in contrast to read clearly. border-color:transparent
+   drops the track entirely; border-top-color:currentColor draws only
+   the moving arc, in the pill's own (already-adaptive) text color, so
+   it stays legible against the pill's own background in either theme. */
+.hero-request-note__text .email-spinner{margin-left:.15em;border-color:transparent;border-top-color:currentColor}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
