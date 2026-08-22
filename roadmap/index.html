@@ -781,7 +781,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     .then(function(n){
       n=Number(n);
       afterMinSpinnerTime(function(){
-        if(n<=0){ note.style.display="none"; return; }
+        if(n<100){ note.style.display="none"; return; }
         valueEl.textContent=n.toLocaleString()+" "+(n===1?"man":"men");
       });
     })
