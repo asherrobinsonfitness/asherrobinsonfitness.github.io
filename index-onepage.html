@@ -242,9 +242,9 @@
       if (!purchaseEventId) { purchaseEventId = __fbEventId(); sessionStorage.setItem("_purchaseEventId", purchaseEventId); }
 
       var em = emailEl.value.trim(), fn = firstEl.value.trim(), ln = lastEl.value.trim();
-      var leadEventId = __fbEventId();
-      fbq("track", "Lead", {}, { eventID: leadEventId });
-      __fbCapi("Lead", leadEventId, {}, { email: em, firstName: fn, lastName: ln });
+      var initiateCheckoutEventId = __fbEventId();
+      fbq("track", "InitiateCheckout", {}, { eventID: initiateCheckoutEventId });
+      __fbCapi("InitiateCheckout", initiateCheckoutEventId, {}, { email: em, firstName: fn, lastName: ln });
 
       try {
         var resp = await fetch("/api/create-payment-intent", {
