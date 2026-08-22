@@ -97,9 +97,15 @@ export default async function handler(req, res) {
                 'Content-Type': 'application/json',
                 Authorization: 'Basic ' + Buffer.from('api:' + PDFSHIFT_API_KEY).toString('base64'),
             },
-            body: JSON.stringify({
+                        body: JSON.stringify({
                 source: filledHtml,
                 use_print: true,
+                // The template is built for 8.5x11in pages with zero margin
+                // (see its own `@page` CSS) — PDFShift doesn't read that
+                // itself, it defaults to A4 with a 48px margin on all sides,
+                // so both have to be set explicitly here to match.
+                format: '8.5inx11in',
+                margin: '0',
             }),
         });
         if (!resp.ok) {
