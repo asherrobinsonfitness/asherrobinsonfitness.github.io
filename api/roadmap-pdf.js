@@ -12,10 +12,11 @@ const STORAGE_BUCKET = 'roadmap-pdfs';
 export default async function handler(req, res) {
     if (req.method !== 'GET') return res.status(405).end();
 
-    const id = String(req.query.id || '').trim();
-    // Lead ids are Supabase-generated UUIDs — reject anything else outright
-    // rather than forwarding an arbitrary path segment to Storage.
-    if (!/^[0-9a-fA-F-]{10,60}$/.test(id)) {
+        const id = String(req.query.id || '').trim();
+    // roadmap_leads.id is a plain auto-incrementing int8, not a UUID — reject
+    // anything else outright rather than forwarding an arbitrary path
+    // segment to Storage.
+    if (!/^[0-9]{1,20}$/.test(id)) {
         return res.status(400).send('Invalid link.');
     }
 
