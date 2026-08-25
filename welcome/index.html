@@ -30,6 +30,14 @@
       }).catch(function(){});
     } catch (e) {}
   }
+  // "roadmap" or "direct_offer", read from the acq_path cookie set at first
+  // touch on whichever page this visitor's session actually started on
+  // (roadmap/index.html or index.html) — see
+  // __acqPathInit there. undefined if the cookie is missing.
+  function __contentNameFromAcqPath() {
+    var p = __fbCookie('acq_path');
+    return p === 'lead_magnet' ? 'roadmap' : (p === 'direct' ? 'direct_offer' : undefined);
+  }
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -191,6 +199,10 @@
       if (!e.data || e.data.event !== 'calendly.event_scheduled') return;
       var uri = e.data.payload && e.data.payload.event && e.data.payload.event.uri;
       posthog.capture("onboarding_call_booked", { booking_uri: uri });
+      var crEventId = __fbEventId();
+      var crContentName = __contentNameFromAcqPath();
+      fbq('track', 'CompleteRegistration', { content_name: crContentName }, { eventID: crEventId });
+      __fbCapi('CompleteRegistration', crEventId, { content_name: crContentName }, { email: contactEmail || undefined, firstName: (contactName || '').split(/\s+/)[0] || undefined });
       var qs = [];
       if (contactName) qs.push('name=' + encodeURIComponent(contactName));
       if (contactEmail) qs.push('email=' + encodeURIComponent(contactEmail));
