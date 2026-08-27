@@ -179,19 +179,24 @@ strong{font-weight:600}
    check-badge circle behind it, unlike the checkmark bullet — so it's
    sized and colored on its own via .hero-request-note__icon below
    instead of inheriting the badge's #1c1c1c-on-circle treatment.
-   Unlike the old standalone pill, the bullet itself is never hidden —
-   it renders in place immediately like bullet 1, with the shared
-   .email-spinner (same one used for "Checking email address…") standing
-   in for just the number (see JS below) until the real 7-day count
-   loads, then swaps in place — no whole-bullet load-in, no 100+ floor
-   like the control, so it reveals whatever real number comes back, down
-   to a single digit. Only on a failed fetch does the JS hide the whole
-   bullet, since there's nothing real left to show. "<n> men requested"
-   is bumped heavier below so it reads as the emphasized part of "347 men
-   requested in past week" — only the trailing "in past week" stays the
-   shared list's regular weight. */
+   Unlike the old standalone pill, the bullet itself is never hidden and
+   "men requested" never loads in — it, the icon, and the rest of the
+   bullet render in place immediately like bullet 1. Only the number
+   itself (see JS below) is a loading state, standing in as the shared
+   .email-spinner until the real 7-day count arrives, then swapping in
+   place — same spinner used for "Checking email address…", but scoped
+   below to the control page's own transparent-track/currentColor-arc
+   look (no blue accent) since it's sitting in running text on the page
+   background rather than the control's inverted pill. No 100+ floor
+   either, unlike the control: it reveals whatever real number comes
+   back, down to a single digit. Only on a failed fetch does the JS hide
+   the whole bullet, since there's nothing real left to show. "<n> men
+   requested" is bumped heavier below so it reads as the emphasized part
+   of "347 men requested in past week" — only the trailing "in past
+   week" stays the shared list's regular weight. */
 .hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--text)}
 .hero-request-note__count{font-weight:700}
+.hero-request-note__count .email-spinner{border-color:transparent;border-top-color:currentColor}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
@@ -326,7 +331,7 @@ footer a{color:var(--link);text-decoration:none}
           </form>
           <ul class="value-bullets">
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
-            <li id="hero-request-note"><svg class="hero-request-note__icon" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span><span class="hero-request-note__count"><span id="request-count-value"><span class="email-spinner"></span></span> requested</span> in past week</span></li>
+            <li id="hero-request-note"><svg class="hero-request-note__icon" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span><span class="hero-request-note__count"><span id="request-count-value"><span class="email-spinner"></span></span> men requested</span> in past week</span></li>
           </ul>
         </div>
 
@@ -750,12 +755,14 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 // created_at >= now() - interval '7 days' — see
 // roadmap-leads-count-week-rpc.sql), instead of the control's all-time
 // roadmap_leads_count. Unlike the control, the bullet itself never
-// hides/loads in — it's on screen from first paint like bullet 1, with
-// only the number (see its inline .email-spinner, same one used for
-// "Checking email address…") standing in until the real count arrives.
-// There's also no 100+ floor: it reveals whatever real number comes
-// back, down to a single digit. Only a failed fetch hides the whole
-// bullet, since there's nothing real left to put in its place.
+// hides/loads in and "men requested" is static markup, not something
+// this script writes — it's on screen from first paint like bullet 1.
+// Only the number itself (see its inline .email-spinner, same one used
+// for "Checking email address…") is a loading state, standing in until
+// the real count arrives. There's also no 100+ floor: it reveals
+// whatever real number comes back, down to a single digit. Only a
+// failed fetch hides the whole bullet, since there's nothing real left
+// to put in its place.
 (function(){
   var note=document.getElementById("hero-request-note"),
       valueEl=document.getElementById("request-count-value");
@@ -769,7 +776,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     .then(function(n){
       n=Number(n);
       if(!isFinite(n)||n<0) throw new Error("bad count");
-      valueEl.textContent=n.toLocaleString()+(n===1?" man":" men");
+      valueEl.textContent=n.toLocaleString(); // number only — "men requested" is already static markup
     })
     .catch(function(){ note.style.display="none"; }); // nothing real to show — hide rather than spin forever
 })();
