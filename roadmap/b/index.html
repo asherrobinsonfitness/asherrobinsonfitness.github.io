@@ -763,10 +763,22 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 // whatever real number comes back, down to a single digit. Only a
 // failed fetch hides the whole bullet, since there's nothing real left
 // to put in its place.
+// MIN_SPINNER_MS holds the spinner up for a floor of 500ms (matching the
+// email check's own debounce elsewhere on this page) so a fast RPC
+// response doesn't just flash the spinner instead of reading as a real
+// loading state.
 (function(){
   var note=document.getElementById("hero-request-note"),
-      valueEl=document.getElementById("request-count-value");
+      valueEl=document.getElementById("request-count-value"),
+      MIN_SPINNER_MS=500,
+      startedAt=Date.now();
+
   if(!note||!valueEl) return;
+
+  function afterMinSpin(fn){
+    var wait=MIN_SPINNER_MS-(Date.now()-startedAt);
+    wait>0 ? setTimeout(fn,wait) : fn();
+  }
 
   fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count_week",{
     method:"POST",
@@ -776,9 +788,9 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     .then(function(n){
       n=Number(n);
       if(!isFinite(n)||n<0) throw new Error("bad count");
-      valueEl.textContent=n.toLocaleString(); // number only — "men requested" is already static markup
+      afterMinSpin(function(){ valueEl.textContent=n.toLocaleString(); }); // number only — "men requested" is already static markup
     })
-    .catch(function(){ note.style.display="none"; }); // nothing real to show — hide rather than spin forever
+    .catch(function(){ afterMinSpin(function(){ note.style.display="none"; }); }); // nothing real to show — hide rather than spin forever
 })();
 </script>
 
