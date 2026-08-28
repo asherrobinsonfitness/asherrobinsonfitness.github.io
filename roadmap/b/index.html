@@ -180,11 +180,16 @@ strong{font-weight:600}
    align-self/margin-auto — as a full-width flex child of hero-grid's
    column layout it stretches anyway, and centering its content this way
    reads identically to shrink-wrapping it.
+   Colored like this page's other headline/subtitle pairs (e.g.
+   .progress-card__subtitle on welcome/index.html): the whole line,
+   count included, stays var(--muted) — bold weight alone is what marks
+   "<n> men requested" as the emphasized part, so it doesn't also need a
+   brighter color competing with the muted line around it.
    Renders in place immediately (see JS below) with a spinner standing in
    for the count until the real 7-day number loads — never hidden or
    faded except on a failed fetch, when there's nothing real left to show. */
-.hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--text)}
-.hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--text)}
+.hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--muted)}
+.hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--muted)}
 .hero-request-note__count{font-weight:700}
 /* The shared .email-spinner is blue (var(--link)) everywhere else it's
    used, but that's an accent color, not a neutral one — wrong tone for a
