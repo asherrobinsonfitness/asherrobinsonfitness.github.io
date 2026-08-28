@@ -125,7 +125,7 @@ strong{font-weight:600}
    it scales as one flat, reliable unit rather than 4 separately-computed
    ones. */
 .hero-media-row{width:100%;margin:1.5rem auto 0}
-.hero-media-row__item{display:block;width:100%;aspect-ratio:1844/1010;object-fit:contain}
+.hero-media-row__item{display:block;width:100%;aspect-ratio:2283/1010;object-fit:contain}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
@@ -172,31 +172,28 @@ strong{font-weight:600}
 .value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#1c1c1c}
-/* request-count bullet — split-test variant (b): lives as bullet 2 of
-   .value-bullets instead of its own pill under the hero image, reusing
-   that list's own <li> layout so it lines up with the other bullet, but
-   with its people icon sitting straight on the page background — no
-   check-badge circle behind it, unlike the checkmark bullet — so it's
-   sized and colored on its own via .hero-request-note__icon below
-   instead of inheriting the badge's #1c1c1c-on-circle treatment.
-   Unlike the old standalone pill, the bullet itself is never hidden and
-   "men requested" never loads in — it, the icon, and the rest of the
-   bullet render in place immediately like bullet 1. Only the number
-   itself (see JS below) is a loading state, standing in as the shared
-   .email-spinner until the real 7-day count arrives, then swapping in
-   place — same spinner used for "Checking email address…", but scoped
-   below to the control page's own transparent-track/currentColor-arc
-   look (no blue accent) since it's sitting in running text on the page
-   background rather than the control's inverted pill. No 100+ floor
-   either, unlike the control: it reveals whatever real number comes
-   back, down to a single digit. Only on a failed fetch does the JS hide
-   the whole bullet, since there's nothing real left to show. "<n> men
-   requested" is bumped heavier below so it reads as the emphasized part
-   of "347 men requested in past week" — only the trailing "in past
-   week" stays the shared list's regular weight. */
+/* hero request-count note — subheadline placement, plain text (no pill
+   background), same icon-plus-bold-count formatting this used to have as
+   bullet 2 of .value-bullets: a flat people icon at 1em (no check-badge
+   circle behind it), bold "<n> men requested", regular-weight "in past
+   week". Centered under the headline via justify-content rather than
+   align-self/margin-auto — as a full-width flex child of hero-grid's
+   column layout it stretches anyway, and centering its content this way
+   reads identically to shrink-wrapping it.
+   Renders in place immediately (see JS below) with a spinner standing in
+   for the count until the real 7-day number loads — never hidden or
+   faded except on a failed fetch, when there's nothing real left to show. */
+.hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--text)}
 .hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--text)}
 .hero-request-note__count{font-weight:700}
-.hero-request-note__count .email-spinner{border-color:transparent;border-top-color:currentColor}
+/* The shared .email-spinner is blue (var(--link)) everywhere else it's
+   used, but that's an accent color, not a neutral one — wrong tone for a
+   plain loading state sitting in running text on the page background.
+   Scoped to this component only, so the email-verification spinner
+   elsewhere keeps its blue. border-color:transparent drops the spinner's
+   dark track entirely; border-top-color:currentColor draws only the
+   moving arc, in the note's own (already-adaptive) text color. */
+.hero-request-note__count .email-spinner{margin-right:.15em;border-color:transparent;border-top-color:currentColor}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
@@ -298,8 +295,9 @@ footer a{color:var(--link);text-decoration:none}
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized 10% Body Fat Roadmap</h1>
+      <div class="hero-request-note" id="hero-request-note"><svg class="hero-request-note__icon" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span><span class="hero-request-note__count"><span id="request-count-value"><span class="email-spinner"></span></span> men requested</span> in past week</span></div>
       <div class="hero-media-row">
-        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan-3pg.webp" alt="Roadmap PDF preview pages, fanned out">
+        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
       </div>
     </div>
 
@@ -331,7 +329,8 @@ footer a{color:var(--link);text-decoration:none}
           </form>
           <ul class="value-bullets">
             <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
-            <li id="hero-request-note"><svg class="hero-request-note__icon" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span><span class="hero-request-note__count"><span id="request-count-value"><span class="email-spinner"></span></span> men requested</span> in past week</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips to get there via email</span></li>
           </ul>
         </div>
 
@@ -721,9 +720,8 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     var leadEventId=__fbEventId();
     fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
     __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
-    // Record the completed request in Supabase — this is what the "X men
-    // requested in past week" bullet counts (via roadmap_leads_count_week,
-    // see the RPC below). keepalive lets the request finish even though we
+    // Record the completed request in Supabase — this is what the "Requested by
+    // X men" bullet counts. keepalive lets the request finish even though we
     // navigate away immediately after firing it.
     fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
       method:"POST",
@@ -748,21 +746,19 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// Live social-proof bullet — split-test variant (b): bullet 2 of
-// .value-bullets, filled in from a rolling 7-day count on the
-// roadmap_leads table via the roadmap_leads_count_week Supabase RPC (same
-// project as the control page, just a different RPC scoped to
+// Live social-proof note under the headline — filled in from a rolling
+// 7-day count on the roadmap_leads table via the roadmap_leads_count_week
+// Supabase RPC (same project as the rest of this page, just scoped to
 // created_at >= now() - interval '7 days' — see
-// roadmap-leads-count-week-rpc.sql), instead of the control's all-time
-// roadmap_leads_count. Unlike the control, the bullet itself never
-// hides/loads in and "men requested" is static markup, not something
-// this script writes — it's on screen from first paint like bullet 1.
-// Only the number itself (see its inline .email-spinner, same one used
-// for "Checking email address…") is a loading state, standing in until
-// the real count arrives. There's also no 100+ floor: it reveals
-// whatever real number comes back, down to a single digit. Only a
-// failed fetch hides the whole bullet, since there's nothing real left
-// to put in its place.
+// roadmap-leads-count-week-rpc.sql), instead of the all-time
+// roadmap_leads_count. The note itself never hides/loads in — it, the
+// icon, and "men requested"/"in past week" are static markup, on screen
+// from first paint. Only the number itself (see its inline .email-spinner,
+// same one used for "Checking email address…") is a loading state,
+// standing in until the real count arrives. There's no 100+ floor either:
+// it reveals whatever real number comes back, down to a single digit.
+// Only a failed fetch hides the whole note, since there's nothing real
+// left to put in its place.
 // MIN_SPINNER_MS holds the spinner up for a floor of 500ms (matching the
 // email check's own debounce elsewhere on this page) so a fast RPC
 // response doesn't just flash the spinner instead of reading as a real
