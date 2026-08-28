@@ -172,33 +172,35 @@ strong{font-weight:600}
 .value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#1c1c1c}
-/* hero request-count note — subheadline placement, plain text (no pill
-   background), same icon-plus-bold-count formatting this used to have as
-   bullet 2 of .value-bullets: a flat people icon at 1em (no check-badge
-   circle behind it), bold "<n> men requested", regular-weight "in past
-   week". Centered under the headline via justify-content rather than
-   align-self/margin-auto — as a full-width flex child of hero-grid's
-   column layout it stretches anyway, and centering its content this way
-   reads identically to shrink-wrapping it.
-   Colored like this page's other headline/subtitle pairs (e.g.
-   .progress-card__subtitle on welcome/index.html): the whole line,
-   count included, stays var(--muted) — bold weight alone is what marks
-   "<n> men requested" as the emphasized part, so it doesn't also need a
-   brighter color competing with the muted line around it.
+/* hero request-count note — same pill shape as .hero-callout on index.html
+   (inline-flex, padding, border-radius, icon sizing, align-self:center to
+   avoid being stretched full-width by hero-grid's column flex), but with
+   the secondary section's own background (matching .results-section) in
+   place of the callout's inverted background, and no color override — it
+   keeps inheriting the ambient text color rather than following the
+   callout's contrast-flip.
    Renders in place immediately (see JS below) with a spinner standing in
-   for the count until the real 7-day number loads — never hidden or
-   faded except on a failed fetch, when there's nothing real left to show. */
-.hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--muted)}
-.hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--muted)}
-.hero-request-note__count{font-weight:700}
+   for the count until the real number loads — the pill itself is never
+   hidden or faded, so there's no layout shift and no delayed pop-in. */
+.hero-request-note{display:inline-flex;align-self:center;align-items:center;gap:.35rem;padding:.4rem .625rem;border-radius:8px;background:var(--text);color:#1c1c1c;font-size:.8125rem;font-weight:600;line-height:1.2;letter-spacing:-.005em;margin:1.5rem auto 0;max-width:100%;min-width:0}
+.hero-request-note svg{flex-shrink:0;width:1rem;height:1rem}
+/* Flex items default to min-width:auto, which refuses to shrink below the
+   text's own single-line width — on a narrow screen that forces the whole
+   pill (and the page around it) into horizontal overflow instead of
+   wrapping. min-width:0 here is what actually lets the text wrap. */
+.hero-request-note__text{min-width:0}
 /* The shared .email-spinner is blue (var(--link)) everywhere else it's
    used, but that's an accent color, not a neutral one — wrong tone for a
-   plain loading state sitting in running text on the page background.
+   plain loading state sitting in running text next to "Requested by".
    Scoped to this component only, so the email-verification spinner
-   elsewhere keeps its blue. border-color:transparent drops the spinner's
-   dark track entirely; border-top-color:currentColor draws only the
-   moving arc, in the note's own (already-adaptive) text color. */
-.hero-request-note__count .email-spinner{margin-right:.15em;border-color:transparent;border-top-color:currentColor}
+   elsewhere keeps its blue. The base spinner's dark #3a3a3a track was
+   tuned for a dark pill background — now that the pill background is
+   var(--text) (light in dark mode), that track and a currentColor arc
+   sit too close in contrast to read clearly. border-color:transparent
+   drops the track entirely; border-top-color:currentColor draws only
+   the moving arc, in the pill's own (already-adaptive) text color, so
+   it stays legible against the pill's own background in either theme. */
+.hero-request-note__text .email-spinner{margin-left:.15em;border-color:transparent;border-top-color:currentColor}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
@@ -277,6 +279,7 @@ footer a{color:var(--link);text-decoration:none}
   .container{background:#f7f7f7}
   footer{background:#eee}
   .results-section{background:#eee}
+  .hero-request-note{color:#f7f7f7}
   .signup-unit-input{border-color:#d0d0d0}
   .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
@@ -300,10 +303,10 @@ footer a{color:var(--link);text-decoration:none}
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized 10% Body Fat Roadmap</h1>
-      <div class="hero-request-note" id="hero-request-note"><svg class="hero-request-note__icon" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span><span class="hero-request-note__count"><span id="request-count-value"><span class="email-spinner"></span></span> men requested</span> in past week</span></div>
       <div class="hero-media-row">
-        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
+        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan2.webp" alt="Roadmap PDF preview pages, fanned out">
       </div>
+      <div class="hero-request-note" id="hero-request-note" style="display:none"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm698 112q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160H738ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113Z"/></svg><span class="hero-request-note__text">Requested by <span id="request-count-value"></span></span></div>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
@@ -751,47 +754,30 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// Live social-proof note under the headline — filled in from a rolling
-// 7-day count on the roadmap_leads table via the roadmap_leads_count_week
-// Supabase RPC (same project as the rest of this page, just scoped to
-// created_at >= now() - interval '7 days' — see
-// roadmap-leads-count-week-rpc.sql), instead of the all-time
-// roadmap_leads_count. The note itself never hides/loads in — it, the
-// icon, and "men requested"/"in past week" are static markup, on screen
-// from first paint. Only the number itself (see its inline .email-spinner,
-// same one used for "Checking email address…") is a loading state,
-// standing in until the real count arrives. There's no 100+ floor either:
-// it reveals whatever real number comes back, down to a single digit.
-// Only a failed fetch hides the whole note, since there's nothing real
-// left to put in its place.
-// MIN_SPINNER_MS holds the spinner up for a floor of 500ms (matching the
-// email check's own debounce elsewhere on this page) so a fast RPC
-// response doesn't just flash the spinner instead of reading as a real
-// loading state.
+// Live social-proof count under the hero image — reads the real row count
+// from the roadmap_leads table via a Supabase RPC (so the public anon key
+// can get a count without being able to read the leads themselves). The
+// note starts hidden (see its inline style="display:none") and only ever
+// reveals itself once a real count of at least 100 comes back — no
+// spinner/placeholder state, and no flash of visible-then-hidden while the
+// real count is still under 100 or the request is in flight.
 (function(){
   var note=document.getElementById("hero-request-note"),
-      valueEl=document.getElementById("request-count-value"),
-      MIN_SPINNER_MS=500,
-      startedAt=Date.now();
-
+      valueEl=document.getElementById("request-count-value");
   if(!note||!valueEl) return;
 
-  function afterMinSpin(fn){
-    var wait=MIN_SPINNER_MS-(Date.now()-startedAt);
-    wait>0 ? setTimeout(fn,wait) : fn();
-  }
-
-  fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count_week",{
+  fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count",{
     method:"POST",
     headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00"},
     body:"{}"
   }).then(function(r){ if(!r.ok) throw new Error("bad response"); return r.json(); })
     .then(function(n){
       n=Number(n);
-      if(!isFinite(n)||n<0) throw new Error("bad count");
-      afterMinSpin(function(){ valueEl.textContent=n.toLocaleString(); }); // number only — "men requested" is already static markup
+      if(n<100) return; // stays hidden — 100+ is always plural, no singular case to handle
+      valueEl.textContent=n.toLocaleString()+" men";
+      note.style.display="inline-flex";
     })
-    .catch(function(){ afterMinSpin(function(){ note.style.display="none"; }); }); // nothing real to show — hide rather than spin forever
+    .catch(function(){});
 })();
 </script>
 
