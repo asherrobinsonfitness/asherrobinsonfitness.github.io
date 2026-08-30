@@ -98,22 +98,39 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — a single progress line bled to the section's top edge. No track background —
-   only the fill itself is visible; it grows from 0% (invisible, screen 1) to 100% (full
-   width, last screen) as the quiz advances. */
-.progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden}
+/* nav — a thin bar pinned to the results-section's own top edge, bled edge-to-edge
+   past the section's horizontal padding. Taken out of the section's centered flex
+   flow (position:absolute) so it stays put at the top while the current screen's
+   content is centered in the remaining height below it. A visible var(--muted)
+   track underneath the fill (not just the fill itself) so the bar reads as a
+   progress indicator even at 0% width on screen 1, before anything's answered. */
+.progress-line{position:absolute;top:0;left:0;right:0;width:auto;height:4px;overflow:hidden;background:var(--muted)}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
 
 /* section divider — the standalone rule between hero/quiz and between quiz/footer,
    same 1px var(--border) hairline the original roadmap page uses. */
 .section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
 
-/* hero — headline/subheadline/steps-card, same layout as the original roadmap
-   page's hero-grid (no min-height, no forced centering — natural content height). */
-.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem}
-.hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+/* hero — full viewport height (100svh alongside 100vh, same fallback index.html's
+   own hero-grid uses for mobile browsers whose chrome eats into 100vh), holding
+   three groups: header (headline/subheadline), the steps card, and the CTA +
+   pricing. Spacing between them is a fixed gap:2.5rem — the same group-spacing
+   value .blocks-grid uses everywhere else on the site — not derived from the
+   viewport height, so it doesn't stretch or shrink with screen size. The whole
+   group is then centered as a block within the full-height section. Visible
+   alone on load; clicking the CTA swaps it out for the quiz entirely (see JS). */
+.hero-grid{display:flex;flex-direction:column;gap:2.5rem;justify-content:center;text-align:center;min-height:100vh;min-height:100svh;padding:var(--pad-sm) 1rem}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
-.subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;margin-bottom:2rem;text-align:center}
+.subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
+/* Button and under-button pricing text: same sizing/centering as .hero-grid>.btn
+   and .hero-grid>.pricing on index.html — max-width:472px (the site's shared
+   content-column width) centered with margin auto, not stretched to the hero's
+   own wider padded column. The pricing caption itself is full width of that
+   472px column (a block element, not shrink-wrapped to its text). */
+.hero-cta{max-width:472px;margin-left:auto;margin-right:auto}
+.hero-pricing{width:100%;margin-top:.75rem;max-width:472px;margin-left:auto;margin-right:auto;font-size:.8125rem;color:var(--muted);text-align:center}
+.hero-pricing__was{text-decoration:line-through}
+.hero-pricing__now{font-weight:700;color:var(--text)}
 
 /* 3-step "how it works" card — stands in for a hero image on screen 1. Same
    dark-card treatment as .signup-modal/.legal-modal elsewhere on the site
@@ -128,9 +145,9 @@ strong{font-weight:600}
 .steps-title{font-size:1rem;font-weight:600;line-height:1.3;color:var(--text)}
 .steps-desc{font-size:.9375rem;font-weight:400;line-height:1.4;color:var(--muted);margin-top:.2rem}
 
-/* quiz section — same hero-colored background as the hero (no separate dark
-   panel), natural content height like the original roadmap page. */
-.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
+/* quiz section — full viewport height too: once the hero is swapped out, each
+   screen should occupy the entire page on its own, one at a time. */
+.results-section{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:var(--pad) 1.5rem var(--pad);width:100%}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
@@ -142,7 +159,7 @@ strong{font-weight:600}
 .signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
 @keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
-.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#1c1c1c}
 .signup-input:focus~.signup-label{color:var(--link)}
 #su-email{padding-right:2.5rem}
 .email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
@@ -226,13 +243,12 @@ footer a{color:var(--link);text-decoration:none}
   body{background:#f7f7f7}
   .container{background:#f7f7f7}
   footer{background:#eee}
-  .results-section{background:#eee}
   .choice-option{border-color:#d0d0d0}
   .steps-card{background:#fff;border-color:var(--card-border)}
   .steps-num{color:#f7f7f7}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
-  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
+  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#f7f7f7}
   .legal-modal{background:#fff;border-color:var(--card-border)}
   .legal-modal-header{border-bottom-color:var(--card-border)}
   .legal-modal-title{color:var(--text)}
@@ -249,44 +265,56 @@ footer a{color:var(--link);text-decoration:none}
 <main>
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
-      <p class="subheadline">Find out what diet and training is best for you.</p>
+      <div class="hero-header">
+        <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
+        <p class="subheadline">Find out what diet and training is best for you.</p>
+      </div>
 
       <!-- In place of a hero image: the 3-step "how it works" card -->
-      <div class="steps-card">
-        <div class="steps-item">
-          <div class="steps-num-col">
-            <span class="steps-num">1</span>
+      <div class="hero-steps">
+        <div class="steps-card">
+          <div class="steps-item">
+            <div class="steps-num-col">
+              <span class="steps-num">1</span>
+            </div>
+            <div class="steps-text">
+              <h3 class="steps-title">Take the 5-step quiz</h3>
+              <p class="steps-desc">Tell me about your goals and coaching preferences.</p>
+            </div>
           </div>
-          <div class="steps-text">
-            <h3 class="steps-title">Take the 5-step quiz</h3>
-            <p class="steps-desc">Tell me about your goals and coaching preferences.</p>
+          <div class="steps-item">
+            <div class="steps-num-col">
+              <span class="steps-num">2</span>
+            </div>
+            <div class="steps-text">
+              <h3 class="steps-title">Meet your coach</h3>
+              <p class="steps-desc">See if you qualify for online coaching.</p>
+            </div>
           </div>
-        </div>
-        <div class="steps-item">
-          <div class="steps-num-col">
-            <span class="steps-num">2</span>
-          </div>
-          <div class="steps-text">
-            <h3 class="steps-title">Meet your coach</h3>
-            <p class="steps-desc">See if you qualify for online coaching.</p>
-          </div>
-        </div>
-        <div class="steps-item">
-          <div class="steps-num-col">
-            <span class="steps-num">3</span>
-          </div>
-          <div class="steps-text">
-            <h3 class="steps-title">Start your plan</h3>
-            <p class="steps-desc">Receive personalized workouts &amp; accountability check-ins.</p>
+          <div class="steps-item">
+            <div class="steps-num-col">
+              <span class="steps-num">3</span>
+            </div>
+            <div class="steps-text">
+              <h3 class="steps-title">Start your plan</h3>
+              <p class="steps-desc">Receive personalized workouts &amp; accountability check-ins.</p>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="hero-actions">
+        <button type="button" class="signup-submit hero-cta" id="btn-find-plan">
+          Find My Plan
+          <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+        </button>
+        <p class="hero-pricing"><span class="hero-pricing__was">$199</span> <span class="hero-pricing__now">$50</span> first month. Cancel anytime.</p>
+      </div>
     </div>
 
-    <div class="section-divider" aria-hidden="true"></div>
+    <div class="section-divider" id="hero-divider" aria-hidden="true"></div>
 
-    <section class="results-section">
+    <section class="results-section" id="results-section" style="display:none">
       <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div class="progress-line__fill" id="progress-fill"></div>
       </div>
@@ -627,6 +655,16 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   var stepEls={};
   steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
+
+  // Hero CTA — the hero is its own full-screen view, on its own until this is
+  // clicked. Swaps it out entirely (not a scroll) for the quiz, which then
+  // shows exactly one screen at a time, same as every step after it. The
+  // footer stays visible/reachable the whole time, same as every other page.
+  document.getElementById("btn-find-plan").addEventListener("click",function(){
+    document.querySelector(".hero-grid").style.display="none";
+    document.getElementById("hero-divider").style.display="none";
+    document.getElementById("results-section").style.display="";
+  });
 
   // 0% on screen 1 (invisible) through 100% on the last screen (full width).
   function updateNav(){
