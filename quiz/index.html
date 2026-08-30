@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Meta Pixel Code -->
+<script>
+// Shared helpers for Meta Pixel + Conversions API deduplication.
+// Each conversion event gets one event_id shared by both the browser pixel
+// call and the server-side CAPI call so Meta counts it once, not twice.
+function __fbEventId() {
+  return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+}
+function __fbCookie(name) {
+  var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : undefined;
+}
+function __fbCapi(eventName, eventId, customData, userData) {
+  try {
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData || {},
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+// First-touch acquisition-path marker. Set once, on entry to a funnel, and
+// never overwritten — whichever page the visitor's session actually started
+// on decides "lead_magnet" vs "direct" for this browser, even if they come
+// back through a different page days later. Mirrors __fbCookie's own cookie
+// pattern; read back via __fbCookie('acq_path') wherever a Meta content_name
+// needs to reflect it (Purchase, CompleteRegistration). Also pushed to
+// PostHog as a $set_once person property (2nd arg) so it can't be
+// overwritten there either, no matter how many times this runs.
+function __acqPathInit(value) {
+  if (__fbCookie('acq_path')) return;
+  var oneYear = 60 * 60 * 24 * 365;
+  document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
+  if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
+}
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'/edge/fbevents.js');
+fbq('init', '1575468926630270');
+var __pvEventId = __fbEventId();
+fbq('track', 'PageView', {}, {eventID: __pvEventId});
+__fbCapi('PageView', __pvEventId);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    // No ph_distinct_id cookie bootstrap here (unlike index.html/welcome) —
+    // that cookie is only ever set by middleware.js, which only runs on "/".
+    // Visitors can land straight on /roadmap/ without ever hitting "/", so
+    // posthog-js is left to mint and persist its own distinct_id normally.
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    __acqPathInit('lead_magnet');
+    posthog.capture('roadmap_pageview');
+</script>
+<!-- End PostHog -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Online Fat Loss Coaching</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+<link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+<link rel="shortcut icon" href="/assets/favicon.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<style>
+:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+strong{font-weight:600}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+
+/* nav — a single progress line bled to the section's top edge. No track background —
+   only the fill itself is visible; it grows from 0% (invisible, screen 1) to 100% (full
+   width, last screen) as the quiz advances. */
+.progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
+
+/* section divider — the standalone rule between hero/quiz and between quiz/footer,
+   same 1px var(--border) hairline the original roadmap page uses. */
+.section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
+
+/* hero — headline/subheadline/steps-card, same layout as the original roadmap
+   page's hero-grid (no min-height, no forced centering — natural content height). */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem}
+.hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
+.subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;margin-bottom:2rem;text-align:center}
+
+/* 3-step "how it works" card — stands in for a hero image on screen 1. Same
+   dark-card treatment as .signup-modal/.legal-modal elsewhere on the site
+   (flat #222 surface, var(--card-border) hairline, 12px radius), and the
+   same white-circle-on-dark-card badge as .check-badge in the value bullets,
+   just holding a number instead of a checkmark. */
+.steps-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.5rem;text-align:left}
+.steps-item{display:flex;align-items:stretch;gap:1rem}
+.steps-num-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.steps-num{flex-shrink:0;width:calc(.9375rem / .7);height:calc(.9375rem / .7);border-radius:.5rem;background:var(--text);display:flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:600;color:#1c1c1c}
+.steps-line{flex:1;width:1px;min-height:1.5rem;background:var(--border);margin:.25rem 0}
+.steps-text{padding-bottom:1.5rem}
+.steps-item:last-child .steps-text{padding-bottom:0}
+.steps-title{font-size:1rem;font-weight:600;line-height:1.3;color:var(--text)}
+.steps-desc{font-size:.9375rem;font-weight:400;line-height:1.4;color:var(--muted);margin-top:.2rem}
+
+/* quiz section — same hero-colored background as the hero (no separate dark
+   panel), natural content height like the original roadmap page. */
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
+.results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
+.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
+.signup-field{margin-bottom:.75rem;position:relative}
+.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-input::placeholder{color:transparent}
+.signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
+.pulse-ring{position:absolute;inset:0;border-radius:8px;border:1px solid var(--blue);opacity:0;pointer-events:none}
+.signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
+@keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
+.signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
+.signup-input:focus~.signup-label{color:var(--link)}
+#su-email{padding-right:2.5rem}
+.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
+.email-status.is-valid{color:#2ecc71}
+.email-status.is-invalid{color:#e53e3e}
+.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
+@keyframes email-spin{to{transform:rotate(360deg)}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* single-select question screens — full-width stacked option buttons, tap
+   to answer and auto-advance (no separate Continue click needed) */
+.choice-list{display:flex;flex-direction:column;gap:.625rem}
+.choice-option{width:100%;text-align:left;padding:1rem 1.1rem;border:1px solid #3a3a3a;border-radius:8px;background:0 0;color:var(--text);font-family:inherit;font-size:.9375rem;font-weight:500;line-height:1.35;cursor:pointer;transition:border-color 0s ease,background-color 0s ease,color 0s ease}
+.choice-option[aria-checked=true]{border-color:var(--link);background:rgba(0,102,255,.1);color:var(--link)}
+/* proof / education screens — a single centered statement plus a Continue button */
+.proof-statement{font-size:clamp(1.15rem,1.05rem + .5vw,1.375rem);font-weight:600;line-height:1.45;color:var(--text);text-align:center;margin-bottom:1.5rem}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
+.signup-submit:disabled:hover{background:var(--card-border)}
+.btn-chevron{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);flex-shrink:0}
+.legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
+.legal-link:hover{color:var(--link)}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
+.signup-back-link:hover{color:var(--text)}
+.signup-back-link svg{flex-shrink:0}
+
+/* disclaimers — now live inside the footer, so they inherit its dark panel
+   background rather than needing one of their own. */
+.footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimer-grid{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
+.disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
+.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
+.disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
+.disclaimer-text .legal-link{font-size:.8125rem}
+
+/* footer */
+footer{background:#161616;padding:2.5rem 1.5rem;font-size:.8125rem;color:var(--muted)}
+footer{padding-left:1rem;padding-right:1rem}
+.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
+.footer-disclaimer{font-size:.8125rem;line-height:1.6}
+.footer-disclaimer p+p{margin-top:.75rem}
+.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+footer a{color:var(--link);text-decoration:none}
+
+/* legal (terms / privacy) popups */
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.legal-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
+.legal-overlay.active .legal-modal{transform:translateY(0)}
+.legal-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
+.legal-modal-title{font-size:.8125rem;font-weight:600;color:#f8fafc}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:6px;cursor:pointer;padding:.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
+.legal-modal-body::-webkit-scrollbar{display:none}
+.legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
+.legal-modal-body .legal-effective{font-size:.8125rem;color:#a8afba;margin-bottom:1.75rem}
+.legal-modal-body h3{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.75rem 0 .625rem;padding-top:1.375rem;border-top:1px solid var(--card-border,#3d3d3d)}
+.legal-modal-body p{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.75rem}
+.legal-modal-body ul{margin:0 0 .875rem 1.125rem}
+.legal-modal-body ul li{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.25rem}
+.legal-modal-body a{color:var(--link);text-decoration:none}
+.legal-modal-body a:hover{color:var(--link)}
+.legal-modal-body strong{color:var(--text);font-weight:600}
+
+@media(hover:hover) and (pointer:fine){
+  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
+  .signup-submit:hover{background:#0052cc}
+}
+
+@media (min-width:900px){
+  /* Four disclaimer blocks read as one long full-width column on a wide
+     screen — a 2x2 grid keeps each paragraph's line length readable while
+     the block as a whole still spans the full footer width. Same gap value
+     as the stacked layout, just used for both row-gap and column-gap. */
+  .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+}
+
+@media (prefers-color-scheme:light){
+  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
+  body{background:#f7f7f7}
+  .container{background:#f7f7f7}
+  footer{background:#eee}
+  .results-section{background:#eee}
+  .choice-option{border-color:#d0d0d0}
+  .steps-card{background:#fff;border-color:var(--card-border)}
+  .steps-num{color:#f7f7f7}
+  .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
+  .signup-label{color:#4a4a4a}
+  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
+  .legal-modal{background:#fff;border-color:var(--card-border)}
+  .legal-modal-header{border-bottom-color:var(--card-border)}
+  .legal-modal-title{color:var(--text)}
+  .legal-modal-close{color:rgba(0,0,0,.5)}
+  .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+  .legal-modal-body h2{color:var(--text)}
+  .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+  .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="container">
+    <div class="hero-grid">
+      <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
+      <p class="subheadline">Find out what diet and training is best for you.</p>
+
+      <!-- In place of a hero image: the 3-step "how it works" card -->
+      <div class="steps-card">
+        <div class="steps-item">
+          <div class="steps-num-col">
+            <span class="steps-num">1</span>
+            <span class="steps-line" aria-hidden="true"></span>
+          </div>
+          <div class="steps-text">
+            <h3 class="steps-title">Take the 5-step quiz</h3>
+            <p class="steps-desc">Tell me about your goals and coaching preferences.</p>
+          </div>
+        </div>
+        <div class="steps-item">
+          <div class="steps-num-col">
+            <span class="steps-num">2</span>
+            <span class="steps-line" aria-hidden="true"></span>
+          </div>
+          <div class="steps-text">
+            <h3 class="steps-title">Meet your coach</h3>
+            <p class="steps-desc">See if you qualify for online coaching.</p>
+          </div>
+        </div>
+        <div class="steps-item">
+          <div class="steps-num-col">
+            <span class="steps-num">3</span>
+          </div>
+          <div class="steps-text">
+            <h3 class="steps-title">Start your plan</h3>
+            <p class="steps-desc">Receive personalized workouts &amp; accountability check-ins.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section class="results-section">
+      <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-line__fill" id="progress-fill"></div>
+      </div>
+
+      <div class="blocks-grid">
+
+        <!-- Screen 1 — name, exactly like the original roadmap page's first step -->
+        <div id="step-name">
+          <h2 class="signup-title" tabindex="-1">What's your <strong>name</strong>?</h2>
+          <form id="form-name" novalidate>
+            <div class="signup-field">
+              <input class="signup-input pulse-border" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <span class="pulse-ring" aria-hidden="true"></span>
+              <label class="signup-label" for="su-first">First name</label>
+            </div>
+            <div class="signup-field">
+              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+              <label class="signup-label" for="su-last">Last name</label>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-name" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Q1 -->
+        <div id="step-q1" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Where do you <strong>start</strong>?</h2>
+          <div class="choice-list" data-key="start" role="radiogroup" aria-label="Where do you start">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-15">Under 15% body fat. I want more definition.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="15-25">15–25% body fat. I carry noticeable fat.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="over-25">Over 25% body fat. This has gone on for years.</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Screen 3 — entry hook: sets emotional context, mirrored on the result page -->
+        <div id="step-entry" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Why do you want to <strong>lose fat</strong>?</h2>
+          <div class="choice-list" data-key="motivation" role="radiogroup" aria-label="Why do you want to lose fat">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="look-better">Look better</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="feel-confident">Feel more confident</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="get-healthier">Get healthier</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="something-else">Something else</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Proof Screen A — sets up the unique mechanism before asking what broke them -->
+        <div id="step-proofA" style="display:none">
+          <p class="proof-statement" tabindex="-1">Most men fail at fat loss for one reason. Not willpower. No real structure.</p>
+          <button type="button" class="signup-submit proof-continue">
+            Continue
+            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+          </button>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q2 -->
+        <div id="step-q2" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What <strong>stopped you</strong> before?</h2>
+          <div class="choice-list" data-key="blocker" role="radiogroup" aria-label="What stopped you before">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="consistency">I can't stay consistent.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="unclear-plan">I don't know what's wrong with my plan.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="life">Life gets in the way.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-structure">I never had real structure or support.</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q3 -->
+        <div id="step-q3" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How many times have you <strong>tried this</strong>?</h2>
+          <div class="choice-list" data-key="attempts" role="radiogroup" aria-label="How many times have you tried this">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="first-try">This is my first real try.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="2-3-times">2–3 times. It didn't stick.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="many-times">More times than I can count.</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Proof Screen B — credibility injection, same slot as the "1 in 8 adults" screen.
+             TODO: swap in a real stat or client result once you have one to cite. -->
+        <div id="step-proofB" style="display:none">
+          <p class="proof-statement" tabindex="-1">[X] men have lost fat with a coach, not a diet plan.</p>
+          <button type="button" class="signup-submit proof-continue">
+            Continue
+            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+          </button>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q4 -->
+        <div id="step-q4" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your biggest <strong>time problem</strong>?</h2>
+          <div class="choice-list" data-key="timeProblem" role="radiogroup" aria-label="What's your biggest time problem">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="schedule">My work schedule changes too much.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="poor-use">I have time. I don't use it well.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="family-travel">Family or travel breaks my routine.</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q5 -->
+        <div id="step-q5" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your <strong>goal</strong>?</h2>
+          <div class="choice-list" data-key="goal" role="radiogroup" aria-label="What's your goal">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-15lbs">Lose under 15 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="15-30lbs">Lose 15–30 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="30plus-lbs">Lose 30+ Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure, I just want to lose fat</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q6 -->
+        <div id="step-q6" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How <strong>ready</strong> are you to start?</h2>
+          <div class="choice-list" data-key="readiness" role="radiogroup" aria-label="How ready are you to start">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="ready-now">I'm ready now. I need the right plan.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="want-proof">I'm interested. I want proof first.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="exploring">I'm still exploring.</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Proof Screen C (pre-gate) — positions the gate as unlocking the diagnosis -->
+        <div id="step-proofC" style="display:none">
+          <p class="proof-statement" tabindex="-1">Your diagnosis is ready. Enter your email to see it.</p>
+          <button type="button" class="signup-submit proof-continue">
+            Continue
+            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+          </button>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q7 — gate: email (name was already collected in step-name) -->
+        <div id="step-gate" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Where should I <strong>email</strong> it to?</h2>
+          <form id="form-gate" novalidate>
+            <div class="signup-field">
+              <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
+              <label class="signup-label" for="su-email">Email address</label>
+              <span class="email-status" id="su-email-status" aria-hidden="true"></span>
+              <span class="sr-only" id="su-email-status-text" aria-live="polite"></span>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-gate" disabled>
+              Get My Diagnosis
+            </button>
+          </form>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-disclaimers">
+      <h2 class="disclaimers-title">Disclaimers</h2>
+      <div class="disclaimer-grid">
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Eligibility</h3>
+          <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+          <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-disclaimer">
+      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-row">
+      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
+        <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="terms-title">Terms of Service</span>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Terms of Service</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Agreement</h3>
+      <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
+      <h3>2. The Service</h3>
+      <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
+      <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
+      <h3>3. Eligibility</h3>
+      <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>4. Pricing and Billing</h3>
+      <p>Coaching is billed as follows:</p>
+      <ul>
+        <li><strong>First month:</strong> $50.00 (one-time discounted rate)</li>
+        <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
+      </ul>
+      <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>5. Cancellation</h3>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <h3>6. 30-Day Results Guarantee</h3>
+      <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
+      <ul>
+        <li>You must have completed your onboarding call</li>
+        <li>You must have logged food and workouts as directed for the 30-day period</li>
+        <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
+      </ul>
+      <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
+      <h3>7. No Medical Advice</h3>
+      <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>8. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>9. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>10. Disclaimer of Warranties</h3>
+      <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>11. Governing Law</h3>
+      <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
+      <h3>12. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>13. Contact</h3>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Privacy Policy</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Overview</h3>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
+      <h3>2. Information I Collect</h3>
+      <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
+      <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
+      <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <h3>3. How I Use Your Information</h3>
+      <ul>
+        <li>To process your purchase and deliver coaching services</li>
+        <li>To communicate with you about your coaching program</li>
+        <li>To measure and improve the performance of my advertising</li>
+        <li>To analyze Site usage and improve user experience</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
+      <h3>4. Sharing of Information</h3>
+      <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
+      <ul>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
+      </ul>
+      <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
+      <h3>5. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>6. Data Retention</h3>
+      <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
+      <h3>7. Your Rights</h3>
+      <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>8. Children's Privacy</h3>
+      <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
+      <h3>9. Third-Party Links</h3>
+      <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
+      <h3>10. Changes to This Policy</h3>
+      <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      <h3>11. Contact</h3>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var legalReturnFocus=null;
+function openLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  legalReturnFocus=document.activeElement;
+  l.classList.add("active"),document.body.style.overflow="hidden";
+  var o=l.querySelector(".legal-modal-body");
+  o&&(o.scrollTop=0);
+  var close=l.querySelector(".legal-modal-close");
+  close&&close.focus();
+}
+function closeLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  l.classList.remove("active"),document.body.style.overflow="";
+  legalReturnFocus&&legalReturnFocus.focus();
+  legalReturnFocus=null;
+}
+document.querySelectorAll(".legal-overlay").forEach(function(e){e.addEventListener("click",function(l){l.target===e&&closeLegal(e.id.replace("modal-",""))})});
+document.addEventListener("keydown",function(e){"Escape"===e.key&&document.querySelectorAll(".legal-overlay.active").forEach(function(e){closeLegal(e.id.replace("modal-",""))})});
+</script>
+
+<script>
+// 12-screen quiz: name, entry hook, 7 single-select questions, 3 proof/education
+// screens, and the final gate (email — name was already collected in step 1).
+// Linear flow throughout — every "Continue"/choice tap moves to current+1,
+// every Back link to current-1 — so no per-step wiring is needed beyond the
+// name and gate forms' own validation.
+(function(){
+  var steps=["name","q1","entry","proofA","q2","q3","proofB","q4","q5","q6","proofC","gate"],
+      current=0,
+      answers={};
+
+  var stepEls={};
+  steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
+  var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
+
+  // 0% on screen 1 (invisible) through 100% on the last screen (full width).
+  function updateNav(){
+    var pct=current/(steps.length-1)*100;
+    progressFill.style.width=pct+"%";
+    progressBar.setAttribute("aria-valuenow",Math.round(pct));
+  }
+  function goToStep(i){
+    if(i<0||i>=steps.length) return;
+    stepEls[steps[current]].style.display="none";
+    current=i;
+    stepEls[steps[current]].style.display="";
+    updateNav();
+    // Move focus to the new screen's heading/statement on every viewport, not
+    // just desktop — this announces the new content to screen readers and puts
+    // keyboard focus somewhere sane, without popping the mobile keyboard unprompted.
+    var heading=stepEls[steps[current]].querySelector(".signup-title, .proof-statement");
+    if(heading) heading.focus();
+  }
+
+  // Fired once, the first time the visitor answers anything — this is the
+  // "started the quiz" funnel event.
+  var formStartedFired=!1;
+  function markStarted(){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } }
+
+  // Screen 1 — name, same fname/lname pattern as the original roadmap page.
+  var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
+  function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
+  [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
+  // The pulse should only ever show on a genuinely empty field. It's baked into
+  // the initial markup as the "empty on load" default, but the field isn't
+  // always actually empty on load — browser autofill or a bfcache/history
+  // restore can populate it before the user ever focuses or blurs it. Check
+  // (and re-check on every input, since autofill fires that event too) rather
+  // than relying solely on focus/blur.
+  function syncFirstPulse(){ first.classList.toggle("pulse-border",!first.value.trim()); }
+  syncFirstPulse();
+  window.addEventListener("pageshow",syncFirstPulse);
+  first.addEventListener("input",syncFirstPulse);
+  first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
+  first.addEventListener("blur",syncFirstPulse);
+  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ markStarted(); goToStep(current+1); } });
+
+  // Every question screen — tap an option, it's recorded under the screen's
+  // data-key, and the quiz auto-advances (a brief pause so the tap's own
+  // selected state is visible before the screen changes).
+  document.querySelectorAll(".choice-list").forEach(function(list){
+    var key=list.dataset.key,opts=list.querySelectorAll(".choice-option");
+    opts.forEach(function(btn){
+      btn.addEventListener("click",function(){
+        opts.forEach(function(b){ b.setAttribute("aria-checked","false"); });
+        btn.setAttribute("aria-checked","true");
+        answers[key]=btn.dataset.value;
+        markStarted();
+        setTimeout(function(){ goToStep(current+1); },200);
+      });
+    });
+  });
+
+  // Every proof/education screen's Continue button just advances.
+  document.querySelectorAll(".proof-continue").forEach(function(btn){
+    btn.addEventListener("click",function(){ goToStep(current+1); });
+  });
+
+  // Every screen's Back link (all but the first) just retreats.
+  document.querySelectorAll(".signup-back-link").forEach(function(btn){
+    btn.addEventListener("click",function(){ goToStep(current-1); });
+  });
+
+  // Q7 — gate: email only (name was already collected in step-name), with the
+  // same live server-side email verification (spinner while checking, then
+  // check/x) as the signup modal on index.html. This is the final screen, so
+  // submitting sends the visitor on to the results page.
+  var email=document.getElementById("su-email"),btnGate=document.getElementById("btn-gate"),
+      es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),emTimer=null,emReqId=0,emVerified=!1;
+  function validateGate(){
+    var v=email.value.trim();
+    btnGate.disabled=!(email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&emVerified);
+  }
+  function setEmailStatus(st){
+    emVerified="valid"===st;
+    es.classList.remove("is-valid","is-invalid");
+    if("checking"===st){ es.innerHTML='<span class="email-spinner"></span>'; esText.textContent="Checking email address…"; email.removeAttribute("aria-invalid"); }
+    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Email address verified."; email.setAttribute("aria-invalid","false"); }
+    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address couldn't be verified."; email.setAttribute("aria-invalid","true"); }
+    else { es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
+    validateGate();
+  }
+  function checkEmailServer(){
+    var em=email.value.trim();
+    if(!email.validity.valid||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return void setEmailStatus("");
+    var reqId=++emReqId;
+    setEmailStatus("checking");
+    fetch("/api/verify-email?email="+encodeURIComponent(em)).then(function(r){ return r.json(); }).then(function(r){ reqId===emReqId&&setEmailStatus(r.valid?"valid":"invalid"); }).catch(function(){ reqId===emReqId&&setEmailStatus(""); });
+  }
+  email.addEventListener("input",function(){ setEmailStatus(""); clearTimeout(emTimer); emTimer=setTimeout(checkEmailServer,500); });
+  document.getElementById("form-gate").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(btnGate.disabled) return;
+    var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
+    if(name) qs.push("name="+encodeURIComponent(name));
+    if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    Object.keys(answers).forEach(function(k){ qs.push(k+"="+encodeURIComponent(answers[k])); });
+    // Final-step lead capture — PostHog funnel event plus the deduped Meta Lead (pixel + CAPI).
+    posthog.capture("roadmap_lead_captured",answers);
+    var leadEventId=__fbEventId();
+    fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
+    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
+    // Record the completed request in Supabase. keepalive lets the request
+    // finish even though we navigate away immediately after firing it.
+    fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
+      method:"POST",
+      keepalive:!0,
+      headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
+      body:JSON.stringify(Object.assign({
+        first_name:first.value.trim(),
+        last_name:last.value.trim(),
+        email:emailVal
+      },answers))
+    }).catch(function(){});
+    window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
+  });
+
+  updateNav();
+})();
+</script>
+
+</body>
+</html>
