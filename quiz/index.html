@@ -98,14 +98,13 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — a thin bar pinned to the results-section's own top edge, bled edge-to-edge
-   past the section's horizontal padding. Taken out of the section's centered flex
-   flow (position:absolute) so it stays put at the top while the current screen's
-   content is centered in the remaining height below it. A visible var(--muted)
-   track underneath the fill (not just the fill itself) so the bar reads as a
-   progress indicator even at 0% width on screen 1, before anything's answered. */
-.progress-line{position:absolute;top:0;left:0;right:0;width:auto;height:4px;overflow:hidden;background:var(--muted)}
-.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
+/* nav — a thin bar fixed to the very top of the viewport, shared across the hero
+   and the quiz (lives outside both, once in the markup) so it's visible on the
+   first page too, not just once the quiz starts. A dark var(--card-border) track
+   under the fill, both pill-shaped, so it reads as a progress indicator even in
+   its default state — which itself starts partway filled (see JS), not empty. */
+.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;border-radius:2px;overflow:hidden;background:var(--card-border)}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;border-radius:0 2px 2px 0;background:var(--blue);transition:width .3s ease}
 
 /* section divider — the standalone rule between hero/quiz and between quiz/footer,
    same 1px var(--border) hairline the original roadmap page uses. */
@@ -128,8 +127,8 @@ strong{font-weight:600}
    own wider padded column. The pricing caption itself is full width of that
    472px column (a block element, not shrink-wrapped to its text). */
 .hero-cta{max-width:472px;margin-left:auto;margin-right:auto}
-.hero-pricing{width:100%;margin-top:.75rem;max-width:472px;margin-left:auto;margin-right:auto;font-size:.8125rem;color:var(--muted);text-align:center}
-.hero-pricing__was{text-decoration:line-through}
+.hero-pricing{width:100%;margin-top:.75rem;max-width:472px;margin-left:auto;margin-right:auto;font-size:.8125rem;color:var(--text);text-align:center}
+.hero-pricing__was{text-decoration:line-through;color:var(--muted)}
 .hero-pricing__now{font-weight:700;color:var(--text)}
 
 /* 3-step "how it works" card — stands in for a hero image on screen 1. Same
@@ -147,7 +146,7 @@ strong{font-weight:600}
 
 /* quiz section — full viewport height too: once the hero is swapped out, each
    screen should occupy the entire page on its own, one at a time. */
-.results-section{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:var(--pad) 1.5rem var(--pad);width:100%}
+.results-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:var(--pad) 1.5rem var(--pad);width:100%}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
@@ -264,6 +263,10 @@ footer a{color:var(--link);text-decoration:none}
 
 <main>
   <div class="container">
+    <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-line__fill" id="progress-fill"></div>
+    </div>
+
     <div class="hero-grid">
       <div class="hero-header">
         <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
@@ -315,10 +318,6 @@ footer a{color:var(--link);text-decoration:none}
     <div class="section-divider" id="hero-divider" aria-hidden="true"></div>
 
     <section class="results-section" id="results-section" style="display:none">
-      <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div class="progress-line__fill" id="progress-fill"></div>
-      </div>
-
       <div class="blocks-grid">
 
         <!-- Screen 1 — name, exactly like the original roadmap page's first step -->
@@ -666,9 +665,13 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     document.getElementById("results-section").style.display="";
   });
 
-  // 0% on screen 1 (invisible) through 100% on the last screen (full width).
+  // A floor of 8% even on screen 1 (default state — nothing answered yet, on
+  // the hero or on the first quiz screen) rather than a literal 0%, so the bar
+  // reads as "already a little underway" instead of empty. Climbs normally
+  // from there up to 100% on the last screen.
+  var MIN_PROGRESS_PCT=8;
   function updateNav(){
-    var pct=current/(steps.length-1)*100;
+    var pct=Math.max(MIN_PROGRESS_PCT,current/(steps.length-1)*100);
     progressFill.style.width=pct+"%";
     progressBar.setAttribute("aria-valuenow",Math.round(pct));
   }
