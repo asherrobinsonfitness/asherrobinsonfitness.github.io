@@ -98,13 +98,15 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — a thin bar fixed to the very top of the viewport, shared across the hero
-   and the quiz (lives outside both, once in the markup) so it's visible on the
-   first page too, not just once the quiz starts. A dark var(--card-border) track
-   under the fill, both pill-shaped, so it reads as a progress indicator even in
-   its default state — which itself starts partway filled (see JS), not empty. */
-.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;border-radius:2px;overflow:hidden;background:var(--card-border)}
-.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;border-radius:0 2px 2px 0;background:var(--blue);transition:width .3s ease}
+/* nav — same plain bar as the original roadmap page (no rounding), just blue
+   instead of white/text, and fixed to the very top of the viewport, shared
+   across the hero and the quiz (lives outside both, once in the markup) so
+   it's visible on the first page too, not just once the quiz starts. Its
+   default state starts partway filled (see JS), not empty. Track uses
+   var(--border) — this codebase's own color for a plain thin line on the
+   dark background, already used for every .section-divider on this page. */
+.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;overflow:hidden;background:var(--border)}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);transition:width .3s ease}
 
 /* section divider — the standalone rule between hero/quiz and between quiz/footer,
    same 1px var(--border) hairline the original roadmap page uses. */
@@ -113,12 +115,15 @@ strong{font-weight:600}
 /* hero — full viewport height (100svh alongside 100vh, same fallback index.html's
    own hero-grid uses for mobile browsers whose chrome eats into 100vh), holding
    three groups: header (headline/subheadline), the steps card, and the CTA +
-   pricing. Spacing between them is a fixed gap:2.5rem — the same group-spacing
-   value .blocks-grid uses everywhere else on the site — not derived from the
-   viewport height, so it doesn't stretch or shrink with screen size. The whole
-   group is then centered as a block within the full-height section. Visible
-   alone on load; clicking the CTA swaps it out for the quiz entirely (see JS). */
-.hero-grid{display:flex;flex-direction:column;gap:2.5rem;justify-content:center;text-align:center;min-height:100vh;min-height:100svh;padding:var(--pad-sm) 1rem}
+   pricing. Spacing between them is a fixed gap:1.5rem — index.html's own
+   hero-grid uses exactly this between its equivalent direct children
+   (.hero-grid>.hero-media and .hero-grid>.btn are both margin-top:1.5rem) — not
+   .blocks-grid's 2.5rem, which is a different section's convention, and not
+   derived from the viewport height, so it doesn't stretch or shrink with screen
+   size. The whole group is then centered as a block within the full-height
+   section. Visible alone on load; clicking the CTA swaps it out for the quiz
+   entirely (see JS). */
+.hero-grid{display:flex;flex-direction:column;gap:1.5rem;justify-content:center;text-align:center;min-height:100vh;min-height:100svh;padding:var(--pad-sm) 1rem}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
 /* Button and under-button pricing text: same sizing/centering as .hero-grid>.btn
