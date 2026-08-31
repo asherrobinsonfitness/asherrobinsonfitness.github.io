@@ -117,30 +117,14 @@ strong{font-weight:600}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
-/* Social-proof pill above the headline — same pill shape/colors as the
-   .check-badge / white-chip pattern used elsewhere on the site (inverted:
-   light chip, dark text, sits on the dark hero). */
-.social-proof{display:inline-flex;align-self:center;align-items:center;gap:.4rem;padding:.4rem .75rem;border-radius:999px;background:var(--text);color:#1c1c1c;font-size:.8125rem;font-weight:600;line-height:1.2}
-/* Price anchor — reused identically on the intro, the diagnosis screen, and
-   checkout (three repetitions, per the brief). $199 struck through + muted,
-   $0/$50/etc. bold + primary, trailing copy primary. */
+/* Price anchor — reused identically on the diagnosis screen and checkout
+   (two repetitions — the intro no longer carries one, since the intro is
+   just the hero flowing straight into Q1, nothing to anchor a price against
+   yet). $199 struck through + muted, $0/$50/etc. bold + primary, trailing
+   copy primary. */
 .price-anchor{width:100%;max-width:472px;margin:1.5rem auto 0;font-size:.8125rem;color:var(--text);text-align:center}
 .price-anchor__was{text-decoration:line-through;color:var(--muted)}
 .price-anchor__now{font-weight:700;color:var(--text)}
-.hero-cta{max-width:472px;margin:1.5rem auto 0}
-
-/* 3-step "how it works" card — stands in for a hero image. Same dark-card
-   treatment as .signup-modal/.legal-modal elsewhere on the site (flat #222
-   surface, var(--card-border) hairline, 12px radius), and the same
-   white-circle-on-dark-card badge as .check-badge in the value bullets, just
-   holding a number instead of a checkmark. */
-.steps-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.5rem;text-align:left}
-.steps-item{display:flex;align-items:flex-start;gap:1rem}
-.steps-num{flex-shrink:0;width:calc(.9375rem / .7);height:calc(.9375rem / .7);border-radius:.5rem;background:var(--text);display:flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:600;color:#1c1c1c}
-.steps-text{padding-bottom:1.5rem}
-.steps-item:last-child .steps-text{padding-bottom:0}
-.steps-title{font-size:1rem;font-weight:600;line-height:1.3;color:var(--text)}
-.steps-desc{font-size:.9375rem;font-weight:400;line-height:1.4;color:var(--muted);margin-top:.2rem}
 
 /* quiz section — same darker #161616 panel as the original roadmap page,
    natural content height by default (flows right below the hero). Once the
@@ -192,7 +176,8 @@ body.quiz-focused .results-section{min-height:100vh;min-height:100svh;display:fl
 
 /* testimonial interstitials — reusable component, content filled from the
    CONTENT.testimonials config array at runtime (see JS), not hardcoded per
-   instance. Same dark-card surface as .steps-card. */
+   instance. Same dark-card treatment as .signup-modal/.legal-modal elsewhere
+   on the site (flat #222 surface, var(--card-border) hairline, 12px radius). */
 .testimonial-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.75rem 1.5rem;text-align:center}
 .testimonial-quote{font-size:1.0625rem;font-weight:500;line-height:1.5;color:var(--text)}
 .testimonial-quote::before{content:"“"}
@@ -306,9 +291,6 @@ footer a{color:var(--link);text-decoration:none}
   .results-section{background:#eee}
   .diagnosis-section{background:#eee}
   .choice-option{border-color:#d0d0d0}
-  .steps-card{background:#fff;border-color:var(--card-border)}
-  .steps-num{color:#f7f7f7}
-  .social-proof{color:#f7f7f7}
   .testimonial-card{background:#fff;border-color:var(--card-border)}
   .mechanism-card{background:#fff;border-color:var(--card-border)}
   .way-card--old{background:#fdecea}
@@ -337,51 +319,10 @@ footer a{color:var(--link);text-decoration:none}
     </div>
 
     <div class="hero-grid">
-      <span class="social-proof" id="social-proof-pill"></span>
-
       <div class="hero-header">
         <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
         <p class="subheadline">Take the 2-minute quiz to get matched with a coaching plan built around your body, your schedule, and what's actually stopped you before.</p>
       </div>
-
-      <!-- In place of a hero image: the 3-step "how it works" card -->
-      <div class="hero-steps">
-        <div class="steps-card">
-          <div class="steps-item">
-            <div class="steps-num-col">
-              <span class="steps-num">1</span>
-            </div>
-            <div class="steps-text">
-              <h3 class="steps-title">Take the quiz</h3>
-              <p class="steps-desc">Tell me about your goals and coaching preferences.</p>
-            </div>
-          </div>
-          <div class="steps-item">
-            <div class="steps-num-col">
-              <span class="steps-num">2</span>
-            </div>
-            <div class="steps-text">
-              <h3 class="steps-title">Get your diagnosis</h3>
-              <p class="steps-desc">See exactly why what you've tried before hasn't worked.</p>
-            </div>
-          </div>
-          <div class="steps-item">
-            <div class="steps-num-col">
-              <span class="steps-num">3</span>
-            </div>
-            <div class="steps-text">
-              <h3 class="steps-title">Start your plan</h3>
-              <p class="steps-desc">Receive personalized workouts &amp; accountability check-ins.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button type="button" class="signup-submit hero-cta" id="btn-start-quiz">
-        Start Quiz
-        <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-      </button>
-      <p class="price-anchor" id="price-anchor-intro"></p>
     </div>
 
     <div class="section-divider" id="hero-divider" aria-hidden="true"></div>
@@ -398,7 +339,6 @@ footer a{color:var(--link);text-decoration:none}
             <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="get-healthier">Just get healthier overall</button>
             <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure yet, need guidance</button>
           </div>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
         <!-- Q2 — age -->
@@ -831,7 +771,6 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 // rebuild.
 // ============================================================================
 var CONTENT = {
-  socialProof: "Trusted by 200+ men getting back in shape", // placeholder stat — swap for a real member count / result once available
   priceWas: "$199",
   priceNow: "$50",
   priceSuffix: "first month. Cancel anytime.",
@@ -863,12 +802,10 @@ var CONTENT = {
 // Fill every element tagged with an id/data-field this config owns. Kept as
 // one small render pass so nothing above is hardcoded twice.
 (function renderContent(){
-  document.getElementById("social-proof-pill").textContent = CONTENT.socialProof;
-
   function priceAnchorHTML(){
     return '<span class="price-anchor__was">' + CONTENT.priceWas + '</span> <span class="price-anchor__now">' + CONTENT.priceNow + '</span> ' + CONTENT.priceSuffix;
   }
-  ["price-anchor-intro","price-anchor-diagnosis","price-anchor-checkout"].forEach(function(id){
+  ["price-anchor-diagnosis","price-anchor-checkout"].forEach(function(id){
     var el = document.getElementById(id);
     if (el) el.innerHTML = priceAnchorHTML();
   });
@@ -923,16 +860,6 @@ var CONTENT = {
   steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
-  // "Start Quiz" — the hero is its own screen until this is tapped; tapping
-  // it enters the focused, one-question-at-a-time quiz view.
-  document.getElementById("btn-start-quiz").addEventListener("click",function(){
-    // TODO(backend): fire "quiz_started" to PostHog + Meta Pixel/CAPI here.
-    document.body.classList.add("quiz-focused");
-    updateNav();
-    var heading=stepEls[steps[current]].querySelector(".signup-title, .proof-statement, .founder-heading");
-    if(heading) heading.focus();
-  });
-
   function updateNav(){
     var pct=current/(steps.length-1)*100;
     progressFill.style.width=pct+"%";
@@ -943,6 +870,10 @@ var CONTENT = {
     stepEls[steps[current]].style.display="none";
     current=i;
     stepEls[steps[current]].style.display="";
+    // Q1 (goal) is part of the hero — normal page flow, footer visible below.
+    // Every screen after it takes over the whole page instead (hero/footer
+    // hidden, one question at a time) — see the body.quiz-focused rules in CSS.
+    document.body.classList.toggle("quiz-focused",current>0);
     // TODO(backend): fire a PostHog "quiz_question_viewed" event here, keyed
     // by steps[current], so per-question drop-off is visible in the funnel —
     // not just aggregate quiz-completion rate.
@@ -956,7 +887,10 @@ var CONTENT = {
 
   // Every question screen — tap an option, it's recorded under the screen's
   // data-key, and the quiz auto-advances (a brief pause so the tap's own
-  // selected state is visible before the screen changes).
+  // selected state is visible before the screen changes). Q1 (goal) sits in
+  // normal page flow as part of the hero itself — no separate "Start Quiz"
+  // step — so answering it is what both starts the quiz and enters the
+  // focused, one-question-at-a-time view for everything after it.
   document.querySelectorAll(".choice-list").forEach(function(list){
     var key=list.dataset.key,opts=list.querySelectorAll(".choice-option");
     opts.forEach(function(btn){
@@ -964,6 +898,8 @@ var CONTENT = {
         opts.forEach(function(b){ b.setAttribute("aria-checked","false"); });
         btn.setAttribute("aria-checked","true");
         answers[key]=btn.dataset.value;
+        // TODO(backend): if current===0, this is the "quiz_started" moment —
+        // fire it to PostHog + Meta Pixel/CAPI here.
         setTimeout(function(){ goToStep(current+1); },200);
       });
     });
@@ -974,15 +910,13 @@ var CONTENT = {
     btn.addEventListener("click",function(){ goToStep(current+1); });
   });
 
-  // Every screen's Back link retreats. On the first quiz screen (goal), Back
-  // exits focused mode instead and returns to the hero, matching how it got here.
+  // Every screen's Back link retreats. Q1 (goal) has none — it's part of the
+  // hero itself, nothing to go back to — so the earliest this ever fires is
+  // from Q2 back to Q1, which goToStep already resolves correctly: current
+  // becomes 0 again, so its own quiz-focused toggle drops out of focused mode
+  // and back into the hero's normal page flow on its own.
   document.querySelectorAll(".signup-back-link").forEach(function(btn){
     btn.addEventListener("click",function(){
-      if(current===0){
-        document.body.classList.remove("quiz-focused");
-        document.querySelector(".hero-grid").scrollIntoView({behavior:"smooth"});
-        return;
-      }
       goToStep(current-1);
     });
   });
