@@ -98,43 +98,31 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — same plain bar as the original roadmap page (no rounding), just blue
-   instead of white/text, and fixed to the very top of the viewport, shared
-   across the hero and the quiz (lives outside both, once in the markup) so
-   it's visible on the first page too, not just once the quiz starts. Its
-   default state starts partway filled (see JS), not empty. Track uses
-   var(--border) — this codebase's own color for a plain thin line on the
-   dark background, already used for every .section-divider on this page. */
-.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;overflow:hidden;background:var(--border)}
+/* nav — same plain bar as the original roadmap page (no rounding, no track
+   background of its own), just blue instead of white/text. Fixed to the very
+   top of the viewport and lives outside both the hero and results-section, so
+   it's already visible on Q1 (the hero counts as part of Q1) and stays pinned
+   to the top of the screen for every question after it too. */
+.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;overflow:hidden}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);transition:width .3s ease}
 
 /* section divider — the standalone rule between hero/quiz and between quiz/footer,
    same 1px var(--border) hairline the original roadmap page uses. */
 .section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
 
-/* hero — full viewport height (100svh alongside 100vh, same fallback index.html's
-   own hero-grid uses for mobile browsers whose chrome eats into 100vh), holding
-   three groups: header (headline/subheadline), the steps card, and the CTA +
-   pricing. Spacing between them is a fixed gap:1.5rem — index.html's own
-   hero-grid uses exactly this between its equivalent direct children
-   (.hero-grid>.hero-media and .hero-grid>.btn are both margin-top:1.5rem) — not
-   .blocks-grid's 2.5rem, which is a different section's convention, and not
-   derived from the viewport height, so it doesn't stretch or shrink with screen
-   size. The whole group is then centered as a block within the full-height
-   section. Visible alone on load; clicking the CTA swaps it out for the quiz
-   entirely (see JS). */
-.hero-grid{display:flex;flex-direction:column;gap:1.5rem;justify-content:center;text-align:center;min-height:100vh;min-height:100svh;padding:var(--pad-sm) 1rem}
+/* hero — same plain layout as the original roadmap page's hero-grid (natural
+   content height, no forced min-height), holding two groups: header
+   (headline/subheadline) and the steps card. Spacing between them is a fixed
+   gap:1.5rem — index.html's own hero-grid uses exactly this between its
+   equivalent direct children (.hero-grid>.hero-media is margin-top:1.5rem) —
+   not .blocks-grid's 2.5rem, which is a different section's convention.
+   Flows straight into results-section below it (Q1), same as roadmap's
+   hero->results relationship — no toggle, nothing hidden, just the normal
+   page; the hero counts as part of Q1 itself, not a separate screen. */
+.hero-grid{display:flex;flex-direction:column;gap:1.5rem;text-align:center;padding:var(--pad) 1.5rem}
+.hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
-/* Button and under-button pricing text: same sizing/centering as .hero-grid>.btn
-   and .hero-grid>.pricing on index.html — max-width:472px (the site's shared
-   content-column width) centered with margin auto, not stretched to the hero's
-   own wider padded column. The pricing caption itself is full width of that
-   472px column (a block element, not shrink-wrapped to its text). */
-.hero-cta{max-width:472px;margin-left:auto;margin-right:auto}
-.hero-pricing{width:100%;margin-top:.75rem;max-width:472px;margin-left:auto;margin-right:auto;font-size:.8125rem;color:var(--text);text-align:center}
-.hero-pricing__was{text-decoration:line-through;color:var(--muted)}
-.hero-pricing__now{font-weight:700;color:var(--text)}
 
 /* 3-step "how it works" card — stands in for a hero image on screen 1. Same
    dark-card treatment as .signup-modal/.legal-modal elsewhere on the site
@@ -149,21 +137,28 @@ strong{font-weight:600}
 .steps-title{font-size:1rem;font-weight:600;line-height:1.3;color:var(--text)}
 .steps-desc{font-size:.9375rem;font-weight:400;line-height:1.4;color:var(--muted);margin-top:.2rem}
 
-/* quiz section — full viewport height too: once the hero is swapped out, each
-   screen should occupy the entire page on its own, one at a time. */
-.results-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:var(--pad) 1.5rem var(--pad);width:100%}
+/* quiz section — same darker #161616 panel as the original roadmap page (every
+   question uses it, Q1 included), natural content height by default (flows
+   right below the hero, like roadmap). Once past Q1, .quiz-focused (added to
+   body — see JS) switches it to a full-height, single-screen-at-a-time view
+   with the hero and footer hidden, below. */
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+
+/* Q1 is "the main screen" — normal in-page flow, footer reachable below, same
+   as roadmap. Every screen after it (Q2 onward) takes over the whole page
+   instead: hero and footer hidden, this section alone fills the viewport,
+   content top-justified (not centered) under the fixed progress bar. */
+body.quiz-focused .hero-grid,body.quiz-focused #hero-divider,body.quiz-focused footer,body.quiz-focused #footer-divider{display:none}
+body.quiz-focused .results-section{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .signup-field{margin-bottom:.75rem;position:relative}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
 .signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
-.pulse-ring{position:absolute;inset:0;border-radius:8px;border:1px solid var(--blue);opacity:0;pointer-events:none}
-.signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
-@keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
-.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#1c1c1c}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
 .signup-input:focus~.signup-label{color:var(--link)}
 #su-email{padding-right:2.5rem}
 .email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
@@ -247,12 +242,13 @@ footer a{color:var(--link);text-decoration:none}
   body{background:#f7f7f7}
   .container{background:#f7f7f7}
   footer{background:#eee}
+  .results-section{background:#eee}
   .choice-option{border-color:#d0d0d0}
   .steps-card{background:#fff;border-color:var(--card-border)}
   .steps-num{color:#f7f7f7}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
-  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#f7f7f7}
+  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
   .legal-modal{background:#fff;border-color:var(--card-border)}
   .legal-modal-header{border-bottom-color:var(--card-border)}
   .legal-modal-title{color:var(--text)}
@@ -311,100 +307,53 @@ footer a{color:var(--link);text-decoration:none}
         </div>
       </div>
 
-      <div class="hero-actions">
-        <button type="button" class="signup-submit hero-cta" id="btn-find-plan">
-          Find My Plan
-          <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-        </button>
-        <p class="hero-pricing"><span class="hero-pricing__was">$199</span> <span class="hero-pricing__now">$50</span> first month. Cancel anytime.</p>
-      </div>
     </div>
 
     <div class="section-divider" id="hero-divider" aria-hidden="true"></div>
 
-    <section class="results-section" id="results-section" style="display:none">
+    <section class="results-section" id="results-section">
       <div class="blocks-grid">
 
-        <!-- Screen 1 — name, exactly like the original roadmap page's first step -->
-        <div id="step-name">
-          <h2 class="signup-title" tabindex="-1">What's your <strong>name</strong>?</h2>
-          <form id="form-name" novalidate>
-            <div class="signup-field">
-              <input class="signup-input pulse-border" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
-              <span class="pulse-ring" aria-hidden="true"></span>
-              <label class="signup-label" for="su-first">First name</label>
-            </div>
-            <div class="signup-field">
-              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
-              <label class="signup-label" for="su-last">Last name</label>
-            </div>
-            <button type="submit" class="signup-submit" id="btn-name" disabled>
-              Continue
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-            </button>
-          </form>
-        </div>
-
-        <!-- Q1 -->
-        <div id="step-q1" style="display:none">
-          <h2 class="signup-title" tabindex="-1">Where do you <strong>start</strong>?</h2>
-          <div class="choice-list" data-key="start" role="radiogroup" aria-label="Where do you start">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-15">Under 15% body fat. I want more definition.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="15-25">15–25% body fat. I carry noticeable fat.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="over-25">Over 25% body fat. This has gone on for years.</button>
+        <!-- Q1 — main screen: normal in-page flow right below the hero, exactly like
+             the original roadmap page's hero->results-section relationship. Placeholder
+             question for now. -->
+        <div id="step-q1">
+          <h2 class="signup-title" tabindex="-1">Are you <strong>male</strong> or <strong>female</strong>?</h2>
+          <div class="choice-list" data-key="sex" role="radiogroup" aria-label="Are you male or female">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="male">Male</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="female">Female</button>
           </div>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Screen 3 — entry hook: sets emotional context, mirrored on the result page -->
-        <div id="step-entry" style="display:none">
-          <h2 class="signup-title" tabindex="-1">Why do you want to <strong>lose fat</strong>?</h2>
-          <div class="choice-list" data-key="motivation" role="radiogroup" aria-label="Why do you want to lose fat">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="look-better">Look better</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="feel-confident">Feel more confident</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="get-healthier">Get healthier</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="something-else">Something else</button>
-          </div>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
-        </div>
-
-        <!-- Proof Screen A — sets up the unique mechanism before asking what broke them -->
-        <div id="step-proofA" style="display:none">
-          <p class="proof-statement" tabindex="-1">Most men fail at fat loss for one reason. Not willpower. No real structure.</p>
-          <button type="button" class="signup-submit proof-continue">
-            Continue
-            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-          </button>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
-        </div>
-
-        <!-- Q2 -->
+        <!-- Q2 — core failure diagnosis: the key question, this is the primary segmentation
+             data source once real completions come in (no-structure vs. life-disruption,
+             plus two catch-alls so no one's forced into a false choice). -->
         <div id="step-q2" style="display:none">
-          <h2 class="signup-title" tabindex="-1">What <strong>stopped you</strong> before?</h2>
-          <div class="choice-list" data-key="blocker" role="radiogroup" aria-label="What stopped you before">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="consistency">I can't stay consistent.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="unclear-plan">I don't know what's wrong with my plan.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="life">Life gets in the way.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-structure">I never had real structure or support.</button>
+          <h2 class="signup-title" tabindex="-1">What's <strong>stopped you</strong> before?</h2>
+          <div class="choice-list" data-key="blocker" role="radiogroup" aria-label="What's stopped you before">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-plan">I never had a real plan, just guessed</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="life-disruption">I had something working, then life got in the way and I never got back on track</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-followthrough">I know what to do, I just don't follow through alone</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="something-else">Something else</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
         <!-- Q3 -->
         <div id="step-q3" style="display:none">
-          <h2 class="signup-title" tabindex="-1">How many times have you <strong>tried this</strong>?</h2>
-          <div class="choice-list" data-key="attempts" role="radiogroup" aria-label="How many times have you tried this">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="first-try">This is my first real try.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="2-3-times">2–3 times. It didn't stick.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="many-times">More times than I can count.</button>
+          <h2 class="signup-title" tabindex="-1">How many times has <strong>this happened</strong>?</h2>
+          <div class="choice-list" data-key="attempts" role="radiogroup" aria-label="How many times has this happened">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="first-attempt">First real attempt</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="2-3-times">2–3 times, didn't stick</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lost-count">Lost count</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Proof Screen B — credibility injection, same slot as the "1 in 8 adults" screen.
-             TODO: swap in a real stat or client result once you have one to cite. -->
-        <div id="step-proofB" style="display:none">
-          <p class="proof-statement" tabindex="-1">[X] men have lost fat with a coach, not a diet plan.</p>
+        <!-- Proof screen — seeds the life-disruption mechanism regardless of which Q2
+             answer they picked, since it's likely the strongest wedge for this avatar. -->
+        <div id="step-proof" style="display:none">
+          <p class="proof-statement" tabindex="-1">Most guys 20–50 Pounds overweight don't fail from lack of effort. They fail because nothing adjusts when life does.</p>
           <button type="button" class="signup-submit proof-continue">
             Continue
             <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
@@ -412,51 +361,40 @@ footer a{color:var(--link);text-decoration:none}
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q4 -->
+        <!-- Q4 — time/lifestyle constraint -->
         <div id="step-q4" style="display:none">
-          <h2 class="signup-title" tabindex="-1">What's your biggest <strong>time problem</strong>?</h2>
-          <div class="choice-list" data-key="timeProblem" role="radiogroup" aria-label="What's your biggest time problem">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="schedule">My work schedule changes too much.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="poor-use">I have time. I don't use it well.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="family-travel">Family or travel breaks my routine.</button>
+          <h2 class="signup-title" tabindex="-1">What <strong>throws off</strong> your routine most?</h2>
+          <div class="choice-list" data-key="timeProblem" role="radiogroup" aria-label="What throws off your routine most">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="work-schedule">Work schedule</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="family-travel">Family/travel</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lose-motivation">I just lose motivation over time</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q5 -->
+        <!-- Q5 — goal -->
         <div id="step-q5" style="display:none">
-          <h2 class="signup-title" tabindex="-1">What's your <strong>goal</strong>?</h2>
-          <div class="choice-list" data-key="goal" role="radiogroup" aria-label="What's your goal">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-15lbs">Lose under 15 Pounds</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="15-30lbs">Lose 15–30 Pounds</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="30plus-lbs">Lose 30+ Pounds</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure, I just want to lose fat</button>
+          <h2 class="signup-title" tabindex="-1">How much do you want to <strong>lose</strong>?</h2>
+          <div class="choice-list" data-key="goal" role="radiogroup" aria-label="How much do you want to lose">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="20-30lbs">20–30 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="30-50lbs">30–50 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure, just want to lose it</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q6 -->
+        <!-- Q6 — readiness -->
         <div id="step-q6" style="display:none">
           <h2 class="signup-title" tabindex="-1">How <strong>ready</strong> are you to start?</h2>
           <div class="choice-list" data-key="readiness" role="radiogroup" aria-label="How ready are you to start">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="ready-now">I'm ready now. I need the right plan.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="want-proof">I'm interested. I want proof first.</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="exploring">I'm still exploring.</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="ready-now">Ready now, need the right plan</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="want-proof">Interested, want proof first</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="exploring">Just exploring</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Proof Screen C (pre-gate) — positions the gate as unlocking the diagnosis -->
-        <div id="step-proofC" style="display:none">
-          <p class="proof-statement" tabindex="-1">Your diagnosis is ready. Enter your email to see it.</p>
-          <button type="button" class="signup-submit proof-continue">
-            Continue
-            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
-          </button>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
-        </div>
-
-        <!-- Q7 — gate: email (name was already collected in step-name) -->
+        <!-- Gate — email capture -->
         <div id="step-gate" style="display:none">
           <h2 class="signup-title" tabindex="-1">Where should I <strong>email</strong> it to?</h2>
           <form id="form-gate" novalidate>
@@ -478,7 +416,7 @@ footer a{color:var(--link);text-decoration:none}
   </div>
 </main>
 
-<div class="section-divider" aria-hidden="true"></div>
+<div class="section-divider" id="footer-divider" aria-hidden="true"></div>
 
 <footer>
   <div class="footer-inner">
@@ -646,13 +584,14 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// 12-screen quiz: name, entry hook, 7 single-select questions, 3 proof/education
-// screens, and the final gate (email — name was already collected in step 1).
-// Linear flow throughout — every "Continue"/choice tap moves to current+1,
-// every Back link to current-1 — so no per-step wiring is needed beyond the
-// name and gate forms' own validation.
+// 8-screen quiz: 6 single-select questions (Q1 entry driver, Q2 core failure
+// diagnosis — the key segmentation question, Q3 attempts, Q4 time constraint,
+// Q5 goal, Q6 readiness), one proof/education screen between Q3 and Q4, and
+// the final email-only gate. Linear flow throughout — every "Continue"/choice
+// tap moves to current+1, every Back link to current-1 — so no per-step
+// wiring is needed beyond the gate form's own validation.
 (function(){
-  var steps=["name","q1","entry","proofA","q2","q3","proofB","q4","q5","q6","proofC","gate"],
+  var steps=["q1","q2","q3","proof","q4","q5","q6","gate"],
       current=0,
       answers={};
 
@@ -660,23 +599,8 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
-  // Hero CTA — the hero is its own full-screen view, on its own until this is
-  // clicked. Swaps it out entirely (not a scroll) for the quiz, which then
-  // shows exactly one screen at a time, same as every step after it. The
-  // footer stays visible/reachable the whole time, same as every other page.
-  document.getElementById("btn-find-plan").addEventListener("click",function(){
-    document.querySelector(".hero-grid").style.display="none";
-    document.getElementById("hero-divider").style.display="none";
-    document.getElementById("results-section").style.display="";
-  });
-
-  // A floor of 8% even on screen 1 (default state — nothing answered yet, on
-  // the hero or on the first quiz screen) rather than a literal 0%, so the bar
-  // reads as "already a little underway" instead of empty. Climbs normally
-  // from there up to 100% on the last screen.
-  var MIN_PROGRESS_PCT=8;
   function updateNav(){
-    var pct=Math.max(MIN_PROGRESS_PCT,current/(steps.length-1)*100);
+    var pct=current/(steps.length-1)*100;
     progressFill.style.width=pct+"%";
     progressBar.setAttribute("aria-valuenow",Math.round(pct));
   }
@@ -685,6 +609,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     stepEls[steps[current]].style.display="none";
     current=i;
     stepEls[steps[current]].style.display="";
+    // Q1 ("the main screen") stays in normal page flow, footer and hero
+    // visible below/above it, exactly like the original roadmap page. Every
+    // screen after it takes over the whole page instead — hero and footer
+    // hidden, this section alone fills the viewport (see the body.quiz-focused
+    // rules in CSS).
+    document.body.classList.toggle("quiz-focused",current>0);
     updateNav();
     // Move focus to the new screen's heading/statement on every viewport, not
     // just desktop — this announces the new content to screen readers and puts
@@ -697,24 +627,6 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   // "started the quiz" funnel event.
   var formStartedFired=!1;
   function markStarted(){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } }
-
-  // Screen 1 — name, same fname/lname pattern as the original roadmap page.
-  var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
-  function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
-  [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
-  // The pulse should only ever show on a genuinely empty field. It's baked into
-  // the initial markup as the "empty on load" default, but the field isn't
-  // always actually empty on load — browser autofill or a bfcache/history
-  // restore can populate it before the user ever focuses or blurs it. Check
-  // (and re-check on every input, since autofill fires that event too) rather
-  // than relying solely on focus/blur.
-  function syncFirstPulse(){ first.classList.toggle("pulse-border",!first.value.trim()); }
-  syncFirstPulse();
-  window.addEventListener("pageshow",syncFirstPulse);
-  first.addEventListener("input",syncFirstPulse);
-  first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
-  first.addEventListener("blur",syncFirstPulse);
-  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ markStarted(); goToStep(current+1); } });
 
   // Every question screen — tap an option, it's recorded under the screen's
   // data-key, and the quiz auto-advances (a brief pause so the tap's own
@@ -742,10 +654,10 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     btn.addEventListener("click",function(){ goToStep(current-1); });
   });
 
-  // Q7 — gate: email only (name was already collected in step-name), with the
-  // same live server-side email verification (spinner while checking, then
-  // check/x) as the signup modal on index.html. This is the final screen, so
-  // submitting sends the visitor on to the results page.
+  // Gate — email capture, with the same live server-side email verification
+  // (spinner while checking, then check/x) as the signup modal on index.html.
+  // This is the final screen, so submitting sends the visitor on to the
+  // results page.
   var email=document.getElementById("su-email"),btnGate=document.getElementById("btn-gate"),
       es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),emTimer=null,emReqId=0,emVerified=!1;
   function validateGate(){
@@ -772,26 +684,21 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-gate").addEventListener("submit",function(e){
     e.preventDefault();
     if(btnGate.disabled) return;
-    var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
-    if(name) qs.push("name="+encodeURIComponent(name));
+    var emailVal=email.value.trim(),qs=[];
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
     Object.keys(answers).forEach(function(k){ qs.push(k+"="+encodeURIComponent(answers[k])); });
     // Final-step lead capture — PostHog funnel event plus the deduped Meta Lead (pixel + CAPI).
     posthog.capture("roadmap_lead_captured",answers);
     var leadEventId=__fbEventId();
     fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
-    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
+    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal});
     // Record the completed request in Supabase. keepalive lets the request
     // finish even though we navigate away immediately after firing it.
     fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
       method:"POST",
       keepalive:!0,
       headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
-      body:JSON.stringify(Object.assign({
-        first_name:first.value.trim(),
-        last_name:last.value.trim(),
-        email:emailVal
-      },answers))
+      body:JSON.stringify(Object.assign({email:emailVal},answers))
     }).catch(function(){});
     window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
   });
