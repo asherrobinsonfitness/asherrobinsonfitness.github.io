@@ -117,6 +117,12 @@ strong{font-weight:600}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
+/* Same value-bullets/check-badge as the original roadmap page's first question,
+   copied verbatim — a white circle check badge next to each line. */
+.value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
+.value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
+.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
+.check-icon{width:.6em;height:.6em;color:#1c1c1c}
 /* Price anchor — reused identically on the diagnosis screen and checkout
    (two repetitions — the intro no longer carries one, since the intro is
    just the hero flowing straight into Q1, nothing to anchor a price against
@@ -291,6 +297,7 @@ footer a{color:var(--link);text-decoration:none}
   .results-section{background:#eee}
   .diagnosis-section{background:#eee}
   .choice-option{border-color:#d0d0d0}
+  .check-icon{color:#f7f7f7}
   .testimonial-card{background:#fff;border-color:var(--card-border)}
   .mechanism-card{background:#fff;border-color:var(--card-border)}
   .way-card--old{background:#fdecea}
@@ -322,6 +329,11 @@ footer a{color:var(--link);text-decoration:none}
       <div class="hero-header">
         <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
         <p class="subheadline">Find out what diet &amp; training plan is best for you.</p>
+        <ul class="value-bullets">
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get my best tips to get there via email</span></li>
+        </ul>
       </div>
     </div>
 
