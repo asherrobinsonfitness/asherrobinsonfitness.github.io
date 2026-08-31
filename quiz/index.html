@@ -98,11 +98,9 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — same plain bar as the original roadmap page (no rounding, no track
-   background of its own), just blue instead of white/text. Fixed to the very
-   top of the viewport and lives outside both the hero and results-section, so
-   it's already visible on Q1 (the hero counts as part of Q1) and stays pinned
-   to the top of the screen for every question after it too. */
+/* nav — fixed to the very top of the viewport the whole time (visible from
+   the intro screen through the last question), plain bar, blue fill, no
+   track background of its own — matches the rest of the site's minimal style. */
 .progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;overflow:hidden}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);transition:width .3s ease}
 
@@ -110,25 +108,32 @@ strong{font-weight:600}
    same 1px var(--border) hairline the original roadmap page uses. */
 .section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
 
-/* hero — same plain layout as the original roadmap page's hero-grid (natural
-   content height, no forced min-height), holding two groups: header
-   (headline/subheadline) and the steps card. Spacing between them is a fixed
-   gap:1.5rem — index.html's own hero-grid uses exactly this between its
-   equivalent direct children (.hero-grid>.hero-media is margin-top:1.5rem) —
-   not .blocks-grid's 2.5rem, which is a different section's convention.
-   Flows straight into results-section below it (Q1), same as roadmap's
-   hero->results relationship — no toggle, nothing hidden, just the normal
-   page; the hero counts as part of Q1 itself, not a separate screen. */
+/* hero / intro screen — same plain layout as the original roadmap page's
+   hero-grid (natural content height, no forced min-height). Visible alone on
+   load, normal in-page flow into results-section below it (footer reachable
+   under both) until "Start Quiz" is tapped, at which point the quiz proper
+   takes over the full screen one question at a time (.quiz-focused). */
 .hero-grid{display:flex;flex-direction:column;gap:1.5rem;text-align:center;padding:var(--pad) 1.5rem}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
+/* Social-proof pill above the headline — same pill shape/colors as the
+   .check-badge / white-chip pattern used elsewhere on the site (inverted:
+   light chip, dark text, sits on the dark hero). */
+.social-proof{display:inline-flex;align-self:center;align-items:center;gap:.4rem;padding:.4rem .75rem;border-radius:999px;background:var(--text);color:#1c1c1c;font-size:.8125rem;font-weight:600;line-height:1.2}
+/* Price anchor — reused identically on the intro, the diagnosis screen, and
+   checkout (three repetitions, per the brief). $199 struck through + muted,
+   $0/$50/etc. bold + primary, trailing copy primary. */
+.price-anchor{width:100%;max-width:472px;margin:1.5rem auto 0;font-size:.8125rem;color:var(--text);text-align:center}
+.price-anchor__was{text-decoration:line-through;color:var(--muted)}
+.price-anchor__now{font-weight:700;color:var(--text)}
+.hero-cta{max-width:472px;margin:1.5rem auto 0}
 
-/* 3-step "how it works" card — stands in for a hero image on screen 1. Same
-   dark-card treatment as .signup-modal/.legal-modal elsewhere on the site
-   (flat #222 surface, var(--card-border) hairline, 12px radius), and the
-   same white-circle-on-dark-card badge as .check-badge in the value bullets,
-   just holding a number instead of a checkmark. */
+/* 3-step "how it works" card — stands in for a hero image. Same dark-card
+   treatment as .signup-modal/.legal-modal elsewhere on the site (flat #222
+   surface, var(--card-border) hairline, 12px radius), and the same
+   white-circle-on-dark-card badge as .check-badge in the value bullets, just
+   holding a number instead of a checkmark. */
 .steps-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.5rem;text-align:left}
 .steps-item{display:flex;align-items:flex-start;gap:1rem}
 .steps-num{flex-shrink:0;width:calc(.9375rem / .7);height:calc(.9375rem / .7);border-radius:.5rem;background:var(--text);display:flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:600;color:#1c1c1c}
@@ -137,22 +142,23 @@ strong{font-weight:600}
 .steps-title{font-size:1rem;font-weight:600;line-height:1.3;color:var(--text)}
 .steps-desc{font-size:.9375rem;font-weight:400;line-height:1.4;color:var(--muted);margin-top:.2rem}
 
-/* quiz section — same darker #161616 panel as the original roadmap page (every
-   question uses it, Q1 included), natural content height by default (flows
-   right below the hero, like roadmap). Once past Q1, .quiz-focused (added to
-   body — see JS) switches it to a full-height, single-screen-at-a-time view
-   with the hero and footer hidden, below. */
+/* quiz section — same darker #161616 panel as the original roadmap page,
+   natural content height by default (flows right below the hero). Once the
+   quiz starts, .quiz-focused (added to body — see JS) switches it to a
+   full-height, single-screen-at-a-time view with the hero and footer hidden. */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
 .results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 
-/* Q1 is "the main screen" — normal in-page flow, footer reachable below, same
-   as roadmap. Every screen after it (Q2 onward) takes over the whole page
-   instead: hero and footer hidden, this section alone fills the viewport,
-   content top-justified (not centered) under the fixed progress bar. */
+/* The intro (hero) is its own screen — normal in-page flow, footer reachable
+   below, same as roadmap. Every quiz screen after "Start Quiz" is tapped
+   takes over the whole page instead: hero and footer hidden, this section
+   alone fills the viewport, content top-justified (not centered) under the
+   fixed progress bar. */
 body.quiz-focused .hero-grid,body.quiz-focused #hero-divider,body.quiz-focused footer,body.quiz-focused #footer-divider{display:none}
 body.quiz-focused .results-section{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
+.field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem;text-align:left}
 .signup-field{margin-bottom:.75rem;position:relative}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
@@ -184,6 +190,61 @@ body.quiz-focused .results-section{min-height:100vh;min-height:100svh;display:fl
 .signup-back-link:hover{color:var(--text)}
 .signup-back-link svg{flex-shrink:0}
 
+/* testimonial interstitials — reusable component, content filled from the
+   CONTENT.testimonials config array at runtime (see JS), not hardcoded per
+   instance. Same dark-card surface as .steps-card. */
+.testimonial-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.75rem 1.5rem;text-align:center}
+.testimonial-quote{font-size:1.0625rem;font-weight:500;line-height:1.5;color:var(--text)}
+.testimonial-quote::before{content:"“"}
+.testimonial-quote::after{content:"”"}
+.testimonial-meta{margin-top:1rem;font-size:.8125rem;color:var(--muted)}
+.testimonial-name{font-weight:600;color:var(--text)}
+.testimonial-stat{display:inline-block;margin-top:.75rem;padding:.35rem .75rem;border-radius:999px;background:rgba(0,102,255,.12);color:var(--link);font-size:.75rem;font-weight:600}
+
+/* "why I built this" interstitial — first-person copy, same statement
+   pattern as the proof screens but left-aligned body copy under a heading. */
+.founder-heading{font-size:1.25rem;font-weight:600;color:var(--text);text-align:center;margin-bottom:1rem}
+.founder-body{font-size:.9375rem;line-height:1.65;color:var(--muted);text-align:left}
+.founder-body p+p{margin-top:.85rem}
+.founder-signoff{margin-top:1rem;font-size:.9375rem;font-weight:600;color:var(--text);text-align:left}
+
+/* diagnosis screen — the Hormozi offer moment. Old-way/new-way comparison,
+   named mechanism, guarantee — every one of these strings comes from the
+   CONTENT config object at runtime, not hardcoded here. */
+.diagnosis-section{background:#161616;padding:var(--pad-sm) 1rem;width:100%;display:none}
+.diagnosis-inner{width:100%;max-width:472px;margin:0 auto;display:flex;flex-direction:column;gap:2rem}
+.diagnosis-eyebrow{font-size:.8125rem;font-weight:600;color:var(--link);text-align:center;text-transform:uppercase;letter-spacing:.04em}
+.diagnosis-heading{font-size:clamp(1.5rem,1.3rem + 1vw,1.875rem);font-weight:600;line-height:1.25;color:var(--text);text-align:center;margin-top:.5rem}
+.way-compare{display:flex;flex-direction:column;gap:.75rem}
+.way-card{border-radius:12px;padding:1.25rem 1.375rem;border:1px solid var(--card-border)}
+.way-card--old{background:#201415}
+.way-card--new{background:#132018}
+.way-label{font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.way-card--old .way-label{color:#f28b82}
+.way-card--new .way-label{color:#5fd48a}
+.way-text{margin-top:.5rem;font-size:.9375rem;line-height:1.55;color:var(--text)}
+.mechanism-card{background:#222;border:1px solid var(--card-border);border-radius:12px;padding:1.5rem;text-align:center}
+.mechanism-label{font-size:.8125rem;color:var(--muted)}
+.mechanism-name{margin-top:.4rem;font-size:1.25rem;font-weight:700;color:var(--text)}
+.identity-statement{font-size:1.125rem;font-weight:600;line-height:1.5;color:var(--text);text-align:center}
+.guarantee-card{border:1px solid var(--card-border);border-radius:12px;padding:1.25rem 1.375rem;display:flex;gap:.75rem;align-items:flex-start}
+.guarantee-icon{flex-shrink:0;width:1.5rem;height:1.5rem;color:var(--link)}
+.guarantee-text{font-size:.9375rem;line-height:1.55;color:var(--text)}
+
+/* checkout modal — same bottom-sheet component as the legal (terms/privacy)
+   modals, two-step skeleton: plan review, then a placeholder payment surface
+   (Stripe not wired yet). */
+.checkout-steps{display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem}
+.checkout-step-dot{width:8px;height:8px;border-radius:50%;background:var(--card-border)}
+.checkout-step-dot.is-active{background:var(--link)}
+.checkout-step-label{font-size:.8125rem;color:var(--muted)}
+.plan-summary{background:#161616;border:1px solid var(--card-border);border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.plan-summary-row{display:flex;justify-content:space-between;align-items:center;font-size:.9375rem;color:var(--text)}
+.plan-summary-row.is-muted{color:var(--muted);font-size:.8125rem}
+.payment-skeleton{margin-top:1.25rem;border:1px dashed var(--card-border);border-radius:8px;padding:2rem 1rem;text-align:center;color:var(--muted);font-size:.875rem}
+.checkout-panel{display:none}
+.checkout-panel.is-active{display:block}
+
 /* disclaimers — now live inside the footer, so they inherit its dark panel
    background rather than needing one of their own. */
 .footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
@@ -204,7 +265,7 @@ footer{padding-left:1rem;padding-right:1rem}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 footer a{color:var(--link);text-decoration:none}
 
-/* legal (terms / privacy) popups */
+/* legal (terms / privacy) popups — also reused for the checkout modal */
 .legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .legal-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
@@ -243,9 +304,16 @@ footer a{color:var(--link);text-decoration:none}
   .container{background:#f7f7f7}
   footer{background:#eee}
   .results-section{background:#eee}
+  .diagnosis-section{background:#eee}
   .choice-option{border-color:#d0d0d0}
   .steps-card{background:#fff;border-color:var(--card-border)}
   .steps-num{color:#f7f7f7}
+  .social-proof{color:#f7f7f7}
+  .testimonial-card{background:#fff;border-color:var(--card-border)}
+  .mechanism-card{background:#fff;border-color:var(--card-border)}
+  .way-card--old{background:#fdecea}
+  .way-card--new{background:#e9f7ee}
+  .plan-summary{background:#fff}
   .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
   .signup-label{color:#4a4a4a}
   .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
@@ -269,9 +337,11 @@ footer a{color:var(--link);text-decoration:none}
     </div>
 
     <div class="hero-grid">
+      <span class="social-proof" id="social-proof-pill"></span>
+
       <div class="hero-header">
         <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
-        <p class="subheadline">Find out what diet and training is best for you.</p>
+        <p class="subheadline">Take the 2-minute quiz to get matched with a coaching plan built around your body, your schedule, and what's actually stopped you before.</p>
       </div>
 
       <!-- In place of a hero image: the 3-step "how it works" card -->
@@ -282,7 +352,7 @@ footer a{color:var(--link);text-decoration:none}
               <span class="steps-num">1</span>
             </div>
             <div class="steps-text">
-              <h3 class="steps-title">Take the 5-step quiz</h3>
+              <h3 class="steps-title">Take the quiz</h3>
               <p class="steps-desc">Tell me about your goals and coaching preferences.</p>
             </div>
           </div>
@@ -291,8 +361,8 @@ footer a{color:var(--link);text-decoration:none}
               <span class="steps-num">2</span>
             </div>
             <div class="steps-text">
-              <h3 class="steps-title">Meet your coach</h3>
-              <p class="steps-desc">See if you qualify for online coaching.</p>
+              <h3 class="steps-title">Get your diagnosis</h3>
+              <p class="steps-desc">See exactly why what you've tried before hasn't worked.</p>
             </div>
           </div>
           <div class="steps-item">
@@ -307,30 +377,97 @@ footer a{color:var(--link);text-decoration:none}
         </div>
       </div>
 
+      <button type="button" class="signup-submit hero-cta" id="btn-start-quiz">
+        Start Quiz
+        <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+      </button>
+      <p class="price-anchor" id="price-anchor-intro"></p>
     </div>
 
     <div class="section-divider" id="hero-divider" aria-hidden="true"></div>
 
     <section class="results-section" id="results-section">
-      <div class="blocks-grid">
+      <div class="blocks-grid" id="quiz-steps">
 
-        <!-- Q1 — main screen: normal in-page flow right below the hero, exactly like
-             the original roadmap page's hero->results-section relationship. Placeholder
-             question for now. -->
-        <div id="step-q1">
-          <h2 class="signup-title" tabindex="-1">Are you <strong>male</strong> or <strong>female</strong>?</h2>
-          <div class="choice-list" data-key="sex" role="radiogroup" aria-label="Are you male or female">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="male">Male</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="female">Female</button>
+        <!-- Q1 — goal -->
+        <div id="step-goal">
+          <h2 class="signup-title" tabindex="-1">What's your main <strong>goal</strong>?</h2>
+          <div class="choice-list" data-key="goal" role="radiogroup" aria-label="What's your main goal">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lose-fat">Lose fat and get lean</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="build-muscle">Build muscle while losing fat</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="get-healthier">Just get healthier overall</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure yet, need guidance</button>
           </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q2 — core failure diagnosis: the key question, this is the primary segmentation
-             data source once real completions come in (no-structure vs. life-disruption,
-             plus two catch-alls so no one's forced into a false choice). -->
-        <div id="step-q2" style="display:none">
+        <!-- Q2 — age -->
+        <div id="step-age" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your <strong>age</strong>?</h2>
+          <div class="choice-list" data-key="age" role="radiogroup" aria-label="What's your age">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-25">Under 25</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="25-34">25–34</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="35-44">35–44</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="45-54">45–54</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="55-plus">55+</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q3 — current weight -->
+        <div id="step-weight" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your current <strong>weight</strong>?</h2>
+          <div class="choice-list" data-key="weight" role="radiogroup" aria-label="What's your current weight">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-180">Under 180 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="180-220">180–220 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="220-260">220–260 Pounds</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="over-260">Over 260 Pounds</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q4 — height -->
+        <div id="step-height" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your <strong>height</strong>?</h2>
+          <div class="choice-list" data-key="height" role="radiogroup" aria-label="What's your height">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-5-6">Under 5'6"</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="5-6-to-5-9">5'6" – 5'9"</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="5-10-to-6-1">5'10" – 6'1"</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="6-2-plus">6'2" or taller</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q5 — activity level -->
+        <div id="step-activity" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How <strong>active</strong> are you day to day?</h2>
+          <div class="choice-list" data-key="activity" role="radiogroup" aria-label="How active are you day to day">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="sedentary">Mostly sedentary — desk job, little movement</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lightly-active">Lightly active — some walking, light activity</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="moderately-active">Moderately active — regular exercise</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="very-active">Very active — intense training or physical job</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Testimonial interstitial #1 — content filled from CONTENT.testimonials[0] at runtime -->
+        <div id="step-testimonial-1" style="display:none">
+          <div class="testimonial-card">
+            <p class="testimonial-quote" data-field="quote"></p>
+            <p class="testimonial-meta"><span class="testimonial-name" data-field="name"></span><span data-field="detail"></span></p>
+            <span class="testimonial-stat" data-field="stat"></span>
+          </div>
+          <button type="button" class="signup-submit proof-continue">
+            Continue
+            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+          </button>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q6 — past attempts / frustrations -->
+        <div id="step-frustrations" style="display:none">
           <h2 class="signup-title" tabindex="-1">What's <strong>stopped you</strong> before?</h2>
-          <div class="choice-list" data-key="blocker" role="radiogroup" aria-label="What's stopped you before">
+          <div class="choice-list" data-key="frustrations" role="radiogroup" aria-label="What's stopped you before">
             <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-plan">I never had a real plan, just guessed</button>
             <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="life-disruption">I had something working, then life got in the way and I never got back on track</button>
             <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="no-followthrough">I know what to do, I just don't follow through alone</button>
@@ -339,21 +476,11 @@ footer a{color:var(--link);text-decoration:none}
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q3 -->
-        <div id="step-q3" style="display:none">
-          <h2 class="signup-title" tabindex="-1">How many times has <strong>this happened</strong>?</h2>
-          <div class="choice-list" data-key="attempts" role="radiogroup" aria-label="How many times has this happened">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="first-attempt">First real attempt</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="2-3-times">2–3 times, didn't stick</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lost-count">Lost count</button>
-          </div>
-          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
-        </div>
-
-        <!-- Proof screen — seeds the life-disruption mechanism regardless of which Q2
-             answer they picked, since it's likely the strongest wedge for this avatar. -->
-        <div id="step-proof" style="display:none">
-          <p class="proof-statement" tabindex="-1">Most guys 20–50 Pounds overweight don't fail from lack of effort. They fail because nothing adjusts when life does.</p>
+        <!-- "Why I built this" interstitial — first-person Asher copy, filled from
+             CONTENT.whyBuiltThis at runtime -->
+        <div id="step-why-built" style="display:none">
+          <h2 class="founder-heading">Why I built this</h2>
+          <div class="founder-body" id="founder-body-text"></div>
           <button type="button" class="signup-submit proof-continue">
             Continue
             <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
@@ -361,42 +488,68 @@ footer a{color:var(--link);text-decoration:none}
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q4 — time/lifestyle constraint -->
-        <div id="step-q4" style="display:none">
-          <h2 class="signup-title" tabindex="-1">What <strong>throws off</strong> your routine most?</h2>
-          <div class="choice-list" data-key="timeProblem" role="radiogroup" aria-label="What throws off your routine most">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="work-schedule">Work schedule</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="family-travel">Family/travel</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="lose-motivation">I just lose motivation over time</button>
+        <!-- Q7 — accountability / coaching style preference -->
+        <div id="step-coaching-style" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How do you want to be <strong>coached</strong>?</h2>
+          <div class="choice-list" data-key="coachingStyle" role="radiogroup" aria-label="How do you want to be coached">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="daily">Daily check-ins, high accountability</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="weekly">Weekly check-ins, steady structure</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="as-needed">Support when I ask for it</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q5 — goal -->
-        <div id="step-q5" style="display:none">
-          <h2 class="signup-title" tabindex="-1">How much do you want to <strong>lose</strong>?</h2>
-          <div class="choice-list" data-key="goal" role="radiogroup" aria-label="How much do you want to lose">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="20-30lbs">20–30 Pounds</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="30-50lbs">30–50 Pounds</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="not-sure">Not sure, just want to lose it</button>
+        <!-- Q8 — intensity preference -->
+        <div id="step-intensity" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How hard do you want to <strong>go</strong>?</h2>
+          <div class="choice-list" data-key="intensity" role="radiogroup" aria-label="How hard do you want to go">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="all-in">All in from day one</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="gradual">Build up gradually</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="guide-me">Not sure, guide me</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Q6 — readiness -->
-        <div id="step-q6" style="display:none">
-          <h2 class="signup-title" tabindex="-1">How <strong>ready</strong> are you to start?</h2>
-          <div class="choice-list" data-key="readiness" role="radiogroup" aria-label="How ready are you to start">
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="ready-now">Ready now, need the right plan</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="want-proof">Interested, want proof first</button>
-            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="exploring">Just exploring</button>
+        <!-- Q9 — workout location / equipment access -->
+        <div id="step-location" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Where do you <strong>train</strong>?</h2>
+          <div class="choice-list" data-key="location" role="radiogroup" aria-label="Where do you train">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="home-no-equipment">Home, no equipment</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="home-gym">Home gym</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="commercial-gym">Commercial gym</button>
           </div>
           <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
         </div>
 
-        <!-- Gate — email capture -->
+        <!-- Testimonial interstitial #2 — content filled from CONTENT.testimonials[1] at runtime -->
+        <div id="step-testimonial-2" style="display:none">
+          <div class="testimonial-card">
+            <p class="testimonial-quote" data-field="quote"></p>
+            <p class="testimonial-meta"><span class="testimonial-name" data-field="name"></span><span data-field="detail"></span></p>
+            <span class="testimonial-stat" data-field="stat"></span>
+          </div>
+          <button type="button" class="signup-submit proof-continue">
+            Continue
+            <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+          </button>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Q10 — time budget per workout -->
+        <div id="step-time-budget" style="display:none">
+          <h2 class="signup-title" tabindex="-1">How much <strong>time</strong> can you give each workout?</h2>
+          <div class="choice-list" data-key="timeBudget" role="radiogroup" aria-label="How much time can you give each workout">
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="under-30">Under 30 minutes</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="30-45">30–45 minutes</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="45-60">45–60 minutes</button>
+            <button type="button" class="choice-option" role="radio" aria-checked="false" data-value="60-plus">60+ minutes</button>
+          </div>
+          <button type="button" class="signup-back-link"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <!-- Gate — email capture, diagnosis is unlocked behind this -->
         <div id="step-gate" style="display:none">
-          <h2 class="signup-title" tabindex="-1">Where should I <strong>email</strong> it to?</h2>
+          <h2 class="signup-title" tabindex="-1">Where should I <strong>send</strong> your diagnosis?</h2>
           <form id="form-gate" novalidate>
             <div class="signup-field">
               <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
@@ -413,6 +566,49 @@ footer a{color:var(--link);text-decoration:none}
 
       </div>
     </section>
+
+    <!-- Diagnosis / result screen — the Hormozi offer moment. Revealed after the
+         email gate; hero/quiz both hidden while this is showing. Every piece of
+         copy that isn't finalized (mechanism name, guarantee) is filled from the
+         CONTENT config object at runtime — see the script at the bottom. -->
+    <section class="diagnosis-section" id="diagnosis-section">
+      <div class="diagnosis-inner">
+        <div>
+          <p class="diagnosis-eyebrow">Your diagnosis</p>
+          <h2 class="diagnosis-heading">Here's why what you've tried hasn't worked.</h2>
+        </div>
+
+        <div class="way-compare">
+          <div class="way-card way-card--old">
+            <span class="way-label">The old way</span>
+            <p class="way-text">Generic programs and apps hand you a plan and hope it survives contact with your actual life. It doesn't — not because you lack willpower, but because nothing adjusts when your schedule, energy, or motivation changes.</p>
+          </div>
+          <div class="way-card way-card--new">
+            <span class="way-label">The new way</span>
+            <p class="way-text" id="diagnosis-new-way-text"></p>
+          </div>
+        </div>
+
+        <div class="mechanism-card">
+          <p class="mechanism-label">How I fix it</p>
+          <p class="mechanism-name" id="mechanism-name-text"></p>
+        </div>
+
+        <p class="identity-statement">You're exactly who this was built for.</p>
+
+        <div class="guarantee-card">
+          <svg class="guarantee-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z"/></svg>
+          <p class="guarantee-text" id="guarantee-text"></p>
+        </div>
+
+        <p class="price-anchor" id="price-anchor-diagnosis"></p>
+
+        <button type="button" class="signup-submit" id="btn-open-checkout">
+          Start Coaching
+          <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+        </button>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -425,12 +621,12 @@ footer a{color:var(--link);text-decoration:none}
       <div class="disclaimer-grid">
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
-          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+          <p class="disclaimer-text">The information this tool generates is for informational and educational purposes only, based on what you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
         </div>
 
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
-          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+          <p class="disclaimer-text">Any pace or timeline shown is an estimate based on the information you provide, not a guarantee. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
         </div>
 
         <div class="disclaimer-block">
@@ -560,6 +756,47 @@ footer a{color:var(--link);text-decoration:none}
   </div>
 </div>
 
+<!-- Checkout modal — same bottom-sheet component as the legal modals. Two-step
+     skeleton (plan review, then payment) with the price anchor shown a third
+     time. Stripe is NOT wired here — the payment panel is a visual placeholder
+     only, per "skeleton first, backend later." -->
+<div class="legal-overlay" id="modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="checkout-title">Start Coaching</span>
+      <button class="legal-modal-close" onclick="closeCheckout()" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <div class="checkout-steps">
+        <span class="checkout-step-dot is-active" id="checkout-dot-1"></span>
+        <span class="checkout-step-dot" id="checkout-dot-2"></span>
+        <span class="checkout-step-label" id="checkout-step-label">Step 1 of 2 — Review your plan</span>
+      </div>
+
+      <div class="checkout-panel is-active" id="checkout-panel-1">
+        <div class="plan-summary">
+          <div class="plan-summary-row"><span>1-on-1 Coaching</span><span id="checkout-plan-price"></span></div>
+          <div class="plan-summary-row is-muted"><span>Billed monthly</span><span>Cancel anytime</span></div>
+        </div>
+        <p class="price-anchor" id="price-anchor-checkout"></p>
+        <button type="button" class="signup-submit" id="btn-checkout-continue" style="margin-top:1.25rem">
+          Continue to Payment
+          <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+        </button>
+      </div>
+
+      <div class="checkout-panel" id="checkout-panel-2">
+        <!-- Placeholder for the Stripe Payment Element — not wired yet. -->
+        <div class="payment-skeleton">Payment form loads here (Stripe not wired yet)</div>
+        <button type="button" class="signup-submit" id="btn-checkout-submit" style="margin-top:1.25rem" disabled>
+          Complete Purchase
+        </button>
+        <button type="button" class="signup-back-link" id="btn-checkout-back"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 var legalReturnFocus=null;
 function openLegal(e){
@@ -584,20 +821,117 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// 8-screen quiz: 6 single-select questions (Q1 entry driver, Q2 core failure
-// diagnosis — the key segmentation question, Q3 attempts, Q4 time constraint,
-// Q5 goal, Q6 readiness), one proof/education screen between Q3 and Q4, and
-// the final email-only gate. Linear flow throughout — every "Continue"/choice
-// tap moves to current+1, every Back link to current-1 — so no per-step
-// wiring is needed beyond the gate form's own validation.
+// ============================================================================
+// CONTENT CONFIG — every string here is unfinalized copy (mechanism name,
+// guarantee, testimonials, founder story, social proof, price anchor). Swap
+// values here, not in the markup/JS below, once real copy/testimonials/A-B
+// variants exist. This is the "single config file" the brief asks for,
+// scoped down to a single object since this is one static HTML file — the
+// same shape would move into a real content/config module in the Next.js
+// rebuild.
+// ============================================================================
+var CONTENT = {
+  socialProof: "Trusted by 200+ men getting back in shape", // placeholder stat — swap for a real member count / result once available
+  priceWas: "$199",
+  priceNow: "$50",
+  priceSuffix: "first month. Cancel anytime.",
+  mechanismName: "The Adaptive Coaching Method", // TBD — naming not finalized
+  guarantee: "Follow the plan for 30 days. If you don't see measurable progress, you get a full refund of your first month — no questions asked.", // TBD — guarantee language not finalized
+  diagnosisNewWay: "My coaching adjusts every week based on what's actually happening in your life — your sleep, your schedule, your energy — instead of asking you to force-fit a static plan that was never built for you specifically.",
+  whyBuiltThis: [
+    "I built this because I got tired of watching guys do everything “right” on paper and still not see results — not because they didn't work hard, but because their plan never adjusted when their life did.",
+    "Generic programs and fitness apps give you a fixed plan and walk away. Real coaching means someone's actually watching what's working, what's not, and changing course with you — every week, not every 12-week reset.",
+    "That's the whole premise here. Not more willpower. A plan that moves with you."
+  ],
+  founderSignoff: "— Asher",
+  testimonials: [
+    {
+      quote: "I'd tried three different apps before this. The difference was someone actually noticed when I fell off track and adjusted instead of just sending reminders.",
+      name: "Placeholder client",
+      detail: " · early access member",
+      stat: "Lost 28 lbs in 4 months"
+    },
+    {
+      quote: "The check-ins kept me honest in a way I couldn't do for myself. First time I've stuck with anything past 6 weeks.",
+      name: "Placeholder client",
+      detail: " · early access member",
+      stat: "Down 35 lbs, still going"
+    }
+  ]
+};
+
+// Fill every element tagged with an id/data-field this config owns. Kept as
+// one small render pass so nothing above is hardcoded twice.
+(function renderContent(){
+  document.getElementById("social-proof-pill").textContent = CONTENT.socialProof;
+
+  function priceAnchorHTML(){
+    return '<span class="price-anchor__was">' + CONTENT.priceWas + '</span> <span class="price-anchor__now">' + CONTENT.priceNow + '</span> ' + CONTENT.priceSuffix;
+  }
+  ["price-anchor-intro","price-anchor-diagnosis","price-anchor-checkout"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = priceAnchorHTML();
+  });
+  document.getElementById("checkout-plan-price").textContent = CONTENT.priceNow + " / mo";
+
+  document.getElementById("mechanism-name-text").textContent = CONTENT.mechanismName;
+  document.getElementById("guarantee-text").textContent = CONTENT.guarantee;
+  document.getElementById("diagnosis-new-way-text").textContent = CONTENT.diagnosisNewWay;
+
+  var founderBody = document.getElementById("founder-body-text");
+  CONTENT.whyBuiltThis.forEach(function(para){
+    var p = document.createElement("p");
+    p.textContent = para;
+    founderBody.appendChild(p);
+  });
+  var signoff = document.createElement("p");
+  signoff.className = "founder-signoff";
+  signoff.textContent = CONTENT.founderSignoff;
+  founderBody.appendChild(signoff);
+
+  [1,2].forEach(function(n){
+    var card = document.getElementById("step-testimonial-" + n);
+    if (!card) return;
+    var t = CONTENT.testimonials[n-1];
+    if (!t) return;
+    card.querySelector('[data-field="quote"]').textContent = t.quote;
+    card.querySelector('[data-field="name"]').textContent = t.name;
+    card.querySelector('[data-field="detail"]').textContent = t.detail;
+    card.querySelector('[data-field="stat"]').textContent = t.stat;
+  });
+})();
+</script>
+
+<script>
+// Quiz flow: intro (hero) -> 10 questions + 2 testimonial interstitials + 1
+// founder interstitial -> email gate -> diagnosis screen -> checkout modal.
+// Linear throughout — every choice tap / Continue moves to current+1, every
+// Back link to current-1 — so no per-step wiring is needed beyond the gate
+// form's own validation.
+//
+// SKELETON NOTE: this is UX/flow only. Nothing here calls Supabase, fires a
+// PostHog funnel-step event per question, or fires Meta CAPI Lead/Purchase —
+// those are exactly the "backend stuff for later" the brief calls out. The
+// hooks are commented in place where each one would go, so wiring them up
+// later is a drop-in, not a redesign.
 (function(){
-  var steps=["q1","q2","q3","proof","q4","q5","q6","gate"],
+  var steps=["goal","age","weight","height","activity","testimonial-1","frustrations","why-built","coaching-style","intensity","location","testimonial-2","time-budget","gate"],
       current=0,
       answers={};
 
   var stepEls={};
   steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
+
+  // "Start Quiz" — the hero is its own screen until this is tapped; tapping
+  // it enters the focused, one-question-at-a-time quiz view.
+  document.getElementById("btn-start-quiz").addEventListener("click",function(){
+    // TODO(backend): fire "quiz_started" to PostHog + Meta Pixel/CAPI here.
+    document.body.classList.add("quiz-focused");
+    updateNav();
+    var heading=stepEls[steps[current]].querySelector(".signup-title, .proof-statement, .founder-heading");
+    if(heading) heading.focus();
+  });
 
   function updateNav(){
     var pct=current/(steps.length-1)*100;
@@ -609,24 +943,16 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     stepEls[steps[current]].style.display="none";
     current=i;
     stepEls[steps[current]].style.display="";
-    // Q1 ("the main screen") stays in normal page flow, footer and hero
-    // visible below/above it, exactly like the original roadmap page. Every
-    // screen after it takes over the whole page instead — hero and footer
-    // hidden, this section alone fills the viewport (see the body.quiz-focused
-    // rules in CSS).
-    document.body.classList.toggle("quiz-focused",current>0);
+    // TODO(backend): fire a PostHog "quiz_question_viewed" event here, keyed
+    // by steps[current], so per-question drop-off is visible in the funnel —
+    // not just aggregate quiz-completion rate.
     updateNav();
     // Move focus to the new screen's heading/statement on every viewport, not
     // just desktop — this announces the new content to screen readers and puts
     // keyboard focus somewhere sane, without popping the mobile keyboard unprompted.
-    var heading=stepEls[steps[current]].querySelector(".signup-title, .proof-statement");
+    var heading=stepEls[steps[current]].querySelector(".signup-title, .proof-statement, .founder-heading");
     if(heading) heading.focus();
   }
-
-  // Fired once, the first time the visitor answers anything — this is the
-  // "started the quiz" funnel event.
-  var formStartedFired=!1;
-  function markStarted(){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } }
 
   // Every question screen — tap an option, it's recorded under the screen's
   // data-key, and the quiz auto-advances (a brief pause so the tap's own
@@ -638,26 +964,32 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
         opts.forEach(function(b){ b.setAttribute("aria-checked","false"); });
         btn.setAttribute("aria-checked","true");
         answers[key]=btn.dataset.value;
-        markStarted();
         setTimeout(function(){ goToStep(current+1); },200);
       });
     });
   });
 
-  // Every proof/education screen's Continue button just advances.
+  // Every proof/testimonial/founder screen's Continue button just advances.
   document.querySelectorAll(".proof-continue").forEach(function(btn){
     btn.addEventListener("click",function(){ goToStep(current+1); });
   });
 
-  // Every screen's Back link (all but the first) just retreats.
+  // Every screen's Back link retreats. On the first quiz screen (goal), Back
+  // exits focused mode instead and returns to the hero, matching how it got here.
   document.querySelectorAll(".signup-back-link").forEach(function(btn){
-    btn.addEventListener("click",function(){ goToStep(current-1); });
+    btn.addEventListener("click",function(){
+      if(current===0){
+        document.body.classList.remove("quiz-focused");
+        document.querySelector(".hero-grid").scrollIntoView({behavior:"smooth"});
+        return;
+      }
+      goToStep(current-1);
+    });
   });
 
   // Gate — email capture, with the same live server-side email verification
   // (spinner while checking, then check/x) as the signup modal on index.html.
-  // This is the final screen, so submitting sends the visitor on to the
-  // results page.
+  // This is the last quiz screen; submitting reveals the diagnosis screen.
   var email=document.getElementById("su-email"),btnGate=document.getElementById("btn-gate"),
       es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),emTimer=null,emReqId=0,emVerified=!1;
   function validateGate(){
@@ -684,26 +1016,67 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-gate").addEventListener("submit",function(e){
     e.preventDefault();
     if(btnGate.disabled) return;
-    var emailVal=email.value.trim(),qs=[];
-    if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
-    Object.keys(answers).forEach(function(k){ qs.push(k+"="+encodeURIComponent(answers[k])); });
-    // Final-step lead capture — PostHog funnel event plus the deduped Meta Lead (pixel + CAPI).
-    posthog.capture("roadmap_lead_captured",answers);
-    var leadEventId=__fbEventId();
-    fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
-    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal});
-    // Record the completed request in Supabase. keepalive lets the request
-    // finish even though we navigate away immediately after firing it.
-    fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
-      method:"POST",
-      keepalive:!0,
-      headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
-      body:JSON.stringify(Object.assign({email:emailVal},answers))
-    }).catch(function(){});
-    window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
+    answers.email=email.value.trim();
+
+    // TODO(backend): this is the moment the brief calls out for writing quiz
+    // answers + UTM/session data into Supabase keyed to email — BEFORE
+    // payment — so abandoned quizzes are recoverable for Kit follow-up. Also
+    // fire PostHog "quiz_completed" / "email_captured" and the deduped Meta
+    // Lead (pixel + CAPI) here. None of that is wired in this skeleton.
+
+    document.body.classList.remove("quiz-focused");
+    document.getElementById("results-section").style.display="none";
+    document.getElementById("diagnosis-section").style.display="block";
+    document.getElementById("diagnosis-section").scrollIntoView({behavior:"smooth"});
   });
 
   updateNav();
+})();
+</script>
+
+<script>
+// Checkout modal — two-step skeleton (plan review, then a placeholder
+// payment surface). Stripe is not wired here; "Complete Purchase" has no
+// handler yet on purpose. See TODOs for where Supabase/PostHog/Meta CAPI
+// events would fire once the backend is built.
+(function(){
+  var overlay=document.getElementById("modal-checkout"),
+      panel1=document.getElementById("checkout-panel-1"),
+      panel2=document.getElementById("checkout-panel-2"),
+      dot1=document.getElementById("checkout-dot-1"),
+      dot2=document.getElementById("checkout-dot-2"),
+      label=document.getElementById("checkout-step-label");
+
+  document.getElementById("btn-open-checkout").addEventListener("click",function(){
+    // TODO(backend): fire "checkout_initiated" to PostHog + Meta Pixel/CAPI here.
+    panel1.classList.add("is-active");
+    panel2.classList.remove("is-active");
+    dot1.classList.add("is-active");
+    dot2.classList.remove("is-active");
+    label.textContent="Step 1 of 2 — Review your plan";
+    window.openLegal("checkout");
+  });
+  window.closeCheckout=function(){ closeLegal("checkout"); };
+
+  document.getElementById("btn-checkout-continue").addEventListener("click",function(){
+    panel1.classList.remove("is-active");
+    panel2.classList.add("is-active");
+    dot1.classList.remove("is-active");
+    dot2.classList.add("is-active");
+    label.textContent="Step 2 of 2 — Payment";
+    // TODO(backend): mount the Stripe Payment Element into .payment-skeleton here.
+  });
+  document.getElementById("btn-checkout-back").addEventListener("click",function(){
+    panel2.classList.remove("is-active");
+    panel1.classList.add("is-active");
+    dot2.classList.remove("is-active");
+    dot1.classList.add("is-active");
+    label.textContent="Step 1 of 2 — Review your plan";
+  });
+  // "Complete Purchase" stays disabled — no Stripe wiring in this skeleton.
+  // TODO(backend): enable once a valid payment method is entered, then on
+  // submit: create the Stripe subscription, fire "purchase" to PostHog +
+  // Meta Pixel/CAPI (deduped), and redirect to a confirmation page.
 })();
 </script>
 
