@@ -96,12 +96,21 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
-.container{display:flex;flex-direction:column;background:#1c1c1c}
+.container{display:flex;flex-direction:column;background:#1c1c1c;padding-top:var(--topbar-height,60px)}
 
-/* nav — fixed to the very top of the viewport the whole time (visible from
-   the intro screen through the last question), plain bar, blue fill, no
-   track background of its own — matches the rest of the site's minimal style. */
-.progress-line{position:fixed;top:0;left:0;right:0;z-index:10;height:4px;overflow:hidden}
+/* Top bar — banner + progress bar stacked together, fixed to the very top of
+   the viewport the whole time (visible from the intro screen through the
+   last question — never hidden by .quiz-focused, unlike the hero/footer).
+   .container gets padding-top equal to this bar's real measured height (see
+   JS) so page content always clears it, however tall it renders. */
+.site-topbar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;flex-direction:column;background:#1c1c1c}
+/* Banner — a plain full-width bar, darker than the page (same #161616 tier
+   as the footer/results-section), not a pill/chip. */
+.promo-banner{background:#161616;color:var(--text);text-align:center;font-weight:600;font-size:.9375rem;padding:.75rem 1.5rem}
+/* Progress bar — a visible var(--border) track under the blue fill (not just
+   the fill itself), so it reads as a progress indicator even in its default
+   state, which itself starts partway filled (see JS), not empty. */
+.progress-line{position:relative;height:4px;overflow:hidden;background:var(--border)}
 .progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);transition:width .3s ease}
 
 /* section divider — the standalone rule between hero/quiz and between quiz/footer,
@@ -115,9 +124,6 @@ strong{font-weight:600}
    takes over the full screen one question at a time (.quiz-focused). */
 .hero-grid{display:flex;flex-direction:column;gap:1.5rem;text-align:center;padding:var(--pad) 1.5rem}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
-/* Same callout as the root index.html page's hero, copied verbatim. */
-.hero-callout{display:inline-flex;align-self:center;align-items:center;gap:.35rem;padding:.4rem .625rem;border-radius:8px;background:var(--text);color:#1c1c1c;font-size:.8125rem;font-weight:600;line-height:1.2;letter-spacing:-.005em;margin-bottom:.75rem}
-.hero-callout svg{flex-shrink:0;width:1rem;height:1rem}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-align:center}
 .subheadline{font-size:clamp(1rem,.92rem + .4vw,1.15rem);font-weight:400;line-height:1.4;color:var(--muted);margin-top:.75rem;text-align:center}
 /* Price anchor — reused identically on the diagnosis screen and checkout
@@ -143,7 +149,10 @@ strong{font-weight:600}
    alone fills the viewport, content top-justified (not centered) under the
    fixed progress bar. */
 body.quiz-focused .hero-grid,body.quiz-focused #hero-divider,body.quiz-focused footer,body.quiz-focused #footer-divider{display:none}
-body.quiz-focused .results-section{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start}
+/* .container already has padding-top:var(--topbar-height) clearing the fixed
+   top bar, so this only needs to fill what's left of the viewport, not the
+   full 100vh on top of that padding. */
+body.quiz-focused .results-section{min-height:calc(100vh - var(--topbar-height,60px));min-height:calc(100svh - var(--topbar-height,60px));display:flex;flex-direction:column;justify-content:flex-start}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem;text-align:left}
 .signup-field{margin-bottom:.75rem;position:relative}
@@ -293,8 +302,9 @@ footer a{color:var(--link);text-decoration:none}
   footer{background:#eee}
   .results-section{background:#eee}
   .diagnosis-section{background:#eee}
+  .site-topbar{background:#f7f7f7}
+  .promo-banner{background:#eee}
   .choice-option{border-color:#d0d0d0}
-  .hero-callout{color:#f7f7f7}
   .testimonial-card{background:#fff;border-color:var(--card-border)}
   .mechanism-card{background:#fff;border-color:var(--card-border)}
   .way-card--old{background:#fdecea}
@@ -316,15 +326,17 @@ footer a{color:var(--link);text-decoration:none}
 </head>
 <body>
 
+<div class="site-topbar">
+  <div class="promo-banner">Men's Online Fat Loss Coaching</div>
+  <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="progress-line__fill" id="progress-fill"></div>
+  </div>
+</div>
+
 <main>
   <div class="container">
-    <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <div class="progress-line__fill" id="progress-fill"></div>
-    </div>
-
     <div class="hero-grid">
       <div class="hero-header">
-        <div class="hero-callout"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5Zm0-160Q520-463 520-480v-160q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v160q0 17 11.5 28.5T480-440q17 0 28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>Men's Online Fat Loss Coaching</div>
         <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
         <p class="subheadline">Hire a coach — remove your <strong>willpower</strong> as the single point of failure.</p>
       </div>
@@ -865,8 +877,23 @@ var CONTENT = {
   steps.forEach(function(id){ stepEls[id]=document.getElementById("step-"+id); });
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
+  // .container's padding-top has to clear the real height of the fixed
+  // top bar (banner + progress line), not a guessed constant — measure it
+  // and publish it as a CSS var, re-checked on resize since the banner's
+  // font-size (and so its height) can shift across breakpoints.
+  var topbar=document.querySelector(".site-topbar");
+  function syncTopbarHeight(){
+    document.documentElement.style.setProperty("--topbar-height",topbar.getBoundingClientRect().height+"px");
+  }
+  syncTopbarHeight();
+  window.addEventListener("resize",syncTopbarHeight);
+
+  // A floor of 8% even on screen 1 (default state — nothing answered yet)
+  // rather than a literal 0%, so the bar reads as "already a little
+  // underway" instead of empty. Climbs normally from there to 100%.
+  var MIN_PROGRESS_PCT=8;
   function updateNav(){
-    var pct=current/(steps.length-1)*100;
+    var pct=Math.max(MIN_PROGRESS_PCT,current/(steps.length-1)*100);
     progressFill.style.width=pct+"%";
     progressBar.setAttribute("aria-valuenow",Math.round(pct));
   }
