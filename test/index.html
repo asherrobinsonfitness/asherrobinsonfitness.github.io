@@ -90,11 +90,15 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* nav — a single progress line bled to the section's top edge. No track background —
-   only the fill itself is visible; it grows from 0% (invisible, step 1) to 100% (full
-   width, last step) as the wizard advances. */
-.progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden}
-.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
+/* nav — a single progress line bled to the section's top edge. The track
+   (--card-border, a subtle divider tone in both themes) stays visible along
+   its full length so the bar reads as a track-plus-fill from the first
+   paint, not just a fill that pops in from nothing. Square corners on both
+   track and fill.
+   It grows from 5% (a sliver, step 1) to 95% (never a full, "done" bar
+   even on the last step) as the wizard advances — see updateNav() below. */
+.progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden;background:var(--card-border)}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);transition:width .3s ease}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
@@ -240,8 +244,8 @@ footer a{color:var(--link);text-decoration:none}
 <main>
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Are You the Thing Limiting Your Fat Loss Progress?</h1>
-      <div class="subheadline">Hire a coach — remove your <strong>willpower</strong> as the single point of failure.</div>
+      <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
+      <div class="subheadline">Find out exactly what diet &amp; training is best for you.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -550,9 +554,10 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   var stepEls={name:document.getElementById("step-name"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat"),email:document.getElementById("step-email")};
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
-  // 0% on step 1 (invisible) through 100% on the last step (full width).
+  // 5% on step 1 (a sliver, never empty) through 95% on the last step
+  // (never a full, "done" bar — there's still an email to submit).
   function updateNav(){
-    var pct=current/(steps.length-1)*100;
+    var pct=5+current/(steps.length-1)*90;
     progressFill.style.width=pct+"%";
     progressBar.setAttribute("aria-valuenow",Math.round(pct));
   }
@@ -587,7 +592,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   // Fired once, the first time the visitor clears step 1 — this is the
   // "started the quiz" funnel event, not "typed in the name field".
   var formStartedFired=!1;
-  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } goToStep(1); } });
+  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ if(!formStartedFired){ formStartedFired=!0; try{ posthog.capture("roadmap_form_started"); }catch(err){} } goToStep(1); } });
 
   // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
@@ -660,28 +665,33 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
     if(bfValue) qs.push("bf="+encodeURIComponent(bfValue));
     // Final-step lead capture — PostHog funnel event plus the deduped Meta
-    // Lead (pixel + CAPI).
-    posthog.capture("roadmap_lead_captured",{bodyfat_range:bfValue});
-    var leadEventId=__fbEventId();
-    fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
-    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
+    // Lead (pixel + CAPI). Guarded so a tracking failure can never block the
+    // redirect below — the visitor's own progress through the quiz always wins.
+    try{
+      posthog.capture("roadmap_lead_captured",{bodyfat_range:bfValue});
+      var leadEventId=__fbEventId();
+      fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
+      __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
+    }catch(err){}
     // Record the completed request in Supabase — this is what the "Requested by
     // X men" bullet counts elsewhere. keepalive lets the request finish even
     // though we navigate away immediately after firing it.
-    fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
-      method:"POST",
-      keepalive:!0,
-      headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
-      body:JSON.stringify({
-        first_name:first.value.trim(),
-        last_name:last.value.trim(),
-        email:emailVal,
-        height_ft:parseFloat(heightFt.value)||null,
-        height_in:parseFloat(heightIn.value)||null,
-        weight_lbs:parseFloat(weight.value)||null,
-        bodyfat_range:bfValue
-      })
-    }).catch(function(){});
+    try{
+      fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
+        method:"POST",
+        keepalive:!0,
+        headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
+        body:JSON.stringify({
+          first_name:first.value.trim(),
+          last_name:last.value.trim(),
+          email:emailVal,
+          height_ft:parseFloat(heightFt.value)||null,
+          height_in:parseFloat(heightIn.value)||null,
+          weight_lbs:parseFloat(weight.value)||null,
+          bodyfat_range:bfValue
+        })
+      }).catch(function(){});
+    }catch(err){}
     window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
   });
   document.getElementById("back-to-bodyfat").addEventListener("click",function(){ goToStep(2); });
