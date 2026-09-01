@@ -99,6 +99,7 @@ strong{font-weight:600}
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
 
 /* second section — single-step signup form (name + email) + button + bullets */
@@ -106,6 +107,11 @@ strong{font-weight:600}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .signup-field{margin-bottom:.75rem;position:relative}
+/* first/last name — stack on narrow widths, sit side by side once there's
+   room for both at a reasonable width (~200px each + gap), rather than at a
+   fixed viewport breakpoint. */
+.name-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem}
+.name-row .signup-field{flex:1 1 200px;min-width:0;margin-bottom:0}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
 .signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
@@ -213,6 +219,7 @@ footer a{color:var(--link);text-decoration:none}
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Lose Your First 10 Pounds in 4 Weeks Free</h1>
+      <div class="subheadline">Hire a coach — remove your <strong>willpower</strong> as the single point of failure.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -229,19 +236,21 @@ footer a{color:var(--link);text-decoration:none}
           <h2 class="signup-title">Enter Your Info</h2>
           <form id="form-signup" novalidate>
             <div class="signup-field">
-              <input class="signup-input pulse-border" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <input class="signup-input pulse-border" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
               <span class="pulse-ring" aria-hidden="true"></span>
-              <label class="signup-label" for="su-first">First name</label>
-            </div>
-            <div class="signup-field">
-              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
-              <label class="signup-label" for="su-last">Last name</label>
-            </div>
-            <div class="signup-field">
-              <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
               <label class="signup-label" for="su-email">Email address</label>
               <span class="email-status" id="su-email-status" aria-hidden="true"></span>
               <span class="sr-only" id="su-email-status-text" aria-live="polite"></span>
+            </div>
+            <div class="name-row">
+              <div class="signup-field">
+                <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+                <label class="signup-label" for="su-first">First name</label>
+              </div>
+              <div class="signup-field">
+                <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+                <label class="signup-label" for="su-last">Last name</label>
+              </div>
             </div>
             <button type="submit" class="signup-submit" id="btn-signup" disabled>
               Continue
@@ -428,12 +437,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// Single-step signup form: enables Continue once first/last name are filled
-// and the email has passed live server-side verification, then submits the
+// Single-step signup form: enables Continue once the email has passed live
+// server-side verification and first/last name are filled, then submits the
 // lead and sends the visitor on to the roadmap results page.
 (function(){
-  var first=document.getElementById("su-first"),last=document.getElementById("su-last"),
-      email=document.getElementById("su-email"),btn=document.getElementById("btn-signup"),
+  var email=document.getElementById("su-email"),first=document.getElementById("su-first"),last=document.getElementById("su-last"),
+      btn=document.getElementById("btn-signup"),
       es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),
       emTimer=null,emReqId=0,emVerified=!1;
 
@@ -449,12 +458,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   // restore can populate it before the user ever focuses or blurs it. Check
   // (and re-check on every input, since autofill fires that event too) rather
   // than relying solely on focus/blur.
-  function syncFirstPulse(){ first.classList.toggle("pulse-border",!first.value.trim()); }
-  syncFirstPulse();
-  window.addEventListener("pageshow",syncFirstPulse);
-  first.addEventListener("input",syncFirstPulse);
-  first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
-  first.addEventListener("blur",syncFirstPulse);
+  function syncEmailPulse(){ email.classList.toggle("pulse-border",!email.value.trim()); }
+  syncEmailPulse();
+  window.addEventListener("pageshow",syncEmailPulse);
+  email.addEventListener("input",syncEmailPulse);
+  email.addEventListener("focus",function(){ email.classList.remove("pulse-border"); });
+  email.addEventListener("blur",syncEmailPulse);
 
   // Email — live server-side verification: spinner while checking, then check/x.
   function setEmailStatus(st){
@@ -506,6 +515,26 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     }catch(err){}
     window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
   });
+})();
+</script>
+
+<script>
+// Same as roadmap/coaching — a visitor can arrive here with ?name=&email=
+// already known (e.g. from another opt-in step), so prefill the form instead
+// of making them retype it.
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var name=(params.get("name")||"").trim(),email=(params.get("email")||"").trim();
+  function fire(el){ el.dispatchEvent(new Event("input",{bubbles:true})); }
+  if(name){
+    var parts=name.split(/\s+/),first=document.getElementById("su-first"),last=document.getElementById("su-last");
+    if(first){ first.value=parts.shift()||""; fire(first); }
+    if(last){ last.value=parts.join(" "); fire(last); }
+  }
+  if(email){
+    var emailEl=document.getElementById("su-email");
+    if(emailEl){ emailEl.value=email; fire(emailEl); }
+  }
 })();
 </script>
 
