@@ -101,16 +101,19 @@ strong{font-weight:600}
 /* nav — a single progress line bled to the section's top edge. The track
    (--card-border, a subtle divider tone in both themes) stays visible along
    its full length so the bar reads as a track-plus-fill from the first
-   paint, not just a fill that pops in from nothing. overflow:hidden clips
-   the fill to the track's own rounded shape, so rounding only the track is
-   enough — the fill's right edge is never square even mid-transition.
+   paint, not just a fill that pops in from nothing.
    Rounded only on the right (top-right/bottom-right) since the left edge
    bleeds flush to the section's own edge and a rounded corner there would
-   float oddly off the edge it's pinned to. It grows from 5% (a sliver,
-   step 1) to 95% (never a full, "done" bar even on the last step) as the
-   wizard advances — see updateNav() below. */
+   float oddly off the edge it's pinned to. The fill is capped at 95% (see
+   below), so its right edge sits mid-track rather than flush with the
+   track's own right edge — overflow:hidden on the track alone can't round
+   it, since it only clips content that actually reaches the track's edge.
+   The fill gets the same right-side radius directly instead, so its own
+   growing edge is rounded at every width, not just at 100%.
+   It grows from 5% (a sliver, step 1) to 95% (never a full, "done" bar
+   even on the last step) as the wizard advances — see updateNav() below. */
 .progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden;background:var(--card-border);border-radius:0 4px 4px 0}
-.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--blue);border-radius:0 4px 4px 0;transition:width .3s ease}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves, so no section's box size ever changes depending on whether a
