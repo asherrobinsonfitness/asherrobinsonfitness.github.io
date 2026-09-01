@@ -13,61 +13,23 @@
     var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     return m ? m[2] : undefined;
   }
-  function __fbCapi(eventName, eventId, customData, userData) {
-    try {
-      fetch('/api/meta-capi', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        keepalive: true,
-        body: JSON.stringify({
-          event_name: eventName,
-          event_id: eventId,
-          event_source_url: window.location.href,
-          custom_data: customData || {},
-          user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
-        })
-      }).catch(function(){});
-    } catch (e) {}
-  }
-  // First-touch acquisition-path marker — set once, on entry to a funnel,
-  // never overwritten. This is the "direct" side of the roadmap-vs-direct
-  // split; roadmap/index.html sets the "lead_magnet" side the same way.
-  // Also pushed to PostHog as a $set_once person property (2nd arg) so it
-  // can't be overwritten there either, no matter how many times this runs.
-  function __acqPathInit(value) {
-    if (__fbCookie('acq_path')) return;
-    var oneYear = 60 * 60 * 24 * 365;
-    document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
-    if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
-  }
-  // "roadmap" or "direct_offer", read back from that same cookie — used to
-  // tag Purchase's content_name so it can be split by acquisition path.
+  // Test build: no real Pixel/CAPI/PostHog calls (see stub script below) —
+  // __fbCapi is a no-op so nothing here needs to change if that's restored later.
+  function __fbCapi(eventName, eventId, customData, userData) {}
+  // "roadmap" or "direct_offer" — unused with tracking stubbed out, kept so
+  // any leftover call sites still resolve.
   function __contentNameFromAcqPath() {
     var p = __fbCookie('acq_path');
     return p === 'lead_magnet' ? 'roadmap' : (p === 'direct' ? 'direct_offer' : undefined);
   }
 </script>
-<script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),o.push=o,o.loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="/edge/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","1575468926630270");var __pvEventId=__fbEventId();fbq("track","PageView",{},{eventID:__pvEventId});__fbCapi('PageView',__pvEventId)</script> <noscript><img height="1" width="1" style="display:none" src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"></noscript>
-<!-- PostHog -->
+<!-- Test build: Meta Pixel + PostHog disabled — no external tracking calls,
+     no /api hits. Stubbed so any posthog.capture(...) / fbq(...) call sites
+     elsewhere in this file stay harmless no-ops instead of throwing. -->
 <script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    // Bootstrap posthog-js with the same distinct_id the Edge middleware
-    // used to evaluate the landing-page-variant flag (set via the
-    // ph_distinct_id cookie in middleware.js). Without this, posthog-js
-    // mints its own separate anonymous id and every client-side event
-    // (vsl_started, checkout_modal_opened, etc.) ends up attributed
-    // to a different "person" than the $feature_flag_called exposure event.
-    var __phDistinctId = document.cookie.replace(/(?:(?:^|.*;\s*)ph_distinct_id\s*=\s*([^;]*).*$)|^.*$/, '$1') || undefined;
-    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
-        api_host: 'https://us.i.posthog.com',
-        defaults: '2026-05-30',
-        person_profiles: 'always',
-        autocapture: false,
-        bootstrap: __phDistinctId ? { distinctID: __phDistinctId } : undefined,
-    })
-    __acqPathInit('direct');
+  window.fbq = function(){};
+  window.posthog = { capture:function(){}, get_distinct_id:function(){ return undefined; }, setPersonProperties:function(){} };
 </script>
-<!-- End PostHog -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Online Fat Loss Coaching (Test)</title>
 <meta name="robots" content="noindex,nofollow">
@@ -152,7 +114,7 @@ strong{font-weight:600}
    the modal (it's forced to full viewport height on mobile — see the
    max-width:600px block below) so the dark panel always reaches the
    modal's actual bottom edge instead of stopping at its own content. */
-.payment-page{display:flex;flex-direction:column;flex:1;min-height:0}
+.payment-page{display:flex;flex-direction:column;flex:1;min-height:0;margin-top:1.5rem}
 @media(max-width:600px){
   .payment-overlay{padding:0}
   .payment-modal{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:none}
@@ -166,7 +128,7 @@ strong{font-weight:600}
    reached yet, swapped for a grey checkmark once that step is done. */
 .step-nav{position:relative;display:flex;align-items:center;justify-content:center;margin:calc(-1 * var(--pad-sm)) -1rem 0;padding:.85rem 1rem}
 .step-nav__steps{display:flex;align-items:center;gap:1.5rem}
-.step-nav__item{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--muted)}
+.step-nav__item{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--muted);cursor:pointer}
 .step-nav__marker{width:.5em;height:.5em;border-radius:50%;background:var(--card-border);flex-shrink:0}
 .step-nav__check{width:.85em;height:.85em;color:var(--muted);display:none}
 .step-nav__item.is-active .step-nav__marker{background:var(--blue)}
@@ -174,8 +136,9 @@ strong{font-weight:600}
 .step-nav__item.is-done .step-nav__marker{display:none}
 .step-nav__item.is-done .step-nav__check{display:block}
 .payment-close{position:absolute;top:50%;right:1rem;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:6px;padding:.4rem;transition:background-color 0s ease,color 0s ease}
+.payment-back{left:1rem;right:auto}
 
-.modal-hero-title{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;text-align:center;margin-top:1.5rem}
+.modal-hero-title{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;text-align:center}
 .modal-hero-subtitle{font-size:.9375rem;color:var(--muted);text-align:center;margin-top:.35rem}
 
 /* card section — its own dark panel below a break line, same pattern as the
@@ -506,6 +469,9 @@ footer a{color:var(--link);text-decoration:none}
     <div class="payment-modal-body">
 
       <div class="step-nav">
+        <button class="payment-close payment-back" id="payment-back" onclick="goToPaymentPage(0)" aria-label="Back" style="display:none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
         <div class="step-nav__steps">
           <span class="step-nav__item is-active" id="stepnav-payment">
             <span class="step-nav__marker"></span>
@@ -548,6 +514,7 @@ footer a{color:var(--link);text-decoration:none}
             <div id="stripe-message" role="alert" class="alert alert--error"><span id="stripe-message-text"></span></div>
             <button type="submit" class="signup-submit" id="btn-join" disabled>
               <span id="btn-join-text">Join Now</span>
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
         </div>
@@ -620,18 +587,25 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 </script>
 
 <script>
-// Single-step signup form: enables Continue once the email has passed live
-// server-side verification and first/last name are filled, then submits the
-// lead and sends the visitor on to the roadmap results page.
+// Single-step signup form: enables Continue once the email looks valid and
+// first/last name are filled, then opens the payment modal.
+//
+// TEST BUILD: no backend calls. Email verification used to hit
+// /api/verify-email and the lead used to be recorded in Supabase — both
+// removed so this page can be clicked through without touching real data.
+// Restore both by re-adding the fetch calls this replaced if this page ever
+// goes further than local testing.
 (function(){
   var email=document.getElementById("su-email"),first=document.getElementById("su-first"),last=document.getElementById("su-last"),
       btn=document.getElementById("btn-signup"),
-      es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),
-      emTimer=null,emReqId=0,emVerified=!1;
+      es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text");
 
-  function validate(){
+  function emailLooksValid(){
     var v=email.value.trim();
-    btn.disabled=!(first.value.trim()&&last.value.trim()&&email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&emVerified);
+    return email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+  function validate(){
+    btn.disabled=!(first.value.trim()&&last.value.trim()&&emailLooksValid());
   }
   [first,last].forEach(function(el){ el.addEventListener("input",validate); });
 
@@ -648,52 +622,21 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   email.addEventListener("focus",function(){ email.classList.remove("pulse-border"); });
   email.addEventListener("blur",syncEmailPulse);
 
-  // Email — live server-side verification: spinner while checking, then check/x.
-  function setEmailStatus(st){
-    emVerified="valid"===st;
+  // Email status icon — check/x based purely on client-side format, no
+  // server round-trip.
+  function setEmailStatus(){
     es.classList.remove("is-valid","is-invalid");
-    if("checking"===st){ es.innerHTML='<span class="email-spinner"></span>'; esText.textContent="Checking email address…"; email.removeAttribute("aria-invalid"); }
-    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Email address verified."; email.setAttribute("aria-invalid","false"); }
-    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address couldn't be verified."; email.setAttribute("aria-invalid","true"); }
-    else { es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
+    var v=email.value.trim();
+    if(!v){ es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
+    else if(emailLooksValid()){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Email address looks valid."; email.setAttribute("aria-invalid","false"); }
+    else { es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address doesn't look valid."; email.setAttribute("aria-invalid","true"); }
     validate();
   }
-  function checkEmailServer(){
-    var em=email.value.trim();
-    if(!email.validity.valid||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return void setEmailStatus("");
-    var reqId=++emReqId;
-    setEmailStatus("checking");
-    fetch("/api/verify-email?email="+encodeURIComponent(em)).then(function(r){ return r.json(); }).then(function(r){ reqId===emReqId&&setEmailStatus(r.valid?"valid":"invalid"); }).catch(function(){ reqId===emReqId&&setEmailStatus(""); });
-  }
-  email.addEventListener("input",function(){ setEmailStatus(""); clearTimeout(emTimer); emTimer=setTimeout(checkEmailServer,500); });
+  email.addEventListener("input",setEmailStatus);
 
   document.getElementById("form-signup").addEventListener("submit",function(e){
     e.preventDefault();
     if(btn.disabled) return;
-    var emailVal=email.value.trim();
-    // Lead capture — PostHog funnel event plus the deduped Meta Lead (pixel +
-    // CAPI). Guarded so a tracking failure can never block the payment modal
-    // opening below.
-    try{
-      posthog.capture("roadmap_lead_captured");
-      var leadEventId=__fbEventId();
-      fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
-      __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
-    }catch(err){}
-    // Record the completed request in Supabase — this is what the "Requested by
-    // X men" bullet counts elsewhere.
-    try{
-      fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
-        method:"POST",
-        keepalive:!0,
-        headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
-        body:JSON.stringify({
-          first_name:first.value.trim(),
-          last_name:last.value.trim(),
-          email:emailVal
-        })
-      }).catch(function(){});
-    }catch(err){}
     openPayment();
   });
 })();
@@ -721,16 +664,9 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
 <script>
 // Payment modal — 2 pages: (1) plan + card, (2) download the app. Card is a
-// real mounted Stripe Element (not a mock), wired to the same
-// /api/create-payment-intent endpoint index.html itself uses.
-//
-// NOTE: that endpoint currently models the site's $50-first-month-then-$199
-// offer (a fixed Price + promo code, charged today). This modal's copy is a
-// different offer — 30 days free, $0 due today, $199/mo after — which needs
-// either a Stripe Price with trial_period_days or trial_period_days passed to
-// stripe.subscriptions.create() server-side. That's a backend/business
-// decision this file doesn't make on its own, so today it'll still run the
-// existing $50 charge under the hood until the API is updated to match.
+// real mounted Stripe Element (not a mock) — kept fully working so it's
+// still there to look at/test typing into — but nothing here calls the
+// backend. See the TEST BUILD note in initPaymentStripe() below.
 var paymentStripeInitialized=false;
 
 // Step 1 (Payment): blue active dot on Payment, plain grey dot on Download App.
@@ -738,11 +674,16 @@ var paymentStripeInitialized=false;
 function goToPaymentPage(i){
   document.getElementById("payment-page-1").style.display=i===0?"":"none";
   document.getElementById("payment-page-2").style.display=i===1?"":"none";
+  document.getElementById("payment-back").style.display=i===1?"":"none";
   var paymentStep=document.getElementById("stepnav-payment"),downloadStep=document.getElementById("stepnav-download");
   paymentStep.classList.toggle("is-active",i===0);
   paymentStep.classList.toggle("is-done",i===1);
   downloadStep.classList.toggle("is-active",i===1);
 }
+// TEST BUILD: click either nav step directly to jump between pages, so you
+// don't have to fill out the card to see page 2.
+document.getElementById("stepnav-payment").addEventListener("click",function(){ goToPaymentPage(0); });
+document.getElementById("stepnav-download").addEventListener("click",function(){ goToPaymentPage(1); });
 
 function openPayment(){
   document.getElementById("payment-modal").classList.add("active");
@@ -773,41 +714,13 @@ function initPaymentStripe(){
     var pk="pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN";
     var fontUrl="https://asherrobinsonfitness.com/fonts/inter-latin-variable.woff2";
     var fonts=[{family:"Inter",src:"url("+fontUrl+") format('woff2')",weight:"400"},{family:"Inter",src:"url("+fontUrl+") format('woff2')",weight:"600"}];
-    var first=document.getElementById("su-first"),last=document.getElementById("su-last"),email=document.getElementById("su-email");
-    var purchaseEventId=__fbEventId();
 
-    function showError(msg){
-      var el=document.getElementById("stripe-message"),text=document.getElementById("stripe-message-text");
-      text&&(text.textContent=msg);
-      el&&(el.style.display="flex");
-    }
-    function resetSubmit(){
-      var b=document.getElementById("btn-join"),t=document.getElementById("btn-join-text");
-      b&&(b.disabled=!1); t&&(t.textContent="Join Now");
-    }
-
-    var clientSecret;
-    fetch("/api/create-payment-intent",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        email:email.value.trim()||void 0,
-        name:(first.value.trim()+" "+last.value.trim()).trim()||void 0,
-        firstName:first.value.trim()||void 0,
-        lastName:last.value.trim()||void 0,
-        eventId:purchaseEventId,
-        fbp:__fbCookie("_fbp"),
-        fbc:__fbCookie("_fbc"),
-        posthogDistinctId:window.posthog&&window.posthog.get_distinct_id?window.posthog.get_distinct_id():void 0,
-        contentName:__contentNameFromAcqPath()
-      })
-    }).then(function(r){ return r.json(); }).then(function(data){
-      clientSecret=data.clientSecret;
-      if(!clientSecret) throw new Error(data.error||"No client secret.");
-    }).catch(function(){
-      showError("Failed to initialize payment. Please close and try again.");
-    });
-
+    // TEST BUILD: no /api/create-payment-intent call, so there's no real
+    // clientSecret and confirmCardPayment can't run against anything. The
+    // Stripe card Element below still mounts and is fully interactive
+    // (type into it, see validation) — just nothing is actually charged.
+    // Submitting with a complete card jumps straight to page 2, same as
+    // clicking "Download App" in the nav above.
     var stripeInstance=Stripe(pk);
     var isDark=window.matchMedia("(prefers-color-scheme: dark)").matches;
     var cardEl=document.getElementById("payment-element");
@@ -825,23 +738,8 @@ function initPaymentStripe(){
 
     document.getElementById("form-payment").addEventListener("submit",function(e){
       e.preventDefault();
-      var btn=document.getElementById("btn-join");
-      if(btn.disabled||!clientSecret) return;
-      btn.disabled=!0;
-      document.getElementById("btn-join-text").textContent="Processing…";
-      document.getElementById("stripe-message").style.display="none";
-      stripeInstance.confirmCardPayment(clientSecret,{
-        payment_method:{ card:card, billing_details:{ name:(first.value.trim()+" "+last.value.trim()).trim()||void 0, email:email.value.trim()||void 0 } }
-      }).then(function(result){
-        if(result.error){ showError(result.error.message||"Something went wrong. Please try again."); resetSubmit(); return; }
-        var pi=result.paymentIntent;
-        if(!pi||("succeeded"!==pi.status&&"processing"!==pi.status)){ showError("Unexpected payment status. Please try again."); resetSubmit(); return; }
-        try{
-          fbq("track","Purchase",{value:50.00,currency:"USD",content_name:__contentNameFromAcqPath()},{eventID:purchaseEventId});
-          posthog.capture("purchase_completed");
-        }catch(err){}
-        goToPaymentPage(1);
-      }).catch(function(){ showError("Something went wrong. Please try again."); resetSubmit(); });
+      if(document.getElementById("btn-join").disabled) return;
+      goToPaymentPage(1);
     });
   }).catch(function(){
     var el=document.getElementById("stripe-message"),text=document.getElementById("stripe-message-text");
