@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  // Shared helpers for Meta Pixel + Conversions API deduplication.
+  // Each conversion event gets one event_id shared by both the browser pixel
+  // call and the server-side CAPI call so Meta counts it once, not twice.
+  function __fbEventId() {
+    return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+  }
+  function __fbCookie(name) {
+    var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return m ? m[2] : undefined;
+  }
+  // Test build: no real Pixel/CAPI/PostHog calls (see stub script below) —
+  // __fbCapi is a no-op so nothing here needs to change if that's restored later.
+  function __fbCapi(eventName, eventId, customData, userData) {}
+  // "roadmap" or "direct_offer" — unused with tracking stubbed out, kept so
+  // any leftover call sites still resolve.
+  function __contentNameFromAcqPath() {
+    var p = __fbCookie('acq_path');
+    return p === 'lead_magnet' ? 'roadmap' : (p === 'direct' ? 'direct_offer' : undefined);
+  }
+</script>
+<!-- Test build: Meta Pixel + PostHog disabled — no external tracking calls,
+     no /api hits. Stubbed so any posthog.capture(...) / fbq(...) call sites
+     elsewhere in this file stay harmless no-ops instead of throwing. -->
+<script>
+  window.fbq = function(){};
+  window.posthog = { capture:function(){}, get_distinct_id:function(){ return undefined; }, setPersonProperties:function(){} };
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Online Fat Loss Coaching</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+<link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+<link rel="shortcut icon" href="/assets/favicon.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<link rel="preconnect" href="https://fast.vidalytics.com">
+<link rel="dns-prefetch" href="https://fast.vidalytics.com">
+<style>
+:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+strong{font-weight:600}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+
+/* section dividers — standalone elements rather than borders on the sections
+   themselves. Horizontal by default (stacked layout); the one between
+   hero-grid and results-section flips to a vertical rule once the desktop
+   side-by-side split kicks in. */
+.section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
+
+/* top banner — plain-text nav bar above the hero, same background (it's a
+   plain child of <main>, not inside .container, so it stays full-width and
+   never gets pulled into the desktop side-by-side row below). The
+   .section-divider right after it is the break line separating it from the
+   hero. */
+.top-banner{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.9rem 1.5rem;font-size:.9375rem;font-weight:600;letter-spacing:-.005em;color:var(--text)}
+.top-banner svg{flex-shrink:0;width:1.1rem;height:1.1rem}
+
+/* hero — headline, video only */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
+.hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+
+/* second section — single-step signup form (name + email) + button + bullets */
+.results-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
+.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
+.signup-field{margin-bottom:.75rem;position:relative}
+/* first/last name — stack on narrow widths, sit side by side once there's
+   room for both at a reasonable width (~200px each + gap), rather than at a
+   fixed viewport breakpoint. */
+.name-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem}
+.name-row .signup-field{flex:1 1 200px;min-width:0;margin-bottom:0}
+.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-input::placeholder{color:transparent}
+.signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
+.pulse-ring{position:absolute;inset:0;border-radius:8px;border:1px solid var(--blue);opacity:0;pointer-events:none}
+.signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
+@keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
+.signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
+.signup-input:focus~.signup-label{color:var(--link)}
+#su-email{padding-right:2.5rem}
+.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
+.email-status.is-valid{color:#2ecc71}
+.email-status.is-invalid{color:#e53e3e}
+.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
+@keyframes email-spin{to{transform:rotate(360deg)}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
+.signup-submit:disabled:hover{background:var(--card-border)}
+.btn-chevron{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);flex-shrink:0}
+.value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
+.value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
+.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
+.check-icon{width:.6em;height:.6em;color:#1c1c1c}
+/* bonus rows in the bullet list get a green "+" badge instead of the
+   standard white checkmark, so they read as an add-on, not a core inclusion. */
+.check-badge--bonus{background:#22c55e}
+.legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
+.legal-link:hover{color:var(--link)}
+
+/* payment modal — mobile (≤600px): same bottom-sheet slide as the legal
+   (terms/privacy) modals — backdrop fades via opacity, but the panel itself
+   slides up from translateY(100%) on open and back down on close. Desktop
+   (>600px) overrides this below to a centered dialog that just appears,
+   no slide. */
+.payment-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.payment-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.payment-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-width:472px;max-height:100%;overflow-y:auto;position:relative;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
+.payment-overlay.active .payment-modal{transform:translateY(0)}
+.payment-modal-body{padding:var(--pad-sm) 1rem var(--pad-sm);display:flex;flex-direction:column;flex:1;min-height:0}
+/* .payment-page / .modal-card-section grow to fill any leftover height in
+   the modal (it's forced to full viewport height on mobile — see the
+   max-width:600px block below) so the dark panel always reaches the
+   modal's actual bottom edge instead of stopping at its own content. */
+.payment-page{display:flex;flex-direction:column;flex:1;min-height:0;margin-top:1.5rem}
+@media(max-width:600px){
+  .payment-overlay{padding:0}
+  .payment-modal{max-width:none;width:100%;height:100%;max-height:none;border-radius:0;border:none}
+}
+/* Desktop — no bottom-sheet: the modal is just centered on screen and
+   appears/disappears instantly with the overlay, no slide transform. */
+@media(min-width:601px){
+  .payment-overlay{align-items:center;padding:1.25rem;transition:none}
+  .payment-overlay.active{transition:none}
+  .payment-modal{max-height:92vh;border-bottom:1px solid var(--card-border,#3d3d3d);border-radius:12px;transform:none;transition:none}
+}
+
+/* modal progress nav — an actual nav bar: bled to the modal's own top/left/right
+   edges, a break line (border-bottom) separating it from the hero content
+   below, and the close button living inside it (not floating over the
+   content). A simple 2-word stepper, no bar, no card panel — each step is a
+   small filled dot + label: blue for the active step, grey for one not
+   reached yet, swapped for a grey checkmark once that step is done. */
+.step-nav{position:relative;display:flex;align-items:center;justify-content:center;margin:calc(-1 * var(--pad-sm)) -1rem 0;padding:.85rem 1rem}
+.step-nav__steps{display:flex;align-items:center;gap:1.5rem}
+.step-nav__item{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--muted);cursor:pointer}
+.step-nav__marker{width:.5em;height:.5em;border-radius:50%;background:var(--card-border);flex-shrink:0}
+.step-nav__check{width:.85em;height:.85em;color:var(--muted);display:none}
+.step-nav__item.is-active .step-nav__marker{background:var(--blue)}
+.step-nav__item.is-active{color:var(--text);font-weight:600}
+.step-nav__item.is-done .step-nav__marker{display:none}
+.step-nav__item.is-done .step-nav__check{display:block}
+.payment-close{position:absolute;top:50%;right:1rem;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:6px;padding:.4rem;transition:background-color 0s ease,color 0s ease}
+.payment-back{left:1rem;right:auto}
+
+.modal-hero-title{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;text-align:center}
+.modal-hero-subtitle{font-size:.9375rem;color:var(--muted);text-align:center;margin-top:.35rem}
+
+/* card section — its own dark panel below a break line, same pattern as the
+   root page's hero → divider → dark results-section. */
+.modal-card-section{background:#161616;margin:0 -1rem calc(-1 * var(--pad-sm));padding:var(--pad-sm) 1rem;flex:1}
+
+
+/* card field */
+.field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
+.payment-element-wrap{position:relative;margin-bottom:.75rem}
+#payment-element-skeleton{position:absolute;inset:0;min-height:52px;border-radius:8px;background:linear-gradient(90deg,var(--border) 0,#2a2a2a 50%,var(--border) 100%);background-size:200% 100%;animation:pay-skeleton-shimmer 1.5s ease-in-out infinite;transition:opacity 0s ease;z-index:1}
+#payment-element{background:0 0;border:1px solid #3a3a3a;border-radius:8px;padding:.75rem 1rem}
+@keyframes pay-skeleton-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.alert{display:flex;align-items:center;padding:.75rem 1rem;border-radius:8px;border:1px solid;font-size:.8125rem;line-height:1.5;color:var(--text);text-align:left}
+.alert b{font-weight:600}
+.alert--error{background:rgba(229,62,62,.1);border-color:#e53e3e;color:#f87171}
+.alert--warning{background:rgba(245,158,11,.1);border-color:#f59e0b;color:#fbbf24;margin-bottom:1.5rem}
+#stripe-message{display:none;margin-bottom:.75rem}
+
+/* app download — store badges on mobile, a QR code in their place on
+   desktop (nothing to tap on a computer). */
+.store-buttons-row{display:flex;align-items:center;justify-content:center;gap:.85rem;flex-wrap:wrap}
+.store-btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;width:180px;padding:.75rem 1.25rem;border-radius:8px;border:1px solid var(--card-border);background:#000;text-decoration:none}
+.store-btn__icon{width:24px;height:24px;flex-shrink:0}
+.store-btn__text{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.store-btn__eyebrow{font-size:.6rem;font-weight:500;letter-spacing:.03em;color:#c9c9c9}
+#google-btn .store-btn__eyebrow{text-transform:uppercase}
+.store-btn__title{font-size:1rem;font-weight:600;letter-spacing:-.01em;color:#fff}
+.app-qr{display:none;flex-direction:column;align-items:center;gap:.65rem}
+.app-qr img{width:180px;height:180px;border-radius:8px;background:#fff;padding:.5rem;display:block}
+.app-qr__caption{font-size:.8125rem;color:var(--muted)}
+.desktop-note{margin-top:1.5rem;font-size:.8125rem;color:var(--muted);line-height:1.6;text-align:center}
+.desktop-note b{color:var(--text);font-weight:600}
+@media(min-width:900px){
+  .store-buttons-row{display:none}
+  .app-qr{display:flex}
+}
+
+/* disclaimers — live inside the footer, so they inherit its dark panel background. */
+.footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimer-grid{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
+.disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
+.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
+.disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
+.disclaimer-text .legal-link{font-size:.8125rem}
+
+/* footer */
+footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
+.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
+.footer-disclaimer{font-size:.8125rem;line-height:1.6}
+.footer-disclaimer p+p{margin-top:.75rem}
+.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+footer a{color:var(--link);text-decoration:none}
+
+/* legal (terms / privacy) popups */
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.legal-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
+.legal-overlay.active .legal-modal{transform:translateY(0)}
+.legal-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
+.legal-modal-title{font-size:.8125rem;font-weight:600;color:#f8fafc}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:6px;cursor:pointer;padding:.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
+.legal-modal-body::-webkit-scrollbar{display:none}
+.legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
+.legal-modal-body .legal-effective{font-size:.8125rem;color:#a8afba;margin-bottom:1.75rem}
+.legal-modal-body h3{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.75rem 0 .625rem;padding-top:1.375rem;border-top:1px solid var(--card-border,#3d3d3d)}
+.legal-modal-body p{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.75rem}
+.legal-modal-body ul{margin:0 0 .875rem 1.125rem}
+.legal-modal-body ul li{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.25rem}
+.legal-modal-body a{color:var(--link);text-decoration:none}
+.legal-modal-body a:hover{color:var(--link)}
+.legal-modal-body strong{color:var(--text);font-weight:600}
+
+@media(hover:hover) and (pointer:fine){
+  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
+  .payment-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
+  .signup-submit:hover{background:#0052cc}
+}
+
+/* desktop — swap the stacked hero/quiz layout for a 50/50 side-by-side split.
+   The top banner sits above .container (so it stays full-width instead of
+   getting pulled into the row split below) — main becomes the full-height
+   flex column instead, and .container fills whatever height the banner
+   leaves it, so banner + divider + container still add up to exactly one
+   viewport instead of container alone claiming a full 100vh on top of it. */
+@media (min-width:900px){
+  main{display:flex;flex-direction:column;min-height:100vh}
+  .top-banner{flex-shrink:0}
+  .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
+  .results-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .section-divider--split{width:1px;height:auto;align-self:stretch}
+  .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+}
+
+@media (prefers-color-scheme:light){
+  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
+  body{background:#f7f7f7}
+  .container{background:#f7f7f7}
+  footer{background:#eee}
+  .results-section{background:#eee}
+  .hero-media{background:#eee}
+  .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
+  .signup-label{color:#4a4a4a}
+  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
+  .check-icon{color:#f7f7f7}
+  .legal-modal{background:#fff;border-color:var(--card-border)}
+  .legal-modal-header{border-bottom-color:var(--card-border)}
+  .legal-modal-title{color:var(--text)}
+  .legal-modal-close{color:rgba(0,0,0,.5)}
+  .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+  .legal-modal-body h2{color:var(--text)}
+  .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+  .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
+  .payment-modal{background:#fff;border-color:var(--card-border)}
+  .payment-close{color:rgba(0,0,0,.5)}
+  .payment-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+  #payment-element{border-color:#d0d0d0}
+  #payment-element-skeleton{background:linear-gradient(90deg,var(--border) 0,#fff 50%,var(--border) 100%);background-size:200% 100%}
+  .alert--error{color:#b91c1c}
+  .alert--warning{color:#92400e}
+  .modal-card-section{background:#eee}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="top-banner"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="M727-280H600q-17 0-28.5-11.5T560-320q0-17 11.5-28.5T600-360h127l-36-36q-11-11-11-27.5t12-28.5q11-11 28-11t28 11l104 104q5 5 8 12.5t3 15.5q0 8-3 15.5t-8 12.5L748-188q-11 11-27.5 11.5T692-188q-11-11-11-28t11-28l35-36ZM416-520l264-154v-86h-10L416-613 169-760h-9v88l256 152ZM155-280q-31 0-53-22t-22-53v-410q0-31 22-53t53-22h530q31 0 53 22t22 53v173q0 14-11 24t-25 9q-49-2-93.5 16T551-490q-35 35-53.5 80T481-316q1 14-9 25t-24 11H155Z"/></svg>Your Roadmap is on its way</div>
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-grid">
+      <h1 class="headline">Before You Check Your Email, Watch This Video</h1>
+      <div class="subheadline">I'm taking on a few new clients for my online fat loss coaching.</div>
+      <div class="hero-media">
+        <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
+        <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+        <script>!function(v,a,p,i){v.getVidalyticsPlayer=n=>{v[a]=v[a]||{},v[a][p]=v[a][p]||{};let d=v[a][p][n]=v[a][p][n]||{};return new Promise((e=>{if(d[i])return void e(d[i]);let t;Object.defineProperty(d,i,{get:()=>t,set(i){t=i,e(i)}})}))}}(window,"_vidalytics","embeds","player");getVidalyticsPlayer("vidalytics_embed_Xcic7Hyxo2J8RaM9").then(function(player){if(!player)return;var vslStarted=!1;player.on("play",function(){vslStarted||(vslStarted=!0,posthog.capture("vsl_started"))}),player.on("ended",function(){posthog.capture("vsl_completed")})})</script>
+      </div>
+    </div>
+
+    <div class="section-divider section-divider--split" aria-hidden="true"></div>
+
+    <section class="results-section">
+      <div class="blocks-grid">
+
+        <div id="signup-block">
+          <h2 class="signup-title">Enter Your Info</h2>
+          <form id="form-signup" novalidate>
+            <div class="signup-field">
+              <input class="signup-input pulse-border" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
+              <span class="pulse-ring" aria-hidden="true"></span>
+              <label class="signup-label" for="su-email">Email address</label>
+              <span class="email-status" id="su-email-status" aria-hidden="true"></span>
+              <span class="sr-only" id="su-email-status-text" aria-live="polite"></span>
+            </div>
+            <div class="name-row">
+              <div class="signup-field">
+                <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+                <label class="signup-label" for="su-first">First name</label>
+              </div>
+              <div class="signup-field">
+                <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+                <label class="signup-label" for="su-last">Last name</label>
+              </div>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-signup" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <ul class="value-bullets">
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Start your 1 month free trial</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get personalized training and nutrition</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>No commitment &mdash; Cancel anytime</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-disclaimers">
+      <h2 class="disclaimers-title">Disclaimers</h2>
+      <div class="disclaimer-grid">
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Eligibility</h3>
+          <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+          <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-disclaimer">
+      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-row">
+      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
+        <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="terms-title">Terms of Service</span>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Terms of Service</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Agreement</h3>
+      <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
+      <h3>2. The Service</h3>
+      <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
+      <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
+      <h3>3. Eligibility</h3>
+      <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>4. Pricing and Billing</h3>
+      <p>Coaching is billed as follows:</p>
+      <ul>
+        <li><strong>First month:</strong> $50.00 (one-time discounted rate)</li>
+        <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
+      </ul>
+      <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>5. Cancellation</h3>
+      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
+      <h3>6. 30-Day Results Guarantee</h3>
+      <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
+      <ul>
+        <li>You must have completed your onboarding call</li>
+        <li>You must have logged food and workouts as directed for the 30-day period</li>
+        <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
+      </ul>
+      <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
+      <h3>7. No Medical Advice</h3>
+      <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>8. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>9. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>10. Disclaimer of Warranties</h3>
+      <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>11. Governing Law</h3>
+      <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
+      <h3>12. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>13. Contact</h3>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2>Privacy Policy</h2>
+      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <h3>1. Overview</h3>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
+      <h3>2. Information I Collect</h3>
+      <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
+      <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
+      <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <h3>3. How I Use Your Information</h3>
+      <ul>
+        <li>To process your purchase and deliver coaching services</li>
+        <li>To communicate with you about your coaching program</li>
+        <li>To measure and improve the performance of my advertising</li>
+        <li>To analyze Site usage and improve user experience</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
+      <h3>4. Sharing of Information</h3>
+      <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
+      <ul>
+        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
+        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
+        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
+      </ul>
+      <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
+      <h3>5. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>6. Data Retention</h3>
+      <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
+      <h3>7. Your Rights</h3>
+      <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>8. Children's Privacy</h3>
+      <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
+      <h3>9. Third-Party Links</h3>
+      <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
+      <h3>10. Changes to This Policy</h3>
+      <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      <h3>11. Contact</h3>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="payment-overlay" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title">
+  <div class="payment-modal">
+    <div class="payment-modal-body">
+
+      <div class="step-nav">
+        <button class="payment-close payment-back" id="payment-back" onclick="goToPaymentPage(0)" aria-label="Back" style="display:none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="step-nav__steps">
+          <span class="step-nav__item is-active" id="stepnav-payment">
+            <span class="step-nav__marker"></span>
+            <svg class="step-nav__check" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>
+            Payment
+          </span>
+          <span class="step-nav__item" id="stepnav-download">
+            <span class="step-nav__marker"></span>
+            <svg class="step-nav__check" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>
+            Download App
+          </span>
+        </div>
+        <button class="payment-close" onclick="closePayment()" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="section-divider" style="margin:0 -1rem;width:calc(100% + 2rem)" aria-hidden="true"></div>
+
+      <div id="payment-page-1" class="payment-page">
+        <h2 class="modal-hero-title" id="payment-modal-title">28 Days Free</h2>
+        <div class="modal-hero-subtitle">Then $199 per month. Cancel anytime.</div>
+
+        <ul class="value-bullets" style="margin-top:1.25rem;margin-bottom:0">
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>A training and nutrition plan built from scratch</span></li>
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Weekly check-ins with your coach</span></li>
+          <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Direct access to your coach via message</span></li>
+          <li><span class="check-badge check-badge--bonus"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><strong>Bonus:</strong> A video demo for every exercise</span></li>
+          <li><span class="check-badge check-badge--bonus"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span><strong>Bonus:</strong> 5,000+ recipes to choose from</span></li>
+        </ul>
+
+        <div class="section-divider" style="margin:var(--pad-sm) -1rem 0;width:calc(100% + 2rem)" aria-hidden="true"></div>
+
+        <div class="modal-card-section">
+          <form id="form-payment" novalidate>
+            <label class="field-label" for="payment-element">Card information</label>
+            <div class="payment-element-wrap">
+              <div id="payment-element-skeleton"></div>
+              <div id="payment-element"></div>
+            </div>
+            <div id="stripe-message" role="alert" class="alert alert--error"><span id="stripe-message-text"></span></div>
+            <button type="submit" class="signup-submit" id="btn-join" disabled>
+              <span id="btn-join-text">Start Free Trial</span>
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div id="payment-page-2" class="payment-page" style="display:none">
+        <p class="alert alert--warning" role="alert">
+          <span><b>Important:</b> You won't be able to sign in to the app until after your onboarding call, so it's important you show up. All the details for your call were sent to your email.</span>
+        </p>
+
+        <div class="store-buttons-row">
+          <a id="apple-btn" class="store-btn" href="https://apps.apple.com/us/app/hubfit/id6448201245" target="_blank" rel="noopener">
+            <svg class="store-btn__icon" viewBox="0 0 814 1000" fill="#fff" aria-hidden="true">
+              <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/>
+            </svg>
+            <span class="store-btn__text">
+              <span class="store-btn__eyebrow">Download on the</span>
+              <span class="store-btn__title">App Store</span>
+            </span>
+          </a>
+          <a id="google-btn" class="store-btn" href="https://play.google.com/store/apps/details?id=com.hubfitapp" target="_blank" rel="noopener">
+            <svg class="store-btn__icon" viewBox="0 0 28.99 31.99" aria-hidden="true">
+              <path fill="#ea4335" d="M13.54 15.28.12 29.34a3.66 3.66 0 0 0 5.33 2.16l15.1-8.6Z"/>
+              <path fill="#fbbc04" d="m27.11 12.89-6.53-3.74-7.35 6.45 7.38 7.28 6.48-3.7a3.54 3.54 0 0 0 1.5-4.79 3.62 3.62 0 0 0-1.5-1.5z"/>
+              <path fill="#4285f4" d="M.12 2.66a3.57 3.57 0 0 0-.12.92v24.84a3.57 3.57 0 0 0 .12.92L14 15.64Z"/>
+              <path fill="#34a853" d="m13.64 16 6.94-6.85L5.5.51A3.73 3.73 0 0 0 3.63 0 3.64 3.64 0 0 0 .12 2.65Z"/>
+            </svg>
+            <span class="store-btn__text">
+              <span class="store-btn__eyebrow">Get it on</span>
+              <span class="store-btn__title">Google Play</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="app-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fhubfit%2Fid6448201245" alt="QR code to download the HubFit app" width="180" height="180" loading="lazy">
+          <span class="app-qr__caption">Scan to download the app</span>
+        </div>
+
+        <p class="desktop-note">
+          <b>On your computer?</b> The app lives on your phone — open this page on your phone, or search <b>"HubFit"</b> in the App Store / Google Play.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+var legalReturnFocus=null;
+function openLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  legalReturnFocus=document.activeElement;
+  l.classList.add("active"),document.body.style.overflow="hidden";
+  var o=l.querySelector(".legal-modal-body");
+  o&&(o.scrollTop=0);
+  var close=l.querySelector(".legal-modal-close");
+  close&&close.focus();
+}
+function closeLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  l.classList.remove("active"),document.body.style.overflow="";
+  legalReturnFocus&&legalReturnFocus.focus();
+  legalReturnFocus=null;
+}
+document.querySelectorAll(".legal-overlay").forEach(function(e){e.addEventListener("click",function(l){l.target===e&&closeLegal(e.id.replace("modal-",""))})});
+document.addEventListener("keydown",function(e){"Escape"===e.key&&document.querySelectorAll(".legal-overlay.active").forEach(function(e){closeLegal(e.id.replace("modal-",""))})});
+</script>
+
+<script>
+// Single-step signup form: enables Continue once the email looks valid and
+// first/last name are filled, then opens the payment modal.
+//
+// TEST BUILD: no backend calls. Email verification used to hit
+// /api/verify-email and the lead used to be recorded in Supabase — both
+// removed so this page can be clicked through without touching real data.
+// Restore both by re-adding the fetch calls this replaced if this page ever
+// goes further than local testing.
+(function(){
+  var email=document.getElementById("su-email"),first=document.getElementById("su-first"),last=document.getElementById("su-last"),
+      btn=document.getElementById("btn-signup"),
+      es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text");
+
+  function emailLooksValid(){
+    var v=email.value.trim();
+    return email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+  function validate(){
+    btn.disabled=!(first.value.trim()&&last.value.trim()&&emailLooksValid());
+  }
+  [first,last].forEach(function(el){ el.addEventListener("input",validate); });
+
+  // The pulse should only ever show on a genuinely empty field. It's baked into
+  // the initial markup as the "empty on load" default, but the field isn't
+  // always actually empty on load — browser autofill or a bfcache/history
+  // restore can populate it before the user ever focuses or blurs it. Check
+  // (and re-check on every input, since autofill fires that event too) rather
+  // than relying solely on focus/blur.
+  function syncEmailPulse(){ email.classList.toggle("pulse-border",!email.value.trim()); }
+  syncEmailPulse();
+  window.addEventListener("pageshow",syncEmailPulse);
+  email.addEventListener("input",syncEmailPulse);
+  email.addEventListener("focus",function(){ email.classList.remove("pulse-border"); });
+  email.addEventListener("blur",syncEmailPulse);
+
+  // Email status icon — check/x based purely on client-side format, no
+  // server round-trip.
+  function setEmailStatus(){
+    es.classList.remove("is-valid","is-invalid");
+    var v=email.value.trim();
+    if(!v){ es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
+    else if(emailLooksValid()){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Email address looks valid."; email.setAttribute("aria-invalid","false"); }
+    else { es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address doesn't look valid."; email.setAttribute("aria-invalid","true"); }
+    validate();
+  }
+  email.addEventListener("input",setEmailStatus);
+
+  document.getElementById("form-signup").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(btn.disabled) return;
+    openPayment();
+  });
+})();
+</script>
+
+<script>
+// Same as roadmap/coaching — a visitor can arrive here with ?name=&email=
+// already known (e.g. from another opt-in step), so prefill the form instead
+// of making them retype it.
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var name=(params.get("name")||"").trim(),email=(params.get("email")||"").trim();
+  function fire(el){ el.dispatchEvent(new Event("input",{bubbles:true})); }
+  if(name){
+    var parts=name.split(/\s+/),first=document.getElementById("su-first"),last=document.getElementById("su-last");
+    if(first){ first.value=parts.shift()||""; fire(first); }
+    if(last){ last.value=parts.join(" "); fire(last); }
+  }
+  if(email){
+    var emailEl=document.getElementById("su-email");
+    if(emailEl){ emailEl.value=email; fire(emailEl); }
+  }
+})();
+</script>
+
+<script>
+// Payment modal — 2 pages: (1) plan + card, (2) download the app. Card is a
+// real mounted Stripe Element (not a mock) — kept fully working so it's
+// still there to look at/test typing into — but nothing here calls the
+// backend. See the TEST BUILD note in initPaymentStripe() below.
+var paymentStripeInitialized=false;
+
+// Step 1 (Payment): blue active dot on Payment, plain grey dot on Download App.
+// Step 2 (Download App): grey check on Payment, blue active dot on Download App.
+function goToPaymentPage(i){
+  document.getElementById("payment-page-1").style.display=i===0?"":"none";
+  document.getElementById("payment-page-2").style.display=i===1?"":"none";
+  document.getElementById("payment-back").style.display=i===1?"":"none";
+  var paymentStep=document.getElementById("stepnav-payment"),downloadStep=document.getElementById("stepnav-download");
+  paymentStep.classList.toggle("is-active",i===0);
+  paymentStep.classList.toggle("is-done",i===1);
+  downloadStep.classList.toggle("is-active",i===1);
+}
+// TEST BUILD: click either nav step directly to jump between pages, so you
+// don't have to fill out the card to see page 2.
+document.getElementById("stepnav-payment").addEventListener("click",function(){ goToPaymentPage(0); });
+document.getElementById("stepnav-download").addEventListener("click",function(){ goToPaymentPage(1); });
+
+function openPayment(){
+  document.getElementById("payment-modal").classList.add("active");
+  document.body.style.overflow="hidden";
+  goToPaymentPage(0);
+  initPaymentStripe();
+}
+function closePayment(){
+  document.getElementById("payment-modal").classList.remove("active");
+  document.body.style.overflow="";
+}
+document.getElementById("payment-modal").addEventListener("click",function(e){ if(e.target===e.currentTarget) closePayment(); });
+document.addEventListener("keydown",function(e){ "Escape"===e.key&&document.getElementById("payment-modal").classList.contains("active")&&closePayment(); });
+
+function loadStripeJs(){
+  return window.Stripe?Promise.resolve():new Promise(function(res,rej){
+    var s=document.createElement("script");
+    s.src="https://js.stripe.com/v3/";
+    s.onload=res; s.onerror=rej;
+    document.head.appendChild(s);
+  });
+}
+
+function initPaymentStripe(){
+  if(paymentStripeInitialized) return;
+  paymentStripeInitialized=true;
+  loadStripeJs().then(function(){
+    var pk="pk_live_51OHKSrKD9V1PzErueaUxkapsI8ItONhS7ROxaaOCsKd1OoYPIrquVn3mVOorTkr1RoyzoTTqGsI5Q1I2gVcA9Oiu00Bs085VBN";
+    var fontUrl="https://asherrobinsonfitness.com/fonts/inter-latin-variable.woff2";
+    var fonts=[{family:"Inter",src:"url("+fontUrl+") format('woff2')",weight:"400"},{family:"Inter",src:"url("+fontUrl+") format('woff2')",weight:"600"}];
+
+    // TEST BUILD: no /api/create-payment-intent call, so there's no real
+    // clientSecret and confirmCardPayment can't run against anything. The
+    // Stripe card Element below still mounts and is fully interactive
+    // (type into it, see validation) — just nothing is actually charged.
+    // Submitting with a complete card jumps straight to page 2, same as
+    // clicking "Download App" in the nav above.
+    var stripeInstance=Stripe(pk);
+    var isDark=window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var cardEl=document.getElementById("payment-element");
+    cardEl.style.visibility="hidden";
+    var elements=stripeInstance.elements({fonts:fonts});
+    var card=elements.create("card",{hidePostalCode:!0,style:{base:{color:isDark?"#F8FAFC":"#111111",fontFamily:'Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,sans-serif',fontSize:"16px",fontWeight:"400",lineHeight:"21.6px","::placeholder":{color:isDark?"#a8afba":"#4a4a4a"}},invalid:{color:"#e53e3e"}}});
+    card.on("ready",function(){
+      var skeleton=document.getElementById("payment-element-skeleton");
+      skeleton&&(skeleton.style.opacity="0",setTimeout(function(){ skeleton.style.display="none"; },260));
+      cardEl.style.visibility="";
+    });
+    var cardComplete=!1;
+    card.on("change",function(e){ cardComplete=e.complete; document.getElementById("btn-join").disabled=!cardComplete; });
+    card.mount("#payment-element");
+
+    document.getElementById("form-payment").addEventListener("submit",function(e){
+      e.preventDefault();
+      if(document.getElementById("btn-join").disabled) return;
+      goToPaymentPage(1);
+    });
+  }).catch(function(){
+    var el=document.getElementById("stripe-message"),text=document.getElementById("stripe-message-text");
+    text&&(text.textContent="Failed to load payment form. Please close and try again.");
+    el&&(el.style.display="flex");
+  });
+}
+</script>
+
+</body>
+</html>
