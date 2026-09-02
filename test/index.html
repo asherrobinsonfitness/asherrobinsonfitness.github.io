@@ -126,7 +126,8 @@ strong{font-weight:600}
 /* Desktop — no bottom-sheet: the modal is just centered on screen and
    appears/disappears instantly with the overlay, no slide transform. */
 @media(min-width:601px){
-  .payment-overlay{align-items:center;padding:1.25rem}
+  .payment-overlay{align-items:center;padding:1.25rem;transition:none}
+  .payment-overlay.active{transition:none}
   .payment-modal{max-height:92vh;border-bottom:1px solid var(--card-border,#3d3d3d);border-radius:12px;transform:none;transition:none}
 }
 
