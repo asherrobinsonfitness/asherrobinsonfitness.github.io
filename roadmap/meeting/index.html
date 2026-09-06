@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Book Your Free Consultation</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+<link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+<link rel="shortcut icon" href="/assets/favicon.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<link rel="preconnect" href="https://fast.vidalytics.com">
+<link rel="dns-prefetch" href="https://fast.vidalytics.com">
+<style>
+:root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+strong{font-weight:600}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+
+/* section dividers — standalone elements rather than borders on the sections
+   themselves. Horizontal by default (stacked layout); the one between
+   hero-grid and booking-section flips to a vertical rule once the desktop
+   side-by-side split kicks in. */
+.section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
+
+/* top banner — plain-text nav bar above the hero, same background (it's a
+   plain child of <main>, not inside .container, so it stays full-width and
+   never gets pulled into the desktop side-by-side row below). The
+   .section-divider right after it is the break line separating it from the
+   hero. */
+.top-banner{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.9rem 1.5rem;font-size:.9375rem;font-weight:600;letter-spacing:-.005em;color:var(--text)}
+.top-banner svg{flex-shrink:0;width:1.1rem;height:1.1rem}
+
+/* hero — headline, video only */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
+.hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+
+/* second section — the booking calendar */
+.booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
+.booking-inner{width:100%;max-width:472px;margin:0 auto}
+
+/* footer */
+footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
+.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
+.footer-disclaimer{font-size:.8125rem;line-height:1.6}
+.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.footer-row{display:flex;justify-content:center;align-items:center}
+
+/* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split.
+   The top banner sits above .container (so it stays full-width instead of
+   getting pulled into the row split below) — main becomes the full-height
+   flex column instead, and .container fills whatever height the banner
+   leaves it, so banner + divider + container still add up to exactly one
+   viewport instead of container alone claiming a full 100vh on top of it. */
+@media (min-width:900px){
+  main{display:flex;flex-direction:column;min-height:100vh}
+  .top-banner{flex-shrink:0}
+  .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
+  .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
+  .section-divider--split{width:1px;height:auto;align-self:stretch}
+}
+
+@media (prefers-color-scheme:light){
+  :root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0}
+  body{background:#f7f7f7}
+  .container{background:#f7f7f7}
+  footer{background:#eee}
+  .booking-section{background:#eee}
+  .hero-media{background:#eee}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="top-banner"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="M727-280H600q-17 0-28.5-11.5T560-320q0-17 11.5-28.5T600-360h127l-36-36q-11-11-11-27.5t12-28.5q11-11 28-11t28 11l104 104q5 5 8 12.5t3 15.5q0 8-3 15.5t-8 12.5L748-188q-11 11-27.5 11.5T692-188q-11-11-11-28t11-28l35-36ZM416-520l264-154v-86h-10L416-613 169-760h-9v88l256 152ZM155-280q-31 0-53-22t-22-53v-410q0-31 22-53t53-22h530q31 0 53 22t22 53v173q0 14-11 24t-25 9q-49-2-93.5 16T551-490q-35 35-53.5 80T481-316q1 14-9 25t-24 11H155Z"/></svg>Your Roadmap is on its way</div>
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-grid">
+      <h1 class="headline">Before You Check Your Email, Watch This Video</h1>
+      <div class="subheadline">I'm taking on a few new clients for my online fat loss coaching.</div>
+      <div class="hero-media">
+        <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
+        <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+      </div>
+    </div>
+
+    <div class="section-divider section-divider--split" aria-hidden="true"></div>
+
+    <section class="booking-section">
+      <div class="booking-inner">
+        <!-- iClosed inline widget begin -->
+        <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
+        <script>
+        // Prefill the iClosed scheduler from this page's own ?name=/?email=/?phone=
+        // query params (e.g. a visitor arriving from another opt-in step), per
+        // https://intercom.help/iclosed/en/articles/9830929 — appended to the
+        // widget's data-url before widget.js reads it, so this must run first.
+        (function(){
+          var params=new URLSearchParams(window.location.search);
+          var name=(params.get("name")||"").trim(),email=(params.get("email")||"").trim(),phone=(params.get("phone")||"").trim();
+          var widget=document.querySelector(".iclosed-widget");
+          if(!widget) return;
+          var qs=[];
+          if(phone) qs.push("iclosedPhone="+encodeURIComponent(phone));
+          if(email) qs.push("iclosedEmail="+encodeURIComponent(email));
+          if(name) qs.push("iclosedName="+encodeURIComponent(name));
+          if(qs.length) widget.setAttribute("data-url",widget.getAttribute("data-url")+"?"+qs.join("&"));
+        })();
+        </script>
+        <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
+        <!-- iClosed inline widget end -->
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-disclaimer">
+      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-row">
+      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
