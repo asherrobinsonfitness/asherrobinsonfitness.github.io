@@ -22,17 +22,11 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
-.container{display:flex;flex-direction:column;background:#1c1c1c}
-
 /* section dividers — standalone elements rather than borders on the sections
-   themselves. Horizontal by default (stacked layout); the one between
-   hero-grid and booking-section flips to a vertical rule once the desktop
-   side-by-side split kicks in. */
+   themselves. */
 .section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
 
-/* top banner — plain-text nav bar above the hero, same background (it's a
-   plain child of <main>, not inside .container, so it stays full-width and
-   never gets pulled into the desktop side-by-side row below). The
+/* top banner — plain-text nav bar above the hero, same background. The
    .section-divider right after it is the break line separating it from the
    hero. */
 .top-banner{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.9rem 1.5rem;font-size:.9375rem;font-weight:600;letter-spacing:-.005em;color:var(--text)}
@@ -43,85 +37,175 @@ strong{font-weight:600}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+.value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
+.value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
+.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
+.check-icon{width:.6em;height:.6em;color:#1c1c1c}
+.ps-divider{border:none;border-bottom:1px solid var(--border);margin-top:1.5rem}
+.ps-note{margin-top:1.5rem;font-size:.9375rem;color:var(--text);line-height:1.6}
+.ps-note p+p{margin-top:.5rem}
+
+/* shared section title — same treatment as "Common Questions" on the root page */
+.section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
 
 /* second section — the booking calendar */
 .booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
 
+/* third section — common questions */
+.common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
+.common-questions__inner{max-width:472px;margin:0 auto}
+.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
+.faq-item__summary::-webkit-details-marker{display:none}
+.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
+.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
+.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
+.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
+.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
+.faq-item__body-inner{padding:0 .25rem 1.25rem}
+.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);margin:0}
+.faq-item__body-inner p+p{margin-top:.75rem}
+
 /* footer */
 footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
-.footer-disclaimer{font-size:.8125rem;line-height:1.6}
-.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.copyright{color:var(--muted)}
 .footer-row{display:flex;justify-content:center;align-items:center}
-
-/* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split.
-   The top banner sits above .container (so it stays full-width instead of
-   getting pulled into the row split below) — main becomes the full-height
-   flex column instead, and .container fills whatever height the banner
-   leaves it, so banner + divider + container still add up to exactly one
-   viewport instead of container alone claiming a full 100vh on top of it. */
-@media (min-width:900px){
-  main{display:flex;flex-direction:column;min-height:100vh}
-  .top-banner{flex-shrink:0}
-  .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
-  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
-  .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
-  .section-divider--split{width:1px;height:auto;align-self:stretch}
-}
 
 @media (prefers-color-scheme:light){
   :root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0}
   body{background:#f7f7f7}
-  .container{background:#f7f7f7}
   footer{background:#eee}
   .booking-section{background:#eee}
+  .common-questions{background:#eee}
   .hero-media{background:#eee}
+  .check-icon{color:#f7f7f7}
 }
 </style>
 </head>
 <body>
 
 <main>
-  <div class="top-banner"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="m438-342 139-139q12-12 29-12t29 12q12 12 12 29t-12 29L466-254q-12 12-28 12t-28-12l-85-85q-12-12-12-29t12-29q12-12 29-12t29 12l55 55ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Z"/></svg>You're All Set</div>
+  <div class="top-banner"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="m438-342 139-139q12-12 29-12t29 12q12 12 12 29t-12 29L466-254q-12 12-28 12t-28-12l-85-85q-12-12-12-29t12-29q12-12 29-12t29 12l55 55ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Z"/></svg>Your Meeting Is Scheduled</div>
   <div class="section-divider" aria-hidden="true"></div>
 
-  <div class="container">
-    <div class="hero-grid">
-      <h1 class="headline">Your Call Is Confirmed</h1>
-      <div class="subheadline">Here are your call details below.</div>
-      <div class="hero-media">
-        <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
-        <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+  <div class="hero-grid">
+    <h1 class="headline">Important Next Steps</h1>
+    <div class="subheadline">Watch the video below. It explains what happens next.</div>
+    <div class="hero-media">
+      <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
+      <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+    </div>
+    <ul class="value-bullets">
+      <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>I may call, text, or email you to confirm your meeting</span></li>
+      <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Please watch for unknown numbers and check your voicemail/spam folder</span></li>
+    </ul>
+    <hr class="ps-divider" aria-hidden="true">
+    <div class="ps-note">
+      <p><strong>P.S.</strong> The goal of the call is to get to know each other and see if you're a good fit for coaching.</p>
+      <p>That's it for now — just be ready to connect when I reach out.</p>
+    </div>
+  </div>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="booking-section">
+    <div class="booking-inner">
+      <!-- iClosed widget begin -->
+      <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px"></div>
+      <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
+      <!-- iClosed widget end -->
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
+    <div class="common-questions__inner">
+      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>You have no client results. How do I know this works?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>You’re right, I don’t. What I have is my own transformation: 171 lbs at ~17% body fat down to 155 lbs at ~9% in about 8 weeks, coaching myself the exact same way I’ll coach you. If you don’t see measurable fat loss in the first 30 days, you’ll get a full refund. This way, you’re not taking the risk — I am.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Whatever you’ve tried before was likely built for a perfect week. My coaching is built for a real one. You weigh yourself, log your food, track your workouts, and show up to your weekly check-in — I adjust everything else around your life. If your last attempt had worked with your schedule, you’d still be doing it.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Why is it only $50?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>$50 is the first month, then $199/month after. The first month is discounted because I want little financial risk on your end while you find out if this works for you.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Do you handle the diet side too?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Yes. You get a daily calorie target and a daily protein target, plus a custom meal plan with a flexible structure and swappable alternatives from a 5,000+ recipe library. Nothing is off-limits — I'll suggest specific options when it makes sense, but you're never locked into foods you don't want.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>How much time does this take each week?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>3–4 gym sessions per week, 45 to 60 minutes each. A couple of minutes a day to weigh yourself and log your food. A once-weekly check-in with me that takes less than 30 minutes. That’s it.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>What happens after I pay?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>After you pay, you'll be redirected to book your onboarding call and then download the app. Your workouts, nutrition logging, check-ins, and messaging with me are all in one place.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>How does the refund actually work?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>You can cancel anytime from the app, or message me to do it for you. If you’re inside the first 30 days, you’ll receive a full refund. No form, no waiting period.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Can I cancel anytime?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Yes. No contract, no cancellation fee.</p>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
-
-    <div class="section-divider section-divider--split" aria-hidden="true"></div>
-
-    <section class="booking-section">
-      <div class="booking-inner">
-        <!-- iClosed widget begin -->
-        <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px"></div>
-        <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
-        <!-- iClosed widget end -->
-      </div>
-    </section>
-  </div>
+  </section>
 </main>
 
 <div class="section-divider" aria-hidden="true"></div>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-disclaimer">
-      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
-    </div>
-    <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
     </div>
   </div>
 </footer>
+
+<script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
 
 </body>
 </html>
