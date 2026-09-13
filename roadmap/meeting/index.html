@@ -48,6 +48,25 @@ strong{font-weight:600}
 .booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
 
+/* shared section title — same treatment as "Common Questions" on the root page */
+.section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
+
+/* third section — common questions */
+.common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
+.common-questions__inner{max-width:472px;margin:0 auto}
+.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
+.faq-item__summary::-webkit-details-marker{display:none}
+.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
+.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
+.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
+.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
+.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
+.faq-item__body-inner{padding:0 .25rem 1.25rem}
+.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);margin:0}
+.faq-item__body-inner p+p{margin-top:.75rem}
+
 /* footer */
 footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
@@ -77,6 +96,7 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
   footer{background:#eee}
   .booking-section{background:#eee}
   .hero-media{background:#eee}
+  .common-questions{background:#eee}
 }
 </style>
 </head>
@@ -124,6 +144,80 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
       </div>
     </section>
   </div>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
+    <div class="common-questions__inner">
+      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>You have no client results. How do I know this works?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>You’re right, I don’t. What I have is my own transformation: 171 lbs at ~17% body fat down to 155 lbs at ~9% in about 8 weeks, coaching myself the exact same way I’ll coach you. If you don’t see measurable fat loss in the first 30 days, you’ll get a full refund. This way, you’re not taking the risk — I am.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>I’ve tried this before and it didn’t work.</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Whatever you’ve tried before was likely built for a perfect week. My coaching is built for a real one. You weigh yourself, log your food, track your workouts, and show up to your weekly check-in — I adjust everything else around your life. If your last attempt had worked with your schedule, you’d still be doing it.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Why is it only $50?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>$50 is the first month, then $199/month after. The first month is discounted because I want little financial risk on your end while you find out if this works for you.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Do you handle the diet side too?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Yes. You get a daily calorie target and a daily protein target, plus a custom meal plan with a flexible structure and swappable alternatives from a 5,000+ recipe library. Nothing is off-limits — I'll suggest specific options when it makes sense, but you're never locked into foods you don't want.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>How much time does this take each week?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>3–4 gym sessions per week, 45 to 60 minutes each. A couple of minutes a day to weigh yourself and log your food. A once-weekly check-in with me that takes less than 30 minutes. That’s it.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>What happens after I pay?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>After you pay, you'll be redirected to book your onboarding call and then download the app. Your workouts, nutrition logging, check-ins, and messaging with me are all in one place.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>How does the refund actually work?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>You can cancel anytime from the app, or message me to do it for you. If you’re inside the first 30 days, you’ll receive a full refund. No form, no waiting period.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span>Can I cancel anytime?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Yes. No contract, no cancellation fee.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
 </main>
 
 <div class="section-divider" aria-hidden="true"></div>
@@ -135,6 +229,8 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
     </div>
   </div>
 </footer>
+
+<script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
 
 </body>
 </html>
