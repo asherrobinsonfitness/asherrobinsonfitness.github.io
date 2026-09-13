@@ -112,12 +112,41 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
 
 <footer>
   <div class="footer-inner">
+    <div class="footer-disclaimers">
+      <h2 class="disclaimers-title">Disclaimers</h2>
+      <div class="disclaimer-grid">
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Eligibility</h3>
+          <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Always consult a qualified healthcare professional before beginning any diet or exercise program, particularly if you have an existing medical condition.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+          <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
     <div class="footer-disclaimer">
       <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
     </div>
     <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
+        <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
+      </div>
     </div>
   </div>
 </footer>
