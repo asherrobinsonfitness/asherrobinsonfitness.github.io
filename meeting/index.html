@@ -38,9 +38,13 @@ strong{font-weight:600}
 .subheadline2{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
 
-/* second section — the booking calendar */
+/* second section — the booking calendar. On the stacked (mobile) layout
+   this section is emptied out by JS (widget moved into .hero-grid instead)
+   and hidden along with its divider, per the same 900px split used below. */
 .booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
+.booking-section.is-hidden,.section-divider--split.is-hidden{display:none}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
+.hero-grid>.booking-inner{margin-top:1.5rem}
 
 /* shared section title — same treatment as "Common Questions" on the root page */
 .section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
@@ -152,7 +156,7 @@ footer a{color:var(--link);text-decoration:none}
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
 
     <section class="booking-section">
-      <div class="booking-inner">
+      <div class="booking-inner" id="booking-inner">
         <!-- iClosed inline widget begin -->
         <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
         <script>
@@ -177,6 +181,34 @@ footer a{color:var(--link);text-decoration:none}
       </div>
     </section>
   </div>
+
+  <script>
+  // Vertical (stacked) layout: fold the booking widget into the hero section
+  // and hide the now-empty booking section + its divider, since there's
+  // nothing left to divide. Desktop (900px+) keeps the widget in its own
+  // split column, matching the CSS breakpoint above.
+  (function(){
+    var widget=document.getElementById("booking-inner");
+    var heroGrid=document.querySelector(".hero-grid");
+    var bookingSection=document.querySelector(".booking-section");
+    var splitDivider=document.querySelector(".section-divider--split");
+    if(!widget||!heroGrid||!bookingSection) return;
+    var mq=window.matchMedia("(min-width:900px)");
+    function place(isDesktop){
+      if(isDesktop){
+        bookingSection.appendChild(widget);
+        bookingSection.classList.remove("is-hidden");
+        splitDivider&&splitDivider.classList.remove("is-hidden");
+      }else{
+        heroGrid.appendChild(widget);
+        bookingSection.classList.add("is-hidden");
+        splitDivider&&splitDivider.classList.add("is-hidden");
+      }
+    }
+    place(mq.matches);
+    mq.addEventListener("change",function(e){place(e.matches)});
+  })();
+  </script>
 
   <div class="section-divider" aria-hidden="true"></div>
 
