@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fast.vidalytics.com">
 <link rel="dns-prefetch" href="https://fast.vidalytics.com">
 <style>
-:root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828}
+:root{--pad-sm:2rem;--blue:#06f;--text:#f8fafc;--muted:#a8afba;--border:#282828}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
@@ -43,6 +43,11 @@ strong{font-weight:600}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+.save-contact{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.save-contact__text{font-size:.9375rem;line-height:1.6;color:var(--text)}
+.save-contact__btn{display:flex;width:100%;max-width:472px;align-items:center;justify-content:center;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer}
+.save-contact__btn:hover{background:#0052cc}
+.save-contact__number{font-size:.875rem;color:var(--muted)}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
 .value-bullets li{display:flex;align-items:flex-start;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
 .bullet-icon{flex-shrink:0;width:1.15em;height:1.15em;margin-top:.125em;color:var(--text)}
@@ -118,6 +123,11 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+      </div>
+      <div class="save-contact">
+        <p class="save-contact__text">Save my number now so you know it's me when I call or text.</p>
+        <a class="save-contact__btn" href="/asher-robinson.vcf">Save as Contact</a>
+        <p class="save-contact__number">(555) 555-0123</p>
       </div>
     </div>
 
