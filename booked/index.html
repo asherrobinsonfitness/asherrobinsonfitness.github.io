@@ -47,6 +47,12 @@ strong{font-weight:600}
 .save-contact__text{font-size:.9375rem;line-height:1.6;color:var(--text)}
 .save-contact__btn{display:flex;width:100%;max-width:472px;align-items:center;justify-content:center;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer}
 .save-contact__btn:hover{background:#0052cc}
+.save-contact__qr{display:none;width:148px;padding:10px;border-radius:8px;background:#fff;line-height:0}
+.save-contact__qr svg{width:100%;height:auto}
+@media (hover:hover) and (pointer:fine){
+  .save-contact__btn{display:none}
+  .save-contact__qr{display:block}
+}
 .save-contact__number{font-size:.8125rem;font-weight:600;text-align:center}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
 .value-bullets li{display:flex;align-items:flex-start;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
@@ -127,6 +133,7 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
       <div class="save-contact">
         <p class="save-contact__text">Save my number so you know it's me.</p>
         <a class="save-contact__btn" href="/asher-robinson.vcf">Save Contact</a>
+        <div class="save-contact__qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m2 0h1m4 0h1m3 0h1m2 0h1m4 0h7m-33 1h1m5 0h1m1 0h3m2 0h2m2 0h1m3 0h1m2 0h1m1 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h3m2 0h9m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h3m4 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h3m3 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m3 0h1m1 0h2m2 0h2m3 0h1m2 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h2m1 0h1m2 0h1m3 0h1m4 0h1m-24 1h1m5 0h1m1 0h1m3 0h4m1 0h1m4 0h2m1 0h2m2 0h3m-32 1h1m1 0h3m2 0h5m2 0h3m1 0h2m1 0h3m4 0h3m-31 1h4m2 0h1m2 0h4m2 0h2m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m-32 1h1m8 0h1m4 0h2m3 0h2m1 0h1m2 0h1m1 0h6m-32 1h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h6m1 0h1m2 0h2m1 0h2m-28 1h2m5 0h1m3 0h2m1 0h1m1 0h2m3 0h1m1 0h1m1 0h2m3 0h3m-31 1h1m1 0h4m2 0h3m1 0h1m3 0h1m3 0h1m2 0h7m-32 1h1m1 0h1m1 0h2m2 0h4m3 0h1m3 0h1m4 0h2m2 0h3m1 0h1m-31 1h1m3 0h1m1 0h2m1 0h3m2 0h2m4 0h4m1 0h3m2 0h1m-33 1h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h3m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m-33 1h1m2 0h1m2 0h1m4 0h1m1 0h1m1 0h1m3 0h1m3 0h5m1 0h4m-33 1h2m3 0h1m2 0h4m2 0h2m1 0h3m4 0h1m1 0h1m1 0h4m-31 1h2m3 0h1m1 0h2m1 0h1m3 0h2m6 0h3m2 0h2m1 0h2m-33 1h2m7 0h4m3 0h1m1 0h2m2 0h2m3 0h2m1 0h1m-31 1h1m3 0h1m1 0h1m2 0h1m3 0h4m3 0h1m3 0h1m4 0h1m1 0h1m-32 1h1m3 0h2m4 0h1m1 0h1m1 0h1m3 0h2m3 0h3m1 0h1m1 0h4m-33 1h2m3 0h2m1 0h3m1 0h1m2 0h1m3 0h1m3 0h7m1 0h2m-25 1h1m1 0h2m1 0h4m1 0h4m2 0h1m3 0h1m1 0h1m1 0h1m-33 1h7m3 0h1m2 0h1m1 0h2m1 0h1m3 0h3m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m2 0h3m7 0h1m2 0h3m3 0h4m-32 1h1m1 0h3m1 0h1m3 0h4m1 0h1m2 0h2m2 0h1m1 0h6m1 0h2m-33 1h1m1 0h3m1 0h1m3 0h1m1 0h2m2 0h2m1 0h5m1 0h1m1 0h2m2 0h2m-33 1h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h6m2 0h6m-33 1h1m5 0h1m4 0h1m1 0h4m1 0h3m1 0h1m2 0h6m-31 1h7m1 0h4m1 0h2m2 0h1m4 0h6m3 0h1"/></svg></div>
         <p class="save-contact__number">(555) 555-0123</p>
       </div>
     </div>
