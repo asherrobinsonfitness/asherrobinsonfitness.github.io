@@ -38,23 +38,34 @@ strong{font-weight:600}
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
-.save-contact{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-.save-contact__text{font-size:.9375rem;line-height:1.6;color:var(--text)}
-.save-contact__btn{display:flex;width:100%;max-width:472px;align-items:center;justify-content:center;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;text-decoration:none;cursor:pointer}
-.save-contact__btn:hover{background:#0052cc}
-.save-contact__qr{display:none;width:168px;padding:10px;border-radius:8px;background:#fff;line-height:0}
-.save-contact__qr svg{width:100%;height:auto}
+/* save contact — a contact card (photo, name, number) mirroring what they're
+   about to save, with a small blue Save button (the page's main action, so it gets the
+   brand blue); on desktop a QR replaces the
+   button. Keep .save-contact__number / .save-contact__qr: set-contact-number.py
+   rewrites them. The QR svg has no quiet zone of its own; the card's white
+   padding is it. */
+.save-contact{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.625rem}
+.contact-card{display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;padding:.75rem;background:#fff;border:1px solid var(--card-border);border-radius:12px;text-align:left}
+.contact-card__photo{flex-shrink:0;width:48px;height:48px;border-radius:50%;object-fit:cover}
+.contact-card__info{flex:1 1 auto;min-width:0}
+.contact-card__name{font-size:.9375rem;font-weight:600;line-height:1.35}
+.save-contact__number{font-size:.9375rem;line-height:1.35;color:var(--text);font-variant-numeric:tabular-nums}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:8px;background:var(--blue);color:#fff;font-size:.875rem;font-weight:600;line-height:1.2;text-decoration:none}
+.save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
+.save-contact__qr svg{display:block;width:100%;height:auto}
+.save-contact__text{font-size:.8125rem;line-height:1.5;color:var(--muted)}
 @media (hover:hover) and (pointer:fine){
   .save-contact__btn{display:none}
   .save-contact__qr{display:block}
 }
-.save-contact__number{font-size:.8125rem;font-weight:600;text-align:center}
-.value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
-.value-bullets li{display:flex;align-items:flex-start;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
-.bullet-icon{flex-shrink:0;width:1.15em;height:1.15em;margin-top:.125em;color:var(--text)}
+/* what happens next — numbered steps in the same hairline-row style as the
+   FAQ list, then iClosed's meeting details. */
+.next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
+.next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid var(--border)}
+.next-step__num{flex-shrink:0;font-size:.8125rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.next-step__title{font-size:.9375rem;font-weight:600;line-height:1.35;color:var(--text)}
+.next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:var(--muted)}
 .call-details-widget{margin-top:1.5rem}
-.ps-note{margin-top:1.5rem;font-size:.9375rem;color:var(--text);line-height:1.6;text-align:center}
-.ps-note p+p{margin-top:.5rem}
 
 /* shared section title — same treatment as "Common Questions" on the root page */
 .section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
@@ -125,10 +136,16 @@ footer{background:#eee}
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
       </div>
       <div class="save-contact">
+        <div class="contact-card">
+          <img class="contact-card__photo" src="/assets/asher-avatar.webp" width="48" height="48" alt="">
+          <div class="contact-card__info">
+            <p class="contact-card__name">Asher Robinson</p>
+            <p class="save-contact__number">(555) 555-0123</p>
+          </div>
+          <a class="save-contact__btn" href="/asher-robinson.vcf" aria-label="Save contact">Save</a>
+          <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
+        </div>
         <p class="save-contact__text">Save my number so you know it's me.</p>
-        <a class="save-contact__btn" href="/asher-robinson.vcf">Save Contact</a>
-        <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
-        <p class="save-contact__number">(555) 555-0123</p>
       </div>
     </div>
 
@@ -137,17 +154,15 @@ footer{background:#eee}
     <section class="booking-section">
       <div class="booking-inner">
         <h2 class="section-title">What Happens Next</h2>
-        <ul class="value-bullets">
-          <li><svg class="bullet-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z"/></svg><span>I may call, text, or email you to confirm your meeting</span></li>
-          <li><svg class="bullet-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" aria-hidden="true"><path d="M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z"/></svg><span>To join the meeting, use the Google Meet link in your email</span></li>
-        </ul>
+        <ol class="next-steps">
+          <li class="next-step"><span class="next-step__num">01</span><div><p class="next-step__title">Confirmation</p><p class="next-step__text">I may call, text, or email you to confirm your meeting.</p></div></li>
+          <li class="next-step"><span class="next-step__num">02</span><div><p class="next-step__title">Joining</p><p class="next-step__text">Use the Google Meet link in your email to join the meeting.</p></div></li>
+          <li class="next-step"><span class="next-step__num">03</span><div><p class="next-step__title">The meeting</p><p class="next-step__text">We get to know each other and see if you're a good fit for coaching.</p></div></li>
+        </ol>
         <!-- iClosed widget begin -->
         <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px"></div>
         <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
         <!-- iClosed widget end -->
-        <div class="ps-note">
-          <p><strong>P.S.</strong> The goal of the meeting is to get to know each other and see if you're a good fit for coaching.</p>
-        </div>
       </div>
     </section>
   </div>
