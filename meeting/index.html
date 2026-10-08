@@ -28,7 +28,7 @@ strong{font-weight:600}
 /* status bar — light strip at the very top: a green "live" dot (static; only
    the ring around it pulses) and one line of info, centered. Dot-to-text gap
    matches the .value-bullets icon gap on roadmap/booked. */
-.status-bar{display:flex;justify-content:center;align-items:center;gap:.65rem;background:#fff;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4;padding:.625rem 1rem}
+.status-bar{display:flex;justify-content:center;align-items:center;gap:.65rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4;padding:.625rem 1rem}
 .status-dot{position:relative;flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
 .status-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#22c55e;animation:status-pulse 2s cubic-bezier(0,0,.2,1) infinite}
 @keyframes status-pulse{from{transform:scale(1);opacity:.6}to{transform:scale(2.75);opacity:0}}
