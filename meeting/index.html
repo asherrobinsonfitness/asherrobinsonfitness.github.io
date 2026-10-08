@@ -25,6 +25,10 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
+/* announcement bar — one quiet line above everything else, at the same
+   size as the footer/disclaimer text. */
+.announcement{background:#111;color:#fff;text-align:center;font-size:.8125rem;font-weight:600;line-height:1.4;padding:.75rem 1rem}
+
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
    hero-grid and booking-section flips to a vertical rule once the desktop
@@ -137,10 +141,12 @@ footer{background:#eee}
 </head>
 <body>
 
+<div class="announcement">Your roadmap is on its way</div>
+
 <main>
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks. Guaranteed.</h1>
+      <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks</h1>
       <div class="subheadline">Get dedicated coaching and support to help you lose body fat.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
