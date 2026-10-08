@@ -223,5 +223,23 @@ footer{background:#eee}
 
 <script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
 
+<script>
+// Android: Chrome downloads the .vcf instead of opening it, so on Android the
+// Save button opens the Contacts app's pre-filled "new contact" screen instead,
+// the same thing scanning the QR does. Name and number are read off the card,
+// so set-contact-number.py keeps this in sync. Browsers that can't open the
+// intent fall back to the .vcf download.
+(function(){
+  if(!/Android/i.test(navigator.userAgent))return;
+  var btn=document.querySelector(".save-contact__btn"),name=document.querySelector(".contact-card__name"),num=document.querySelector(".save-contact__number");
+  if(!btn||!name||!num)return;
+  var digits=num.textContent.replace(/\D/g,"");
+  if(digits.length===10)digits="1"+digits;
+  var e=encodeURIComponent;
+  btn.href="intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/raw_contact"
+    +";S.name="+e(name.textContent.trim())+";S.phone="+e("+"+digits)+";i.phone_type=2"
+    +";S.browser_fallback_url="+e(new URL(btn.getAttribute("href"),location.href).href)+";end";
+})();
+</script>
 </body>
 </html>
