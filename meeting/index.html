@@ -18,7 +18,7 @@
 <link rel="dns-prefetch" href="https://fast.vidalytics.com">
 <style>
 :root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828}
-:root{--pad:2.5rem;--link:#4d94ff;--card-border:#3d3d3d}
+:root{--pad:2.5rem;--link:#4d94ff;--card-border:#3d3d3d;--blue:#06f}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
@@ -35,8 +35,17 @@ strong{font-weight:600}
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
-.subheadline2{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+
+/* mobile-only "Book Setup Call" button — jumps down to the booking calendar
+   (same treatment as the root page). */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;text-decoration:none;transition:background 0s}
+.btn:hover{background:#0052cc}
+.hero-grid>.btn--scroll{display:none;width:100%;max-width:472px;margin:1.5rem auto 0}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media(max-width:600px){
+  .hero-grid>.btn--scroll{display:inline-flex}
+}
 
 /* second section — the booking calendar */
 .booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
@@ -141,17 +150,17 @@ footer a{color:var(--link);text-decoration:none}
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks</h1>
-      <div class="subheadline">Hire a coach — remove your <strong>willpower</strong> as the single point of failure.</div>
+      <div class="subheadline">Get dedicated coaching and support to help you lose body fat.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
       </div>
-      <div class="subheadline2">It’s 1-on-1 coaching where you get personalized training and nutrition guidance based on your weight, progress, and end goal.</div>
+      <a class="btn btn--scroll" href="#book">Book Setup Call<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
 
-    <section class="booking-section">
+    <section class="booking-section" id="book">
       <div class="booking-inner">
         <!-- iClosed inline widget begin -->
         <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
