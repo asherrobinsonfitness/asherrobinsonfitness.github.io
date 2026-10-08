@@ -87,8 +87,8 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
 <link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#f7f7f7">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
 <style>
 :root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
@@ -266,27 +266,28 @@ footer a{color:var(--link);text-decoration:none}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
-@media (prefers-color-scheme:light){
-  :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
-  body{background:#f7f7f7}
-  .container{background:#f7f7f7}
-  footer{background:#eee}
-  .results-section{background:#eee}
-  .signup-unit-input{border-color:#d0d0d0}
-  .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
-  .email-spinner{border-color:#d0d0d0;border-top-color:#06f}
-  .signup-label{color:#4a4a4a}
-  .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
-  .check-icon{color:#f7f7f7}
-  .legal-modal{background:#fff;border-color:var(--card-border)}
-  .legal-modal-header{border-bottom-color:var(--card-border)}
-  .legal-modal-title{color:var(--text)}
-  .legal-modal-close{color:rgba(0,0,0,.5)}
-  .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
-  .legal-modal-body h2{color:var(--text)}
-  .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
-  .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
-}
+/* light theme only — these overrides used to apply just for light-mode
+   devices; they now always apply, on top of the dark defaults above. */
+:root{color-scheme:light only}
+:root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
+body{background:#f7f7f7}
+.container{background:#f7f7f7}
+footer{background:#eee}
+.results-section{background:#eee}
+.signup-unit-input{border-color:#d0d0d0}
+.bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
+.email-spinner{border-color:#d0d0d0;border-top-color:#06f}
+.signup-label{color:#4a4a4a}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
+.check-icon{color:#f7f7f7}
+.legal-modal{background:#fff;border-color:var(--card-border)}
+.legal-modal-header{border-bottom-color:var(--card-border)}
+.legal-modal-title{color:var(--text)}
+.legal-modal-close{color:rgba(0,0,0,.5)}
+.legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+.legal-modal-body h2{color:var(--text)}
+.legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+.legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
 </style>
 </head>
 <body>
