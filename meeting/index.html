@@ -389,5 +389,9 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
 <script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
 
+<!-- iClosed Lift Widget begin -->
+    <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" data-cta-widget="JL8WdX7dIubE" async></script>
+<!-- iClosed Lift Widget end -->
+   
 </body>
 </html>
