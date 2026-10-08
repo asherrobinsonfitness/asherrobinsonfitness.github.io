@@ -11,8 +11,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
 <link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#f7f7f7">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
 <link rel="preconnect" href="https://fast.vidalytics.com">
 <link rel="dns-prefetch" href="https://fast.vidalytics.com">
@@ -115,23 +115,24 @@ footer a{color:var(--link);text-decoration:none}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
-@media (prefers-color-scheme:light){
-  :root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0;--link:#0047b3;--card-border:#d5d5d5}
-  body{background:#f7f7f7}
-  .container{background:#f7f7f7}
-  footer{background:#eee}
-  .booking-section{background:#eee}
-  .hero-media{background:#eee}
-  .common-questions{background:#eee}
-  .legal-modal{background:#fff;border-color:var(--card-border)}
-  .legal-modal-header{border-bottom-color:var(--card-border)}
-  .legal-modal-title{color:var(--text)}
-  .legal-modal-close{color:rgba(0,0,0,.5)}
-  .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
-  .legal-modal-body h2{color:var(--text)}
-  .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
-  .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
-}
+/* light theme only — these overrides used to apply just for light-mode
+   devices; they now always apply, on top of the dark defaults above. */
+:root{color-scheme:light only}
+:root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0;--link:#0047b3;--card-border:#d5d5d5}
+body{background:#f7f7f7}
+.container{background:#f7f7f7}
+footer{background:#eee}
+.booking-section{background:#eee}
+.hero-media{background:#eee}
+.common-questions{background:#eee}
+.legal-modal{background:#fff;border-color:var(--card-border)}
+.legal-modal-header{border-bottom-color:var(--card-border)}
+.legal-modal-title{color:var(--text)}
+.legal-modal-close{color:rgba(0,0,0,.5)}
+.legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+.legal-modal-body h2{color:var(--text)}
+.legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+.legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
 </style>
 </head>
 <body>
