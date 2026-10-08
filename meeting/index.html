@@ -122,7 +122,11 @@ footer a{color:var(--link);text-decoration:none}
 
 /* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split. */
 @media (min-width:900px){
-  .container{flex-direction:row;align-items:stretch;min-height:100vh}
+  /* the two bars + the hero/booking split share one viewport: .above-fold is
+     the full-height column, and .container takes whatever the bars leave. */
+  .above-fold{display:flex;flex-direction:column;min-height:100vh}
+  .status-bar,.announcement{flex-shrink:0}
+  .container{flex:1 1 auto;flex-direction:row;align-items:stretch}
   .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
@@ -151,10 +155,11 @@ footer{background:#eee}
 </head>
 <body>
 
-<div class="status-bar"><span class="status-dot" aria-hidden="true"></span>6 Week Challenge · Online · Accepting Clients</div>
-<div class="announcement">Your roadmap is on its way</div>
-
 <main>
+  <div class="above-fold">
+  <div class="status-bar"><span class="status-dot" aria-hidden="true"></span>6 Week Challenge · Online · Accepting Clients</div>
+  <div class="announcement">Your roadmap is on its way</div>
+
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks. Guaranteed.</h1>
@@ -192,6 +197,7 @@ footer{background:#eee}
         <!-- iClosed inline widget end -->
       </div>
     </section>
+  </div>
   </div>
 
   <div class="section-divider" aria-hidden="true"></div>
