@@ -45,13 +45,14 @@ strong{font-weight:600}
   .status-bar__half{gap:.5rem;padding-left:.25rem;padding-right:.25rem}
 }
 .status-dot{flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
-/* the phrase the dot refers to — darker than the dot so it holds AA contrast as text */
-.status-live{color:#15803d}
+/* the phrase the dot refers to — darker than the dot so it holds AA contrast
+   as text on both status-bar backgrounds (4.9:1 on #eee, 5.3:1 on #f7f7f7) */
+.status-live{color:#147638}
 
 /* announcement bar — one quiet line at the very top, above the status bar
-   (matches booked/). One step smaller than the status bar, since all caps
-   reads larger than mixed case. Typed in sentence case, uppercased here. */
-.announcement{background:#000;color:#fff;text-align:center;font-size:.75rem;font-weight:600;line-height:1.4;text-transform:uppercase;padding:.5rem 1rem}
+   (matches booked/). Sentence case at the status bar's size and weight: the
+   black strip does the framing, so the text doesn't need to shout. */
+.announcement{background:#000;color:#fff;text-align:center;font-size:.8125rem;font-weight:500;line-height:1.4;padding:.5rem 1rem}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
@@ -150,6 +151,9 @@ footer a{color:var(--link);text-decoration:none}
   .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
+  /* each status-bar half takes its column's background, so the hero and
+     booking columns read as running up to the announcement bar */
+  .status-bar__half:last-child{background:#eee}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
