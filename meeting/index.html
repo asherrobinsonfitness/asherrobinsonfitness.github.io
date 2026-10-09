@@ -94,13 +94,12 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
 footer a{color:var(--link);text-decoration:none}
 
 /* legal (terms / privacy) popups */
-.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:flex-end;justify-content:center;padding:var(--pad) 0 0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:center;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.legal-modal{background:#222;border:1px solid var(--card-border,#3d3d3d);border-bottom:none;border-radius:12px 12px 0 0;width:100%;max-height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
+.legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
 .legal-overlay.active .legal-modal{transform:translateY(0)}
-.legal-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
-.legal-modal-title{font-size:.8125rem;font-weight:600;color:#f8fafc}
-.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:6px;cursor:pointer;padding:.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;padding:.75rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.4rem;margin-right:-.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
@@ -112,6 +111,13 @@ footer a{color:var(--link);text-decoration:none}
 .legal-modal-body a{color:var(--link);text-decoration:none}
 .legal-modal-body a:hover{color:var(--link)}
 .legal-modal-body strong{color:var(--text);font-weight:600}
+
+/* desktop — the popup becomes a full-height panel that slides in from the right */
+@media (min-width:900px){
+  .legal-overlay{justify-content:flex-end}
+  .legal-modal{width:min(36rem,100%);border-left:1px solid var(--card-border,#3d3d3d);transform:translateX(100%)}
+  .legal-overlay.active .legal-modal{transform:translateX(0)}
+}
 
 @media(hover:hover) and (pointer:fine){
   .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
@@ -142,7 +148,6 @@ footer{background:#eee}
 .common-questions{background:#eee}
 .legal-modal{background:#fff;border-color:var(--card-border)}
 .legal-modal-header{border-bottom-color:var(--card-border)}
-.legal-modal-title{color:var(--text)}
 .legal-modal-close{color:rgba(0,0,0,.5)}
 .legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
 .legal-modal-body h2{color:var(--text)}
@@ -286,11 +291,10 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <span class="legal-modal-title" id="terms-title">Terms of Service</span>
-      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
-      <h2>Terms of Service</h2>
+      <h2 id="terms-title">Terms of Service</h2>
       <p class="legal-effective">Effective Date: June 1, 2026</p>
       <h3>1. Agreement</h3>
       <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
@@ -337,11 +341,10 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <span class="legal-modal-title" id="privacy-title">Privacy Policy</span>
-      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
-      <h2>Privacy Policy</h2>
+      <h2 id="privacy-title">Privacy Policy</h2>
       <p class="legal-effective">Effective Date: June 1, 2026</p>
       <h3>1. Overview</h3>
       <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
