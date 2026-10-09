@@ -28,7 +28,7 @@ strong{font-weight:600}
 /* status bar — light strip under the announcement bar, split into two equal
    halves by a 1px rule. The grid mirrors the hero/booking split below
    (1fr · 1px · 1fr), so on desktop the rule lines up with
-   .section-divider--split and "Accepting New Clients" sits over the calendar.
+   .section-divider--split and "Accepting new clients" sits over the calendar.
    Information only, so it keeps the quiet one-line text treatment rather than
    tab styling. Same background as the hero, so a standard .section-divider
    separates them. The static green "live" dot (no pulse; the video already
@@ -37,7 +37,7 @@ strong{font-weight:600}
 .status-bar{display:grid;grid-template-columns:1fr 1px 1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
 .status-bar__half{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
 .status-bar__rule{background:var(--border)}
-/* "Accepting New Clients" needs ~353px of viewport at full size; below 360px
+/* "Accepting new clients" needs ~353px of viewport at full size; below 360px
    (320px-class phones) step the text down and tighten the spacing so each half
    stays on one line instead of dropping the word "New". */
 @media (max-width:359px){
@@ -184,7 +184,7 @@ footer{background:#eee}
   <div class="status-bar">
     <div class="status-bar__half">6 Week Challenge</div>
     <div class="status-bar__rule" aria-hidden="true"></div>
-    <div class="status-bar__half"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting New Clients</span></div>
+    <div class="status-bar__half"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
   </div>
   <div class="section-divider" aria-hidden="true"></div>
 
