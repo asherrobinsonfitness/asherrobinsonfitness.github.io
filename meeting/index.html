@@ -25,11 +25,25 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* status bar — light strip under the announcement bar: a static green "live"
-   dot (no pulse; the video already moves) and one line of info, centered.
-   Same background as the hero, so a standard .section-divider separates them.
-   Dot-to-text gap matches the .value-bullets icon gap on roadmap/booked. */
-.status-bar{display:flex;justify-content:center;align-items:center;gap:.65rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4;padding:.625rem 1rem}
+/* status bar — light strip under the announcement bar, split into two equal
+   halves by a 1px rule. The grid mirrors the hero/booking split below
+   (1fr · 1px · 1fr), so on desktop the rule lines up with
+   .section-divider--split and "Accepting New Clients" sits over the calendar.
+   Information only, so it keeps the quiet one-line text treatment rather than
+   tab styling. Same background as the hero, so a standard .section-divider
+   separates them. The static green "live" dot (no pulse; the video already
+   moves) sits with the phrase it refers to; dot-to-text gap matches the
+   .value-bullets icon gap on roadmap/booked. */
+.status-bar{display:grid;grid-template-columns:1fr 1px 1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
+.status-bar__half{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
+.status-bar__rule{background:var(--border)}
+/* "Accepting New Clients" needs ~353px of viewport at full size; below 360px
+   (320px-class phones) step the text down and tighten the spacing so each half
+   stays on one line instead of dropping the word "New". */
+@media (max-width:359px){
+  .status-bar{font-size:.75rem}
+  .status-bar__half{gap:.5rem;padding-left:.25rem;padding-right:.25rem}
+}
 .status-dot{flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
 /* the phrase the dot refers to — darker than the dot so it holds AA contrast as text */
 .status-live{color:#15803d}
@@ -163,7 +177,11 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement">Your roadmap is on its way</div>
-  <div class="status-bar"><span class="status-dot" aria-hidden="true"></span><span><span class="status-live">Accepting Clients</span> · 6 Week Challenge · Online</span></div>
+  <div class="status-bar">
+    <div class="status-bar__half">6 Week Challenge</div>
+    <div class="status-bar__rule" aria-hidden="true"></div>
+    <div class="status-bar__half"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting New Clients</span></div>
+  </div>
   <div class="section-divider" aria-hidden="true"></div>
 
   <div class="container">
