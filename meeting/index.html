@@ -31,6 +31,8 @@ strong{font-weight:600}
    Dot-to-text gap matches the .value-bullets icon gap on roadmap/booked. */
 .status-bar{display:flex;justify-content:center;align-items:center;gap:.65rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4;padding:.625rem 1rem}
 .status-dot{flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
+/* the phrase the dot refers to — darker than the dot so it holds AA contrast as text */
+.status-live{color:#15803d}
 
 /* announcement bar — one quiet line at the very top, above the status bar
    (matches booked/). One step smaller than the status bar, since all caps
@@ -161,7 +163,7 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement">Your roadmap is on its way</div>
-  <div class="status-bar"><span class="status-dot" aria-hidden="true"></span>6 Week Challenge · Online · Accepting Clients</div>
+  <div class="status-bar"><span class="status-dot" aria-hidden="true"></span><span><span class="status-live">Accepting Clients</span> · 6 Week Challenge · Online</span></div>
   <div class="section-divider" aria-hidden="true"></div>
 
   <div class="container">
