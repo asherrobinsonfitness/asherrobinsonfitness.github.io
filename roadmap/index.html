@@ -133,10 +133,10 @@ strong{font-weight:600}
 .blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
 .signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
 .signup-field{margin-bottom:.75rem;position:relative}
-.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:8px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:4px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
 .signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
-.pulse-ring{position:absolute;inset:0;border-radius:8px;border:1px solid var(--blue);opacity:0;pointer-events:none}
+.pulse-ring{position:absolute;inset:0;border-radius:4px;border:1px solid var(--blue);opacity:0;pointer-events:none}
 .signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
 @keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
@@ -152,7 +152,7 @@ strong{font-weight:600}
 .field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
 .signup-unit-field{margin-bottom:.75rem}
 .signup-height-row{display:flex;gap:.75rem}
-.signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #3a3a3a;border-radius:8px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #3a3a3a;border-radius:4px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-unit-input:focus-within{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
 .signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:var(--text);font-size:1.0625rem;font-weight:600;font-family:inherit}
 .signup-unit-input__field::placeholder{color:var(--muted);font-weight:400}
@@ -164,7 +164,7 @@ strong{font-weight:600}
 .bf-option__label{font-size:.8125rem;font-weight:600;line-height:1.2}
 .bf-option[aria-checked=true] .bf-option__img{border-color:var(--link);background:rgba(0,102,255,.1)}
 .bf-option[aria-checked=true] .bf-option__label{color:var(--link)}
-.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
 .signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
 .signup-submit:disabled:hover{background:var(--card-border)}
 .btn-chevron{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);flex-shrink:0}
@@ -221,29 +221,29 @@ footer{padding-left:1rem;padding-right:1rem}
 footer a{color:var(--link);text-decoration:none}
 
 /* legal (terms / privacy) popups */
-.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:center;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .22s ease}
-.legal-overlay.active .legal-modal{transform:translateY(0)}
-.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;padding:.75rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
-.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.4rem;margin-right:-.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+.legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .22s ease}
+.legal-overlay.active .legal-modal{transform:translateX(0)}
+/* header — same height, background and hairline as the status bar strip on meeting/ */
+.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
 .legal-modal-body .legal-effective{font-size:.8125rem;color:#a8afba;margin-bottom:1.75rem}
 .legal-modal-body h3{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.75rem 0 .625rem;padding-top:1.375rem;border-top:1px solid var(--card-border,#3d3d3d)}
-.legal-modal-body p{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.75rem}
+.legal-modal-body p{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.75rem}
 .legal-modal-body ul{margin:0 0 .875rem 1.125rem}
-.legal-modal-body ul li{font-size:.9375rem;line-height:1.8;color:#a8afba;margin-bottom:.25rem}
+.legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.25rem}
 .legal-modal-body a{color:var(--link);text-decoration:none}
 .legal-modal-body a:hover{color:var(--link)}
 .legal-modal-body strong{color:var(--text);font-weight:600}
 
-/* desktop — the popup becomes a full-height panel that slides in from the right */
+/* the popup is a full-height panel that slides in from the right on every
+   screen: full width on phones, a 480px panel on desktop */
 @media (min-width:900px){
-  .legal-overlay{justify-content:flex-end}
-  .legal-modal{width:min(36rem,100%);border-left:1px solid var(--card-border,#3d3d3d);transform:translateX(100%)}
-  .legal-overlay.active .legal-modal{transform:translateX(0)}
+  .legal-modal{width:min(30rem,100%);border-left:1px solid var(--card-border,#3d3d3d)}
 }
 
 @media(hover:hover) and (pointer:fine){
@@ -286,10 +286,9 @@ footer{background:#eee}
 .signup-label{color:#4a4a4a}
 .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
 .check-icon{color:#f7f7f7}
-.legal-modal{background:#fff;border-color:var(--card-border)}
-.legal-modal-header{border-bottom-color:var(--card-border)}
-.legal-modal-close{color:rgba(0,0,0,.5)}
-.legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+.legal-modal{background:#f7f7f7;border-color:var(--card-border)}
+.legal-modal-close{color:var(--muted)}
+.legal-modal-close:hover{background:none;color:var(--text)}
 .legal-modal-body h2{color:var(--text)}
 .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
 .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
@@ -476,7 +475,7 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
@@ -526,7 +525,7 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="privacy-title">Privacy Policy</h2>
