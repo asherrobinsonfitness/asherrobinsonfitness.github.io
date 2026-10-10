@@ -55,9 +55,16 @@ strong{font-weight:600}
 .status-live{color:#147638}
 
 /* announcement bar — one quiet line at the very top, above the status bar
-   (matches booked/). Sentence case at the status bar's size and weight: the
-   black strip does the framing, so the text doesn't need to shout. */
-.announcement{background:#000;color:#fff;text-align:center;font-size:.8125rem;font-weight:500;line-height:1.4;padding:.5rem 1rem}
+   (matches booked/). Light strip with a hairline under it and a dismiss X on
+   the right; the X just removes the bar for this page view. */
+.announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
+/* centered, offset by the X + gap so it sits on the page's true center */
+.announcement__text{flex:1 1 auto;min-width:0;display:flex;justify-content:center;align-items:center;gap:.5rem;padding-left:2rem}
+/* green check — same green as the status bar's live dot */
+.announcement__check{flex-shrink:0;display:block}
+/* the negative margins keep the bigger tap area from making the bar taller */
+.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
+@media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
@@ -184,7 +191,7 @@ footer{background:#eee}
 
 <main>
   <div class="above-fold">
-  <div class="announcement">Your roadmap is on its way</div>
+  <div class="announcement"><span class="announcement__text"><svg class="announcement__check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#22c55e"/><path d="M4.75 8.25l2.25 2.25 4.25-4.5" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>Your roadmap is on its way</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
   <div class="status-bar">
     <div class="status-bar__half">1-on-1 Online Fat Loss Coaching for Men</div>
     <div class="status-bar__rule" aria-hidden="true"></div>
