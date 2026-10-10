@@ -86,6 +86,10 @@ strong{font-weight:600}
 .faq-item{border-bottom:1px solid var(--border)}
 .faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
 .faq-item__summary::-webkit-details-marker{display:none}
+/* quick answer — sits in the row next to the toggle, visible open or closed
+   (Buck Mason's label/value rows); the full answer still drops down below */
+.faq-item__question{flex:1 1 auto;min-width:0}
+.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:var(--muted);white-space:nowrap}
 .faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
 .faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
 .faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
@@ -179,7 +183,7 @@ footer{background:#eee}
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>Is this a sales pitch?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>No. This call is to see if you're a good fit for coaching. I ask about your goal, your schedule, and your starting point. You ask me anything about the challenge. If we're a good fit, I walk you through next steps.</p>
@@ -187,7 +191,7 @@ footer{background:#eee}
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>How do I know this works?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guaranteed</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>I built this off my own result. I dropped from 171 pounds to 155 pounds in eight weeks. I coach you the same way I coached myself. Hit your 10-pound goal in 6 weeks, and you get your money back.</p>
@@ -195,7 +199,7 @@ footer{background:#eee}
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>How much does this cost?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>This costs $599. Lose your first 10 pounds in 6 weeks, and you get that money back. After the challenge, ongoing coaching costs $199 a month if you want to continue.</p>
@@ -203,7 +207,7 @@ footer{background:#eee}
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span>Is this right for my starting point?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Yes</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>Your starting point matters less than the numbers you bring. Log your food and your weight, and the plan fits around you from day one.</p>
