@@ -58,8 +58,9 @@ strong{font-weight:600}
    (matches booked/). Light strip with a hairline under it and a dismiss X on
    the right; the X just removes the bar for this page view. */
 .announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
-/* centered, offset by the X + gap so it sits on the page's true center */
-.announcement__text{flex:1 1 auto;min-width:0;text-align:center;padding-left:2rem}
+/* left-aligned on phones and tablets, right-aligned (next to the X) on desktop */
+.announcement__text{flex:1 1 auto;min-width:0}
+@media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
 .announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
 @media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
