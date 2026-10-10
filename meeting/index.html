@@ -35,6 +35,10 @@ strong{font-weight:600}
    background as the hero, so a standard .section-divider separates them. */
 .status-bar{display:flex;justify-content:center;align-items:center;min-width:0;padding:.875rem .5rem;white-space:nowrap;background:#f7f7f7;color:var(--text);font-family:"Barlow Semi Condensed",Inter,system-ui,sans-serif;font-size:.875rem;font-weight:600;letter-spacing:.03em;line-height:1.2;text-transform:uppercase}
 @media (min-width:900px){.status-bar{padding-top:1rem;padding-bottom:1rem}}
+/* phones and tablets: bigger text so the line reads at arm's length; it still
+   fits on one line down to ~330px, and steps down a notch below that */
+@media (max-width:899px){.status-bar{font-size:1rem}}
+@media (max-width:339px){.status-bar{font-size:.9375rem}}
 
 /* announcement bar — one quiet line at the very top, above the status bar
    (matches booked/). Light strip with a hairline under it and a dismiss X on
