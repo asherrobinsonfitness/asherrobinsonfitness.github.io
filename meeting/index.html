@@ -27,7 +27,7 @@ strong{font-weight:600}
 
 /* status bar — light strip under the announcement bar. On phones and tablets
    it's one full-width line, so the full label fits without truncating, and
-   "Accepting new clients" moves to .hero-status under the video. On desktop it
+   "Accepting new clients" moves to .booking-status atop the calendar section. On desktop it
    splits into two equal halves by a 1px rule. The grid mirrors the
    hero/booking split below (1fr · 1px · 1fr), so the rule lines up with
    .section-divider--split and "Accepting new clients" sits over the calendar.
@@ -37,17 +37,17 @@ strong{font-weight:600}
    moves) sits with the phrase it refers to; dot-to-text gap matches the
    .value-bullets icon gap on roadmap/booked. */
 .status-bar{display:grid;grid-template-columns:1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
-.status-bar__half{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
+.status-bar__half,.booking-status{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
 .status-bar__rule,.status-bar__half--live{display:none}
 .status-bar__rule{background:var(--border)}
-/* phones and tablets: "Accepting new clients" sits under the video, so it
-   stays above the fold on the smallest screens */
-.hero-status{display:flex;justify-content:center;align-items:center;gap:.65rem;margin-top:1rem;font-size:.8125rem;font-weight:500;line-height:1.4}
+/* phones and tablets: "Accepting new clients" is a strip across the top of
+   the calendar section, the stacked version of the desktop bar's right half */
+.booking-status{background:#eee;font-size:.8125rem;font-weight:500;line-height:1.4}
 @media (min-width:900px){
   .status-bar{grid-template-columns:1fr 1px 1fr}
   .status-bar__rule{display:block}
   .status-bar__half--live{display:flex}
-  .hero-status{display:none}
+  .booking-status,.booking-status-divider{display:none}
 }
 .status-dot{flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
 /* the phrase the dot refers to — darker than the dot so it holds AA contrast
@@ -201,10 +201,11 @@ footer{background:#eee}
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
       </div>
-      <div class="hero-status"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
+    <div class="booking-status"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
+    <div class="section-divider booking-status-divider" aria-hidden="true"></div>
 
     <section class="booking-section">
       <div class="booking-inner">
