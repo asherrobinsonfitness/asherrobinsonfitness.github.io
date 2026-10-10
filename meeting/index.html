@@ -25,34 +25,13 @@ body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:ant
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
-/* status bar — light strip under the announcement bar. On phones and tablets
-   it's one full-width line, so the full label fits without truncating, and
-   "Accepting new clients" moves to .booking-status atop the calendar section. On desktop it
-   splits into two equal halves by a 1px rule. The grid mirrors the
-   hero/booking split below (1fr · 1px · 1fr), so the rule lines up with
-   .section-divider--split and "Accepting new clients" sits over the calendar.
-   Information only, so it keeps the quiet one-line text treatment rather than
-   tab styling. Same background as the hero, so a standard .section-divider
-   separates them. The static green "live" dot (no pulse; the video already
-   moves) sits with the phrase it refers to; dot-to-text gap matches the
-   .value-bullets icon gap on roadmap/booked. */
-.status-bar{display:grid;grid-template-columns:1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
-.status-bar__half,.booking-status{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
-.status-bar__rule,.status-bar__half--live{display:none}
-.status-bar__rule{background:var(--border)}
-/* phones and tablets: "Accepting new clients" is a strip across the top of
-   the calendar section, the stacked version of the desktop bar's right half */
-.booking-status{background:#eee;font-size:.8125rem;font-weight:500;line-height:1.4}
-@media (min-width:900px){
-  .status-bar{grid-template-columns:1fr 1px 1fr}
-  .status-bar__rule{display:block}
-  .status-bar__half--live{display:flex}
-  .booking-status,.booking-status-divider{display:none}
-}
-.status-dot{flex-shrink:0;width:.5rem;height:.5rem;border-radius:50%;background:#22c55e}
-/* the phrase the dot refers to — darker than the dot so it holds AA contrast
-   as text on both status-bar backgrounds (4.9:1 on #eee, 5.3:1 on #f7f7f7) */
-.status-live{color:#147638}
+/* status bar — light strip under the announcement bar: one full-width,
+   centered line naming the offer. Uppercase at 14px/600, a step up from the
+   sentence-case 13px/500 announcement bar, so the two read as different
+   bars. Same background as the hero, so a standard .section-divider
+   separates them. Below 360px it drops to 13px so the line still fits. */
+.status-bar{display:flex;justify-content:center;align-items:center;min-width:0;padding:.625rem .5rem;white-space:nowrap;background:#f7f7f7;color:var(--text);font-size:.875rem;font-weight:600;line-height:1.4;text-transform:uppercase}
+@media (max-width:359px){.status-bar{font-size:.8125rem}}
 
 /* announcement bar — one quiet line at the very top, above the status bar
    (matches booked/). Light strip with a hairline under it and a dismiss X on
@@ -162,9 +141,6 @@ footer a{color:var(--link);text-decoration:none}
   .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
-  /* each status-bar half takes its column's background, so the hero and
-     booking columns read as running up to the announcement bar */
-  .status-bar__half:last-child{background:#eee}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
@@ -191,11 +167,7 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your roadmap is on its way</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
-  <div class="status-bar">
-    <div class="status-bar__half">1-on-1 Online Fat Loss Coaching for Men</div>
-    <div class="status-bar__rule" aria-hidden="true"></div>
-    <div class="status-bar__half status-bar__half--live"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
-  </div>
+  <div class="status-bar">1-on-1 Online Fat Loss Coaching for Men</div>
   <div class="section-divider" aria-hidden="true"></div>
 
   <div class="container">
@@ -209,8 +181,6 @@ footer{background:#eee}
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
-    <div class="booking-status"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
-    <div class="section-divider booking-status-divider" aria-hidden="true"></div>
 
     <section class="booking-section">
       <div class="booking-inner">
