@@ -38,7 +38,7 @@ strong{font-weight:600}
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
-.hero-media{width:100%;margin-top:1.5rem;border-radius:12px;background:#161616;overflow:hidden}
+.hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 /* save contact — a contact card (photo, name, number) mirroring what they're
    about to save, with a small blue Save My Number button (the page's main action, so it gets the
    brand blue); on desktop a QR replaces the
@@ -46,12 +46,12 @@ strong{font-weight:600}
    rewrites them. The QR svg has no quiet zone of its own; the card's white
    padding is it. */
 .save-contact{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.625rem}
-.contact-card{display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;padding:.75rem;background:#fff;border:1px solid var(--card-border);border-radius:12px;text-align:left}
+.contact-card{display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;padding:.75rem;background:#fff;border:1px solid var(--card-border);border-radius:8px;text-align:left}
 .contact-card__photo{flex-shrink:0;width:48px;height:48px;border-radius:50%;object-fit:cover}
 .contact-card__info{flex:1 1 auto;min-width:0}
 .contact-card__name{font-size:.9375rem;font-weight:600;line-height:1.35}
 .save-contact__number{margin-top:.125rem;font-size:.875rem;line-height:1.35;color:var(--muted)}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:8px;background:var(--blue);color:#fff;font-size:.875rem;font-weight:600;line-height:1.2;text-decoration:none}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:4px;background:var(--blue);color:#fff;font-size:.875rem;font-weight:600;line-height:1.2;text-decoration:none}
 .save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
 .save-contact__qr svg{display:block;width:100%;height:auto}
 @media (hover:hover) and (pointer:fine){
