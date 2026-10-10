@@ -91,7 +91,7 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 <meta name="theme-color" content="#f7f7f7">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
 <style>
-:root{--pad:2.5rem;--pad-sm:2rem;--blue:#06f;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
+:root{--pad:2.5rem;--pad-sm:2rem;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
@@ -135,25 +135,22 @@ strong{font-weight:600}
 .signup-field{margin-bottom:.75rem;position:relative}
 .signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:4px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-input::placeholder{color:transparent}
-.signup-input:focus{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
-.pulse-ring{position:absolute;inset:0;border-radius:4px;border:1px solid var(--blue);opacity:0;pointer-events:none}
-.signup-input.pulse-border~.pulse-ring{animation:pulse-border-anim 1.6s ease-in-out infinite}
-@keyframes pulse-border-anim{0%,100%{opacity:0}50%{opacity:1}}
+.signup-input:focus{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.1)}
 .signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
 .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
-.signup-input:focus~.signup-label{color:var(--link)}
+.signup-input:focus~.signup-label{color:#111}
 #su-email{padding-right:2.5rem}
 .email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
 .email-status.is-valid{color:#2ecc71}
 .email-status.is-invalid{color:#e53e3e}
-.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:var(--link);border-radius:50%;animation:email-spin .6s linear infinite}
+.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:#111;border-radius:50%;animation:email-spin .6s linear infinite}
 @keyframes email-spin{to{transform:rotate(360deg)}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
 .signup-unit-field{margin-bottom:.75rem}
 .signup-height-row{display:flex;gap:.75rem}
 .signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #3a3a3a;border-radius:4px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
-.signup-unit-input:focus-within{border-color:var(--link);box-shadow:0 0 0 2px rgba(0,102,255,.1)}
+.signup-unit-input:focus-within{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.1)}
 .signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:var(--text);font-size:1.0625rem;font-weight:600;font-family:inherit}
 .signup-unit-input__field::placeholder{color:var(--muted);font-weight:400}
 .signup-unit-input__suffix{flex-shrink:0;margin-left:.5rem;color:var(--muted);font-size:.9375rem}
@@ -186,13 +183,9 @@ strong{font-weight:600}
 .hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--text)}
 .hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--text)}
 .hero-request-note__count{font-weight:700}
-/* The shared .email-spinner is blue (var(--link)) everywhere else it's
-   used, but that's an accent color, not a neutral one — wrong tone for a
-   plain loading state sitting in running text on the page background.
-   Scoped to this component only, so the email-verification spinner
-   elsewhere keeps its blue. border-color:transparent drops the spinner's
-   dark track entirely; border-top-color:currentColor draws only the
-   moving arc, in the note's own (already-adaptive) text color. */
+/* Scoped to this component only: border-color:transparent drops the
+   shared .email-spinner's track entirely, so in running text only the
+   moving arc shows, in the note's own (already-adaptive) text color. */
 .hero-request-note__count .email-spinner{margin-right:.15em;border-color:transparent;border-top-color:currentColor}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
 .legal-link:hover{color:var(--link)}
@@ -282,7 +275,7 @@ footer{background:#eee}
 .results-section{background:#eee}
 .signup-unit-input{border-color:#d0d0d0}
 .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
-.email-spinner{border-color:#d0d0d0;border-top-color:#06f}
+.email-spinner{border-color:#d0d0d0;border-top-color:#111}
 .signup-label{color:#4a4a4a}
 .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
 .check-icon{color:#f7f7f7}
@@ -318,8 +311,7 @@ footer{background:#eee}
           <h2 class="signup-title" tabindex="-1">What's your name?</h2>
           <form id="form-name" novalidate>
             <div class="signup-field">
-              <input class="signup-input pulse-border" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
-              <span class="pulse-ring" aria-hidden="true"></span>
+              <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
               <label class="signup-label" for="su-first">First name</label>
             </div>
             <div class="signup-field">
@@ -647,18 +639,6 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
   function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
   [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
-  // The pulse should only ever show on a genuinely empty field. It's baked into
-  // the initial markup as the "empty on load" default, but the field isn't
-  // always actually empty on load — browser autofill or a bfcache/history
-  // restore can populate it before the user ever focuses or blurs it. Check
-  // (and re-check on every input, since autofill fires that event too) rather
-  // than relying solely on focus/blur.
-  function syncFirstPulse(){ first.classList.toggle("pulse-border",!first.value.trim()); }
-  syncFirstPulse();
-  window.addEventListener("pageshow",syncFirstPulse);
-  first.addEventListener("input",syncFirstPulse);
-  first.addEventListener("focus",function(){ first.classList.remove("pulse-border"); });
-  first.addEventListener("blur",syncFirstPulse);
   // Fired once, the first time the visitor clears step 1 — this is the
   // "started the quiz" funnel event, not "typed in the name field".
   var formStartedFired=!1;
