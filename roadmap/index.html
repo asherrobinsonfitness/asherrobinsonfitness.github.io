@@ -164,7 +164,7 @@ strong{font-weight:600}
 .bf-option__label{font-size:.8125rem;font-weight:600;line-height:1.2}
 .bf-option[aria-checked=true] .bf-option__img{border-color:var(--link);background:rgba(0,102,255,.1)}
 .bf-option[aria-checked=true] .bf-option__label{color:var(--link)}
-.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:var(--blue);color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
 .signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
 .signup-submit:disabled:hover{background:var(--card-border)}
 .btn-chevron{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);flex-shrink:0}
@@ -438,12 +438,12 @@ footer{background:#eee}
       <div class="disclaimer-grid">
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
-          <p class="disclaimer-text">The body fat ranges, composition gap, and timeline projections this tool generates are for informational and educational purposes only. Body fat is estimated visually from the images and descriptors you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+          <p class="disclaimer-text">The fat mass, FFMI, goal weight, and timeline estimates in your roadmap are for informational and educational purposes only. Body fat is estimated visually from the example image you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
         </div>
 
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
-          <p class="disclaimer-text">The moderate- and aggressive-pace ranges shown are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+          <p class="disclaimer-text">The slower, standard, and faster paces in your roadmap are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
         </div>
 
         <div class="disclaimer-block">
@@ -453,7 +453,7 @@ footer{background:#eee}
 
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">How Your Information Is Used</h3>
-          <p class="disclaimer-text">I may send you a follow-up email with your results and information about coaching from Asher Robinson LLC. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+          <p class="disclaimer-text">Requesting your roadmap signs you up for my email newsletter from Asher Robinson LLC, including information about coaching. You can unsubscribe at any time. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
         </div>
       </div>
     </div>
@@ -479,44 +479,49 @@ footer{background:#eee}
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
-      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <p class="legal-effective">Effective Date: October 10, 2026</p>
       <h3>1. Agreement</h3>
-      <p>These Terms of Service ("Terms") govern your use of the coaching services offered by Asher Robinson LLC ("I," "me") through asherrobinsonfitness.com ("Site"). By completing a purchase, you agree to these Terms in full. If you do not agree, do not purchase.</p>
-      <h3>2. The Service</h3>
-      <p>I provide online fat loss coaching for adults, which includes a personalized training program, daily calorie and protein targets, weekly check-ins, and same-day messaging access to your coach. All coaching is delivered through a third-party app designated at the time of purchase.</p>
+      <p>These Terms of Service ("Terms") govern your use of asherrobinsonfitness.com (the "Site"), the free 10% Body Fat Roadmap, consultation calls, and the coaching services offered by Asher Robinson LLC ("I," "me"). By using the Site, requesting a roadmap, booking a call, or purchasing coaching, you agree to these Terms. If you do not agree, do not use the Site or purchase coaching.</p>
+      <h3>2. The Free Roadmap</h3>
+      <p>The roadmap estimates your fat mass, fat-free mass index (FFMI), goal weight at 10% body fat, and a timeline at several weekly paces, based on the height, weight, and body fat range you enter. Body fat is estimated from the example image you select, not measured. The roadmap is for informational and educational purposes only and is not medical advice.</p>
+      <p>Requesting a roadmap signs you up for my email newsletter, which includes fitness tips and information about coaching. You can unsubscribe at any time using the link in any email.</p>
+      <h3>3. Consultation Calls</h3>
+      <p>Booking a consultation call is free and does not obligate you to purchase anything. Calls are scheduled through iClosed and held over Google Meet. By booking, you agree that I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to any text to opt out.</p>
+      <h3>4. The Coaching Service</h3>
+      <p>I provide online fat loss coaching for adults. Coaching includes a personalized training program, daily calorie and protein targets, weekly check-ins, and messaging access to your coach, delivered through a third-party coaching app designated at enrollment.</p>
       <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
-      <h3>3. Eligibility</h3>
-      <p>You must be at least 18 years old to purchase coaching. By completing checkout, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
-      <h3>4. Pricing and Billing</h3>
-      <p>Coaching is billed as follows:</p>
+      <h3>5. Eligibility</h3>
+      <p>You must be at least 18 years old to request a roadmap, book a call, or purchase coaching. By doing so, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>6. Pricing and Payment</h3>
+      <p>Coaching starts with the 6-Week Challenge:</p>
       <ul>
-        <li><strong>First month:</strong> $50.00 (one-time discounted rate)</li>
-        <li><strong>Subsequent months:</strong> $199.00 per month, billed automatically on the same calendar date each month until you cancel</li>
+        <li><strong>6-Week Challenge:</strong> $599, paid in full after your consultation call</li>
+        <li><strong>Continued coaching:</strong> $199 per month, billed automatically on the same calendar date each month until you cancel, if you choose to continue after the challenge</li>
       </ul>
-      <p>Payments are processed by Stripe, Inc. By completing checkout, you authorize Asher Robinson LLC to charge your payment method on the schedule above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
-      <h3>5. Cancellation</h3>
-      <p>You may cancel your subscription at any time with no cancellation fee. Cancellation can be initiated through the coaching app or by messaging your coach directly. Cancellation takes effect at the end of your current billing period. You will not be charged again after cancellation is confirmed. I do not offer prorated refunds for partial months outside of the 30-day results guarantee described below.</p>
-      <h3>6. 30-Day Results Guarantee</h3>
-      <p>If you follow the program as prescribed and do not see measurable progress within your first 30 days, you are entitled to a full refund of the $50 first-month payment. To qualify:</p>
+      <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>7. The 10-Pound Guarantee</h3>
+      <!-- INCOMPLETE (flagged 2026-10-10): the qualifying conditions (what the client must do during the challenge for the guarantee to apply), the deadline to claim, and confirmation that nothing is refunded if the 10 pounds are not lost have not been decided yet. Fill these in before relying on this section. -->
+      <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you choose one of the following:</p>
       <ul>
-        <li>You must have completed your onboarding call</li>
-        <li>You must have logged food and workouts as directed for the 30-day period</li>
-        <li>You must submit your refund request within 30 days of your purchase date by messaging your coach</li>
+        <li><strong>Refund:</strong> a full refund of your $599 challenge payment, or</li>
+        <li><strong>6 more weeks free:</strong> keep coaching and apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month until you cancel.</li>
       </ul>
-      <p>Refunds are returned to the original payment method. Processing time is typically 5–10 business days depending on your bank. This guarantee applies to the $50 first-month payment only.</p>
-      <h3>7. No Medical Advice</h3>
-      <p>Nothing on this Site or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
-      <h3>8. Intellectual Property</h3>
-      <p>All training programs, nutrition guidance, written content, and materials provided through the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
-      <h3>9. Limitation of Liability</h3>
-      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the coaching service or this Site. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
-      <h3>10. Disclaimer of Warranties</h3>
-      <p>The coaching service is provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
-      <h3>11. Governing Law</h3>
+      <p>Your weight loss is measured from the weigh-ins you log during the challenge. I may ask for a photo of your scale to confirm your starting and ending weight. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
+      <h3>8. Cancellation</h3>
+      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. Except as described in Section 7, the $599 challenge payment is not refundable.</p>
+      <h3>9. No Medical Advice</h3>
+      <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>10. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, roadmaps, written content, and materials provided through the Site or the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>11. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, the roadmap, or the coaching service. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>12. Disclaimer of Warranties</h3>
+      <p>The Site, the roadmap, and the coaching service are provided "as is" and "as available" without warranty of any kind, express or implied. Except for the guarantee in Section 7, I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>13. Governing Law</h3>
       <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
-      <h3>12. Changes to These Terms</h3>
-      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the service after changes take effect constitutes acceptance of the revised Terms.</p>
-      <h3>13. Contact</h3>
+      <h3>14. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the Site or the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>15. Contact</h3>
       <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
     </div>
   </div>
@@ -529,43 +534,59 @@ footer{background:#eee}
     </div>
     <div class="legal-modal-body">
       <h2 id="privacy-title">Privacy Policy</h2>
-      <p class="legal-effective">Effective Date: June 1, 2026</p>
+      <p class="legal-effective">Effective Date: October 10, 2026</p>
       <h3>1. Overview</h3>
-      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com. This Privacy Policy explains what information I collect, how I use it, and your rights. By using this Site, you agree to the practices described here.</p>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com (the "Site"). This Privacy Policy explains what information I collect, how I use it, who I share it with, and your choices. By using this Site, you agree to the practices described here.</p>
       <h3>2. Information I Collect</h3>
-      <p><strong>Information you provide:</strong> When you complete my application survey, I collect responses to questions about your fitness goals, age range, gym access, and commitment level. When you purchase coaching, my payment processor Stripe collects your name, email address, billing address, and payment card details on my behalf.</p>
-      <p><strong>Information collected automatically:</strong> When you visit this Site, I and my third-party partners automatically collect certain technical data, including your IP address, browser type, device type, pages visited, and time on page. This data is collected via cookies and similar tracking technologies.</p>
-      <p><strong>Meta Pixel:</strong> This Site uses the Meta Pixel (Facebook Pixel), a tracking tool provided by Meta Platforms, Inc. The Meta Pixel may collect data about your visit and associate it with your Facebook or Instagram account if you are logged in. This data is used to measure ad performance and show relevant ads on Meta platforms. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>When you request a roadmap:</strong> your first and last name, email address, height, weight, and the body fat range you select. Your weight and body fat range are health-related information. I use them only to create your roadmap and to understand where you are starting from.</p>
+      <p><strong>When you book a call:</strong> your name, email address, phone number, and any answers you give on the booking form. The booking form is run by iClosed.</p>
+      <p><strong>When you become a client:</strong> payment details collected by Stripe (I never see your full card number), plus the information you share during coaching, such as weigh-ins, food logs, scale photos, and check-ins.</p>
+      <p><strong>Collected automatically:</strong> when you visit the Site, I and my service providers collect technical data such as your IP address, browser type, device type, pages visited, and time on page, using cookies, pixels, and similar technologies.</p>
       <h3>3. How I Use Your Information</h3>
       <ul>
-        <li>To process your purchase and deliver coaching services</li>
-        <li>To communicate with you about your coaching program</li>
-        <li>To measure and improve the performance of my advertising</li>
-        <li>To analyze Site usage and improve user experience</li>
+        <li>To create your roadmap and email it to you</li>
+        <li>To send my email newsletter, including information about coaching</li>
+        <li>To schedule, confirm, and remind you about consultation calls</li>
+        <li>To deliver coaching and process payments</li>
+        <li>To measure and improve my advertising</li>
+        <li>To analyze Site usage and improve the Site</li>
         <li>To comply with legal obligations</li>
       </ul>
-      <p>If you provide an email address through checkout, I may use it to send service-related communications such as receipts, onboarding instructions, and coaching updates. I do not sell your email address to third parties.</p>
-      <h3>4. Sharing of Information</h3>
-      <p>I do not sell your personal information. I share data only with the following service providers who help me operate the business:</p>
+      <h3>4. Emails and Text Messages</h3>
+      <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
+      <p>If you book a call, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
+      <h3>5. Advertising and Analytics</h3>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
+      <h3>6. Sharing of Information</h3>
+      <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
       <ul>
-        <li><strong>Stripe, Inc.</strong>: payment processing, subject to Stripe's Privacy Policy</li>
-        <li><strong>Meta Platforms, Inc.</strong>: advertising measurement via the Meta Pixel</li>
-        <li><strong>Coaching app provider</strong>: delivery of your training and check-in program</li>
+        <li><strong>Vercel:</strong> website hosting</li>
+        <li><strong>Supabase:</strong> database and file storage for roadmap requests</li>
+        <li><strong>PDFShift:</strong> creating your roadmap PDF</li>
+        <li><strong>Kit:</strong> email delivery and newsletter</li>
+        <li><strong>iClosed:</strong> call scheduling and appointment reminders</li>
+        <li><strong>Google:</strong> video calls through Google Meet</li>
+        <li><strong>Vidalytics:</strong> video hosting and playback</li>
+        <li><strong>Stripe, Inc.:</strong> payment processing</li>
+        <li><strong>PostHog:</strong> site analytics</li>
+        <li><strong>Meta Platforms, Inc.:</strong> advertising measurement and targeting</li>
+        <li><strong>Coaching app provider:</strong> delivery of your training and check-in program</li>
       </ul>
       <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
-      <h3>5. Cookies</h3>
-      <p>This Site uses cookies and similar technologies to function and to enable advertising measurement. By using this Site, you consent to the use of cookies as described here. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
-      <h3>6. Data Retention</h3>
-      <p>I retain your information for as long as your coaching relationship is active and for a reasonable period afterward as required for business and legal purposes. Payment records are retained as required by applicable law and my payment processor's policies.</p>
-      <h3>7. Your Rights</h3>
-      <p>Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or request deletion of information I hold about you. To exercise any of these rights, contact me at the email below. I will respond within a reasonable timeframe.</p>
-      <h3>8. Children's Privacy</h3>
+      <h3>7. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function, to remember how you first arrived at the Site, to measure advertising, and for analytics. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>8. Data Retention</h3>
+      <p>I keep roadmap requests and newsletter information until you ask me to delete them or unsubscribe. I keep coaching information for as long as your coaching relationship is active and for a reasonable period afterward for business and legal purposes. Payment records are kept as required by law and by my payment processor's policies.</p>
+      <h3>9. Your Rights</h3>
+      <p>Depending on where you live, you may have the right to access, correct, or delete the information I hold about you, and to opt out of the use of your information for targeted advertising. To make a request, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>10. Children's Privacy</h3>
       <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
-      <h3>9. Third-Party Links</h3>
+      <h3>11. Third-Party Links</h3>
       <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
-      <h3>10. Changes to This Policy</h3>
+      <h3>12. Changes to This Policy</h3>
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
-      <h3>11. Contact</h3>
+      <h3>13. Contact</h3>
       <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
     </div>
   </div>
@@ -739,7 +760,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
         bodyfat_range:bfValue
       })
     }).catch(function(){});
-    window.location.href="/roadmap/coaching/"+(qs.length?"?"+qs.join("&"):"");
+    window.location.href="/meeting/"+(qs.length?"?"+qs.join("&"):"");
   });
   document.getElementById("back-to-bodyfat").addEventListener("click",function(){ goToStep(2); });
 
