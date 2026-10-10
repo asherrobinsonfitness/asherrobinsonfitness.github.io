@@ -31,18 +31,19 @@ strong{font-weight:600}
    splits into two equal halves by a 1px rule. The grid mirrors the
    hero/booking split below (1fr · 1px · 1fr), so the rule lines up with
    .section-divider--split and "Accepting new clients" sits over the calendar.
-   Information only, so it keeps the quiet one-line text treatment rather than
-   tab styling. Same background as the hero, so a standard .section-divider
+   Information only, so one line of text rather than tab styling: uppercase
+   at 600 sets it apart from the sentence-case announcement bar above (Son of
+   a Tailor's product-row treatment, minus the letter spacing). Same background as the hero, so a standard .section-divider
    separates them. The static green "live" dot (no pulse; the video already
    moves) sits with the phrase it refers to; dot-to-text gap matches the
    .value-bullets icon gap on roadmap/booked. */
-.status-bar{display:grid;grid-template-columns:1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
+.status-bar{display:grid;grid-template-columns:1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1.4;text-transform:uppercase}
 .status-bar__half,.booking-status{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
 .status-bar__rule,.status-bar__half--live{display:none}
 .status-bar__rule{background:var(--border)}
 /* phones and tablets: "Accepting new clients" is a strip across the top of
    the calendar section, the stacked version of the desktop bar's right half */
-.booking-status{background:#eee;font-size:.8125rem;font-weight:500;line-height:1.4}
+.booking-status{background:#eee;font-size:.8125rem;font-weight:600;line-height:1.4;text-transform:uppercase}
 @media (min-width:900px){
   .status-bar{grid-template-columns:1fr 1px 1fr}
   .status-bar__rule{display:block}
