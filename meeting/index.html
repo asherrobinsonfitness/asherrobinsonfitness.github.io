@@ -121,8 +121,9 @@ footer a{color:var(--link);text-decoration:none}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .22s ease}
 .legal-overlay.active .legal-modal{transform:translateX(0)}
-.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;padding:.75rem 1.5rem;border-bottom:1px solid var(--card-border,#3d3d3d);flex-shrink:0}
-.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.4rem;margin-right:-.4rem;transition:background-color 0s ease,color 0s ease;flex-shrink:0}
+/* header — same height, background and hairline as the status bar strip on meeting/ */
+.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
@@ -171,10 +172,9 @@ footer{background:#eee}
 .booking-section{background:#eee}
 .hero-media{background:#eee}
 .common-questions{background:#eee}
-.legal-modal{background:#fff;border-color:var(--card-border)}
-.legal-modal-header{border-bottom-color:var(--card-border)}
-.legal-modal-close{color:rgba(0,0,0,.5)}
-.legal-modal-close:hover{background-color:rgba(0,0,0,.06);color:#000}
+.legal-modal{background:#f7f7f7;border-color:var(--card-border)}
+.legal-modal-close{color:var(--muted)}
+.legal-modal-close:hover{background:none;color:var(--text)}
 .legal-modal-body h2{color:var(--text)}
 .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
 .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
@@ -323,7 +323,7 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
@@ -373,7 +373,7 @@ footer{background:#eee}
 <div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="privacy-title">Privacy Policy</h2>
