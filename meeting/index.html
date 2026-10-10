@@ -37,6 +37,9 @@ strong{font-weight:600}
 .status-bar{display:grid;grid-template-columns:1fr 1px 1fr;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:500;line-height:1.4}
 .status-bar__half{display:flex;justify-content:center;align-items:center;gap:.65rem;min-width:0;padding:.625rem .5rem;white-space:nowrap}
 .status-bar__rule{background:var(--border)}
+/* the full label needs ~268px per half; phones get the short one */
+.status-label--long{display:none}
+@media (min-width:600px){.status-label--long{display:inline}.status-label--short{display:none}}
 /* "Accepting new clients" needs ~353px of viewport at full size; below 360px
    (320px-class phones) step the text down and tighten the spacing so each half
    stays on one line instead of dropping the word "New". */
@@ -182,7 +185,7 @@ footer{background:#eee}
   <div class="above-fold">
   <div class="announcement">Your roadmap is on its way</div>
   <div class="status-bar">
-    <div class="status-bar__half">6 Week Challenge</div>
+    <div class="status-bar__half"><span class="status-label--long">1-on-1 Online Fat Loss Coaching for Men</span><span class="status-label--short">1-on-1 Fat Loss for Men</span></div>
     <div class="status-bar__rule" aria-hidden="true"></div>
     <div class="status-bar__half"><span class="status-dot" aria-hidden="true"></span><span class="status-live">Accepting new clients</span></div>
   </div>
@@ -191,7 +194,7 @@ footer{background:#eee}
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks. Guaranteed.</h1>
-      <div class="subheadline">Put down $599. Lose 10 pounds in 6 weeks, and get it all back.</div>
+      <div class="subheadline">Reach your goal, and get your money back or 6 more weeks of coaching free.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
