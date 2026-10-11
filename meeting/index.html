@@ -105,8 +105,8 @@ strong{font-weight:600}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
-.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
-.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em;text-wrap:balance}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0;text-wrap:balance}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 
 /* second section — the booking calendar */
@@ -240,8 +240,8 @@ footer{background:#eee}
 
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks. Guaranteed.</h1>
-      <div class="subheadline">Hit it, and get your money back. Miss it, and I coach you for free until you do.</div>
+      <h1 class="headline">Lose Your First 10&nbsp;Pounds in 6&nbsp;Weeks. Guaranteed.</h1>
+      <div class="subheadline">Hit it, and get your money back. Miss&nbsp;it, and I coach you for free until you&nbsp;do.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -322,7 +322,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">What if I don't lose 10 pounds?</span><span class="faq-item__short">Free coaching</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>Follow the plan for 6 weeks and miss it, and I coach you free until you hit 10 pounds, up to 6 more weeks. Following the plan means you hit your calorie and protein targets, weigh in at least 5 days a week, and finish every workout. Send me a scale photo on day 1 and at the end. The $599 refund covers the first 6 weeks.</p>
+              <p>Follow the plan for 6 weeks and miss it, and I coach you free until you hit 10 pounds, up to 6 more weeks. Following the plan means you log your food daily, hit your calorie and protein targets, weigh in at least 5 days a week, and finish every workout. Send me a scale photo on day 1 and at the end. The $599 refund covers the first 6 weeks.</p>
             </div>
           </div>
         </details>
@@ -355,7 +355,7 @@ footer{background:#eee}
 
         <div class="disclaimer-block">
           <h3 class="disclaimer-heading">How Your Information Is Used</h3>
-          <p class="disclaimer-text">When you book a call, the scheduler (run by iClosed) collects your name, email, and phone number so I can confirm your call. I may call, text, or email you about your appointment. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+          <p class="disclaimer-text">When you book a meeting, the scheduler (run by iClosed) collects your name, email, and phone number so I can confirm your meeting. I may call, text, or email you about your meeting. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
         </div>
       </div>
     </div>
@@ -402,23 +402,24 @@ footer{background:#eee}
       </ul>
       <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
       <h3>7. The 10-Pound Guarantee</h3>
-      <!-- OPEN (flagged 2026-10-11): the deadline to claim the refund or the free coaching has not been decided yet. -->
       <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you choose one of the following:</p>
       <ul>
         <li><strong>Refund:</strong> a full refund of your $599 challenge payment, or</li>
-        <li><strong>6 more weeks free:</strong> keep coaching and apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month until you cancel.</li>
+        <li><strong>6 more weeks free:</strong> apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month if you choose to continue.</li>
       </ul>
-      <p>If you follow the plan for all 6 weeks and lose less than 10 pounds, I coach you for free until you lose 10 pounds, for up to 6 more weeks. After free coaching ends, coaching continues at $199 per month until you cancel.</p>
-      <p>"Follow the plan" means that, as shown in your coaching app logs, you:</p>
+      <p>If you follow the plan and lose less than 10 pounds by the end of your 6-Week Challenge, I coach you free until you reach 10 pounds lost from your starting weight, for up to 6 more weeks. Free coaching ends when your logged weigh-ins show 10 pounds lost, or 6 weeks after your challenge ends, whichever comes first. After that, coaching continues at $199 per month if you choose to continue.</p>
+      <p>“Follow the plan” means that during every week of the challenge you:</p>
       <ul>
-        <li>hit your calorie and protein targets,</li>
-        <li>log your weight at least 5 days a week, and</li>
-        <li>complete every workout.</li>
+        <li>log your food daily and hit your daily calorie and protein targets</li>
+        <li>log your weight at least 5 days a week</li>
+        <li>complete every scheduled workout</li>
       </ul>
-      <p>You must send a photo of your scale on day 1 and at the end of the challenge. Your weight loss is measured from these photos and the weigh-ins you log.</p>
-      <p>The refund applies only to 10 pounds lost within the first 6 weeks. Weight lost during free coaching does not qualify for a refund. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
+      <p>I confirm this from your logs in the coaching app.</p>
+      <p><strong>How it’s measured:</strong> Weight loss is measured from the weigh-ins you log in the coaching app. To qualify for either outcome, you must send a photo of your scale at the start and at the end of your challenge.</p>
+      <p><strong>Refund timing:</strong> The refund applies only to 10 pounds lost within the 6-Week Challenge. Reaching 10 pounds during free coaching does not qualify for a refund.</p>
+      <p><strong>How to claim:</strong> Message me in the coaching app or email <a href="mailto:help@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">help@asherrobinsonfitness.com</a> within 14 days after your challenge ends. Refunds go back to your original payment method, usually within 5 to 10 business days depending on your bank.</p>
       <h3>8. Cancellation</h3>
-      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. The $599 challenge payment is not refundable, except for the refund in Section 7 for losing 10 pounds within the first 6 weeks.</p>
+      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. The $599 challenge payment is not refundable, except for the refund in Section 7 for losing 10 pounds within the 6-Week Challenge.</p>
       <h3>9. No Medical Advice</h3>
       <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
       <h3>10. Intellectual Property</h3>
@@ -432,7 +433,7 @@ footer{background:#eee}
       <h3>14. Changes to These Terms</h3>
       <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the Site or the service after changes take effect constitutes acceptance of the revised Terms.</p>
       <h3>15. Contact</h3>
-      <p>Questions about these Terms? Reach me at: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:help@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">help@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
@@ -497,7 +498,7 @@ footer{background:#eee}
       <h3>12. Changes to This Policy</h3>
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
       <h3>13. Contact</h3>
-      <p>Privacy questions or requests: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
+      <p>Privacy questions or requests: <a href="mailto:help@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">help@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
