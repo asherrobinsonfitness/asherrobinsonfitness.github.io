@@ -474,7 +474,7 @@ footer{background:#eee}
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
-      <p class="legal-effective">Effective Date: October 10, 2026</p>
+      <p class="legal-effective">Effective Date: October 11, 2026</p>
       <h3>1. Agreement</h3>
       <p>These Terms of Service ("Terms") govern your use of asherrobinsonfitness.com (the "Site"), the free 10% Body Fat Roadmap, consultation calls, and the coaching services offered by Asher Robinson LLC ("I," "me"). By using the Site, requesting a roadmap, booking a call, or purchasing coaching, you agree to these Terms. If you do not agree, do not use the Site or purchase coaching.</p>
       <h3>2. The Free Roadmap</h3>
@@ -495,15 +495,23 @@ footer{background:#eee}
       </ul>
       <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
       <h3>7. The 10-Pound Guarantee</h3>
-      <!-- INCOMPLETE (flagged 2026-10-10): the qualifying conditions (what the client must do during the challenge for the guarantee to apply), the deadline to claim, and confirmation that nothing is refunded if the 10 pounds are not lost have not been decided yet. Fill these in before relying on this section. -->
+      <!-- OPEN (flagged 2026-10-11): the deadline to claim the refund or the free coaching has not been decided yet. -->
       <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you choose one of the following:</p>
       <ul>
         <li><strong>Refund:</strong> a full refund of your $599 challenge payment, or</li>
         <li><strong>6 more weeks free:</strong> keep coaching and apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month until you cancel.</li>
       </ul>
-      <p>Your weight loss is measured from the weigh-ins you log during the challenge. I may ask for a photo of your scale to confirm your starting and ending weight. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
+      <p>If you follow the plan for all 6 weeks and lose less than 10 pounds, I coach you for free until you lose 10 pounds, for up to 6 more weeks. After free coaching ends, coaching continues at $199 per month until you cancel.</p>
+      <p>"Follow the plan" means that, as shown in your coaching app logs, you:</p>
+      <ul>
+        <li>hit your calorie and protein targets,</li>
+        <li>log your weight at least 5 days a week, and</li>
+        <li>complete every workout.</li>
+      </ul>
+      <p>You must send a photo of your scale on day 1 and at the end of the challenge. Your weight loss is measured from these photos and the weigh-ins you log.</p>
+      <p>The refund applies only to 10 pounds lost within the first 6 weeks. Weight lost during free coaching does not qualify for a refund. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
       <h3>8. Cancellation</h3>
-      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. Except as described in Section 7, the $599 challenge payment is not refundable.</p>
+      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. The $599 challenge payment is not refundable, except for the refund in Section 7 for losing 10 pounds within the first 6 weeks.</p>
       <h3>9. No Medical Advice</h3>
       <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
       <h3>10. Intellectual Property</h3>
@@ -517,7 +525,7 @@ footer{background:#eee}
       <h3>14. Changes to These Terms</h3>
       <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the Site or the service after changes take effect constitutes acceptance of the revised Terms.</p>
       <h3>15. Contact</h3>
-      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
@@ -582,7 +590,7 @@ footer{background:#eee}
       <h3>12. Changes to This Policy</h3>
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
       <h3>13. Contact</h3>
-      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Privacy questions or requests: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
@@ -715,10 +723,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-email").addEventListener("submit",function(e){
     e.preventDefault();
     if(btnEmail.disabled) return;
-    var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
-    if(name) qs.push("name="+encodeURIComponent(name));
+    // meeting/ reads these once, saves them, and strips them from its URL
+    // before iClosed or Vidalytics load. No health data rides in the URL.
+    var firstVal=first.value.trim(),lastVal=last.value.trim(),emailVal=email.value.trim(),qs=[];
+    if(firstVal) qs.push("fname="+encodeURIComponent(firstVal));
+    if(lastVal) qs.push("lname="+encodeURIComponent(lastVal));
     if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
-    if(bfValue) qs.push("bf="+encodeURIComponent(bfValue));
     // Final-step lead capture — PostHog funnel event plus the deduped Meta
     // Lead (pixel + CAPI). No "gap" property here: this page never computes
     // a goal weight / distance-from-goal, only the raw bodyfat bracket.
