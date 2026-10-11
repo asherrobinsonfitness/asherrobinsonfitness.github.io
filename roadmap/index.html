@@ -2,8 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Meta Pixel Code -->
+<script>
+// Shared helpers for Meta Pixel + Conversions API deduplication.
+// Each conversion event gets one event_id shared by both the browser pixel
+// call and the server-side CAPI call so Meta counts it once, not twice.
+function __fbEventId() {
+  return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+}
+function __fbCookie(name) {
+  var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : undefined;
+}
+function __fbCapi(eventName, eventId, customData, userData) {
+  try {
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData || {},
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+// First-touch acquisition-path marker. Set once, on entry to a funnel, and
+// never overwritten — whichever page the visitor's session actually started
+// on decides "lead_magnet" vs "direct" for this browser, even if they come
+// back through a different page days later. Mirrors __fbCookie's own cookie
+// pattern; read back via __fbCookie('acq_path') wherever a Meta content_name
+// needs to reflect it (Purchase, CompleteRegistration). Also pushed to
+// PostHog as a $set_once person property (2nd arg) so it can't be
+// overwritten there either, no matter how many times this runs.
+function __acqPathInit(value) {
+  if (__fbCookie('acq_path')) return;
+  var oneYear = 60 * 60 * 24 * 365;
+  document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
+  if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
+}
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'/edge/fbevents.js');
+fbq('init', '1575468926630270');
+var __pvEventId = __fbEventId();
+fbq('track', 'PageView', {}, {eventID: __pvEventId});
+__fbCapi('PageView', __pvEventId);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    // No ph_distinct_id cookie bootstrap here (unlike index.html/welcome) —
+    // that cookie is only ever set by middleware.js, which only runs on "/".
+    // Visitors can land straight on /roadmap/ without ever hitting "/", so
+    // posthog-js is left to mint and persist its own distinct_id normally.
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    __acqPathInit('lead_magnet');
+    posthog.capture('roadmap_pageview');
+</script>
+<!-- End PostHog -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Call Confirmed</title>
+<title>Online Fat Loss Coaching</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
@@ -14,347 +90,711 @@
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#f7f7f7">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
-<link rel="preconnect" href="https://fast.vidalytics.com">
-<link rel="dns-prefetch" href="https://fast.vidalytics.com">
 <style>
-:root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
+:root{--pad:2.5rem;--pad-sm:2rem;--link:#4d94ff;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d;--step-secondary:var(--muted);--input-border:#3a3a3a}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
 strong{font-weight:600}
 .container{display:flex;flex-direction:column;background:#1c1c1c}
 
+/* nav — a single progress line bled to the section's top edge. No track background —
+   only the fill itself is visible; it grows from 0% (invisible, step 1) to 100% (full
+   width, last step) as the wizard advances. */
+.progress-line{position:relative;width:calc(100% + 2rem);margin:calc(-1 * var(--pad-sm)) -1rem var(--pad-sm);height:4px;flex-shrink:0;overflow:hidden}
+.progress-line__fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--text);transition:width .3s ease}
+
 /* section dividers — standalone elements rather than borders on the sections
-   themselves. Horizontal by default (stacked layout); the one between
-   hero-grid and booking-section flips to a vertical rule once the desktop
-   side-by-side split kicks in. */
+   themselves, so no section's box size ever changes depending on whether a
+   divider sits next to it. Horizontal by default (stacked layout); the one
+   between hero-grid and results-section flips to a vertical rule once the
+   desktop side-by-side split kicks in. */
 .section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
 
-/* announcement bar — one quiet line above everything else, matching the
-   meeting page's. Light strip with a hairline under it and a dismiss X on
-   the right; the X just removes the bar for this page view. */
-.announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:400;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
-/* left-aligned on phones and tablets, right-aligned (next to the X) on desktop */
-.announcement__text{flex:1 1 auto;min-width:0}
-@media (min-width:900px){.announcement__text{text-align:right}}
-/* the negative margins keep the bigger tap area from making the bar taller */
-.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
-@media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
-
-/* hero — headline, video only */
-.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+/* headline / subheadline */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem}
+.hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
-.hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
-/* save contact — a quiet attachment-style row under the video (photo, name,
-   number, small pill button), deliberately lighter than the video. The pill's
-   ::after stretches over the whole row so the row is the tap target. On
-   desktop a QR replaces the button. Keep .save-contact__number /
-   .save-contact__qr: set-contact-number.py rewrites them, and the script at
-   the bottom reads both (tel: link, pop-up text, pop-up QR). The QR svg has no
-   quiet zone of its own; the card's white padding is it. */
-.save-contact{margin-top:1.5rem}
-.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid var(--border);border-radius:8px;text-align:left}
-.contact-card__photo{flex-shrink:0;width:40px;height:40px;border-radius:50%;object-fit:cover}
-.contact-card__info{flex:1 1 auto;min-width:0}
-.contact-card__name{font-size:.875rem;font-weight:600;line-height:1.3}
-.save-contact__number{font-size:.8125rem;line-height:1.35;color:var(--muted)}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid var(--card-border);border-radius:999px;background:#fff;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
-.save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
-.save-contact__btn svg{flex-shrink:0}
-.save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
-.save-contact__qr svg{display:block;width:100%;height:auto}
-@media (hover:hover) and (pointer:fine){
-  .save-contact__btn{display:none}
-  .save-contact__qr{display:block}
-}
+/* The fanned "scroll through a stack" arrangement (item 2 flat and focused
+   up front, 1 turned one way behind it, 3 and 4 turned the other way and
+   progressively further back) got fragile as real CSS 3D transforms — every
+   viewport had slightly different rotation/perspective insets, so widths,
+   margins, and overlaps never quite matched everywhere at once. It's now a
+   single pre-rendered image (a real screenshot of that exact CSS, captured
+   once at 2x) instead: the aspect-ratio below is that image's own W/H, so
+   it scales as one flat, reliable unit rather than 4 separately-computed
+   ones. */
+.hero-media-row{width:100%;margin:1.5rem auto 0}
+.hero-media-row__item{display:block;width:100%;aspect-ratio:2283/1010;object-fit:contain}
 
-/* save-number pop-up — opens once per visit, when the save row scrolls off
-   the top of the screen without having been tapped. Same dim + blur and
-   fade as meeting/'s Terms popup; 8px card like the row, 4px button like the
-   rest of the page; the banner's X. Desktop shows the QR instead of the
-   button. */
-.save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
-.save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.save-popup__card{position:relative;width:100%;max-width:358px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
-.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
-.save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
-.save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
-/* "online" dot */
-.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#2fb463;border:2px solid #f7f7f7}
-.save-popup__title{font-size:1.25rem;font-weight:600;line-height:1.25;letter-spacing:-.02em}
-.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
-.save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
-.save-popup__btn svg{flex-shrink:0}
-.save-popup__qr,.save-popup__qr-caption{display:none}
-.save-popup__qr{width:132px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
-.save-popup__qr svg{display:block;width:100%;height:auto}
-.save-popup__qr-caption{margin-top:.5rem;font-size:.8125rem;color:var(--muted)}
-@media (hover:hover) and (pointer:fine){
-  .save-popup__close:hover{color:var(--text)}
-  .save-popup__btn{display:none}
-  .save-popup__qr,.save-popup__qr-caption{display:block}
-}
-@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
-/* what happens next — numbered steps in the same hairline-row style as the
-   FAQ list, then iClosed's meeting details. */
-.next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
-.next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid var(--border)}
-.next-step__num{flex-shrink:0;font-size:.8125rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
-.next-step__title{font-size:.9375rem;font-weight:600;line-height:1.35;color:var(--text)}
-.next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:var(--muted)}
-.call-details-widget{margin-top:1.5rem}
+/* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
+.results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
+.results-section{padding:var(--pad-sm) 1rem var(--pad-sm)}
+.blocks-grid{display:flex;flex-direction:column;gap:2.5rem;width:100%;max-width:472px;margin:0 auto}
+.signup-title{font-size:1.5rem;font-weight:400;color:var(--text);text-align:center;margin-bottom:1.5rem;line-height:1.3}
+.signup-field{margin-bottom:.75rem;position:relative}
+.signup-input{width:100%;padding:.75rem 1rem;background:0 0;border:1px solid var(--input-border);border-radius:4px;color:var(--text);font-size:1rem;line-height:1.35;outline:0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-input::placeholder{color:transparent}
+.signup-input:focus{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.1)}
+.signup-label{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;line-height:1;color:#a8afba;padding:0 .3rem;background:0 0;pointer-events:none;transition:top .15s ease,font-size .15s ease,color .15s ease,background-color .15s ease}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#161616}
+.signup-input:focus~.signup-label{color:#111}
+#su-email{padding-right:2.5rem}
+.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
+.email-status.is-valid{color:#2ecc71}
+.email-status.is-invalid{color:#e53e3e}
+.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #3a3a3a;border-top-color:#111;border-radius:50%;animation:email-spin .6s linear infinite}
+@keyframes email-spin{to{transform:rotate(360deg)}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.field-label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
+.signup-unit-field{margin-bottom:.75rem}
+.signup-height-row{display:flex;gap:.75rem}
+.signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #3a3a3a;border-radius:4px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
+.signup-unit-input:focus-within{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.1)}
+.signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:var(--text);font-size:1.0625rem;font-weight:600;font-family:inherit}
+.signup-unit-input__field::placeholder{color:var(--muted);font-weight:400}
+.signup-unit-input__suffix{flex-shrink:0;margin-left:.5rem;color:var(--muted);font-size:.9375rem}
+.bf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem}
+.bf-option{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:0;border:none;background:0 0;color:var(--text);font-family:inherit;cursor:pointer;text-align:center;transition:color 0s ease}
+.bf-option__img{width:100%;aspect-ratio:1/1;border:1px solid #3a3a3a;border-radius:8px;overflow:hidden;background:#111;transition:border-color 0s ease,background-color 0s ease}
+.bf-option__img img{width:100%;height:100%;object-fit:cover;display:block}
+.bf-option__label{font-size:.8125rem;font-weight:600;line-height:1.2}
+.bf-option[aria-checked=true] .bf-option__img{border-color:#111}
+.bf-option[aria-checked=true] .bf-option__label{color:#111}
+.signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
+.signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
+.signup-submit:disabled:hover{background:var(--card-border)}
+/* chevron sits right after the label (the button's own gap spaces it) */
+.btn-chevron{flex-shrink:0}
+.value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
+.value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.4;color:var(--text)}
+.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
+.check-icon{width:.6em;height:.6em;color:#1c1c1c}
+/* hero request-count note — subheadline placement, plain text (no pill
+   background), same icon-plus-bold-count formatting this used to have as
+   bullet 2 of .value-bullets: a flat people icon at 1em (no check-badge
+   circle behind it), bold "<n> men requested", regular-weight "in past
+   week". Centered under the headline via justify-content rather than
+   align-self/margin-auto — as a full-width flex child of hero-grid's
+   column layout it stretches anyway, and centering its content this way
+   reads identically to shrink-wrapping it.
+   Renders in place immediately (see JS below) with a spinner standing in
+   for the count until the real 7-day number loads — never hidden or
+   faded except on a failed fetch, when there's nothing real left to show. */
+.hero-request-note{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:.75rem auto 0;font-size:.9375rem;color:var(--text)}
+.hero-request-note__icon{flex-shrink:0;width:1em;height:1em;color:var(--text)}
+.hero-request-note__count{font-weight:700}
+/* Scoped to this component only: border-color:transparent drops the
+   shared .email-spinner's track entirely, so in running text only the
+   moving arc shows, in the note's own (already-adaptive) text color. */
+.hero-request-note__count .email-spinner{margin-right:.15em;border-color:transparent;border-top-color:currentColor}
+.legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
+.legal-link:hover{color:var(--link)}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
+.signup-back-link:hover{color:var(--text)}
+.signup-back-link svg{flex-shrink:0}
 
-/* shared section title — same treatment as "Common Questions" on the root page */
-.section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
-
-/* second section — the booking calendar */
-.booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
-.booking-inner{width:100%;max-width:472px;margin:0 auto}
-
-/* third section — common questions */
-.common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
-/* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
-.common-questions__inner{max-width:640px;margin:0 auto}
-.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
-.faq-item__summary::-webkit-details-marker{display:none}
-/* quick answer — sits in the row next to the toggle, visible open or closed
-   (Buck Mason's label/value rows); the full answer still drops down below */
-.faq-item__question{flex:1 1 auto;min-width:0}
-.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:var(--muted);white-space:nowrap}
-.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
-.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
-.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
-.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
-.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
-.faq-item__body-inner{padding:0 .25rem 1.25rem}
-.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);margin:0}
-.faq-item__body-inner p+p{margin-top:.75rem}
+/* disclaimers — now live inside the footer, so they inherit its dark panel
+   background rather than needing one of their own. */
+.footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimer-grid{display:flex;flex-direction:column;gap:1.25rem}
+.disclaimers-title{font-size:.9375rem;font-weight:600;color:var(--muted)}
+.disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
+.disclaimer-heading{font-size:.875rem;font-weight:500;color:var(--muted)}
+.disclaimer-text{font-size:.8125rem;line-height:1.6;color:var(--muted)}
+.disclaimer-text .legal-link{font-size:.8125rem}
 
 /* footer */
-footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
+footer{background:#161616;padding:2.5rem 1.5rem;font-size:.8125rem;color:var(--muted)}
+footer{padding-left:1rem;padding-right:1rem}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
-.copyright{color:var(--muted)}
-.footer-row{display:flex;justify-content:center;align-items:center}
+.footer-disclaimer{font-size:.8125rem;line-height:1.6}
+.footer-disclaimer p+p{margin-top:.75rem}
+.footer-divider{border:none;border-bottom:1px solid var(--border)}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+footer a{color:var(--link);text-decoration:none}
 
-/* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split.
-   The banner sits above .container (so it stays full-width instead of getting
-   pulled into the row split below). .above-fold wraps just the banner and
-   .container as the full-height column, so the two add up to exactly one
-   viewport, with the FAQ starting below the fold. */
+/* legal (terms / privacy) popups */
+.legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .22s ease}
+.legal-overlay.active .legal-modal{transform:translateX(0)}
+/* header — same height, background and hairline as the status bar strip on meeting/ */
+.legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
+.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
+.legal-modal-body::-webkit-scrollbar{display:none}
+.legal-modal-body h2{font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.375rem;line-height:1.3}
+.legal-modal-body .legal-effective{font-size:.8125rem;color:#a8afba;margin-bottom:1.75rem}
+.legal-modal-body h3{font-size:.9375rem;font-weight:600;color:var(--text);margin:1.75rem 0 .625rem;padding-top:1.375rem;border-top:1px solid var(--card-border,#3d3d3d)}
+.legal-modal-body p{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.75rem}
+.legal-modal-body ul{margin:0 0 .875rem 1.125rem}
+.legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.25rem}
+.legal-modal-body a{color:var(--link);text-decoration:none}
+.legal-modal-body a:hover{color:var(--link)}
+.legal-modal-body strong{color:var(--text);font-weight:600}
+
+/* the popup is a full-height panel that slides in from the right on every
+   screen: full width on phones, a 480px panel on desktop */
 @media (min-width:900px){
-  .above-fold{display:flex;flex-direction:column;min-height:100vh}
-  .announcement{flex-shrink:0}
-  .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
+  .legal-modal{width:min(30rem,100%);border-left:1px solid var(--card-border,#3d3d3d)}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
+  /* hover stays black: a lighter black, and the chevron steps 3px right.
+     Instant, like every other hover on the page (no transition). */
+  .signup-submit:not(:disabled):hover{background:#333}
+  .signup-submit:not(:disabled):hover .btn-chevron{transform:translateX(3px)}
+}
+
+/* desktop — swap the stacked hero/form layout for a 50/50 side-by-side split.
+   The divider moves from a horizontal line (bottom of hero-grid, then bottom
+   of results-section) to a single vertical line between the two columns. */
+@media (min-width:900px){
+  .container{flex-direction:row;align-items:stretch;min-height:100vh}
   .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
-  .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
+  .results-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center;position:relative}
+  /* The hero/results divider flips from a horizontal rule to a vertical one
+     between the two columns — same element, just reoriented. */
   .section-divider--split{width:1px;height:auto;align-self:stretch}
+  /* Pin the progress line to the section's own top edge instead of letting it
+     ride along with the now vertically-centered blocks-grid — position:absolute
+     takes it out of the centered flex flow entirely. */
+  .progress-line{position:absolute;top:0;left:0;right:0;width:auto;margin:0}
+  /* Four disclaimer blocks read as one long full-width column on a wide
+     screen — a 2x2 grid keeps each paragraph's line length readable while
+     the block as a whole still spans the full footer width. Same gap value
+     as the stacked layout, just used for both row-gap and column-gap. */
+  .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
 /* light theme only — these overrides used to apply just for light-mode
    devices; they now always apply, on top of the dark defaults above. */
 :root{color-scheme:light only}
-:root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0;--card-border:#d5d5d5}
+:root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
 body{background:#f7f7f7}
 .container{background:#f7f7f7}
 footer{background:#eee}
-.booking-section{background:#eee}
-.common-questions{background:#eee}
-.hero-media{background:#eee}
+.results-section{background:#eee}
+.signup-unit-input{border-color:#d0d0d0}
+.bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
+.email-spinner{border-color:#d0d0d0;border-top-color:#111}
+.signup-label{color:#4a4a4a}
+.signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{background:#eee}
+.check-icon{color:#f7f7f7}
+.legal-modal{background:#f7f7f7;border-color:var(--card-border)}
+.legal-modal-close{color:var(--muted)}
+.legal-modal-close:hover{background:none;color:var(--text)}
+.legal-modal-body h2{color:var(--text)}
+.legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
+.legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
 </style>
 </head>
 <body>
 
 <main>
-  <div class="above-fold">
-  <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
-
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Watch This Video</h1>
-      <div class="hero-media">
-        <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
-        <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
-      </div>
-      <div class="save-contact">
-        <div class="contact-card">
-          <img class="contact-card__photo" src="/assets/asher-avatar.webp" width="40" height="40" alt="">
-          <div class="contact-card__info">
-            <p class="contact-card__name">Asher Robinson</p>
-            <p class="save-contact__number">(555) 555-0123</p>
-          </div>
-          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>Save Number</a>
-          <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
-        </div>
+      <h1 class="headline">Get Your Free Personalized 10% Body Fat Roadmap</h1>
+      <div class="hero-media-row">
+        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
       </div>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
 
-    <section class="booking-section">
-      <div class="booking-inner">
-        <h2 class="section-title">What Happens Next</h2>
-        <ol class="next-steps">
-          <li class="next-step"><span class="next-step__num">01</span><div><p class="next-step__title">Confirmation</p><p class="next-step__text">I may call, text, or email you to confirm your meeting.</p></div></li>
-          <li class="next-step"><span class="next-step__num">02</span><div><p class="next-step__title">Joining</p><p class="next-step__text">Use the Google Meet link in your email to join the meeting.</p></div></li>
-          <li class="next-step"><span class="next-step__num">03</span><div><p class="next-step__title">The meeting</p><p class="next-step__text">We get to know each other and see if you're a good fit for coaching.</p></div></li>
-        </ol>
-        <!-- iClosed widget begin -->
-        <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px"></div>
-        <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
-        <!-- iClosed widget end -->
+    <section class="results-section">
+      <div class="progress-line" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-line__fill" id="progress-fill"></div>
+      </div>
+
+      <div class="blocks-grid">
+
+        <div id="step-name">
+          <h2 class="signup-title" tabindex="-1">What's your name?</h2>
+          <form id="form-name" novalidate>
+            <div class="signup-field">
+              <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <label class="signup-label" for="su-first">First name</label>
+            </div>
+            <div class="signup-field">
+              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+              <label class="signup-label" for="su-last">Last name</label>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-name" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <ul class="value-bullets">
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
+            <li><span class="check-badge"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
+          </ul>
+        </div>
+
+        <div id="step-metrics" style="display:none">
+          <h2 class="signup-title" tabindex="-1">What's your height &amp; weight?</h2>
+          <form id="form-metrics" novalidate>
+            <div class="signup-unit-field">
+              <label class="field-label">Height</label>
+              <div class="signup-height-row">
+                <div class="signup-unit-input">
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" placeholder="0" required>
+                  <span class="signup-unit-input__suffix">feet</span>
+                </div>
+                <div class="signup-unit-input">
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" placeholder="0" required>
+                  <span class="signup-unit-input__suffix">inches</span>
+                </div>
+              </div>
+            </div>
+            <div class="signup-unit-field">
+              <label class="field-label">Weight</label>
+              <div class="signup-unit-input">
+                <input class="signup-unit-input__field" type="text" inputmode="decimal" id="su-weight" placeholder="0" required>
+                <span class="signup-unit-input__suffix">pounds</span>
+              </div>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-metrics" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <div id="step-bodyfat" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Estimate your body fat</h2>
+          <form id="form-bodyfat" novalidate>
+            <div class="signup-unit-field">
+            <div class="bf-grid" id="bf-grid" role="radiogroup" aria-label="Body fat percentage">
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="14-below">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-13-17.webp" alt="Example physique at 14 percent body fat or below"></span>
+                <span class="bf-option__label">14% or below</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="15-19">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-18-23.webp" alt="Example physique at 15 to 19 percent body fat"></span>
+                <span class="bf-option__label">15–19%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="20-24">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-24-29.webp" alt="Example physique at 20 to 24 percent body fat"></span>
+                <span class="bf-option__label">20–24%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="25-29">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-30-34.webp" alt="Example physique at 25 to 29 percent body fat"></span>
+                <span class="bf-option__label">25–29%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="30-39">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-35-39.webp" alt="Example physique at 30 to 39 percent body fat"></span>
+                <span class="bf-option__label">30–39%</span>
+              </button>
+              <button type="button" class="bf-option" role="radio" aria-checked="false" data-value="40+">
+                <span class="bf-option__img"><img src="/assets/bodyfat/bf-40plus.webp" alt="Example physique at 40 percent body fat or higher"></span>
+                <span class="bf-option__label">40%+</span>
+              </button>
+            </div>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-bodyfat" disabled>
+              Continue
+              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-metrics"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
+        <div id="step-email" style="display:none">
+          <h2 class="signup-title" tabindex="-1">Where should I send it?</h2>
+          <form id="form-email" novalidate>
+            <div class="signup-field">
+              <input class="signup-input" type="email" id="su-email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="su-email-status-text">
+              <label class="signup-label" for="su-email">Email address</label>
+              <span class="email-status" id="su-email-status" aria-hidden="true"></span>
+              <span class="sr-only" id="su-email-status-text" aria-live="polite"></span>
+            </div>
+            <button type="submit" class="signup-submit" id="btn-email" disabled>
+              Get Roadmap
+            </button>
+          </form>
+          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        </div>
+
       </div>
     </section>
   </div>
-  </div>
-
-  <div class="section-divider" aria-hidden="true"></div>
-
-  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
-    <div class="common-questions__inner">
-      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No</span><span class="faq-toggle" aria-hidden="true"></span></summary>
-          <div class="faq-item__body">
-            <div class="faq-item__body-inner">
-              <p>No. This call is to see if you're a good fit for coaching. I ask about your goal, your schedule, and your starting point. You ask me anything about the challenge. If we're a good fit, I walk you through next steps.</p>
-            </div>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guaranteed</span><span class="faq-toggle" aria-hidden="true"></span></summary>
-          <div class="faq-item__body">
-            <div class="faq-item__body-inner">
-              <p>I built this off my own result. I dropped from 171 pounds to 155 pounds in eight weeks. I coach you the same way I coached myself. Hit your 10-pound goal in 6 weeks, and you get your money back.</p>
-            </div>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
-          <div class="faq-item__body">
-            <div class="faq-item__body-inner">
-              <p>This costs $599. Lose your first 10 pounds in 6 weeks, and you get that money back. After the challenge, ongoing coaching costs $199 a month if you want to continue.</p>
-            </div>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Yes</span><span class="faq-toggle" aria-hidden="true"></span></summary>
-          <div class="faq-item__body">
-            <div class="faq-item__body-inner">
-              <p>Your starting point matters less than the numbers you bring. Log your food and your weight, and the plan fits around you from day one.</p>
-            </div>
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
 </main>
 
 <div class="section-divider" aria-hidden="true"></div>
 
 <footer>
   <div class="footer-inner">
+    <div class="footer-disclaimers">
+      <h2 class="disclaimers-title">Disclaimers</h2>
+      <div class="disclaimer-grid">
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Estimates, Not Medical Advice</h3>
+          <p class="disclaimer-text">The fat mass, FFMI, goal weight, and timeline estimates in your roadmap are for informational and educational purposes only. Body fat is estimated visually from the example image you select, not measured, and none of this is medical advice, a medical device, or a diagnosis.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Results &amp; Timelines Vary</h3>
+          <p class="disclaimer-text">The slower, standard, and faster paces in your roadmap are estimates based on the information you provide, not guarantees. Actual results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">Eligibility</h3>
+          <p class="disclaimer-text">This tool is intended for adults 18 years of age or older. Consult a qualified healthcare professional before starting any diet or exercise program. This is important if you have an existing medical condition.</p>
+        </div>
+
+        <div class="disclaimer-block">
+          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
+          <p class="disclaimer-text">Requesting your roadmap signs you up for my email newsletter from Asher Robinson LLC, including information about coaching. You can unsubscribe at any time. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-disclaimer">
+      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
+    </div>
+    <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
+        <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
+      </div>
     </div>
   </div>
 </footer>
 
-<div class="save-popup" id="save-popup" aria-hidden="true">
-  <div class="save-popup__card" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
-    <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-    <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
-    <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
-    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
-    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>Save Number</a>
-    <div class="save-popup__qr"></div>
-    <p class="save-popup__qr-caption">Scan with your phone camera to save my number</p>
+<div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2 id="terms-title">Terms of Service</h2>
+      <p class="legal-effective">Effective Date: October 10, 2026</p>
+      <h3>1. Agreement</h3>
+      <p>These Terms of Service ("Terms") govern your use of asherrobinsonfitness.com (the "Site"), the free 10% Body Fat Roadmap, consultation calls, and the coaching services offered by Asher Robinson LLC ("I," "me"). By using the Site, requesting a roadmap, booking a call, or purchasing coaching, you agree to these Terms. If you do not agree, do not use the Site or purchase coaching.</p>
+      <h3>2. The Free Roadmap</h3>
+      <p>The roadmap estimates your fat mass, fat-free mass index (FFMI), goal weight at 10% body fat, and a timeline at several weekly paces, based on the height, weight, and body fat range you enter. Body fat is estimated from the example image you select, not measured. The roadmap is for informational and educational purposes only and is not medical advice.</p>
+      <p>Requesting a roadmap signs you up for my email newsletter, which includes fitness tips and information about coaching. You can unsubscribe at any time using the link in any email.</p>
+      <h3>3. Consultation Calls</h3>
+      <p>Booking a consultation call is free and does not obligate you to purchase anything. Calls are scheduled through iClosed and held over Google Meet. By booking, you agree that I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to any text to opt out.</p>
+      <h3>4. The Coaching Service</h3>
+      <p>I provide online fat loss coaching for adults. Coaching includes a personalized training program, daily calorie and protein targets, weekly check-ins, and messaging access to your coach, delivered through a third-party coaching app designated at enrollment.</p>
+      <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
+      <h3>5. Eligibility</h3>
+      <p>You must be at least 18 years old to request a roadmap, book a call, or purchase coaching. By doing so, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
+      <h3>6. Pricing and Payment</h3>
+      <p>Coaching starts with the 6-Week Challenge:</p>
+      <ul>
+        <li><strong>6-Week Challenge:</strong> $599, paid in full after your consultation call</li>
+        <li><strong>Continued coaching:</strong> $199 per month, billed automatically on the same calendar date each month until you cancel, if you choose to continue after the challenge</li>
+      </ul>
+      <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
+      <h3>7. The 10-Pound Guarantee</h3>
+      <!-- INCOMPLETE (flagged 2026-10-10): the qualifying conditions (what the client must do during the challenge for the guarantee to apply), the deadline to claim, and confirmation that nothing is refunded if the 10 pounds are not lost have not been decided yet. Fill these in before relying on this section. -->
+      <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you choose one of the following:</p>
+      <ul>
+        <li><strong>Refund:</strong> a full refund of your $599 challenge payment, or</li>
+        <li><strong>6 more weeks free:</strong> keep coaching and apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month until you cancel.</li>
+      </ul>
+      <p>Your weight loss is measured from the weigh-ins you log during the challenge. I may ask for a photo of your scale to confirm your starting and ending weight. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
+      <h3>8. Cancellation</h3>
+      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. Except as described in Section 7, the $599 challenge payment is not refundable.</p>
+      <h3>9. No Medical Advice</h3>
+      <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
+      <h3>10. Intellectual Property</h3>
+      <p>All training programs, nutrition guidance, roadmaps, written content, and materials provided through the Site or the coaching service are the property of Asher Robinson LLC. You may not reproduce, distribute, sell, or share these materials with any third party without prior written consent.</p>
+      <h3>11. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, the roadmap, or the coaching service. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
+      <h3>12. Disclaimer of Warranties</h3>
+      <p>The Site, the roadmap, and the coaching service are provided "as is" and "as available" without warranty of any kind, express or implied. Except for the guarantee in Section 7, I do not guarantee specific results. Individual outcomes vary.</p>
+      <h3>13. Governing Law</h3>
+      <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
+      <h3>14. Changes to These Terms</h3>
+      <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the Site or the service after changes take effect constitutes acceptance of the revised Terms.</p>
+      <h3>15. Contact</h3>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2 id="privacy-title">Privacy Policy</h2>
+      <p class="legal-effective">Effective Date: October 10, 2026</p>
+      <h3>1. Overview</h3>
+      <p>Asher Robinson LLC ("I," "me") operates asherrobinsonfitness.com (the "Site"). This Privacy Policy explains what information I collect, how I use it, who I share it with, and your choices. By using this Site, you agree to the practices described here.</p>
+      <h3>2. Information I Collect</h3>
+      <p><strong>When you request a roadmap:</strong> your first and last name, email address, height, weight, and the body fat range you select. Your weight and body fat range are health-related information. I use them only to create your roadmap and to understand where you are starting from.</p>
+      <p><strong>When you book a call:</strong> your name, email address, phone number, and any answers you give on the booking form. The booking form is run by iClosed.</p>
+      <p><strong>When you become a client:</strong> payment details collected by Stripe (I never see your full card number), plus the information you share during coaching, such as weigh-ins, food logs, scale photos, and check-ins.</p>
+      <p><strong>Collected automatically:</strong> when you visit the Site, I and my service providers collect technical data such as your IP address, browser type, device type, pages visited, and time on page, using cookies, pixels, and similar technologies.</p>
+      <h3>3. How I Use Your Information</h3>
+      <ul>
+        <li>To create your roadmap and email it to you</li>
+        <li>To send my email newsletter, including information about coaching</li>
+        <li>To schedule, confirm, and remind you about consultation calls</li>
+        <li>To deliver coaching and process payments</li>
+        <li>To measure and improve my advertising</li>
+        <li>To analyze Site usage and improve the Site</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+      <h3>4. Emails and Text Messages</h3>
+      <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
+      <p>If you book a call, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
+      <h3>5. Advertising and Analytics</h3>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
+      <h3>6. Sharing of Information</h3>
+      <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
+      <ul>
+        <li><strong>Vercel:</strong> website hosting</li>
+        <li><strong>Supabase:</strong> database and file storage for roadmap requests</li>
+        <li><strong>PDFShift:</strong> creating your roadmap PDF</li>
+        <li><strong>Kit:</strong> email delivery and newsletter</li>
+        <li><strong>iClosed:</strong> call scheduling and appointment reminders</li>
+        <li><strong>Google:</strong> video calls through Google Meet</li>
+        <li><strong>Vidalytics:</strong> video hosting and playback</li>
+        <li><strong>Stripe, Inc.:</strong> payment processing</li>
+        <li><strong>PostHog:</strong> site analytics</li>
+        <li><strong>Meta Platforms, Inc.:</strong> advertising measurement and targeting</li>
+        <li><strong>Coaching app provider:</strong> delivery of your training and check-in program</li>
+      </ul>
+      <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
+      <h3>7. Cookies</h3>
+      <p>This Site uses cookies and similar technologies to function, to remember how you first arrived at the Site, to measure advertising, and for analytics. You can disable cookies in your browser settings, though doing so may affect Site functionality.</p>
+      <h3>8. Data Retention</h3>
+      <p>I keep roadmap requests and newsletter information until you ask me to delete them or unsubscribe. I keep coaching information for as long as your coaching relationship is active and for a reasonable period afterward for business and legal purposes. Payment records are kept as required by law and by my payment processor's policies.</p>
+      <h3>9. Your Rights</h3>
+      <p>Depending on where you live, you may have the right to access, correct, or delete the information I hold about you, and to opt out of the use of your information for targeted advertising. To make a request, contact me at the email below. I will respond within a reasonable timeframe.</p>
+      <h3>10. Children's Privacy</h3>
+      <p>This Site and its services are intended for adults 18 years of age and older. I do not knowingly collect personal information from individuals under 18. If you believe I have collected information from a minor, contact me immediately.</p>
+      <h3>11. Third-Party Links</h3>
+      <p>This Site may contain links to third-party websites. I am not responsible for the privacy practices of those sites and encourage you to review their respective privacy policies.</p>
+      <h3>12. Changes to This Policy</h3>
+      <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      <h3>13. Contact</h3>
+      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+    </div>
   </div>
 </div>
 
 <script>
-// Save Number: one link target per device, plus the pop-up.
+var legalReturnFocus=null;
+function openLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  legalReturnFocus=document.activeElement;
+  l.classList.add("active"),document.body.style.overflow="hidden";
+  var o=l.querySelector(".legal-modal-body");
+  o&&(o.scrollTop=0);
+  var close=l.querySelector(".legal-modal-close");
+  close&&close.focus();
+}
+function closeLegal(e){
+  var l=document.getElementById("modal-"+e);
+  if(!l) return;
+  l.classList.remove("active"),document.body.style.overflow="";
+  legalReturnFocus&&legalReturnFocus.focus();
+  legalReturnFocus=null;
+}
+document.querySelectorAll(".legal-overlay").forEach(function(e){e.addEventListener("click",function(l){l.target===e&&closeLegal(e.id.replace("modal-",""))})});
+document.addEventListener("keydown",function(e){"Escape"===e.key&&document.querySelectorAll(".legal-overlay.active").forEach(function(e){closeLegal(e.id.replace("modal-",""))})});
+</script>
+
+<script>
+// Design-only 4-step wizard: enables each step's button once its fields look valid,
+// steps forward/back between panels, and animates the nav dots. No tracking, no
+// server calls, no navigation — this page doesn't submit anywhere.
 (function(){
-  var row=document.querySelector(".save-contact"),
-      btn=document.querySelector(".save-contact__btn"),
-      num=document.querySelector(".save-contact__number"),
-      qr=document.querySelector(".save-contact__qr"),
-      pop=document.getElementById("save-popup");
-  if(!row||!btn||!num||!pop) return;
-  var popBtn=pop.querySelector(".save-popup__btn"),
-      closeBtn=pop.querySelector(".save-popup__close");
+  var steps=["name","metrics","bodyfat","email"],
+      current=0;
 
-  // iPhone opens the .vcf straight into "Create New Contact". Android would
-  // download it as a file instead, so there the button opens the dialer with
-  // the number typed in (it doesn't call), where "Create new contact" is one
-  // tap away. The number is read from the visible text, which
-  // set-contact-number.py keeps current.
-  var digits=num.textContent.replace(/\D/g,"");
-  if(digits.length===10) digits="1"+digits;
-  if(/Android/i.test(navigator.userAgent)){
-    btn.setAttribute("href","tel:+"+digits);
-    popBtn.setAttribute("href","tel:+"+digits);
-  }
-  pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
-  if(qr) pop.querySelector(".save-popup__qr").innerHTML=qr.innerHTML;
+  var stepEls={name:document.getElementById("step-name"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat"),email:document.getElementById("step-email")};
+  var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
-  // at most once per visit, and never after they've tapped Save Number
-  var KEY="savePopupDone";
-  function isDone(){try{return !!sessionStorage.getItem(KEY)}catch(e){return false}}
-  function markDone(){try{sessionStorage.setItem(KEY,"1")}catch(e){}}
+  // 0% on step 1 (invisible) through 100% on the last step (full width).
+  function updateNav(){
+    var pct=current/(steps.length-1)*100;
+    progressFill.style.width=pct+"%";
+    progressBar.setAttribute("aria-valuenow",Math.round(pct));
+  }
+  function goToStep(i){
+    stepEls[steps[current]].style.display="none";
+    current=i;
+    stepEls[steps[current]].style.display="";
+    updateNav();
+    // Move focus to the new step's heading (not its first input) on every viewport,
+    // not just desktop — this announces the new content to screen readers and puts
+    // keyboard focus somewhere sane, without popping the mobile keyboard unprompted.
+    var heading=stepEls[steps[current]].querySelector(".signup-title");
+    if(heading) heading.focus();
+  }
 
-  var lastFocus=null;
-  function onKey(e){
-    if(e.key==="Escape"){close();return}
-    if(e.key!=="Tab") return;
-    // keep Tab inside the pop-up
-    var f=[].filter.call(pop.querySelectorAll("button,a[href]"),function(el){return el.offsetParent!==null});
-    if(!f.length) return;
-    var first=f[0],last=f[f.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
-    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
-  }
-  function open(){
-    if(isDone()) return;
-    markDone();
-    lastFocus=document.activeElement;
-    pop.classList.add("active");
-    pop.removeAttribute("aria-hidden");
-    document.body.style.overflow="hidden";
-    document.addEventListener("keydown",onKey);
-    closeBtn.focus({preventScroll:true});
-  }
-  function close(){
-    if(!pop.classList.contains("active")) return;
-    pop.classList.remove("active");
-    pop.setAttribute("aria-hidden","true");
-    document.body.style.overflow="";
-    document.removeEventListener("keydown",onKey);
-    if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
-  }
-  btn.addEventListener("click",markDone);
-  popBtn.addEventListener("click",close);
-  closeBtn.addEventListener("click",close);
-  pop.addEventListener("click",function(e){if(e.target===pop) close()});
+  // Step 1 — name
+  var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
+  function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
+  [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
+  // Fired once, the first time the visitor clears step 1 — this is the
+  // "started the quiz" funnel event, not "typed in the name field".
+  var formStartedFired=!1;
+  document.getElementById("form-name").addEventListener("submit",function(e){ e.preventDefault(); if(!btnName.disabled){ if(!formStartedFired){ formStartedFired=!0; posthog.capture("roadmap_form_started"); } goToStep(1); } });
 
-  // open once the save row has scrolled off the top of the screen: they've
-  // seen the video and the row and kept going without saving
-  if(!("IntersectionObserver" in window)) return;
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(!en.isIntersecting&&en.boundingClientRect.bottom<=0){
-        io.disconnect();
-        open();
-      }
+  // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
+  var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
+      weight=document.getElementById("su-weight"),btnMetrics=document.getElementById("btn-metrics");
+  var ranges={ft:[3,8],inches:[0,12],lbs:[80,350]};
+  function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
+  function clampField(el,range){
+    var n=parseFloat(el.value);
+    if(isNaN(n)) return;
+    if(n<range[0]) el.value=range[0];
+    else if(n>range[1]) el.value=range[1];
+  }
+  function validateMetrics(){
+    btnMetrics.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
+  }
+  heightFt.addEventListener("input",validateMetrics);
+  heightFt.addEventListener("blur",function(){ clampField(heightFt,ranges.ft); validateMetrics(); });
+  heightIn.addEventListener("input",validateMetrics);
+  heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateMetrics(); });
+  weight.addEventListener("input",validateMetrics);
+  weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateMetrics(); });
+  document.getElementById("form-metrics").addEventListener("submit",function(e){ e.preventDefault(); if(!btnMetrics.disabled) goToStep(2); });
+  document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
+
+  // Step 3 — body fat (single-select image grid)
+  var bfOptions=document.querySelectorAll(".bf-option"),bfValue=null,btnBodyfat=document.getElementById("btn-bodyfat");
+  function validateBodyfat(){ btnBodyfat.disabled=!bfValue; }
+  bfOptions.forEach(function(btn){
+    btn.addEventListener("click",function(){
+      bfOptions.forEach(function(b){ b.setAttribute("aria-checked","false"); });
+      btn.setAttribute("aria-checked","true");
+      bfValue=btn.dataset.value;
+      validateBodyfat();
     });
   });
-  io.observe(row);
+  document.getElementById("form-bodyfat").addEventListener("submit",function(e){ e.preventDefault(); if(!btnBodyfat.disabled) goToStep(3); });
+  document.getElementById("back-to-metrics").addEventListener("click",function(){ goToStep(1); });
+
+  // Step 4 — email (checkbox opt-in is required too), with the same live
+  // server-side verification (spinner while checking, then check/x) as the
+  // signup modal on index.html. This is the final step, so submitting sends
+  // the visitor on to the results page.
+  var email=document.getElementById("su-email"),btnEmail=document.getElementById("btn-email"),
+      es=document.getElementById("su-email-status"),esText=document.getElementById("su-email-status-text"),emTimer=null,emReqId=0,emVerified=!1;
+  function validateEmail(){
+    var v=email.value.trim();
+    btnEmail.disabled=!(email.validity.valid&&v&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&emVerified);
+  }
+  function setEmailStatus(st){
+    emVerified="valid"===st;
+    es.classList.remove("is-valid","is-invalid");
+    if("checking"===st){ es.innerHTML='<span class="email-spinner"></span>'; esText.textContent="Checking email address…"; email.removeAttribute("aria-invalid"); }
+    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Valid email address"; email.setAttribute("aria-invalid","false"); }
+    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address looks incorrect"; email.setAttribute("aria-invalid","true"); }
+    else { es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
+    validateEmail();
+  }
+  function checkEmailServer(){
+    var em=email.value.trim();
+    if(!email.validity.valid||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return void setEmailStatus("");
+    var reqId=++emReqId;
+    setEmailStatus("checking");
+    fetch("/api/verify-email?email="+encodeURIComponent(em)).then(function(r){ return r.json(); }).then(function(r){ reqId===emReqId&&setEmailStatus(r.valid?"valid":"invalid"); }).catch(function(){ reqId===emReqId&&setEmailStatus(""); });
+  }
+  email.addEventListener("input",function(){ setEmailStatus(""); clearTimeout(emTimer); emTimer=setTimeout(checkEmailServer,500); });
+  document.getElementById("form-email").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(btnEmail.disabled) return;
+    var name=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
+    if(name) qs.push("name="+encodeURIComponent(name));
+    if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    if(bfValue) qs.push("bf="+encodeURIComponent(bfValue));
+    // Final-step lead capture — PostHog funnel event plus the deduped Meta
+    // Lead (pixel + CAPI). No "gap" property here: this page never computes
+    // a goal weight / distance-from-goal, only the raw bodyfat bracket.
+    posthog.capture("roadmap_lead_captured",{bodyfat_range:bfValue});
+    var leadEventId=__fbEventId();
+    fbq("track","Lead",{content_name:"roadmap"},{eventID:leadEventId});
+    __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
+    // Record the completed request in Supabase — this is what the "Requested by
+    // X men" bullet counts. keepalive lets the request finish even though we
+    // navigate away immediately after firing it.
+    fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
+      method:"POST",
+      keepalive:!0,
+      headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00",Prefer:"return=minimal"},
+      body:JSON.stringify({
+        first_name:first.value.trim(),
+        last_name:last.value.trim(),
+        email:emailVal,
+        height_ft:parseFloat(heightFt.value)||null,
+        height_in:parseFloat(heightIn.value)||null,
+        weight_lbs:parseFloat(weight.value)||null,
+        bodyfat_range:bfValue
+      })
+    }).catch(function(){});
+    window.location.href="/meeting/"+(qs.length?"?"+qs.join("&"):"");
+  });
+  document.getElementById("back-to-bodyfat").addEventListener("click",function(){ goToStep(2); });
+
+  updateNav();
 })();
 </script>
 
-<script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
+<script>
+// Live social-proof note under the headline — filled in from a rolling
+// 7-day count on the roadmap_leads table via the roadmap_leads_count_week
+// Supabase RPC (same project as the rest of this page, just scoped to
+// created_at >= now() - interval '7 days' — see
+// roadmap-leads-count-week-rpc.sql), instead of the all-time
+// roadmap_leads_count. The note itself never hides/loads in — it, the
+// icon, and "men requested"/"in past week" are static markup, on screen
+// from first paint. Only the number itself (see its inline .email-spinner,
+// same one used for "Checking email address…") is a loading state,
+// standing in until the real count arrives. There's no 100+ floor either:
+// it reveals whatever real number comes back, down to a single digit.
+// Only a failed fetch hides the whole note, since there's nothing real
+// left to put in its place.
+// MIN_SPINNER_MS holds the spinner up for a floor of 500ms (matching the
+// email check's own debounce elsewhere on this page) so a fast RPC
+// response doesn't just flash the spinner instead of reading as a real
+// loading state.
+(function(){
+  var note=document.getElementById("hero-request-note"),
+      valueEl=document.getElementById("request-count-value"),
+      MIN_SPINNER_MS=500,
+      startedAt=Date.now();
+
+  if(!note||!valueEl) return;
+
+  function afterMinSpin(fn){
+    var wait=MIN_SPINNER_MS-(Date.now()-startedAt);
+    wait>0 ? setTimeout(fn,wait) : fn();
+  }
+
+  fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/rpc/roadmap_leads_count_week",{
+    method:"POST",
+    headers:{"Content-Type":"application/json",apikey:"sb_publishable_K6FmXWt7GSBgQbP4e7qPhA_zWY0pG00"},
+    body:"{}"
+  }).then(function(r){ if(!r.ok) throw new Error("bad response"); return r.json(); })
+    .then(function(n){
+      n=Number(n);
+      if(!isFinite(n)||n<0) throw new Error("bad count");
+      afterMinSpin(function(){ valueEl.textContent=n.toLocaleString(); }); // number only — "men requested" is already static markup
+    })
+    .catch(function(){ afterMinSpin(function(){ note.style.display="none"; }); }); // nothing real to show — hide rather than spin forever
+})();
+</script>
 
 </body>
 </html>
