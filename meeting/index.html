@@ -5,32 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Book Your Free Consultation</title>
 <meta name="robots" content="noindex,nofollow">
-<script>
-// Name and email from the roadmap/ redirect (fname, lname, email). Only
-// roadmap/ sends these, so window.__arfLead is set only for roadmap
-// visitors: the announcement bar shows only then, and the iClosed
-// scheduler is prefilled from it.
-(function(){
-  var params;
-  try{params=new URLSearchParams(location.search)}catch(e){return}
-  if(!params.has("fname")&&!params.has("lname")&&!params.has("email")) return;
-  var letters;
-  try{letters=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){letters=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
-  function get(k){return (params.get(k)||"").trim()}
-  function cleanFirst(v){
-    if(!v||v.length>30||!letters.test(v)) return "";
-    // "mike" or "MIKE" reads as "Mike"; anything mixed is left as typed
-    if(v===v.toLowerCase()||v===v.toUpperCase()) v=v.charAt(0).toUpperCase()+v.slice(1).toLowerCase();
-    return v;
-  }
-  function cleanLast(v){return v&&v.length<=50&&v.split(/\s+/).every(function(p){return letters.test(p)})?v:""}
-  function cleanEmail(v){return v&&v.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?v:""}
-
-  var lead={first:cleanFirst(get("fname")),last:cleanLast(get("lname")),email:cleanEmail(get("email"))};
-  if(!lead.first) lead.last="";
-  window.__arfLead=lead;
-})();
-</script>
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
 <link rel="shortcut icon" href="/assets/favicon.jpg">
@@ -214,7 +188,21 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your roadmap is on its way</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button></div>
-  <script>(function(){var l=window.__arfLead,b=document.querySelector(".announcement");if(!l){b.remove();return}if(l.first) b.querySelector(".announcement__text").textContent=l.first+", your roadmap is on its way"})();</script>
+  <script>
+  // Only roadmap/ sends iclosedName/iclosedEmail, so the bar shows only for
+  // roadmap visitors. First name from iclosedName, checked before use.
+  // iClosed's widget below reads the same params to prefill the scheduler.
+  (function(){
+    var p=new URLSearchParams(location.search),b=document.querySelector(".announcement");
+    if(!p.has("iclosedName")&&!p.has("iclosedEmail")){b.remove();return}
+    var ok;try{ok=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){ok=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
+    var f=(p.get("iclosedName")||"").trim().split(/\s+/)[0];
+    if(!f||f.length>30||!ok.test(f)) return;
+    // "mike" or "MIKE" reads as "Mike"; anything mixed is left as typed
+    if(f===f.toLowerCase()||f===f.toUpperCase()) f=f.charAt(0).toUpperCase()+f.slice(1).toLowerCase();
+    b.querySelector(".announcement__text").textContent=f+", your roadmap is on its way";
+  })();
+  </script>
   <div class="status-bar">1-on-1 Online Fat Loss Coaching for Men</div>
   <div class="section-divider" aria-hidden="true"></div>
 
@@ -236,22 +224,6 @@ footer{background:#eee}
         <div class="iclosed-scroll">
           <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
         </div>
-        <script>
-        // Prefill the iClosed scheduler from the values the head script read
-        // (window.__arfLead), per https://intercom.help/iclosed/en/articles/9830929.
-        // They go on the widget's own data-url, appended before widget.js
-        // reads it, so this must run first.
-        (function(){
-          var lead=window.__arfLead||{};
-          var name=((lead.first||"")+" "+(lead.last||"")).trim(),email=lead.email||"";
-          var widget=document.querySelector(".iclosed-widget");
-          if(!widget) return;
-          var qs=[];
-          if(email) qs.push("iclosedEmail="+encodeURIComponent(email));
-          if(name) qs.push("iclosedName="+encodeURIComponent(name));
-          if(qs.length) widget.setAttribute("data-url",widget.getAttribute("data-url")+"?"+qs.join("&"));
-        })();
-        </script>
         <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
         <!-- iClosed inline widget end -->
       </div>
