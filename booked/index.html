@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Call Confirmed</title>
+<title>Meeting Confirmed</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
@@ -44,6 +44,7 @@ strong{font-weight:600}
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0;text-wrap:balance}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 /* save contact — a quiet attachment-style row under the video (photo, name,
    number, small pill button), deliberately lighter than the video. The pill's
@@ -64,18 +65,19 @@ strong{font-weight:600}
 .save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
 .save-contact__qr svg{display:block;width:100%;height:auto}
 @media (hover:hover) and (pointer:fine){
-  .save-contact__btn{display:none}
-  .save-contact__qr{display:block}
+  .save-contact{display:none}
 }
 
-/* save-number pop-up — opens once per visit, when the save row scrolls off
-   the top of the screen without having been tapped. Same dim + blur and
+/* save-number pop-up — opens once per visit: on phones when the save row
+   scrolls off the top of the screen without having been tapped, on desktop
+   (no row there) 5 seconds after load. The 472px cap matches the contact row,
+   so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
    fade as meeting/'s Terms popup; 8px card like the row, 4px button like the
    rest of the page; the banner's X. Desktop shows the QR instead of the
    button. */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.save-popup__card{position:relative;width:100%;max-width:358px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
+.save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
 .save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
 .save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
@@ -86,7 +88,7 @@ strong{font-weight:600}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
 .save-popup__btn svg{flex-shrink:0}
 .save-popup__qr,.save-popup__qr-caption{display:none}
-.save-popup__qr{width:132px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
+.save-popup__qr{width:180px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
 .save-popup__qr svg{display:block;width:100%;height:auto}
 .save-popup__qr-caption{margin-top:.5rem;font-size:.8125rem;color:var(--muted)}
 @media (hover:hover) and (pointer:fine){
@@ -169,10 +171,22 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <script>
+  // first name saved by meeting/ in this tab (sessionStorage "arfLead");
+  // re-checked here since storage is editable. Fallback: the line above.
+  (function(){
+    try{
+      var l=JSON.parse(sessionStorage.getItem("arfLead")||"null"),f=l&&l.first;
+      var ok;try{ok=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){ok=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
+      if(typeof f==="string"&&f.length<=30&&ok.test(f)) document.querySelector(".announcement__text").textContent=f+", your meeting is scheduled";
+    }catch(e){}
+  })();
+  </script>
 
   <div class="container">
     <div class="hero-grid">
-      <h1 class="headline">Watch This Video</h1>
+      <h1 class="headline">Watch This Before Our Meeting</h1>
+      <div class="subheadline">It answers what most guys ask before they start.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -216,18 +230,18 @@ footer{background:#eee}
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No pressure</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>No. This call is to see if you're a good fit for coaching. I ask about your goal, your schedule, and your starting point. You ask me anything about the challenge. If we're a good fit, I walk you through next steps.</p>
+              <p>I ask about your goal, your schedule, and where you start. You ask me anything. If it's a fit, I show you how to start. If not, I tell you.</p>
             </div>
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guaranteed</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guarantee</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>I built this off my own result. I dropped from 171 pounds to 155 pounds in eight weeks. I coach you the same way I coached myself. Hit your 10-pound goal in 6 weeks, and you get your money back.</p>
+              <p>I went from 171 to 155 pounds in 8 weeks. I build the same plan around your numbers. Hit 10 pounds in 6 weeks, and you get your $599 back. Follow the plan and miss it, and I coach you free until you hit it, up to 6 more weeks.</p>
             </div>
           </div>
         </details>
@@ -235,7 +249,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>This costs $599. Lose your first 10 pounds in 6 weeks, and you get that money back. After the challenge, ongoing coaching costs $199 a month if you want to continue.</p>
+              <p>$599 for the 6-Week Challenge. Hit 10 pounds in 6 weeks, and you pick: your $599 back, or 6 more weeks free. After that, coaching is $199 a month if you want to keep going. Cancel anytime.</p>
             </div>
           </div>
         </details>
@@ -243,7 +257,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Yes</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>Your starting point matters less than the numbers you bring. Log your food and your weight, and the plan fits around you from day one.</p>
+              <p>Yes. Your roadmap shows where you start. I build your calorie and protein targets from your numbers, so the plan fits you from day one.</p>
             </div>
           </div>
         </details>
@@ -339,8 +353,14 @@ footer{background:#eee}
   closeBtn.addEventListener("click",close);
   pop.addEventListener("click",function(e){if(e.target===pop) close()});
 
-  // open once the save row has scrolled off the top of the screen: they've
-  // seen the video and the row and kept going without saving
+  // desktop: the row is hidden there, so open after 5 seconds instead
+  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
+    setTimeout(open,5000);
+    return;
+  }
+
+  // phones: open once the save row has scrolled off the top of the screen:
+  // they've seen the video and the row and kept going without saving
   if(!("IntersectionObserver" in window)) return;
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(en){
