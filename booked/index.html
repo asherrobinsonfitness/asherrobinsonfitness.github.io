@@ -172,14 +172,21 @@ footer{background:#eee}
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
   <script>
-  // first name saved by meeting/ in this tab (sessionStorage "arfLead");
-  // re-checked here since storage is editable. Fallback: the line above.
+  // First name from iClosed's redirect param invitee_full_name (the name
+  // they just booked with), checked before use. Fallback: the line above.
+  // The URL is left as-is: the meeting details widget below builds itself
+  // from these params.
   (function(){
-    try{
-      var l=JSON.parse(sessionStorage.getItem("arfLead")||"null"),f=l&&l.first;
-      var ok;try{ok=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){ok=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
-      if(typeof f==="string"&&f.length<=30&&ok.test(f)) document.querySelector(".announcement__text").textContent=f+", your meeting is scheduled";
-    }catch(e){}
+    var ok;try{ok=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){ok=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
+    function clean(v){
+      v=typeof v==="string"?v.trim():"";
+      if(!v||v.length>30||!ok.test(v)) return "";
+      if(v===v.toLowerCase()||v===v.toUpperCase()) v=v.charAt(0).toUpperCase()+v.slice(1).toLowerCase();
+      return v;
+    }
+    var f="";
+    try{f=clean((new URLSearchParams(location.search).get("invitee_full_name")||"").trim().split(/\s+/)[0])}catch(e){}
+    if(f) document.querySelector(".announcement__text").textContent=f+", your meeting is scheduled";
   })();
   </script>
 
