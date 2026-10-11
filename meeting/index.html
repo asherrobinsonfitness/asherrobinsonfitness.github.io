@@ -72,7 +72,8 @@ strong{font-weight:600}
 
 /* third section — common questions */
 .common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
-.common-questions__inner{max-width:472px;margin:0 auto}
+/* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
+.common-questions__inner{max-width:640px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
 .faq-item{border-bottom:1px solid var(--border)}
 .faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
@@ -151,6 +152,15 @@ footer a{color:var(--link);text-decoration:none}
   .container{flex:1 1 auto;flex-direction:row;align-items:stretch}
   .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
+  /* cap the iClosed form at the height the column has. iClosed sets the
+     widget's own height to its content (it grows once name/email are in),
+     so the cap goes on a wrapper that scrolls instead. .booking-inner is
+     taken out of flow, so the form never makes the row taller: the row is
+     sized by the hero and the screen, and the cap follows it (dismissing
+     the announcement makes it taller). Phones keep the full-height form. */
+  .booking-section{position:relative}
+  .booking-inner{position:absolute;top:var(--pad-sm);bottom:var(--pad-sm);left:2.5rem;right:2.5rem;width:auto;display:flex;flex-direction:column;justify-content:center}
+  .iclosed-scroll{max-height:100%;overflow-y:auto;overscroll-behavior:contain}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
@@ -196,7 +206,9 @@ footer{background:#eee}
     <section class="booking-section">
       <div class="booking-inner">
         <!-- iClosed inline widget begin -->
-        <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
+        <div class="iclosed-scroll">
+          <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
+        </div>
         <script>
         // Prefill the iClosed scheduler from this page's own ?name=/?email=/?phone=
         // query params (e.g. a visitor arriving from another opt-in step), per
