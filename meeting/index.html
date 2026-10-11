@@ -5,6 +5,52 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Book Your Free Consultation</title>
 <meta name="robots" content="noindex,nofollow">
+<script>
+// Personal params from roadmap/ (fname, lname, email): read them once, keep
+// them in memory (window.__arfLead) and sessionStorage (booked/ reads the
+// first name from there), then strip them from the address bar before any
+// third-party script runs. iClosed's widget.js copies every page param, plus
+// the full page URL as referrerUrl, into its booking iframe, and Vidalytics
+// can read the URL too. utm_* and fbclid stay. Must stay above every other
+// script on this page.
+(function(){
+  var KEY="arfLead",PERSONAL=["name","fname","lname","email","phone","bf","goal","fat","mo"];
+  var params;
+  try{params=new URLSearchParams(location.search)}catch(e){return}
+  var letters;
+  try{letters=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){letters=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
+  function get(k){return (params.get(k)||"").trim()}
+  function cleanFirst(v){
+    if(!v||v.length>30||!letters.test(v)) return "";
+    // "mike" or "MIKE" reads as "Mike"; anything mixed is left as typed
+    if(v===v.toLowerCase()||v===v.toUpperCase()) v=v.charAt(0).toUpperCase()+v.slice(1).toLowerCase();
+    return v;
+  }
+  function cleanLast(v){return v&&v.length<=50&&v.split(/\s+/).every(function(p){return letters.test(p)})?v:""}
+  function cleanEmail(v){return v&&v.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?v:""}
+
+  var first=get("fname"),last=get("lname");
+  // older links sent one full "name"
+  if(!first&&get("name")){var parts=get("name").split(/\s+/);first=parts.shift();last=last||parts.join(" ")}
+  var lead={first:cleanFirst(first),last:cleanLast(last),email:cleanEmail(get("email"))};
+  if(!lead.first) lead.last="";
+
+  var hadPersonal=PERSONAL.some(function(k){return params.has(k)});
+  if(hadPersonal){
+    try{sessionStorage.setItem(KEY,JSON.stringify(lead))}catch(e){}
+  }else{
+    // a reload after the strip below: fall back to what this tab saved
+    try{var saved=JSON.parse(sessionStorage.getItem(KEY)||"null");if(saved) lead={first:cleanFirst(saved.first||""),last:cleanLast(saved.last||""),email:cleanEmail(saved.email||"")}}catch(e){}
+  }
+  window.__arfLead=lead;
+
+  if(hadPersonal){
+    PERSONAL.forEach(function(k){params.delete(k)});
+    var qs=params.toString();
+    try{history.replaceState(history.state,"",location.pathname+(qs?"?"+qs:"")+location.hash)}catch(e){}
+  }
+})();
+</script>
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
 <link rel="shortcut icon" href="/assets/favicon.jpg">
@@ -188,13 +234,14 @@ footer{background:#eee}
 <main>
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your roadmap is on its way</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <script>(function(){var l=window.__arfLead;if(l&&l.first) document.querySelector(".announcement__text").textContent=l.first+", your roadmap is on its way"})();</script>
   <div class="status-bar">1-on-1 Online Fat Loss Coaching for Men</div>
   <div class="section-divider" aria-hidden="true"></div>
 
   <div class="container">
     <div class="hero-grid">
       <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks. Guaranteed.</h1>
-      <div class="subheadline">Reach your goal, and get your money back or 6 more weeks of coaching free.</div>
+      <div class="subheadline">Hit it, and get your money back. Miss it, and I coach you for free until you do.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -210,17 +257,17 @@ footer{background:#eee}
           <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
         </div>
         <script>
-        // Prefill the iClosed scheduler from this page's own ?name=/?email=/?phone=
-        // query params (e.g. a visitor arriving from another opt-in step), per
-        // https://intercom.help/iclosed/en/articles/9830929 — appended to the
-        // widget's data-url before widget.js reads it, so this must run first.
+        // Prefill the iClosed scheduler from the values the head script saved
+        // (window.__arfLead), per https://intercom.help/iclosed/en/articles/9830929.
+        // They go on the widget's own data-url, so prefill doesn't depend on
+        // the page URL, which is already stripped by now. Appended before
+        // widget.js reads data-url, so this must run first.
         (function(){
-          var params=new URLSearchParams(window.location.search);
-          var name=(params.get("name")||"").trim(),email=(params.get("email")||"").trim(),phone=(params.get("phone")||"").trim();
+          var lead=window.__arfLead||{};
+          var name=((lead.first||"")+" "+(lead.last||"")).trim(),email=lead.email||"";
           var widget=document.querySelector(".iclosed-widget");
           if(!widget) return;
           var qs=[];
-          if(phone) qs.push("iclosedPhone="+encodeURIComponent(phone));
           if(email) qs.push("iclosedEmail="+encodeURIComponent(email));
           if(name) qs.push("iclosedName="+encodeURIComponent(name));
           if(qs.length) widget.setAttribute("data-url",widget.getAttribute("data-url")+"?"+qs.join("&"));
@@ -240,10 +287,10 @@ footer{background:#eee}
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guaranteed</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guarantee</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>I built this off my own result. I dropped from 171 pounds to 155 pounds in eight weeks. I coach you the same way I coached myself. Hit your 10-pound goal in 6 weeks, and you get your money back.</p>
+              <p>I went from 171 to 155 pounds in 8 weeks. I build the same plan around your numbers. Hit 10 pounds in 6 weeks, and you get your $599 back. Follow the plan and miss it, and I coach you free until you hit it, up to 6 more weeks.</p>
             </div>
           </div>
         </details>
@@ -251,7 +298,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">Is this for beginners?</span><span class="faq-item__short">Yes</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>Yes. Beginners get a plan built around their life. People who tried other plans get real check-ins this time. You weigh in every day. You log your food every day. You train three to four times a week. If your last plan worked, you would use it now.</p>
+              <p>Yes. You don't need to know how to diet or train. I build the plan around your life and show you each step.</p>
             </div>
           </div>
         </details>
@@ -259,7 +306,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>This costs $599. Lose your first 10 pounds in 6 weeks, and you get that money back. After the challenge, ongoing coaching costs $199 a month if you want to continue.</p>
+              <p>$599 for the 6-Week Challenge. Hit 10 pounds in 6 weeks, and you pick: your $599 back, or 6 more weeks free. After that, coaching is $199 a month if you want to keep going. Cancel anytime.</p>
             </div>
           </div>
         </details>
@@ -267,7 +314,15 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">How much time does this take?</span><span class="faq-item__short">~4 hrs/wk</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>Training takes three to four sessions a week, 45 to 60 minutes each. Logging your food and weight takes a few minutes a day. Your weekly check-in takes under 30 minutes.</p>
+              <p>3 to 4 workouts a week, 45 to 60 minutes each. A few minutes a day to log food and weight. Under 30 minutes for your weekly check-in.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span class="faq-item__question">What if I don't lose 10 pounds?</span><span class="faq-item__short">Free coaching</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>Follow the plan for 6 weeks and miss it, and I coach you free until you hit 10 pounds, up to 6 more weeks. Following the plan means you hit your calorie and protein targets, weigh in at least 5 days a week, and finish every workout. Send me a scale photo on day 1 and at the end. The $599 refund covers the first 6 weeks.</p>
             </div>
           </div>
         </details>
@@ -326,7 +381,7 @@ footer{background:#eee}
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
-      <p class="legal-effective">Effective Date: October 10, 2026</p>
+      <p class="legal-effective">Effective Date: October 11, 2026</p>
       <h3>1. Agreement</h3>
       <p>These Terms of Service ("Terms") govern your use of asherrobinsonfitness.com (the "Site"), the free 10% Body Fat Roadmap, consultation calls, and the coaching services offered by Asher Robinson LLC ("I," "me"). By using the Site, requesting a roadmap, booking a call, or purchasing coaching, you agree to these Terms. If you do not agree, do not use the Site or purchase coaching.</p>
       <h3>2. The Free Roadmap</h3>
@@ -347,15 +402,23 @@ footer{background:#eee}
       </ul>
       <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
       <h3>7. The 10-Pound Guarantee</h3>
-      <!-- INCOMPLETE (flagged 2026-10-10): the qualifying conditions (what the client must do during the challenge for the guarantee to apply), the deadline to claim, and confirmation that nothing is refunded if the 10 pounds are not lost have not been decided yet. Fill these in before relying on this section. -->
+      <!-- OPEN (flagged 2026-10-11): the deadline to claim the refund or the free coaching has not been decided yet. -->
       <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you choose one of the following:</p>
       <ul>
         <li><strong>Refund:</strong> a full refund of your $599 challenge payment, or</li>
         <li><strong>6 more weeks free:</strong> keep coaching and apply your $599 toward continued coaching, which covers 6 more weeks (12 weeks in total). After that, coaching continues at $199 per month until you cancel.</li>
       </ul>
-      <p>Your weight loss is measured from the weigh-ins you log during the challenge. I may ask for a photo of your scale to confirm your starting and ending weight. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
+      <p>If you follow the plan for all 6 weeks and lose less than 10 pounds, I coach you for free until you lose 10 pounds, for up to 6 more weeks. After free coaching ends, coaching continues at $199 per month until you cancel.</p>
+      <p>"Follow the plan" means that, as shown in your coaching app logs, you:</p>
+      <ul>
+        <li>hit your calorie and protein targets,</li>
+        <li>log your weight at least 5 days a week, and</li>
+        <li>complete every workout.</li>
+      </ul>
+      <p>You must send a photo of your scale on day 1 and at the end of the challenge. Your weight loss is measured from these photos and the weigh-ins you log.</p>
+      <p>The refund applies only to 10 pounds lost within the first 6 weeks. Weight lost during free coaching does not qualify for a refund. Refunds are returned to the original payment method, typically within 5–10 business days depending on your bank.</p>
       <h3>8. Cancellation</h3>
-      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. Except as described in Section 7, the $599 challenge payment is not refundable.</p>
+      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. Monthly payments are not refunded for partial months. The $599 challenge payment is not refundable, except for the refund in Section 7 for losing 10 pounds within the first 6 weeks.</p>
       <h3>9. No Medical Advice</h3>
       <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
       <h3>10. Intellectual Property</h3>
@@ -369,7 +432,7 @@ footer{background:#eee}
       <h3>14. Changes to These Terms</h3>
       <p>I reserve the right to update these Terms at any time. Material changes will be communicated via email or a notice on the Site. Continued use of the Site or the service after changes take effect constitutes acceptance of the revised Terms.</p>
       <h3>15. Contact</h3>
-      <p>Questions about these Terms? Reach me at: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Questions about these Terms? Reach me at: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
@@ -434,7 +497,7 @@ footer{background:#eee}
       <h3>12. Changes to This Policy</h3>
       <p>I may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
       <h3>13. Contact</h3>
-      <p>Privacy questions or requests: <a href="mailto:asherapple2@gmail.com" style="color:var(--link);text-decoration:none">asherapple2@gmail.com</a></p>
+      <p>Privacy questions or requests: <a href="mailto:support@asherrobinsonfitness.com" style="color:var(--link);text-decoration:none">support@asherrobinsonfitness.com</a></p>
     </div>
   </div>
 </div>
