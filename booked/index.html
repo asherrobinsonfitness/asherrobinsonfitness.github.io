@@ -45,24 +45,56 @@ strong{font-weight:600}
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
-/* save contact — a contact card (photo, name, number) mirroring what they're
-   about to save, with a small black Save My Number button (the page's main action); on desktop a QR replaces the
-   button. Keep .save-contact__number / .save-contact__qr: set-contact-number.py
-   rewrites them. The QR svg has no quiet zone of its own; the card's white
-   padding is it. */
-.save-contact{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.625rem}
-.contact-card{display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;padding:.75rem;background:#fff;border:1px solid var(--card-border);border-radius:8px;text-align:left}
-.contact-card__photo{flex-shrink:0;width:48px;height:48px;border-radius:50%;object-fit:cover}
+/* save contact — a quiet attachment-style row under the video (photo, name,
+   number, small pill button), deliberately lighter than the video. The pill's
+   ::after stretches over the whole row so the row is the tap target. On
+   desktop a QR replaces the button. Keep .save-contact__number /
+   .save-contact__qr: set-contact-number.py rewrites them, and the script at
+   the bottom reads both (tel: link, pop-up text, pop-up QR). The QR svg has no
+   quiet zone of its own; the card's white padding is it. */
+.save-contact{margin-top:1.5rem}
+.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid var(--border);border-radius:8px;text-align:left}
+.contact-card__photo{flex-shrink:0;width:40px;height:40px;border-radius:50%;object-fit:cover}
 .contact-card__info{flex:1 1 auto;min-width:0}
-.contact-card__name{font-size:.9375rem;font-weight:600;line-height:1.35}
-.save-contact__number{margin-top:.125rem;font-size:.875rem;line-height:1.35;color:var(--muted)}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:4px;background:#111;color:#fff;font-size:.875rem;font-weight:600;line-height:1.2;text-decoration:none}
+.contact-card__name{font-size:.875rem;font-weight:600;line-height:1.3}
+.save-contact__number{font-size:.8125rem;line-height:1.35;color:var(--muted)}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid var(--card-border);border-radius:999px;background:#fff;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
+.save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
+.save-contact__btn svg{flex-shrink:0}
 .save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
 .save-contact__qr svg{display:block;width:100%;height:auto}
 @media (hover:hover) and (pointer:fine){
   .save-contact__btn{display:none}
   .save-contact__qr{display:block}
 }
+
+/* save-number pop-up — opens once per visit, when the save row scrolls off
+   the top of the screen without having been tapped. Same dim + blur and
+   fade as meeting/'s Terms popup; 8px card like the row, 4px button like the
+   rest of the page; the banner's X. Desktop shows the QR instead of the
+   button. */
+.save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.save-popup__card{position:relative;width:100%;max-width:358px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
+.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
+.save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
+.save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+/* "online" dot */
+.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#2fb463;border:2px solid #f7f7f7}
+.save-popup__title{font-size:1.25rem;font-weight:600;line-height:1.25;letter-spacing:-.02em}
+.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
+.save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
+.save-popup__btn svg{flex-shrink:0}
+.save-popup__qr,.save-popup__qr-caption{display:none}
+.save-popup__qr{width:132px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
+.save-popup__qr svg{display:block;width:100%;height:auto}
+.save-popup__qr-caption{margin-top:.5rem;font-size:.8125rem;color:var(--muted)}
+@media (hover:hover) and (pointer:fine){
+  .save-popup__close:hover{color:var(--text)}
+  .save-popup__btn{display:none}
+  .save-popup__qr,.save-popup__qr-caption{display:block}
+}
+@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
 /* what happens next — numbered steps in the same hairline-row style as the
    FAQ list, then iClosed's meeting details. */
 .next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
@@ -81,7 +113,8 @@ strong{font-weight:600}
 
 /* third section — common questions */
 .common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
-.common-questions__inner{max-width:472px;margin:0 auto}
+/* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
+.common-questions__inner{max-width:640px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
 .faq-item{border-bottom:1px solid var(--border)}
 .faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
@@ -146,12 +179,12 @@ footer{background:#eee}
       </div>
       <div class="save-contact">
         <div class="contact-card">
-          <img class="contact-card__photo" src="/assets/asher-avatar.webp" width="48" height="48" alt="">
+          <img class="contact-card__photo" src="/assets/asher-avatar.webp" width="40" height="40" alt="">
           <div class="contact-card__info">
             <p class="contact-card__name">Asher Robinson</p>
             <p class="save-contact__number">(555) 555-0123</p>
           </div>
-          <a class="save-contact__btn" href="/asher-robinson.vcf" >Save My Number</a>
+          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>Save Number</a>
           <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
         </div>
       </div>
@@ -228,6 +261,98 @@ footer{background:#eee}
     </div>
   </div>
 </footer>
+
+<div class="save-popup" id="save-popup" aria-hidden="true">
+  <div class="save-popup__card" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
+    <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
+    <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
+    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
+    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>Save Number</a>
+    <div class="save-popup__qr"></div>
+    <p class="save-popup__qr-caption">Scan with your phone camera to save my number</p>
+  </div>
+</div>
+
+<script>
+// Save Number: one link target per device, plus the pop-up.
+(function(){
+  var row=document.querySelector(".save-contact"),
+      btn=document.querySelector(".save-contact__btn"),
+      num=document.querySelector(".save-contact__number"),
+      qr=document.querySelector(".save-contact__qr"),
+      pop=document.getElementById("save-popup");
+  if(!row||!btn||!num||!pop) return;
+  var popBtn=pop.querySelector(".save-popup__btn"),
+      closeBtn=pop.querySelector(".save-popup__close");
+
+  // iPhone opens the .vcf straight into "Create New Contact". Android would
+  // download it as a file instead, so there the button opens the dialer with
+  // the number typed in (it doesn't call), where "Create new contact" is one
+  // tap away. The number is read from the visible text, which
+  // set-contact-number.py keeps current.
+  var digits=num.textContent.replace(/\D/g,"");
+  if(digits.length===10) digits="1"+digits;
+  if(/Android/i.test(navigator.userAgent)){
+    btn.setAttribute("href","tel:+"+digits);
+    popBtn.setAttribute("href","tel:+"+digits);
+  }
+  pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
+  if(qr) pop.querySelector(".save-popup__qr").innerHTML=qr.innerHTML;
+
+  // at most once per visit, and never after they've tapped Save Number
+  var KEY="savePopupDone";
+  function isDone(){try{return !!sessionStorage.getItem(KEY)}catch(e){return false}}
+  function markDone(){try{sessionStorage.setItem(KEY,"1")}catch(e){}}
+
+  var lastFocus=null;
+  function onKey(e){
+    if(e.key==="Escape"){close();return}
+    if(e.key!=="Tab") return;
+    // keep Tab inside the pop-up
+    var f=[].filter.call(pop.querySelectorAll("button,a[href]"),function(el){return el.offsetParent!==null});
+    if(!f.length) return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  }
+  function open(){
+    if(isDone()) return;
+    markDone();
+    lastFocus=document.activeElement;
+    pop.classList.add("active");
+    pop.removeAttribute("aria-hidden");
+    document.body.style.overflow="hidden";
+    document.addEventListener("keydown",onKey);
+    closeBtn.focus({preventScroll:true});
+  }
+  function close(){
+    if(!pop.classList.contains("active")) return;
+    pop.classList.remove("active");
+    pop.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    document.removeEventListener("keydown",onKey);
+    if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
+  }
+  btn.addEventListener("click",markDone);
+  popBtn.addEventListener("click",close);
+  closeBtn.addEventListener("click",close);
+  pop.addEventListener("click",function(e){if(e.target===pop) close()});
+
+  // open once the save row has scrolled off the top of the screen: they've
+  // seen the video and the row and kept going without saving
+  if(!("IntersectionObserver" in window)) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting&&en.boundingClientRect.bottom<=0){
+        io.disconnect();
+        open();
+      }
+    });
+  });
+  io.observe(row);
+})();
+</script>
 
 <script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
 
