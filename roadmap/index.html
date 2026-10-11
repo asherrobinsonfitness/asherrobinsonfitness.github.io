@@ -115,17 +115,12 @@ strong{font-weight:600}
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad) 1.5rem}
 .hero-grid{padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
-/* The fanned "scroll through a stack" arrangement (item 2 flat and focused
-   up front, 1 turned one way behind it, 3 and 4 turned the other way and
-   progressively further back) got fragile as real CSS 3D transforms — every
-   viewport had slightly different rotation/perspective insets, so widths,
-   margins, and overlaps never quite matched everywhere at once. It's now a
-   single pre-rendered image (a real screenshot of that exact CSS, captured
-   once at 2x) instead: the aspect-ratio below is that image's own W/H, so
-   it scales as one flat, reliable unit rather than 4 separately-computed
-   ones. */
-.hero-media-row{width:100%;margin:1.5rem auto 0}
-.hero-media-row__item{display:block;width:100%;aspect-ratio:2283/1010;object-fit:contain}
+/* Three real roadmap pages lying flat on a surface, pre-rendered once at 2x
+   with a transparent background so only the paper and its shadows are in
+   the image. The surface itself is this box: same radius and colors as the
+   .hero-media on meeting/ and booked/. The aspect-ratio is the image's W/H. */
+.hero-media-row{width:100%;margin:1.5rem auto 0;border-radius:8px;background:#161616;overflow:hidden}
+.hero-media-row__item{display:block;width:100%;aspect-ratio:2400/1060;object-fit:contain}
 
 /* second section — lead-magnet opt-in steps, using the same dark section + centered-content pattern as the root page's second section */
 .results-section{background:#161616;padding:var(--pad) 1.5rem var(--pad);width:100%}
@@ -277,6 +272,7 @@ body{background:#f7f7f7}
 .container{background:#f7f7f7}
 footer{background:#eee}
 .results-section{background:#eee}
+.hero-media-row{background:#eee}
 .signup-unit-input{border-color:#d0d0d0}
 .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
 .email-spinner{border-color:#d0d0d0;border-top-color:#111}
@@ -298,7 +294,7 @@ footer{background:#eee}
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized 10% Body Fat Roadmap</h1>
       <div class="hero-media-row">
-        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-fan.webp" alt="Roadmap PDF preview pages, fanned out">
+        <img class="hero-media-row__item" src="/assets/roadmap-content/roadmap-hero-flatlay.webp" alt="Three pages of the roadmap PDF lying flat">
       </div>
     </div>
 
@@ -724,8 +720,8 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-email").addEventListener("submit",function(e){
     e.preventDefault();
     if(btnEmail.disabled) return;
-    // meeting/ reads these once, saves them, and strips them from its URL
-    // before iClosed or Vidalytics load. No health data rides in the URL.
+    // meeting/ reads these for its announcement bar and the iClosed
+    // prefill. No health data rides in the URL.
     var firstVal=first.value.trim(),lastVal=last.value.trim(),emailVal=email.value.trim(),qs=[];
     if(firstVal) qs.push("fname="+encodeURIComponent(firstVal));
     if(lastVal) qs.push("lname="+encodeURIComponent(lastVal));
