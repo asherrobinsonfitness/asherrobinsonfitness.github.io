@@ -720,12 +720,12 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   document.getElementById("form-email").addEventListener("submit",function(e){
     e.preventDefault();
     if(btnEmail.disabled) return;
-    // meeting/ reads these for its announcement bar and the iClosed
-    // prefill. No health data rides in the URL.
-    var firstVal=first.value.trim(),lastVal=last.value.trim(),emailVal=email.value.trim(),qs=[];
-    if(firstVal) qs.push("fname="+encodeURIComponent(firstVal));
-    if(lastVal) qs.push("lname="+encodeURIComponent(lastVal));
-    if(emailVal) qs.push("email="+encodeURIComponent(emailVal));
+    // iClosed's own prefill params: its widget on meeting/ reads them from
+    // the page URL, and meeting/'s announcement bar uses them too. No health
+    // data rides in the URL.
+    var nameVal=(first.value.trim()+" "+last.value.trim()).trim(),emailVal=email.value.trim(),qs=[];
+    if(nameVal) qs.push("iclosedName="+encodeURIComponent(nameVal));
+    if(emailVal) qs.push("iclosedEmail="+encodeURIComponent(emailVal));
     // Final-step lead capture — PostHog funnel event plus the deduped Meta
     // Lead (pixel + CAPI). No "gap" property here: this page never computes
     // a goal weight / distance-from-goal, only the raw bodyfat bracket.
