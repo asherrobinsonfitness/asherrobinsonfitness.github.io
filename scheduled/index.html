@@ -2,20 +2,107 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Meeting Confirmed</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meeting Scheduled - Asher Robinson</title>
+<meta name="description" content="Your meeting is scheduled. Watch this short video before we meet.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
-<link rel="shortcut icon" href="/assets/favicon.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
-<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#f7f7f7">
+<!-- Meta Pixel Code -->
+<script>
+// Shared helpers for Meta Pixel + Conversions API deduplication.
+// Each conversion event gets one event_id shared by both the browser pixel
+// call and the server-side CAPI call so Meta counts it once, not twice.
+function __fbEventId() {
+  return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+}
+function __fbCookie(name) {
+  var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : undefined;
+}
+function __fbCapi(eventName, eventId, customData, userData) {
+  try {
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData || {},
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+// First-touch acquisition-path marker. Set once, on entry to a funnel, and
+// never overwritten — whichever page the visitor's session actually started
+// on decides "lead_magnet" vs "direct" for this browser, even if they come
+// back through a different page days later. Mirrors __fbCookie's own cookie
+// pattern; read back via __fbCookie('acq_path') wherever a Meta content_name
+// needs to reflect it (Purchase, CompleteRegistration). Also pushed to
+// PostHog as a $set_once person property (2nd arg) so it can't be
+// overwritten there either, no matter how many times this runs.
+function __acqPathInit(value) {
+  if (__fbCookie('acq_path')) return;
+  var oneYear = 60 * 60 * 24 * 365;
+  document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
+  if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
+}
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'/edge/fbevents.js');
+fbq('init', '1575468926630270');
+var __pvEventId = __fbEventId();
+fbq('track', 'PageView', {}, {eventID: __pvEventId});
+__fbCapi('PageView', __pvEventId);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    // posthog-js mints and persists its own distinct_id (no cookie bootstrap).
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    posthog.capture('scheduled_pageview');
+</script>
+<!-- End PostHog -->
+<script>
+// Booked-call conversion. Fires only on iClosed's post-booking redirect (it
+// adds invitee_full_name), and once per booking per tab so a refresh doesn't
+// count twice. One event_id for pixel + CAPI so Meta counts it once.
+// content_name is the first-touch path (lead_magnet / direct).
+(function(){
+  var p=new URLSearchParams(location.search),name=(p.get("invitee_full_name")||"").trim();
+  if(!name) return;
+  var key="callBooked:"+location.search;
+  try{if(sessionStorage.getItem(key)) return;sessionStorage.setItem(key,"1")}catch(e){}
+  var parts=name.split(/\s+/),path=__fbCookie("acq_path")||"unknown",id=__fbEventId();
+  fbq("track","Schedule",{content_name:path},{eventID:id});
+  __fbCapi("Schedule",id,{content_name:path},{email:p.get("invitee_email")||undefined,firstName:parts[0],lastName:parts.length>1?parts[parts.length-1]:undefined});
+  posthog.capture("call_booked",{acquisition_path:path});
+})();
+</script>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-semi-condensed-700-latin.woff2" crossorigin>
 <link rel="preconnect" href="https://fast.vidalytics.com">
-<link rel="dns-prefetch" href="https://fast.vidalytics.com">
+<link rel="preconnect" href="https://app.iclosed.io">
 <style>
 :root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
@@ -46,7 +133,7 @@ strong{font-weight:600}
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
 /* red callout above the headline: Material Symbols Rounded "error" icon + label,
-   in the same type as meeting/'s status bar (Barlow Semi Condensed caps), but red */
+   in the same type as coaching/'s status bar (Barlow Semi Condensed caps), but red */
 .hero-callout{display:flex;align-items:center;justify-content:center;gap:.35rem;margin-bottom:.75rem;font-family:"Barlow Semi Condensed",Inter,system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:.05em;line-height:1.2;text-transform:uppercase;color:var(--red)}
 /* icon about 2px larger than its text, like the Save Number buttons: 18px at 16px, 16px at 14px */
 .hero-callout svg{flex-shrink:0;width:18px;height:18px}
@@ -82,7 +169,7 @@ strong{font-weight:600}
    scrolls off the top of the screen without having been tapped, on desktop
    (no row there) 5 seconds after load. The 472px cap matches the contact row,
    so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
-   fade as meeting/'s Terms popup; 8px card like the row, 4px button like the
+   fade as coaching/'s Terms popup; 8px card like the row, 4px button like the
    rest of the page; the banner's X. Desktop shows the QR instead of the
    button. */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
@@ -116,7 +203,7 @@ strong{font-weight:600}
 .next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:var(--muted)}
 .call-details-widget{margin-top:1.5rem}
 
-/* shared section title — same treatment as "Common Questions" on the root page */
+/* shared section title — same treatment as "Common Questions" */
 .section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
 
 /* second section — the booking calendar */
