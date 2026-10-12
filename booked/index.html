@@ -48,8 +48,9 @@ strong{font-weight:600}
 /* red callout above the headline: Material Symbols Rounded "error" icon + label,
    in the same type as meeting/'s status bar (Barlow Semi Condensed caps), but red */
 .hero-callout{display:flex;align-items:center;justify-content:center;gap:.35rem;margin-bottom:.75rem;font-family:"Barlow Semi Condensed",Inter,system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:.05em;line-height:1.2;text-transform:uppercase;color:var(--red)}
-@media (max-width:899px){.hero-callout{font-size:.875rem}}
-.hero-callout svg{flex-shrink:0}
+/* icon about 2px larger than its text, like the Save Number buttons: 18px at 16px, 16px at 14px */
+.hero-callout svg{flex-shrink:0;width:18px;height:18px}
+@media (max-width:899px){.hero-callout{font-size:.875rem}.hero-callout svg{width:16px;height:16px}}
 .subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 /* save contact — a quiet attachment-style row under the video (photo, name,
@@ -277,12 +278,8 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>I offer two ways to start:</p>
-              <ul>
-                <li><strong>6-Week Challenge ($599):</strong> Lose 10 pounds in 6 weeks, and you earn your $599 back or 6 more weeks of free coaching.</li>
-                <li><strong>Coaching ($199/mo):</strong> Same coaching, without the guarantee. Cancel anytime.</li>
-              </ul>
-              <p>After the challenge, you can keep going with coaching at $199 a month.</p>
+              <p>The 6-Week Challenge is $599. Lose 10 pounds in 6 weeks, and you earn your $599 back or 6 more weeks of free coaching.</p>
+              <p>After the challenge, you can keep going with coaching at $199 a month. Cancel anytime.</p>
             </div>
           </div>
         </details>
