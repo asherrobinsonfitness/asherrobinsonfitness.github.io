@@ -134,11 +134,10 @@ strong{font-weight:600}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 /* save contact — a quiet attachment-style row under the video (photo, name,
    number, small pill button), deliberately lighter than the video. The pill's
-   ::after stretches over the whole row so the row is the tap target. On
-   desktop a QR replaces the button. Keep .save-contact__number /
-   .save-contact__qr: set-contact-number.py rewrites them, and the script at
-   the bottom reads both (tel: link, pop-up text, pop-up QR). The QR svg has no
-   quiet zone of its own; the card's white padding is it. */
+   ::after stretches over the whole row so the row is the tap target. Phones
+   only; desktop gets the corner QR card below. Keep .save-contact__number:
+   set-contact-number.py rewrites it, and the script at the bottom reads it
+   (tel: link, pop-up text). */
 .save-contact{margin-top:1.5rem}
 .contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid var(--border);border-radius:8px;text-align:left}
 .contact-card__photo{position:relative;flex-shrink:0;line-height:0}
@@ -151,19 +150,15 @@ strong{font-weight:600}
 .save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid var(--card-border);border-radius:999px;background:#fff;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
 .save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
 .save-contact__btn svg{flex-shrink:0}
-.save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
-.save-contact__qr svg{display:block;width:100%;height:auto}
 @media (hover:hover) and (pointer:fine){
   .save-contact{display:none}
 }
 
-/* save-number pop-up — opens once per visit: on phones when the save row
-   scrolls off the top of the screen without having been tapped, on desktop
-   (no row there) 5 seconds after load. The 472px cap matches the contact row,
+/* save-number pop-up — phones only: opens once per visit when the save row
+   scrolls off the top of the screen without having been tapped. The 472px cap matches the contact row,
    so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
    fade as coaching/'s Terms popup; 8px card like the row, 4px button like the
-   rest of the page; the banner's X. Desktop shows the QR instead of the
-   button. */
+   rest of the page; the banner's X. */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
@@ -176,16 +171,27 @@ strong{font-weight:600}
 .save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
 .save-popup__btn svg{flex-shrink:0}
-.save-popup__qr,.save-popup__qr-caption{display:none}
-.save-popup__qr{width:180px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
-.save-popup__qr svg{display:block;width:100%;height:auto}
-.save-popup__qr-caption{margin-top:.5rem;font-size:.8125rem;color:var(--muted)}
-@media (hover:hover) and (pointer:fine){
-  .save-popup__close:hover{color:var(--text)}
-  .save-popup__btn{display:none}
-  .save-popup__qr,.save-popup__qr-caption{display:block}
-}
 @media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
+/* desktop save-number card — pinned bottom-right for the whole visit, no
+   close button (like X's "Scan to get the app"). Photo with the online dot,
+   the QR, a camera hint. Keep .save-corner__qr: set-contact-number.py
+   rewrites it. The QR svg has no quiet zone of its own; the card's white
+   padding is it. */
+.save-corner{display:none}
+@media (hover:hover) and (pointer:fine){
+  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text)}
+}
+.save-corner__head{display:flex;align-items:center;gap:.625rem;margin-bottom:1rem;text-align:left}
+.save-corner__photo{position:relative;flex-shrink:0;line-height:0}
+.save-corner__photo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+/* "online" dot, same as the row's; white ring = the card */
+.save-corner__photo::after{content:"";position:absolute;right:-1px;bottom:0;width:10px;height:10px;border-radius:50%;background:#2fb463;border:2px solid #fff}
+.save-corner__title{font-size:.875rem;font-weight:600;line-height:1.25}
+.save-corner__text{margin-top:1px;font-size:.75rem;line-height:1.35;color:var(--muted);white-space:nowrap}
+.save-corner__qr{width:164px;margin:0 auto;line-height:0}
+.save-corner__qr svg{display:block;width:100%;height:auto}
+.save-corner__hint{display:inline-flex;align-items:center;gap:.375rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#f1f1f1;font-size:.75rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-corner__hint svg{flex-shrink:0}
 /* what happens next — numbered steps in the same hairline-row style as the
    FAQ list, then iClosed's meeting details. */
 .next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
@@ -300,7 +306,6 @@ footer{background:#eee}
             <p class="save-contact__number">(555) 555-0123</p>
           </div>
           <a class="save-contact__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
-          <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
         </div>
       </div>
     </div>
@@ -384,6 +389,18 @@ footer{background:#eee}
   </div>
 </footer>
 
+<div class="save-corner">
+  <div class="save-corner__head">
+    <span class="save-corner__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
+    <div>
+      <p class="save-corner__title">Save my number</p>
+      <p class="save-corner__text">So my call doesn't go to spam</p>
+    </div>
+  </div>
+  <div class="save-corner__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact"><path d="M8.5 0.5h0M9.5 0.5h0M10.5 0.5h0M11.5 0.5h0M13.5 0.5h0M16.5 0.5h0M17.5 0.5h0M18.5 0.5h0M19.5 0.5h0M21.5 0.5h0M22.5 0.5h0M23.5 0.5h0M8.5 1.5h0M12.5 1.5h0M14.5 1.5h0M16.5 1.5h0M18.5 1.5h0M9.5 2.5h0M12.5 2.5h0M13.5 2.5h0M15.5 2.5h0M17.5 2.5h0M19.5 2.5h0M21.5 2.5h0M24.5 2.5h0M10.5 3.5h0M13.5 3.5h0M16.5 3.5h0M18.5 3.5h0M20.5 3.5h0M21.5 3.5h0M22.5 3.5h0M23.5 3.5h0M24.5 3.5h0M8.5 4.5h0M9.5 4.5h0M11.5 4.5h0M13.5 4.5h0M16.5 4.5h0M18.5 4.5h0M19.5 4.5h0M21.5 4.5h0M24.5 4.5h0M8.5 5.5h0M9.5 5.5h0M14.5 5.5h0M16.5 5.5h0M18.5 5.5h0M21.5 5.5h0M8.5 6.5h0M10.5 6.5h0M12.5 6.5h0M14.5 6.5h0M16.5 6.5h0M18.5 6.5h0M20.5 6.5h0M22.5 6.5h0M24.5 6.5h0M8.5 7.5h0M11.5 7.5h0M12.5 7.5h0M14.5 7.5h0M19.5 7.5h0M22.5 7.5h0M23.5 7.5h0M24.5 7.5h0M0.5 8.5h0M1.5 8.5h0M2.5 8.5h0M5.5 8.5h0M6.5 8.5h0M8.5 8.5h0M9.5 8.5h0M11.5 8.5h0M14.5 8.5h0M15.5 8.5h0M18.5 8.5h0M20.5 8.5h0M24.5 8.5h0M25.5 8.5h0M26.5 8.5h0M27.5 8.5h0M28.5 8.5h0M31.5 8.5h0M32.5 8.5h0M0.5 9.5h0M1.5 9.5h0M8.5 9.5h0M12.5 9.5h0M14.5 9.5h0M15.5 9.5h0M17.5 9.5h0M18.5 9.5h0M21.5 9.5h0M24.5 9.5h0M25.5 9.5h0M27.5 9.5h0M29.5 9.5h0M30.5 9.5h0M4.5 10.5h0M5.5 10.5h0M6.5 10.5h0M7.5 10.5h0M9.5 10.5h0M11.5 10.5h0M12.5 10.5h0M13.5 10.5h0M15.5 10.5h0M18.5 10.5h0M19.5 10.5h0M20.5 10.5h0M21.5 10.5h0M22.5 10.5h0M23.5 10.5h0M24.5 10.5h0M25.5 10.5h0M26.5 10.5h0M27.5 10.5h0M29.5 10.5h0M32.5 10.5h0M3.5 11.5h0M4.5 11.5h0M11.5 11.5h0M14.5 11.5h0M15.5 11.5h0M18.5 11.5h0M19.5 11.5h0M20.5 11.5h0M23.5 11.5h0M24.5 11.5h0M25.5 11.5h0M26.5 11.5h0M31.5 11.5h0M3.5 12.5h0M6.5 12.5h0M7.5 12.5h0M8.5 12.5h0M9.5 12.5h0M10.5 12.5h0M14.5 12.5h0M16.5 12.5h0M17.5 12.5h0M20.5 12.5h0M23.5 12.5h0M24.5 12.5h0M26.5 12.5h0M28.5 12.5h0M31.5 12.5h0M0.5 13.5h0M3.5 13.5h0M4.5 13.5h0M5.5 13.5h0M7.5 13.5h0M9.5 13.5h0M11.5 13.5h0M14.5 13.5h0M15.5 13.5h0M18.5 13.5h0M19.5 13.5h0M20.5 13.5h0M24.5 13.5h0M27.5 13.5h0M30.5 13.5h0M0.5 14.5h0M1.5 14.5h0M2.5 14.5h0M5.5 14.5h0M6.5 14.5h0M10.5 14.5h0M11.5 14.5h0M12.5 14.5h0M13.5 14.5h0M15.5 14.5h0M16.5 14.5h0M17.5 14.5h0M19.5 14.5h0M21.5 14.5h0M23.5 14.5h0M24.5 14.5h0M25.5 14.5h0M28.5 14.5h0M29.5 14.5h0M32.5 14.5h0M2.5 15.5h0M3.5 15.5h0M4.5 15.5h0M5.5 15.5h0M7.5 15.5h0M8.5 15.5h0M9.5 15.5h0M12.5 15.5h0M14.5 15.5h0M15.5 15.5h0M19.5 15.5h0M20.5 15.5h0M22.5 15.5h0M23.5 15.5h0M25.5 15.5h0M27.5 15.5h0M29.5 15.5h0M31.5 15.5h0M32.5 15.5h0M0.5 16.5h0M1.5 16.5h0M5.5 16.5h0M6.5 16.5h0M10.5 16.5h0M11.5 16.5h0M12.5 16.5h0M14.5 16.5h0M17.5 16.5h0M20.5 16.5h0M24.5 16.5h0M26.5 16.5h0M27.5 16.5h0M28.5 16.5h0M30.5 16.5h0M32.5 16.5h0M0.5 17.5h0M2.5 17.5h0M5.5 17.5h0M12.5 17.5h0M14.5 17.5h0M15.5 17.5h0M17.5 17.5h0M18.5 17.5h0M19.5 17.5h0M20.5 17.5h0M22.5 17.5h0M27.5 17.5h0M29.5 17.5h0M0.5 18.5h0M4.5 18.5h0M6.5 18.5h0M8.5 18.5h0M9.5 18.5h0M10.5 18.5h0M11.5 18.5h0M12.5 18.5h0M13.5 18.5h0M15.5 18.5h0M16.5 18.5h0M17.5 18.5h0M18.5 18.5h0M19.5 18.5h0M22.5 18.5h0M23.5 18.5h0M24.5 18.5h0M27.5 18.5h0M29.5 18.5h0M32.5 18.5h0M2.5 19.5h0M5.5 19.5h0M7.5 19.5h0M8.5 19.5h0M9.5 19.5h0M11.5 19.5h0M12.5 19.5h0M14.5 19.5h0M16.5 19.5h0M18.5 19.5h0M19.5 19.5h0M25.5 19.5h0M26.5 19.5h0M27.5 19.5h0M29.5 19.5h0M31.5 19.5h0M2.5 20.5h0M3.5 20.5h0M5.5 20.5h0M6.5 20.5h0M9.5 20.5h0M12.5 20.5h0M14.5 20.5h0M16.5 20.5h0M17.5 20.5h0M19.5 20.5h0M22.5 20.5h0M23.5 20.5h0M26.5 20.5h0M28.5 20.5h0M29.5 20.5h0M30.5 20.5h0M32.5 20.5h0M1.5 21.5h0M4.5 21.5h0M5.5 21.5h0M8.5 21.5h0M12.5 21.5h0M14.5 21.5h0M16.5 21.5h0M18.5 21.5h0M19.5 21.5h0M20.5 21.5h0M23.5 21.5h0M27.5 21.5h0M0.5 22.5h0M1.5 22.5h0M2.5 22.5h0M3.5 22.5h0M4.5 22.5h0M6.5 22.5h0M7.5 22.5h0M8.5 22.5h0M9.5 22.5h0M11.5 22.5h0M13.5 22.5h0M14.5 22.5h0M15.5 22.5h0M16.5 22.5h0M17.5 22.5h0M18.5 22.5h0M19.5 22.5h0M20.5 22.5h0M21.5 22.5h0M22.5 22.5h0M23.5 22.5h0M24.5 22.5h0M27.5 22.5h0M32.5 22.5h0M4.5 23.5h0M8.5 23.5h0M9.5 23.5h0M10.5 23.5h0M12.5 23.5h0M16.5 23.5h0M19.5 23.5h0M20.5 23.5h0M23.5 23.5h0M24.5 23.5h0M26.5 23.5h0M28.5 23.5h0M29.5 23.5h0M32.5 23.5h0M0.5 24.5h0M1.5 24.5h0M2.5 24.5h0M4.5 24.5h0M5.5 24.5h0M6.5 24.5h0M8.5 24.5h0M11.5 24.5h0M12.5 24.5h0M14.5 24.5h0M16.5 24.5h0M17.5 24.5h0M20.5 24.5h0M21.5 24.5h0M24.5 24.5h0M25.5 24.5h0M26.5 24.5h0M27.5 24.5h0M28.5 24.5h0M29.5 24.5h0M30.5 24.5h0M31.5 24.5h0M32.5 24.5h0M8.5 25.5h0M12.5 25.5h0M14.5 25.5h0M16.5 25.5h0M19.5 25.5h0M20.5 25.5h0M22.5 25.5h0M24.5 25.5h0M28.5 25.5h0M9.5 26.5h0M10.5 26.5h0M11.5 26.5h0M12.5 26.5h0M13.5 26.5h0M14.5 26.5h0M15.5 26.5h0M17.5 26.5h0M19.5 26.5h0M22.5 26.5h0M24.5 26.5h0M26.5 26.5h0M28.5 26.5h0M30.5 26.5h0M32.5 26.5h0M8.5 27.5h0M10.5 27.5h0M11.5 27.5h0M14.5 27.5h0M16.5 27.5h0M18.5 27.5h0M24.5 27.5h0M28.5 27.5h0M29.5 27.5h0M32.5 27.5h0M9.5 28.5h0M10.5 28.5h0M12.5 28.5h0M14.5 28.5h0M15.5 28.5h0M16.5 28.5h0M18.5 28.5h0M20.5 28.5h0M23.5 28.5h0M24.5 28.5h0M25.5 28.5h0M26.5 28.5h0M27.5 28.5h0M28.5 28.5h0M30.5 28.5h0M14.5 29.5h0M16.5 29.5h0M17.5 29.5h0M18.5 29.5h0M19.5 29.5h0M20.5 29.5h0M21.5 29.5h0M23.5 29.5h0M24.5 29.5h0M8.5 30.5h0M9.5 30.5h0M11.5 30.5h0M14.5 30.5h0M15.5 30.5h0M17.5 30.5h0M19.5 30.5h0M20.5 30.5h0M23.5 30.5h0M24.5 30.5h0M27.5 30.5h0M28.5 30.5h0M29.5 30.5h0M32.5 30.5h0M8.5 31.5h0M11.5 31.5h0M15.5 31.5h0M18.5 31.5h0M19.5 31.5h0M22.5 31.5h0M23.5 31.5h0M24.5 31.5h0M26.5 31.5h0M29.5 31.5h0M8.5 32.5h0M10.5 32.5h0M11.5 32.5h0M14.5 32.5h0M15.5 32.5h0M16.5 32.5h0M17.5 32.5h0M19.5 32.5h0M20.5 32.5h0M23.5 32.5h0M24.5 32.5h0M25.5 32.5h0M28.5 32.5h0M29.5 32.5h0M30.5 32.5h0M32.5 32.5h0" stroke="#111" stroke-width=".86" stroke-linecap="round"/><g fill="none" stroke="#111"><rect x="0.5" y="0.5" width="6" height="6" rx="1.6"/><rect x="26.5" y="0.5" width="6" height="6" rx="1.6"/><rect x="0.5" y="26.5" width="6" height="6" rx="1.6"/></g><g fill="#111"><rect x="2" y="2" width="3" height="3" rx=".8"/><rect x="28" y="2" width="3" height="3" rx=".8"/><rect x="2" y="28" width="3" height="3" rx=".8"/></g></svg></div>
+  <p class="save-corner__hint"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
+</div>
+
 <div class="save-popup" id="save-popup" aria-hidden="true">
   <div class="save-popup__card" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
     <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
@@ -391,18 +408,15 @@ footer{background:#eee}
     <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
     <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
     <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
-    <div class="save-popup__qr"></div>
-    <p class="save-popup__qr-caption">Scan with your phone camera to save my number</p>
   </div>
 </div>
 
 <script>
-// Save Number: one link target per device, plus the pop-up.
+// Save Number (phones): one link target per device, plus the pop-up.
 (function(){
   var row=document.querySelector(".save-contact"),
       btn=document.querySelector(".save-contact__btn"),
       num=document.querySelector(".save-contact__number"),
-      qr=document.querySelector(".save-contact__qr"),
       pop=document.getElementById("save-popup");
   if(!row||!btn||!num||!pop) return;
   var popBtn=pop.querySelector(".save-popup__btn"),
@@ -420,7 +434,6 @@ footer{background:#eee}
     popBtn.setAttribute("href","tel:+"+digits);
   }
   pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
-  if(qr) pop.querySelector(".save-popup__qr").innerHTML=qr.innerHTML;
 
   // at most once per visit, and never after they've tapped Save Number
   var KEY="savePopupDone";
@@ -461,11 +474,8 @@ footer{background:#eee}
   closeBtn.addEventListener("click",close);
   pop.addEventListener("click",function(e){if(e.target===pop) close()});
 
-  // desktop: the row is hidden there, so open after 5 seconds instead
-  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
-    setTimeout(open,5000);
-    return;
-  }
+  // desktop: no row and no pop-up there; the corner card covers it
+  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches) return;
 
   // phones: open once the save row has scrolled off the top of the screen:
   // they've seen the video and the row and kept going without saving
