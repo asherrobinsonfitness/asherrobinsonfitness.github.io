@@ -125,7 +125,6 @@ strong{font-weight:600}
 @media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
 .announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
-@media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
@@ -180,7 +179,6 @@ strong{font-weight:600}
 .save-popup__hint{align-items:center;gap:.375rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#ececec;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
 .save-popup__hint svg{flex-shrink:0}
 @media (hover:hover) and (pointer:fine){
-  .save-popup__close:hover{color:var(--text)}
   .save-popup__btn{display:none}
   .save-popup__qr{display:block}
   .save-popup__hint{display:inline-flex}
@@ -248,6 +246,14 @@ strong{font-weight:600}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
 .faq-item__body-inner strong{color:var(--text)}
+/* 700px+ (the list is a fixed 640px from 672px): the short labels line up
+   as one left-aligned column, centred in the gap between the longest
+   question ("Is this right for my starting point?") and the +. Retune 23rem if a longer question is
+   added; until then a longer one wraps. Phones keep the label against the +. */
+@media (min-width:700px){
+  .faq-item__question{flex:0 0 23rem}
+  .faq-item__short{margin:0 auto 0 0}
+}
 
 /* footer */
 footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
@@ -359,7 +365,7 @@ footer{background:#eee}
           <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No hard sell</span><span class="faq-toggle" aria-hidden="true"></span></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>I ask about your goal, your schedule, and where you're starting from. You can ask me anything. If it's a fit, I give you the option to start. If not, you still leave knowing why your past attempts stalled and what to fix first.</p>
+              <p>I ask about your goal, your schedule, and where you're starting from. You can ask me anything. If it's a fit, I give you the option to start. If not, you still leave knowing why your past attempts failed and what to fix first.</p>
             </div>
           </div>
         </details>
