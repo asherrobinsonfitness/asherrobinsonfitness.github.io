@@ -259,6 +259,14 @@ footer{background:#eee}
 .legal-modal-body h2{color:var(--text)}
 .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
 .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
+/* keyboard focus ring in the page's near-black instead of the browser's
+   blue. :focus-visible only shows for keyboard use, not mouse clicks or taps.
+   :where() keeps it at zero specificity, so components with their own focus
+   style (e.g. inputs with outline:0) keep it. */
+:where(:focus-visible){outline:2px solid var(--text);outline-offset:2px}
+/* step headings take focus on each step change (for screen readers); they
+   aren't controls, so no ring */
+.signup-title:focus{outline:none}
 </style>
 </head>
 <body>
