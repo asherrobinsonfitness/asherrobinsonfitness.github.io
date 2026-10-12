@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Meeting Confirmed</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
+<link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
+<link rel="shortcut icon" href="/assets/favicon.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#f7f7f7">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<link rel="preconnect" href="https://fast.vidalytics.com">
+<link rel="dns-prefetch" href="https://fast.vidalytics.com">
+<style>
+:root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/barlow-semi-condensed-700-latin.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+strong{font-weight:600}
+.container{display:flex;flex-direction:column;background:#1c1c1c}
+
+/* section dividers — standalone elements rather than borders on the sections
+   themselves. Horizontal by default (stacked layout); the one between
+   hero-grid and booking-section flips to a vertical rule once the desktop
+   side-by-side split kicks in. */
+.section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
+
+/* announcement bar — one quiet line above everything else, matching the
+   meeting page's. Light strip with a hairline under it and a dismiss X on
+   the right; the X just removes the bar for this page view. */
+.announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:400;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
+/* left-aligned on phones and tablets, right-aligned (next to the X) on desktop */
+.announcement__text{flex:1 1 auto;min-width:0}
+@media (min-width:900px){.announcement__text{text-align:right}}
+/* the negative margins keep the bigger tap area from making the bar taller */
+.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
+@media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
+
+/* hero — headline, video only */
+.hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
+/* red callout above the headline: Material Symbols Rounded "error" icon + label,
+   in the same type as meeting/'s status bar (Barlow Semi Condensed caps), but red */
+.hero-callout{display:flex;align-items:center;justify-content:center;gap:.35rem;margin-bottom:.75rem;font-family:"Barlow Semi Condensed",Inter,system-ui,sans-serif;font-size:1rem;font-weight:700;letter-spacing:.05em;line-height:1.2;text-transform:uppercase;color:var(--red)}
+/* icon about 2px larger than its text, like the Save Number buttons: 18px at 16px, 16px at 14px */
+.hero-callout svg{flex-shrink:0;width:18px;height:18px}
+@media (max-width:899px){.hero-callout{font-size:.875rem}.hero-callout svg{width:16px;height:16px}}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
+.hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
+/* save contact — a quiet attachment-style row under the video (photo, name,
+   number, small pill button), deliberately lighter than the video. The pill's
+   ::after stretches over the whole row so the row is the tap target. On
+   desktop a QR replaces the button. Keep .save-contact__number /
+   .save-contact__qr: set-contact-number.py rewrites them, and the script at
+   the bottom reads both (tel: link, pop-up text, pop-up QR). The QR svg has no
+   quiet zone of its own; the card's white padding is it. */
+.save-contact{margin-top:1.5rem}
+.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid var(--border);border-radius:8px;text-align:left}
+.contact-card__photo{position:relative;flex-shrink:0;line-height:0}
+.contact-card__photo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+/* "online" dot, scaled down from the pop-up's; white ring = the card */
+.contact-card__photo::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#2fb463;border:2px solid #fff}
+.contact-card__info{flex:1 1 auto;min-width:0}
+.contact-card__name{font-size:.875rem;font-weight:600;line-height:1.3}
+.save-contact__number{font-size:.8125rem;line-height:1.35;color:var(--muted)}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid var(--card-border);border-radius:999px;background:#fff;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
+.save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
+.save-contact__btn svg{flex-shrink:0}
+.save-contact__qr{display:none;flex-shrink:0;width:72px;line-height:0}
+.save-contact__qr svg{display:block;width:100%;height:auto}
+@media (hover:hover) and (pointer:fine){
+  .save-contact{display:none}
+}
+
+/* save-number pop-up — opens once per visit: on phones when the save row
+   scrolls off the top of the screen without having been tapped, on desktop
+   (no row there) 5 seconds after load. The 472px cap matches the contact row,
+   so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
+   fade as meeting/'s Terms popup; 8px card like the row, 4px button like the
+   rest of the page; the banner's X. Desktop shows the QR instead of the
+   button. */
+.save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
+.save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
+.save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
+.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
+.save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
+.save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+/* "online" dot */
+.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#2fb463;border:2px solid #f7f7f7}
+.save-popup__title{font-size:1.25rem;font-weight:600;line-height:1.25;letter-spacing:-.02em}
+.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
+.save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
+.save-popup__btn svg{flex-shrink:0}
+.save-popup__qr,.save-popup__qr-caption{display:none}
+.save-popup__qr{width:180px;margin:0 auto;padding:8px;background:#fff;border:1px solid var(--border);line-height:0}
+.save-popup__qr svg{display:block;width:100%;height:auto}
+.save-popup__qr-caption{margin-top:.5rem;font-size:.8125rem;color:var(--muted)}
+@media (hover:hover) and (pointer:fine){
+  .save-popup__close:hover{color:var(--text)}
+  .save-popup__btn{display:none}
+  .save-popup__qr,.save-popup__qr-caption{display:block}
+}
+@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
+/* what happens next — numbered steps in the same hairline-row style as the
+   FAQ list, then iClosed's meeting details. */
+.next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
+.next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid var(--border)}
+.next-step__num{flex-shrink:0;font-size:.8125rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.next-step__title{font-size:.9375rem;font-weight:600;line-height:1.35;color:var(--text)}
+.next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:var(--muted)}
+.call-details-widget{margin-top:1.5rem}
+
+/* shared section title — same treatment as "Common Questions" on the root page */
+.section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
+
+/* second section — the booking calendar */
+.booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
+.booking-inner{width:100%;max-width:472px;margin:0 auto}
+
+/* third section — common questions */
+.common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
+/* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
+.common-questions__inner{max-width:640px;margin:0 auto}
+.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
+.faq-item__summary::-webkit-details-marker{display:none}
+/* quick answer — sits in the row next to the toggle, visible open or closed
+   (Buck Mason's label/value rows); the full answer still drops down below */
+.faq-item__question{flex:1 1 auto;min-width:0}
+.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:var(--muted);white-space:nowrap}
+.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
+.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
+.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
+.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
+.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
+.faq-item__body-inner{padding:0 .25rem 1.25rem}
+.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);margin:0}
+.faq-item__body-inner p+p{margin-top:.75rem}
+.faq-item__body-inner ul{margin:.5rem 0 0;padding-left:1.25rem}
+.faq-item__body-inner li{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted)}
+.faq-item__body-inner li+li{margin-top:.25rem}
+.faq-item__body-inner ul+p{margin-top:.75rem}
+.faq-item__body-inner strong{color:var(--text)}
+
+/* footer */
+footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
+.footer-inner{display:flex;flex-direction:column;gap:1.5rem}
+.copyright{color:var(--muted)}
+.footer-row{display:flex;justify-content:center;align-items:center}
+
+/* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split.
+   The banner sits above .container (so it stays full-width instead of getting
+   pulled into the row split below). .above-fold wraps just the banner and
+   .container as the full-height column, so the two add up to exactly one
+   viewport, with the FAQ starting below the fold. */
+@media (min-width:900px){
+  .above-fold{display:flex;flex-direction:column;min-height:100vh}
+  .announcement{flex-shrink:0}
+  .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
+  .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
+  .section-divider--split{width:1px;height:auto;align-self:stretch}
+}
+
+/* light theme only — these overrides used to apply just for light-mode
+   devices; they now always apply, on top of the dark defaults above. */
+:root{color-scheme:light only}
+:root{--text:#111111;--muted:#4a4a4a;--border:#e0e0e0;--card-border:#d5d5d5;--red:#c62a2f}
+body{background:#f7f7f7}
+.container{background:#f7f7f7}
+footer{background:#eee}
+.booking-section{background:#eee}
+.common-questions{background:#eee}
+.hero-media{background:#eee}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="above-fold">
+  <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button></div>
+  <script>
+  // First name from iClosed's redirect param invitee_full_name (the name
+  // they just booked with), checked before use. Fallback: the line above.
+  // The URL is left as-is: the meeting details widget below builds itself
+  // from these params.
+  (function(){
+    var ok;try{ok=new RegExp("^\\p{L}+(?:['\u2019-]\\p{L}+)*$","u")}catch(e){ok=/^[A-Za-z]+(?:['-][A-Za-z]+)*$/}
+    function clean(v){
+      v=typeof v==="string"?v.trim():"";
+      if(!v||v.length>30||!ok.test(v)) return "";
+      if(v===v.toLowerCase()||v===v.toUpperCase()) v=v.charAt(0).toUpperCase()+v.slice(1).toLowerCase();
+      return v;
+    }
+    var f="";
+    try{f=clean((new URLSearchParams(location.search).get("invitee_full_name")||"").trim().split(/\s+/)[0])}catch(e){}
+    if(f) document.querySelector(".announcement__text").textContent=f+", your meeting is scheduled";
+  })();
+  </script>
+
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-callout"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5Zm0-160Q520-463 520-480v-160q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640v160q0 17 11.5 28.5T480-440q17 0 28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>Important</div>
+      <h1 class="headline">Watch This 3-Minute Video Before Our Meeting</h1>
+      <div class="subheadline">It answers what most guys ask, so we can spend our meeting on your plan.</div>
+      <div class="hero-media">
+        <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
+        <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
+      </div>
+      <div class="save-contact">
+        <div class="contact-card">
+          <span class="contact-card__photo"><img src="/assets/asher-avatar.webp" width="40" height="40" alt=""></span>
+          <div class="contact-card__info">
+            <p class="contact-card__name">Asher Robinson</p>
+            <p class="save-contact__number">(555) 555-0123</p>
+          </div>
+          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+          <div class="save-contact__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider section-divider--split" aria-hidden="true"></div>
+
+    <section class="booking-section">
+      <div class="booking-inner">
+        <h2 class="section-title">What Happens Next</h2>
+        <ol class="next-steps">
+          <li class="next-step"><span class="next-step__num">01</span><div><p class="next-step__title">Confirmation</p><p class="next-step__text">I may call, text, or email you to confirm your meeting.</p></div></li>
+          <li class="next-step"><span class="next-step__num">02</span><div><p class="next-step__title">Joining</p><p class="next-step__text">Use the Google Meet link in your email to join the meeting.</p></div></li>
+          <li class="next-step"><span class="next-step__num">03</span><div><p class="next-step__title">The meeting</p><p class="next-step__text">We see if you're a good fit. If you are, your program is live in the app within 24 hours.</p></div></li>
+        </ol>
+        <!-- iClosed widget begin -->
+        <div class="call-details-widget" data-url="https://app.iclosed.io/embed" style="width: 100%; height: 340px"></div>
+        <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
+        <!-- iClosed widget end -->
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="common-questions" id="faq" aria-labelledby="common-questions-heading">
+    <div class="common-questions__inner">
+      <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No hard sell</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>I ask about your goal, your schedule, and where you're starting from. You can ask me anything. If it's a fit, I give you the option to start. If not, you still leave knowing why your past attempts stalled and what to fix first.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guarantee</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>I lost 16 pounds in about 8 weeks. I set up your plan the same way:</p>
+              <ul>
+                <li>Your calories are set from your body fat, not a generic number.</li>
+                <li>Your protein is set to keep your muscle while you lose fat.</li>
+                <li>I adjust your plan every week from your weigh-ins.</li>
+              </ul>
+              <p>Lose 10 pounds in 6 weeks, and you earn your $599 back or 6 more weeks of free coaching. You pick. If you follow the plan and don't lose 10 pounds, I coach you free until you do, up to 6 more weeks.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>The 6-Week Challenge is $599. Lose 10 pounds in 6 weeks, and you earn your $599 back or 6 more weeks of free coaching.</p>
+              <p>After the challenge, you can keep going with coaching at $199 a month. Cancel anytime.</p>
+            </div>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Probably</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <div class="faq-item__body">
+            <div class="faq-item__body-inner">
+              <p>My approach is built for any man with fat to lose. If you have a serious medical condition or need a special diet, this may not be the right fit for you.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-row">
+      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="save-popup" id="save-popup" aria-hidden="true">
+  <div class="save-popup__card" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
+    <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
+    <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
+    <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
+    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
+    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+    <div class="save-popup__qr"></div>
+    <p class="save-popup__qr-caption">Scan with your phone camera to save my number</p>
+  </div>
+</div>
+
+<script>
+// Save Number: one link target per device, plus the pop-up.
+(function(){
+  var row=document.querySelector(".save-contact"),
+      btn=document.querySelector(".save-contact__btn"),
+      num=document.querySelector(".save-contact__number"),
+      qr=document.querySelector(".save-contact__qr"),
+      pop=document.getElementById("save-popup");
+  if(!row||!btn||!num||!pop) return;
+  var popBtn=pop.querySelector(".save-popup__btn"),
+      closeBtn=pop.querySelector(".save-popup__close");
+
+  // iPhone opens the .vcf straight into "Create New Contact". Android would
+  // download it as a file instead, so there the button opens the dialer with
+  // the number typed in (it doesn't call), where "Create new contact" is one
+  // tap away. The number is read from the visible text, which
+  // set-contact-number.py keeps current.
+  var digits=num.textContent.replace(/\D/g,"");
+  if(digits.length===10) digits="1"+digits;
+  if(/Android/i.test(navigator.userAgent)){
+    btn.setAttribute("href","tel:+"+digits);
+    popBtn.setAttribute("href","tel:+"+digits);
+  }
+  pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
+  if(qr) pop.querySelector(".save-popup__qr").innerHTML=qr.innerHTML;
+
+  // at most once per visit, and never after they've tapped Save Number
+  var KEY="savePopupDone";
+  function isDone(){try{return !!sessionStorage.getItem(KEY)}catch(e){return false}}
+  function markDone(){try{sessionStorage.setItem(KEY,"1")}catch(e){}}
+
+  var lastFocus=null;
+  function onKey(e){
+    if(e.key==="Escape"){close();return}
+    if(e.key!=="Tab") return;
+    // keep Tab inside the pop-up
+    var f=[].filter.call(pop.querySelectorAll("button,a[href]"),function(el){return el.offsetParent!==null});
+    if(!f.length) return;
+    var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  }
+  function open(){
+    if(isDone()) return;
+    markDone();
+    lastFocus=document.activeElement;
+    pop.classList.add("active");
+    pop.removeAttribute("aria-hidden");
+    document.body.style.overflow="hidden";
+    document.addEventListener("keydown",onKey);
+    closeBtn.focus({preventScroll:true});
+  }
+  function close(){
+    if(!pop.classList.contains("active")) return;
+    pop.classList.remove("active");
+    pop.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    document.removeEventListener("keydown",onKey);
+    if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
+  }
+  btn.addEventListener("click",markDone);
+  popBtn.addEventListener("click",close);
+  closeBtn.addEventListener("click",close);
+  pop.addEventListener("click",function(e){if(e.target===pop) close()});
+
+  // desktop: the row is hidden there, so open after 5 seconds instead
+  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
+    setTimeout(open,5000);
+    return;
+  }
+
+  // phones: open once the save row has scrolled off the top of the screen:
+  // they've seen the video and the row and kept going without saving
+  if(!("IntersectionObserver" in window)) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting&&en.boundingClientRect.bottom<=0){
+        io.disconnect();
+        open();
+      }
+    });
+  });
+  io.observe(row);
+})();
+</script>
+
+<script>!function(){var e="cubic-bezier(0.4,0,0.2,1)";document.querySelectorAll(".faq-item").forEach(function(t){var i=t.querySelector(".faq-item__summary"),n=t.querySelector(".faq-item__body");i&&n&&(n.style.display="block",n.style.overflow="hidden",n.style.maxHeight=t.open?"none":"0",t.open&&t.classList.add("faq-item--open"),i.addEventListener("click",function(i){if(i.preventDefault(),t.open){var a=n.scrollHeight;t.classList.remove("faq-item--open");var o=n.animate([{maxHeight:a+"px"},{maxHeight:"0px"}],{duration:380,easing:e,fill:"forwards"});o.onfinish=function(){t.removeAttribute("open"),o.cancel(),n.style.maxHeight="0"}}else t.setAttribute("open",""),t.classList.add("faq-item--open"),n.style.maxHeight="0",requestAnimationFrame(function(){var t=n.scrollHeight;n.animate([{maxHeight:"0px"},{maxHeight:t+"px"}],{duration:380,easing:e}).onfinish=function(){n.style.maxHeight="none"}})}))})}()</script>
+
+</body>
+</html>
