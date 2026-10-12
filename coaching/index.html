@@ -119,7 +119,6 @@ strong{font-weight:600}
 @media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
 .announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
-@media (hover:hover) and (pointer:fine){.announcement__close:hover{color:var(--text)}}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
@@ -165,9 +164,16 @@ strong{font-weight:600}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
 .faq-item__body-inner strong{color:var(--text)}
+/* 700px+ (the list is a fixed 640px from 672px): the short labels line up
+   as one left-aligned column, centred in the gap between the longest
+   question ("How much time does this take?") and the +. Retune 22rem if a longer question is
+   added; until then a longer one wraps. Phones keep the label against the +. */
+@media (min-width:700px){
+  .faq-item__question{flex:0 0 22rem}
+  .faq-item__short{margin:0 auto 0 0}
+}
 
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
-.legal-link:hover{color:var(--link)}
 
 /* disclaimers — now live inside the footer, so they inherit its dark panel
    background rather than needing one of their own. */
@@ -205,7 +211,6 @@ footer a{color:var(--link);text-decoration:none}
 .legal-modal-body ul{margin:0 0 .875rem 1.125rem}
 .legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.25rem}
 .legal-modal-body a{color:var(--link);text-decoration:none}
-.legal-modal-body a:hover{color:var(--link)}
 .legal-modal-body strong{color:var(--text);font-weight:600}
 
 /* the popup is a full-height panel that slides in from the right on every
@@ -214,9 +219,6 @@ footer a{color:var(--link);text-decoration:none}
   .legal-modal{width:min(30rem,100%);border-left:1px solid var(--card-border,#3d3d3d)}
 }
 
-@media(hover:hover) and (pointer:fine){
-  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
-}
 
 /* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split. */
 @media (min-width:900px){
@@ -252,7 +254,6 @@ footer{background:#eee}
 .common-questions{background:#eee}
 .legal-modal{background:#f7f7f7;border-color:var(--card-border)}
 .legal-modal-close{color:var(--muted)}
-.legal-modal-close:hover{background:none;color:var(--text)}
 .legal-modal-body h2{color:var(--text)}
 .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
 .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
