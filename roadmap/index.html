@@ -159,9 +159,7 @@ strong{font-weight:600}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:var(--text);display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#1c1c1c}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--link);text-decoration:none;font-family:inherit;transition:color 0s}
-.legal-link:hover{color:var(--link)}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:var(--muted);text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
-.signup-back-link:hover{color:var(--text)}
 .signup-back-link svg{flex-shrink:0}
 
 /* disclaimers — now live inside the footer, so they inherit its dark panel
@@ -200,7 +198,6 @@ footer a{color:var(--link);text-decoration:none}
 .legal-modal-body ul{margin:0 0 .875rem 1.125rem}
 .legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#a8afba;margin-bottom:.25rem}
 .legal-modal-body a{color:var(--link);text-decoration:none}
-.legal-modal-body a:hover{color:var(--link)}
 .legal-modal-body strong{color:var(--text);font-weight:600}
 
 /* the popup is a full-height panel that slides in from the right on every
@@ -210,9 +207,8 @@ footer a{color:var(--link);text-decoration:none}
 }
 
 @media(hover:hover) and (pointer:fine){
-  .legal-modal-close:hover{background-color:rgba(235,235,235,.1);color:#fff}
   /* hover stays black: a lighter black, and the chevron steps 3px right.
-     Instant, like every other hover on the page (no transition). */
+     Instant (no transition); the only hover state on the site. */
   .signup-submit:not(:disabled):hover{background:#333}
   .signup-submit:not(:disabled):hover .btn-chevron{transform:translateX(3px)}
 }
@@ -255,7 +251,6 @@ footer{background:#eee}
 .check-icon{color:#f7f7f7}
 .legal-modal{background:#f7f7f7;border-color:var(--card-border)}
 .legal-modal-close{color:var(--muted)}
-.legal-modal-close:hover{background:none;color:var(--text)}
 .legal-modal-body h2{color:var(--text)}
 .legal-modal-body h3{color:var(--text);border-top-color:var(--card-border)}
 .legal-modal-body p,.legal-modal-body ul li,.legal-modal-body .legal-effective{color:#4a4a4a}
