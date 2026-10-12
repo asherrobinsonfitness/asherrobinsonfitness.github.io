@@ -2,26 +2,97 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>Book Your Free Consultation</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lose Your First 10 Pounds in 6 Weeks - Asher Robinson</title>
+<meta name="description" content="Lose your first 10 pounds in 6 weeks. Hit it, and get your money back. Follow the plan and miss it, and get up to 6 more weeks of free coaching.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
-<link rel="shortcut icon" href="/assets/favicon.jpg">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<link rel="icon" type="image/webp" sizes="192x192" href="/assets/android-chrome-192x192.webp">
-<link rel="icon" type="image/webp" sizes="512x512" href="/assets/android-chrome-512x512.webp">
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#f7f7f7">
+<!-- Meta Pixel Code -->
+<script>
+// Shared helpers for Meta Pixel + Conversions API deduplication.
+// Each conversion event gets one event_id shared by both the browser pixel
+// call and the server-side CAPI call so Meta counts it once, not twice.
+function __fbEventId() {
+  return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+}
+function __fbCookie(name) {
+  var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : undefined;
+}
+function __fbCapi(eventName, eventId, customData, userData) {
+  try {
+    fetch('/api/meta-capi', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData || {},
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+// First-touch acquisition-path marker. Set once, on entry to a funnel, and
+// never overwritten — whichever page the visitor's session actually started
+// on decides "lead_magnet" vs "direct" for this browser, even if they come
+// back through a different page days later. Mirrors __fbCookie's own cookie
+// pattern; read back via __fbCookie('acq_path') wherever a Meta content_name
+// needs to reflect it (Purchase, CompleteRegistration). Also pushed to
+// PostHog as a $set_once person property (2nd arg) so it can't be
+// overwritten there either, no matter how many times this runs.
+function __acqPathInit(value) {
+  if (__fbCookie('acq_path')) return;
+  var oneYear = 60 * 60 * 24 * 365;
+  document.cookie = 'acq_path=' + value + '; Path=/; Max-Age=' + oneYear + '; SameSite=Lax';
+  if (window.posthog && posthog.setPersonProperties) posthog.setPersonProperties(undefined, { acquisition_path: value });
+}
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'/edge/fbevents.js');
+fbq('init', '1575468926630270');
+var __pvEventId = __fbEventId();
+fbq('track', 'PageView', {}, {eventID: __pvEventId});
+__fbCapi('PageView', __pvEventId);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ji Yi init fn mn Hr pn bn cn capture calculateEventProperties Sn register register_once register_for_session unregister unregister_for_session In getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Mn identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Cn xn createPersonProfile setInternalOrTestUser Tn hn Pn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing debug Ur wt getPageViewId captureTraceFeedback captureTraceMetric an".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    // posthog-js mints and persists its own distinct_id (no cookie bootstrap).
+    posthog.init('phc_utdoPENXNndee2XS4QgEAEUAU5JHyMCFzLciVREuJXGQ', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'always',
+        autocapture: false,
+    })
+    __acqPathInit('direct');
+    posthog.capture('coaching_pageview');
+</script>
+<!-- End PostHog -->
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-semi-condensed-700-latin.woff2" crossorigin>
 <link rel="preconnect" href="https://fast.vidalytics.com">
-<link rel="dns-prefetch" href="https://fast.vidalytics.com">
+<link rel="preconnect" href="https://app.iclosed.io">
 <style>
 :root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828}
 :root{--pad:2.5rem;--link:#4d94ff;--card-border:#3d3d3d}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
-/* second-bar label face only (OFL, Latin subset). 700 is in use; 600 stays
-   declared (it only downloads if used) so stepping back is a one-number edit */
+/* second-bar label face only (OFL, Latin subset), 700 weight */
 @font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/barlow-semi-condensed-700-latin.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
@@ -40,7 +111,7 @@ strong{font-weight:600}
 @media (max-width:899px){.status-bar{font-size:.875rem}}
 
 /* announcement bar — one quiet line at the very top, above the status bar
-   (matches booked/). Light strip with a hairline under it and a dismiss X on
+   (matches scheduled/). Light strip with a hairline under it and a dismiss X on
    the right; the X just removes the bar for this page view. */
 .announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:400;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
 /* left-aligned on phones and tablets, right-aligned (next to the X) on desktop */
@@ -66,7 +137,7 @@ strong{font-weight:600}
 .booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
 
-/* shared section title — same treatment as "Common Questions" on the root page */
+/* shared section title — same treatment as "Common Questions" */
 .section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
 
 /* third section — common questions */
@@ -122,7 +193,7 @@ footer a{color:var(--link);text-decoration:none}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .legal-modal{background:#222;border:none;border-radius:0;width:100%;height:100%;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .22s ease}
 .legal-overlay.active .legal-modal{transform:translateX(0)}
-/* header — a slim strip with a hairline under it, like the bars atop meeting/ */
+/* header — a slim strip with a hairline under it, like the bars atop coaching/ */
 .legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
 .legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:rgba(255,255,255,.65);border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
@@ -451,7 +522,7 @@ footer{background:#eee}
       <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
       <p>If you book a meeting, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
       <h3>5. Advertising and Analytics</h3>
-      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
       <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
       <h3>6. Sharing of Information</h3>
       <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
