@@ -1,8 +1,8 @@
 const crypto = require('crypto');
 
 // Files/folders prefixed with "_" under /api are not deployed as routes by
-// Vercel — this is a shared module imported by the actual endpoint handlers
-// (api/meta-capi.js and api/stripe-webhook.js), not a route itself.
+// Vercel — this is a shared module imported by the endpoint handler
+// (api/meta-capi.js), not a route itself.
 
 const PIXEL_ID = process.env.META_PIXEL_ID;
 const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
@@ -13,6 +13,7 @@ const GRAPH_VERSION = process.env.META_GRAPH_API_VERSION || 'v21.0';
 const ALLOWED_EVENTS = new Set([
     'PageView',
     'Lead',
+    'Schedule',
     'Purchase',
     'ViewContent',
     'InitiateCheckout',
