@@ -3,7 +3,7 @@
 
 Usage: python3 scripts/set-contact-number.py +15555550123   (needs: pip3 install segno)
 
-Updates: asher-robinson.vcf (TEL line), booked/index.html (visible number + QR code).
+Updates: asher-robinson.vcf (TEL line), scheduled/index.html (visible number + QR code).
 """
 import re, sys
 from pathlib import Path
@@ -30,10 +30,10 @@ card = f"BEGIN:VCARD\nVERSION:3.0\nFN:Asher Robinson\nTEL;TYPE=CELL:{e164}\nEND:
 svg = segno.make(card, error="l").svg_inline(scale=1, border=0, dark="#000", light=None, omitsize=True)
 svg = svg.replace('class="segno"', 'role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"').replace(' class="qrline"', "")
 
-page = ROOT / "booked" / "index.html"
+page = ROOT / "scheduled" / "index.html"
 h = page.read_text()
 h, n1 = re.subn(r'(<div class="save-contact__qr">).*?(</div>)', lambda m: m.group(1) + svg + m.group(2), h, count=1, flags=re.S)
 h, n2 = re.subn(r'(<p class="save-contact__number">)[^<]*(</p>)', lambda m: m.group(1) + shown + m.group(2), h, count=1)
-assert n1 == 1 and n2 == 1, "markup not found in booked/index.html"
+assert n1 == 1 and n2 == 1, "markup not found in scheduled/index.html"
 page.write_text(h)
 print(f"Set {shown} ({e164})")
