@@ -154,14 +154,17 @@ strong{font-weight:600}
   .save-contact{display:none}
 }
 
-/* save-number pop-up — phones only: opens once per visit when the save row
-   scrolls off the top of the screen without having been tapped. The 472px cap matches the contact row,
+/* save-number pop-up — on phones it opens once per visit when the save row
+   scrolls off the top of the screen without having been tapped; on desktop
+   it opens whenever the corner card is clicked, with the QR (copied from the
+   card) in place of the button. The 472px cap matches the contact row,
    so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
    fade as coaching/'s Terms popup; 8px card like the row, 4px button like the
    rest of the page; the banner's X. */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--card-border);border-radius:8px;text-align:center;color:var(--text)}
+.save-popup__card:focus{outline:none}
 .save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
 .save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
@@ -171,15 +174,28 @@ strong{font-weight:600}
 .save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
 .save-popup__btn svg{flex-shrink:0}
-@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
+.save-popup__qr,.save-popup__hint{display:none}
+.save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid var(--border);border-radius:8px;line-height:0}
+.save-popup__qr svg{display:block;width:100%;height:auto}
+.save-popup__hint{align-items:center;gap:.375rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#ececec;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-popup__hint svg{flex-shrink:0}
+@media (hover:hover) and (pointer:fine){
+  .save-popup__close:hover{color:var(--text)}
+  .save-popup__btn{display:none}
+  .save-popup__qr{display:block}
+  .save-popup__hint{display:inline-flex}
+}
+@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active,.save-corner{transition:none}}
 /* desktop save-number card — pinned bottom-right for the whole visit, no
    close button (like X's "Scan to get the app"). Photo with the online dot,
-   the QR, a camera hint. Keep .save-corner__qr: set-contact-number.py
+   the QR, a camera hint. Hover lifts it; a click opens the pop-up with a
+   bigger QR. Keep .save-corner__qr: set-contact-number.py
    rewrites it. The QR svg has no quiet zone of its own; the card's white
    padding is it. */
 .save-corner{display:none}
 @media (hover:hover) and (pointer:fine){
-  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text)}
+  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+  .save-corner:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.18);border-color:var(--card-border)}
 }
 .save-corner__head{display:flex;align-items:center;gap:.625rem;margin-bottom:1rem;text-align:left}
 .save-corner__photo{position:relative;flex-shrink:0;line-height:0}
@@ -264,6 +280,9 @@ footer{background:#eee}
 .booking-section{background:#eee}
 .common-questions{background:#eee}
 .hero-media{background:#eee}
+/* keyboard focus ring in the page's near-black instead of the browser's
+   blue. :focus-visible only shows for keyboard use, not mouse clicks or taps. */
+:focus-visible{outline:2px solid var(--text);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -402,25 +421,30 @@ footer{background:#eee}
 </div>
 
 <div class="save-popup" id="save-popup" aria-hidden="true">
-  <div class="save-popup__card" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
+  <div class="save-popup__card" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
     <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
     <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
     <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
     <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
     <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+    <div class="save-popup__qr"></div>
+    <p class="save-popup__hint"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
   </div>
 </div>
 
 <script>
-// Save Number (phones): one link target per device, plus the pop-up.
+// Save Number: one link target per device, the pop-up, and the desktop
+// corner card that opens it.
 (function(){
   var row=document.querySelector(".save-contact"),
       btn=document.querySelector(".save-contact__btn"),
       num=document.querySelector(".save-contact__number"),
-      pop=document.getElementById("save-popup");
+      pop=document.getElementById("save-popup"),
+      corner=document.querySelector(".save-corner");
   if(!row||!btn||!num||!pop) return;
   var popBtn=pop.querySelector(".save-popup__btn"),
-      closeBtn=pop.querySelector(".save-popup__close");
+      closeBtn=pop.querySelector(".save-popup__close"),
+      card=pop.querySelector(".save-popup__card");
 
   // iPhone opens the .vcf straight into "Create New Contact". Android would
   // download it as a file instead, so there the button opens the dialer with
@@ -434,6 +458,7 @@ footer{background:#eee}
     popBtn.setAttribute("href","tel:+"+digits);
   }
   pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
+  if(corner) pop.querySelector(".save-popup__qr").innerHTML=corner.querySelector(".save-corner__qr").innerHTML;
 
   // at most once per visit, and never after they've tapped Save Number
   var KEY="savePopupDone";
@@ -448,18 +473,22 @@ footer{background:#eee}
     var f=[].filter.call(pop.querySelectorAll("button,a[href]"),function(el){return el.offsetParent!==null});
     if(!f.length) return;
     var first=f[0],last=f[f.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    if(e.shiftKey&&(document.activeElement===first||document.activeElement===card)){e.preventDefault();last.focus()}
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
   }
+  // phones: at most once per visit
   function open(){
     if(isDone()) return;
     markDone();
+    show();
+  }
+  function show(){
     lastFocus=document.activeElement;
     pop.classList.add("active");
     pop.removeAttribute("aria-hidden");
     document.body.style.overflow="hidden";
     document.addEventListener("keydown",onKey);
-    closeBtn.focus({preventScroll:true});
+    card.focus({preventScroll:true});
   }
   function close(){
     if(!pop.classList.contains("active")) return;
@@ -474,8 +503,11 @@ footer{background:#eee}
   closeBtn.addEventListener("click",close);
   pop.addEventListener("click",function(e){if(e.target===pop) close()});
 
-  // desktop: no row and no pop-up there; the corner card covers it
-  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  // desktop: no row there; the corner card opens the pop-up on every click
+  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
+    if(corner) corner.addEventListener("click",show);
+    return;
+  }
 
   // phones: open once the save row has scrolled off the top of the screen:
   // they've seen the video and the row and kept going without saving
