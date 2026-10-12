@@ -232,9 +232,13 @@ footer a{color:var(--link);text-decoration:none}
 :root{--text:#111111;--muted:#4a4a4a;--link:#0047b3;--border:#e0e0e0;--card-border:#d5d5d5;--step-secondary:#bbbbbb;--input-border:#d0d0d0}
 body{background:#f7f7f7}
 .container{background:#f7f7f7}
+/* faint dot grid behind the top section. Stacked layout: fades in from the top.
+   50/50 split: fades in and back out, so the dots sit behind the centered content. */
+.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 45%),radial-gradient(circle,rgba(0,0,0,.08) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}
+@media (min-width:900px){.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 35%,#f7f7f700 65%,#f7f7f7),radial-gradient(circle,rgba(0,0,0,.08) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}}
 footer{background:#eee}
 .results-section{background:#eee}
-.hero-media-row{background:#eee}
+.hero-media-row{background:#eee;border:1px solid var(--border)}
 .signup-unit-input{border-color:#d0d0d0}
 .bf-option__img{border-color:#d0d0d0;background:#e2e2e2}
 .email-spinner{border-color:#d0d0d0;border-top-color:#111}
@@ -543,7 +547,7 @@ footer{background:#eee}
         <li><strong>Stripe, Inc.:</strong> payment processing</li>
         <li><strong>PostHog:</strong> site analytics</li>
         <li><strong>Meta Platforms, Inc.:</strong> advertising measurement and targeting</li>
-        <li><strong>Coaching app provider:</strong> delivery of your training and check-in program</li>
+        <li><strong>HubFit:</strong> delivery of your training and check-in program</li>
       </ul>
       <p>I may also disclose information if required by law, court order, or to protect the rights or safety of Asher Robinson LLC or others.</p>
       <h3>7. Cookies</h3>
