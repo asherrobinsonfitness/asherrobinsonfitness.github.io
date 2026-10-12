@@ -151,7 +151,6 @@ strong{font-weight:600}
 .bf-option[aria-checked=true] .bf-option__label{color:#111}
 .signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-weight:600;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
 .signup-submit:disabled{background:var(--card-border);color:var(--muted);cursor:not-allowed}
-.signup-submit:disabled:hover{background:var(--card-border)}
 /* chevron sits right after the label (the button's own gap spaces it) */
 .btn-chevron{flex-shrink:0}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
@@ -204,13 +203,6 @@ footer a{color:var(--link);text-decoration:none}
    screen: full width on phones, a 480px panel on desktop */
 @media (min-width:900px){
   .legal-modal{width:min(30rem,100%);border-left:1px solid var(--card-border,#3d3d3d)}
-}
-
-@media(hover:hover) and (pointer:fine){
-  /* hover stays black: a lighter black, and the chevron steps 3px right.
-     Instant (no transition); the only hover state on the site. */
-  .signup-submit:not(:disabled):hover{background:#333}
-  .signup-submit:not(:disabled):hover .btn-chevron{transform:translateX(3px)}
 }
 
 /* desktop — swap the stacked hero/form layout for a 50/50 side-by-side split.
