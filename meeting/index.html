@@ -185,17 +185,16 @@ strong{font-weight:600}
   .save-popup__qr{display:block}
   .save-popup__hint{display:inline-flex}
 }
-@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active,.save-corner{transition:none}}
+@media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
 /* desktop save-number card — pinned bottom-right for the whole visit, no
    close button (like X's "Scan to get the app"). Photo with the online dot,
-   the QR, a camera hint. Hover lifts it; a click opens the pop-up with a
-   bigger QR. Keep .save-corner__qr: set-contact-number.py
+   the QR, a camera hint. A click opens the pop-up with a bigger QR; no
+   hover state. Keep .save-corner__qr: set-contact-number.py
    rewrites it. The QR svg has no quiet zone of its own; the card's white
    padding is it. */
 .save-corner{display:none}
 @media (hover:hover) and (pointer:fine){
-  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
-  .save-corner:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.18);border-color:var(--card-border)}
+  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text);cursor:pointer}
 }
 .save-corner__head{display:flex;align-items:center;gap:.625rem;margin-bottom:1rem;text-align:left}
 .save-corner__photo{position:relative;flex-shrink:0;line-height:0}
@@ -281,8 +280,10 @@ footer{background:#eee}
 .common-questions{background:#eee}
 .hero-media{background:#eee}
 /* keyboard focus ring in the page's near-black instead of the browser's
-   blue. :focus-visible only shows for keyboard use, not mouse clicks or taps. */
-:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+   blue. :focus-visible only shows for keyboard use, not mouse clicks or taps.
+   :where() keeps it at zero specificity, so components with their own focus
+   style (e.g. inputs with outline:0) keep it. */
+:where(:focus-visible){outline:2px solid var(--text);outline-offset:2px}
 </style>
 </head>
 <body>
