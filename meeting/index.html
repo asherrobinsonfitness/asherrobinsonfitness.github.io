@@ -9,7 +9,6 @@
 <link rel="icon" type="image/webp" sizes="32x32" href="/assets/favicon-32x32.webp">
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#f7f7f7">
 <!-- Meta Pixel Code -->
 <script>
@@ -103,34 +102,38 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 <link rel="preconnect" href="https://fast.vidalytics.com">
 <link rel="preconnect" href="https://app.iclosed.io">
 <style>
-:root{--pad-sm:2rem;--text:#f8fafc;--muted:#a8afba;--border:#282828;--card-border:#3d3d3d}
+:root{--pad-sm:2rem}
 @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{color:var(--text);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#1c1c1c}
+body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#f7f7f7}
 strong{font-weight:600}
-.container{display:flex;flex-direction:column;background:#1c1c1c}
+.container{display:flex;flex-direction:column;background:#f7f7f7}
 
 /* section dividers — standalone elements rather than borders on the sections
    themselves. Horizontal by default (stacked layout); the one between
    hero-grid and booking-section flips to a vertical rule once the desktop
    side-by-side split kicks in. */
-.section-divider{flex-shrink:0;width:100%;height:1px;background:var(--border)}
+.section-divider{flex-shrink:0;width:100%;height:1px;background:#d5d5d5}
 
 /* announcement bar — one quiet line above everything else, matching the
    meeting page's. Light strip with a hairline under it and a dismiss X on
    the right; the X just removes the bar for this page view. */
-.announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;color:var(--text);font-size:.8125rem;font-weight:400;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 var(--border)}
+.announcement{display:flex;align-items:center;gap:1rem;background:#f7f7f7;font-size:.8125rem;font-weight:400;line-height:1.4;padding:.5rem 1rem;box-shadow:inset 0 -1px 0 #d5d5d5}
 /* left-aligned on phones and tablets, right-aligned (next to the X) on desktop */
 .announcement__text{flex:1 1 auto;min-width:0}
 @media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
-.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:var(--muted);cursor:pointer}
+.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:#4a4a4a;cursor:pointer}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
+/* faint dot grid behind the top section. Stacked layout: fades in from the top.
+   50/50 split: fades in and back out, so the dots sit behind the centered content. */
+.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 45%),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}
+@media (min-width:900px){.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 35%,#f7f7f700 65%,#f7f7f7),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:500;line-height:1.22}
-.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;margin:.75rem auto 0}
-.hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:#4a4a4a;line-height:1.6;margin:.75rem auto 0}
+.hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#eee;overflow:hidden}
 /* save contact — a quiet attachment-style row under the video (photo, name,
    number, small pill button), deliberately lighter than the video. The pill's
    ::after stretches over the whole row so the row is the tap target. Phones
@@ -138,15 +141,15 @@ strong{font-weight:600}
    set-contact-number.py rewrites it, and the script at the bottom reads it
    (tel: link, pop-up text). */
 .save-contact{margin-top:1.5rem}
-.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid var(--border);border-radius:8px;text-align:left}
+.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;text-align:left}
 .contact-card__photo{position:relative;flex-shrink:0;line-height:0}
 .contact-card__photo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
 /* "online" dot, scaled down from the pop-up's; white ring = the card */
-.contact-card__photo::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#2fb463;border:2px solid #fff}
+.contact-card__photo::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#18874a;border:2px solid #fff}
 .contact-card__info{flex:1 1 auto;min-width:0}
 .contact-card__name{font-size:.875rem;font-weight:600;line-height:1.3}
-.save-contact__number{font-size:.8125rem;line-height:1.35;color:var(--muted)}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid var(--border);border-radius:999px;background:#fff;color:var(--text);font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
+.save-contact__number{font-size:.8125rem;line-height:1.35;color:#4a4a4a}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;color:#111;font-size:.8125rem;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
 .save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
 .save-contact__btn svg{flex-shrink:0}
 @media (hover:hover) and (pointer:fine){
@@ -162,21 +165,21 @@ strong{font-weight:600}
    rest of the page; the banner's X. */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid var(--border);border-radius:8px;text-align:center;color:var(--text)}
+.save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid #d5d5d5;border-radius:8px;text-align:center}
 .save-popup__card:focus{outline:none}
-.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:var(--muted);cursor:pointer}
+.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:#4a4a4a;cursor:pointer}
 .save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
 /* "online" dot */
-.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#2fb463;border:2px solid #f7f7f7}
+.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
 .save-popup__title{font-size:1.25rem;font-weight:500;line-height:1.25}
-.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
+.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.5;color:#4a4a4a}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:600;line-height:1.2;text-decoration:none}
 .save-popup__btn svg{flex-shrink:0}
 .save-popup__qr,.save-popup__hint{display:none}
-.save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid var(--border);border-radius:8px;line-height:0}
+.save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid #d5d5d5;border-radius:8px;line-height:0}
 .save-popup__qr svg{display:block;width:100%;height:auto}
-.save-popup__hint{align-items:center;gap:.375rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#ececec;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-popup__hint{align-items:center;gap:.375rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
 .save-popup__hint svg{flex-shrink:0}
 @media (hover:hover) and (pointer:fine){
   .save-popup__btn{display:none}
@@ -192,60 +195,60 @@ strong{font-weight:600}
    padding is it. */
 .save-corner{display:none}
 @media (hover:hover) and (pointer:fine){
-  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;color:var(--text);cursor:pointer}
+  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;cursor:pointer}
 }
 .save-corner__head{display:flex;align-items:center;gap:.625rem;margin-bottom:1rem;text-align:left}
 .save-corner__photo{position:relative;flex-shrink:0;line-height:0}
 .save-corner__photo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
 /* "online" dot, same as the row's; white ring = the card */
-.save-corner__photo::after{content:"";position:absolute;right:-1px;bottom:0;width:10px;height:10px;border-radius:50%;background:#2fb463;border:2px solid #fff}
+.save-corner__photo::after{content:"";position:absolute;right:-1px;bottom:0;width:10px;height:10px;border-radius:50%;background:#18874a;border:2px solid #fff}
 .save-corner__title{font-size:.875rem;font-weight:600;line-height:1.25}
-.save-corner__text{margin-top:1px;font-size:.75rem;line-height:1.35;color:var(--muted);white-space:nowrap}
+.save-corner__text{margin-top:1px;font-size:.75rem;line-height:1.35;color:#4a4a4a;white-space:nowrap}
 .save-corner__qr{width:164px;margin:0 auto;line-height:0}
 .save-corner__qr svg{display:block;width:100%;height:auto}
-.save-corner__hint{display:inline-flex;align-items:center;gap:.375rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#f1f1f1;font-size:.75rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-corner__hint{display:inline-flex;align-items:center;gap:.375rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#eee;font-size:.75rem;font-weight:500;line-height:1.2;white-space:nowrap}
 .save-corner__hint svg{flex-shrink:0}
 /* what happens next — numbered steps in the same hairline-row style as the
    FAQ list, then iClosed's meeting details. */
-.next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid var(--border);text-align:left}
-.next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid var(--border)}
-.next-step__num{flex-shrink:0;font-size:.8125rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
-.next-step__title{font-size:.9375rem;font-weight:500;line-height:1.35;color:var(--text)}
-.next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:var(--muted)}
+.next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid #d5d5d5;text-align:left}
+.next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid #d5d5d5}
+.next-step__num{flex-shrink:0;font-size:.8125rem;font-weight:500;color:#4a4a4a;font-variant-numeric:tabular-nums}
+.next-step__title{font-size:.9375rem;font-weight:500;line-height:1.35}
+.next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
 .call-details-widget{margin-top:1.5rem}
 
 /* shared section title — same treatment as "Common Questions" */
-.section-title{font-size:1.5rem;font-weight:500;line-height:1.15;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
+.section-title{font-size:1.5rem;font-weight:500;line-height:1.15;margin:0 auto 1.25rem;text-align:center;max-width:36rem;padding:0 .5rem}
 
 /* second section — the booking calendar */
-.booking-section{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
+.booking-section{background:#eee;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
 
 /* third section — common questions */
-.common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
+.common-questions{background:#eee;padding:var(--pad-sm) 1rem var(--pad-sm)}
 /* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
 .common-questions__inner{max-width:640px;margin:0 auto}
-.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;color:var(--text);user-select:none}
+.faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid #d5d5d5}
+.faq-item{border-bottom:1px solid #d5d5d5}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;user-select:none}
 .faq-item__summary::-webkit-details-marker{display:none}
 /* quick answer — sits in the row next to the toggle, visible open or closed
    (Buck Mason's label/value rows); the full answer still drops down below */
 .faq-item__question{flex:1 1 auto;min-width:0}
-.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:var(--muted);white-space:nowrap}
-.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:var(--muted)}
+.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:#4a4a4a;white-space:nowrap}
+.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:#4a4a4a}
 .faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
 .faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
 .faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
 .faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
 .faq-item__body-inner{padding:0 .25rem 1.25rem}
-.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;color:var(--muted);margin:0}
+.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;color:#4a4a4a;margin:0}
 .faq-item__body-inner p+p{margin-top:.75rem}
 .faq-item__body-inner ul{margin:.5rem 0 0;padding-left:1.25rem}
-.faq-item__body-inner li{font-size:.9375rem;line-height:1.6;color:var(--muted)}
+.faq-item__body-inner li{font-size:.9375rem;line-height:1.6;color:#4a4a4a}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
-.faq-item__body-inner strong{color:var(--text)}
+.faq-item__body-inner strong{color:#111}
 /* 700px+ (the list is a fixed 640px from 672px): the short labels line up
    as one left-aligned column, centred in the gap between the longest
    question ("Is this right for my starting point?") and the +. Retune 23rem if a longer question is
@@ -256,9 +259,9 @@ strong{font-weight:600}
 }
 
 /* footer */
-footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--muted)}
+footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;color:#4a4a4a}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
-.copyright{color:var(--muted)}
+.copyright{color:#4a4a4a}
 .footer-row{display:flex;justify-content:center;align-items:center}
 
 /* desktop — swap the stacked hero/booking layout for a 50/50 side-by-side split.
@@ -275,25 +278,11 @@ footer{background:#161616;padding:2.5rem 1rem;font-size:.8125rem;color:var(--mut
   .section-divider--split{width:1px;height:auto;align-self:stretch}
 }
 
-/* light theme only — these overrides used to apply just for light-mode
-   devices; they now always apply, on top of the dark defaults above. */
-:root{color-scheme:light only}
-:root{--text:#111111;--muted:#4a4a4a;--border:#d5d5d5}
-body{background:#f7f7f7}
-.container{background:#f7f7f7}
-/* faint dot grid behind the top section. Stacked layout: fades in from the top.
-   50/50 split: fades in and back out, so the dots sit behind the centered content. */
-.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 45%),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}
-@media (min-width:900px){.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 35%,#f7f7f700 65%,#f7f7f7),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}}
-footer{background:#eee}
-.booking-section{background:#eee}
-.common-questions{background:#eee}
-.hero-media{background:#eee}
 /* keyboard focus ring in the page's near-black instead of the browser's
    blue. :focus-visible only shows for keyboard use, not mouse clicks or taps.
    :where() keeps it at zero specificity, so components with their own focus
    style (e.g. inputs with outline:0) keep it. */
-:where(:focus-visible){outline:2px solid var(--text);outline-offset:2px}
+:where(:focus-visible){outline:2px solid #111;outline-offset:2px}
 </style>
 </head>
 <body>
