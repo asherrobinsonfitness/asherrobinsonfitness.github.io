@@ -129,8 +129,8 @@ strong{font-weight:600}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
-.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:600;line-height:1.22;letter-spacing:-.02em}
-.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;letter-spacing:-.005em;margin:.75rem auto 0}
+.headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:500;line-height:1.22}
+.subheadline{font-size:clamp(1rem,.93rem + .4vw,1.125rem);color:var(--muted);line-height:1.6;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#161616;overflow:hidden}
 
 /* second section — the booking calendar */
@@ -138,7 +138,7 @@ strong{font-weight:600}
 .booking-inner{width:100%;max-width:472px;margin:0 auto}
 
 /* shared section title — same treatment as "Common Questions" */
-.section-title{font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.02em;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
+.section-title{font-size:1.5rem;font-weight:500;line-height:1.15;margin:0 auto 1.25rem;text-align:center;color:var(--text);max-width:36rem;padding:0 .5rem}
 
 /* third section — common questions */
 .common-questions{background:#161616;padding:var(--pad-sm) 1rem var(--pad-sm)}
@@ -146,7 +146,7 @@ strong{font-weight:600}
 .common-questions__inner{max-width:640px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border)}
 .faq-item{border-bottom:1px solid var(--border)}
-.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--text);user-select:none}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.35;color:var(--text);user-select:none}
 .faq-item__summary::-webkit-details-marker{display:none}
 /* quick answer — sits in the row next to the toggle, visible open or closed
    (Buck Mason's label/value rows); the full answer still drops down below */
@@ -158,10 +158,10 @@ strong{font-weight:600}
 .faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
 .faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
 .faq-item__body-inner{padding:0 .25rem 1.25rem}
-.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted);margin:0}
+.faq-item__body-inner p{font-size:.9375rem;line-height:1.6;color:var(--muted);margin:0}
 .faq-item__body-inner p+p{margin-top:.75rem}
 .faq-item__body-inner ul{margin:.5rem 0 0;padding-left:1.25rem}
-.faq-item__body-inner li{font-size:.9375rem;line-height:1.6;letter-spacing:-.005em;color:var(--muted)}
+.faq-item__body-inner li{font-size:.9375rem;line-height:1.6;color:var(--muted)}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
 .faq-item__body-inner strong{color:var(--text)}
