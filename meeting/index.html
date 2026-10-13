@@ -141,13 +141,13 @@ strong{font-weight:500}
    set-contact-number.py rewrites it, and the script at the bottom reads it
    (tel: link, pop-up text). */
 .save-contact{margin-top:1.5rem}
-.contact-card{position:relative;display:flex;align-items:center;gap:.75rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;text-align:left}
+.contact-card{position:relative;display:flex;align-items:center;gap:.5rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;text-align:left}
 .contact-card__photo{position:relative;flex-shrink:0;line-height:0}
 .contact-card__photo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
 /* "online" dot, scaled down from the pop-up's; white ring = the card */
 .contact-card__photo::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#18874a;border:2px solid #fff}
 .contact-card__info{flex:1 1 auto;min-width:0}
-.contact-card__name{font-size:.9375rem;font-weight:500;line-height:1.4}
+.contact-card__name{font-size:.9375rem;font-weight:500;line-height:1.2}
 .save-contact__number{font-size:.8125rem;line-height:1.6;color:#4a4a4a}
 .save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;color:#111;font-size:.8125rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap}
 .save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
@@ -172,7 +172,7 @@ strong{font-weight:500}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
 /* "online" dot */
 .save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
-.save-popup__title{font-size:1.5rem;font-weight:400;line-height:1.25}
+.save-popup__title{font-size:1.5rem;font-weight:400;line-height:1.2}
 .save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none}
 .save-popup__btn svg{flex-shrink:0}
@@ -202,7 +202,7 @@ strong{font-weight:500}
 .save-corner__photo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
 /* "online" dot, same as the row's; white ring = the card */
 .save-corner__photo::after{content:"";position:absolute;right:-1px;bottom:0;width:10px;height:10px;border-radius:50%;background:#18874a;border:2px solid #fff}
-.save-corner__title{font-size:.9375rem;font-weight:500;line-height:1.4}
+.save-corner__title{font-size:.9375rem;font-weight:500;line-height:1.2}
 .save-corner__text{margin-top:1px;font-size:.8125rem;line-height:1.6;color:#4a4a4a;white-space:nowrap}
 .save-corner__qr{width:164px;margin:0 auto;line-height:0}
 .save-corner__qr svg{display:block;width:100%;height:auto}
@@ -213,12 +213,12 @@ strong{font-weight:500}
 .next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid #d5d5d5;text-align:left}
 .next-step{display:flex;align-items:baseline;gap:1rem;padding:1.15rem .25rem;border-bottom:1px solid #d5d5d5}
 .next-step__num{flex-shrink:0;font-size:.8125rem;line-height:1.6;color:#4a4a4a;font-variant-numeric:tabular-nums}
-.next-step__title{font-size:.9375rem;font-weight:500;line-height:1.4}
+.next-step__title{font-size:.9375rem;font-weight:500;line-height:1.2}
 .next-step__text{margin-top:.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
 .call-details-widget{margin-top:1.5rem}
 
 /* shared section title — same treatment as "Common Questions" */
-.section-title{font-size:1.5rem;font-weight:400;line-height:1.25;margin:0 auto 1.25rem;text-align:center;max-width:36rem;padding:0 .5rem}
+.section-title{font-size:1.5rem;font-weight:400;line-height:1.2;margin:0 auto 1.25rem;text-align:center;max-width:36rem;padding:0 .5rem}
 
 /* second section — the booking calendar */
 .booking-section{background:#eee;padding:var(--pad-sm) 1rem var(--pad-sm);width:100%}
@@ -230,7 +230,7 @@ strong{font-weight:500}
 .common-questions__inner{max-width:640px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid #d5d5d5}
 .faq-item{border-bottom:1px solid #d5d5d5}
-.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.4;user-select:none}
+.faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.2;user-select:none}
 .faq-item__summary::-webkit-details-marker{display:none}
 /* quick answer — sits in the row next to the toggle, visible open or closed
    (Buck Mason's label/value rows); the full answer still drops down below */
