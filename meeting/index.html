@@ -404,7 +404,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
   </div>
 </footer>
 
-<div class="save-corner">
+<div class="save-corner" role="button" tabindex="0" aria-label="Save my number, show a larger QR code">
   <div class="save-corner__head">
     <span class="save-corner__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
     <div>
@@ -502,7 +502,10 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
 
   // desktop: no row there; the corner card opens the pop-up on every click
   if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
-    if(corner) corner.addEventListener("click",show);
+    if(corner){
+      corner.addEventListener("click",show);
+      corner.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show()}});
+    }
     return;
   }
 
