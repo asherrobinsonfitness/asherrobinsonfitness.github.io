@@ -129,7 +129,7 @@ strong{font-weight:500}
 #su-email{padding-right:2.5rem}
 .email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
 .email-status.is-valid{color:#18874a}
-.email-status.is-invalid{color:#e53e3e}
+.email-status.is-invalid{color:#c53030}
 .email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #d5d5d5;border-top-color:#111;border-radius:50%;animation:email-spin .6s linear infinite}
 @keyframes email-spin{to{transform:rotate(360deg)}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -138,8 +138,16 @@ strong{font-weight:500}
 .signup-height-row{display:flex;gap:.75rem}
 .signup-unit-input{position:relative;flex:1;display:flex;align-items:center;border:1px solid #888;border-radius:4px;padding:.75rem 1rem;background:0 0;transition:border-color 0s ease,box-shadow 0s ease}
 .signup-unit-input:focus-within{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.1)}
+/* over the weight limit: red border, even while focused */
+.signup-unit-input.is-invalid{border-color:#c53030}
+.field-error{margin-top:.5rem;font-size:.8125rem;line-height:1.6;color:#c53030}
+.field-error:empty{display:none}
+/* name too short: red border (even while focused), message tucked under the field */
+.signup-input.is-invalid{border-color:#c53030}
+.signup-field+.field-error{margin:-.25rem 0 .75rem}
 .signup-unit-input__field{flex:1;width:0;min-width:0;border:none;background:0 0;outline:0;padding:0;color:#111;font-size:1rem;font-family:inherit}
-.signup-unit-input__field::placeholder{color:#4a4a4a}
+/* lighter than muted so an empty "0" doesn't read as typed; lightest gray that passes AA on #eee */
+.signup-unit-input__field::placeholder{color:#6b6b6b}
 .signup-unit-input__suffix{flex-shrink:0;margin-left:.5rem;color:#4a4a4a;font-size:.9375rem;line-height:1.6}
 .bf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem}
 .bf-option{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:0;border:none;background:0 0;color:#111;font-family:inherit;cursor:pointer;text-align:center;transition:color 0s ease}
@@ -157,7 +165,7 @@ strong{font-weight:500}
 .check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center}
 .check-icon{width:.6em;height:.6em;color:#f7f7f7}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
-.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.9rem auto 0;background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
 .signup-back-link svg{flex-shrink:0}
 
 /* disclaimers — now live inside the footer, so they inherit its
@@ -197,6 +205,8 @@ footer a{color:#0047b3;text-decoration:none}
 .legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#4a4a4a;margin-bottom:.25rem}
 .legal-modal-body a{color:#0047b3;text-decoration:none}
 .legal-modal-body strong{font-weight:500}
+/* phones/computers set to Reduce Motion: the popup opens and closes without the slide or fade */
+@media (prefers-reduced-motion:reduce){.legal-overlay,.legal-overlay.active,.legal-modal{transition:none}}
 
 /* the popup is a full-height panel that slides in from the right on every
    screen: full width on phones, a 480px panel on desktop */
@@ -259,13 +269,15 @@ footer a{color:#0047b3;text-decoration:none}
           <h2 class="signup-title" tabindex="-1">What's your name?</h2>
           <form id="form-name" novalidate>
             <div class="signup-field">
-              <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required>
+              <input class="signup-input" type="text" id="su-first" placeholder=" " autocomplete="given-name" required aria-describedby="su-first-error">
               <label class="signup-label" for="su-first">First name</label>
             </div>
+            <p class="field-error" id="su-first-error" aria-live="polite"></p>
             <div class="signup-field">
-              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required>
+              <input class="signup-input" type="text" id="su-last" placeholder=" " autocomplete="family-name" required aria-describedby="su-last-error">
               <label class="signup-label" for="su-last">Last name</label>
             </div>
+            <p class="field-error" id="su-last-error" aria-live="polite"></p>
             <button type="submit" class="signup-submit" id="btn-name" disabled>
               Continue
               <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
@@ -284,21 +296,22 @@ footer a{color:#0047b3;text-decoration:none}
               <label class="field-label">Height</label>
               <div class="signup-height-row">
                 <div class="signup-unit-input">
-                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" placeholder="0" required>
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" aria-label="Height, feet" placeholder="0" required>
                   <span class="signup-unit-input__suffix">feet</span>
                 </div>
                 <div class="signup-unit-input">
-                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" placeholder="0" required>
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" aria-label="Height, inches" placeholder="0" required>
                   <span class="signup-unit-input__suffix">inches</span>
                 </div>
               </div>
             </div>
             <div class="signup-unit-field">
-              <label class="field-label">Weight</label>
+              <label class="field-label" for="su-weight">Weight</label>
               <div class="signup-unit-input">
-                <input class="signup-unit-input__field" type="text" inputmode="decimal" id="su-weight" placeholder="0" required>
+                <input class="signup-unit-input__field" type="text" inputmode="decimal" id="su-weight" placeholder="0" required aria-describedby="su-weight-error">
                 <span class="signup-unit-input__suffix">pounds</span>
               </div>
+              <p class="field-error" id="su-weight-error" aria-live="polite"></p>
             </div>
             <button type="submit" class="signup-submit" id="btn-metrics" disabled>
               Continue
@@ -564,6 +577,14 @@ function closeLegal(e){
 }
 document.querySelectorAll(".legal-overlay").forEach(function(e){e.addEventListener("click",function(l){l.target===e&&closeLegal(e.id.replace("modal-",""))})});
 document.addEventListener("keydown",function(e){"Escape"===e.key&&document.querySelectorAll(".legal-overlay.active").forEach(function(e){closeLegal(e.id.replace("modal-",""))})});
+// keep Tab inside the open pop-up
+document.addEventListener("keydown",function(e){
+  var m=document.querySelector(".legal-overlay.active");
+  if(!m||"Tab"!==e.key) return;
+  var f=m.querySelectorAll("button,a[href]"),first=f[0],last=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+});
 </script>
 
 <script>
@@ -597,8 +618,20 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
 
   // Step 1 — name
   var first=document.getElementById("su-first"),last=document.getElementById("su-last"),btnName=document.getElementById("btn-name");
-  function validateName(){ btnName.disabled=!(first.value.trim()&&last.value.trim()); }
-  [first,last].forEach(function(el){ el.addEventListener("input",validateName); });
+  // at least 2 characters per name, so one-letter fakes like "A" don't get through
+  function nameOk(el){ return el.value.trim().length>=2; }
+  function validateName(){ btnName.disabled=!(nameOk(first)&&nameOk(last)); }
+  // the message shows when they leave a too-short field and clears as soon as it's long enough
+  function showNameError(el,which){
+    var bad=el.value.trim()!==""&&!nameOk(el);
+    document.getElementById(el.id+"-error").textContent=bad?"Please enter your full "+which+" name.":"";
+    el.classList.toggle("is-invalid",bad);
+    bad?el.setAttribute("aria-invalid","true"):el.removeAttribute("aria-invalid");
+  }
+  [[first,"first"],[last,"last"]].forEach(function(f){
+    f[0].addEventListener("input",function(){ validateName(); if(nameOk(f[0])) showNameError(f[0],f[1]); });
+    f[0].addEventListener("blur",function(){ showNameError(f[0],f[1]); });
+  });
   // Fired once, the first time the visitor clears step 1 — this is the
   // "started the quiz" funnel event, not "typed in the name field".
   var formStartedFired=!1;
@@ -607,7 +640,7 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
       weight=document.getElementById("su-weight"),btnMetrics=document.getElementById("btn-metrics");
-  var ranges={ft:[3,8],inches:[0,12],lbs:[80,350]};
+  var ranges={ft:[3,8],inches:[0,11],lbs:[80,350]};
   function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
   function clampField(el,range){
     var n=parseFloat(el.value);
@@ -615,7 +648,13 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
     if(n<range[0]) el.value=range[0];
     else if(n>range[1]) el.value=range[1];
   }
+  var weightError=document.getElementById("su-weight-error");
   function validateMetrics(){
+    // over the limit: say so and keep Continue disabled (the range check fails)
+    var over=parseFloat(weight.value)>ranges.lbs[1];
+    weightError.textContent=over?"Sorry, this roadmap only works up to "+ranges.lbs[1]+" pounds.":"";
+    weight.parentNode.classList.toggle("is-invalid",over);
+    over?weight.setAttribute("aria-invalid","true"):weight.removeAttribute("aria-invalid");
     btnMetrics.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
   }
   heightFt.addEventListener("input",validateMetrics);
@@ -623,7 +662,8 @@ document.addEventListener("keydown",function(e){"Escape"===e.key&&document.query
   heightIn.addEventListener("input",validateMetrics);
   heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateMetrics(); });
   weight.addEventListener("input",validateMetrics);
-  weight.addEventListener("blur",function(){ clampField(weight,ranges.lbs); validateMetrics(); });
+  // only the low end is clamped; over the limit shows the message instead
+  weight.addEventListener("blur",function(){ if(parseFloat(weight.value)<ranges.lbs[0]) weight.value=ranges.lbs[0]; validateMetrics(); });
   document.getElementById("form-metrics").addEventListener("submit",function(e){ e.preventDefault(); if(!btnMetrics.disabled) goToStep(2); });
   document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
 
