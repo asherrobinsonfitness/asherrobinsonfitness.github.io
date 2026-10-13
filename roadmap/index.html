@@ -296,14 +296,15 @@ footer a{color:#0047b3;text-decoration:none}
               <label class="field-label">Height</label>
               <div class="signup-height-row">
                 <div class="signup-unit-input">
-                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" aria-label="Height, feet" placeholder="0" required>
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-ft" aria-label="Height, feet" placeholder="0" required aria-describedby="su-height-error">
                   <span class="signup-unit-input__suffix">feet</span>
                 </div>
                 <div class="signup-unit-input">
-                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" aria-label="Height, inches" placeholder="0" required>
+                  <input class="signup-unit-input__field" type="text" inputmode="numeric" id="su-height-in" aria-label="Height, inches" placeholder="0" required aria-describedby="su-height-error">
                   <span class="signup-unit-input__suffix">inches</span>
                 </div>
               </div>
+              <p class="field-error" id="su-height-error" aria-live="polite"></p>
             </div>
             <div class="signup-unit-field">
               <label class="field-label" for="su-weight">Weight</label>
@@ -642,28 +643,28 @@ document.addEventListener("keydown",function(e){
       weight=document.getElementById("su-weight"),btnMetrics=document.getElementById("btn-metrics");
   var ranges={ft:[3,8],inches:[0,11],lbs:[80,350]};
   function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
-  function clampField(el,range){
-    var n=parseFloat(el.value);
-    if(isNaN(n)) return;
-    if(n<range[0]) el.value=range[0];
-    else if(n>range[1]) el.value=range[1];
+  // Out-of-range values are kept as typed and get "Enter a value between X and Y."
+  // Too high shows right away; too low waits until they leave the field, since
+  // typing 2 on the way to 200 isn't a mistake. Fixing it clears the message.
+  var heightError=document.getElementById("su-height-error"),weightError=document.getElementById("su-weight-error");
+  function markField(el,range){
+    var n=parseFloat(el.value),
+        bad=el.value.trim()!==""&&!isNaN(n)&&(n>range[1]||(!!el.dataset.left&&n<range[0]));
+    el.parentNode.classList.toggle("is-invalid",bad);
+    bad?el.setAttribute("aria-invalid","true"):el.removeAttribute("aria-invalid");
+    return bad?"Enter a value between "+range[0]+" and "+range[1]+".":"";
   }
-  var weightError=document.getElementById("su-weight-error");
   function validateMetrics(){
-    // over the limit: say so and keep Continue disabled (the range check fails)
-    var over=parseFloat(weight.value)>ranges.lbs[1];
-    weightError.textContent=over?"Sorry, this roadmap only works up to "+ranges.lbs[1]+" pounds.":"";
-    weight.parentNode.classList.toggle("is-invalid",over);
-    over?weight.setAttribute("aria-invalid","true"):weight.removeAttribute("aria-invalid");
+    // feet and inches share one line under the height row; feet's message wins
+    var ft=markField(heightFt,ranges.ft),inch=markField(heightIn,ranges.inches);
+    heightError.textContent=ft||inch;
+    weightError.textContent=markField(weight,ranges.lbs);
     btnMetrics.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
   }
-  heightFt.addEventListener("input",validateMetrics);
-  heightFt.addEventListener("blur",function(){ clampField(heightFt,ranges.ft); validateMetrics(); });
-  heightIn.addEventListener("input",validateMetrics);
-  heightIn.addEventListener("blur",function(){ clampField(heightIn,ranges.inches); validateMetrics(); });
-  weight.addEventListener("input",validateMetrics);
-  // only the low end is clamped; over the limit shows the message instead
-  weight.addEventListener("blur",function(){ if(parseFloat(weight.value)<ranges.lbs[0]) weight.value=ranges.lbs[0]; validateMetrics(); });
+  [heightFt,heightIn,weight].forEach(function(el){
+    el.addEventListener("input",validateMetrics);
+    el.addEventListener("blur",function(){ el.dataset.left="1"; validateMetrics(); });
+  });
   document.getElementById("form-metrics").addEventListener("submit",function(e){ e.preventDefault(); if(!btnMetrics.disabled) goToStep(2); });
   document.getElementById("back-to-name").addEventListener("click",function(){ goToStep(0); });
 
