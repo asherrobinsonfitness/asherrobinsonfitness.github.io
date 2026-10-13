@@ -112,10 +112,6 @@ strong{font-weight:500}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
-/* faint dot grid behind the top section. Stacked layout: fades in from the top.
-   50/50 split: fades in and back out, so the dots sit behind the centered content. */
-.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 45%),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}
-@media (min-width:900px){.hero-grid{background:linear-gradient(#f7f7f7,#f7f7f700 35%,#f7f7f700 65%,#f7f7f7),radial-gradient(circle,rgba(0,0,0,.1) .8px,transparent 1.2px) 0 0/12px 12px,#f7f7f7}}
 /* callout above the headline, after Ramp's: a label in the footer's
    "Disclaimers" title style (15px, 600, muted) + a #eee chip (the section
    fill) with 4px corners (the site's button/input radius), same 15px/600 */
@@ -123,7 +119,7 @@ strong{font-weight:500}
 .hero-callout__label{color:#4a4a4a}
 .hero-callout__chip{padding:.3125rem .5rem;border-radius:4px;background:#eee}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:500;line-height:1.2}
-.subheadline{font-size:1rem;color:#4a4a4a;line-height:1.6;margin:.75rem auto 0}
+.subheadline{font-size:1.125rem;color:#4a4a4a;line-height:1.6;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#eee;overflow:hidden}
 
 /* second section — the booking calendar */
