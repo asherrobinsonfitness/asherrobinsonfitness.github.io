@@ -162,7 +162,8 @@ strong{font-weight:500}
 .btn-chevron{flex-shrink:0}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
 .value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.2}
-.check-icon{flex-shrink:0}
+.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center}
+.check-icon{width:.6em;height:.6em;color:#f7f7f7}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
 .signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
 .signup-back-link svg{flex-shrink:0}
@@ -283,8 +284,8 @@ footer a{color:#0047b3;text-decoration:none}
             </button>
           </form>
           <ul class="value-bullets">
-            <li><svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg><span>Get your roadmap in under 30 seconds</span></li>
-            <li><svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg><span>Find your goal weight at 10% body fat</span></li>
+            <li><span class="check-badge"><svg class="check-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-388 321-321q19-19 45-19t45 19q19 19 19 45t-19 45L427-253q-19 19-45 19t-45-19L167-423q-19-19-19-45t19-45q19-19 45-19t45 19l125 125Z"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
+            <li><span class="check-badge"><svg class="check-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-388 321-321q19-19 45-19t45 19q19 19 19 45t-19 45L427-253q-19 19-45 19t-45-19L167-423q-19-19-19-45t19-45q19-19 45-19t45 19l125 125Z"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
           </ul>
         </div>
 
@@ -318,7 +319,7 @@ footer a{color:#0047b3;text-decoration:none}
               <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
         </div>
 
         <div id="step-bodyfat" style="display:none">
@@ -357,7 +358,7 @@ footer a{color:#0047b3;text-decoration:none}
               <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-metrics"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-metrics"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
         </div>
 
         <div id="step-email" style="display:none">
@@ -373,7 +374,7 @@ footer a{color:#0047b3;text-decoration:none}
               Get Roadmap
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
         </div>
 
       </div>
@@ -694,8 +695,8 @@ document.addEventListener("keydown",function(e){
     emVerified="valid"===st;
     es.classList.remove("is-valid","is-invalid");
     if("checking"===st){ es.innerHTML='<span class="email-spinner"></span>'; esText.textContent="Checking email address…"; email.removeAttribute("aria-invalid"); }
-    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Valid email address"; email.setAttribute("aria-invalid","false"); }
-    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address looks incorrect"; email.setAttribute("aria-invalid","true"); }
+    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Valid email address"; email.setAttribute("aria-invalid","false"); }
+    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address looks incorrect"; email.setAttribute("aria-invalid","true"); }
     else { es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
     validateEmail();
   }
