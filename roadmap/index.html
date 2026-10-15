@@ -92,6 +92,8 @@ body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiase
 strong{font-weight:500}
 /* icons: 1.25x the font size of the text beside them (Material Symbols Rounded, default weight) */
 .icon{width:1.25em;height:1.25em;flex-shrink:0}
+/* arrows fill their whole box, so at 1.25em they came out too big: size them like the text (1em) */
+.icon-arrow{width:1em;height:1em}
 .container{display:flex;flex-direction:column;background:#f7f7f7}
 
 /* nav — a single progress line bled to the section's top edge. No track background —
@@ -192,7 +194,9 @@ footer a{color:#0047b3;text-decoration:none}
 .legal-overlay.active .legal-modal{transform:translateX(0)}
 /* header — same height, background and hairline as the status bar strip on coaching/ */
 .legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid #d5d5d5;flex-shrink:0}
-.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0;position:relative}
+/* ✕ buttons: an invisible layer makes the tap area 44px; the button and its focus ring stay 32px */
+.legal-modal-close::after{content:"";position:absolute;inset:-6px}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:400;margin-bottom:.375rem;line-height:1.2}
@@ -238,6 +242,8 @@ footer a{color:#0047b3;text-decoration:none}
    :where() keeps it at zero specificity, so components with their own focus
    style (e.g. inputs with outline:0) keep it. */
 :where(:focus-visible){outline:2px solid #111;outline-offset:2px}
+/* ✕ buttons sit against screen edges: their ring is drawn inside the button so it is never cut off */
+.legal-modal-close:focus-visible{outline-offset:-2px}
 /* step headings take focus on each step change (for screen readers); they
    aren't controls, so no ring */
 .signup-title:focus{outline:none}
@@ -278,7 +284,7 @@ footer a{color:#0047b3;text-decoration:none}
             <p class="field-error" id="su-last-error" aria-live="polite"></p>
             <button type="submit" class="signup-submit" id="btn-name" disabled>
               Continue
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
           <ul class="value-bullets">
@@ -314,10 +320,10 @@ footer a{color:#0047b3;text-decoration:none}
             </div>
             <button type="submit" class="signup-submit" id="btn-metrics" disabled>
               Continue
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-name"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-name"><svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
         <div id="step-bodyfat" style="display:none">
@@ -353,10 +359,10 @@ footer a{color:#0047b3;text-decoration:none}
             </div>
             <button type="submit" class="signup-submit" id="btn-bodyfat" disabled>
               Continue
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-metrics"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-metrics"><svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
         <div id="step-email" style="display:none">
@@ -372,7 +378,7 @@ footer a{color:#0047b3;text-decoration:none}
               Get Roadmap
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
       </div>
