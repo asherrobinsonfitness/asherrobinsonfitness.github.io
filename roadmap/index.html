@@ -90,6 +90,8 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#f7f7f7}
 strong{font-weight:500}
+/* icons: 1.25x the font size of the text beside them (Material Symbols Rounded, default weight) */
+.icon{width:1.25em;height:1.25em;flex-shrink:0}
 .container{display:flex;flex-direction:column;background:#f7f7f7}
 
 /* nav — a single progress line bled to the section's top edge. No track background —
@@ -127,10 +129,11 @@ strong{font-weight:500}
 .signup-input:focus~.signup-label,.signup-input:not(:placeholder-shown)~.signup-label{top:0;font-size:.8125rem;background:#eee}
 .signup-input:focus~.signup-label{color:#111}
 #su-email{padding-right:2.5rem}
-.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;pointer-events:none}
+.email-status{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;pointer-events:none}
 .email-status.is-valid{color:#18874a}
 .email-status.is-invalid{color:#c53030}
-.email-spinner{display:inline-block;vertical-align:-2px;width:12px;height:12px;border:2px solid #d5d5d5;border-top-color:#111;border-radius:50%;animation:email-spin .6s linear infinite}
+/* spinner sized like an icon: the ring fills Material's 20/24 live area and is as thick as an icon line */
+.email-spinner{display:inline-block;vertical-align:-2px;width:1.0417em;height:1.0417em;border:.1042em solid #d5d5d5;border-top-color:#111;border-radius:50%;animation:email-spin .6s linear infinite}
 @keyframes email-spin{to{transform:rotate(360deg)}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .field-label{display:block;font-size:.9375rem;font-weight:500;line-height:1.2;margin-bottom:.5rem}
@@ -158,15 +161,10 @@ strong{font-weight:500}
 .bf-option[aria-checked=true] .bf-option__img{outline:1px solid #111;outline-offset:-1px}
 .signup-submit{position:relative;display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;margin-top:.35rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-weight:500;font-size:1rem;line-height:1.2;border:none;cursor:pointer;transition:background 0s ease}
 .signup-submit:disabled{background:#d5d5d5;color:#4a4a4a;cursor:not-allowed}
-/* chevron sits right after the label (the button's own gap spaces it) */
-.btn-chevron{flex-shrink:0}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
-.value-bullets li{display:flex;align-items:center;gap:.65rem;font-size:.9375rem;line-height:1.2}
-.check-badge{flex-shrink:0;width:1em;height:1em;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center}
-.check-icon{width:.6em;height:.6em;color:#f7f7f7}
+.value-bullets li{display:flex;align-items:center;gap:.5rem;font-size:.9375rem;line-height:1.2}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
-.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.35rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
-.signup-back-link svg{flex-shrink:0}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
 
 /* disclaimers — now live inside the footer, so they inherit its
    background rather than needing one of their own. */
@@ -194,7 +192,7 @@ footer a{color:#0047b3;text-decoration:none}
 .legal-overlay.active .legal-modal{transform:translateX(0)}
 /* header — same height, background and hairline as the status bar strip on coaching/ */
 .legal-modal-header{display:flex;align-items:center;justify-content:flex-end;height:calc(.8125rem * 1.4 + 1.25rem);padding:0 1.5rem;border-bottom:1px solid #d5d5d5;flex-shrink:0}
-.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;color:#4a4a4a;border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
+.legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;transition:color 0s ease;flex-shrink:0}
 .legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:400;margin-bottom:.375rem;line-height:1.2}
@@ -280,12 +278,12 @@ footer a{color:#0047b3;text-decoration:none}
             <p class="field-error" id="su-last-error" aria-live="polite"></p>
             <button type="submit" class="signup-submit" id="btn-name" disabled>
               Continue
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
           <ul class="value-bullets">
-            <li><span class="check-badge"><svg class="check-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-388 321-321q19-19 45-19t45 19q19 19 19 45t-19 45L427-253q-19 19-45 19t-45-19L167-423q-19-19-19-45t19-45q19-19 45-19t45 19l125 125Z"/></svg></span><span>Get your roadmap in under 30 seconds</span></li>
-            <li><span class="check-badge"><svg class="check-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-388 321-321q19-19 45-19t45 19q19 19 19 45t-19 45L427-253q-19 19-45 19t-45-19L167-423q-19-19-19-45t19-45q19-19 45-19t45 19l125 125Z"/></svg></span><span>Find your goal weight at 10% body fat</span></li>
+            <li><svg class="icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg><span>Get your roadmap in under 30 seconds</span></li>
+            <li><svg class="icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg><span>Find your goal weight at 10% body fat</span></li>
           </ul>
         </div>
 
@@ -316,10 +314,10 @@ footer a{color:#0047b3;text-decoration:none}
             </div>
             <button type="submit" class="signup-submit" id="btn-metrics" disabled>
               Continue
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-name"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-name"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
         <div id="step-bodyfat" style="display:none">
@@ -355,10 +353,10 @@ footer a{color:#0047b3;text-decoration:none}
             </div>
             <button type="submit" class="signup-submit" id="btn-bodyfat" disabled>
               Continue
-              <svg class="btn-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M579-480 285-774q-15-15-14.5-35.5T286-845q15-15 35.5-15t35.5 15l307 308q12 12 18 27t6 30q0 15-6 30t-18 27L356-115q-15 15-35 14.5T286-116q-15-15-15-35.5t15-35.5l293-293Z"/></svg>
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-metrics"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-metrics"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
         <div id="step-email" style="display:none">
@@ -374,7 +372,7 @@ footer a{color:#0047b3;text-decoration:none}
               Get Roadmap
             </button>
           </form>
-          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z"/></svg>Back</button>
+          <button type="button" class="signup-back-link" id="back-to-bodyfat"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-480 294 294q15 15 14.5 35T675-116q-15 15-35 15t-35-15L297-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T676-844q15 15 15 35t-15 35L382-480Z"/></svg>Back</button>
         </div>
 
       </div>
@@ -428,7 +426,7 @@ footer a{color:#0047b3;text-decoration:none}
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("terms")' aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
@@ -489,7 +487,7 @@ footer a{color:#0047b3;text-decoration:none}
 <div class="legal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
   <div class="legal-modal">
     <div class="legal-modal-header">
-      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
+      <button class="legal-modal-close" onclick='closeLegal("privacy")' aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
     </div>
     <div class="legal-modal-body">
       <h2 id="privacy-title">Privacy Policy</h2>
@@ -698,8 +696,8 @@ document.addEventListener("keydown",function(e){
     emVerified="valid"===st;
     es.classList.remove("is-valid","is-invalid");
     if("checking"===st){ es.innerHTML='<span class="email-spinner"></span>'; esText.textContent="Checking email address…"; email.removeAttribute("aria-invalid"); }
-    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Valid email address"; email.setAttribute("aria-invalid","false"); }
-    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address looks incorrect"; email.setAttribute("aria-invalid","true"); }
+    else if("valid"===st){ es.classList.add("is-valid"); es.innerHTML='<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/></svg>'; esText.textContent="Valid email address"; email.setAttribute("aria-invalid","false"); }
+    else if("invalid"===st){ es.classList.add("is-invalid"); es.innerHTML='<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>'; esText.textContent="This email address looks incorrect"; email.setAttribute("aria-invalid","true"); }
     else { es.innerHTML=""; esText.textContent=""; email.removeAttribute("aria-invalid"); }
     validateEmail();
   }
