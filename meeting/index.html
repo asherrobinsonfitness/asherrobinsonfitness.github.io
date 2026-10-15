@@ -125,7 +125,7 @@ strong{font-weight:500}
 .announcement__text{flex:1 1 auto;min-width:0}
 @media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
-.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;font-size:.8125rem;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:#4a4a4a;cursor:pointer}
+.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;font-size:.8125rem;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:#4a4a4a;cursor:pointer;position:relative}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
@@ -165,6 +165,8 @@ strong{font-weight:500}
 .save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid #d5d5d5;border-radius:8px;text-align:center}
 .save-popup__card:focus{outline:none}
 .save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;cursor:pointer}
+/* ✕ buttons: an invisible layer makes the tap area 44px; the button and its focus ring stay 32px */
+.announcement__close::after,.save-popup__close::after{content:"";position:absolute;inset:-6px}
 .save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
 /* "online" dot */
@@ -230,13 +232,11 @@ strong{font-weight:500}
    (Buck Mason's label/value rows); the full answer still drops down below */
 .faq-item__question{flex:1 1 auto;min-width:0}
 .faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.5rem;font-weight:400;color:#4a4a4a;white-space:nowrap}
-.faq-toggle{position:relative;flex-shrink:0;width:1.25em;height:1.25em;color:#4a4a4a}
-.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1),opacity .32s cubic-bezier(.4, 0, .2, 1)}
-/* bars drawn to Material's "add" icon proportions: 58.33% long, 8.33% thick */
-.faq-toggle::before{top:50%;left:20.83%;width:58.33%;height:8.33%;transform:translateY(-50%)}
-.faq-toggle::after{left:50%;top:20.83%;width:8.33%;height:58.33%;transform:translateX(-50%)}
-/* the vertical bar fades as it turns, so the "-" is one bar, as thick as the "+" */
-.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg);opacity:0}
+/* +/− toggle: Google's "add" icon drawn as one SVG (two bars in one drawing, so they
+   always line up). Opening turns the vertical bar flat and fades it out, leaving "−". */
+.faq-toggle{color:#4a4a4a}
+.faq-toggle__v{transform-box:fill-box;transform-origin:center;transition:transform .32s cubic-bezier(.4, 0, .2, 1),opacity .32s cubic-bezier(.4, 0, .2, 1)}
+.faq-item--open .faq-toggle__v{transform:rotate(90deg);opacity:0}
 .faq-item__body-inner{padding:0 .25rem 1.25rem}
 .faq-item__body-inner p{font-size:.9375rem;line-height:1.6;color:#4a4a4a;margin:0}
 .faq-item__body-inner p+p{margin-top:.75rem}
@@ -279,6 +279,8 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
    :where() keeps it at zero specificity, so components with their own focus
    style (e.g. inputs with outline:0) keep it. */
 :where(:focus-visible){outline:2px solid #111;outline-offset:2px}
+/* ✕ buttons sit against screen edges: their ring is drawn inside the button so it is never cut off */
+.announcement__close:focus-visible,.save-popup__close:focus-visible{outline-offset:-2px}
 </style>
 </head>
 <body>
@@ -351,7 +353,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
       <h2 id="common-questions-heading" class="section-title">Common Questions</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No hard sell</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this a sales pitch?</span><span class="faq-item__short">No hard sell</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>I ask about your goal, your schedule, and where you're starting from. You can ask me anything. If it's a fit, I give you the option to start. If not, you still leave knowing why your past attempts failed and what to fix first.</p>
@@ -359,7 +361,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guarantee</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How do I know this works?</span><span class="faq-item__short">Guarantee</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>I lost 16 pounds in about 8 weeks. I set up your plan the same way:</p>
@@ -373,7 +375,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">How much does this cost?</span><span class="faq-item__short">$599</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>The 6-Week Challenge is $599. Lose 10 pounds in 6 weeks, and you earn your $599 back as $100 off each of your next 6 payments. After the challenge, coaching is $199 every 4 weeks. Cancel anytime.</p>
@@ -381,7 +383,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
           </div>
         </details>
         <details class="faq-item">
-          <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Probably</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <summary class="faq-item__summary"><span class="faq-item__question">Is this right for my starting point?</span><span class="faq-item__short">Probably</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
               <p>My approach is built for any man with fat to lose. If you have a serious medical condition or need a special diet, this may not be the right fit for you.</p>
