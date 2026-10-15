@@ -166,7 +166,9 @@ strong{font-weight:500}
 .value-bullets{margin:1.5rem auto 0;text-align:left;list-style:none;padding:0;display:flex;flex-direction:column;gap:.75rem;width:fit-content}
 .value-bullets li{display:flex;align-items:center;gap:.5rem;font-size:.9375rem;line-height:1.2}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
-.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s}
+.signup-back-link{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;margin:.4rem auto 0;background:0 0;border:none;padding:.75rem 0;cursor:pointer;font-size:.8125rem;color:#4a4a4a;text-decoration:none;font-family:inherit;text-align:center;transition:color 0s;position:relative}
+/* invisible layer adds 2px above and below, so the Back tap area is 44px; nothing visible changes */
+.signup-back-link::after{content:"";position:absolute;inset:-2px 0}
 
 /* disclaimers — now live inside the footer, so they inherit its
    background rather than needing one of their own. */
