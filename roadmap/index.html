@@ -22,6 +22,22 @@ function __fbCookie(name) {
   var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return m ? m[2] : undefined;
 }
+// Stable per-browser ID sent with every Meta event (hashed by the server and
+// by the pixel), so anonymous page views link up with the later lead.
+function __fbExtId() {
+  var id = __fbCookie('ext_id');
+  if (!id) {
+    id = __fbEventId();
+    document.cookie = 'ext_id=' + id + '; Path=/; Max-Age=' + (60 * 60 * 24 * 365) + '; SameSite=Lax';
+  }
+  return id;
+}
+// _fbc is set by the pixel script, which hasn't loaded yet on the first page
+// view (and may be blocked). Fall back to building it from the ad's fbclid.
+function __fbClickId() {
+  var fbclid = new URLSearchParams(location.search).get('fbclid');
+  return __fbCookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : undefined);
+}
 function __fbCapi(eventName, eventId, customData, userData) {
   try {
     fetch('/api/meta-capi', {
@@ -33,7 +49,7 @@ function __fbCapi(eventName, eventId, customData, userData) {
         event_id: eventId,
         event_source_url: window.location.href,
         custom_data: customData || {},
-        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbClickId(), external_id: __fbExtId() }, userData || {})
       })
     }).catch(function(){});
   } catch (e) {}
@@ -60,7 +76,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 '/edge/fbevents.js');
-fbq('init', '1575468926630270');
+fbq('init', '1575468926630270', {external_id: __fbExtId()});
 var __pvEventId = __fbEventId();
 fbq('track', 'PageView', {}, {eventID: __pvEventId});
 __fbCapi('PageView', __pvEventId);
@@ -522,7 +538,7 @@ footer a{color:#0047b3;text-decoration:none}
       <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
       <p>If you book a meeting, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
       <h3>5. Advertising and Analytics</h3>
-      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address, approximate location, browser, and a random ID stored in a cookie, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
       <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
       <h3>6. Sharing of Information</h3>
       <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
@@ -735,7 +751,9 @@ document.addEventListener("keydown",function(e){
     __fbCapi("Lead",leadEventId,{content_name:"roadmap"},{email:emailVal,firstName:first.value.trim(),lastName:last.value.trim()});
     // Record the completed request in Supabase — this is what the "Requested by
     // X men" bullet counts. keepalive lets the request finish even though we
-    // navigate away immediately after firing it.
+    // navigate away immediately after firing it. The UTM and ad ID come from
+    // the ad's URL parameters, so each lead can be traced to its ad.
+    var adParams=new URLSearchParams(location.search);
     fetch("https://utscsmwenhzrpdqvwvcz.supabase.co/rest/v1/roadmap_leads",{
       method:"POST",
       keepalive:!0,
@@ -747,7 +765,11 @@ document.addEventListener("keydown",function(e){
         height_ft:parseFloat(heightFt.value)||null,
         height_in:parseFloat(heightIn.value)||null,
         weight_lbs:parseFloat(weight.value)||null,
-        bodyfat_range:bfValue
+        bodyfat_range:bfValue,
+        utm_source:adParams.get("utm_source"),
+        utm_campaign:adParams.get("utm_campaign"),
+        utm_content:adParams.get("utm_content"),
+        ad_id:adParams.get("ad_id")
       })
     }).catch(function(){});
     window.location.href="/coaching/"+(qs.length?"?"+qs.join("&"):"");
