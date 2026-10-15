@@ -228,8 +228,9 @@ footer a{color:#0047b3;text-decoration:none}
   /* the hero is sized to the screen, not the row, so it never moves when the
      iClosed form grows (iClosed sets the widget's height to its content, and
      it grows once name/email are in). The form stays centered while it fits;
-     once it's taller, it starts at the top of its column and the row grows
-     down, pushing the FAQ, instead of being cut off.
+     once it would make the row taller than the hero, the script after
+     .booking-section starts it at the callout's line and the row grows down,
+     pushing the FAQ, instead of the form being cut off.
      2.3rem = the announcement bar's height: .5rem padding top and bottom +
      one 13px line at 1.6. The bar is removed when dismissed or when there
      are no roadmap params, and the hero then takes the full screen. */
@@ -288,6 +289,25 @@ footer a{color:#0047b3;text-decoration:none}
         <!-- iClosed inline widget end -->
       </div>
     </section>
+    <script>
+    // Desktop: once the form would make the row taller than the hero, start it
+    // at the callout's line instead of centered. Re-checked whenever the form
+    // (iClosed adding fields) or the hero (window size, zoom, bar dismissed)
+    // changes size.
+    (function(){
+      var h=document.querySelector(".hero-grid"),b=document.querySelector(".booking-section"),
+          i=document.querySelector(".booking-inner"),c=document.querySelector(".hero-callout"),
+          d=matchMedia("(min-width:900px)");
+      function fit(){
+        b.style.paddingTop="";
+        if(!d.matches) return;
+        var s=getComputedStyle(b);
+        if(i.offsetHeight+parseFloat(s.paddingTop)+parseFloat(s.paddingBottom)>h.offsetHeight)
+          b.style.paddingTop=c.getBoundingClientRect().top-h.getBoundingClientRect().top+"px";
+      }
+      var o=new ResizeObserver(fit);o.observe(i);o.observe(h);
+    })();
+    </script>
   </div>
   </div>
 
