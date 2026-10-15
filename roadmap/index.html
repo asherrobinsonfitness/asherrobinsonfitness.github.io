@@ -416,7 +416,7 @@ footer a{color:#0047b3;text-decoration:none}
     </div>
     <hr class="footer-divider">
     <div class="footer-row">
-      <span class="copyright">© 2026 Asher Robinson LLC. All rights reserved.</span>
+      <span class="copyright">© 2026 Asher Robinson LLC</span>
       <div style="display:flex;gap:.75rem;flex-wrap:wrap">
         <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
         <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
@@ -641,8 +641,11 @@ document.addEventListener("keydown",function(e){
   // Step 2 — height (feet + inches) / weight, each clamped to a realistic range
   var heightFt=document.getElementById("su-height-ft"),heightIn=document.getElementById("su-height-in"),
       weight=document.getElementById("su-weight"),btnMetrics=document.getElementById("btn-metrics");
-  var ranges={ft:[3,8],inches:[0,11],lbs:[80,350]};
+  var ranges={ft:[4,7],inches:[0,11],lbs:[80,350]};
+  // total height 4'10" (the medical cutoff for short stature) to 7'0"
+  var heightTotal=[58,84];
   function inRange(v,range){ var n=parseFloat(v); return v.trim()!==""&&!isNaN(n)&&n>=range[0]&&n<=range[1]; }
+  function totalInches(){ return parseFloat(heightFt.value)*12+parseFloat(heightIn.value); }
   // Out-of-range values are kept as typed and get "Enter a value between X and Y."
   // Too high shows right away; too low waits until they leave the field, since
   // typing 2 on the way to 200 isn't a mistake. Fixing it clears the message.
@@ -657,9 +660,14 @@ document.addEventListener("keydown",function(e){
   function validateMetrics(){
     // feet and inches share one line under the height row; feet's message wins
     var ft=markField(heightFt,ranges.ft),inch=markField(heightIn,ranges.inches);
-    heightError.textContent=ft||inch;
+    // both parts valid but the whole height isn't (e.g. 4'5" or 7'3"): same timing
+    // rule, too tall right away, too short once they leave the inches field
+    var bothOk=inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches),t=totalInches(),
+        totalBad=bothOk&&(t>heightTotal[1]||(!!heightIn.dataset.left&&t<heightTotal[0]));
+    if(totalBad){ [heightFt,heightIn].forEach(function(el){ el.parentNode.classList.add("is-invalid"); el.setAttribute("aria-invalid","true"); }); }
+    heightError.textContent=ft||inch||(totalBad?"Enter a height between 4'10\" and 7'0\".":"");
     weightError.textContent=markField(weight,ranges.lbs);
-    btnMetrics.disabled=!(inRange(heightFt.value,ranges.ft)&&inRange(heightIn.value,ranges.inches)&&inRange(weight.value,ranges.lbs));
+    btnMetrics.disabled=!(bothOk&&t>=heightTotal[0]&&t<=heightTotal[1]&&inRange(weight.value,ranges.lbs));
   }
   [heightFt,heightIn,weight].forEach(function(el){
     el.addEventListener("input",validateMetrics);
