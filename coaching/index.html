@@ -225,17 +225,17 @@ footer a{color:#0047b3;text-decoration:none}
   .above-fold{display:flex;flex-direction:column;min-height:100vh}
   .announcement{flex-shrink:0}
   .container{flex:1 1 auto;flex-direction:row;align-items:stretch}
-  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
+  /* the hero is sized to the screen, not the row, so it never moves when the
+     iClosed form grows (iClosed sets the widget's height to its content, and
+     it grows once name/email are in). The form stays centered while it fits;
+     once it's taller, it starts at the top of its column and the row grows
+     down, pushing the FAQ, instead of being cut off.
+     2.3rem = the announcement bar's height: .5rem padding top and bottom +
+     one 13px line at 1.6. The bar is removed when dismissed or when there
+     are no roadmap params, and the hero then takes the full screen. */
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center;align-self:flex-start;min-height:100vh}
+  .announcement ~ .container .hero-grid{min-height:calc(100vh - 2.3rem)}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
-  /* cap the iClosed form at the height the column has. iClosed sets the
-     widget's own height to its content (it grows once name/email are in),
-     so the cap goes on a wrapper that scrolls instead. .booking-inner is
-     taken out of flow, so the form never makes the row taller: the row is
-     sized by the hero and the screen, and the cap follows it (dismissing
-     the announcement makes it taller). Phones keep the full-height form. */
-  .booking-section{position:relative}
-  .booking-inner{position:absolute;top:var(--pad-sm);bottom:var(--pad-sm);left:2.5rem;right:2.5rem;width:auto;display:flex;flex-direction:column;justify-content:center}
-  .iclosed-scroll{max-height:100%;overflow-y:auto;overscroll-behavior:contain}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
   .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
@@ -283,9 +283,7 @@ footer a{color:#0047b3;text-decoration:none}
     <section class="booking-section">
       <div class="booking-inner">
         <!-- iClosed inline widget begin -->
-        <div class="iclosed-scroll">
-          <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
-        </div>
+        <div class="iclosed-widget" data-url="https://app.iclosed.io/e/asherrobinson/meeting" title="Online Fat Loss Coaching" style="width: 100%; height: 620px"></div>
         <script type="text/javascript" src="https://app.iclosed.io/assets/widget.js" async></script>
         <!-- iClosed inline widget end -->
       </div>
