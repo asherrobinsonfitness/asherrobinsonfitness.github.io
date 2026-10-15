@@ -107,6 +107,8 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#f7f7f7}
 strong{font-weight:500}
+/* icons: 1.25x the font size of the text beside them (Material Symbols Rounded, default weight) */
+.icon{width:1.25em;height:1.25em;flex-shrink:0}
 .container{display:flex;flex-direction:column;background:#f7f7f7}
 
 /* section dividers — standalone elements rather than borders on the sections
@@ -123,7 +125,7 @@ strong{font-weight:500}
 .announcement__text{flex:1 1 auto;min-width:0}
 @media (min-width:900px){.announcement__text{text-align:right}}
 /* the negative margins keep the bigger tap area from making the bar taller */
-.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:#4a4a4a;cursor:pointer}
+.announcement__close{display:flex;flex-shrink:0;background:0 0;border:none;font-size:.8125rem;padding:.5rem;margin:-.5rem -.5rem -.5rem 0;color:#4a4a4a;cursor:pointer}
 
 /* hero — headline, video only */
 .hero-grid{display:flex;flex-direction:column;text-align:center;padding:var(--pad-sm) max(1rem, calc((100% - 640px) / 2))}
@@ -145,9 +147,8 @@ strong{font-weight:500}
 .contact-card__info{flex:1 1 auto;min-width:0}
 .contact-card__name{font-size:.9375rem;font-weight:500;line-height:1.2}
 .save-contact__number{font-size:.8125rem;line-height:1.6;color:#4a4a4a}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.375rem;height:2.125rem;padding:0 .75rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;color:#111;font-size:.8125rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap}
+.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;height:2.125rem;padding:0 .75rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;color:#111;font-size:.8125rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap}
 .save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
-.save-contact__btn svg{flex-shrink:0}
 @media (hover:hover) and (pointer:fine){
   .save-contact{display:none}
 }
@@ -163,7 +164,7 @@ strong{font-weight:500}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid #d5d5d5;border-radius:8px;text-align:center}
 .save-popup__card:focus{outline:none}
-.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;color:#4a4a4a;cursor:pointer}
+.save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;cursor:pointer}
 .save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
 .save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
 /* "online" dot */
@@ -171,12 +172,10 @@ strong{font-weight:500}
 .save-popup__title{font-size:1.5rem;font-weight:400;line-height:1.2}
 .save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
 .save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none}
-.save-popup__btn svg{flex-shrink:0}
 .save-popup__qr,.save-popup__hint{display:none}
 .save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid #d5d5d5;border-radius:8px;line-height:0}
 .save-popup__qr svg{display:block;width:100%;height:auto}
-.save-popup__hint{align-items:center;gap:.375rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
-.save-popup__hint svg{flex-shrink:0}
+.save-popup__hint{align-items:center;gap:.5rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
 @media (hover:hover) and (pointer:fine){
   .save-popup__btn{display:none}
   .save-popup__qr{display:block}
@@ -202,8 +201,7 @@ strong{font-weight:500}
 .save-corner__text{margin-top:1px;font-size:.8125rem;line-height:1.6;color:#4a4a4a;white-space:nowrap}
 .save-corner__qr{width:164px;margin:0 auto;line-height:0}
 .save-corner__qr svg{display:block;width:100%;height:auto}
-.save-corner__hint{display:inline-flex;align-items:center;gap:.375rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
-.save-corner__hint svg{flex-shrink:0}
+.save-corner__hint{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
 /* what happens next — numbered steps in the same hairline-row style as the
    FAQ list, then iClosed's meeting details. */
 .next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid #d5d5d5;text-align:left}
@@ -231,12 +229,14 @@ strong{font-weight:500}
 /* quick answer — sits in the row next to the toggle, visible open or closed
    (Buck Mason's label/value rows); the full answer still drops down below */
 .faq-item__question{flex:1 1 auto;min-width:0}
-.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.375rem;font-weight:400;color:#4a4a4a;white-space:nowrap}
-.faq-toggle{position:relative;flex-shrink:0;width:15px;height:15px;color:#4a4a4a}
-.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1)}
-.faq-toggle::before{top:50%;left:0;width:100%;height:1.5px;transform:translateY(-50%)}
-.faq-toggle::after{left:50%;top:0;width:1.5px;height:100%;transform:translateX(-50%)}
-.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg)}
+.faq-item__short{flex-shrink:0;margin-left:auto;margin-right:-.5rem;font-weight:400;color:#4a4a4a;white-space:nowrap}
+.faq-toggle{position:relative;flex-shrink:0;width:1.25em;height:1.25em;color:#4a4a4a}
+.faq-toggle::after,.faq-toggle::before{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .32s cubic-bezier(.4, 0, .2, 1),opacity .32s cubic-bezier(.4, 0, .2, 1)}
+/* bars drawn to Material's "add" icon proportions: 58.33% long, 8.33% thick */
+.faq-toggle::before{top:50%;left:20.83%;width:58.33%;height:8.33%;transform:translateY(-50%)}
+.faq-toggle::after{left:50%;top:20.83%;width:8.33%;height:58.33%;transform:translateX(-50%)}
+/* the vertical bar fades as it turns, so the "-" is one bar, as thick as the "+" */
+.faq-item--open .faq-toggle::after{transform:translateX(-50%) rotate(90deg);opacity:0}
 .faq-item__body-inner{padding:0 .25rem 1.25rem}
 .faq-item__body-inner p{font-size:.9375rem;line-height:1.6;color:#4a4a4a;margin:0}
 .faq-item__body-inner p+p{margin-top:.75rem}
@@ -285,7 +285,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
 
 <main>
   <div class="above-fold">
-  <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button></div>
+  <div class="announcement"><span class="announcement__text">Your meeting is scheduled</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button></div>
   <script>
   // First name from iClosed's redirect param invitee_full_name (the name
   // they just booked with), checked before use. Fallback: the line above.
@@ -320,7 +320,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
             <p class="contact-card__name">Asher Robinson</p>
             <p class="save-contact__number">(555) 555-0123</p>
           </div>
-          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
         </div>
       </div>
     </div>
@@ -413,18 +413,18 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
   </div>
   <div class="save-corner__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg>
 </div>
-  <p class="save-corner__hint"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
+  <p class="save-corner__hint"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
 </div>
 
 <div class="save-popup" id="save-popup" aria-hidden="true">
   <div class="save-popup__card" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
-    <button class="save-popup__close" type="button" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
+    <button class="save-popup__close" type="button" aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
     <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
     <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
     <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
-    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
     <div class="save-popup__qr"></div>
-    <p class="save-popup__hint"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
+    <p class="save-popup__hint"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
   </div>
 </div>
 
