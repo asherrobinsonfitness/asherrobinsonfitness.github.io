@@ -22,6 +22,22 @@ function __fbCookie(name) {
   var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return m ? m[2] : undefined;
 }
+// Stable per-browser ID sent with every Meta event (hashed by the server and
+// by the pixel), so anonymous page views link up with the later lead.
+function __fbExtId() {
+  var id = __fbCookie('ext_id');
+  if (!id) {
+    id = __fbEventId();
+    document.cookie = 'ext_id=' + id + '; Path=/; Max-Age=' + (60 * 60 * 24 * 365) + '; SameSite=Lax';
+  }
+  return id;
+}
+// _fbc is set by the pixel script, which hasn't loaded yet on the first page
+// view (and may be blocked). Fall back to building it from the ad's fbclid.
+function __fbClickId() {
+  var fbclid = new URLSearchParams(location.search).get('fbclid');
+  return __fbCookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : undefined);
+}
 function __fbCapi(eventName, eventId, customData, userData) {
   try {
     fetch('/api/meta-capi', {
@@ -33,7 +49,7 @@ function __fbCapi(eventName, eventId, customData, userData) {
         event_id: eventId,
         event_source_url: window.location.href,
         custom_data: customData || {},
-        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbClickId(), external_id: __fbExtId() }, userData || {})
       })
     }).catch(function(){});
   } catch (e) {}
@@ -60,7 +76,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 '/edge/fbevents.js');
-fbq('init', '1575468926630270');
+fbq('init', '1575468926630270', {external_id: __fbExtId()});
 var __pvEventId = __fbEventId();
 fbq('track', 'PageView', {}, {eventID: __pvEventId});
 __fbCapi('PageView', __pvEventId);
@@ -278,7 +294,7 @@ footer a{color:#0047b3;text-decoration:none}
     <div class="hero-grid">
       <div class="hero-callout"><span class="hero-callout__label">1-on-1 Online Fat Loss Coaching</span><span class="hero-callout__chip">For Men</span></div>
       <h1 class="headline">Lose Your First 10 Pounds in 6 Weeks — <a class="footnote-link" href="#guarantee" aria-label="Guaranteed, see conditions"><span class="footnote-link__word">Guaranteed</span><span class="footnote-link__mark">*</span></a></h1>
-      <div class="subheadline">Follow the plan. Miss it, and I coach you free for up to 6 more weeks.</div>
+      <div class="subheadline">If you follow the plan and fall short, I coach you free for up to 6 more weeks.</div>
       <div class="hero-media">
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
@@ -528,7 +544,7 @@ footer a{color:#0047b3;text-decoration:none}
       <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
       <p>If you book a meeting, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
       <h3>5. Advertising and Analytics</h3>
-      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address and browser, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address, approximate location, browser, and a random ID stored in a cookie, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
       <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
       <h3>6. Sharing of Information</h3>
       <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
