@@ -125,6 +125,8 @@ body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiase
 strong{font-weight:500}
 /* icons: 1.25x the font size of the text beside them (Material Symbols Rounded, default weight) */
 .icon{width:1.25em;height:1.25em;flex-shrink:0}
+/* arrows fill their whole box, so size them like the text (1em) */
+.icon-arrow{width:1em;height:1em}
 .container{display:flex;flex-direction:column;background:#f7f7f7}
 
 /* section dividers — standalone elements rather than borders on the sections
@@ -438,7 +440,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
 
 <div class="save-bar">
   <span class="save-bar__photo"><img src="/assets/asher-avatar.webp" width="60" height="60" alt=""></span>
-  <a class="save-bar__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save My Number</a>
+  <a class="save-bar__btn" href="/asher-robinson.vcf">Avoid Spam<svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg>Save Number</a>
 </div>
 
 <div class="save-corner" role="button" tabindex="0" aria-label="Scan to save my number, show a larger QR code">
@@ -455,7 +457,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
       <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
       <div>
         <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
-        <p class="save-popup__text" id="save-popup-text">Scan to save my number</p>
+        <p class="save-popup__text" id="save-popup-text">Save my number so it doesn't show as spam</p>
       </div>
     </div>
     <span class="save-popup__number" hidden>(555) 555-0123</span>
