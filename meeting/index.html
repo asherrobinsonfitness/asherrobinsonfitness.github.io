@@ -168,58 +168,54 @@ strong{font-weight:500}
 .save-bar>*{pointer-events:auto}
 .save-bar__photo{position:relative;flex-shrink:0;line-height:0}
 .save-bar__photo img{width:60px;height:60px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #f7f7f7}
-/* "online" dot: the pop-up's, scaled to 60px */
+/* "online" dot: 12px green + 2px ring in the band color (2px = every ring here),
+   in whole pixels so it renders as a true circle; border-box because the
+   page's * reset doesn't reach ::after. */
 .save-bar__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:16px;height:16px;box-sizing:border-box;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
 .save-bar__btn{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap;box-shadow:0 0 0 2px #f7f7f7}
 @media (hover:hover) and (pointer:fine){
   .save-bar{display:none}
 }
 
-/* save-number pop-up — desktop only: the corner card opens it on click,
-   with a bigger QR (copied from the card). Never opens by itself. Same dim +
-   blur and fade as coaching/'s Terms popup; 8px card; the banner's X. Keep
-   .save-popup__number: set-contact-number.py rewrites it, and the script at
-   the bottom reads it (the phone bar's tel: link on Android). */
+/* save-number pop-up — desktop only: the corner card opens it on click.
+   Laid out like X's "Get the app": a big QR (copied from the card), then the
+   photo with two lines under it, all in one white card (white = action, and
+   the QR's quiet zone). Never opens by itself. Same dim + blur and fade as
+   coaching/'s Terms popup; 8px card; the banner's X. The hidden
+   .save-popup__number stays: set-contact-number.py rewrites it, and the
+   script at the bottom reads it (the phone bar's tel: link on Android). */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
-.save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid #d5d5d5;border-radius:8px;text-align:center}
+.save-popup__card{position:relative;padding:3rem 2rem 1.75rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px}
 .save-popup__card:focus{outline:none}
 .save-popup__close{position:absolute;top:.5rem;right:.5rem;display:flex;padding:.5rem;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;cursor:pointer}
 /* ✕ buttons: an invisible layer makes the tap area 44px; the button and its focus ring stay 32px */
 .announcement__close::after,.save-popup__close::after{content:"";position:absolute;inset:-6px}
-.save-popup__photo{position:relative;display:inline-block;margin-bottom:.75rem;line-height:0}
-.save-popup__photo img{width:64px;height:64px;border-radius:50%;object-fit:cover}
-/* "online" dot: 13px green + 2px ring in the card color (2px = every ring here). All three dots
-   (pop-up, phone bar, desktop QR card) are this one scaled to their photo,
-   in whole pixels so they render as true circles; border-box because the
-   page's * reset doesn't reach ::after. */
-.save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:17px;height:17px;box-sizing:border-box;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
-.save-popup__title{font-size:1.5rem;font-weight:400;line-height:1.2}
-.save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
-.save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid #d5d5d5;border-radius:8px;line-height:0}
+.save-popup__qr{width:360px;line-height:0}
 .save-popup__qr svg{display:block;width:100%;height:auto}
-.save-popup__hint{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.4375rem .875rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-popup__head{display:flex;align-items:center;justify-content:center;gap:.625rem;margin-top:1.5rem}
+.save-popup__photo{position:relative;flex-shrink:0;line-height:0}
+.save-popup__photo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+/* "online" dot: 7px green + 2px ring in the card color (2px = every ring
+   here), in whole pixels so it renders as a true circle; border-box because
+   the page's * reset doesn't reach ::after. */
+.save-popup__photo::after{content:"";position:absolute;right:0;bottom:0;width:11px;height:11px;box-sizing:border-box;border-radius:50%;background:#18874a;border:2px solid #fff}
+.save-popup__title{font-size:.9375rem;font-weight:500;line-height:1.2}
+.save-popup__text{margin-top:1px;font-size:.8125rem;line-height:1.6;color:#4a4a4a}
 @media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
 /* desktop save-number card — pinned bottom-right for the whole visit, no
-   close button (like X's "Scan to get the app"). Photo with the online dot,
-   the QR, a camera hint. A click opens the pop-up with a bigger QR; no
-   hover state. Keep .save-corner__qr: set-contact-number.py
-   rewrites it. The QR svg has no quiet zone of its own; the card's white
-   padding is it. */
+   close button (like X's "Scan to get the app"): a one-line title, then
+   the QR, sized to the title's width (176px) so the card hugs both. A click
+   opens the pop-up with a bigger QR; no hover state. Keep .save-corner__qr:
+   set-contact-number.py rewrites it. The QR svg has no quiet zone of its
+   own; the card's white padding is it. */
 .save-corner{display:none}
 @media (hover:hover) and (pointer:fine){
-  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;width:252px;padding:1rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;cursor:pointer}
+  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;padding:1rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;cursor:pointer}
 }
-.save-corner__head{display:flex;align-items:center;gap:.625rem;margin-bottom:1rem;text-align:left}
-.save-corner__photo{position:relative;flex-shrink:0;line-height:0}
-.save-corner__photo img{width:36px;height:36px;border-radius:50%;object-fit:cover}
-/* "online" dot: the pop-up's, scaled to 36px; white ring = the card */
-.save-corner__photo::after{content:"";position:absolute;right:0;bottom:0;width:11px;height:11px;box-sizing:border-box;border-radius:50%;background:#18874a;border:2px solid #fff}
-.save-corner__title{font-size:.9375rem;font-weight:500;line-height:1.2}
-.save-corner__text{margin-top:1px;font-size:.8125rem;line-height:1.6;color:#4a4a4a;white-space:nowrap}
-.save-corner__qr{width:164px;margin:0 auto;line-height:0}
+.save-corner__title{margin-bottom:.75rem;font-size:.9375rem;font-weight:500;line-height:1.2;white-space:nowrap}
+.save-corner__qr{width:176px;margin:0 auto;line-height:0}
 .save-corner__qr svg{display:block;width:100%;height:auto}
-.save-corner__hint{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.375rem .75rem;border-radius:999px;background:#eee;font-size:.8125rem;font-weight:500;line-height:1.2;white-space:nowrap}
 /* what happens next — numbered steps in the same hairline-row style as the
    FAQ list, then iClosed's meeting details. */
 .next-steps{list-style:none;margin:1.5rem 0 0;padding:0;border-top:1px solid #d5d5d5;text-align:left}
@@ -285,7 +281,17 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
   .above-fold{display:flex;flex-direction:column;min-height:100vh}
   .announcement{flex-shrink:0}
   .container{flex:1 1 auto;min-height:0;flex-direction:row;align-items:stretch}
-  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center}
+  /* the hero is sized to the screen, not the row, so it never moves when the
+     "What Happens Next" column is taller than the screen (short windows, zoom).
+     The column stays centered while it fits; once it would make the row taller
+     than the hero, the script after .booking-section starts it at the
+     headline's line and the row grows down, pushing the FAQ, instead of
+     pushing the video off center.
+     2.3rem = the announcement bar's height: .5rem padding top and bottom +
+     one 13px line at 1.6. The bar is removed when dismissed, and the hero
+     then takes the full screen. */
+  .hero-grid{flex:1 1 0;min-width:0;padding:var(--pad-sm) 2.5rem;justify-content:center;align-self:flex-start;min-height:100vh}
+  .announcement ~ .container .hero-grid{min-height:calc(100vh - 2.3rem)}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
 }
@@ -349,6 +355,25 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
         <!-- iClosed widget end -->
       </div>
     </section>
+    <script>
+    // Desktop: once the column would make the row taller than the hero, start it
+    // at the headline's line instead of centered. Re-checked whenever the column
+    // (iClosed widget loading) or the hero (window size, zoom, bar dismissed)
+    // changes size.
+    (function(){
+      var h=document.querySelector(".hero-grid"),b=document.querySelector(".booking-section"),
+          i=document.querySelector(".booking-inner"),c=document.querySelector(".headline"),
+          d=matchMedia("(min-width:900px)");
+      function fit(){
+        b.style.paddingTop="";
+        if(!d.matches) return;
+        var s=getComputedStyle(b);
+        if(i.offsetHeight+parseFloat(s.paddingTop)+parseFloat(s.paddingBottom)>h.offsetHeight)
+          b.style.paddingTop=c.getBoundingClientRect().top-h.getBoundingClientRect().top+"px";
+      }
+      var o=new ResizeObserver(fit);o.observe(i);o.observe(h);
+    })();
+    </script>
   </div>
   </div>
 
@@ -416,27 +441,24 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
   <a class="save-bar__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save My Number</a>
 </div>
 
-<div class="save-corner" role="button" tabindex="0" aria-label="Save my number, show a larger QR code">
-  <div class="save-corner__head">
-    <span class="save-corner__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
-    <div>
-      <p class="save-corner__title">Don't miss my call</p>
-      <p class="save-corner__text">Save my number</p>
-    </div>
-  </div>
+<div class="save-corner" role="button" tabindex="0" aria-label="Scan to save my number, show a larger QR code">
+  <p class="save-corner__title">Scan to save my number</p>
   <div class="save-corner__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg>
 </div>
-  <p class="save-corner__hint"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
 </div>
 
 <div class="save-popup" id="save-popup" aria-hidden="true">
   <div class="save-popup__card" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="save-popup-title" aria-describedby="save-popup-text">
     <button class="save-popup__close" type="button" aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
-    <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
-    <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
-    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number">(555) 555-0123</span>. Save it so it doesn't get filtered as spam.</p>
     <div class="save-popup__qr"></div>
-    <p class="save-popup__hint"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
+    <div class="save-popup__head">
+      <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
+      <div>
+        <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
+        <p class="save-popup__text" id="save-popup-text">Scan to save my number</p>
+      </div>
+    </div>
+    <span class="save-popup__number" hidden>(555) 555-0123</span>
   </div>
 </div>
 
