@@ -159,12 +159,13 @@ strong{font-weight:500}
    #f7f7f7, 2px like every ring here. The button is its text plus padding,
    never stretched. To lift
    it off the page: a 1px #d5d5d5 line along the band's top that runs up and
-   over the photo and button (half-rings on their ::before, filled #f7f7f7 so
-   they hide the band line behind them), plus the corner QR card's shadow
+   over the photo and button (half-rings on their ::before, filled #f7f7f7 and
+   1px taller than the photo's middle so they cover the band line; flush,
+   iPhone Safari let a stub of it peek past their sides), plus the corner QR card's shadow
    (pointed up), drawn around the whole silhouette by drop-shadow. */
 .save-bar{position:sticky;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-top:-30px;padding:0 1rem 1rem;pointer-events:none;filter:drop-shadow(0 -8px 28px rgba(0,0,0,.12))}
 .save-bar::before{content:"";position:absolute;left:0;right:0;bottom:0;top:30px;z-index:-1;background:#f7f7f7;border-top:1px solid #d5d5d5}
-.save-bar__photo::before,.save-bar__btn::before{content:"";position:absolute;z-index:-1;left:-3px;right:-3px;top:-3px;height:calc(50% + 3px);background:#f7f7f7;border:1px solid #d5d5d5;border-bottom:0;box-sizing:border-box}
+.save-bar__photo::before,.save-bar__btn::before{content:"";position:absolute;z-index:-1;left:-3px;right:-3px;top:-3px;height:calc(50% + 4px);background:#f7f7f7;border:1px solid #d5d5d5;border-bottom:0;box-sizing:border-box}
 .save-bar__photo::before{border-radius:33px 33px 0 0}
 .save-bar__btn::before{border-radius:7px 7px 0 0}
 .save-bar>*{pointer-events:auto}
