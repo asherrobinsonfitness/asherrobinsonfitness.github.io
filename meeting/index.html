@@ -161,15 +161,17 @@ strong{font-weight:500}
    it off the page: a 1px #d5d5d5 line along the band's top that runs up and
    over the photo and button, plus the corner QR card's shadow (pointed up),
    drawn around the whole silhouette by drop-shadow. Built in three layers so
-   no two lines have to meet: ::before is the line (solid #d5d5d5 from 30px
-   down), the half-rings on the photo and button sit on it (filled, so they
-   hide it inside them), and ::after is the band fill from 31px down, painted
-   last, so its one top edge ends the line and the half-rings' sides alike.
-   Lines that had to meet left stubs on phones (fractional pixel densities). */
+   no two lines have to meet: ::before is the line (a 1px border at 30px), the
+   half-rings on the photo and button sit on it (filled, so they hide it
+   inside them), and ::after is the band fill, painted last, under an
+   identical but transparent border, so its top edge lands exactly on the
+   line's bottom and cuts the half-rings' sides there too. Lines that had to
+   meet left stubs on phones (fractional pixel densities), and the line is a
+   border, not a 1px fill, because phones draw 1px borders thinner (whole
+   screen pixels) and it has to match the half-rings. */
 .save-bar{position:sticky;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-top:-30px;padding:0 1rem 1rem;pointer-events:none;filter:drop-shadow(0 -8px 28px rgba(0,0,0,.12))}
-.save-bar::before,.save-bar::after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:-1}
-.save-bar::before{top:30px;background:#d5d5d5}
-.save-bar::after{top:31px;background:#f7f7f7}
+.save-bar::before,.save-bar::after{content:"";position:absolute;left:0;right:0;bottom:0;top:30px;z-index:-1;border-top:1px solid #d5d5d5}
+.save-bar::after{border-top-color:transparent;background:#f7f7f7 padding-box}
 .save-bar__photo::before,.save-bar__btn::before{content:"";position:absolute;z-index:-1;left:-3px;right:-3px;top:-3px;bottom:0;background:#f7f7f7;border:1px solid #d5d5d5;border-bottom:0;box-sizing:border-box}
 .save-bar__photo::before{border-radius:33px 33px 0 0}
 .save-bar__btn::before{border-radius:7px 7px 0 0}
