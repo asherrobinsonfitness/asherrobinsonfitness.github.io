@@ -22,6 +22,22 @@ function __fbCookie(name) {
   var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return m ? m[2] : undefined;
 }
+// Stable per-browser ID sent with every Meta event (hashed by the server and
+// by the pixel), so anonymous page views link up with the later lead.
+function __fbExtId() {
+  var id = __fbCookie('ext_id');
+  if (!id) {
+    id = __fbEventId();
+    document.cookie = 'ext_id=' + id + '; Path=/; Max-Age=' + (60 * 60 * 24 * 365) + '; SameSite=Lax';
+  }
+  return id;
+}
+// _fbc is set by the pixel script, which hasn't loaded yet on the first page
+// view (and may be blocked). Fall back to building it from the ad's fbclid.
+function __fbClickId() {
+  var fbclid = new URLSearchParams(location.search).get('fbclid');
+  return __fbCookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : undefined);
+}
 function __fbCapi(eventName, eventId, customData, userData) {
   try {
     fetch('/api/meta-capi', {
@@ -33,7 +49,7 @@ function __fbCapi(eventName, eventId, customData, userData) {
         event_id: eventId,
         event_source_url: window.location.href,
         custom_data: customData || {},
-        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbCookie('_fbc') }, userData || {})
+        user_data: Object.assign({ fbp: __fbCookie('_fbp'), fbc: __fbClickId(), external_id: __fbExtId() }, userData || {})
       })
     }).catch(function(){});
   } catch (e) {}
@@ -60,7 +76,7 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 '/edge/fbevents.js');
-fbq('init', '1575468926630270');
+fbq('init', '1575468926630270', {external_id: __fbExtId()});
 var __pvEventId = __fbEventId();
 fbq('track', 'PageView', {}, {eventID: __pvEventId});
 __fbCapi('PageView', __pvEventId);
@@ -132,34 +148,31 @@ strong{font-weight:500}
 .headline{font-size:clamp(1.75rem,1.35rem + 2vw,2.75rem);font-weight:500;line-height:1.2}
 .subheadline{font-size:1.125rem;color:#4a4a4a;line-height:1.6;margin:.75rem auto 0}
 .hero-media{width:100%;margin-top:1.5rem;border-radius:8px;background:#eee;overflow:hidden}
-/* save contact — a quiet attachment-style row under the video (photo, name,
-   number, small pill button), deliberately lighter than the video. The pill's
-   ::after stretches over the whole row so the row is the tap target. Phones
-   only; desktop gets the corner QR card below. Keep .save-contact__number:
-   set-contact-number.py rewrites it, and the script at the bottom reads it
-   (tel: link, pop-up text). */
-.save-contact{margin-top:1.5rem}
-.contact-card{position:relative;display:flex;align-items:center;gap:.5rem;width:100%;max-width:472px;margin:0 auto;padding:.625rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;text-align:left}
-.contact-card__photo{position:relative;flex-shrink:0;line-height:0}
-.contact-card__photo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
-/* "online" dot, scaled down from the pop-up's; white ring = the card */
-.contact-card__photo::after{content:"";position:absolute;right:0;bottom:1px;width:10px;height:10px;border-radius:50%;background:#18874a;border:2px solid #fff}
-.contact-card__info{flex:1 1 auto;min-width:0}
-.contact-card__name{font-size:.9375rem;font-weight:500;line-height:1.2}
-.save-contact__number{font-size:.8125rem;line-height:1.6;color:#4a4a4a}
-.save-contact__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;height:2.125rem;padding:0 .75rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;color:#111;font-size:.8125rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap}
-.save-contact__btn::after{content:"";position:absolute;inset:0;border-radius:8px}
+/* save bar — phones only; desktop gets the corner QR card below. Laid out
+   like Morgan & Morgan's: photo and button centered as a pair on the band's
+   top edge, half above it. Sticky as the last thing in <body>, so it rides
+   the bottom of the screen and comes to rest under the footer, covering
+   nothing. The band is the ::before, starting at the photo's middle; the open
+   half above lets taps through to the page. Rings and band = the hero's
+   #f7f7f7. The button is its text plus padding, never stretched. */
+.save-bar{position:sticky;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-top:-30px;padding:0 1rem 1rem;pointer-events:none}
+.save-bar::before{content:"";position:absolute;left:0;right:0;bottom:0;top:30px;z-index:-1;background:#f7f7f7}
+.save-bar>*{pointer-events:auto}
+.save-bar__photo{position:relative;flex-shrink:0;line-height:0}
+.save-bar__photo img{width:60px;height:60px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #f7f7f7}
+.save-bar__photo::after{content:"";position:absolute;right:2px;bottom:3px;width:14px;height:14px;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
+.save-bar__btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap;box-shadow:0 0 0 3px #f7f7f7}
 @media (hover:hover) and (pointer:fine){
-  .save-contact{display:none}
+  .save-bar{display:none}
 }
 
-/* save-number pop-up — on phones it opens once per visit when the save row
-   scrolls off the top of the screen without having been tapped; on desktop
-   it opens whenever the corner card is clicked, with the QR (copied from the
-   card) in place of the button. The 472px cap matches the contact row,
-   so on phones the card's edges line up with the page's 16px gutters. Same dim + blur and
-   fade as coaching/'s Terms popup; 8px card like the row, 4px button like the
-   rest of the page; the banner's X. */
+/* save-number pop-up — opens by itself 5s after the page loads on every
+   device (saving the number is the page's most wanted action). Phones get a
+   Save My Number button; desktop gets a bigger QR (copied from the corner
+   card) in its place, and the corner card reopens it on click. Same dim + blur
+   and fade as coaching/'s Terms popup; 8px card; the banner's X. Keep
+   .save-popup__number: set-contact-number.py rewrites it, and the script at
+   the bottom reads it (tel: links on Android). */
 .save-popup{display:flex;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .save-popup.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
 .save-popup__card{position:relative;width:100%;max-width:472px;padding:1.5rem 1.25rem 1.25rem;background:#f7f7f7;border:1px solid #d5d5d5;border-radius:8px;text-align:center}
@@ -173,7 +186,7 @@ strong{font-weight:500}
 .save-popup__photo::after{content:"";position:absolute;right:1px;bottom:2px;width:13px;height:13px;border-radius:50%;background:#18874a;border:2px solid #f7f7f7}
 .save-popup__title{font-size:1.5rem;font-weight:400;line-height:1.2}
 .save-popup__text{margin:.375rem 0 1.25rem;font-size:.9375rem;line-height:1.6;color:#4a4a4a}
-.save-popup__btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.5rem;padding:.875rem 1.5rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none}
+.save-popup__btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1rem;border-radius:4px;background:#111;color:#fff;font-size:1rem;font-weight:500;line-height:1.2;text-decoration:none;white-space:nowrap}
 .save-popup__qr,.save-popup__hint{display:none}
 .save-popup__qr{width:288px;margin:0 auto;padding:16px;background:#fff;border:1px solid #d5d5d5;border-radius:8px;line-height:0}
 .save-popup__qr svg{display:block;width:100%;height:auto}
@@ -315,16 +328,6 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
         <div id="vidalytics_embed_Xcic7Hyxo2J8RaM9" style="width:100%;position:relative;padding-top:56.25%"></div>
         <script>!function(e,a,t,n,c,d,i,o,r){d="_"+t.toLowerCase(),o=t+"L",e[t]||(e[t]={}),e[o]||(e[o]={}),e[d]||(e[d]={});var s="Loader",l=e[d][s],y=e[o][s+"Script"];e[o][s+"Loaded"],y||(y=function(e,t){i?t():((r=a.createElement("script")).type="text/javascript",r.async=1,r.src=e,r.readyState?r.onreadystatechange=function(){"loaded"!==r.readyState&&"complete"!=r.readyState||(r.onreadystatechange=null,t())}:r.onload=function(){t()},a.getElementsByTagName("head")[0].appendChild(r))}),y(c+"loader.min.js",function(){if(!l){var a=e[o][s];l=new a}l.loadScript(c+"player.min.js",function(){var a=e[t].Embed;(i=new a).run("vidalytics_embed_Xcic7Hyxo2J8RaM9")})})}(window,document,"Vidalytics",0,"https://fast.vidalytics.com/embeds/swbCvzMu/Xcic7Hyxo2J8RaM9/")</script>
       </div>
-      <div class="save-contact">
-        <div class="contact-card">
-          <span class="contact-card__photo"><img src="/assets/asher-avatar.webp" width="40" height="40" alt=""></span>
-          <div class="contact-card__info">
-            <p class="contact-card__name">Asher Robinson</p>
-            <p class="save-contact__number">(555) 555-0123</p>
-          </div>
-          <a class="save-contact__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
-        </div>
-      </div>
     </div>
 
     <div class="section-divider section-divider--split" aria-hidden="true"></div>
@@ -405,6 +408,11 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
   </div>
 </footer>
 
+<div class="save-bar">
+  <span class="save-bar__photo"><img src="/assets/asher-avatar.webp" width="60" height="60" alt=""></span>
+  <a class="save-bar__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save My Number</a>
+</div>
+
 <div class="save-corner" role="button" tabindex="0" aria-label="Save my number, show a larger QR code">
   <div class="save-corner__head">
     <span class="save-corner__photo"><img src="/assets/asher-avatar.webp" width="36" height="36" alt=""></span>
@@ -423,31 +431,30 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
     <button class="save-popup__close" type="button" aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
     <span class="save-popup__photo"><img src="/assets/asher-avatar.webp" width="64" height="64" alt=""></span>
     <h2 class="save-popup__title" id="save-popup-title">Don't miss my call</h2>
-    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number"></span>. Save it so it doesn't get filtered as spam.</p>
-    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save Number</a>
+    <p class="save-popup__text" id="save-popup-text">I may call or text you from <span class="save-popup__number">(555) 555-0123</span>. Save it so it doesn't get filtered as spam.</p>
+    <a class="save-popup__btn" href="/asher-robinson.vcf"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M720-520h-80q-17 0-28.5-11.5T600-560q0-17 11.5-28.5T640-600h80v-80q0-17 11.5-28.5T760-720q17 0 28.5 11.5T800-680v80h80q17 0 28.5 11.5T920-560q0 17-11.5 28.5T880-520h-80v80q0 17-11.5 28.5T760-400q-17 0-28.5-11.5T720-440v-80Zm-473-7q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-240v-32q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240Zm80 0h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z"/></svg>Save My Number</a>
     <div class="save-popup__qr"></div>
     <p class="save-popup__hint"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l50-54q11-12 26.5-19t32.5-7h170q17 0 32.5 7t26.5 19l50 54h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>Scan with your camera</p>
   </div>
 </div>
 
 <script>
-// Save Number: one link target per device, the pop-up, and the desktop
-// corner card that opens it.
+// Save Number: link targets per device, the pop-up that opens 5s after
+// load (button on phones, QR on desktop), and the desktop corner card.
 (function(){
-  var row=document.querySelector(".save-contact"),
-      btn=document.querySelector(".save-contact__btn"),
-      num=document.querySelector(".save-contact__number"),
+  var btn=document.querySelector(".save-bar__btn"),
+      num=document.querySelector(".save-popup__number"),
       pop=document.getElementById("save-popup"),
       corner=document.querySelector(".save-corner");
-  if(!row||!btn||!num||!pop) return;
+  if(!btn||!num||!pop) return;
   var popBtn=pop.querySelector(".save-popup__btn"),
       closeBtn=pop.querySelector(".save-popup__close"),
       card=pop.querySelector(".save-popup__card");
 
   // iPhone opens the .vcf straight into "Create New Contact". Android would
-  // download it as a file instead, so there the button opens the dialer with
+  // download it as a file instead, so there the buttons open the dialer with
   // the number typed in (it doesn't call), where "Create new contact" is one
-  // tap away. The number is read from the visible text, which
+  // tap away. The number is read from the pop-up text, which
   // set-contact-number.py keeps current.
   var digits=num.textContent.replace(/\D/g,"");
   if(digits.length===10) digits="1"+digits;
@@ -455,13 +462,7 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
     btn.setAttribute("href","tel:+"+digits);
     popBtn.setAttribute("href","tel:+"+digits);
   }
-  pop.querySelector(".save-popup__number").textContent=num.textContent.trim();
   if(corner) pop.querySelector(".save-popup__qr").innerHTML=corner.querySelector(".save-corner__qr").innerHTML;
-
-  // at most once per visit, and never after they've tapped Save Number
-  var KEY="savePopupDone";
-  function isDone(){try{return !!sessionStorage.getItem(KEY)}catch(e){return false}}
-  function markDone(){try{sessionStorage.setItem(KEY,"1")}catch(e){}}
 
   var lastFocus=null;
   function onKey(e){
@@ -473,12 +474,6 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
     var first=f[0],last=f[f.length-1];
     if(e.shiftKey&&(document.activeElement===first||document.activeElement===card)){e.preventDefault();last.focus()}
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
-  }
-  // phones: at most once per visit
-  function open(){
-    if(isDone()) return;
-    markDone();
-    show();
   }
   function show(){
     lastFocus=document.activeElement;
@@ -496,32 +491,18 @@ footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;co
     document.removeEventListener("keydown",onKey);
     if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
   }
-  btn.addEventListener("click",markDone);
   popBtn.addEventListener("click",close);
   closeBtn.addEventListener("click",close);
   pop.addEventListener("click",function(e){if(e.target===pop) close()});
 
-  // desktop: no row there; the corner card opens the pop-up on every click
-  if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
-    if(corner){
-      corner.addEventListener("click",show);
-      corner.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show()}});
-    }
-    return;
+  // desktop: the corner card also opens the pop-up on every click
+  if(corner&&window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){
+    corner.addEventListener("click",show);
+    corner.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();show()}});
   }
 
-  // phones: open once the save row has scrolled off the top of the screen:
-  // they've seen the video and the row and kept going without saving
-  if(!("IntersectionObserver" in window)) return;
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(!en.isIntersecting&&en.boundingClientRect.bottom<=0){
-        io.disconnect();
-        open();
-      }
-    });
-  });
-  io.observe(row);
+  // both: open by itself 5s after load
+  setTimeout(show,5000);
 })();
 </script>
 
