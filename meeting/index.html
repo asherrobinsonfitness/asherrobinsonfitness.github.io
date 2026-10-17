@@ -293,6 +293,8 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
 .footer-divider{border:none;border-bottom:1px solid #d5d5d5}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
+/* phones: links above the © line, so © closes the page */
+@media (max-width:699px){.footer-row{flex-direction:column-reverse;align-items:flex-start}}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
 
 /* legal (terms / privacy) popups */
