@@ -193,6 +193,8 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 .footer-divider{border:none;border-bottom:1px solid #d5d5d5}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
+/* phones: links above the © line, so © closes the page */
+@media (max-width:699px){.footer-row{flex-direction:column-reverse;align-items:flex-start}}
 footer p+p{margin-top:.75rem}
 
 /* short steps on tall phones: the page fills the screen, so the footer sits
