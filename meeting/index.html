@@ -282,7 +282,12 @@ strong{font-weight:500}
 
 /* footer: one note line, a divider, then © and the legal links.
    The disclaimers live in their own slide-in panel, like Terms and Privacy. */
-footer{background:#eee;padding:1.5rem 1rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a}
+footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a}
+/* phones: the save bar comes to rest 30px up over the footer's bottom
+   (its margin-top:-30px), so the footer adds those 30px to keep the links clear.
+   Mouse screens hide the save bar and keep the standard padding. */
+footer{padding-bottom:calc(var(--pad-sm) + 30px)}
+@media (hover:hover) and (pointer:fine){footer{padding-bottom:var(--pad-sm)}}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
 .footer-divider{border:none;border-bottom:1px solid #d5d5d5}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
