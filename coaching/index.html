@@ -189,24 +189,13 @@ strong{font-weight:500}
 
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none;font-family:inherit;transition:color 0s}
 
-/* disclaimers — now live inside the footer, so they inherit its
-   background rather than needing one of their own. */
-.footer-disclaimers{display:flex;flex-direction:column;gap:1.25rem}
-.disclaimer-grid{display:flex;flex-direction:column;gap:1.25rem}
-.disclaimers-title{font-size:.9375rem;font-weight:500;line-height:1.2;color:#4a4a4a}
-.disclaimer-block{display:flex;flex-direction:column;gap:.3rem}
-.disclaimer-heading{font-size:.8125rem;font-weight:500;line-height:1.2;color:#4a4a4a}
-.disclaimer-text{font-size:.8125rem;line-height:1.6;color:#4a4a4a}
-.disclaimer-text .legal-link{font-size:.8125rem}
-
-/* footer */
-footer{background:#eee;padding:2.5rem 1rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a}
+/* footer: one note line, a divider, then © and the legal links.
+   The disclaimers live in their own slide-in panel, like Terms and Privacy. */
+footer{background:#eee;padding:1.5rem 1rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a}
 .footer-inner{display:flex;flex-direction:column;gap:1.5rem}
-.footer-disclaimer{font-size:.8125rem;line-height:1.6}
-.footer-disclaimer p+p{margin-top:.75rem}
 .footer-divider{border:none;border-bottom:1px solid #d5d5d5}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
-footer a{color:#0047b3;text-decoration:none}
+.footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
 
 /* legal (terms / privacy) popups */
 .legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
@@ -227,6 +216,7 @@ footer a{color:#0047b3;text-decoration:none}
 .legal-modal-body ul{margin:0 0 .875rem 1.125rem}
 .legal-modal-body ul li{font-size:.9375rem;line-height:1.6;color:#4a4a4a;margin-bottom:.25rem}
 .legal-modal-body a{color:#0047b3;text-decoration:none}
+.legal-modal-body .legal-link{font-size:inherit}
 .legal-modal-body strong{font-weight:500}
 /* phones/computers set to Reduce Motion: the popup opens and closes without the slide or fade */
 @media (prefers-reduced-motion:reduce){.legal-overlay,.legal-overlay.active,.legal-modal{transition:none}}
@@ -258,7 +248,6 @@ footer a{color:#0047b3;text-decoration:none}
   .announcement ~ .container .hero-grid{min-height:calc(100vh - 2.3rem)}
   .booking-section{flex:1 1 0;min-width:0;padding-left:2.5rem;padding-right:2.5rem;display:flex;flex-direction:column;justify-content:center}
   .section-divider--split{width:1px;height:auto;align-self:stretch}
-  .disclaimer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 }
 
 /* keyboard focus ring in the page's near-black instead of the browser's
@@ -414,44 +403,37 @@ footer a{color:#0047b3;text-decoration:none}
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-disclaimers">
-      <h2 class="disclaimers-title">Disclaimers</h2>
-      <div class="disclaimer-grid">
-        <div class="disclaimer-block">
-          <h3 class="disclaimer-heading">Guarantee Terms</h3>
-          <p class="disclaimer-text">The 10-pound guarantee has conditions. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> for how it works and how to claim it.</p>
-        </div>
-
-        <div class="disclaimer-block">
-          <h3 class="disclaimer-heading">Results Vary</h3>
-          <p class="disclaimer-text">My own result, losing 16 pounds in about 8 weeks, is not a promise of yours. Results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
-        </div>
-
-        <div class="disclaimer-block">
-          <h3 class="disclaimer-heading">Eligibility</h3>
-          <p class="disclaimer-text">Coaching is for adults 18 years of age or older and is not medical advice. Consult a qualified healthcare professional before starting any diet or exercise program. This is important if you have an existing medical condition.</p>
-        </div>
-
-        <div class="disclaimer-block">
-          <h3 class="disclaimer-heading">How Your Information Is Used</h3>
-          <p class="disclaimer-text">When you book a meeting, the scheduler (run by iClosed) collects your name, email, and phone number so I can confirm your meeting. I may call, text, or email you about your meeting. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
-        </div>
-      </div>
-    </div>
-    <hr class="footer-divider">
-    <div class="footer-disclaimer">
-      <p>This site is not a part of the Facebook website or Meta Platforms, Inc. Additionally, this site is NOT endorsed by Facebook or Meta in any way. FACEBOOK is a trademark of Meta Platforms, Inc.</p>
-    </div>
+    <p>Your results depend on your starting point, how well you follow the plan, sleep, and stress.</p>
     <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <div class="footer-links">
+        <button class="legal-link" onclick='openLegal("disclaimers")'>Disclaimers</button>
         <button class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>
         <button class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button>
       </div>
     </div>
   </div>
 </footer>
+
+<div class="legal-overlay" id="modal-disclaimers" role="dialog" aria-modal="true" aria-labelledby="disclaimers-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <button class="legal-modal-close" onclick='closeLegal("disclaimers")' aria-label="Close"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h2 id="disclaimers-title">Disclaimers</h2>
+      <h3>Guarantee Terms</h3>
+      <p>The 10-pound guarantee has conditions. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> for how it works and how to claim it.</p>
+      <h3>Results Vary</h3>
+      <p>My own result, losing 16 pounds in about 8 weeks, is not a promise of yours. Results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
+      <h3>Eligibility</h3>
+      <p>Coaching is for adults 18 years of age or older and is not medical advice. Consult a qualified healthcare professional before starting any diet or exercise program. This is important if you have an existing medical condition.</p>
+      <h3>How Your Information Is Used</h3>
+      <p>When you book a meeting, the scheduler (run by iClosed) collects your name, email, and phone number so I can confirm your meeting. I may call, text, or email you about your meeting. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> &amp; <button type="button" class="legal-link" onclick='openLegal("privacy")'>Privacy Policy</button> for details.</p>
+    </div>
+  </div>
+</div>
 
 <div class="legal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title">
   <div class="legal-modal">
@@ -544,7 +526,7 @@ footer a{color:#0047b3;text-decoration:none}
       <p>Requesting a roadmap adds you to my email newsletter, sent through Kit. Every email includes an unsubscribe link.</p>
       <p>If you book a meeting, I may call, text, or email you about your appointment. Automated text reminders are sent only if you opt in on the booking form. Message and data rates may apply, and you can reply STOP to opt out. I do not share your phone number or your text message consent with third parties for their own marketing.</p>
       <h3>5. Advertising and Analytics</h3>
-      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address, approximate location, browser, and a random ID stored in a cookie, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>.</p>
+      <p><strong>Meta Pixel and Conversions API:</strong> this Site uses tools from Meta Platforms, Inc. to measure ad performance and show relevant ads on Facebook and Instagram. When you request a roadmap or book a meeting, I send Meta a scrambled (hashed) version of your email address and name, along with technical data such as your IP address, approximate location, browser, and a random ID stored in a cookie, so Meta can match the request or booking to an ad. Meta may associate this data with your Facebook or Instagram account. Learn more at <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener">facebook.com/privacy/explanation</a>. To opt out of ads based on your activity, visit <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener">facebook.com/adpreferences</a> or <a href="https://optout.aboutads.info" target="_blank" rel="noopener">optout.aboutads.info</a>.</p>
       <p><strong>PostHog:</strong> I use PostHog to understand how visitors use the Site, such as which pages they view and which steps they complete.</p>
       <h3>6. Sharing of Information</h3>
       <p>I do not sell your personal information for money. I share it only with service providers that help me run the business, and with Meta for advertising as described above:</p>
