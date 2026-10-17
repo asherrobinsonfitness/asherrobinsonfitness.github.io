@@ -217,15 +217,19 @@ strong{font-weight:500}
    second line made them sit 1.6px high. Type styles unchanged. */
 .save-popup__head>div{text-box:trim-both cap alphabetic}
 @media (prefers-reduced-motion:reduce){.save-popup,.save-popup.active{transition:none}}
-/* desktop save-number card — pinned bottom-right for the whole visit, no
-   close button (like X's "Scan to get the app"): a one-line title, then
-   the QR, sized to the title's width (176px) so the card hugs both. A click
-   opens the pop-up with a bigger QR; no hover state. Keep .save-corner__qr:
+/* desktop save-number card — rides the bottom-right corner, no close
+   button (like X's "Scan to get the app"): a one-line title, then the QR,
+   sized to the title's width (176px) so the card hugs both. A click opens
+   the pop-up with a bigger QR; no hover state. Keep .save-corner__qr:
    set-contact-number.py rewrites it. The QR svg has no quiet zone of its
-   own; the card's white padding is it. */
+   own; the card's white padding is it. Its holder is a 0-height sticky
+   strip, the last thing in <main>, so the card stops at the end of the FAQ
+   and never covers the footer links: 24px off the screen's bottom while it
+   rides, then it rests on the FAQ's bottom padding (--pad-sm). */
 .save-corner{display:none}
+.save-corner-wrap{position:sticky;bottom:calc(1.5rem - var(--pad-sm));z-index:100;height:0}
 @media (hover:hover) and (pointer:fine){
-  .save-corner{display:block;position:fixed;right:1.5rem;bottom:1.5rem;z-index:100;padding:1rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;cursor:pointer}
+  .save-corner{display:block;position:absolute;right:1.5rem;bottom:var(--pad-sm);padding:1rem;background:#fff;border:1px solid #d5d5d5;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.12);text-align:center;cursor:pointer}
 }
 .save-corner__title{margin-bottom:.75rem;font-size:.9375rem;font-weight:500;line-height:1.2;white-space:nowrap}
 .save-corner__qr{width:176px;margin:0 auto;line-height:0}
@@ -479,6 +483,13 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
       </div>
     </div>
   </section>
+  <div class="save-corner-wrap">
+    <div class="save-corner" role="button" tabindex="0" aria-label="Scan to save my number, show a larger QR code">
+      <p class="save-corner__title">Scan to save my number</p>
+      <div class="save-corner__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg>
+      </div>
+    </div>
+  </div>
 </main>
 
 <div class="section-divider" aria-hidden="true"></div>
@@ -678,12 +689,6 @@ document.addEventListener("keydown",function(e){
 <div class="save-bar">
   <span class="save-bar__photo"><img src="/assets/asher-avatar.webp" width="60" height="60" alt=""></span>
   <a class="save-bar__btn" href="/asher-robinson.vcf">Avoid Spam<svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M647-440H200q-17 0-28.5-11.5T160-480q0-17 11.5-28.5T200-520h447L451-716q-12-12-11.5-28t12.5-28q12-11 28-11.5t28 11.5l264 264q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L508-188q-11 11-27.5 11T452-188q-12-12-12-28.5t12-28.5l195-195Z"/></svg>Save Number</a>
-</div>
-
-<div class="save-corner" role="button" tabindex="0" aria-label="Scan to save my number, show a larger QR code">
-  <p class="save-corner__title">Scan to save my number</p>
-  <div class="save-corner__qr"><svg viewBox="0 0 33 33" role="img" aria-label="QR code to save my contact" shape-rendering="crispEdges"><path stroke="#000" d="M0 0.5h7m1 0h4m1 0h1m2 0h4m1 0h3m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1m7 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h1m2 0h2m1 0h1m4 0h1m2 0h3m-25 1h3m2 0h2m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h5m2 0h2m-33 1h2m6 0h1m3 0h1m1 0h2m1 0h2m2 0h1m2 0h2m1 0h1m1 0h2m-27 1h4m1 0h1m1 0h3m1 0h1m2 0h10m1 0h1m2 0h1m-30 1h2m6 0h1m2 0h2m2 0h3m2 0h4m4 0h1m-29 1h1m2 0h5m3 0h1m1 0h2m2 0h1m2 0h2m1 0h1m1 0h1m2 0h1m-32 1h1m2 0h3m1 0h1m1 0h1m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m2 0h1m-31 1h3m2 0h2m3 0h4m1 0h3m1 0h1m1 0h1m1 0h3m2 0h2m2 0h1m-31 1h4m1 0h3m2 0h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m-33 1h2m3 0h2m3 0h3m1 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m1 0h1m-33 1h1m1 0h1m2 0h1m6 0h1m1 0h2m1 0h4m1 0h1m4 0h1m1 0h1m-30 1h1m3 0h1m1 0h1m1 0h6m1 0h5m2 0h3m2 0h1m1 0h1m2 0h1m-31 1h1m2 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m5 0h3m1 0h1m1 0h1m-30 1h2m1 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-32 1h1m2 0h2m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m3 0h1m-28 1h5m1 0h4m1 0h1m1 0h12m2 0h1m4 0h1m-29 1h1m3 0h3m1 0h1m3 0h1m2 0h2m2 0h2m1 0h1m1 0h2m2 0h1m-33 1h3m1 0h3m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h9m-25 1h1m3 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m-29 1h7m2 0h7m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1m3 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1m-31 1h1m1 0h3m1 0h1m7 0h1m1 0h6m1 0h2m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m1 0h2m2 0h2m2 0h3m2 0h1m-33 1h1m5 0h1m1 0h1m2 0h1m3 0h1m2 0h2m2 0h3m1 0h1m2 0h1m-30 1h7m1 0h1m1 0h2m2 0h4m1 0h2m2 0h3m2 0h3m1 0h1"/></svg>
-</div>
 </div>
 
 <div class="save-popup" id="save-popup" aria-hidden="true">
