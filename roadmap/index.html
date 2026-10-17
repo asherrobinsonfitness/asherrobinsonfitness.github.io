@@ -193,6 +193,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 .footer-divider{border:none;border-bottom:1px solid #d5d5d5}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
+footer p+p{margin-top:.75rem}
 
 /* short steps on tall phones: the page fills the screen, so the footer sits
    at the bottom and the gray form section stretches down to meet it */
@@ -399,7 +400,10 @@ main{flex:1;display:flex;flex-direction:column}
 
 <footer>
   <div class="footer-inner">
-    <p>By requesting a roadmap, you agree to get emails from me. You can unsubscribe from any email.</p>
+    <div>
+      <p>The numbers in your roadmap are estimates, not medical advice.</p>
+      <p>By requesting a roadmap, you agree to get emails from me. You can unsubscribe from any email.</p>
+    </div>
     <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
