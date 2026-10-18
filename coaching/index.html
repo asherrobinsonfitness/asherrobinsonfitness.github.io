@@ -199,6 +199,10 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 /* phones: links above the © line, so © closes the page */
 @media (max-width:699px){.footer-row{flex-direction:column-reverse;align-items:flex-start}}
 
+
+.footer-region{display:flex;align-items:center;gap:.5rem}
+.footer-region__flag{width:1.25em;height:1.25em;flex-shrink:0}
+
 /* legal (terms / privacy) popups */
 .legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
@@ -261,7 +265,6 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 </style>
 </head>
 <body>
-
 <main>
   <div class="above-fold">
   <div class="announcement"><span class="announcement__text">Your roadmap is on its way</span><button class="announcement__close" type="button" onclick="this.parentNode.remove()" aria-label="Dismiss"><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg></button></div>
@@ -291,7 +294,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
       </div>
     </div>
 
-    <div class="section-divider section-divider--split" aria-hidden="true"></div>
+  <div class="section-divider section-divider--split" aria-hidden="true"></div>
 
     <section class="booking-section">
       <div class="booking-inner">
@@ -403,6 +406,10 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
   <div class="footer-inner">
     <p>Your results depend on your starting point, how well you follow the plan, sleep, and stress.</p>
     <hr class="footer-divider">
+    <div class="footer-region" aria-label="United States, US dollars, English">
+      <svg class="footer-region__flag" viewBox="0 0 19 13" role="img" aria-label="United States flag" xmlns="http://www.w3.org/2000/svg"><rect width="19" height="13" fill="#fff"/><path fill="#b22234" d="M0 0h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0z"/><path fill="#3c3b6e" d="M0 0h8v7H0z"/><g fill="#fff"><circle cx="1.2" cy="1" r=".28"/><circle cx="3" cy="1" r=".28"/><circle cx="4.8" cy="1" r=".28"/><circle cx="6.6" cy="1" r=".28"/><circle cx="2.1" cy="2.2" r=".28"/><circle cx="3.9" cy="2.2" r=".28"/><circle cx="5.7" cy="2.2" r=".28"/><circle cx="1.2" cy="3.4" r=".28"/><circle cx="3" cy="3.4" r=".28"/><circle cx="4.8" cy="3.4" r=".28"/><circle cx="6.6" cy="3.4" r=".28"/><circle cx="2.1" cy="4.6" r=".28"/><circle cx="3.9" cy="4.6" r=".28"/><circle cx="5.7" cy="4.6" r=".28"/><circle cx="1.2" cy="5.8" r=".28"/><circle cx="3" cy="5.8" r=".28"/><circle cx="4.8" cy="5.8" r=".28"/><circle cx="6.6" cy="5.8" r=".28"/></g></svg>
+      <span>United States <span aria-hidden="true">·</span> USD <span aria-hidden="true">·</span> English</span>
+    </div>
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
       <div class="footer-links">
