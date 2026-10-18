@@ -621,11 +621,11 @@ document.addEventListener("keydown",function(e){
     current=i;
     stepEls[steps[current]].style.display="";
     updateNav();
-    // Move focus to the new step's heading (not its first input) on every viewport,
-    // not just desktop — this announces the new content to screen readers and puts
-    // keyboard focus somewhere sane, without popping the mobile keyboard unprompted.
-    var heading=stepEls[steps[current]].querySelector(".signup-title");
-    if(heading) heading.focus();
+    // Focus the first input so visitors can continue entering information
+    // immediately. Keep the body-fat step focused on its heading.
+    var activeStep=stepEls[steps[current]],nextControl=activeStep.querySelector('input:not([type="hidden"])');
+    if(steps[current]==="bodyfat") nextControl=activeStep.querySelector(".signup-title");
+    if(nextControl) nextControl.focus();
   }
 
   // Step 1 — name
