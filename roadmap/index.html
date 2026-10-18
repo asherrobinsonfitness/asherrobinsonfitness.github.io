@@ -610,6 +610,15 @@ document.addEventListener("keydown",function(e){
   var stepEls={name:document.getElementById("step-name"),metrics:document.getElementById("step-metrics"),bodyfat:document.getElementById("step-bodyfat"),email:document.getElementById("step-email")};
   var progressFill=document.getElementById("progress-fill"),progressBar=progressFill.parentElement;
 
+  // Start loading and decoding the body-fat examples while the visitor is
+  // answering the metrics step. They stay lazy during the initial page load.
+  function prepareBodyfatImages(){
+    document.querySelectorAll(".bf-option img[loading='lazy']").forEach(function(img){
+      img.loading="eager";
+      if(img.decode) img.decode().catch(function(){});
+    });
+  }
+
   // 0% on step 1 (invisible) through 100% on the last step (full width).
   function updateNav(){
     var pct=current/(steps.length-1)*100;
@@ -621,6 +630,7 @@ document.addEventListener("keydown",function(e){
     current=i;
     stepEls[steps[current]].style.display="";
     updateNav();
+    if(i===1) prepareBodyfatImages();
     // Focus the first input so visitors can continue entering information
     // immediately. Keep the body-fat step focused on its heading.
     var activeStep=stepEls[steps[current]],nextControl=activeStep.querySelector('input:not([type="hidden"])');
