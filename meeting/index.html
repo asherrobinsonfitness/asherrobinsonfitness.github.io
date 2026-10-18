@@ -301,7 +301,7 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
 /* phones: links above the © line, so © closes the page */
-@media (max-width:699px){.footer-row{flex-direction:column-reverse;align-items:flex-start}}
+@media (max-width:699px){.footer-row{display:contents}.footer-links{order:1}.footer-region{order:2}.copyright{order:3}}
 .legal-link{background:0 0;border:none;padding:0;cursor:pointer;font-size:.8125rem;color:#0047b3;text-decoration:none}
 
 
