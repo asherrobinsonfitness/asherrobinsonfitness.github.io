@@ -203,6 +203,10 @@ body{min-height:100dvh;display:flex;flex-direction:column}
 main{flex:1;display:flex;flex-direction:column}
 .container,.results-section{flex:1}
 
+
+.footer-region{display:flex;align-items:center;gap:.5rem}
+.footer-region__flag{width:1.25em;height:1.25em;flex-shrink:0}
+
 /* legal (terms / privacy) popups */
 .legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
 .legal-overlay.active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease,visibility 0s linear 0s}
@@ -261,7 +265,6 @@ main{flex:1;display:flex;flex-direction:column}
 </style>
 </head>
 <body>
-
 <main>
   <div class="container">
     <div class="hero-grid">
@@ -406,6 +409,10 @@ main{flex:1;display:flex;flex-direction:column}
       <p>By requesting a roadmap, you agree to get emails from me. You can unsubscribe from any email.</p>
     </div>
     <hr class="footer-divider">
+    <div class="footer-region" aria-label="United States, US dollars, English">
+      <svg class="footer-region__flag" viewBox="0 0 19 13" role="img" aria-label="United States flag" xmlns="http://www.w3.org/2000/svg"><rect width="19" height="13" fill="#fff"/><path fill="#b22234" d="M0 0h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0z"/><path fill="#3c3b6e" d="M0 0h8v7H0z"/><g fill="#fff"><circle cx="1.2" cy="1" r=".28"/><circle cx="3" cy="1" r=".28"/><circle cx="4.8" cy="1" r=".28"/><circle cx="6.6" cy="1" r=".28"/><circle cx="2.1" cy="2.2" r=".28"/><circle cx="3.9" cy="2.2" r=".28"/><circle cx="5.7" cy="2.2" r=".28"/><circle cx="1.2" cy="3.4" r=".28"/><circle cx="3" cy="3.4" r=".28"/><circle cx="4.8" cy="3.4" r=".28"/><circle cx="6.6" cy="3.4" r=".28"/><circle cx="2.1" cy="4.6" r=".28"/><circle cx="3.9" cy="4.6" r=".28"/><circle cx="5.7" cy="4.6" r=".28"/><circle cx="1.2" cy="5.8" r=".28"/><circle cx="3" cy="5.8" r=".28"/><circle cx="4.8" cy="5.8" r=".28"/><circle cx="6.6" cy="5.8" r=".28"/></g></svg>
+      <span>United States ($USD) · English</span>
+    </div>
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
       <div class="footer-links">
