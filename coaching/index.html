@@ -158,6 +158,7 @@ strong{font-weight:500}
 /* 640px — the same cap the stacked hero uses; wider than the 472px form column on purpose */
 .common-questions__inner{max-width:640px;margin:0 auto}
 .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid #d5d5d5}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .faq-item{border-bottom:1px solid #d5d5d5}
 .faq-item__summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem .25rem;font-size:.9375rem;font-weight:500;line-height:1.2;user-select:none}
 .faq-item__summary::-webkit-details-marker{display:none}
@@ -365,6 +366,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
             <div class="faq-item__body-inner">
               <p>The 6-Week Challenge is $599.</p>
               <p>After the challenge, coaching is your choice. Coaching costs $249 every 4 weeks. Coaching renews automatically until you cancel.</p>
+              <p>Lose 10 pounds in 6 weeks? Earn $600 off coaching. That's <s><span class="sr-only">was </span>$249</s> $149 every 4 weeks, 6 times.</p>
             </div>
           </div>
         </details>
