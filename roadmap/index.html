@@ -194,7 +194,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 .footer-row{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .footer-links{display:flex;gap:.75rem;flex-wrap:wrap}
 /* phones: links above the © line, so © closes the page */
-@media (max-width:699px){.footer-row{display:contents}.footer-links{order:1}.footer-region{order:2}.copyright{order:3}}
+@media (max-width:699px){.footer-row{display:contents}.footer-links{order:1}.copyright{order:3}}
 footer p+p{margin-top:.75rem}
 
 /* short steps on tall phones: the page fills the screen, so the footer sits
@@ -203,9 +203,6 @@ body{min-height:100dvh;display:flex;flex-direction:column}
 main{flex:1;display:flex;flex-direction:column}
 .container,.results-section{flex:1}
 
-
-.footer-region{display:flex;align-items:center;gap:.5rem}
-.footer-region__flag{width:1.25em;height:1.25em;flex-shrink:0}
 
 /* legal (terms / privacy) popups */
 .legal-overlay{display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:99999;align-items:stretch;justify-content:flex-end;padding:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}
@@ -409,10 +406,6 @@ main{flex:1;display:flex;flex-direction:column}
       <p>By requesting a roadmap, you agree to get emails from me. You can unsubscribe from any email.</p>
     </div>
     <hr class="footer-divider">
-    <div class="footer-region" aria-label="United States, US dollars, English">
-      <svg class="footer-region__flag" viewBox="0 0 19 13" role="img" aria-label="United States flag" xmlns="http://www.w3.org/2000/svg"><rect width="19" height="13" fill="#fff"/><path fill="#b22234" d="M0 0h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0zm0 2h19v1H0z"/><path fill="#3c3b6e" d="M0 0h8v7H0z"/><g fill="#fff"><circle cx="1.2" cy="1" r=".28"/><circle cx="3" cy="1" r=".28"/><circle cx="4.8" cy="1" r=".28"/><circle cx="6.6" cy="1" r=".28"/><circle cx="2.1" cy="2.2" r=".28"/><circle cx="3.9" cy="2.2" r=".28"/><circle cx="5.7" cy="2.2" r=".28"/><circle cx="1.2" cy="3.4" r=".28"/><circle cx="3" cy="3.4" r=".28"/><circle cx="4.8" cy="3.4" r=".28"/><circle cx="6.6" cy="3.4" r=".28"/><circle cx="2.1" cy="4.6" r=".28"/><circle cx="3.9" cy="4.6" r=".28"/><circle cx="5.7" cy="4.6" r=".28"/><circle cx="1.2" cy="5.8" r=".28"/><circle cx="3" cy="5.8" r=".28"/><circle cx="4.8" cy="5.8" r=".28"/><circle cx="6.6" cy="5.8" r=".28"/></g></svg>
-      <span>United States ($USD) | English</span>
-    </div>
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
       <div class="footer-links">
