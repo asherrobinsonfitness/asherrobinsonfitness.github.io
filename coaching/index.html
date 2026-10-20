@@ -179,6 +179,12 @@ strong{font-weight:500}
 .faq-item__body-inner .legal-link{font-size:inherit}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
+/* FAQ 1 before/after: two 4:5 photos side by side, video's 8px corners, gray until the photo loads */
+.before-after{display:flex;gap:.5rem;margin-top:.75rem}
+.before-after figure{flex:1;margin:0}
+.before-after img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:8px;background:#d5d5d5}
+.before-after figcaption{margin-top:.375rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a;text-align:center}
+.before-after+p{margin-top:.75rem}
 /* 700px+ (the list is a fixed 640px from 672px): the short labels line up
    as one left-aligned column, centred in the gap between the longest
    question ("How much time does this take?") and the +. Retune 22rem if a longer question is
@@ -336,10 +342,15 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
             <div class="faq-item__body-inner">
               <ul>
                 <li>I set your calorie and protein targets</li>
+                <li>I build your workouts</li>
                 <li>I review your weekly logs</li>
-                <li>I adjust your plan to fit your results</li>
+                <li>I adjust your plan as you make progress</li>
               </ul>
               <p>I used these steps to lose 16 pounds. That took about 8 weeks. Your results may differ.</p>
+              <div class="before-after">
+                <figure><img src="/assets/results/before.webp" width="400" height="500" alt="Me before" loading="lazy"><figcaption>Before</figcaption></figure>
+                <figure><img src="/assets/results/after.webp" width="400" height="500" alt="Me after" loading="lazy"><figcaption>After</figcaption></figure>
+              </div>
               <p>Lose less than 10 pounds? I coach you free, up to 6 more weeks. Full rules are in my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>.</p>
             </div>
           </div>
@@ -348,12 +359,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
           <summary class="faq-item__summary"><span class="faq-item__question">Is this for beginners?</span><span class="faq-item__short">Yes</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p>You can start with zero experience. I do the planning. You do 3 things:</p>
-              <ul>
-                <li>Hit your calorie and protein targets</li>
-                <li>Do the workouts I build</li>
-                <li>Log your food and weight</li>
-              </ul>
+              <p>You need zero experience. I build your plan. I teach you as you go.</p>
             </div>
           </div>
         </details>
@@ -363,7 +369,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
             <div class="faq-item__body-inner">
               <p>The 6-Week Challenge is $599.</p>
               <p>Want to keep going after 6 weeks? Coaching costs $249 every 4 weeks. It renews until you cancel.</p>
-              <p>Lose 10+ pounds in 6 weeks? Earn $600 off coaching. That's <s><span class="sr-only">was </span>$249</s> $149 every 4 weeks, 6 times.</p>
+              <p>Lose 10+ pounds during the challenge? Earn $600 off coaching. That's <s><span class="sr-only">was </span>$249</s> $149 every 4 weeks, 6 times.</p>
             </div>
           </div>
         </details>
@@ -374,7 +380,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
               <ul>
                 <li><strong>Workouts:</strong> 45–60 minutes, 3 times a week</li>
                 <li><strong>Logging food and weight:</strong> a few minutes a day</li>
-                <li><strong>Weekly check-in:</strong> 30 minutes</li>
+                <li><strong>Check-ins:</strong> 30 minutes, 1 time a week</li>
               </ul>
             </div>
           </div>
@@ -383,15 +389,15 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
           <summary class="faq-item__summary"><span class="faq-item__question">What if I don't lose 10 pounds?</span><span class="faq-item__short">Guarantee</span><svg class="icon faq-toggle" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="11" width="14" height="2" rx="1"/><rect class="faq-toggle__v" x="11" y="5" width="2" height="14" rx="1"/></svg></summary>
           <div class="faq-item__body">
             <div class="faq-item__body-inner">
-              <p><span class="footnote-mark-note">*</span>Do these things for 6 weeks:</p>
+              <p><span class="footnote-mark-note">*</span>Follow the plan for 6 weeks. That means:</p>
               <ul>
                 <li>Log food and weight 6+ days a week</li>
                 <li>Hit calories and protein 6+ days a week</li>
                 <li>Miss 2 workouts or fewer in 6 weeks</li>
                 <li>Send scale and progress photos, start and end</li>
               </ul>
-              <p>Lose less than 10 pounds? I coach you free, up to 6 more weeks. It ends when you're 10 pounds down. The guarantee is coaching, not cash.</p>
-              <p>Free weeks don't earn the $600 credit. Full rules are in my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>.</p>
+              <p>Lose less than 10 pounds? I coach you free, up to 6 more weeks. It ends when you're 10 pounds down.</p>
+              <p>The guarantee is coaching, not cash. Full rules are in my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>.</p>
             </div>
           </div>
         </details>
@@ -404,7 +410,7 @@ footer{background:#eee;padding:var(--pad-sm) 1rem;font-size:.8125rem;line-height
 
 <footer>
   <div class="footer-inner">
-    <p>Your results depend on your starting point, how well you follow the plan, sleep, and stress.</p>
+    <p>Your results depend on how well you follow the plan, your starting point, sleep, stress, genetics, and health.</p>
     <hr class="footer-divider">
     <div class="footer-row">
       <span class="copyright">© 2026 Asher Robinson LLC</span>
