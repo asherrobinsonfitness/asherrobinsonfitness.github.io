@@ -10,13 +10,6 @@
 <link rel="icon" type="image/webp" sizes="16x16" href="/assets/favicon-16x16.webp">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <meta name="theme-color" content="#f7f7f7">
-<!-- Hints first, so the font and third-party connections start with the
-     first bytes of HTML. Vidalytics needs two connections: its loader is a
-     plain script, while the player and video come over CORS (crossorigin).
-     Meta and PostHog are warmed so tracking calls go out sooner. -->
-<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-web-6356914b.woff2" crossorigin>
-<link rel="preconnect" href="https://connect.facebook.net">
-<link rel="preconnect" href="https://us.i.posthog.com" crossorigin>
 <!-- Meta Pixel Code -->
 <script>
 // Shared helpers for Meta Pixel + Conversions API deduplication.
@@ -106,15 +99,11 @@ src="/edge/tr?id=1575468926630270&ev=PageView&noscript=1"
     posthog.capture('roadmap_pageview');
 </script>
 <!-- End PostHog -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-variable.woff2" crossorigin>
 <style>
 :root{--pad-sm:2rem}
-/* Inter trimmed to weights 400-700 (the pages use 400/500; the video player's text uses 700).
-   The file name carries its hash, so it can be cached for a year and a new
-   font always gets a new name. "Inter Fallback" is Arial resized to Inter's
-   metrics, so text doesn't jump if the font lands after the first paint. */
-@font-face{font-family:Inter;font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/inter-web-6356914b.woff2') format('woff2')}
-@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.48%;ascent-override:90.14%;descent-override:22.44%;line-gap-override:0%}
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,"Inter Fallback",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-variable.woff2') format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 body{color:#111;line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;background:#f7f7f7}
 strong{font-weight:500}
 /* icons: 1.25x the font size of the text beside them (Material Symbols Rounded, default weight) */
@@ -225,9 +214,7 @@ main{flex:1;display:flex;flex-direction:column}
 .legal-modal-close{display:flex;align-items:center;justify-content:center;background:0 0;border:none;font-size:.8125rem;color:#4a4a4a;border-radius:0;cursor:pointer;padding:.5rem;margin-right:-.5rem;flex-shrink:0;position:relative}
 /* ✕ buttons: an invisible layer makes the tap area 44px; the button and its focus ring stay 32px */
 .legal-modal-close::after{content:"";position:absolute;inset:-6px}
-/* content-visibility: the panel sits off-screen until opened, so the browser
-   skips laying out its text during page load */
-.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none;content-visibility:auto}
+.legal-modal-body{overflow-y:auto;padding:1.75rem 1.5rem 2.25rem;flex:1;scrollbar-width:none}
 .legal-modal-body::-webkit-scrollbar{display:none}
 .legal-modal-body h2{font-size:1.5rem;font-weight:400;margin-bottom:.375rem;line-height:1.2}
 .legal-modal-body .legal-effective{font-size:.8125rem;color:#4a4a4a;margin-bottom:1.75rem}
@@ -280,7 +267,7 @@ main{flex:1;display:flex;flex-direction:column}
     <div class="hero-grid">
       <h1 class="headline">Get Your Free Personalized 10% Body Fat Roadmap</h1>
       <div class="hero-media-row">
-        <img class="hero-media-row__item" fetchpriority="high" src="/assets/roadmap-content/roadmap-hero-flatlay-1200.webp" srcset="/assets/roadmap-content/roadmap-hero-flatlay-800.webp 800w, /assets/roadmap-content/roadmap-hero-flatlay-1200.webp 1200w, /assets/roadmap-content/roadmap-hero-flatlay-1600.webp 1600w, /assets/roadmap-content/roadmap-hero-flatlay.webp 2400w" sizes="(min-width: 900px) calc(50vw - 82px), min(calc(100vw - 34px), 638px)" alt="Three pages of the roadmap PDF lying flat">
+        <img class="hero-media-row__item" fetchpriority="high" src="/assets/roadmap-content/roadmap-hero-flatlay-1200.webp" srcset="/assets/roadmap-content/roadmap-hero-flatlay-800.webp 800w, /assets/roadmap-content/roadmap-hero-flatlay-1200.webp 1200w, /assets/roadmap-content/roadmap-hero-flatlay-1600.webp 1600w, /assets/roadmap-content/roadmap-hero-flatlay.webp 2400w" sizes="(min-width: 900px) 50vw, 100vw" alt="Three pages of the roadmap PDF lying flat">
       </div>
     </div>
 
