@@ -276,12 +276,6 @@ strong{font-weight:500}
 .faq-item__body-inner .legal-link{font-size:inherit}
 .faq-item__body-inner li+li{margin-top:.25rem}
 .faq-item__body-inner ul+p{margin-top:.75rem}
-/* FAQ 1 before/after: two 4:5 photos side by side, video's 8px corners, gray until the photo loads */
-.before-after{display:flex;gap:.5rem;margin-top:.75rem}
-.before-after figure{flex:1;margin:0}
-.before-after img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:8px;background:#d5d5d5}
-.before-after figcaption{margin-top:.375rem;font-size:.8125rem;line-height:1.6;color:#4a4a4a;text-align:center}
-.before-after+p{margin-top:.75rem}
 .faq-item__body-inner ol{margin:.5rem 0 0;padding-left:1.25rem}
 .faq-item__body-inner ol+p{margin-top:.75rem}
 .faq-item__body-inner strong{color:#111}
@@ -476,10 +470,6 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
                 <li>I adjust your plan as you make progress</li>
               </ul>
               <p>I used these steps to lose 16 pounds. That took about 8 weeks. Your results may differ.</p>
-              <div class="before-after">
-                <figure><img src="/assets/results/before.webp" width="400" height="500" alt="Me before" loading="lazy"><figcaption>Before</figcaption></figure>
-                <figure><img src="/assets/results/after.webp" width="400" height="500" alt="Me after" loading="lazy"><figcaption>After</figcaption></figure>
-              </div>
               <p>Lose less than 10 pounds? I coach you free, up to 6 more weeks. Full rules are in my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button>.</p>
             </div>
           </div>
@@ -538,8 +528,8 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
     </div>
     <div class="legal-modal-body">
       <h2 id="disclaimers-title">Disclaimers</h2>
-      <h3>Guarantee Terms</h3>
-      <p>The 10-pound guarantee has conditions. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> for how it works and how to claim it.</p>
+      <h3>Free Coaching Terms</h3>
+      <p>Free coaching has conditions. See my <button type="button" class="legal-link" onclick='openLegal("terms")'>Terms of Service</button> for how it works and how to claim it.</p>
       <h3>Results Vary</h3>
       <p>My own result, losing 16 pounds in about 8 weeks, is not a promise of yours. Results depend on adherence, starting point, genetics, sleep, stress, and other individual factors, and will vary from person to person.</p>
       <h3>Eligibility</h3>
@@ -557,7 +547,7 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
     </div>
     <div class="legal-modal-body">
       <h2 id="terms-title">Terms of Service</h2>
-      <p class="legal-effective">Effective Date: October 19, 2026</p>
+      <p class="legal-effective">Effective Date: October 24, 2026</p>
       <h3>1. Agreement</h3>
       <p>These Terms of Service ("Terms") govern your use of asherrobinsonfitness.com (the "Site"), the free 10% Body Fat Roadmap, consultation meetings, and the coaching services offered by Asher Robinson LLC ("I," "me"). By using the Site, requesting a roadmap, booking a meeting, or purchasing coaching, you agree to these Terms. If you do not agree, do not use the Site or purchase coaching.</p>
       <h3>2. The Free Roadmap</h3>
@@ -568,17 +558,17 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
       <h3>4. The Coaching Service</h3>
       <p>I provide online fat loss coaching for adults. Coaching includes a personalized training program, daily calorie and protein targets, meal templates, weekly check-ins, and messaging access to your coach, delivered through a third-party coaching app designated at enrollment.</p>
       <p>Coaching is provided for informational and educational purposes only. It is not a substitute for medical advice, diagnosis, or treatment. You should consult a qualified healthcare provider before beginning any diet or exercise program.</p>
-      <p><strong>Sharing your results:</strong> I may ask to share your results, including your weight changes and progress photos, on my website, in my ads, and on social media. I share them only if you agree in writing. You choose whether your face is shown or blurred. Saying no does not affect your coaching, your guarantee, or your credit. You can withdraw your permission at any time, and I will stop using your results in new posts and ads.</p>
+      <p><strong>Sharing your results:</strong> I may ask to share your results, including your weight changes and progress photos, on my website, in my ads, and on social media. I share them only if you agree in writing. You choose whether your face is shown or blurred. Saying no does not affect your coaching, your free coaching, or your credit. You can withdraw your permission at any time, and I will stop using your results in new posts and ads.</p>
       <h3>5. Eligibility</h3>
       <p>You must be at least 18 years old to request a roadmap, book a meeting, or purchase coaching. By doing so, you represent that you meet this requirement. Coaching is intended for healthy adults. If you have any medical concerns, consult a physician before enrolling.</p>
       <h3>6. Pricing and Payment</h3>
       <p>Coaching is offered as follows:</p>
       <ul>
         <li><strong>6-Week Challenge:</strong> $599, paid in full after your consultation meeting</li>
-        <li><strong>Continued coaching:</strong> $249 every 4 weeks (13 payments a year), billed automatically until canceled, if you choose to continue after the challenge. This rate is for challenge clients only.</li>
+        <li><strong>Coaching:</strong> $249 every 4 weeks (13 payments a year), billed automatically until canceled. You can start it after the challenge or on its own.</li>
       </ul>
       <p>Payments are processed by Stripe, Inc. By completing payment, you authorize Asher Robinson LLC to charge your payment method as described above. You are responsible for keeping your payment information current. Failed payments may result in suspension of service.</p>
-      <h3>7. The 10-Pound Guarantee</h3>
+      <h3>7. Credit and Free Coaching</h3>
       <p>If you lose at least 10 pounds by the end of your 6-Week Challenge, you earn a $600 credit. I apply it as $100 off each of your next 6 payments, so you pay $149 instead of $249. The credit has no cash value and ends if you cancel coaching.</p>
       <p>If you follow the plan and lose less than 10 pounds by the end of your 6-Week Challenge, I coach you free until you reach 10 pounds lost from your starting weight, for up to 6 more weeks. Free coaching ends when your logged weigh-ins show 10 pounds lost, or 6 weeks after your challenge ends, whichever comes first. After that, coaching continues at $249 every 4 weeks if you choose to continue.</p>
       <p>“Follow the plan” means that during the challenge you:</p>
@@ -592,7 +582,7 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
       <p><strong>Credit timing:</strong> The credit applies only to 10 pounds lost within the 6-Week Challenge. Reaching 10 pounds during free coaching does not earn the credit.</p>
       <p><strong>How to claim:</strong> Message me in the coaching app or email <a href="mailto:help@asherrobinsonfitness.com">help@asherrobinsonfitness.com</a> within 14 days after your challenge ends.</p>
       <h3>8. Cancellation</h3>
-      <p>You may cancel continued coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. No refunds for partial periods. The $599 challenge payment is not refundable.</p>
+      <p>You may cancel coaching at any time with no cancellation fee, through the coaching app or by messaging your coach. Cancellation takes effect at the end of your current billing period, and you will not be charged again after cancellation is confirmed. No refunds for partial periods. The $599 challenge payment is not refundable.</p>
       <h3>9. No Medical Advice</h3>
       <p>Nothing on this Site, in the roadmap, or delivered through coaching constitutes medical advice. I do not diagnose, treat, cure, or prevent any health condition. Results described on this Site reflect individual experiences and are not guaranteed. Your results will depend on many factors including your starting point, adherence, sleep, stress, and medical history.</p>
       <h3>10. Intellectual Property</h3>
@@ -600,7 +590,7 @@ footer{padding-bottom:calc(var(--pad-sm) + 33px)}
       <h3>11. Limitation of Liability</h3>
       <p>To the maximum extent permitted by applicable law, Asher Robinson LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, the roadmap, or the coaching service. My total liability to you for any claim shall not exceed the total amount paid by you in the 30 days preceding the claim.</p>
       <h3>12. Disclaimer of Warranties</h3>
-      <p>The Site, the roadmap, and the coaching service are provided "as is" and "as available" without warranty of any kind, express or implied. Except for the guarantee in Section 7, I do not guarantee specific results. Individual outcomes vary.</p>
+      <p>The Site, the roadmap, and the coaching service are provided "as is" and "as available" without warranty of any kind, express or implied. I do not guarantee specific results. Individual outcomes vary.</p>
       <h3>13. Governing Law</h3>
       <p>These Terms are governed by the laws of the Commonwealth of Pennsylvania, without regard to conflict of law provisions. Any disputes shall be resolved in the state or federal courts located in Pennsylvania, and you consent to personal jurisdiction in that venue.</p>
       <h3>14. Changes to These Terms</h3>
