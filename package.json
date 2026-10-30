@@ -1,6 +1,6 @@
 {
     "dependencies": {
-      "stripe": "^14.0.0",
-      "posthog-node": "^5.0.0"
+        "@vercel/functions": "^3.10.5",
+        "posthog-node": "^5.0.0"
     }
-  }
+}
